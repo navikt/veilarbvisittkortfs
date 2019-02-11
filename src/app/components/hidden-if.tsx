@@ -6,10 +6,10 @@ export interface HiddenProps {
 
 export default function hiddenIf<PROPS>(Component: React.ComponentType<PROPS>): React.ComponentType<PROPS & HiddenProps> {
     return (props: PROPS & HiddenProps) => {
-        const { hidden, ...rest } = props as any; // Typescript doesnt allow rest/spread of generic-types
+        const { hidden, ...rest } = props as any; // tslint:disable-line
         if (hidden) {
             return null;
         }
-        return <Component {...rest} />
-    }
+        return <Component {...rest} />;
+    };
 }

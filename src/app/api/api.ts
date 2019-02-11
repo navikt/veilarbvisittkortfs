@@ -1,5 +1,5 @@
 function toJsonOrError(response: Response) {
-    if(!response.status){
+    if (!response.status) {
         throw new Error(response.statusText);
     }
     return response.json();

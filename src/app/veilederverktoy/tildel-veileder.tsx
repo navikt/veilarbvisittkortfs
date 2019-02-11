@@ -1,4 +1,4 @@
-import Dropdown from "../components/dropdown/dropdown";
+import Dropdown from '../components/dropdown/dropdown';
 
 function TildelVeileder() {
     return (
@@ -6,7 +6,7 @@ function TildelVeileder() {
             knappeTekst={'Tildel veileder'}
             className="input-m tildel-veileder-dropdown"
             name="tildel-veileder-dropdown"
-            onLukk={() => "hello world" }
+            onLukk={() => 'hello world'}
         >
 
             <button>hepps</button>

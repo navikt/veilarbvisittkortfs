@@ -1,8 +1,8 @@
-import * as React from "react";
-import LeggTilArbeidsliste from "./legg-til-arbeidsliste";
-import {Hovedknapp, Knapp} from "nav-frontend-knapper";
-import ArbeidslisteIkon from "./arbeidsliste.svg"
-import "./veilederverktoy.less"
+import * as React from 'react';
+import LeggTilArbeidsliste from './legg-til-arbeidsliste';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import ArbeidslisteIkon from './arbeidsliste.svg';
+import './veilederverktoy.less';
 
 interface VeiledervertoyslinjeState {
     leggTilIAbreidsListe: boolean;
@@ -11,25 +11,25 @@ interface VeiledervertoyslinjeState {
 }
 
 class Veilederverktoyslinje extends React.Component<{}, VeiledervertoyslinjeState> {
-    constructor (props:{}){
+    constructor (props: {}) {
       super(props);
       this.state = {
-          leggTilIAbreidsListe:false,
-          tildelVeileder:false,
+          leggTilIAbreidsListe: false,
+          tildelVeileder: false,
           verktoy: false,
       };
       this.onCloseModalClick = this.onCloseModalClick.bind(this);
     }
 
-    onCloseModalClick(){
-        this.setState({leggTilIAbreidsListe:false});
+    onCloseModalClick() {
+        this.setState({leggTilIAbreidsListe: false});
     }
 
     render() {
         return (
             <div className="veilederverktoyslinje">
                 <div className="veilederverktoyslinje__container">
-                    <Knapp className="arbeidsliste__knapp" htmlType="button" onClick={()=> this.setState({leggTilIAbreidsListe:true})}>
+                    <Knapp className="arbeidsliste__knapp" htmlType="button" onClick={() => this.setState({leggTilIAbreidsListe: true})}>
                         <img src={ArbeidslisteIkon} alt="Legg til i arbeidsliste"/>
                         <span>Legg til i arbeidsliste</span>
                     </Knapp>
@@ -41,7 +41,7 @@ class Veilederverktoyslinje extends React.Component<{}, VeiledervertoyslinjeStat
                     />
                 </div>
             </div>
-        )
+        );
     }
 }
 

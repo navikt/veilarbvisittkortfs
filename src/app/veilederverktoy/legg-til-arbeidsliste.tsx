@@ -1,9 +1,9 @@
 import React from 'react';
 import { Formik } from 'formik';
 import NavFrontendModal from 'nav-frontend-modal';
-import {Input, Textarea} from "nav-frontend-skjema";
+import { Input, Textarea } from 'nav-frontend-skjema';
 import * as Yup from 'yup';
-import {Hovedknapp, Knapp} from "nav-frontend-knapper";
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 interface LeggTilArbeidslisteProps {
     isOpen: boolean;
@@ -35,14 +35,14 @@ const SignupSchema = Yup.object().shape({
         .required('Pakrevd'),
 });
 
-function LeggTilArbeidsliste (props: LeggTilArbeidslisteProps){
+function LeggTilArbeidsliste (props: LeggTilArbeidslisteProps) {
     return (
         <NavFrontendModal
             isOpen={props.isOpen}
             contentLabel="modal resultat"
             onRequestClose={props.onCloseModalClick}
             className="modal__arbeidsliste"
-            closeButton
+            closeButton={true}
         >
             <Formik
                 initialValues={{ overskrift: '', kommentar: '' }}
@@ -53,25 +53,25 @@ function LeggTilArbeidsliste (props: LeggTilArbeidslisteProps){
                     }, 1000);
                 }}
                 validationSchema={SignupSchema}
-                render={props => {
-                    const harFeilIOverskrift = props.errors.overskrift && props.touched.overskrift ?
-                        {feilmelding: props.errors.overskrift} : undefined;
-                    const harFeilIKommentar =  props.errors.kommentar && props.touched.kommentar ?
-                        {feilmelding: props.errors.kommentar} : undefined;
+                render={formikProps => {
+                    const harFeilIOverskrift = formikProps.errors.overskrift && formikProps.touched.overskrift ?
+                        {feilmelding: formikProps.errors.overskrift} : undefined;
+                    const harFeilIKommentar =  formikProps.errors.kommentar && formikProps.touched.kommentar ?
+                        {feilmelding: formikProps.errors.kommentar} : undefined;
                     return (<form onSubmit={props.handleSubmit}>
                             <Input
                                 label="Overskrift"
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                                value={props.values.overskrift}
+                                onChange={formikProps.handleChange}
+                                onBlur={formikProps.handleBlur}
+                                value={formikProps.values.overskrift}
                                 name="overskrift"
                                 feil={harFeilIOverskrift}
                             />
                             <Textarea
                                 label="Kommentar"
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                                value={props.values.kommentar}
+                                onChange={formikProps.handleChange}
+                                onBlur={formikProps.handleBlur}
+                                value={formikProps.values.kommentar}
                                 name="kommentar"
                                 feil={harFeilIKommentar}
                             />
@@ -80,7 +80,7 @@ function LeggTilArbeidsliste (props: LeggTilArbeidslisteProps){
                             <Knapp> Avbryt </Knapp>
 
                         </form>
-                    )}}
+                    ); }}
             />
         </NavFrontendModal>
     );

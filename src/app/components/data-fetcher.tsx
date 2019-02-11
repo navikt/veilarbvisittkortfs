@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import {OrNothing} from "../../types/utils/ornothing";
-import {fetchToJson} from "../api/api";
+import { OrNothing } from '../../types/utils/ornothing';
+import { fetchToJson } from '../api/api';
 
 interface DataFetcherProps<T> {
     fetchFunc: (args?: string[], errorHandler?: (response?: Response) => any) => T|null; // tslint:disable-line
@@ -13,19 +13,18 @@ interface DataFetcherState<T> {
     data: OrNothing<T>;
 }
 
-function DataFetcher<T> (props: DataFetcherProps<T>){
+function DataFetcher<T> (props: DataFetcherProps<T>) {
     const [dataFetcherState, setData] = useState<DataFetcherState<T>>({data: null, isLoading: true});
 
     useEffect(() => {
         try {
-            fetchToJson("/abs");
+            fetchToJson('/abs');
             const data = props.fetchFunc();
             setData({data, isLoading: false});
+        } catch (e) {
+           throw new Error(e);
         }
-        catch(e) {
-            console.log(e);
-        }
-    },[]);
+    }, []);
 
     if (dataFetcherState.isLoading) {
         return <div className="spinner-wrapper centered"><NavFrontendSpinner type="XXL"/></div>;
@@ -36,7 +35,6 @@ function DataFetcher<T> (props: DataFetcherProps<T>){
     }
 
     return props.children( dataFetcherState.data as T);
-
 
 }
 

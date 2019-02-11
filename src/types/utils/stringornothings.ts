@@ -1,3 +1,3 @@
-import {OrNothing} from "./ornothing";
+import { OrNothing } from './ornothing';
 
 export type StringOrNothing = OrNothing<string>;

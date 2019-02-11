@@ -1,30 +1,30 @@
 import * as React from 'react';
-import Icon from "./components/icon";
-import {useEffect, useState} from "react";
-import {OppfolgingData} from '../../types/oppfolgingsstatus';
-import {Personalia} from "../../types/personalia";
-import NavnOgAlder from "./components/navnogalder";
-import Etiketter from "./components/etiketter";
-import Fodelsnummer from "./components/fodelsnummer";
-import "./personinfo.less";
+import Icon from './components/icon';
+import { useEffect, useState } from 'react';
+import { OppfolgingData } from '../../types/oppfolgingsstatus';
+import { Personalia } from '../../types/personalia';
+import NavnOgAlder from './components/navnogalder';
+import Etiketter from './components/etiketter';
+import Fodelsnummer from './components/fodelsnummer';
+import './personinfo.less';
 
 const initOppfolgingData: OppfolgingData = {
     oppfolgingsenhet: {
-        navn: "NAV TestHeim",
-        enhetId: "007"},
+        navn: 'NAV TestHeim',
+        enhetId: '007'},
     veilederId: null,
     formidlingsgruppe: null,
     servicegruppe: null,
 };
 
 const initPersonalia: Personalia = {
-    fornavn: "",
-    etternavn: "",
+    fornavn: '',
+    etternavn: '',
     mellomnavn: null,
-    sammensattNavn: "",
-    fodselsnummer: "",
-    fodselsdato: "",
-    kjonn: "K",
+    sammensattNavn: '',
+    fodselsnummer: '',
+    fodselsdato: '',
+    kjonn: 'K',
     dodsdato: null,
     diskresjonskode: null,
     egenAnsatt: false,
@@ -32,7 +32,7 @@ const initPersonalia: Personalia = {
 };
 
 export interface PersoninfoData {
-    oppfolging: OppfolgingData,
+    oppfolging: OppfolgingData;
     personalia: Personalia;
 }
 
@@ -59,15 +59,13 @@ function PersonInfo(props: {fnr: string}) {
         setData({personalia: personalia, oppfolging: oppfolging});
     };
 
-
     useEffect(() => {
         try {
             fetchPersonInfoData();
+        } catch (e) {
+            throw new Error(e); //TODO fix
         }
-        catch(e) {
-            console.log(e);
-        }
-    },[]);
+    }, []);
 
     return (
         <div className="personinfo">
@@ -78,6 +76,6 @@ function PersonInfo(props: {fnr: string}) {
                 <Etiketter personalia={personinfoData.personalia} oppfolging={personinfoData.oppfolging}/>
             </div>
         </div>
-    )
+    );
 }
 export default PersonInfo;
