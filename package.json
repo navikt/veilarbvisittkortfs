@@ -2,6 +2,7 @@
   "name": "veilarbvisittkortfs",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/veilarbvisittkortfs",
   "dependencies": {
     "@craco/craco": "^3.4.1",
     "babel-polyfill": "^6.26.0",
