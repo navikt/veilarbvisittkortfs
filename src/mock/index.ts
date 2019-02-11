@@ -1,6 +1,6 @@
-import Oppfolgingsstatus from "./oppfolging";
-import FetchMock, { Middleware, MiddlewareUtils} from "yet-another-fetch-mock";
-import Personalia from "./personalia";
+import Oppfolgingsstatus from './oppfolging';
+import FetchMock, { Middleware, MiddlewareUtils } from 'yet-another-fetch-mock';
+import Personalia from './personalia';
 
 const loggingMiddleware: Middleware = (request, response) => {
     // tslint:disable
@@ -23,8 +23,6 @@ const loggingMiddleware: Middleware = (request, response) => {
     return response;
 };
 
-
-
 const mock = FetchMock.configure({
     enableFallback: true,
     middleware: MiddlewareUtils.combine(
@@ -35,4 +33,3 @@ const mock = FetchMock.configure({
 
 mock.get('/veilarboppfolging/api/person/:fnr/oppfolgingsstatus', Oppfolgingsstatus);
 mock.get('/veilarbperson/api/person/:fnr', Personalia);
-

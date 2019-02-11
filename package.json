@@ -44,8 +44,8 @@
     "build": "craco build",
     "test:coverage": "echo \"her testar vi ingenting\"",
     "eject": "react-scripts eject",
-    "lint": "tslint ./src/**/**/*.ts*",
-    "lint:fix": "tslint ./src/**/**/*.ts* --fix"
+    "lint": "tslint ./src/**/*.ts*",
+    "lint:fix": "tslint ./src/**/*.ts* --fix"
   },
   "eslintConfig": {
     "extends": "react-app"

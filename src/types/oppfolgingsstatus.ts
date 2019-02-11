@@ -1,5 +1,5 @@
-import {StringOrNothing} from "./utils/stringornothings";
-import {OrNothing} from "./utils/ornothing";
+import { StringOrNothing } from './utils/stringornothings';
+import { OrNothing } from './utils/ornothing';
 
 export type Formidlingsgruppe = 'ARBS' | 'IARBS' | 'ISERV' | 'PARBS' | 'RARBS';
 export type Servicegruppe = 'BKART' | 'IVURD' | 'OPPFI' | 'VARIG' | 'VURDI' | 'VURDU';
@@ -9,9 +9,8 @@ interface OppfolgingEnhet {
     enhetId: StringOrNothing;
 }
 
-
 export interface OppfolgingData {
-    oppfolgingsenhet: OppfolgingEnhet,
+    oppfolgingsenhet: OppfolgingEnhet;
     veilederId: StringOrNothing;
     formidlingsgruppe: OrNothing<Formidlingsgruppe>;
     servicegruppe: OrNothing<Servicegruppe>;
