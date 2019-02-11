@@ -15,6 +15,7 @@ export default class NAVSPA {
 
     public static importer<PROPS>(name: string): React.ComponentType<PROPS> {
         class NAVSPAImporter extends React.Component<PROPS> { // tslint:disable-line
+            // @ts-ignore
             private el: HTMLElement;
 
             public componentWillUnmount() {
