@@ -1,4 +1,4 @@
-import App from './app';
+import App from './App';
 import * as serviceWorker from './serviceWorker';
 import NAVSPA from "./NAVSPA";
 

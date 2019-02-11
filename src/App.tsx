@@ -1,28 +1,26 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import PersonInfo from "./app/personinfo/personinfo";
+import Veilederverktoyslinje from "./app/veilederverktoy/veiledervertoyslinje";
+import Tilbakelenke from "./app/tilbakelenke";
+import "./index.less";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+export interface AppProps {
+    fnr: string;
+    enhet?: string;
+}
+
+class App extends React.Component<AppProps> {
+    render() {
+        return (
+            <div className="visittkortfs">
+                <Tilbakelenke enhet={this.props.enhet}/>
+                <div className="visittkortfs__container">
+                    <PersonInfo fnr={this.props.fnr}/>
+                    <Veilederverktoyslinje/>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;
