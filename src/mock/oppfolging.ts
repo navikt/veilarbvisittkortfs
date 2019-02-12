@@ -1,8 +1,8 @@
 // tslint:disable object-literal-sort-keys
 import { JSONValue } from 'yet-another-fetch-mock';
-import { OppfolgingData } from '../types/oppfolgingsstatus';
+import { Oppfolgingsstatus } from '../types/oppfolgingsstatus';
 
-const oppfolgingsstatus: OppfolgingData & JSONValue = {
+const oppfolgingsstatus: Oppfolgingsstatus & JSONValue = {
     oppfolgingsenhet: {
         navn: 'NAV TestHeim',
         enhetId: '007'
