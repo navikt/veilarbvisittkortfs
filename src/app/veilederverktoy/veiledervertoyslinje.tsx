@@ -1,48 +1,58 @@
-import * as React from 'react';
-import LeggTilArbeidsliste from './legg-til-arbeidsliste';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import ArbeidslisteIkon from './arbeidsliste.svg';
+import React, {useEffect, useState} from 'react';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import './veilederverktoy.less';
+import Arbeidslistekomponent from "./arbeidslistekomponent";
+import TannHjulIkon from './tannhjul.svg';
+import {Arbeidsliste} from "../../types/arbeidsliste";
 
-interface VeiledervertoyslinjeState {
-    leggTilIAbreidsListe: boolean;
-    tildelVeileder: boolean;
-    verktoy: boolean;
-}
 
-class Veilederverktoyslinje extends React.Component<{}, VeiledervertoyslinjeState> {
-    constructor (props: {}) {
-      super(props);
-      this.state = {
-          leggTilIAbreidsListe: false,
-          tildelVeileder: false,
-          verktoy: false,
-      };
-      this.onCloseModalClick = this.onCloseModalClick.bind(this);
-    }
+const initArbeidsliste: Arbeidsliste = {
+    arbeidslisteAktiv: null,
+    endringstidspunkt: null,
+    frist: null,
+    harVeilederTilgang: true,
+    isOppfolgendeVeileder: true,
+    kommentar: null,
+    overskrift: null,
+    sistEndretAv: null,
+    veilederId: null,
+};
 
-    onCloseModalClick() {
-        this.setState({leggTilIAbreidsListe: false});
-    }
+function Veilederverktoyslinje(props: {fnr: string}){
+    const [arbeidsliste, setArbeidsliste] = useState(initArbeidsliste);
 
-    render() {
+    const fetchArbeidslisteData = async ()=> {
+        const response: Response = await fetch(
+            `/veilarbportefolje/api/arbeidsliste/${props.fnr}?fnr=${props.fnr}`);
+        const arbeidsliste = await response.json();
+        setArbeidsliste(arbeidsliste);
+    };
+
+    useEffect(()=> {
+        try{
+            fetchArbeidslisteData();
+        }
+        catch(e){
+            throw new Error(e);
+        }}
+
+    ,[]);
+
         return (
             <div className="veilederverktoyslinje">
                 <div className="veilederverktoyslinje__container">
-                    <Knapp className="arbeidsliste__knapp" htmlType="button" onClick={() => this.setState({leggTilIAbreidsListe: true})}>
-                        <img src={ArbeidslisteIkon} alt="Legg til i arbeidsliste"/>
-                        <span>Legg til i arbeidsliste</span>
-                    </Knapp>
-                    <button>Tildel veileder</button>
-                    <Hovedknapp className="arbeidsliste">Veilederverktoy</Hovedknapp>
-                    <LeggTilArbeidsliste
-                        isOpen={this.state.leggTilIAbreidsListe}
-                        onCloseModalClick={this.onCloseModalClick}
+                    <Arbeidslistekomponent
+                        hidden={!arbeidsliste.isOppfolgendeVeileder}
+                        {...arbeidsliste}
                     />
+                    <button>Tildel veileder</button>
+                    <Hovedknapp className="veilederverktoy_knapp">
+                        <span>Veilederverktoy</span>
+                        <img src={TannHjulIkon} alt="Veilederverktoy"/>
+                    </Hovedknapp>
                 </div>
             </div>
         );
-    }
 }
 
 export default Veilederverktoyslinje;

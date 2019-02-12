@@ -1,62 +1,31 @@
 import * as React from 'react';
-import Icon from './components/icon';
-import { useEffect, useState } from 'react';
-import { OppfolgingData } from '../../types/oppfolgingsstatus';
-import { Personalia } from '../../types/personalia';
 import NavnOgAlder from './components/navnogalder';
 import Etiketter from './components/etiketter';
 import Fodelsnummer from './components/fodelsnummer';
 import './personinfo.less';
+import {InitialDataContext} from "../components/initialdataprovider";
+import {useContext, useEffect, useState} from "react";
+import Icon from "./components/icon";
+import {Oppfolgingsstatus} from "../../types/oppfolgingsstatus";
 
-const initOppfolgingData: OppfolgingData = {
+const initOppfolgingData: Oppfolgingsstatus = {
     oppfolgingsenhet: {
-        navn: 'NAV TestHeim',
-        enhetId: '007'},
+        navn: "NAV TestHeim",
+        enhetId: "007"},
     veilederId: null,
     formidlingsgruppe: null,
     servicegruppe: null,
 };
 
-const initPersonalia: Personalia = {
-    fornavn: '',
-    etternavn: '',
-    mellomnavn: null,
-    sammensattNavn: '',
-    fodselsnummer: '',
-    fodselsdato: '',
-    kjonn: 'K',
-    dodsdato: null,
-    diskresjonskode: null,
-    egenAnsatt: false,
-    sikkerhetstiltak: null,
-};
-
-export interface PersoninfoData {
-    oppfolging: OppfolgingData;
-    personalia: Personalia;
-}
-
-const initPersonInfo:  PersoninfoData = {
-    oppfolging: initOppfolgingData,
-    personalia: initPersonalia,
-};
-
 function PersonInfo(props: {fnr: string}) {
-    const [personinfoData, setData] = useState(initPersonInfo);
+
+    const [oppfolgingstatus, setData] = useState(initOppfolgingData);
+    const value = useContext(InitialDataContext);
 
     const fetchPersonInfoData = async () => {
-
-        const personResponse: Response = await fetch(
-            `/veilarbperson/api/person/${props.fnr}`,
-        );
-        const personalia = await personResponse.json();
-
-        const response: Response = await fetch(
-            `/veilarboppfolging/api/person/${props.fnr}/oppfolgingsstatus`,
-        );
-        const oppfolging = await response.json();
-
-        setData({personalia: personalia, oppfolging: oppfolging});
+        const response = await fetch(`/veilarboppfolging/api/person/${props.fnr}/oppfolgingsstatus`);
+        const oppfolgingstatus = await response.json();
+        setData(oppfolgingstatus);
     };
 
     useEffect(() => {
@@ -69,11 +38,11 @@ function PersonInfo(props: {fnr: string}) {
 
     return (
         <div className="personinfo">
-            <Icon kjonn={personinfoData.personalia.kjonn}/>
+            <Icon kjonn={value.kjonn}/>
             <div className="personinfo__container">
-                <Fodelsnummer fnr={personinfoData.personalia.fodselsnummer}/>
-                <NavnOgAlder personalia={personinfoData.personalia}/>
-                <Etiketter personalia={personinfoData.personalia} oppfolging={personinfoData.oppfolging}/>
+                <Fodelsnummer fnr={value.fodselsnummer}/>
+                <NavnOgAlder personalia={value}/>
+                <Etiketter personalia={value} oppfolging={oppfolgingstatus}/>
             </div>
         </div>
     );
