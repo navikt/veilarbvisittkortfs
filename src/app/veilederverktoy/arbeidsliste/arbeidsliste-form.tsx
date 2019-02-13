@@ -1,17 +1,27 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Formik } from 'formik';
 import { Input, Textarea } from 'nav-frontend-skjema';
 import * as Yup from 'yup';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import {Arbeidsliste} from "../../types/arbeidsliste";
-import Modal from "../components/modal/modal";
+import {Arbeidsliste} from "../../../types/arbeidsliste";
+import Modal from "../../components/modal/modal";
+import {InitialDataContext} from "../../components/initialdataprovider";
+import {postAsJson} from "../../api/api-utils";
 
 interface LeggTilArbeidslisteProps {
     isOpen: boolean;
     onRequestClose: () => void;
     handleSubmit?: () => void;
     arbeidsliste:Arbeidsliste;
+    innholdstittel: string;
 }
+
+interface ArbeidslisteForm {
+    kommentar: string;
+    overskrift:string;
+    frist?: string;
+}
+
 
 const ArbeidslisteSchema = Yup.object().shape({
     overskrift: Yup.string()
@@ -25,17 +35,22 @@ const ArbeidslisteSchema = Yup.object().shape({
 });
 
 function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
+
+    const {personalia} = useContext(InitialDataContext);
+
+    const initalValues = {
+        overskrift: props.arbeidsliste.overskrift ? props.arbeidsliste.overskrift :  '',
+        kommentar: props.arbeidsliste.kommentar? props.arbeidsliste.kommentar : '' };
+
+    const lagreArbeidsliste = (fnr: string, arbeidsliste:ArbeidslisteForm) => {
+        return postAsJson(`/veilarbportefolje/api/arbeidsliste/${fnr}?fnr=${fnr}`,arbeidsliste
+        );
+    };
+
     return (
         <Formik
-            initialValues={{
-                overskrift: props.arbeidsliste.overskrift ? props.arbeidsliste.overskrift :  '',
-                kommentar: props.arbeidsliste.kommentar? props.arbeidsliste.kommentar : '' }}
-            onSubmit={(values, actions) => {
-                setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2));
-                    actions.setSubmitting(false);
-                }, 1000);
-            }}
+            initialValues={initalValues}
+            onSubmit={(values) => {lagreArbeidsliste(personalia.fodselsnummer, values)}}
             validationSchema={ArbeidslisteSchema}
             render={formikProps => {
 
@@ -49,7 +64,9 @@ function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
                     <Modal
                         isOpen={props.isOpen}
                         onRequestClose={props.onRequestClose}
-                        innholdstittel="Legg til i arbeidsliste"
+                        innholdstittel={props.innholdstittel}
+                        undertittel={`${personalia.fornavn} ${personalia.etternavn}, ${personalia.fodselsnummer}`}
+
                     >
                         <form onSubmit={props.handleSubmit}>
                             <Input
@@ -70,7 +87,7 @@ function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
                             />
 
                             <Hovedknapp htmlType="submit">Lagre</Hovedknapp>
-                            <Knapp> Avbryt </Knapp>
+                            <Knapp onClick={props.onRequestClose}> Avbryt </Knapp>
 
                         </form>
                     </Modal>

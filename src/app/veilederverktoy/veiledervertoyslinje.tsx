@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import './veilederverktoy.less';
-import Arbeidslistekomponent from "./arbeidslistekomponent";
+import Arbeidslistekomponent from "./arbeidsliste/arbeidslistekomponent";
 import TannHjulIkon from './tannhjul.svg';
 import {Arbeidsliste} from "../../types/arbeidsliste";
+import TildelVeileder from "./tildel-veileder/tildel-veileder";
 
 
 const initArbeidsliste: Arbeidsliste = {
@@ -20,6 +21,7 @@ const initArbeidsliste: Arbeidsliste = {
 
 function Veilederverktoyslinje(props: {fnr: string}){
     const [arbeidsliste, setArbeidsliste] = useState(initArbeidsliste);
+
 
     const fetchArbeidslisteData = async ()=> {
         const response: Response = await fetch(
@@ -45,9 +47,9 @@ function Veilederverktoyslinje(props: {fnr: string}){
                         hidden={!arbeidsliste.isOppfolgendeVeileder}
                         {...arbeidsliste}
                     />
-                    <button>Tildel veileder</button>
+                    <TildelVeileder/>
                     <Hovedknapp className="veilederverktoy_knapp">
-                        <span>Veilederverktoy</span>
+                        Veilederverktoy
                         <img src={TannHjulIkon} alt="Veilederverktoy"/>
                     </Hovedknapp>
                 </div>
