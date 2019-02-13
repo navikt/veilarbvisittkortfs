@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-import {Arbeidsliste} from "../../types/arbeidsliste";
+import {Arbeidsliste} from "../../../types/arbeidsliste";
 import {Knapp} from "nav-frontend-knapper";
 import ArbeidslisteIkon from './arbeidsliste.svg';
 import ArbeidslisteForm from "./arbeidsliste-form";
-import hiddenIf from "../components/hidden-if";
+import hiddenIf from "../../components/hidden-if";
 import FjernArbeidsliste from "./fjern-arbeidsliste";
 
 
@@ -16,12 +16,13 @@ function Arbeidslistekomponent (arbeidsliste: Arbeidsliste) {
             <>
                 <Knapp className="arbeidsliste__knapp" htmlType="button" onClick={()=> setLeggTilArbeidslisteAktivt(true)}>
                     <img src={ArbeidslisteIkon} alt="Legg til i arbeidsliste"/>
-                    <span>Legg til i arbeidsliste</span>
+                    Legg til i arbeidsliste
                 </Knapp>
                 <ArbeidslisteForm
                     isOpen={leggTilArbeidsliste}
                     onRequestClose={()=> setLeggTilArbeidslisteAktivt(false)}
                     arbeidsliste={arbeidsliste}
+                    innholdstittel="Legg i arbeidsliste"
                 />
             </>
         )
@@ -39,6 +40,7 @@ function Arbeidslistekomponent (arbeidsliste: Arbeidsliste) {
                 isOpen={visKommentar}
                 onRequestClose={()=> setLeggTilArbeidslisteAktivt(false)}
                 arbeidsliste={arbeidsliste}
+                innholdstittel="Rediger"
             />
             <FjernArbeidsliste
                isOpen={fjernArbeidsliste}

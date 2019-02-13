@@ -1,4 +1,4 @@
-import Modal from "../components/modal/modal";
+import Modal from "../../components/modal/modal";
 import {Hovedknapp, Knapp} from "nav-frontend-knapper";
 
 function FjernArbeidsliste(props:{isOpen: boolean, onRequestClose: () => void}){

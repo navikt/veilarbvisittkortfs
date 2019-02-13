@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Personalia} from "../../types/personalia";
+import {Oppfolgingsstatus} from "../../types/oppfolgingsstatus";
 
 
 const initPersonalia: Personalia = {
@@ -15,26 +16,47 @@ const initPersonalia: Personalia = {
     egenAnsatt: false,
     sikkerhetstiltak: null,
 };
+const initOppfolgingstatus: Oppfolgingsstatus = {
+    oppfolgingsenhet: {
+        navn: "NAV TestHeim",
+        enhetId: "007"},
+    veilederId: null,
+    formidlingsgruppe: null,
+    servicegruppe: null,
+};
+
+interface InitialDataContextType {
+    personalia: Personalia;
+    oppfolgingstatus: Oppfolgingsstatus;
+}
 
 export const InitialDataContext =
-    React.createContext<Personalia>(initPersonalia);
+    React.createContext<InitialDataContextType>({personalia :initPersonalia, oppfolgingstatus: initOppfolgingstatus});
 
 function InitialDataProvider(props: {fnr: string, children: React.ReactNode}){
-    const [personalia, setData] = useState(initPersonalia);
+    const [personalia, setPersonalia] = useState(initPersonalia);
+    const [oppfolgingstatus, setOppfolgingsstatus] = useState(initOppfolgingstatus);
 
 
-    const fetchData = async () => {
+    const fetchPersonaliaData = async () => {
         const response = await fetch(`/veilarbperson/api/person/${props.fnr}`);
         const personalia = await response.json();
-        setData(personalia);
+        setPersonalia(personalia);
     };
 
+    const fetchOppfolgingsstatusData = async () => {
+        const response = await fetch(`/veilarboppfolging/api/person/${props.fnr}/oppfolgingsstatus`);
+        const oppfolgingstatus = await response.json();
+        setOppfolgingsstatus(oppfolgingstatus);
+    };
 
-    useEffect( () => {fetchData()}, []);
-    console.log(personalia);
+    useEffect( () => {
+        fetchPersonaliaData();
+        fetchOppfolgingsstatusData();
+    }, []);
     return (
 
-        <InitialDataContext.Provider value={personalia}>
+        <InitialDataContext.Provider value={{personalia,oppfolgingstatus}}>
             {props.children}
         </InitialDataContext.Provider>
     )

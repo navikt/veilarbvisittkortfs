@@ -17,7 +17,7 @@ class App extends React.Component<AppProps> {
                 <Tilbakelenke enhet={this.props.enhet}/>
                 <div className="visittkortfs__container">
                 <InitialDataProvider fnr={this.props.fnr}>
-                    <PersonInfo fnr={this.props.fnr}/>
+                    <PersonInfo/>
                     <Veilederverktoyslinje fnr={this.props.fnr}/>
                   </InitialDataProvider>
                 </div>
