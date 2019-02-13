@@ -1,4 +1,4 @@
-import {StringOrNothing} from "./utils/stringornothings";
+import { StringOrNothing } from './utils/stringornothings';
 
 export interface Arbeidsliste {
     arbeidslisteAktiv: StringOrNothing;
