@@ -20,3 +20,17 @@ export function tildelTilVeileder(fnr:string, tilordninger: TildelVeilederProps[
             return json;
         });
 }
+
+
+export async function fetchPersonaliaData (fnr: string) {
+    const response = await fetch(`/veilarbperson/api/person/${fnr}`);
+    const personalia = await response.json();
+    return personalia;
+
+};
+
+export async function fetchOppfolgingsstatusData(fnr: string) {
+    const response = await fetch(`/veilarboppfolging/api/person/${fnr}/oppfolgingsstatus`);
+    const oppfolgingstatus = await response.json();
+    return oppfolgingstatus;
+};
