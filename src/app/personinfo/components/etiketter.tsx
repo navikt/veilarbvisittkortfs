@@ -19,16 +19,16 @@ export function trengerAEV(oppfolging: Oppfolgingsstatus): boolean {
     return oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'BKART';
 }
 
-function Etiketter(props: {personalia:Personalia, oppfolging: Oppfolgingsstatus}) {
+function Etiketter(props: {personalia:Personalia, oppfolgingstatus: Oppfolgingsstatus}) {
     const { diskresjonskode, sikkerhetstiltak, egenAnsatt } = props.personalia;
 
     return <div className="etikett-container">
         <Advarsel hidden={!diskresjonskode}>Kode {diskresjonskode}</Advarsel>
         <Advarsel hidden={!sikkerhetstiltak}>{sikkerhetstiltak}</Advarsel>
         <Advarsel hidden={!egenAnsatt}>Egen ansatt</Advarsel>
-        <Info hidden={!(trengerVurdering(props.oppfolging))} className="etikett--info2">Trenger vurdering</Info>
-        <Info hidden={!(trengerAEV(props.oppfolging))} className="etikett--info2">Behov for AEV</Info>
-        <Info hidden={!erBrukerSykmeldt(props.oppfolging)} className="etikett--info2">Sykmeldt</Info>
+        <Info hidden={!(trengerVurdering(props.oppfolgingstatus))} className="etikett--info2">Trenger vurdering</Info>
+        <Info hidden={!(trengerAEV(props.oppfolgingstatus))} className="etikett--info2">Behov for AEV</Info>
+        <Info hidden={!erBrukerSykmeldt(props.oppfolgingstatus)} className="etikett--info2">Sykmeldt</Info>
     </div>;
 }
 

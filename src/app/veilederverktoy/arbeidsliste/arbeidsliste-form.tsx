@@ -1,12 +1,13 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import { Formik } from 'formik';
 import { Input, Textarea } from 'nav-frontend-skjema';
 import * as Yup from 'yup';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import {Arbeidsliste} from "../../../types/arbeidsliste";
 import Modal from "../../components/modal/modal";
-import {InitialDataContext} from "../../components/initialdataprovider";
-import {postAsJson} from "../../api/api-utils";
+import {postAsJson} from "../../../api/api-utils";
+import {connect} from "react-redux";
+import {Personalia} from "../../../types/personalia";
 
 interface LeggTilArbeidslisteProps {
     isOpen: boolean;
@@ -14,6 +15,7 @@ interface LeggTilArbeidslisteProps {
     handleSubmit?: () => void;
     arbeidsliste:Arbeidsliste;
     innholdstittel: string;
+    personalia: Personalia;
 }
 
 interface ArbeidslisteForm {
@@ -35,9 +37,7 @@ const ArbeidslisteSchema = Yup.object().shape({
 });
 
 function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
-
-    const {personalia} = useContext(InitialDataContext);
-
+    const {personalia} = props;
     const initalValues = {
         overskrift: props.arbeidsliste.overskrift ? props.arbeidsliste.overskrift :  '',
         kommentar: props.arbeidsliste.kommentar? props.arbeidsliste.kommentar : '' };
@@ -96,4 +96,8 @@ function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
     );
 }
 
-export default ArbeidslisteForm;
+const mapStateToProps = (state: any)=>({
+    personalia: state.personalia
+});
+
+export default connect(mapStateToProps)(ArbeidslisteForm);

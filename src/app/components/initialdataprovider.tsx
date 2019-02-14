@@ -1,6 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {Personalia} from "../../types/personalia";
 import {Oppfolgingsstatus} from "../../types/oppfolgingsstatus";
+import { connect } from 'react-redux';
+import {hentOppfolgingStatus} from "../../store/oppfolging-status/reducer";
+import {hentPersonalia} from "../../store/personalia/reducer";
 
 
 const initPersonalia: Personalia = {
@@ -33,33 +36,36 @@ interface InitialDataContextType {
 export const InitialDataContext =
     React.createContext<InitialDataContextType>({personalia :initPersonalia, oppfolgingstatus: initOppfolgingstatus});
 
-function InitialDataProvider(props: {fnr: string, children: React.ReactNode}){
-    const [personalia, setPersonalia] = useState(initPersonalia);
-    const [oppfolgingstatus, setOppfolgingsstatus] = useState(initOppfolgingstatus);
+interface DispatchProps {
+    doHentPersonData: (fnr:string) => void;
+    doHentOppfolgingsstatus: (fnr: string) => void;
+}
 
+interface InitialDataProviderProps {
+    fnr:string;
+    children: React.ReactNode
 
-    const fetchPersonaliaData = async () => {
-        const response = await fetch(`/veilarbperson/api/person/${props.fnr}`);
-        const personalia = await response.json();
-        setPersonalia(personalia);
-    };
+}
 
-    const fetchOppfolgingsstatusData = async () => {
-        const response = await fetch(`/veilarboppfolging/api/person/${props.fnr}/oppfolgingsstatus`);
-        const oppfolgingstatus = await response.json();
-        setOppfolgingsstatus(oppfolgingstatus);
-    };
+type Props = InitialDataProviderProps & DispatchProps;
 
+function InitialDataProvider(props: Props){
     useEffect( () => {
-        fetchPersonaliaData();
-        fetchOppfolgingsstatusData();
+        props.doHentPersonData(props.fnr);
+        props.doHentOppfolgingsstatus(props.fnr);
     }, []);
     return (
-
-        <InitialDataContext.Provider value={{personalia,oppfolgingstatus}}>
+        <>
             {props.children}
-        </InitialDataContext.Provider>
+        </>
     )
 }
 
-export default InitialDataProvider;
+const mapDispatchToProps = (dispatch: any): any => ({
+    doHentOppfolgingsstatus: (fnr: string) => dispatch(hentOppfolgingStatus(fnr)),
+    doHentPersonData: (fnr:string) => dispatch(hentPersonalia(fnr)),
+});
+
+
+
+export default connect<{},DispatchProps, InitialDataProviderProps>(null, mapDispatchToProps)(InitialDataProvider);

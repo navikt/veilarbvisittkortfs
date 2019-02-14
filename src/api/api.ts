@@ -1,5 +1,5 @@
 import {fetchToJson, postAsJson} from "./api-utils";
-import {TildelVeilederProps} from "../veilederverktoy/tildel-veileder/tildel-veileder";
+import {TildelVeilederProps} from "../app/veilederverktoy/tildel-veileder/tildel-veileder";
 
 export function hentVeieldereForEnhet(enhetid:string) {
     return fetchToJson(`/veilarbveileder/api/enhet/${enhetid}/veiledere`);
@@ -23,14 +23,9 @@ export function tildelTilVeileder(fnr:string, tilordninger: TildelVeilederProps[
 
 
 export async function fetchPersonaliaData (fnr: string) {
-    const response = await fetch(`/veilarbperson/api/person/${fnr}`);
-    const personalia = await response.json();
-    return personalia;
-
+    return fetchToJson(`/veilarbperson/api/person/${fnr}`);
 };
 
 export async function fetchOppfolgingsstatusData(fnr: string) {
-    const response = await fetch(`/veilarboppfolging/api/person/${fnr}/oppfolgingsstatus`);
-    const oppfolgingstatus = await response.json();
-    return oppfolgingstatus;
+   return fetchToJson (`/veilarboppfolging/api/person/${fnr}/oppfolgingsstatus`);
 };

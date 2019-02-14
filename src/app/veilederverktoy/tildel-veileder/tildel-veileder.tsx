@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Dropdown from '../../components/dropdown/dropdown';
 import {InitialDataContext} from "../../components/initialdataprovider";
-import {hentVeieldere, hentVeieldereForEnhet, tildelTilVeileder} from "../../api/api";
+import {hentVeieldere, hentVeieldereForEnhet, tildelTilVeileder} from "../../../api/api";
 import SokFilter from "../../components/sokfilter/sok-filter";
 import RadioFilterForm from "../../components/radiofilterform/radio-filter-form";
 import {VeilederData} from "../../../types/veilederdata";
