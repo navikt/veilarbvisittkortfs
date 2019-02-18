@@ -16,7 +16,7 @@ interface DispatchProps {
 }
 
 function StartEskaleringProsess({skjulStartEskalering, navigerTilStartEsklaringForm }:StateProps & DispatchProps) {
-    if(skjulStartEskalering){
+    if(!skjulStartEskalering){
         return null;
     }
     return (

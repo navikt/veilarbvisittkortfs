@@ -1,6 +1,5 @@
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import {FormikValues} from "formik";
 import {Dispatch} from "redux";
 import {opprettHenvendelse} from "../../../../store/dialog/actions";
 import {connect} from "react-redux";
@@ -9,8 +8,12 @@ import {Appstate} from "../../../../types/appstate";
 import BegrunnelseForm from "../begrunnelseform/begrunnelse-form";
 
 interface DispatchProps {
-    handleSubmit: (values: FormikValues) => void
+    handleSubmit: (overskrift: string) => ((tekst: string) => void)
     tilbake: () => void;
+}
+
+interface StateProps {
+    isLoading: boolean;
 }
 
 
@@ -22,12 +25,14 @@ function StartEskalering(props: any) {
                     {defaultTekst =>
                         <BegrunnelseForm
                             tekst={defaultTekst as string}
-                            handleSubmit={props.handleSubmit}
+                            handleSubmit={props.handleSubmit(overskrift)}
                             tekstariaLabel = "herpsderps"
                             maxLength={500}
+                            overskriftTekstId="innstillinger.modal.start-eskalering.overskrift"
+                            beskrivelseTekstId="innstillinger.modal.start-eskalering.beskrivelse"
+                            isLoading={props.isLoading}
                         />
                     }
-
                 </FormattedMessage>
             }
         </FormattedMessage>
@@ -35,17 +40,18 @@ function StartEskalering(props: any) {
 }
 
 const mapStateToProps = (state: Appstate) => ({
-    isLoading: true
+    isLoading: state.dialog.isLoading || state.oppfolging.isLoading
 });
 
 const mapDispatchToProps = (dispatch: Dispatch)=> {
     return {
-        handleSubmit: (values: FormikValues) =>
-            dispatch(opprettHenvendelse(
-            {begrunnelse: values.tekst, overskrift: values.overskrift, egenskaper: ["ESKALERINGSVARSEL"], tekst: values.tekst})),
+        handleSubmit(overskrift: string) {
+            return (tekst: string) => dispatch(opprettHenvendelse(
+                    {begrunnelse: tekst, overskrift, egenskaper: ["ESKALERINGSVARSEL"], tekst}))
+        },
         tilbake: ()=> dispatch(navigerTilbake())
     }
 };
 
 
-export default connect<{},DispatchProps,{}>(mapStateToProps,mapDispatchToProps)(injectIntl(StartEskalering));
+export default connect<StateProps,DispatchProps,{}>(mapStateToProps,mapDispatchToProps)(injectIntl(StartEskalering));

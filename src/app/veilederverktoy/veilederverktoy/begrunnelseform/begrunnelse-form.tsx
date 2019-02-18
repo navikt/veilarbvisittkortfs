@@ -1,5 +1,5 @@
 import React from 'react';
-import {Formik, FormikValues} from "formik";
+import {Formik} from "formik";
 import {Textarea} from "nav-frontend-skjema";
 import VeilederVerktoyModal from '../veilederverktoy-modal';
 import BegrunnelseFooter from "./begrunnelse-form-footer";
@@ -8,7 +8,7 @@ import BergrunnelseOverskrift from "./begrunnelse-overskrift";
 
 interface BegrunnelseFormProps {
     tekst: StringOrNothing;
-    handleSubmit: (values: FormikValues) => void;
+    handleSubmit: (tekst: string) => void;
     tekstariaLabel: React.ReactNode;
     overskriftTekstId: string;
     beskrivelseTekstId: string;
@@ -20,7 +20,7 @@ function BegrunnelseForm(props: BegrunnelseFormProps) {
     return (
         <Formik
             initialValues={{tekst: props.tekst || ''}}
-            onSubmit={props.handleSubmit}
+            onSubmit={(values, actions)=> props.handleSubmit(values.tekst)}
             validationSchema={{}}
             render={formikProps => {
                 return (
@@ -34,6 +34,7 @@ function BegrunnelseForm(props: BegrunnelseFormProps) {
                                     overskriftTekstId={props.overskriftTekstId}
                                     beskrivelseTekstId={props.beskrivelseTekstId}
                                 />
+                                <form onSubmit={formikProps.handleSubmit}>
                                 <Textarea
                                     label={props.tekstariaLabel}
                                     maxLength={5000}
@@ -42,10 +43,10 @@ function BegrunnelseForm(props: BegrunnelseFormProps) {
                                     onChange={formikProps.handleChange}
                                     onBlur={formikProps.handleBlur}
                                 />
-                                <BegrunnelseFooter
-                                    spinner={true}
-                                />
-
+                                    <BegrunnelseFooter
+                                        spinner={props.isLoading}
+                                    />
+                                </form>
                             </section>
                         </div>
                     </VeilederVerktoyModal>

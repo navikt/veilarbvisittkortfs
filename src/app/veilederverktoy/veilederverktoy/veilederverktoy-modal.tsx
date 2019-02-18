@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import {Appstate} from "../../../types/appstate";
 import Modal from '../../components/modal/modal';
 import ModalHeader from '../../components/modal/modal-header';
-import injectIntl = ReactIntl.injectIntl;
-import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {Dispatch} from "redux";
 import {navigerTilbake} from "../../../store/navigation/actions";
 
