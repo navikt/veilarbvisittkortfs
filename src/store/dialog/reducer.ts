@@ -12,6 +12,8 @@ import {
 import DialogApi from "../../api/dialog-api";
 import OppfolgingApi from "../../api/oppfolging-api";
 import PersonaliaSelectors from "../personalia/selectors";
+import {startEskaleringSuccess} from "../oppfolging/actions";
+import {hentOppfolgingstatusSuccess} from "../oppfolging-status/actions";
 
 export type DialogState = {data: Dialog} & {isLoading: boolean; error: OrNothing<Error>}
 
@@ -58,7 +60,6 @@ const dialogReducer: Reducer<DialogState, DialogActions> = (state = initialState
                 error: action.error
             }
         }
-
     }
     return state;
 };
@@ -83,12 +84,13 @@ function* startEskaleringMedDialog(action: OpprettHenvendelseActionSuccess) {
             OppfolgingApi.startEskalering(action.data.id, action.data.henvendelser[0].tekst)
         ]);
 
+        yield put(oppdaterDialogSuccess(dialogData1));
+        yield put(oppdaterDialogSuccess(dialogData2));
+        yield put(startEskaleringSuccess(oppfolgingStatus));
+
         const response = yield call (()=> OppfolgingApi.hentOppfolgingData(fnr));
 
-        yield put(oppdaterDialogSuccess(dialogData1));
-        yield put(dialogData2);
-        yield put(oppfolgingStatus);
-        yield put(response);
+        yield put(hentOppfolgingstatusSuccess(response));
 
     } catch(e) {
 

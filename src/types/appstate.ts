@@ -4,6 +4,7 @@ import {PersonaliaState} from "../store/personalia/reducer";
 import {ArbeidslisteState} from "../store/arbeidsliste/reducer";
 import {DialogState} from "../store/dialog/reducer";
 import {NavigationState} from "../store/navigation/reducer";
+import {TildelVeilederState} from "../store/tildel-veileder/reducer";
 
 
 export interface Appstate {
@@ -12,5 +13,6 @@ export interface Appstate {
     personalia: PersonaliaState,
     arbeidsliste: ArbeidslisteState,
     dialog: DialogState,
-    navigation: NavigationState
+    navigation: NavigationState,
+    tildelVeileder: TildelVeilederState,
 }

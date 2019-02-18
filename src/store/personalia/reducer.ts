@@ -11,10 +11,10 @@ import {
 } from "./actions";
 import {fetchPersonaliaData} from "../../api/api";
 
-export type PersonaliaState = {data: Personalia} & {isLoadig: boolean; error: OrNothing<Error>}
+export type PersonaliaState = {data: Personalia} & {isLoading: boolean; error: OrNothing<Error>}
 
 const initialState: PersonaliaState = {
-    isLoadig:false,
+    isLoading:false,
     error: null,
     data: {
         fornavn: "",

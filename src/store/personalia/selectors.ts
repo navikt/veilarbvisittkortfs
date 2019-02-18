@@ -23,7 +23,7 @@ function selectFodselsnummer(state: Appstate): string {
 }
 
 function selectPersonaliaIsLoading(state: Appstate): boolean {
-    return selectPersonaliaSlice(state).isLoadig;
+    return selectPersonaliaSlice(state).isLoading;
 }
 
 

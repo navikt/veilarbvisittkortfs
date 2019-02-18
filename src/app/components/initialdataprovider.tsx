@@ -2,16 +2,18 @@ import React, {useEffect} from "react";
 import { connect } from 'react-redux';
 import {hentPersonalia} from "../../store/personalia/actions";
 import {hentOppfolgingsstatus} from "../../store/oppfolging-status/actions";
-import {bindActionCreators, Dispatch} from "redux";
+import {Dispatch} from "redux";
 import {hentArbeidsliste} from "../../store/arbeidsliste/actions";
 import {Appstate} from "../../types/appstate";
 import NavFrontendSpinner from "nav-frontend-spinner";
+import {hentOppfolging} from "../../store/oppfolging/actions";
 
 
 interface DispatchProps {
-    doHentPersonData: (fnr:string) => void;
-    doHentOppfolgingsstatus: (fnr: string) => void;
-    doHentArbeidsliste: (fnr: string) => void;
+    doHentPersonData: () => void;
+    doHentOppfolgingsstatus: () => void;
+    doHentArbeidsliste: () => void;
+    doHentOppfolging: () => void;
 }
 
 interface InitialDataProviderProps {
@@ -28,9 +30,10 @@ type Props = InitialDataProviderProps & DispatchProps & StateProps;
 function InitialDataProvider(props: Props){
 
     useEffect( () => {
-        props.doHentPersonData(props.fnr);
-        props.doHentOppfolgingsstatus(props.fnr);
-        props.doHentArbeidsliste(props.fnr);
+        props.doHentPersonData();
+        props.doHentOppfolgingsstatus();
+        props.doHentArbeidsliste();
+        props.doHentOppfolging();
     }, []);
 
     if(props.isLoading){
@@ -43,12 +46,15 @@ function InitialDataProvider(props: Props){
     )
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return bindActionCreators({hentOppfolgingsstatus, hentPersonalia, hentArbeidsliste} ,dispatch)
-};
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: InitialDataProviderProps) => ({
+    doHentPersonData: () => dispatch(hentPersonalia(ownProps.fnr)),
+    doHentOppfolgingsstatus: () => dispatch(hentOppfolgingsstatus(ownProps.fnr)),
+    doHentArbeidsliste: () => dispatch(hentArbeidsliste(ownProps.fnr)),
+    doHentOppfolging: () => dispatch(hentOppfolging(ownProps.fnr))
+});
 
 const mapStateToProps = (state: Appstate): StateProps => ({
-    isLoading: true,
+    isLoading: false,
 });
 
 export default connect<StateProps,DispatchProps, InitialDataProviderProps>(mapStateToProps, mapDispatchToProps)(InitialDataProvider);

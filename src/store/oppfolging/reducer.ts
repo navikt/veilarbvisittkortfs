@@ -11,10 +11,10 @@ import {OrNothing} from "../../types/utils/ornothing";
 import {hentOppfolgingData} from "../../api/oppfolging-api-utils";
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-export type OppfogingState = {data: Oppfolging} & {isLoadig: boolean; error: OrNothing<Error>}
+export type OppfogingState = {data: Oppfolging} & {isLoading: boolean; error: OrNothing<Error>}
 
 const initialState: OppfogingState = {
-    isLoadig:false,
+    isLoading:false,
     error: null,
     data: {
         avslutningStatus: null,
@@ -41,20 +41,25 @@ const initialState: OppfogingState = {
 
 const oppfolgingReducer: Reducer<OppfogingState, OppfolgingActions> = (state = initialState, action) => {
     switch (action.type) {
-        case OppfolgingActionType.HENT_OPPFOLGING: {
+        case OppfolgingActionType.HENT_OPPFOLGING:
+        case OppfolgingActionType.START_ESKALERING: {
             return {
                 ...state,
                 isLoading: true
             };
         }
-        case OppfolgingActionType.HENT_OPPFOLGING_SUCCESS: {
+        case OppfolgingActionType.HENT_OPPFOLGING_SUCCESS:
+        case OppfolgingActionType.START_ESKALERING_SUCCESS:
+            {
             return {
                 ...state,
                 data: action.data,
                 isLoading: false
             };
         }
-        case OppfolgingActionType.HENT_OPPFOLGING_ERROR: {
+        case OppfolgingActionType.HENT_OPPFOLGING_ERROR:
+        case OppfolgingActionType.START_ESKALERING_ERROR:
+            {
             return {
                 ...state,
                 isLoading: false,

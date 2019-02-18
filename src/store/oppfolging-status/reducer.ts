@@ -10,10 +10,10 @@ import {
 } from "./actions";
 import {fetchOppfolgingsstatusData} from "../../api/api";
 
-export type OppfolgingStatusState = {data: OppfolgingStatus} & {isLoadig: boolean; error: OrNothing<Error>}
+export type OppfolgingStatusState = {data: OppfolgingStatus} & {isLoading: boolean; error: OrNothing<Error>}
 
 const initialState: OppfolgingStatusState = {
-    isLoadig:false,
+    isLoading:false,
     error: null,
     data: {
         oppfolgingsenhet: {

@@ -1,62 +1,30 @@
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import VeilederVerktoyModal from '../veilederverktoy-modal';
-import StartEskaleringOverskrift from "./start-eskalering-prosess-overskrift";
-import StartEskaleringFooter from "./start-eskalering-prosess-footer";
-import {Formik} from "formik";
-import {Textarea} from "nav-frontend-skjema";
+import {FormikValues} from "formik";
 import {Dispatch} from "redux";
 import {opprettHenvendelse} from "../../../../store/dialog/actions";
 import {connect} from "react-redux";
 import {navigerTilbake} from "../../../../store/navigation/actions";
+import {Appstate} from "../../../../types/appstate";
+import BegrunnelseForm from "../begrunnelseform/begrunnelse-form";
 
 interface DispatchProps {
-    handleSubmit: (tekst: string, overskrift: string) => void
+    handleSubmit: (values: FormikValues) => void
     tilbake: () => void;
 }
 
 
-function StartEskalering(props:{intl: any, tilbake: ()=> void; handleSubmit: (tekst: string, overskrift: string) => void }) {
+function StartEskalering(props: any) {
     return (
         <FormattedMessage id="dialog.eskalering.overskrift">
             {overskrift =>
                 <FormattedMessage id="innstillinger.modal.start-eskalering.automatisk-tekst">
                     {defaultTekst =>
-                        <Formik
-                            initialValues={{overskrift : overskrift, tekst: defaultTekst}}
-                            onSubmit={(values) => props.handleSubmit(values.tekst as string, values.overskrift as string)}
-                            validationSchema={{}}
-                            render={formikProps => {
-                                return (
-                                    <VeilederVerktoyModal
-                                        onRequestClose={() => {
-                                            const dialogTekst = props.intl.formatMessage({
-                                                id: 'aktkivitet-skjema.lukk-advarsel',
-                                            });
-                                            if (!formikProps.touched.tekst || confirm(dialogTekst)) {
-                                                 props.tilbake();
-                                            }
-                                        }}
-                                        visConfirmDialog={formikProps.touched.tekst}
-                                    >
-                                        <div>
-                                            <section className="innstillinger__prosess">
-                                                <StartEskaleringOverskrift/>
-                                                <Textarea
-                                                    label="Rediger teksten under slik at den passer"
-                                                    maxLength={5000}
-                                                    value={formikProps.values.tekst as string}
-                                                    name="tekst"
-                                                    onChange={formikProps.handleChange}
-                                                    onBlur={formikProps.handleBlur}
-                                                />
-                                                <StartEskaleringFooter spinner={true}/>
-                                            </section>
-                                        </div>
-                                    </VeilederVerktoyModal>
-                                )
-                            }
-                            }
+                        <BegrunnelseForm
+                            tekst={defaultTekst as string}
+                            handleSubmit={props.handleSubmit}
+                            tekstariaLabel = "herpsderps"
+                            maxLength={500}
                         />
                     }
 
@@ -66,15 +34,18 @@ function StartEskalering(props:{intl: any, tilbake: ()=> void; handleSubmit: (te
     );
 }
 
+const mapStateToProps = (state: Appstate) => ({
+    isLoading: true
+});
 
-const mapDispatchToProps = (dispatch: Dispatch, props: any)=> {
+const mapDispatchToProps = (dispatch: Dispatch)=> {
     return {
-        handleSubmit: (tekst:string, overskrift:string) =>
+        handleSubmit: (values: FormikValues) =>
             dispatch(opprettHenvendelse(
-            {begrunnelse: tekst, overskrift, egenskaper: ["ESKALERINGSVARSEL"], tekst})),
+            {begrunnelse: values.tekst, overskrift: values.overskrift, egenskaper: ["ESKALERINGSVARSEL"], tekst: values.tekst})),
         tilbake: ()=> dispatch(navigerTilbake())
     }
 };
 
 
-export default injectIntl(connect<{},DispatchProps,{}>(null,mapDispatchToProps)(StartEskalering));
+export default connect<{},DispatchProps,{}>(mapStateToProps,mapDispatchToProps)(injectIntl(StartEskalering));
