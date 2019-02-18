@@ -1,4 +1,5 @@
-import Oppfolgingsstatus from './oppfolging';
+import Oppfolgingsstatus from './oppfolging-status';
+import Oppfolging from './oppfolging';
 import FetchMock, { Middleware, MiddlewareUtils } from 'yet-another-fetch-mock';
 import Personalia from './personalia';
 import Arbeidsliste from './arbeidsliste';
@@ -34,6 +35,7 @@ const mock = FetchMock.configure({
 });
 
 mock.get('/veilarboppfolging/api/person/:fnr/oppfolgingsstatus', Oppfolgingsstatus);
+mock.get('/veilarboppfolging/api/oppfolging', Oppfolging);
 mock.get('/veilarbperson/api/person/:fnr', Personalia);
 mock.get('/veilarbportefolje/api/arbeidsliste/:fnr', Arbeidsliste);
 mock.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', Veilederliste);

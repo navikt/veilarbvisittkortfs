@@ -6,10 +6,10 @@ import './personinfo.less';
 import Icon from "./components/icon";
 import {connect} from 'react-redux';
 import {Personalia} from "../../types/personalia";
-import {Oppfolgingsstatus} from "../../types/oppfolgingsstatus";
+import {OppfolgingStatus} from "../../types/oppfolging-status";
 
 
-function PersonInfo(props: {personalia: Personalia, oppfolgingstatus: Oppfolgingsstatus} ) {
+function PersonInfo(props: {personalia: Personalia, oppfolgingstatus: OppfolgingStatus} ) {
     return (
         <div className="personinfo">
             <Icon kjonn={props.personalia.kjonn}/>
@@ -23,8 +23,8 @@ function PersonInfo(props: {personalia: Personalia, oppfolgingstatus: Oppfolging
 }
 
 const mapStateToProps = (state:any)=> ({
-    personalia: state.personalia,
-    oppfolgingstatus: state.oppfolgingstatus,
+    personalia: state.personalia.data,
+    oppfolgingstatus: state.oppfolgingstatus.data,
 });
 
-export default connect<{personalia: Personalia, oppfolgingstatus: Oppfolgingsstatus}>(mapStateToProps)(PersonInfo);
+export default connect<{personalia: Personalia, oppfolgingstatus: OppfolgingStatus}>(mapStateToProps)(PersonInfo);

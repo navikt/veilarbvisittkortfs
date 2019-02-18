@@ -1,59 +1,41 @@
 import React, {useEffect} from "react";
-import {Personalia} from "../../types/personalia";
-import {Oppfolgingsstatus} from "../../types/oppfolgingsstatus";
 import { connect } from 'react-redux';
-import {hentOppfolgingStatus} from "../../store/oppfolging-status/reducer";
-import {hentPersonalia} from "../../store/personalia/reducer";
+import {hentPersonalia} from "../../store/personalia/actions";
+import {hentOppfolgingsstatus} from "../../store/oppfolging-status/actions";
+import {bindActionCreators, Dispatch} from "redux";
+import {hentArbeidsliste} from "../../store/arbeidsliste/actions";
+import {Appstate} from "../../types/appstate";
+import NavFrontendSpinner from "nav-frontend-spinner";
 
-
-const initPersonalia: Personalia = {
-    fornavn: "",
-    etternavn: "",
-    mellomnavn: null,
-    sammensattNavn: "",
-    fodselsnummer: "",
-    fodselsdato: "",
-    kjonn: "K",
-    dodsdato: null,
-    diskresjonskode: null,
-    egenAnsatt: false,
-    sikkerhetstiltak: null,
-};
-const initOppfolgingstatus: Oppfolgingsstatus = {
-    oppfolgingsenhet: {
-        navn: "NAV TestHeim",
-        enhetId: "007"},
-    veilederId: null,
-    formidlingsgruppe: null,
-    servicegruppe: null,
-};
-
-interface InitialDataContextType {
-    personalia: Personalia;
-    oppfolgingstatus: Oppfolgingsstatus;
-}
-
-export const InitialDataContext =
-    React.createContext<InitialDataContextType>({personalia :initPersonalia, oppfolgingstatus: initOppfolgingstatus});
 
 interface DispatchProps {
     doHentPersonData: (fnr:string) => void;
     doHentOppfolgingsstatus: (fnr: string) => void;
+    doHentArbeidsliste: (fnr: string) => void;
 }
 
 interface InitialDataProviderProps {
     fnr:string;
     children: React.ReactNode
-
 }
 
-type Props = InitialDataProviderProps & DispatchProps;
+interface StateProps {
+    isLoading: boolean;
+}
+
+type Props = InitialDataProviderProps & DispatchProps & StateProps;
 
 function InitialDataProvider(props: Props){
+
     useEffect( () => {
         props.doHentPersonData(props.fnr);
         props.doHentOppfolgingsstatus(props.fnr);
+        props.doHentArbeidsliste(props.fnr);
     }, []);
+
+    if(props.isLoading){
+        return <NavFrontendSpinner/>
+    }
     return (
         <>
             {props.children}
@@ -61,11 +43,12 @@ function InitialDataProvider(props: Props){
     )
 }
 
-const mapDispatchToProps = (dispatch: any): any => ({
-    doHentOppfolgingsstatus: (fnr: string) => dispatch(hentOppfolgingStatus(fnr)),
-    doHentPersonData: (fnr:string) => dispatch(hentPersonalia(fnr)),
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return bindActionCreators({hentOppfolgingsstatus, hentPersonalia, hentArbeidsliste} ,dispatch)
+};
+
+const mapStateToProps = (state: Appstate): StateProps => ({
+    isLoading: true,
 });
 
-
-
-export default connect<{},DispatchProps, InitialDataProviderProps>(null, mapDispatchToProps)(InitialDataProvider);
+export default connect<StateProps,DispatchProps, InitialDataProviderProps>(mapStateToProps, mapDispatchToProps)(InitialDataProvider);

@@ -9,7 +9,7 @@ interface OppfolgingEnhet {
     enhetId: StringOrNothing;
 }
 
-export interface Oppfolgingsstatus {
+export interface OppfolgingStatus {
     oppfolgingsenhet: OppfolgingEnhet;
     veilederId: StringOrNothing;
     formidlingsgruppe: OrNothing<Formidlingsgruppe>;

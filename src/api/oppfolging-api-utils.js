@@ -11,7 +11,7 @@ export function settDigital() {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/settDigital`);
 }
 
-export function hentOppfolging(fnr) {
+export function hentOppfolgingData(fnr) {
     return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging?fnr=${fnr}`);
 }
 

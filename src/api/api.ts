@@ -22,10 +22,14 @@ export function tildelTilVeileder(fnr:string, tilordninger: TildelVeilederProps[
 }
 
 
-export async function fetchPersonaliaData (fnr: string) {
+export function fetchPersonaliaData (fnr: string) {
     return fetchToJson(`/veilarbperson/api/person/${fnr}`);
 };
 
-export async function fetchOppfolgingsstatusData(fnr: string) {
+export function fetchOppfolgingsstatusData(fnr: string) {
    return fetchToJson (`/veilarboppfolging/api/person/${fnr}/oppfolgingsstatus`);
 };
+
+export function fetchArbeidslisteData(fnr: string) {
+    return fetchToJson(`/veilarbportefolje/api/arbeidsliste/${fnr}?fnr=${fnr}`);
+}

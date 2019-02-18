@@ -1,17 +1,20 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Dropdown from '../../components/dropdown/dropdown';
-import {InitialDataContext} from "../../components/initialdataprovider";
 import {hentVeieldere, hentVeieldereForEnhet, tildelTilVeileder} from "../../../api/api";
 import SokFilter from "../../components/sokfilter/sok-filter";
 import RadioFilterForm from "../../components/radiofilterform/radio-filter-form";
 import {VeilederData} from "../../../types/veilederdata";
+import personalia from "../../../mock/personalia";
+import {Appstate} from "../../../types/appstate";
+import OppfolgingsstatusSelector from "../../../store/oppfolging-status/selectors";
+import {connect} from "react-redux";
 
 
 function settSammenNavn(veileder: VeilederData) {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
 }
 
-const initVeilederData: VeilederData= {
+const initVeilederData: VeilederData = {
     ident: "Z007",
     navn: "James Bond",
     fornavn: "James",
@@ -28,7 +31,6 @@ export interface TildelVeilederProps {
 function TildelVeileder() {
     const [veiledere, setVeieldereForEnhet] = useState({veilederListe: []});
     const [paloggetVeileder, setPaloggetVeileder] = useState(initVeilederData);
-    const {oppfolgingstatus, personalia} = useContext(InitialDataContext);
 
     useEffect(()=> {
         hentAlleVeiledereForEnheten();
@@ -83,4 +85,8 @@ function TildelVeileder() {
         </Dropdown>);
 }
 
-export default TildelVeileder;
+const mapStateToProps = (state: Appstate) =>({
+    oppfolgingsenhetId: OppfolgingsstatusSelector.selectOppfolgingsenhetsId(state)
+});
+
+export default connect(mapStateToProps)(TildelVeileder);

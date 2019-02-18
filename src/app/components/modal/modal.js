@@ -2,19 +2,15 @@ import React from 'react';
 import PT from 'prop-types';
 import NavFrontendModal from 'nav-frontend-modal';
 import classNames from 'classnames';
-import { withRouter } from 'react-router-dom';
 import ModalHeader from './modal-header';
 import './modal.less'
 
 function Modal({
     header,
     children,
-    avhengigheter,
+    isOpen,
     onRequestClose,
     className,
-    minstEnAvhengighet,
-    history,
-    feilmeldinger,
     ...props
 }) {
     const closeFuncOrDefault = () => {
@@ -23,12 +19,12 @@ function Modal({
             return;
         }
 
-        history.push('/');
+        //history.push('/');
     };
     return (
         <NavFrontendModal
             {...props}
-            isOpen
+            isOpen={isOpen}
             className={classNames('aktivitet-modal', className)}
             overlayClassName="aktivitet-modal__overlay"
             portalClassName="aktivitetsplanfs aktivitet-modal-portal"
@@ -47,10 +43,12 @@ Modal.defaultProps = {
     avhengigheter: [],
     minstEnAvhengighet: false,
     feilmeldinger: [],
+    isOpen:false,
 };
 
 Modal.propTypes = {
     history: PT.object,
+    isOpen:PT.bool,
     onRequestClose: PT.func,
     className: PT.string,
     header: PT.node,
@@ -60,4 +58,4 @@ Modal.propTypes = {
     minstEnAvhengighet: PT.bool,
 };
 
-export default withRouter(Modal);
+export default Modal;

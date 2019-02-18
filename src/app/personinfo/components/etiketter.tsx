@@ -1,25 +1,25 @@
 import React from 'react';
 import hiddenIf from "../../components/hidden-if";
 import {EtikettInfo, EtikettAdvarsel} from "nav-frontend-etiketter";
-import {Oppfolgingsstatus} from "../../../types/oppfolgingsstatus";
+import {OppfolgingStatus} from "../../../types/oppfolging-status";
 import {Personalia} from "../../../types/personalia";
 
 
 const Advarsel = hiddenIf(EtikettAdvarsel);
 const Info = hiddenIf(EtikettInfo);
 
-export function erBrukerSykmeldt(oppfolging: Oppfolgingsstatus): boolean {
+export function erBrukerSykmeldt(oppfolging: OppfolgingStatus): boolean {
     return oppfolging.formidlingsgruppe === "IARBS" && oppfolging.servicegruppe === "VURDI";
 }
 
-export function trengerVurdering(oppfolging: Oppfolgingsstatus): boolean {
+export function trengerVurdering(oppfolging: OppfolgingStatus): boolean {
     return oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'IVURD';
 }
-export function trengerAEV(oppfolging: Oppfolgingsstatus): boolean {
+export function trengerAEV(oppfolging: OppfolgingStatus): boolean {
     return oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'BKART';
 }
 
-function Etiketter(props: {personalia:Personalia, oppfolgingstatus: Oppfolgingsstatus}) {
+function Etiketter(props: {personalia:Personalia, oppfolgingstatus: OppfolgingStatus}) {
     const { diskresjonskode, sikkerhetstiltak, egenAnsatt } = props.personalia;
 
     return <div className="etikett-container">

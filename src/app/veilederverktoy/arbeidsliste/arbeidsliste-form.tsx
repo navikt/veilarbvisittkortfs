@@ -18,7 +18,7 @@ interface LeggTilArbeidslisteProps {
     personalia: Personalia;
 }
 
-interface ArbeidslisteForm {
+export interface ArbeidslisteForm {
     kommentar: string;
     overskrift:string;
     frist?: string;
@@ -64,9 +64,8 @@ function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
                     <Modal
                         isOpen={props.isOpen}
                         onRequestClose={props.onRequestClose}
-                        innholdstittel={props.innholdstittel}
-                        undertittel={`${personalia.fornavn} ${personalia.etternavn}, ${personalia.fodselsnummer}`}
-
+                        className=''
+                        header={null}
                     >
                         <form onSubmit={props.handleSubmit}>
                             <Input
@@ -97,7 +96,7 @@ function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
 }
 
 const mapStateToProps = (state: any)=>({
-    personalia: state.personalia
+    personalia: state.personalia.data
 });
 
 export default connect(mapStateToProps)(ArbeidslisteForm);

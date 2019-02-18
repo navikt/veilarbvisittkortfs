@@ -53,3 +53,7 @@ export function fetchToJson(url:string, config = { headers: defaultHeaders }) {
 export function postAsJson(url:string, data = {}, config = {}) {
     return methodToJson('post', url, data, config);
 }
+
+export function putAsJson(url:string, data = {}, config = {}) {
+    return methodToJson('put', url, data, config);
+}
