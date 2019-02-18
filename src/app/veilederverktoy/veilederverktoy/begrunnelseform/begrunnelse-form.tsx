@@ -1,16 +1,19 @@
 import React from 'react';
 import {Formik, FormikValues} from "formik";
-import StartEskaleringOverskrift from "../start-eskalering/start-eskalering-prosess-overskrift";
 import {Textarea} from "nav-frontend-skjema";
 import VeilederVerktoyModal from '../veilederverktoy-modal';
 import BegrunnelseFooter from "./begrunnelse-form-footer";
 import {StringOrNothing} from "../../../../types/utils/stringornothings";
+import BergrunnelseOverskrift from "./begrunnelse-overskrift";
 
 interface BegrunnelseFormProps {
     tekst: StringOrNothing;
     handleSubmit: (values: FormikValues) => void;
     tekstariaLabel: React.ReactNode;
+    overskriftTekstId: string;
+    beskrivelseTekstId: string;
     maxLength: number;
+    isLoading: boolean;
 }
 
 function BegrunnelseForm(props: BegrunnelseFormProps) {
@@ -27,7 +30,10 @@ function BegrunnelseForm(props: BegrunnelseFormProps) {
                     >
                         <div>
                             <section className="innstillinger__prosess">
-                                <StartEskaleringOverskrift/>
+                                <BergrunnelseOverskrift
+                                    overskriftTekstId={props.overskriftTekstId}
+                                    beskrivelseTekstId={props.beskrivelseTekstId}
+                                />
                                 <Textarea
                                     label={props.tekstariaLabel}
                                     maxLength={5000}
@@ -37,7 +43,6 @@ function BegrunnelseForm(props: BegrunnelseFormProps) {
                                     onBlur={formikProps.handleBlur}
                                 />
                                 <BegrunnelseFooter
-                                    tilbake={()=>"hepsderps"}
                                     spinner={true}
                                 />
 
@@ -45,8 +50,7 @@ function BegrunnelseForm(props: BegrunnelseFormProps) {
                         </div>
                     </VeilederVerktoyModal>
                 )
-            }
-            }
+            }}
         />
     )
 }

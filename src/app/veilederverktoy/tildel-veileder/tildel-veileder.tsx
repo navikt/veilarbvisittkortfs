@@ -59,35 +59,31 @@ function TildelVeileder(props : StateProps & DispatchProps ) {
             name="tildel-veileder-dropdown"
             onLukk={() => 'hello world'}
         >
-                <SokFilter
-                    data={props.veiledere}
-                    label=""
-                    placeholder=""
-                >
-                    {(data, radioFilterProps) =>
-                        <RadioFilterForm
-                            data={data}
-                            onSubmit={setValgtVeileder}
-                            createLabel={settSammenNavn}
-                            createValue={(veileder: VeilederData) => veileder.ident}
-                            radioName="tildel-veileder"
-                            fjernNullstill
-                            visLukkKnapp
-                            {...radioFilterProps}
-                        />}
-                </SokFilter>
+            <SokFilter
+                data={props.veiledere}
+                label=""
+                placeholder=""
+            >
+                {(data, radioFilterProps) =>
+                    <RadioFilterForm
+                        data={data}
+                        onSubmit={setValgtVeileder}
+                        createLabel={settSammenNavn}
+                        createValue={(veileder: VeilederData) => veileder.ident}
+                        radioName="tildel-veileder"
+                        fjernNullstill
+                        visLukkKnapp
+                        {...radioFilterProps}
+                    />}
+            </SokFilter>
         </Dropdown>);
 }
 
-const mapStateToProps = (state: Appstate): StateProps => {
-     console.log('state', state);
-        return {
-            oppfolgingsenhetId: OppfolgingsstatusSelector.selectOppfolgingsenhetsId(state),
-            veiledere: state.tildelVeileder.veilederPaEnheten.data.veilederListe,
-            paloggetVeileder: state.tildelVeileder.paloggetVeileder.data,
-        }
-    }
-;
+const mapStateToProps = (state: Appstate): StateProps => ({
+    oppfolgingsenhetId: OppfolgingsstatusSelector.selectOppfolgingsenhetsId(state),
+    veiledere: state.tildelVeileder.veilederPaEnheten.data.veilederListe,
+    paloggetVeileder: state.tildelVeileder.paloggetVeileder.data,
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators({hentPaloggetVeileder, hentAlleVeiledereForEnheten, tildelTilVeileder}, dispatch);

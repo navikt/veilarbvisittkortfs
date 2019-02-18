@@ -7,6 +7,7 @@ function Prosesser () {
         <VeilederVerktoyModal
             ingenTilbakeKnapp={true}
             visConfirmDialog={false}
+            touched={false}
         >
             <StartEskaleringProsess/>
         </VeilederVerktoyModal>

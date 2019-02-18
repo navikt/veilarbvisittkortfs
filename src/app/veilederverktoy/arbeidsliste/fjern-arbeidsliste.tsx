@@ -11,7 +11,7 @@ function FjernArbeidsliste(props:{isOpen: boolean, onRequestClose: () => void}){
             className=''
         >
             <Hovedknapp>Slett</Hovedknapp>
-            <Knapp>Avbryt</Knapp>
+            <Knapp onClick={props.onRequestClose}>Avbryt</Knapp>
         </Modal>
     )
 }

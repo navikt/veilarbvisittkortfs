@@ -2,19 +2,19 @@ import {Systemtittel} from "nav-frontend-typografi";
 import {FormattedMessage} from "react-intl";
 import React from "react";
 
-function StartEskaleringOverskrift () {
+function BergrunnelseOverskrift (props: {overskriftTekstId: string, beskrivelseTekstId: string }) {
     return (
         <>
             <Systemtittel>
-                <FormattedMessage id="innstillinger.modal.start-eskalering.overskrift"/>
+                <FormattedMessage id={props.overskriftTekstId}/>
             </Systemtittel>
 
             <div className="blokk-xxs">
-                <FormattedMessage id="innstillinger.modal.start-eskalering.beskrivelse" />
+                <FormattedMessage id={props.beskrivelseTekstId} />
             </div>
 
         </>
 
     )
 }
-export default StartEskaleringOverskrift;
+export default BergrunnelseOverskrift;

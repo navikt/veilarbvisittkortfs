@@ -8,9 +8,9 @@ export enum ArbeidslisteActionType {
     SLETT_ARBEIDSLISTE = 'SLETT_ARBEIDSLISTE',
     SLETT_ARBEIDSLISTE_SUCCESS = 'SLETT_ARBEIDSLISTE_SUCCESS',
     SLETT_ARBEIDSLISTE_ERROR = 'SLETT_ARBEIDSLISTE_ERROR',
-    OPPDATER_ARBEIDSLISTE = "LEGG_TIL_ARBEIDSLISTE",
-    OPPDATER_ARBEIDSLISTE_SUCESS = "LEGG_TIL_ARBEIDSLISTE_SUCCESS",
-    OPPDATER_ARBEIDSLISTE_ERROR = "LEGG_TIL_ARBEIDSLISTE_ERROR",
+    OPPDATER_ARBEIDSLISTE = "OPPDATER_TIL_ARBEIDSLISTE",
+    OPPDATER_ARBEIDSLISTE_SUCESS = "OPPDATER_TIL_ARBEIDSLISTE_SUCCESS",
+    OPPDATER_ARBEIDSLISTE_ERROR = "OPPDATER_TIL_ARBEIDSLISTE_ERROR",
 
 }
 
@@ -22,11 +22,24 @@ export const hentArbeidsliste = (fnr: string): HentArbeidslisteAction => {
     }
 };
 
-export const oppdaterArbeidsliste = (fnr: string, arbeidsliste: ArbeidslisteForm): OppdaterArbeidslisteAction => {
+export const oppdaterArbeidsliste = (arbeidsliste: ArbeidslisteForm): OppdaterArbeidslisteAction => {
     return {
         type: ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE,
-        fnr,
         arbeidsliste,
+    }
+};
+
+export const oppdaterArbeidslisteSuccess = (data: Arbeidsliste): OppdaterArbeidslisteActionSuccess => {
+    return {
+        type: ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE_SUCESS,
+        data,
+    }
+};
+
+export const oppdaterArbeidslisteError = (error: Error): OppdaterArbeidslisteActionError => {
+    return {
+        type: ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE_ERROR,
+        error
     }
 };
 
@@ -52,13 +65,17 @@ export interface HentArbeidslisteAction {
 
 export interface OppdaterArbeidslisteAction {
     type: ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE;
-    fnr:string;
     arbeidsliste: ArbeidslisteForm;
 }
 
 export interface OppdaterArbeidslisteActionSuccess {
     type: ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE_SUCESS;
-    arbeidsliste: Arbeidsliste;
+    data: Arbeidsliste;
+}
+
+export interface OppdaterArbeidslisteActionError {
+    type: ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE_ERROR;
+    error: Error;
 }
 
 export interface HentArbeidslisteActionSuccess {
@@ -76,4 +93,5 @@ export type ArbeidslisteActions =
     HentArbeidslisteActionSuccess |
     HentArbeidslisteActionError |
     OppdaterArbeidslisteAction |
-    OppdaterArbeidslisteActionSuccess;
+    OppdaterArbeidslisteActionSuccess |
+    OppdaterArbeidslisteActionError;

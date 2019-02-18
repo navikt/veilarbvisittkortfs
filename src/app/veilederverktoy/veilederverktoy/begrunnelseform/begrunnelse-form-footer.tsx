@@ -1,11 +1,18 @@
 import React from "react";
 import {FormattedMessage} from "react-intl";
 import {Hovedknapp, Knapp} from "nav-frontend-knapper";
+import {Dispatch} from "redux";
+import {navigerTilbake} from "../../../../store/navigation/actions";
+import {connect} from "react-redux";
 
-interface StartEskaleringProsessFooterProps {
+interface OwnProps {
     spinner: boolean;
+}
+
+interface DispatchProps {
     tilbake: () => void;
 }
+type StartEskaleringProsessFooterProps = OwnProps & DispatchProps;
 
 function BegrunnelseFooter(props:StartEskaleringProsessFooterProps ) {
     return(
@@ -24,4 +31,8 @@ function BegrunnelseFooter(props:StartEskaleringProsessFooterProps ) {
     )
 }
 
-export default BegrunnelseFooter;
+const mapDispatchToProps= (dispatch: Dispatch) => ({
+    tilbake: ()=> dispatch(navigerTilbake())
+});
+
+export default connect<{},DispatchProps, OwnProps> (null, mapDispatchToProps) (BegrunnelseFooter);
