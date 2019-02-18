@@ -3,15 +3,25 @@ import {Arbeidsliste} from "../../../types/arbeidsliste";
 import {Knapp} from "nav-frontend-knapper";
 import ArbeidslisteIkon from './arbeidsliste.svg';
 import ArbeidslisteForm from "./arbeidsliste-form";
-import hiddenIf from "../../components/hidden-if";
 import FjernArbeidsliste from "./fjern-arbeidsliste";
+import {connect} from "react-redux";
+import {Appstate} from "../../../types/appstate";
+
+interface ArbeidslisteStateProps {
+    arbeidsliste: Arbeidsliste
+}
 
 
-function Arbeidslistekomponent (arbeidsliste: Arbeidsliste) {
+function Arbeidslistekomponent (props:{arbeidsliste: Arbeidsliste}) {
     const [leggTilArbeidsliste, setLeggTilArbeidslisteAktivt] = useState( false);
     const [fjernArbeidsliste, setFjernArbeidslisteAktivt] = useState( false);
     const [visKommentar, setVisKommentarAktivt] = useState( false);
-    if(!arbeidsliste.endringstidspunkt){
+
+    if(!props.arbeidsliste.harVeilederTilgang){
+        return <div/>
+    }
+
+    if(!props.arbeidsliste.endringstidspunkt){
         return(
             <>
                 <Knapp className="arbeidsliste__knapp" htmlType="button" onClick={()=> setLeggTilArbeidslisteAktivt(true)}>
@@ -21,7 +31,7 @@ function Arbeidslistekomponent (arbeidsliste: Arbeidsliste) {
                 <ArbeidslisteForm
                     isOpen={leggTilArbeidsliste}
                     onRequestClose={()=> setLeggTilArbeidslisteAktivt(false)}
-                    arbeidsliste={arbeidsliste}
+                    arbeidsliste={props.arbeidsliste}
                     innholdstittel="Legg i arbeidsliste"
                 />
             </>
@@ -39,7 +49,7 @@ function Arbeidslistekomponent (arbeidsliste: Arbeidsliste) {
             <ArbeidslisteForm
                 isOpen={visKommentar}
                 onRequestClose={()=> setLeggTilArbeidslisteAktivt(false)}
-                arbeidsliste={arbeidsliste}
+                arbeidsliste={props.arbeidsliste}
                 innholdstittel="Rediger"
             />
             <FjernArbeidsliste
@@ -50,4 +60,9 @@ function Arbeidslistekomponent (arbeidsliste: Arbeidsliste) {
     )
 }
 
-export default hiddenIf(Arbeidslistekomponent);
+const mapStateToProps = (state: Appstate): ArbeidslisteStateProps =>({
+   arbeidsliste: state.arbeidsliste.data
+});
+
+
+export default connect<ArbeidslisteStateProps>(mapStateToProps)(Arbeidslistekomponent);

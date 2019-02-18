@@ -1,26 +1,32 @@
-import React, {useContext} from 'react';
-import { Formik } from 'formik';
+import React from 'react';
+import {Formik, FormikValues} from 'formik';
 import { Input, Textarea } from 'nav-frontend-skjema';
 import * as Yup from 'yup';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import {Arbeidsliste} from "../../../types/arbeidsliste";
 import Modal from "../../components/modal/modal";
-import {InitialDataContext} from "../../components/initialdataprovider";
-import {postAsJson} from "../../api/api-utils";
+import {connect} from "react-redux";
+import {Dispatch} from "redux";
+import {oppdaterArbeidsliste} from "../../../store/arbeidsliste/actions";
 
-interface LeggTilArbeidslisteProps {
+interface OwnProps {
     isOpen: boolean;
     onRequestClose: () => void;
-    handleSubmit?: () => void;
     arbeidsliste:Arbeidsliste;
     innholdstittel: string;
 }
 
-interface ArbeidslisteForm {
+interface DispatchProps {
+    lagreArbeidsliste: (values: FormikValues)=> void;
+}
+
+export interface ArbeidslisteForm {
     kommentar: string;
     overskrift:string;
     frist?: string;
 }
+
+type LeggTilArbeidslisteProps = DispatchProps & OwnProps;
 
 
 const ArbeidslisteSchema = Yup.object().shape({
@@ -35,22 +41,13 @@ const ArbeidslisteSchema = Yup.object().shape({
 });
 
 function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
-
-    const {personalia} = useContext(InitialDataContext);
-
     const initalValues = {
         overskrift: props.arbeidsliste.overskrift ? props.arbeidsliste.overskrift :  '',
         kommentar: props.arbeidsliste.kommentar? props.arbeidsliste.kommentar : '' };
-
-    const lagreArbeidsliste = (fnr: string, arbeidsliste:ArbeidslisteForm) => {
-        return postAsJson(`/veilarbportefolje/api/arbeidsliste/${fnr}?fnr=${fnr}`,arbeidsliste
-        );
-    };
-
     return (
         <Formik
             initialValues={initalValues}
-            onSubmit={(values) => {lagreArbeidsliste(personalia.fodselsnummer, values)}}
+            onSubmit={props.lagreArbeidsliste}
             validationSchema={ArbeidslisteSchema}
             render={formikProps => {
 
@@ -64,11 +61,10 @@ function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
                     <Modal
                         isOpen={props.isOpen}
                         onRequestClose={props.onRequestClose}
-                        innholdstittel={props.innholdstittel}
-                        undertittel={`${personalia.fornavn} ${personalia.etternavn}, ${personalia.fodselsnummer}`}
-
+                        className=''
+                        header={null}
                     >
-                        <form onSubmit={props.handleSubmit}>
+                        <form onSubmit={formikProps.handleSubmit}>
                             <Input
                                 label="Overskrift"
                                 onChange={formikProps.handleChange}
@@ -96,4 +92,10 @@ function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
     );
 }
 
-export default ArbeidslisteForm;
+const mapDispatchToProps= (dispatch : Dispatch) =>({
+    lagreArbeidsliste: (values: FormikValues)=> dispatch(
+        oppdaterArbeidsliste({kommentar: values.kommentar, overskrift: values.overskrift})
+    )
+});
+
+export default connect<{},DispatchProps, OwnProps>(null, mapDispatchToProps)(ArbeidslisteForm);

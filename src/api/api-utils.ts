@@ -1,10 +1,8 @@
 
-const defaultHeaders = {
+const defaultHeaders = new Headers({
     'Content-Type': 'application/json',
     NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION'),
-    'Nav-Consumer-Id': 'veilarbvisittkortfs',
-    credentials: "same-origin",
-};
+});
 
 export function sjekkStatuskode(response: Response) {
     if (
@@ -36,12 +34,14 @@ function methodToJson<T>(method:string, url:string, data: T, config: any) {
     return fetchToJson(url, {
         ...{
             method,
+            credentials: 'same-origin',
             headers: defaultHeaders,
             body: JSON.stringify(data),
         },
         ...config,
     });
 }
+
 
 export function fetchToJson(url:string, config = { headers: defaultHeaders }) {
     return fetch(url, config)
@@ -52,4 +52,8 @@ export function fetchToJson(url:string, config = { headers: defaultHeaders }) {
 
 export function postAsJson(url:string, data = {}, config = {}) {
     return methodToJson('post', url, data, config);
+}
+
+export function putAsJson(url:string, data = {}, config = {}) {
+    return methodToJson('put', url, data, config);
 }

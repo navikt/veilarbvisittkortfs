@@ -1,18 +1,97 @@
-@import (reference) '~nav-frontend-core/less/_variabler';
+@import '~nav-frontend-core/less/_variabler';
+@import 'modal-container';
+@import 'modal-footer';
+@import 'modal-header';
 
-.modal {
-  min-width: 40rem;
-  min-height: 6rem;
+@modal-bredde: 640px;
 
-  .modal-header-wrapper {
-    padding: 0.5rem 0.5rem 0.2rem 0.5rem;
-    border-bottom: 1px solid @navGra40;
-    header {
-      height: 2.5rem;
+.ReactModal {
+    &__Content {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+
+        .aktivitetskjema {
+            width: 100%;
+
+            &__datofelt-wrapper {
+                flex-direction: column;
+            }
+        }
     }
-  }
+}
 
-  .modal-container {
-    padding-top: 1rem;
-  }
+// Overskriving av nav-frontend
+.modal {
+    background-color: @navGra40;
+    overflow: auto;
+    border-radius: 0;
+    padding: 0;
+}
+
+.modal__overlay {
+    display: block;
+    padding: 0;
+}
+
+.aktivitet-modal-portal {
+    z-index: 9999;
+
+    .aktivitet-modal {
+        position: relative;
+        border: 1px solid @navGra40;
+        background: @navGra40;
+        outline: none;
+
+        &__overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.74902);
+        }
+    }
+}
+
+.timeout-modal-portal {
+    .aktivitet-modal-portal;
+    z-index: 10000;
+}
+
+// 992px
+@media (min-width: @screen-md) {
+    .modal {
+        max-height: none;
+        overflow: visible;
+        padding: 0;
+        border-radius: 3px;
+    }
+
+    .ReactModal {
+        &__Body--open {
+            overflow: hidden;
+        }
+
+        &__Overlay {
+            overflow-y: auto;
+        }
+
+        &__Content {
+            width: @modal-bredde;
+            margin: 4rem auto;
+            min-height: inherit;
+        }
+    }
+
+    &.aktivitet-modal-portal {
+        z-index: 9999;
+
+        .aktivitet-modal {
+            position: relative;
+            border: 1px solid @navGra40;
+            background: @navGra40;
+            outline: none;
+        }
+    }
 }

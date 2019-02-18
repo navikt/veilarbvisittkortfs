@@ -16,7 +16,7 @@ function lagVeileder() {
         etternavn: etternavn,
     };
 }
-interface VeilederListe {
+export interface VeilederListe {
      veilederListe: VeilederData[];
  }
 

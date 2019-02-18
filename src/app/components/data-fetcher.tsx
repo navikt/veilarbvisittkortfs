@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { OrNothing } from '../../types/utils/ornothing';
-import { fetchToJson } from '../api/api-utils';
+import { fetchToJson } from '../../api/api-utils';
 
 interface DataFetcherProps<T> {
     fetchFunc: (args?: string[], errorHandler?: (response?: Response) => any) => T|null; // tslint:disable-line
