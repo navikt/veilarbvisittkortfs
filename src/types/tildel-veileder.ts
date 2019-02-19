@@ -1,5 +1,5 @@
 export interface TildelVeilederData {
-    fraVeilederId: string,
-    tilVeilederId: string,
+    fraVeilederId: string;
+    tilVeilederId: string;
     brukerFnr: string;
 }

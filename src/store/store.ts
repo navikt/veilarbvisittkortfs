@@ -1,14 +1,13 @@
 import { fork, all } from 'redux-saga/effects';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import createReduxSaga from 'redux-saga';
-import oppfolgingReducer, {oppfolgingSaga} from "./oppfolging/reducer";
-import oppfolgingStatusReducer, {oppfolgingstatusSaga} from "./oppfolging-status/reducer";
-import personaliaReducer, {personaliaSaga} from './personalia/reducer';
-import arbeidslisteReducer, {arbeidslisteSaga} from "./arbeidsliste/reducer";
-import dialogReducer, {dialogSaga} from "./dialog/reducer";
-import navigationReducer from "./navigation/reducer";
-import tildelVelederReducer, {tildelVeilederSaga} from "./tildel-veileder/reducer";
-
+import oppfolgingReducer, { oppfolgingSaga } from './oppfolging/reducer';
+import oppfolgingStatusReducer, { oppfolgingstatusSaga } from './oppfolging-status/reducer';
+import personaliaReducer, { personaliaSaga } from './personalia/reducer';
+import arbeidslisteReducer, { arbeidslisteSaga } from './arbeidsliste/reducer';
+import dialogReducer, { dialogSaga } from './dialog/reducer';
+import navigationReducer from './navigation/reducer';
+import tildelVelederReducer, { tildelVeilederSaga } from './tildel-veileder/reducer';
 
 const sagaMiddleware = createReduxSaga();
 

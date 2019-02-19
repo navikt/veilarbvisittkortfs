@@ -1,25 +1,25 @@
 // tslint:disable object-literal-sort-keys
 import { JSONValue } from 'yet-another-fetch-mock';
-import { Oppfolging} from '../types/oppfolging';
+import { Oppfolging } from '../types/oppfolging';
 
 const oppfolging: Oppfolging & JSONValue = {
     avslutningStatus: null,
-    erIkkeArbeidssokerUtenOppfolging:false,
-    erSykmeldtMedArbeidsgiver:false,
-    fnr: "10108000398",
+    erIkkeArbeidssokerUtenOppfolging: false,
+    erSykmeldtMedArbeidsgiver: false,
+    fnr: '10108000398',
     gjeldeneEskaleringsvarsel: null,
-    harSkriveTilgang:false,
-    inaktivtIArena:false,
+    harSkriveTilgang: false,
+    inaktivtIArena: false,
     inaktiveringsdato: null,
     kanReaktiveras: false,
-    kanStarteOppfolging:false,
+    kanStarteOppfolging: false,
     manuell: false,
     oppfolgingUtgang: null,
-    oppfolgingsPerioder:[],
-    reservarsjonKRR:false,
-    underKvp:false,
-    underOppfolging:false,
+    oppfolgingsPerioder: [],
+    reservarsjonKRR: false,
+    underKvp: false,
+    underOppfolging: false,
     veilederId: null,
-    vilkarMaBesvarel:false,
+    vilkarMaBesvarel: false,
 };
 export default oppfolging;

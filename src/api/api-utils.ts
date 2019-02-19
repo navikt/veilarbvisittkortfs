@@ -1,4 +1,4 @@
-
+/* tslint:disable */
 const defaultHeaders = new Headers({
     'Content-Type': 'application/json',
     NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION'),
@@ -16,7 +16,7 @@ export function sjekkStatuskode(response: Response) {
     throw new Error(response.statusText || response.type);
 }
 
-export function toJson(response:Response) {
+export function toJson(response: Response) {
     if (response.status !== 204) {
         // No content
         return response.json();
@@ -28,9 +28,9 @@ function getCookie (name: string) {
     const re = new RegExp(`${name}=([^;]+)`);
     const match = re.exec(document.cookie);
     return match !== null ? match[1] : '';
-};
+}
 
-function methodToJson<T>(method:string, url:string, data: T, config: any) {
+function methodToJson<T>(method: string, url: string, data: T, config: any) {
     return fetchToJson(url, {
         ...{
             method,
@@ -42,22 +42,20 @@ function methodToJson<T>(method:string, url:string, data: T, config: any) {
     });
 }
 
-
-export function fetchToJson(url:string, config = { headers: defaultHeaders }) {
+export function fetchToJson(url: string, config = { headers: defaultHeaders }) {
     return fetch(url, config)
         .then(sjekkStatuskode)
         .then(toJson);
 }
 
-
-export function postAsJson(url:string, data = {}, config = {}) {
+export function postAsJson(url: string, data = {}, config = {}) {
     return methodToJson('post', url, data, config);
 }
 
-export function putAsJson(url:string, data = {}, config = {}) {
+export function putAsJson(url: string, data = {}, config = {}) {
     return methodToJson('put', url, data, config);
 }
 
-export function deleteAsJson(url:string, data = {}, config = {}) {
+export function deleteAsJson(url: string, data = {}, config = {}) {
     return methodToJson('delete', url, data, config);
 }

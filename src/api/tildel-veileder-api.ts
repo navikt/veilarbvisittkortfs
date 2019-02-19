@@ -1,11 +1,11 @@
-import {fetchToJson, postAsJson} from "./api-utils";
-import {VeilederData} from "../types/veilederdata";
-import {TildelVeilederData} from "../types/tildel-veileder";
+import { fetchToJson, postAsJson } from './api-utils';
+import { VeilederData } from '../types/veilederdata';
+import { TildelVeilederData } from '../types/tildel-veileder';
 
 interface TildelVeilederApi {
     hentVeieldereForEnhet: (enhetId: string) => Promise<VeilederData[]>;
     hentVeieldere: () => Promise<VeilederData>;
-    tildelTilVeileder: (tilordninger : TildelVeilederData[]) => Promise<{resultat:string, feilendeTilordninger: TildelVeilederData[]}>;
+    tildelTilVeileder: (tilordninger: TildelVeilederData[]) => Promise<{resultat: string, feilendeTilordninger: TildelVeilederData[]}>;
 }
 
 function hentVeieldereForEnhet(enhetId: string) {

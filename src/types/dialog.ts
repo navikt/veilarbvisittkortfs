@@ -1,4 +1,4 @@
-import {StringOrNothing} from "./utils/stringornothings";
+import { StringOrNothing } from './utils/stringornothings';
 
 export type Egenskaper = 'ESKALERINGSVARSEL' | 'PARAGRAF8';
 type Avsender = 'VEILEDER' | 'BRUKER';
@@ -9,25 +9,25 @@ interface Henvendelse {
     dialogId: string;
     id: string;
     lest: boolean;
-    sendt:string; //TODO DATO
+    sendt: string; //TODO DATO
     tekst: string;
 }
 
 interface Dialog {
-    aktvitetId:StringOrNothing;
-    egenskaper:Egenskaper[];
+    aktvitetId: StringOrNothing;
+    egenskaper: Egenskaper[];
     erLestAvBruker: boolean;
     ferdigBehandlet: boolean;
-    henvendelser:Henvendelse[];
+    henvendelser: Henvendelse[];
     historisk: boolean;
-    id:string;
-    lest:boolean;
-    lestAvBrukerTidspunkt : StringOrNothing;
+    id: string;
+    lest: boolean;
+    lestAvBrukerTidspunkt: StringOrNothing;
     opprettetDato: string;
     overskrift: string;
-    sisteDato:string;
-    sisteTekst:string;
-    venterPaSvar:boolean;
+    sisteDato: string;
+    sisteTekst: string;
+    venterPaSvar: boolean;
 }
 
 export default Dialog;

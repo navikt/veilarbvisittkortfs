@@ -1,22 +1,22 @@
-import {StringOrNothing} from "./utils/stringornothings";
-
+import { StringOrNothing } from './utils/stringornothings';
+/* tslint:disable */
 export interface Oppfolging {
     avslutningStatus: StringOrNothing;
-    erIkkeArbeidssokerUtenOppfolging:boolean;
-    erSykmeldtMedArbeidsgiver:boolean;
-    fnr:string;
+    erIkkeArbeidssokerUtenOppfolging: boolean;
+    erSykmeldtMedArbeidsgiver: boolean;
+    fnr: string;
     gjeldeneEskaleringsvarsel: StringOrNothing;
-    harSkriveTilgang:boolean;
-    inaktivtIArena:boolean;
+    harSkriveTilgang: boolean;
+    inaktivtIArena: boolean;
     inaktiveringsdato: StringOrNothing;
     kanReaktiveras: boolean;
-    kanStarteOppfolging:boolean;
+    kanStarteOppfolging: boolean;
     manuell: boolean;
     oppfolgingUtgang: StringOrNothing;
-    oppfolgingsPerioder:any[];
-    reservarsjonKRR:boolean;
-    underKvp:boolean;
-    underOppfolging:boolean;
+    oppfolgingsPerioder: any[]; //TODO TYPESCIPT
+    reservarsjonKRR: boolean;
+    underKvp: boolean;
+    underOppfolging: boolean;
     veilederId: StringOrNothing;
-    vilkarMaBesvarel:boolean;
+    vilkarMaBesvarel: boolean;
 }

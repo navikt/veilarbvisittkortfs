@@ -15,6 +15,7 @@ import {
 } from "../../../store/tildel-veileder/actions";
 import {StringOrNothing} from "../../../types/utils/stringornothings";
 import {TildelVeilederData} from "../../../types/tildel-veileder";
+import './tildel-veileder.less';
 
 
 function settSammenNavn(veileder: VeilederData) {
