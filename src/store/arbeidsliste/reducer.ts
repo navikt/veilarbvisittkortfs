@@ -1,13 +1,16 @@
 import {Arbeidsliste} from "../../types/arbeidsliste";
 import {Reducer} from "redux";
 import {OrNothing} from "../../types/utils/ornothing";
-import {call, put, takeLatest, select} from 'redux-saga/effects';
+import {call, put, select, takeLatest} from 'redux-saga/effects';
 import {
     ArbeidslisteActions,
     ArbeidslisteActionType,
     HentArbeidslisteAction,
     hentArbeidslisteError,
-    hentArbeidslisteSuccess, OppdaterArbeidslisteAction, oppdaterArbeidslisteError, oppdaterArbeidslisteSuccess
+    hentArbeidslisteSuccess,
+    OppdaterArbeidslisteAction,
+    oppdaterArbeidslisteError,
+    oppdaterArbeidslisteSuccess, SlettArbeidslisteAction, slettArbeidslisteActionError, slettArbeidslisteActionSuccess
 } from "./actions";
 import PersonaliaSelectors from "../personalia/selectors";
 import ArbeidslisteApi from "../../api/arbeidsliste-api";
@@ -34,14 +37,16 @@ const initialState: ArbeidslisteState = {
 const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (state = initialState, action) => {
     switch (action.type) {
         case ArbeidslisteActionType.HENT_ARBEIDSLISTE:
-        case ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE:{
+        case ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE:
+        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE: {
             return {
                 ...state,
                 isLoading: true
             };
         }
         case ArbeidslisteActionType.HENT_ARBEIDSLISTE_SUCCESS:
-        case ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE_SUCESS: {
+        case ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE_SUCESS:
+        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE_SUCCESS: {
             return {
                 ...state,
                 data: action.data,
@@ -49,7 +54,8 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
             };
         }
         case ArbeidslisteActionType.HENT_ARBEIDSLISTE_ERROR:
-        case ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE_ERROR: {
+        case ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE_ERROR:
+        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE_ERROR: {
             return {
                 ...state,
                 isLoading: false,
@@ -79,10 +85,20 @@ function* lagreArbeidsliste(action: OppdaterArbeidslisteAction) {
     }
 }
 
+function* slettArbeidsliste(action: SlettArbeidslisteAction) {
+    try {
+        const response = yield call( ()=> ArbeidslisteApi.slettArbeidsliste(action.fnr));
+        yield put(slettArbeidslisteActionSuccess(response));
+    } catch (e) {
+        yield put(slettArbeidslisteActionError(e));
+    }
+}
+
 
 export function* arbeidslisteSaga() {
     yield takeLatest(ArbeidslisteActionType.HENT_ARBEIDSLISTE, hentArbeidsliste);
     yield takeLatest(ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE, lagreArbeidsliste);
+    yield takeLatest(ArbeidslisteActionType.SLETT_ARBEIDSLISTE, slettArbeidsliste);
 }
 
 export default arbeidslisteReducer;

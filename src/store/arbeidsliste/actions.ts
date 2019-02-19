@@ -14,6 +14,26 @@ export enum ArbeidslisteActionType {
 
 }
 
+export const slettArbeidsliste = (fnr: string): SlettArbeidslisteAction => {
+    return {
+        type: ArbeidslisteActionType.SLETT_ARBEIDSLISTE,
+        fnr
+    }
+};
+
+export const slettArbeidslisteActionSuccess = (data: Arbeidsliste): SlettArbeidslisteActionSuccess => {
+    return {
+        type: ArbeidslisteActionType.SLETT_ARBEIDSLISTE_SUCCESS,
+        data
+    }
+};
+
+export const slettArbeidslisteActionError = (error: Error): SlettArbeidslisteActionError => {
+    return {
+        type: ArbeidslisteActionType.SLETT_ARBEIDSLISTE_ERROR,
+        error
+    }
+};
 
 export const hentArbeidsliste = (fnr: string): HentArbeidslisteAction => {
     return {
@@ -88,10 +108,30 @@ export interface HentArbeidslisteActionError {
     error: Error
 }
 
+export interface SlettArbeidslisteAction {
+    type: ArbeidslisteActionType.SLETT_ARBEIDSLISTE;
+    fnr: string;
+}
+
+export interface SlettArbeidslisteActionSuccess {
+    type: ArbeidslisteActionType.SLETT_ARBEIDSLISTE_SUCCESS;
+    data: Arbeidsliste;
+}
+
+export interface SlettArbeidslisteActionError {
+    type: ArbeidslisteActionType.SLETT_ARBEIDSLISTE_ERROR;
+    error: Error;
+}
+
+
 export type ArbeidslisteActions =
     HentArbeidslisteAction |
     HentArbeidslisteActionSuccess |
     HentArbeidslisteActionError |
     OppdaterArbeidslisteAction |
     OppdaterArbeidslisteActionSuccess |
-    OppdaterArbeidslisteActionError;
+    OppdaterArbeidslisteActionError |
+    SlettArbeidslisteAction |
+    SlettArbeidslisteActionSuccess |
+    SlettArbeidslisteActionError
+    ;

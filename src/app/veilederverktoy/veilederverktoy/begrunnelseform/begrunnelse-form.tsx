@@ -35,14 +35,14 @@ function BegrunnelseForm(props: BegrunnelseFormProps) {
                                     beskrivelseTekstId={props.beskrivelseTekstId}
                                 />
                                 <form onSubmit={formikProps.handleSubmit}>
-                                <Textarea
-                                    label={props.tekstariaLabel}
-                                    maxLength={5000}
-                                    value={formikProps.values.tekst}
-                                    name="tekst"
-                                    onChange={formikProps.handleChange}
-                                    onBlur={formikProps.handleBlur}
-                                />
+                                    <Textarea
+                                        label={props.tekstariaLabel}
+                                        maxLength={5000}
+                                        value={formikProps.values.tekst}
+                                        name="tekst"
+                                        onChange={formikProps.handleChange}
+                                        onBlur={formikProps.handleBlur}
+                                    />
                                     <BegrunnelseFooter
                                         spinner={props.isLoading}
                                     />

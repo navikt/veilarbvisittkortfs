@@ -8,12 +8,17 @@ import Modal from "../../components/modal/modal";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 import {oppdaterArbeidsliste} from "../../../store/arbeidsliste/actions";
+import ModalContainer from '../../components/modal/modal-container';
+import ModalHeader from '../../components/modal/modal-header';
+import ModalFooter from '../../components/modal/modal-footer';
+import './arbeidsliste.less';
 
 interface OwnProps {
     isOpen: boolean;
     onRequestClose: () => void;
     arbeidsliste:Arbeidsliste;
     innholdstittel: string;
+    children: React.ReactNode;
 }
 
 interface DispatchProps {
@@ -62,30 +67,35 @@ function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
                         isOpen={props.isOpen}
                         onRequestClose={props.onRequestClose}
                         className=''
-                        header={null}
+                        header={<ModalHeader/>}
                     >
-                        <form onSubmit={formikProps.handleSubmit}>
-                            <Input
-                                label="Overskrift"
-                                onChange={formikProps.handleChange}
-                                onBlur={formikProps.handleBlur}
-                                value={formikProps.values.overskrift}
-                                name="overskrift"
-                                feil={harFeilIOverskrift}
-                            />
-                            <Textarea
-                                label="Kommentar"
-                                onChange={formikProps.handleChange}
-                                onBlur={formikProps.handleBlur}
-                                value={formikProps.values.kommentar}
-                                name="kommentar"
-                                feil={harFeilIKommentar}
-                            />
-
-                            <Hovedknapp htmlType="submit">Lagre</Hovedknapp>
-                            <Knapp onClick={props.onRequestClose}> Avbryt </Knapp>
-
-                        </form>
+                        <section className="arbeidsliste__form">
+                            <ModalContainer className="arbeidsliste__form-container">
+                                {props.children}
+                                <form onSubmit={formikProps.handleSubmit}>
+                                    <Input
+                                        label="Overskrift"
+                                        onChange={formikProps.handleChange}
+                                        onBlur={formikProps.handleBlur}
+                                        value={formikProps.values.overskrift}
+                                        name="overskrift"
+                                        feil={harFeilIOverskrift}
+                                    />
+                                    <Textarea
+                                        label="Kommentar"
+                                        onChange={formikProps.handleChange}
+                                        onBlur={formikProps.handleBlur}
+                                        value={formikProps.values.kommentar}
+                                        name="kommentar"
+                                        feil={harFeilIKommentar}
+                                    />
+                                    <ModalFooter>
+                                        <Hovedknapp htmlType="submit">Lagre</Hovedknapp>
+                                        <Knapp htmlType="button" onClick={props.onRequestClose}> Avbryt </Knapp>
+                                    </ModalFooter>
+                                </form>
+                            </ModalContainer>
+                        </section>
                     </Modal>
                 ); }}
         />

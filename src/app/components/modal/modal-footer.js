@@ -18,4 +18,4 @@ ModalFooter.defaultProps = {
     children: undefined,
 };
 
-export default visibleIf(ModalFooter);
+export default ModalFooter;

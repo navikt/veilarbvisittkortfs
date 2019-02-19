@@ -57,3 +57,7 @@ export function postAsJson(url:string, data = {}, config = {}) {
 export function putAsJson(url:string, data = {}, config = {}) {
     return methodToJson('put', url, data, config);
 }
+
+export function deleteAsJson(url:string, data = {}, config = {}) {
+    return methodToJson('delete', url, data, config);
+}

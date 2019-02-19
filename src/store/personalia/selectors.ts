@@ -7,6 +7,7 @@ export interface PersonaliaSelectors {
     selectPersonaliaData: (state: Appstate) => Personalia;
     selectFodselsnummer: (state: Appstate)=> string,
     selectPersonaliaIsLoading: (state: Appstate) => boolean;
+    selectSammensattNavn: (state: Appstate) => string;
 }
 
 function selectPersonaliaSlice (state: Appstate): PersonaliaState {
@@ -26,9 +27,13 @@ function selectPersonaliaIsLoading(state: Appstate): boolean {
     return selectPersonaliaSlice(state).isLoading;
 }
 
+function selectSammensattNavn (state: Appstate): string {
+    return selectPersonaliaData(state).sammensattNavn;
+}
 
 export default {
     selectPersonaliaData,
     selectFodselsnummer,
-    selectPersonaliaIsLoading
+    selectPersonaliaIsLoading,
+    selectSammensattNavn
 } as PersonaliaSelectors;
