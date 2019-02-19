@@ -1,6 +1,6 @@
-import {VeilederData} from "../../types/veilederdata";
-import {TildelVeilederData} from "../../types/tildel-veileder";
-import {VeilederListe} from "../../mock/veiledereliste";
+import { VeilederData } from '../../types/veilederdata';
+import { TildelVeilederData } from '../../types/tildel-veileder';
+import { VeilederListe } from '../../mock/veiledereliste';
 
 export enum TildelVeilederActionType {
     HENT_VEILEDER_PA_ENHETEN = 'HENT_VEILEDER_PA_ENHETEN',
@@ -16,12 +16,12 @@ export enum TildelVeilederActionType {
 
 export interface TildelVeilederAction {
     type: TildelVeilederActionType.TILDEL_VEILEDER;
-    data : TildelVeilederData[];
+    data: TildelVeilederData[];
 }
 
 export interface TildelVeilederActionSuccess {
     type: TildelVeilederActionType.TILDEL_VEILEDER_SUCCESS;
-    data : {resultat : string, feilendeTilordninger: TildelVeilederData[]};
+    data: {resultat: string, feilendeTilordninger: TildelVeilederData[]};
 }
 
 export interface TildelVeilederActionError {
@@ -35,27 +35,27 @@ export interface HentVeilederPaEnhetenAction {
 }
 
 interface HentVeilederPaEnhetenActionSuccess {
-    type: TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN_SUCCESS,
+    type: TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN_SUCCESS;
     data: VeilederListe;
 }
 
 interface HentVeilederPaEnhetenActionError {
-    type: TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN_ERROR,
+    type: TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN_ERROR;
     error: Error;
 }
 
 export interface HentPaloggetVeilederAction {
-    type: TildelVeilederActionType.HENT_PALOGGET_VEILEDER,
+    type: TildelVeilederActionType.HENT_PALOGGET_VEILEDER;
 }
 
 interface HentPaloggetVeilederActionSuccess {
-    type: TildelVeilederActionType.HENT_PALOGGET_VEILEDER_SUCCESS,
-    data: VeilederData,
+    type: TildelVeilederActionType.HENT_PALOGGET_VEILEDER_SUCCESS;
+    data: VeilederData;
 }
 
 interface HentPaloggetVeilederActionError {
-    type: TildelVeilederActionType.HENT_PALOGGET_VEILEDER_ERROR,
-    error: Error,
+    type: TildelVeilederActionType.HENT_PALOGGET_VEILEDER_ERROR;
+    error: Error;
 }
 
 export const tildelTilVeileder = (data: TildelVeilederData[]): TildelVeilederAction => ({
@@ -63,7 +63,7 @@ export const tildelTilVeileder = (data: TildelVeilederData[]): TildelVeilederAct
     data
 });
 
-export const tildelVeilederSuccess = (data: {resultat : string, feilendeTilordninger: TildelVeilederData[]}): TildelVeilederActionSuccess => ({
+export const tildelVeilederSuccess = (data: {resultat: string, feilendeTilordninger: TildelVeilederData[]}): TildelVeilederActionSuccess => ({
     type: TildelVeilederActionType.TILDEL_VEILEDER_SUCCESS,
     data
 });
@@ -72,7 +72,6 @@ export const tildelVeilederError = (error: Error): TildelVeilederActionError => 
     type: TildelVeilederActionType.TILDEL_VEILEDER_ERROR,
     error
 });
-
 
 export const hentPaloggetVeileder = (): HentPaloggetVeilederAction => ({
     type: TildelVeilederActionType.HENT_PALOGGET_VEILEDER,
@@ -88,7 +87,7 @@ export const hentPaloggetVeilederError = (error: Error): HentPaloggetVeilederAct
     error
 });
 
-export const hentAlleVeiledereForEnhetenSuccess = (data:VeilederListe): HentVeilederPaEnhetenActionSuccess => ({
+export const hentAlleVeiledereForEnhetenSuccess = (data: VeilederListe): HentVeilederPaEnhetenActionSuccess => ({
     type: TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN_SUCCESS,
     data
 });

@@ -1,13 +1,12 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import {hentPersonalia} from "../../store/personalia/actions";
-import {hentOppfolgingsstatus} from "../../store/oppfolging-status/actions";
-import {Dispatch} from "redux";
-import {hentArbeidsliste} from "../../store/arbeidsliste/actions";
-import {Appstate} from "../../types/appstate";
-import NavFrontendSpinner from "nav-frontend-spinner";
-import {hentOppfolging} from "../../store/oppfolging/actions";
-
+import { hentPersonalia } from '../../store/personalia/actions';
+import { hentOppfolgingsstatus } from '../../store/oppfolging-status/actions';
+import { Dispatch } from 'redux';
+import { hentArbeidsliste } from '../../store/arbeidsliste/actions';
+import { Appstate } from '../../types/appstate';
+import NavFrontendSpinner from 'nav-frontend-spinner';
+import { hentOppfolging } from '../../store/oppfolging/actions';
 
 interface DispatchProps {
     doHentPersonData: () => void;
@@ -17,8 +16,8 @@ interface DispatchProps {
 }
 
 interface InitialDataProviderProps {
-    fnr:string;
-    children: React.ReactNode
+    fnr: string;
+    children: React.ReactNode;
 }
 
 interface StateProps {
@@ -27,7 +26,7 @@ interface StateProps {
 
 type Props = InitialDataProviderProps & DispatchProps & StateProps;
 
-function InitialDataProvider(props: Props){
+function InitialDataProvider(props: Props) {
 
     useEffect( () => {
         props.doHentPersonData();
@@ -36,14 +35,14 @@ function InitialDataProvider(props: Props){
         props.doHentOppfolging();
     }, []);
 
-    if(props.isLoading){
-        return <NavFrontendSpinner/>
+    if (props.isLoading) {
+        return <NavFrontendSpinner/>;
     }
     return (
         <>
             {props.children}
         </>
-    )
+    );
 }
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: InitialDataProviderProps) => ({
@@ -57,4 +56,4 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     isLoading: false,
 });
 
-export default connect<StateProps,DispatchProps, InitialDataProviderProps>(mapStateToProps, mapDispatchToProps)(InitialDataProvider);
+export default connect<StateProps, DispatchProps, InitialDataProviderProps>(mapStateToProps, mapDispatchToProps)(InitialDataProvider);

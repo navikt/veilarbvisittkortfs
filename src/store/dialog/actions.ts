@@ -1,9 +1,9 @@
-import Dialog, {Egenskaper} from "../../types/dialog";
+import Dialog, { Egenskaper } from '../../types/dialog';
 
 export enum HenvendelseActionType {
-    OPPRETTET_HENVENDELSE = "OPPRETTET_HENVENDELSE",
-    OPPRETTET_HENVENDELSE_ERROR =  "OPPRETT_HENVENDELSE_ERROR",
-    OPPRETTET_HENVENDELSE_SUCCESS = "OPPRETTER_HENVENDELSE_SUCCESS"
+    OPPRETTET_HENVENDELSE = 'OPPRETTET_HENVENDELSE',
+    OPPRETTET_HENVENDELSE_ERROR =  'OPPRETT_HENVENDELSE_ERROR',
+    OPPRETTET_HENVENDELSE_SUCCESS = 'OPPRETTER_HENVENDELSE_SUCCESS'
 }
 
 export enum DialogActionType {
@@ -14,9 +14,9 @@ export enum DialogActionType {
 
 export interface HenvendelseData {
     begrunnelse: string;
-    egenskaper: Egenskaper[],
+    egenskaper: Egenskaper[];
     overskrift: string;
-    tekst:string;
+    tekst: string;
 }
 
 export interface OpprettHenvendelseAction {
@@ -25,15 +25,14 @@ export interface OpprettHenvendelseAction {
 }
 
 export interface OpprettHenvendelseActionSuccess {
-    type: HenvendelseActionType.OPPRETTET_HENVENDELSE_SUCCESS,
+    type: HenvendelseActionType.OPPRETTET_HENVENDELSE_SUCCESS;
     data: Dialog;
 }
 
 export interface OpprettHenvendelseActionError {
-    type: HenvendelseActionType.OPPRETTET_HENVENDELSE_ERROR,
+    type: HenvendelseActionType.OPPRETTET_HENVENDELSE_ERROR;
     error: Error;
 }
-
 
 export interface OppdaterDialogSuccess {
     type: DialogActionType.OPPDATER_DIALOG_SUCCESS;
@@ -44,30 +43,27 @@ export function oppdaterDialogSuccess(data: Dialog): OppdaterDialogSuccess {
     return {
         type: DialogActionType.OPPDATER_DIALOG_SUCCESS,
         data
-    }
+    };
 }
-
-
 
 export function opprettHenvendelse(data: HenvendelseData): OpprettHenvendelseAction {
     return {
         type: HenvendelseActionType.OPPRETTET_HENVENDELSE,
         data
-    }
+    };
 }
 
 export function opprettHenvendelseSuccess(data: Dialog): OpprettHenvendelseActionSuccess {
     return {
         type: HenvendelseActionType.OPPRETTET_HENVENDELSE_SUCCESS,
         data
-    }
+    };
 }
-
 
 export function opprettHenvendelseError(error: Error): OpprettHenvendelseActionError {
     return {
         type: HenvendelseActionType.OPPRETTET_HENVENDELSE_ERROR,
         error
-    }
+    };
 }
 export type DialogActions = OpprettHenvendelseAction | OpprettHenvendelseActionSuccess | OpprettHenvendelseActionError | OppdaterDialogSuccess;

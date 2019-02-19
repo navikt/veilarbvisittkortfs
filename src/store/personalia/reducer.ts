@@ -1,36 +1,35 @@
-import {Reducer} from "redux";
-import {OrNothing} from "../../types/utils/ornothing";
-import {call, put, takeLatest} from 'redux-saga/effects';
-import {Personalia} from "../../types/personalia";
+import { Reducer } from 'redux';
+import { OrNothing } from '../../types/utils/ornothing';
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { Personalia } from '../../types/personalia';
 import {
     HentPersonaliaAction,
     hentPersonaliaError,
     hentPersonaliaSuccess,
     PersonaliaActions,
     PersonaliaActionType
-} from "./actions";
-import {fetchPersonaliaData} from "../../api/api";
+} from './actions';
+import { fetchPersonaliaData } from '../../api/api';
 
-export type PersonaliaState = {data: Personalia} & {isLoading: boolean; error: OrNothing<Error>}
+export type PersonaliaState = {data: Personalia} & {isLoading: boolean; error: OrNothing<Error>};
 
 const initialState: PersonaliaState = {
-    isLoading:false,
+    isLoading: false,
     error: null,
     data: {
-        fornavn: "",
-        etternavn: "",
+        fornavn: '',
+        etternavn: '',
         mellomnavn: null,
-        sammensattNavn: "",
-        fodselsnummer: "",
-        fodselsdato: "",
-        kjonn: "K",
+        sammensattNavn: '',
+        fodselsnummer: '',
+        fodselsdato: '',
+        kjonn: 'K',
         dodsdato: null,
         diskresjonskode: null,
         egenAnsatt: false,
         sikkerhetstiltak: null,
     }
 };
-
 
 const personaliaReducer: Reducer<PersonaliaState, PersonaliaActions> = (state = initialState, action) => {
     switch (action.type) {
@@ -54,19 +53,19 @@ const personaliaReducer: Reducer<PersonaliaState, PersonaliaActions> = (state = 
                 error: action.error
             };
         }
+        default:
+            return state;
     }
-    return state;
 };
 
 function* hentPersonalia(action: HentPersonaliaAction) {
     try {
-        const response = yield call( ()=> fetchPersonaliaData(action.fnr));
+        const response = yield call( () => fetchPersonaliaData(action.fnr));
         yield put(hentPersonaliaSuccess(response));
     } catch (e) {
         yield put(hentPersonaliaError(e));
     }
 }
-
 
 export function* personaliaSaga() {
     yield takeLatest(PersonaliaActionType.HENT_PERSONALIA, hentPersonalia);

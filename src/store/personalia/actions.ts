@@ -1,12 +1,10 @@
-import {Personalia} from "../../types/personalia";
-
+import { Personalia } from '../../types/personalia';
 
 export enum PersonaliaActionType {
     HENT_PERSONALIA = 'HENT_PERSONALIA',
     HENT_PERSONALIA_SUCCESS = 'HENT_PERSONALIA_SUCCESS',
     HENT_PERSONALIA_ERROR = 'HENT_OPPFOLGINGSTATUS_ERROR',
 }
-
 
 export const hentPersonalia = (fnr: string): HentPersonaliaAction => ({
     type: PersonaliaActionType.HENT_PERSONALIA,
@@ -25,10 +23,9 @@ export const hentPersonaliaError = (error: Error): HentPersonaliaActionError => 
 
 });
 
-
 export interface HentPersonaliaAction {
     type: PersonaliaActionType.HENT_PERSONALIA;
-    fnr:string;
+    fnr: string;
 }
 
 export interface HentPersonaliaActionSuccess {

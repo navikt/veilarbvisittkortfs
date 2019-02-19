@@ -1,5 +1,5 @@
 import React from 'react';
-import visibleIf from "./visible-if";
+import visibleIf from './visible-if';
 
 function VisibleIfDiv(props: {children: React.ReactNode, className: string}) {
     return (
@@ -8,6 +8,5 @@ function VisibleIfDiv(props: {children: React.ReactNode, className: string}) {
         </div>
     );
 }
-
 
 export default visibleIf(VisibleIfDiv);

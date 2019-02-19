@@ -1,11 +1,10 @@
-import {Appstate} from "../../types/appstate";
-import {Personalia} from "../../types/personalia";
-import {PersonaliaState} from "./reducer";
-
+import { Appstate } from '../../types/appstate';
+import { Personalia } from '../../types/personalia';
+import { PersonaliaState } from './reducer';
 
 export interface PersonaliaSelectors {
     selectPersonaliaData: (state: Appstate) => Personalia;
-    selectFodselsnummer: (state: Appstate)=> string,
+    selectFodselsnummer: (state: Appstate) => string;
     selectPersonaliaIsLoading: (state: Appstate) => boolean;
     selectSammensattNavn: (state: Appstate) => string;
 }
@@ -13,7 +12,6 @@ export interface PersonaliaSelectors {
 function selectPersonaliaSlice (state: Appstate): PersonaliaState {
     return state.personalia;
 }
-
 
 function selectPersonaliaData(state: Appstate): Personalia {
     return state.personalia.data;

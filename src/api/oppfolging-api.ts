@@ -6,6 +6,7 @@ const OPPFOLGING_BASE_URL = '/veilarboppfolging/api';
 export interface OppfolgingApi {
     hentOppfolgingData: (fnr?: string) => Promise<Oppfolging>;
     startEskalering: (dialogId: string, begrunnelse: string) => Promise<void>; //TODO ELLER NOE
+    hentVeilederTilgang: (fnr: string) => Promise<void>; //TODO ELLER NOE
 }
 
 function hentOppfolgingData(fnr?: string) {
@@ -19,7 +20,12 @@ function startEskalering(dialogId: string, begrunnelse: string) {
     });
 }
 
+function hentVeilederTilgang(fnr: string) {
+    return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/veilederTilgang?fnr={fnr}`);
+}
+
 export default {
     hentOppfolgingData,
-    startEskalering
+    startEskalering,
+    hentVeilederTilgang
 } as OppfolgingApi;

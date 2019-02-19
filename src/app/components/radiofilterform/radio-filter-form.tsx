@@ -1,18 +1,17 @@
-import * as React from "react";
-import {Hovedknapp, Knapp} from "nav-frontend-knapper";
-import {Radio} from "nav-frontend-skjema";
-import {useState} from "react";
-import hiddenIf from "../hidden-if";
-import "./radio-filterform.less"
-
+import * as React from 'react';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Radio } from 'nav-frontend-skjema';
+import { useState } from 'react';
+import hiddenIf from '../hidden-if';
+import './radio-filterform.less';
 
 const HiddenIfKnapp = hiddenIf(Knapp);
 const HiddenIfHovedknapp = hiddenIf(Hovedknapp);
-
+/* tslint:disable */
 
 interface RadioFilterFormProps<T> {
     onSubmit: (event: any) => void;
-    data: T[],
+    data: T[];
     createLabel: (foo: T) => string;
     createValue: (foo: T) => string;
     radioName: string;
@@ -21,9 +20,8 @@ interface RadioFilterFormProps<T> {
     visLukkKnapp?: boolean;
 }
 
-
 function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
-    const [selected, changeSelected] = useState("");
+    const [selected, changeSelected] = useState('');
 
     const {
         onSubmit,
@@ -36,7 +34,7 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
         ...rest
     } = props;
 
-    const submitForm = (event: any) => onSubmit({ event, value: selected, ...rest });
+    const submitForm = (event: React.SyntheticEvent) => onSubmit({ event, value: selected, ...rest });
 
     return (
         <div className="radio-filterform">
@@ -55,7 +53,7 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
                 </div>
                 <div className="knapperad--alignleft blokk-xxs">
                     <HiddenIfHovedknapp
-                        mini
+                        mini={true}
                         hidden={visLukkKnapp && !selected}
                         htmlType="submit"
                         disabled={!selected}
@@ -63,7 +61,7 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
                         Velg
                     </HiddenIfHovedknapp>
                     <HiddenIfKnapp
-                        mini
+                        mini={true}
                         htmlType="button"
                         onClick={props.closeDropdown}
                         hidden={!visLukkKnapp || !!selected}
@@ -71,11 +69,11 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
                         Lukk
                     </HiddenIfKnapp>
                     <HiddenIfKnapp
-                        mini
+                        mini={true}
                         hidden={fjernNullstill}
                         htmlType="button"
                         onClick={event => {
-                            changeSelected("");
+                            changeSelected('');
                             onSubmit({ event, value: null, ...rest });
                         }}
                     >

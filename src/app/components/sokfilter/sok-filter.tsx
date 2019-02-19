@@ -1,22 +1,20 @@
-import React, {useState} from 'react';
-import {Input} from "nav-frontend-skjema";
-
+import React, { useState } from 'react';
+import { Input } from 'nav-frontend-skjema';
+/* tslint:disable */
 interface SokFilterProps<T> {
     data: T[];
-    children: (filteredData: T[], rest:any) => React.ReactNode;
+    children: (filteredData: T[], rest: any) => React.ReactNode;
     label: string;
     placeholder: string;
-    limitSize?: number,
+    limitSize?: number;
 }
 
-
-function limit<T>(liste :T[], antall: number) {
+function limit<T>(liste: T[], antall: number) {
     return liste.slice(0, antall);
 }
 
-
 function SokFilter<T> (props: SokFilterProps<T>) {
-    const [query, changeQuery] = useState("");
+    const [query, changeQuery] = useState('');
 
     const { data, limitSize, children, ...rest } = props;
     const rawfilteredData = data.filter(elem => !query || JSON.stringify(elem).toLowerCase().includes(query.toLowerCase()));
@@ -25,7 +23,6 @@ function SokFilter<T> (props: SokFilterProps<T>) {
         limitSize === null
             ? rawfilteredData
             : limit(rawfilteredData, limitSize || 20);
-
 
     return (
         <div>

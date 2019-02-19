@@ -1,6 +1,6 @@
-import {Systemtittel} from "nav-frontend-typografi";
-import {FormattedMessage} from "react-intl";
-import React from "react";
+import { Systemtittel } from 'nav-frontend-typografi';
+import { FormattedMessage } from 'react-intl';
+import React from 'react';
 
 function BergrunnelseOverskrift (props: {overskriftTekstId: string, beskrivelseTekstId: string }) {
     return (
@@ -15,6 +15,6 @@ function BergrunnelseOverskrift (props: {overskriftTekstId: string, beskrivelseT
 
         </>
 
-    )
+    );
 }
 export default BergrunnelseOverskrift;

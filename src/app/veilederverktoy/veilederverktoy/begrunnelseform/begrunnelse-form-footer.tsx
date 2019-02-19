@@ -1,9 +1,9 @@
-import React from "react";
-import {FormattedMessage} from "react-intl";
-import {Hovedknapp, Knapp} from "nav-frontend-knapper";
-import {Dispatch} from "redux";
-import {navigerTilbake} from "../../../../store/navigation/actions";
-import {connect} from "react-redux";
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Dispatch } from 'redux';
+import { navigerTilbake } from '../../../../store/navigation/actions';
+import { connect } from 'react-redux';
 
 interface OwnProps {
     spinner: boolean;
@@ -14,13 +14,13 @@ interface DispatchProps {
 }
 type StartEskaleringProsessFooterProps = OwnProps & DispatchProps;
 
-function BegrunnelseFooter(props:StartEskaleringProsessFooterProps ) {
+function BegrunnelseFooter(props: StartEskaleringProsessFooterProps ) {
     return(
         <div className="modal-footer">
             <Hovedknapp
                 htmlType="submit"
                 spinner={props.spinner}
-                autoDisableVedSpinner
+                autoDisableVedSpinner={true}
             >
                 <FormattedMessage id="innstillinger.modal.start-eskalering.knapp.bekreft" />
             </Hovedknapp>
@@ -28,11 +28,11 @@ function BegrunnelseFooter(props:StartEskaleringProsessFooterProps ) {
                 <FormattedMessage id="innstillinger.modal.start-eskalering.knapp.avbryt" />
             </Knapp>
         </div>
-    )
+    );
 }
 
-const mapDispatchToProps= (dispatch: Dispatch) => ({
-    tilbake: ()=> dispatch(navigerTilbake())
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    tilbake: () => dispatch(navigerTilbake())
 });
 
-export default connect<{},DispatchProps, OwnProps> (null, mapDispatchToProps) (BegrunnelseFooter);
+export default connect<{}, DispatchProps, OwnProps> (null, mapDispatchToProps) (BegrunnelseFooter);

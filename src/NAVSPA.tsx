@@ -1,10 +1,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-interface INAVSPAScope {
+interface NAVSPAScopeProps {
     [name: string]: NAVSPAApp;
 }
-type NAVSPAApp = (element: HTMLElement, props: any) => void;
+type NAVSPAApp = (element: HTMLElement, props: any) => void; // tslint:disable-line
 
 export default class NAVSPA {
     public static eksporter<PROPS>(name: string, component: React.ComponentType<PROPS>) {
@@ -27,12 +27,12 @@ export default class NAVSPA {
             }
 
             public render() {
-                return <div ref={this.saveRef}/>
+                return <div ref={this.saveRef}/>;
             }
 
             private saveRef = (el: HTMLDivElement) => {
                 this.el = el;
-            };
+            }
         }
 
         return NAVSPAImporter;
@@ -42,5 +42,5 @@ export default class NAVSPA {
         NAVSPA.scope[name](element, props);
     }
 
-    private static scope: INAVSPAScope = (global as any)['NAVSPA'] = (global as any)['NAVSPA'] || {}; // tslint:disable-line
+    private static scope: NAVSPAScopeProps = (global as any)['NAVSPA'] = (global as any)['NAVSPA'] || {}; // tslint:disable-line
 }

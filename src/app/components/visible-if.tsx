@@ -8,7 +8,7 @@ export default function visibleIf<PROPS>(Component: React.ComponentType<PROPS>):
     return (props: PROPS & VisibleProps) => {
         const { visible, ...rest } = props as any; // tslint:disable-line
         if (visible) {
-            <Component {...rest} />;
+            return <Component {...rest} />;
         }
         return null;
     };

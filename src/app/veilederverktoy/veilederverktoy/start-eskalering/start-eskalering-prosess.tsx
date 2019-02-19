@@ -2,10 +2,10 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import StartProsess from './../prosess/start-prosess';
-import {Appstate} from "../../../../types/appstate";
-import {connect} from "react-redux";
-import {Dispatch} from "redux";
-import {navigerTilStartEskalering} from "../../../../store/navigation/actions";
+import { Appstate } from '../../../../types/appstate';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { navigerTilStartEskalering } from '../../../../store/navigation/actions';
 
 interface StateProps {
     skjulStartEskalering: boolean;
@@ -15,8 +15,8 @@ interface DispatchProps {
     navigerTilStartEsklaringForm: () => void;
 }
 
-function StartEskaleringProsess({skjulStartEskalering, navigerTilStartEsklaringForm }:StateProps & DispatchProps) {
-    if(!skjulStartEskalering){
+function StartEskaleringProsess({skjulStartEskalering, navigerTilStartEsklaringForm }: StateProps & DispatchProps) {
+    if (!skjulStartEskalering) {
         return null;
     }
     return (
@@ -37,7 +37,7 @@ function StartEskaleringProsess({skjulStartEskalering, navigerTilStartEsklaringF
     );
 }
 
-const mapStateToProps = (state:Appstate): StateProps => {
+const mapStateToProps = (state: Appstate): StateProps => {
     const oppfolging = state.oppfolging.data;
     return{
         skjulStartEskalering:
@@ -45,13 +45,11 @@ const mapStateToProps = (state:Appstate): StateProps => {
             !oppfolging.gjeldeneEskaleringsvarsel ||
             oppfolging.reservarsjonKRR ||
             oppfolging.manuell
-    }
+    };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigerTilStartEsklaringForm: () => dispatch(navigerTilStartEskalering())
 });
 
-
-
-export default connect<StateProps, DispatchProps>(mapStateToProps,mapDispatchToProps)(StartEskaleringProsess);
+export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(StartEskaleringProsess);

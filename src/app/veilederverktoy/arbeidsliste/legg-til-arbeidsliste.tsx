@@ -1,9 +1,8 @@
 import React from 'react';
-import {Innholdstittel, Undertittel} from "nav-frontend-typografi";
-import ArbeidslisteForm from "./arbeidsliste-form";
-import {Arbeidsliste} from "../../../types/arbeidsliste";
-import {FormattedMessage} from 'react-intl';
-
+import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
+import ArbeidslisteForm from './arbeidsliste-form';
+import { Arbeidsliste } from '../../../types/arbeidsliste';
+import { FormattedMessage } from 'react-intl';
 
 interface LeggTilArbeidslisteProps {
     navn: string;
@@ -13,7 +12,6 @@ interface LeggTilArbeidslisteProps {
     arbeidsliste: Arbeidsliste;
 
 }
-
 
 function LeggTilArbeidsliste(props: LeggTilArbeidslisteProps) {
     return (
@@ -33,7 +31,7 @@ function LeggTilArbeidsliste(props: LeggTilArbeidslisteProps) {
                 />
             </Undertittel>
         </ArbeidslisteForm>
-    )
+    );
 }
 
 export default LeggTilArbeidsliste;

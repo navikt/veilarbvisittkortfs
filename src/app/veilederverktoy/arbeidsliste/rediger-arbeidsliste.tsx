@@ -1,9 +1,8 @@
 import React from 'react';
-import {Innholdstittel, Undertittel} from "nav-frontend-typografi";
-import ArbeidslisteForm from "./arbeidsliste-form";
-import {Arbeidsliste} from "../../../types/arbeidsliste";
-import {FormattedMessage} from 'react-intl';
-
+import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
+import ArbeidslisteForm from './arbeidsliste-form';
+import { Arbeidsliste } from '../../../types/arbeidsliste';
+import { FormattedMessage } from 'react-intl';
 
 interface RedigerArbeidslisteProps {
     navn: string;
@@ -12,7 +11,6 @@ interface RedigerArbeidslisteProps {
     onRequestClose: () => void;
     arbeidsliste: Arbeidsliste;
 }
-
 
 function RedigerArbeidsliste(props: RedigerArbeidslisteProps) {
     return (
@@ -32,7 +30,7 @@ function RedigerArbeidsliste(props: RedigerArbeidslisteProps) {
                 />
             </Undertittel>
         </ArbeidslisteForm>
-    )
+    );
 }
 
 export default RedigerArbeidsliste;

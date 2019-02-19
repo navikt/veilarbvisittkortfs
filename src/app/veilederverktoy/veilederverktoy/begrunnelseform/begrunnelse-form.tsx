@@ -1,10 +1,10 @@
 import React from 'react';
-import {Formik} from "formik";
-import {Textarea} from "nav-frontend-skjema";
+import { Formik } from 'formik';
+import { Textarea } from 'nav-frontend-skjema';
 import VeilederVerktoyModal from '../veilederverktoy-modal';
-import BegrunnelseFooter from "./begrunnelse-form-footer";
-import {StringOrNothing} from "../../../../types/utils/stringornothings";
-import BergrunnelseOverskrift from "./begrunnelse-overskrift";
+import BegrunnelseFooter from './begrunnelse-form-footer';
+import { StringOrNothing } from '../../../../types/utils/stringornothings';
+import BergrunnelseOverskrift from './begrunnelse-overskrift';
 
 interface BegrunnelseFormProps {
     tekst: StringOrNothing;
@@ -20,7 +20,7 @@ function BegrunnelseForm(props: BegrunnelseFormProps) {
     return (
         <Formik
             initialValues={{tekst: props.tekst || ''}}
-            onSubmit={(values, actions)=> props.handleSubmit(values.tekst)}
+            onSubmit={(values, actions) => props.handleSubmit(values.tekst)}
             validationSchema={{}}
             render={formikProps => {
                 return (
@@ -50,10 +50,10 @@ function BegrunnelseForm(props: BegrunnelseFormProps) {
                             </section>
                         </div>
                     </VeilederVerktoyModal>
-                )
+                );
             }}
         />
-    )
+    );
 }
 
 export default BegrunnelseForm;

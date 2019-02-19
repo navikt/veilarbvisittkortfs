@@ -1,11 +1,11 @@
 import React from 'react';
-import Modal from "../../components/modal/modal";
-import ModalHeader from "../../components/modal/modal-header";
-import ModalFooter from "../../components/modal/modal-footer";
-import ModalContainer from "../../components/modal/modal-container";
-import {Hovedknapp, Knapp} from "nav-frontend-knapper";
-import {Innholdstittel, Normaltekst, Undertittel} from "nav-frontend-typografi";
-import {FormattedMessage} from "react-intl";
+import Modal from '../../components/modal/modal';
+import ModalHeader from '../../components/modal/modal-header';
+import ModalFooter from '../../components/modal/modal-footer';
+import ModalContainer from '../../components/modal/modal-container';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Innholdstittel, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { FormattedMessage } from 'react-intl';
 
 interface FjernArbeidsliste {
     isOpen: boolean;
@@ -15,13 +15,13 @@ interface FjernArbeidsliste {
     navn: string;
 }
 
-function FjernArbeidsliste(props: FjernArbeidsliste){
+function FjernArbeidsliste(props: FjernArbeidsliste) {
     return(
         <Modal
             isOpen={props.isOpen}
             onRequestClose={props.onRequestClose}
             header={<ModalHeader/>}
-            className=''
+            className=""
         >
             <ModalContainer className="arbeidsliste__container">
                 <Innholdstittel className="arbeidsliste__overskrift">
@@ -38,11 +38,11 @@ function FjernArbeidsliste(props: FjernArbeidsliste){
                 </Undertittel>
             </ModalContainer>
             <ModalFooter>
-                <Hovedknapp onClick={()=> props.onBekreft(props.fnr)}>Slett</Hovedknapp>
+                <Hovedknapp onClick={() => props.onBekreft(props.fnr)}>Slett</Hovedknapp>
                 <Knapp onClick={props.onRequestClose}>Avbryt</Knapp>
             </ModalFooter>
         </Modal>
-    )
+    );
 }
 
 export default FjernArbeidsliste;

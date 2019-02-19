@@ -2,17 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import { Innholdstittel } from 'nav-frontend-typografi';
-import {Appstate} from "../../../types/appstate";
+import { Appstate } from '../../../types/appstate';
 import Modal from '../../components/modal/modal';
 import ModalHeader from '../../components/modal/modal-header';
-import {Dispatch} from "redux";
-import {navigerTilbake} from "../../../store/navigation/actions";
-
+import { Dispatch } from 'redux';
+import { navigerTilbake } from '../../../store/navigation/actions';
 
 interface OwnProps {
     children: React.ReactNode;
-    ingenTilbakeKnapp?: boolean,
-    visConfirmDialog?: boolean,
+    ingenTilbakeKnapp?: boolean;
+    visConfirmDialog?: boolean;
     touched: boolean;
 }
 interface StateProps {
@@ -23,12 +22,11 @@ interface DispatchProps {
     tilbake: () => void;
 }
 
-
 type VeilederVerktoyModalProps = OwnProps & StateProps & DispatchProps & InjectedIntlProps;
 
 function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
 
-    const onRequestClose= () => {
+    const onRequestClose = () => {
         const dialogTekst = props.intl.formatMessage({id: 'aktkivitet-skjema.lukk-advarsel'});
         if (!props.touched || confirm(dialogTekst)) {
             props.tilbake();
@@ -59,8 +57,7 @@ function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
                         values={{ navn: props.navnPaMotpart }}
                     />
                 </Innholdstittel>
-                <div className="innstillinger__innhold"
-                >
+                <div className="innstillinger__innhold">
                     {props.children}
                 </div>
             </article>
@@ -68,14 +65,12 @@ function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
     );
 }
 
-
-
 const mapStateToProps = (state: Appstate) => ({
     navnPaMotpart: state.personalia.data.sammensattNavn,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    tilbake: ()=> dispatch(navigerTilbake())
+    tilbake: () => dispatch(navigerTilbake())
 });
 
-export default connect<StateProps,DispatchProps,OwnProps>(mapStateToProps, mapDispatchToProps)(injectIntl(VeilederVerktoyModal));
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(injectIntl(VeilederVerktoyModal));

@@ -1,5 +1,5 @@
-import {Arbeidsliste} from "../../types/arbeidsliste";
-import {ArbeidslisteForm} from "../../app/veilederverktoy/arbeidsliste/arbeidsliste-form";
+import { Arbeidsliste } from '../../types/arbeidsliste';
+import { ArbeidslisteForm } from '../../app/veilederverktoy/arbeidsliste/arbeidsliste-form';
 
 export enum ArbeidslisteActionType {
     HENT_ARBEIDSLISTE = 'HENT_ARBEIDSLISTE',
@@ -8,9 +8,9 @@ export enum ArbeidslisteActionType {
     SLETT_ARBEIDSLISTE = 'SLETT_ARBEIDSLISTE',
     SLETT_ARBEIDSLISTE_SUCCESS = 'SLETT_ARBEIDSLISTE_SUCCESS',
     SLETT_ARBEIDSLISTE_ERROR = 'SLETT_ARBEIDSLISTE_ERROR',
-    OPPDATER_ARBEIDSLISTE = "OPPDATER_TIL_ARBEIDSLISTE",
-    OPPDATER_ARBEIDSLISTE_SUCESS = "OPPDATER_TIL_ARBEIDSLISTE_SUCCESS",
-    OPPDATER_ARBEIDSLISTE_ERROR = "OPPDATER_TIL_ARBEIDSLISTE_ERROR",
+    OPPDATER_ARBEIDSLISTE = 'OPPDATER_TIL_ARBEIDSLISTE',
+    OPPDATER_ARBEIDSLISTE_SUCESS = 'OPPDATER_TIL_ARBEIDSLISTE_SUCCESS',
+    OPPDATER_ARBEIDSLISTE_ERROR = 'OPPDATER_TIL_ARBEIDSLISTE_ERROR',
 
 }
 
@@ -18,69 +18,68 @@ export const slettArbeidsliste = (fnr: string): SlettArbeidslisteAction => {
     return {
         type: ArbeidslisteActionType.SLETT_ARBEIDSLISTE,
         fnr
-    }
+    };
 };
 
 export const slettArbeidslisteActionSuccess = (data: Arbeidsliste): SlettArbeidslisteActionSuccess => {
     return {
         type: ArbeidslisteActionType.SLETT_ARBEIDSLISTE_SUCCESS,
         data
-    }
+    };
 };
 
 export const slettArbeidslisteActionError = (error: Error): SlettArbeidslisteActionError => {
     return {
         type: ArbeidslisteActionType.SLETT_ARBEIDSLISTE_ERROR,
         error
-    }
+    };
 };
 
 export const hentArbeidsliste = (fnr: string): HentArbeidslisteAction => {
     return {
         type: ArbeidslisteActionType.HENT_ARBEIDSLISTE,
         fnr
-    }
+    };
 };
 
 export const oppdaterArbeidsliste = (arbeidsliste: ArbeidslisteForm): OppdaterArbeidslisteAction => {
     return {
         type: ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE,
         arbeidsliste,
-    }
+    };
 };
 
 export const oppdaterArbeidslisteSuccess = (data: Arbeidsliste): OppdaterArbeidslisteActionSuccess => {
     return {
         type: ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE_SUCESS,
         data,
-    }
+    };
 };
 
 export const oppdaterArbeidslisteError = (error: Error): OppdaterArbeidslisteActionError => {
     return {
         type: ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE_ERROR,
         error
-    }
+    };
 };
 
 export const hentArbeidslisteSuccess = (data: Arbeidsliste): HentArbeidslisteActionSuccess => {
     return {
         type: ArbeidslisteActionType.HENT_ARBEIDSLISTE_SUCCESS,
         data
-    }
+    };
 };
 
 export const hentArbeidslisteError = (error: Error): HentArbeidslisteActionError => {
     return {
         type: ArbeidslisteActionType.HENT_ARBEIDSLISTE_ERROR,
         error
-    }
+    };
 };
-
 
 export interface HentArbeidslisteAction {
     type: ArbeidslisteActionType.HENT_ARBEIDSLISTE;
-    fnr:string;
+    fnr: string;
 }
 
 export interface OppdaterArbeidslisteAction {
@@ -105,7 +104,7 @@ export interface HentArbeidslisteActionSuccess {
 
 export interface HentArbeidslisteActionError {
     type: ArbeidslisteActionType.HENT_ARBEIDSLISTE_ERROR;
-    error: Error
+    error: Error;
 }
 
 export interface SlettArbeidslisteAction {
@@ -122,7 +121,6 @@ export interface SlettArbeidslisteActionError {
     type: ArbeidslisteActionType.SLETT_ARBEIDSLISTE_ERROR;
     error: Error;
 }
-
 
 export type ArbeidslisteActions =
     HentArbeidslisteAction |

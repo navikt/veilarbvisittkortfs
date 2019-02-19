@@ -1,15 +1,15 @@
-import React, {Children, cloneElement, Component} from 'react';
+import React, { Children, cloneElement, Component } from 'react';
 import classNames from 'classnames';
-import "./dropdown.less"
-
+import './dropdown.less';
+/* tslint:disable */
 const btnCls = (erApen: boolean, className: string|undefined) =>
     classNames('dropdown', className, {
         'dropdown--apen': erApen,
     });
 
-function isChildOf(parent:any, element: any):boolean {
+function isChildOf(parent: any, element: any): boolean {
     if (element === document) {
-        // eslint-disable-line no-undef
+
         return false;
     }
 
@@ -18,7 +18,6 @@ function isChildOf(parent:any, element: any):boolean {
     }
     return isChildOf(parent, element.parentNode);
 }
-
 function settFokus(element: any) {
     if (element !== null) {
         const elementer = element.querySelector('button, a, input, select');
@@ -28,18 +27,17 @@ function settFokus(element: any) {
     }
 }
 interface DropdownProps {
-    apen?: boolean,
-    name: string,
-    knappeTekst: string,
-    children: React.ReactChildren | React.ReactChild | React.ReactNode,
-    className?: string,
-    onLukk: () => void,
+    apen?: boolean;
+    name: string;
+    knappeTekst: string;
+    children: React.ReactChildren | React.ReactChild | React.ReactNode;
+    className?: string;
+    onLukk: () => void;
 }
 
 interface DropdownState {
     apen: boolean;
 }
-
 
 class Dropdown extends Component<DropdownProps, DropdownState> {
     // @ts-ignore

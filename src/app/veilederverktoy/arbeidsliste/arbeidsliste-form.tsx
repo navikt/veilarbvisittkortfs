@@ -1,13 +1,13 @@
 import React from 'react';
-import {Formik, FormikValues} from 'formik';
+import { Formik, FormikValues } from 'formik';
 import { Input, Textarea } from 'nav-frontend-skjema';
 import * as Yup from 'yup';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import {Arbeidsliste} from "../../../types/arbeidsliste";
-import Modal from "../../components/modal/modal";
-import {connect} from "react-redux";
-import {Dispatch} from "redux";
-import {oppdaterArbeidsliste} from "../../../store/arbeidsliste/actions";
+import { Arbeidsliste } from '../../../types/arbeidsliste';
+import Modal from '../../components/modal/modal';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { oppdaterArbeidsliste } from '../../../store/arbeidsliste/actions';
 import ModalContainer from '../../components/modal/modal-container';
 import ModalHeader from '../../components/modal/modal-header';
 import ModalFooter from '../../components/modal/modal-footer';
@@ -16,23 +16,22 @@ import './arbeidsliste.less';
 interface OwnProps {
     isOpen: boolean;
     onRequestClose: () => void;
-    arbeidsliste:Arbeidsliste;
+    arbeidsliste: Arbeidsliste;
     innholdstittel: string;
     children: React.ReactNode;
 }
 
 interface DispatchProps {
-    lagreArbeidsliste: (values: FormikValues)=> void;
+    lagreArbeidsliste: (values: FormikValues) => void;
 }
 
 export interface ArbeidslisteForm {
     kommentar: string;
-    overskrift:string;
+    overskrift: string;
     frist?: string;
 }
 
 type LeggTilArbeidslisteProps = DispatchProps & OwnProps;
-
 
 const ArbeidslisteSchema = Yup.object().shape({
     overskrift: Yup.string()
@@ -48,7 +47,7 @@ const ArbeidslisteSchema = Yup.object().shape({
 function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
     const initalValues = {
         overskrift: props.arbeidsliste.overskrift ? props.arbeidsliste.overskrift :  '',
-        kommentar: props.arbeidsliste.kommentar? props.arbeidsliste.kommentar : '' };
+        kommentar: props.arbeidsliste.kommentar ? props.arbeidsliste.kommentar : '' };
     return (
         <Formik
             initialValues={initalValues}
@@ -66,7 +65,7 @@ function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
                     <Modal
                         isOpen={props.isOpen}
                         onRequestClose={props.onRequestClose}
-                        className=''
+                        className=""
                         header={<ModalHeader/>}
                     >
                         <section className="arbeidsliste__form">
@@ -102,10 +101,10 @@ function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
     );
 }
 
-const mapDispatchToProps= (dispatch : Dispatch) =>({
-    lagreArbeidsliste: (values: FormikValues)=> dispatch(
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    lagreArbeidsliste: (values: FormikValues) => dispatch(
         oppdaterArbeidsliste({kommentar: values.kommentar, overskrift: values.overskrift})
     )
 });
 
-export default connect<{},DispatchProps, OwnProps>(null, mapDispatchToProps)(ArbeidslisteForm);
+export default connect<{}, DispatchProps, OwnProps>(null, mapDispatchToProps)(ArbeidslisteForm);

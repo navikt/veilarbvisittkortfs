@@ -5,6 +5,7 @@ import { ArbeidslisteState } from '../store/arbeidsliste/reducer';
 import { DialogState } from '../store/dialog/reducer';
 import { NavigationState } from '../store/navigation/reducer';
 import { TildelVeilederState } from '../store/tildel-veileder/reducer';
+import { TilgangTilBrukersKontorState } from '../store/tilgang-til-brukerskontor/reducer';
 
 export interface Appstate {
     oppfolging: OppfogingState;
@@ -14,4 +15,5 @@ export interface Appstate {
     dialog: DialogState;
     navigation: NavigationState;
     tildelVeileder: TildelVeilederState;
+    tilgangTilBrukersKontor: TilgangTilBrukersKontorState;
 }

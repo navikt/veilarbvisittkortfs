@@ -1,9 +1,9 @@
 import React from 'react';
-import PersonInfo from "./app/personinfo/personinfo";
-import Veilederverktoyslinje from "./app/veilederverktoy/veiledervertoyslinje";
-import Tilbakelenke from "./app/tilbakelenke";
-import "./index.less";
-import AppProvider from "./app-provider";
+import PersonInfo from './app/personinfo/personinfo';
+import Veilederverktoyslinje from './app/veilederverktoy/veiledervertoyslinje';
+import Tilbakelenke from './app/tilbakelenke';
+import './index.less';
+import AppProvider from './app-provider';
 
 export interface AppProps {
     fnr: string;
@@ -18,7 +18,7 @@ class App extends React.Component<AppProps> {
                     <Tilbakelenke enhet={this.props.enhet}/>
                     <div className="visittkortfs__container">
                         <PersonInfo/>
-                        <Veilederverktoyslinje/>
+                        <Veilederverktoyslinje fnr={this.props.fnr}/>
                     </div>
                 </div>
             </AppProvider>

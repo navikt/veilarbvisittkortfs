@@ -3,7 +3,7 @@ export enum NavigationActionTypes {
     START_ESKALERING= 'START_ESKALERING',
     START_ESKALERING_KVITTERING = 'START_ESKALERING_KVITTERING',
     TILBAKE = 'TILBAKE',
-};
+}
 
 interface NavigerProsesserAction {
     type: NavigationActionTypes.PROSESSER;
@@ -24,19 +24,19 @@ interface NavigerTilbakeAction {
 export function navigerTilProsesser(): NavigerProsesserAction {
     return {
         type: NavigationActionTypes.PROSESSER
-    }
+    };
 }
 
 export function navigerTilStartEskalering(): NavigerStartEskaleringAction {
     return {
         type: NavigationActionTypes.START_ESKALERING
-    }
+    };
 }
 
 export function navigerTilbake(): NavigerTilbakeAction {
     return {
         type: NavigationActionTypes.TILBAKE
-    }
+    };
 }
 
 export type NavigationActions = NavigerProsesserAction | NavigerStartEskaleringAction | NavigerStartEskaleringKvitteringAction | NavigerTilbakeAction;

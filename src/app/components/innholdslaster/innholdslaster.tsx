@@ -4,11 +4,11 @@ import Spinner from 'nav-frontend-spinner';
 interface InnholdlasterProps {
     className?: string;
     avhengigheter: boolean[];
-    children: React.ReactNode
+    children: React.ReactNode;
 }
 
 function Innholdslaster(props: InnholdlasterProps) {
-    const visChildren = props.avhengigheter.every(avhengighet=> avhengighet);
+    const visChildren = props.avhengigheter.every(avhengighet => avhengighet);
 
     if (visChildren) {
         return props.children;

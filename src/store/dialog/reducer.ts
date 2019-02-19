@@ -1,73 +1,71 @@
-import {OrNothing} from "../../types/utils/ornothing";
-import Dialog from "../../types/dialog";
-import {Reducer} from "redux";
-import {call, put, takeLatest, all, select} from 'redux-saga/effects';
+import { OrNothing } from '../../types/utils/ornothing';
+import Dialog from '../../types/dialog';
+import { Reducer } from 'redux';
+import { call, put, takeLatest, all, select } from 'redux-saga/effects';
 import {
     DialogActions, DialogActionType,
     HenvendelseActionType, oppdaterDialogSuccess,
     OpprettHenvendelseAction, OpprettHenvendelseActionSuccess,
     opprettHenvendelseError,
     opprettHenvendelseSuccess
-} from "./actions";
-import DialogApi from "../../api/dialog-api";
-import OppfolgingApi from "../../api/oppfolging-api";
-import PersonaliaSelectors from "../personalia/selectors";
-import {startEskaleringSuccess} from "../oppfolging/actions";
-import {hentOppfolgingstatusSuccess} from "../oppfolging-status/actions";
+} from './actions';
+import DialogApi from '../../api/dialog-api';
+import OppfolgingApi from '../../api/oppfolging-api';
+import PersonaliaSelectors from '../personalia/selectors';
+import { startEskaleringError, startEskaleringSuccess } from '../oppfolging/actions';
+import { hentOppfolgingstatusSuccess } from '../oppfolging-status/actions';
 
-export type DialogState = {data: Dialog} & {isLoading: boolean; error: OrNothing<Error>}
-
+export type DialogState = {data: Dialog} & {isLoading: boolean; error: OrNothing<Error>};
 
 const initialState: DialogState = {
-    isLoading:false,
+    isLoading: false,
     error: null,
     data: {
-        aktvitetId:null,
-    egenskaper:[],
+        aktvitetId: null,
+    egenskaper: [],
     erLestAvBruker: false,
     ferdigBehandlet: false,
-    henvendelser:[],
+    henvendelser: [],
     historisk: false,
-    id:"",
-    lest:false,
-    lestAvBrukerTidspunkt : "",
-    opprettetDato: "",
-    overskrift: "",
-    sisteDato: "",
-    sisteTekst:"",
-    venterPaSvar:false,
+    id: '',
+    lest: false,
+    lestAvBrukerTidspunkt : '',
+    opprettetDato: '',
+    overskrift: '',
+    sisteDato: '',
+    sisteTekst: '',
+    venterPaSvar: false,
     }
 };
 
 const dialogReducer: Reducer<DialogState, DialogActions> = (state = initialState, action) => {
     switch (action.type) {
         case HenvendelseActionType.OPPRETTET_HENVENDELSE: {
-            return {...state, isLoading: true}
+            return {...state, isLoading: true};
         }
         case HenvendelseActionType.OPPRETTET_HENVENDELSE_SUCCESS:
-        case DialogActionType.OPPDATER_DIALOG_SUCCESS:
-            {
+        case DialogActionType.OPPDATER_DIALOG_SUCCESS: {
             return {
                 ...state,
-                isLoading:false,
+                isLoading: false,
                 data: action.data
-            }
+            };
         }
         case HenvendelseActionType.OPPRETTET_HENVENDELSE_ERROR: {
             return {
                 ...state,
-                isLoading:false,
+                isLoading: false,
                 error: action.error
-            }
+            };
         }
+        default:
+            return state;
     }
-    return state;
 };
-
 
 function* opprettHenvendelse(action: OpprettHenvendelseAction) {
     try {
-        const response = yield call( ()=> DialogApi.nyHenvendelse(action.data));
+        const response = yield call( () => DialogApi.nyHenvendelse(action.data));
         yield put(opprettHenvendelseSuccess(response));
     } catch (e) {
         yield put(opprettHenvendelseError(e));
@@ -88,15 +86,14 @@ function* startEskaleringMedDialog(action: OpprettHenvendelseActionSuccess) {
         yield put(oppdaterDialogSuccess(dialogData2));
         yield put(startEskaleringSuccess(oppfolgingStatus));
 
-        const response = yield call (()=> OppfolgingApi.hentOppfolgingData(fnr));
+        const response = yield call (() => OppfolgingApi.hentOppfolgingData(fnr));
 
         yield put(hentOppfolgingstatusSuccess(response));
 
-    } catch(e) {
-
+    } catch (e) {
+        yield put(startEskaleringError(e));
     }
 }
-
 
 export function* dialogSaga() {
     yield takeLatest(HenvendelseActionType.OPPRETTET_HENVENDELSE, opprettHenvendelse);

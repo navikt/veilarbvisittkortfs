@@ -37,6 +37,7 @@ const mock = FetchMock.configure({
 
 mock.get('/veilarboppfolging/api/person/:fnr/oppfolgingsstatus', Oppfolgingsstatus);
 mock.get('/veilarboppfolging/api/oppfolging', Oppfolging);
+mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', {tilgangTilBrukersKontor: true});
 mock.get('/veilarbperson/api/person/:fnr', Personalia);
 mock.get('/veilarbportefolje/api/arbeidsliste/:fnr', Arbeidsliste);
 mock.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', Veilederliste);

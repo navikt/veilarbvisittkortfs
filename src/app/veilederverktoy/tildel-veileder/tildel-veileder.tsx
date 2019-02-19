@@ -1,31 +1,30 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Dropdown from '../../components/dropdown/dropdown';
-import SokFilter from "../../components/sokfilter/sok-filter";
-import RadioFilterForm from "../../components/radiofilterform/radio-filter-form";
-import {VeilederData} from "../../../types/veilederdata";
-import personalia from "../../../mock/personalia";
-import {Appstate} from "../../../types/appstate";
-import OppfolgingsstatusSelector from "../../../store/oppfolging-status/selectors";
-import {connect} from "react-redux";
-import {bindActionCreators, Dispatch} from "redux";
+import SokFilter from '../../components/sokfilter/sok-filter';
+import RadioFilterForm from '../../components/radiofilterform/radio-filter-form';
+import { VeilederData } from '../../../types/veilederdata';
+import personalia from '../../../mock/personalia';
+import { Appstate } from '../../../types/appstate';
+import OppfolgingsstatusSelector from '../../../store/oppfolging-status/selectors';
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import {
     hentAlleVeiledereForEnheten,
     hentPaloggetVeileder, HentPaloggetVeilederAction,
     HentVeilederPaEnhetenAction, tildelTilVeileder, TildelVeilederAction
-} from "../../../store/tildel-veileder/actions";
-import {StringOrNothing} from "../../../types/utils/stringornothings";
-import {TildelVeilederData} from "../../../types/tildel-veileder";
+} from '../../../store/tildel-veileder/actions';
+import { StringOrNothing } from '../../../types/utils/stringornothings';
+import { TildelVeilederData } from '../../../types/tildel-veileder';
 import './tildel-veileder.less';
-
 
 function settSammenNavn(veileder: VeilederData) {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
 }
 
 interface StateProps {
-    oppfolgingsenhetId: StringOrNothing,
-    veiledere: VeilederData[],
-    paloggetVeileder: VeilederData,
+    oppfolgingsenhetId: StringOrNothing;
+    veiledere: VeilederData[];
+    paloggetVeileder: VeilederData;
 }
 
 interface DispatchProps {
@@ -34,22 +33,21 @@ interface DispatchProps {
     tildelTilVeileder: (veilederData: TildelVeilederData[]) => TildelVeilederAction;
 }
 
-function TildelVeileder(props : StateProps & DispatchProps ) {
-    useEffect(()=> {
+function TildelVeileder(props: StateProps & DispatchProps ) {
+    useEffect(() => {
         props.hentAlleVeiledereForEnheten(props.oppfolgingsenhetId || '1234');
         props.hentPaloggetVeileder();
-    },[]);
+    }, []);
 
-
-    const setValgtVeileder = (event: any, value:string, closeDropdown: () => void ) => {
+    const setValgtVeileder = (event: React.SyntheticEvent, value: string, closeDropdown: () => void ) => {
         event.preventDefault();
-        props.paloggetVeileder && props.tildelTilVeileder([
-            {
-                fraVeilederId: props.paloggetVeileder.ident,
-                tilVeilederId: value,
-                brukerFnr: personalia.fodselsnummer,
-            },
-        ]);
+        if (props.paloggetVeileder) {
+            props.tildelTilVeileder([{
+                    fraVeilederId: props.paloggetVeileder.ident,
+                    tilVeilederId: value,
+                    brukerFnr: personalia.fodselsnummer,
+                }]);
+        }
         closeDropdown();
     };
 
@@ -72,8 +70,8 @@ function TildelVeileder(props : StateProps & DispatchProps ) {
                         createLabel={settSammenNavn}
                         createValue={(veileder: VeilederData) => veileder.ident}
                         radioName="tildel-veileder"
-                        fjernNullstill
-                        visLukkKnapp
+                        fjernNullstill={true}
+                        visLukkKnapp={true}
                         {...radioFilterProps}
                     />}
             </SokFilter>
@@ -90,5 +88,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators({hentPaloggetVeileder, hentAlleVeiledereForEnheten, tildelTilVeileder}, dispatch);
 };
 
-
-export default connect<StateProps,DispatchProps>(mapStateToProps, mapDispatchToProps)(TildelVeileder);
+export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(TildelVeileder);
