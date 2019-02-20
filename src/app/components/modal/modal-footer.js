@@ -1,6 +1,5 @@
 import React from 'react';
 import PT from 'prop-types';
-import visibleIf from "../visible-if";
 
 function ModalFooter({ children }) {
     return (

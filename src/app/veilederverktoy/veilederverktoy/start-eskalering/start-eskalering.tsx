@@ -3,7 +3,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Dispatch } from 'redux';
 import { opprettHenvendelse } from '../../../../store/dialog/actions';
 import { connect } from 'react-redux';
-import { navigerTilbake } from '../../../../store/navigation/actions';
+import { navigerAction } from '../../../../store/navigation/actions';
 import { Appstate } from '../../../../types/appstate';
 import BegrunnelseForm from '../begrunnelseform/begrunnelse-form';
 
@@ -19,6 +19,11 @@ interface StateProps {
 type StartEskaleringProps = StateProps & DispatchProps;
 
 function StartEskalering(props: StartEskaleringProps) {
+    const infoTekst = (
+        <div className="blokk-xxs">
+            <FormattedMessage id="innstillinger.modal.start-eskalering.beskrivelse" />
+        </div>
+    );
     return (
         <FormattedMessage id="dialog.eskalering.overskrift">
             {overskrift =>
@@ -27,10 +32,10 @@ function StartEskalering(props: StartEskaleringProps) {
                         <BegrunnelseForm
                             tekst={defaultTekst as string}
                             handleSubmit={props.handleSubmit(overskrift as string)}
-                            tekstariaLabel="herpsderps"
-                            maxLength={500}
+                            tekstariaLabel="Rediger teksten under slik at den passer."
+                            maxLength={5000}
                             overskriftTekstId="innstillinger.modal.start-eskalering.overskrift"
-                            beskrivelseTekstId="innstillinger.modal.start-eskalering.beskrivelse"
+                            infoTekst={infoTekst}
                             isLoading={props.isLoading}
                         />
                     }
@@ -50,7 +55,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
             return (tekst: string) => dispatch(opprettHenvendelse(
                     {begrunnelse: tekst, overskrift, egenskaper: ['ESKALERINGSVARSEL'], tekst}));
         },
-        tilbake: () => dispatch(navigerTilbake())
+        tilbake: () => dispatch(navigerAction(null))
     };
 };
 

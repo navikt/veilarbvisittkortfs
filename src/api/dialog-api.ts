@@ -8,19 +8,19 @@ export interface DialogApi {
     oppdaterVenterPaSvar: (dialogId: string, venterPaSvar: boolean) => Promise<Dialog>;
 }
 
-function nyHenvendelse(henvendelse: HenvendelseData) {
-    return postAsJson(`/veilarbdialog/api/dialog`, henvendelse);
+function nyHenvendelse(henvendelse: HenvendelseData, fnr: string) {
+    return postAsJson(`/veilarbdialog/api/dialog?fnr=${fnr}`, henvendelse);
 }
 
-function oppdaterFerdigbehandlet(dialogId: string, erFerdigbehandlet: boolean) {
+function oppdaterFerdigbehandlet(dialogId: string, erFerdigbehandlet: boolean, fnr: string) {
     return putAsJson(
-        `/veilarbdialog/api/dialog/${dialogId}/ferdigbehandlet/${erFerdigbehandlet}`
+        `/veilarbdialog/api/dialog/${dialogId}/ferdigbehandlet/${erFerdigbehandlet}?fnr=${fnr}`
     );
 }
 
-function oppdaterVenterPaSvar(dialogId: string, venterPaSvar: boolean) {
+function oppdaterVenterPaSvar(dialogId: string, venterPaSvar: boolean, fnr: string) {
     return putAsJson(
-        `/veilarbdialog/api/dialog/${dialogId}/venter_pa_svar/${venterPaSvar}`
+        `/veilarbdialog/api/dialog/${dialogId}/venter_pa_svar/${venterPaSvar}}?fnr=${fnr}`
     );
 }
 

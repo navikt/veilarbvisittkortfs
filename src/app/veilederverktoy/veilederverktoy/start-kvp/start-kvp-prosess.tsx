@@ -8,28 +8,28 @@ import { Dispatch } from 'redux';
 import { navigerAction } from '../../../../store/navigation/actions';
 
 interface StateProps {
-    skjulStartEskalering: boolean;
+    skjulStartKvpPeriode: boolean;
 }
 
 interface DispatchProps {
-    navigerTilStartEsklaringForm: () => void;
+    navigerTilStartKvpPeriode: () => void;
 }
 
-function StartEskaleringProsess({skjulStartEskalering, navigerTilStartEsklaringForm }: StateProps & DispatchProps) {
-    if (!skjulStartEskalering) {
+function StartKvpPeriodeProsess({skjulStartKvpPeriode, navigerTilStartKvpPeriode }: StateProps & DispatchProps) {
+    if (skjulStartKvpPeriode) {
         return null;
     }
     return (
         <>
             <StartProsess
                 className="innstillinger__prosess"
-                tittelId="innstillinger.prosess.start-eskalering.tittel"
+                tittelId="innstillinger.prosess.start-kvp.tittel"
                 knappetekstId="innstillinger.modal.prosess.start.knapp"
-                onClick={navigerTilStartEsklaringForm}
+                onClick={navigerTilStartKvpPeriode}
             >
                 <div className="blokk-xs">
                     <Normaltekst>
-                        <FormattedMessage id="innstillinger.prosess.start-eskalering.tekst" />
+                        <FormattedMessage id="innstillinger.prosess.start-kvp.tekst" />
                     </Normaltekst>
                 </div>
             </StartProsess>
@@ -39,17 +39,13 @@ function StartEskaleringProsess({skjulStartEskalering, navigerTilStartEsklaringF
 
 const mapStateToProps = (state: Appstate): StateProps => {
     const oppfolging = state.oppfolging.data;
-    return{
-        skjulStartEskalering:
-            !oppfolging.underOppfolging ||
-            !oppfolging.gjeldeneEskaleringsvarsel ||
-            oppfolging.reservarsjonKRR ||
-            oppfolging.manuell
+    return {
+        skjulStartKvpPeriode: !oppfolging.underOppfolging || oppfolging.underKvp
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    navigerTilStartEsklaringForm: () => dispatch(navigerAction('start_eskalering'))
+    navigerTilStartKvpPeriode: () => dispatch(navigerAction('start_kvp_periode'))
 });
 
-export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(StartEskaleringProsess);
+export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(StartKvpPeriodeProsess);

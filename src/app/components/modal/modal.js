@@ -18,8 +18,6 @@ function Modal({
             onRequestClose();
             return;
         }
-
-        //history.push('/');
     };
     return (
         <NavFrontendModal
@@ -52,7 +50,6 @@ Modal.propTypes = {
     onRequestClose: PT.func,
     className: PT.string,
     header: PT.node,
-    feilmeldinger: PT.array,
     children: PT.node.isRequired,
     avhengigheter: PT.array,
     minstEnAvhengighet: PT.bool,

@@ -5,14 +5,15 @@ import VeilederVerktoyModal from '../veilederverktoy-modal';
 import BegrunnelseFooter from './begrunnelse-form-footer';
 import { StringOrNothing } from '../../../../types/utils/stringornothings';
 import BergrunnelseOverskrift from './begrunnelse-overskrift';
+import './begrunnelse-form.less';
 
 interface BegrunnelseFormProps {
     tekst: StringOrNothing;
     handleSubmit: (tekst: string) => void;
     tekstariaLabel: React.ReactNode;
     overskriftTekstId: string;
-    beskrivelseTekstId: string;
-    maxLength: number;
+    infoTekst: React.ReactNode;
+    maxLength?: number;
     isLoading: boolean;
 }
 
@@ -32,12 +33,12 @@ function BegrunnelseForm(props: BegrunnelseFormProps) {
                             <section className="innstillinger__prosess">
                                 <BergrunnelseOverskrift
                                     overskriftTekstId={props.overskriftTekstId}
-                                    beskrivelseTekstId={props.beskrivelseTekstId}
+                                    infoTekst={props.infoTekst}
                                 />
                                 <form onSubmit={formikProps.handleSubmit}>
                                     <Textarea
                                         label={props.tekstariaLabel}
-                                        maxLength={5000}
+                                        maxLength={props.maxLength || 500}
                                         value={formikProps.values.tekst}
                                         name="tekst"
                                         onChange={formikProps.handleChange}

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Formik, FormikValues } from 'formik';
 import { Input, Textarea } from 'nav-frontend-skjema';
-import * as Yup from 'yup';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Arbeidsliste } from '../../../types/arbeidsliste';
 import Modal from '../../components/modal/modal';
@@ -12,6 +11,10 @@ import ModalContainer from '../../components/modal/modal-container';
 import ModalHeader from '../../components/modal/modal-header';
 import ModalFooter from '../../components/modal/modal-footer';
 import './arbeidsliste.less';
+import Datovelger from 'nav-datovelger/dist/datovelger/Datovelger';
+import { OrNothing } from '../../../types/utils/ornothing';
+import { StringOrNothing } from '../../../types/utils/stringornothings';
+import { moment } from '../../../App';
 
 interface OwnProps {
     isOpen: boolean;
@@ -28,31 +31,46 @@ interface DispatchProps {
 export interface ArbeidslisteForm {
     kommentar: string;
     overskrift: string;
-    frist?: string;
+    frist: OrNothing<Date>;
+}
+
+interface ErrorProps {
+    kommentar: StringOrNothing;
+    frist: StringOrNothing;
+    overskrift: StringOrNothing;
 }
 
 type LeggTilArbeidslisteProps = DispatchProps & OwnProps;
 
-const ArbeidslisteSchema = Yup.object().shape({
-    overskrift: Yup.string()
-        .min(1, 'Før kort')
-        .max(20, 'Too Long!')
-        .required('Pakrevd'),
-    kommentar: Yup.string()
-        .min(1, 'Too Short!')
-        .max(100, 'Too Long!')
-        .required('Pakrevd'),
-});
-
 function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
     const initalValues = {
         overskrift: props.arbeidsliste.overskrift ? props.arbeidsliste.overskrift :  '',
-        kommentar: props.arbeidsliste.kommentar ? props.arbeidsliste.kommentar : '' };
+        kommentar: props.arbeidsliste.kommentar ? props.arbeidsliste.kommentar : '' ,
+        frist: props.arbeidsliste.frist ? new Date(props.arbeidsliste.frist) : props.arbeidsliste.frist};
+
     return (
         <Formik
             initialValues={initalValues}
             onSubmit={props.lagreArbeidsliste}
-            validationSchema={ArbeidslisteSchema}
+            validate={values => {
+                let errors: ErrorProps = {kommentar: null, frist: null, overskrift: null};
+                if (values.kommentar.length === 0) {
+                    errors.kommentar = 'Påkrevd!';
+                } else if (values.kommentar.length > 500) {
+                    errors.kommentar = 'Før langt';
+                }
+
+                if (values.overskrift.length === 0) {
+                    errors.overskrift = 'Påkreved';
+                } else if (values.overskrift.length > 15) {
+                    errors.overskrift = 'Før langt';
+                }
+
+                if (values.frist && !moment(values.frist).isAfter(moment().subtract(1, 'day').startOf('day'), 'd')) {
+                    errors.frist = 'Fristen må være i dag eller senere';
+                }
+                return errors;
+            }}
             render={formikProps => {
 
                 const harFeilIOverskrift = formikProps.errors.overskrift && formikProps.touched.overskrift ?
@@ -60,6 +78,14 @@ function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
 
                 const harFeilIKommentar =  formikProps.errors.kommentar && formikProps.touched.kommentar ?
                     {feilmelding: formikProps.errors.kommentar} : undefined;
+
+                const handleChange = (value: Date| string) => {
+                    let dato = value;
+                    if (typeof value === 'string') {
+                        dato = new Date(value);
+                    }
+                    formikProps.setFieldValue('frist', dato);
+                };
 
                 return (
                     <Modal
@@ -88,9 +114,32 @@ function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
                                         name="kommentar"
                                         feil={harFeilIKommentar}
                                     />
+                                    <Datovelger
+                                        input={{
+                                            id: 'fristInput',
+                                            name: 'frist',
+                                            placeholder: 'dd.mm.åååå',
+                                            ariaLabel: 'Frist:',
+                                            onChange: handleChange,
+                                        }}
+                                        id="fristDatovelger"
+                                        onChange={handleChange}
+                                        locale="no"
+                                        dato={formikProps.values.frist}
+                                    />
                                     <ModalFooter>
-                                        <Hovedknapp htmlType="submit">Lagre</Hovedknapp>
-                                        <Knapp htmlType="button" onClick={props.onRequestClose}> Avbryt </Knapp>
+                                        <Hovedknapp htmlType="submit">
+                                            Lagre
+                                        </Hovedknapp>
+                                        <Knapp
+                                            htmlType="button"
+                                            onClick={() => {
+                                                formikProps.resetForm(initalValues);
+                                                props.onRequestClose();
+                                            }}
+                                        >
+                                            Avbryt
+                                        </Knapp>
                                     </ModalFooter>
                                 </form>
                             </ModalContainer>
@@ -103,7 +152,7 @@ function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     lagreArbeidsliste: (values: FormikValues) => dispatch(
-        oppdaterArbeidsliste({kommentar: values.kommentar, overskrift: values.overskrift})
+        oppdaterArbeidsliste({kommentar: values.kommentar, overskrift: values.overskrift, frist: values.frist})
     )
 });
 

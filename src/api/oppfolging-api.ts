@@ -7,6 +7,9 @@ export interface OppfolgingApi {
     hentOppfolgingData: (fnr?: string) => Promise<Oppfolging>;
     startEskalering: (dialogId: string, begrunnelse: string) => Promise<void>; //TODO ELLER NOE
     hentVeilederTilgang: (fnr: string) => Promise<void>; //TODO ELLER NOE
+    settManuellOppfolging: (begrunnelse: string, veilederId: string, fnr: string) => Promise<Oppfolging>; // TODO SJEKK HVA DET SKA VARA
+    startKvpOppfolging: (begrunnelse: string, fnr: string) => Promise<void>; // TODO SJEKK HVA DET SKA VARA
+    stoppKvpOppfolging: (begrunnelse: string, fnr: string) => Promise<void>; // TODO SJEKK HVA DET SKA VARA
 }
 
 function hentOppfolgingData(fnr?: string) {
@@ -21,11 +24,33 @@ function startEskalering(dialogId: string, begrunnelse: string) {
 }
 
 function hentVeilederTilgang(fnr: string) {
-    return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/veilederTilgang?fnr={fnr}`);
+    return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/veilederTilgang?fnr=${fnr}`);
+}
+
+function settManuellOppfolging(begrunnelse: string, veilederId: string, fnr: string) {
+    return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/settManuell?fnr=${fnr}`, {
+        begrunnelse,
+        veilederId,
+    });
+}
+
+function startKvpOppfolging(begrunnelse: string, fnr: string) {
+    return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/startKvp?fnr=${fnr}`, {
+        begrunnelse,
+    });
+}
+
+export function stoppKvpOppfolging(begrunnelse: string, fnr: string) {
+    return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/stoppKvp?fnr=${fnr}`, {
+        begrunnelse,
+    });
 }
 
 export default {
     hentOppfolgingData,
     startEskalering,
-    hentVeilederTilgang
+    hentVeilederTilgang,
+    settManuellOppfolging,
+    startKvpOppfolging,
+    stoppKvpOppfolging
 } as OppfolgingApi;

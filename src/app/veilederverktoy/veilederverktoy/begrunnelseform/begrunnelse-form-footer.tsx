@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Dispatch } from 'redux';
-import { navigerTilbake } from '../../../../store/navigation/actions';
+import { navigerAction } from '../../../../store/navigation/actions';
 import { connect } from 'react-redux';
 
 interface OwnProps {
@@ -32,7 +32,7 @@ function BegrunnelseFooter(props: StartEskaleringProsessFooterProps ) {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    tilbake: () => dispatch(navigerTilbake())
+    tilbake: () => dispatch(navigerAction(null))
 });
 
 export default connect<{}, DispatchProps, OwnProps> (null, mapDispatchToProps) (BegrunnelseFooter);

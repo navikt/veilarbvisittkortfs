@@ -8,28 +8,28 @@ import { Dispatch } from 'redux';
 import { navigerAction } from '../../../../store/navigation/actions';
 
 interface StateProps {
-    skjulStartEskalering: boolean;
+    skjulStartManuellOppfolging: boolean;
 }
 
 interface DispatchProps {
-    navigerTilStartEsklaringForm: () => void;
+    navigerTilStartManuellOppfolging: () => void;
 }
 
-function StartEskaleringProsess({skjulStartEskalering, navigerTilStartEsklaringForm }: StateProps & DispatchProps) {
-    if (!skjulStartEskalering) {
+function StarManuellOppfolging({skjulStartManuellOppfolging, navigerTilStartManuellOppfolging }: StateProps & DispatchProps) {
+    if (skjulStartManuellOppfolging) {
         return null;
     }
     return (
         <>
             <StartProsess
                 className="innstillinger__prosess"
-                tittelId="innstillinger.prosess.start-eskalering.tittel"
+                tittelId="innstillinger.prosess.manuell.tittel"
                 knappetekstId="innstillinger.modal.prosess.start.knapp"
-                onClick={navigerTilStartEsklaringForm}
+                onClick={navigerTilStartManuellOppfolging}
             >
                 <div className="blokk-xs">
                     <Normaltekst>
-                        <FormattedMessage id="innstillinger.prosess.start-eskalering.tekst" />
+                        <FormattedMessage id="innstillinger.prosess.manuell.tekst" />
                     </Normaltekst>
                 </div>
             </StartProsess>
@@ -39,17 +39,13 @@ function StartEskaleringProsess({skjulStartEskalering, navigerTilStartEsklaringF
 
 const mapStateToProps = (state: Appstate): StateProps => {
     const oppfolging = state.oppfolging.data;
-    return{
-        skjulStartEskalering:
-            !oppfolging.underOppfolging ||
-            !oppfolging.gjeldeneEskaleringsvarsel ||
-            oppfolging.reservarsjonKRR ||
-            oppfolging.manuell
+    return {
+        skjulStartManuellOppfolging: !oppfolging.underOppfolging || oppfolging.manuell
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    navigerTilStartEsklaringForm: () => dispatch(navigerAction('start_eskalering'))
+    navigerTilStartManuellOppfolging: () => dispatch(navigerAction('manuell_oppfolging'))
 });
 
-export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(StartEskaleringProsess);
+export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(StarManuellOppfolging);

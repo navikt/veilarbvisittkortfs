@@ -1,13 +1,18 @@
 import { Oppfolging } from '../../types/oppfolging';
-
-export enum OppfolgingActionType {
-    HENT_OPPFOLGING = 'HENT_OPPFOLGING',
-    HENT_OPPFOLGING_SUCCESS = 'HENT_OPPFOLGING_SUCCESS',
-    HENT_OPPFOLGING_ERROR = 'HENT_OPPFOLGING_ERROR',
-    START_ESKALERING = 'OPPRETTER_HENVENDELSE_SUCCESS',
-    START_ESKALERING_SUCCESS = 'START_ESKALERING_SUCCESS',
-    START_ESKALERING_ERROR = 'START_ESKALARING_ERROR'
-}
+import { OppfolgingActionType } from './action-type';
+import {
+    StartKVPAction,
+    StartKVPActionError, StartKVPActionSuccess,
+    StoppKVPAction,
+    StoppKVPActionError,
+    StoppKVPActionSuccess
+} from './start-stopp-kvp-periode-actions';
+import {
+    SettDigitalAction,
+    SettDigitalActionError,
+    SettDigitalActionSuccess, SettManuellAction,
+    SettManuellActionError, SettManuellActionSuccess
+} from './sett-manuell-digitial-actions';
 
 export const hentOppfolging = (fnr: string): HentOppfolgingAction => {
     return {
@@ -34,6 +39,7 @@ export const startEskaleringSuccess = (data: Oppfolging): StartEskaleringActionS
     type: OppfolgingActionType.START_ESKALERING_SUCCESS,
     data
 });
+
 export const startEskaleringError = (error: Error): StartEskaleringActionError => ({
     type: OppfolgingActionType.START_ESKALERING_ERROR,
     error
@@ -44,7 +50,7 @@ export interface HentOppfolgingAction {
     fnr: string;
 }
 
-export interface StartEskalringAction {
+export interface StartEskaleringAction {
     type: OppfolgingActionType.START_ESKALERING;
 }
 
@@ -72,6 +78,18 @@ export type OppfolgingActions =
     HentOppfolgingAction |
     HentOppfolgingActionSuccess |
     HentOppfolgingActionError |
-    StartEskalringAction |
+    StartEskaleringAction |
     StartEskaleringActionSuccess |
-    StartEskaleringActionError;
+    StartEskaleringActionError |
+    SettManuellAction |
+    SettManuellActionSuccess |
+    SettManuellActionError |
+    SettDigitalAction |
+    SettDigitalActionSuccess|
+    SettDigitalActionError |
+    StartKVPAction |
+    StartKVPActionSuccess |
+    StartKVPActionError |
+    StoppKVPAction |
+    StoppKVPActionSuccess |
+    StoppKVPActionError;
