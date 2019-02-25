@@ -37,9 +37,8 @@ function LeggTilArbeidsliste(props: LeggTilArbeidslisteProps) {
                 actions.resetForm();
                 props.lukkModal();
             }}
-            render ={formikProps => {
-                console.log(formikProps);
-                return(<NavFrontendModal
+            render ={ formikProps =>
+                <NavFrontendModal
                     className="arbeidsliste-modal"
                     contentLabel="arbeidsliste"
                     isOpen={props.isOpen}
@@ -67,7 +66,7 @@ function LeggTilArbeidsliste(props: LeggTilArbeidslisteProps) {
                         </div>
                     </div>
                 </NavFrontendModal>
-            )}}
+            }
         />
 
     )

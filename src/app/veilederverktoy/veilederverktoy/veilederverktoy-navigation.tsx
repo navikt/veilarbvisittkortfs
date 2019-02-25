@@ -29,7 +29,7 @@ function VeilederVerktoyNavigation(props: VeilederVerktoyNavigationProps) {
         case 'start_kvp_periode':
             return <StarKvpPeriode/>;
         case 'stopp_kvp_periode':
-            return <StoppKvpPeriode/>
+            return <StoppKvpPeriode/>;
         default:
             return null;
     }

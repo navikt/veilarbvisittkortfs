@@ -3,6 +3,7 @@ import {Field, FieldProps, getIn} from "formik";
 import Datovelger from "nav-datovelger/dist/datovelger/Datovelger";
 import SkjemaelementFeilmelding from "nav-frontend-skjema/lib/skjemaelement-feilmelding";
 import {moment} from "../../../App";
+import "./datovelger.less";
 
 
 interface FormikDatepickerProps {
@@ -41,21 +42,20 @@ function FormikDatoVelger({name}: FormikDatepickerProps) {
             {({ field, form: {errors, setFieldValue}}: FieldProps) => {
                 const error = getIn(errors, name);
                 return(
-                    <>
+                    <div className="datovelger skjemaelement">
                         <Datovelger
                             input={{
                                 id: 'fristInput',
                                 name: 'frist',
                                 placeholder: 'dd.mm.åååå',
-                                ariaLabel: 'Frist:',
-                                onChange: (value: string) => setFieldValue(field.name, new Date(value)),
+                                ariaLabel: 'Frist:'
                             }}
                             id="fristDatovelger"
                             onChange={(date: Date) => setFieldValue(field.name, date)}
                             dato={field.value}
                         />
                         <SkjemaelementFeilmelding feil={error ? {feilmelding: error}: undefined}/>
-                    </>
+                    </div>
                 )
             }}
         </Field>

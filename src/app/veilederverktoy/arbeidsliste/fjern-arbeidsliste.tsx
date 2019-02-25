@@ -1,11 +1,8 @@
 import React from 'react';
-import Modal from '../../components/modal/modal';
-import ModalHeader from '../../components/modal/modal-header';
-import ModalFooter from '../../components/modal/modal-footer';
-import ModalContainer from '../../components/modal/modal-container';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Innholdstittel, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
+import NavFrontendModal from "nav-frontend-modal";
 
 interface FjernArbeidsliste {
     isOpen: boolean;
@@ -17,31 +14,46 @@ interface FjernArbeidsliste {
 
 function FjernArbeidsliste(props: FjernArbeidsliste) {
     return(
-        <Modal
+        <NavFrontendModal
+            className="arbeidsliste-modal"
+            contentLabel="arbeidsliste"
             isOpen={props.isOpen}
             onRequestClose={props.onRequestClose}
-            header={<ModalHeader/>}
-            className=""
+            closeButton
         >
-            <ModalContainer className="arbeidsliste__container">
-                <Innholdstittel className="arbeidsliste__overskrift">
-                    <FormattedMessage id="arbeidsliste.modal.fjern.overskrift" />
-                </Innholdstittel>
-                <Normaltekst>
-                    <FormattedMessage id="arbeidsliste.modal.fjern.infotekst" />
-                </Normaltekst>
-                <Undertittel>
-                    <FormattedMessage
-                        id="arbeidsliste.modal.personalia"
-                        values={{ navn: props.navn, fnr: props.fnr }}
-                    />
-                </Undertittel>
-            </ModalContainer>
-            <ModalFooter>
-                <Hovedknapp onClick={() => props.onSubmit(props.fnr)}>Slett</Hovedknapp>
-                <Knapp onClick={props.onRequestClose}>Avbryt</Knapp>
-            </ModalFooter>
-        </Modal>
+            <div className="modal-header-wrapper">
+                <header className="modal-header"/>
+            </div>
+            <div className="arbeidsliste__modal">
+                <div className="arbeidsliste-info-tekst">
+                    <Innholdstittel className="arbeidsliste__overskrift">
+                        <FormattedMessage id="arbeidsliste.modal.fjern.overskrift" />
+                    </Innholdstittel>
+                    <Normaltekst>
+                        <FormattedMessage id="arbeidsliste.modal.fjern.infotekst" />
+                    </Normaltekst>
+                    <Undertittel>
+                        <FormattedMessage
+                            id="arbeidsliste.modal.personalia"
+                            values={{ navn: props.navn, fnr: props.fnr }}
+                        />
+                    </Undertittel>
+                </div>
+                <div className="modal-footer">
+                    <Hovedknapp
+                        htmlType="submit"
+                        onClick={() => props.onSubmit(props.fnr)}
+                    >
+                        <FormattedMessage id="modal.knapp.lagre" />
+                    </Hovedknapp>
+                    <Knapp
+                        htmlType="button"
+                        onClick={props.onRequestClose}>
+                        <FormattedMessage id="modal.knapp.avbryt" />
+                    </Knapp>
+                </div>
+            </div>
+        </NavFrontendModal>
     );
 }
 

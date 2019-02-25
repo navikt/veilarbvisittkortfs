@@ -26,7 +26,7 @@ interface ArbeidslisteFormProps {
 
 function ArbeidslisteForm (props: ArbeidslisteFormProps) {
     return (
-        <div className="input-fields">
+        <div>
             <div className="nav-input blokk-s">
                 <FormikInput name="overskrift"/>
                 <FormikTekstArea name = "kommentar"/>
