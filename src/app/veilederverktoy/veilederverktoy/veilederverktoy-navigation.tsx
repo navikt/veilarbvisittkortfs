@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Prosesser from './prosess/prosesser';
 import * as React from 'react';
 import StartEskalering from './start-eskalering/start-eskalering';
-import StarManuellOppfolging from './start-manuell-oppfolging/start-manuell-oppfolging-prosess';
+import StarManuellOppfolging from './start-manuell-oppfolging/start-manuell-oppfolging';
 import StartManuellOppfolgingKvittering from './start-manuell-oppfolging/start-manuell-oppfolging-kvittering';
 import StarKvpPeriode from './start-kvp/start-kvp-periode';
 import hiddenIf from '../../components/hidden-if';

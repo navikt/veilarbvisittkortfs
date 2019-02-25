@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './veilederverktoy.less';
-import Arbeidslistekomponent from './arbeidsliste/arbeidslistekomponent';
+import Arbeidslistekomponent from './arbeidsliste/arbeidsliste-controller';
 import TildelVeileder from './tildel-veileder/tildel-veileder';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';

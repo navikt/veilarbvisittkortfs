@@ -1,5 +1,5 @@
 import { StringOrNothing } from './utils/stringornothings';
-import {OrNothing} from "./utils/ornothing";
+import { OrNothing } from './utils/ornothing';
 /* tslint:disable */
 
 export interface EskaleringsVarsel {

@@ -8,28 +8,28 @@ import { Dispatch } from 'redux';
 import { navigerAction } from '../../../../store/navigation/actions';
 
 interface StateProps {
-    skjulStartManuellOppfolging: boolean;
+    skjulStoppKvpPeriode: boolean;
 }
 
 interface DispatchProps {
-    navigerTilStartManuellOppfolging: () => void;
+    navigerTilStopKvpPeriode: () => void;
 }
 
-function StarManuellOppfolging({skjulStartManuellOppfolging, navigerTilStartManuellOppfolging }: StateProps & DispatchProps) {
-    if (skjulStartManuellOppfolging) {
+function StartKvpPeriodeProsess({skjulStoppKvpPeriode, navigerTilStopKvpPeriode }: StateProps & DispatchProps) {
+    if (skjulStoppKvpPeriode) {
         return null;
     }
     return (
         <>
             <StartProsess
                 className="innstillinger__prosess"
-                tittelId="innstillinger.prosess.manuell.tittel"
+                tittelId="innstillinger.prosess.start-kvp.tittel"
                 knappetekstId="innstillinger.modal.prosess.start.knapp"
-                onClick={navigerTilStartManuellOppfolging}
+                onClick={navigerTilStopKvpPeriode}
             >
                 <div className="blokk-xs">
                     <Normaltekst>
-                        <FormattedMessage id="innstillinger.prosess.manuell.tekst" />
+                        <FormattedMessage id="innstillinger.prosess.stopp-kvp.tekst" />
                     </Normaltekst>
                 </div>
             </StartProsess>
@@ -40,12 +40,12 @@ function StarManuellOppfolging({skjulStartManuellOppfolging, navigerTilStartManu
 const mapStateToProps = (state: Appstate): StateProps => {
     const oppfolging = state.oppfolging.data;
     return {
-        skjulStartManuellOppfolging: !oppfolging.underOppfolging || oppfolging.manuell
+        skjulStoppKvpPeriode: !oppfolging.underOppfolging || !oppfolging.underKvp
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    navigerTilStartManuellOppfolging: () => dispatch(navigerAction('manuell_oppfolging'))
+    navigerTilStopKvpPeriode: () => dispatch(navigerAction('stopp_kvp_periode'))
 });
 
-export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(StarManuellOppfolging);
+export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(StartKvpPeriodeProsess);
