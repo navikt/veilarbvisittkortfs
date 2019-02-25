@@ -17,7 +17,7 @@ interface StateProps {
 
 type StartKvpPeriodeProsessProps = StateProps & DispatchProps;
 
-function StarKvpPeriode(props: StartKvpPeriodeProsessProps) {
+function StoppKvpPeriode(props: StartKvpPeriodeProsessProps) {
     const infoTekst = (
         <Normaltekst className="blokk-xs">
             <FormattedMessage id="innstillinger.modal.stopp-kvp.infotekst" />
@@ -28,7 +28,7 @@ function StarKvpPeriode(props: StartKvpPeriodeProsessProps) {
             tekst={null}
             handleSubmit={props.handleSubmit}
             tekstariaLabel="Begrunnelse:"
-            overskriftTekstId="innstillinger.prosess.start-kvp.tittel"
+            overskriftTekstId="innstillinger.prosess.stopp-kvp.tittel"
             infoTekst={infoTekst}
             isLoading={props.isLoading}
         />
@@ -43,4 +43,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     handleSubmit: (begrunnelse: string) => dispatch(stoppKVP(begrunnelse))
 });
 
-export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(StarKvpPeriode);
+export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(StoppKvpPeriode);

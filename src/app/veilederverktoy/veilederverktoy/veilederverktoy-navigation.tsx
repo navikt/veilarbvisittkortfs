@@ -5,7 +5,8 @@ import * as React from 'react';
 import StartEskalering from './start-eskalering/start-eskalering';
 import StarManuellOppfolging from './start-manuell-oppfolging/start-manuell-oppfolging';
 import StartManuellOppfolgingKvittering from './start-manuell-oppfolging/start-manuell-oppfolging-kvittering';
-import StarKvpPeriode from './start-kvp/start-kvp-periode';
+import StarKvpPeriode from './start-kvp-periode/start-kvp-periode';
+import StoppKvpPeriode from './stopp-kvp-periode/stopp-kvp-periode';
 import hiddenIf from '../../components/hidden-if';
 import { StringOrNothing } from '../../../types/utils/stringornothings';
 
@@ -27,6 +28,8 @@ function VeilederVerktoyNavigation(props: VeilederVerktoyNavigationProps) {
             return <StartManuellOppfolgingKvittering/>;
         case 'start_kvp_periode':
             return <StarKvpPeriode/>;
+        case 'stopp_kvp_periode':
+            return <StoppKvpPeriode/>
         default:
             return null;
     }
