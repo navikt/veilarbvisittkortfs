@@ -6,7 +6,7 @@ import { Appstate } from '../../../types/appstate';
 import Modal from '../../components/modal/modal';
 import ModalHeader from '../../components/modal/modal-header';
 import { Dispatch } from 'redux';
-import { navigerTilbake } from '../../../store/navigation/actions';
+import { navigerAction } from '../../../store/navigation/actions';
 
 interface OwnProps {
     children: React.ReactNode;
@@ -70,7 +70,7 @@ const mapStateToProps = (state: Appstate) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    tilbake: () => dispatch(navigerTilbake())
+    tilbake: () => dispatch(navigerAction(null))
 });
 
 export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(injectIntl(VeilederVerktoyModal));

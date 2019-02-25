@@ -5,7 +5,7 @@ import StartProsess from './../prosess/start-prosess';
 import { Appstate } from '../../../../types/appstate';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { navigerTilStartEskalering } from '../../../../store/navigation/actions';
+import { navigerAction } from '../../../../store/navigation/actions';
 
 interface StateProps {
     skjulStartEskalering: boolean;
@@ -49,7 +49,7 @@ const mapStateToProps = (state: Appstate): StateProps => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    navigerTilStartEsklaringForm: () => dispatch(navigerTilStartEskalering())
+    navigerTilStartEsklaringForm: () => dispatch(navigerAction('start_eskalering'))
 });
 
 export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(StartEskaleringProsess);

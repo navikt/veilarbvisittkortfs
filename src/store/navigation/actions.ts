@@ -1,42 +1,12 @@
-export enum NavigationActionTypes {
-    PROSESSER = 'PROSSER',
-    START_ESKALERING= 'START_ESKALERING',
-    START_ESKALERING_KVITTERING = 'START_ESKALERING_KVITTERING',
-    TILBAKE = 'TILBAKE',
-}
+import { StringOrNothing } from '../../types/utils/stringornothings';
 
-interface NavigerProsesserAction {
-    type: NavigationActionTypes.PROSESSER;
-}
+export type NavigerActionType = 'NAVIGER' | 'START_ESKALERING_SUCCESS' | 'SETT_MANUELL_SUCCESS';
 
-interface NavigerStartEskaleringAction {
-    type: NavigationActionTypes.START_ESKALERING;
+export interface NavigerAction {
+    type: NavigerActionType;
+    location: StringOrNothing;
 }
-
-interface NavigerStartEskaleringKvitteringAction {
-    type: NavigationActionTypes.START_ESKALERING_KVITTERING;
-}
-
-interface NavigerTilbakeAction {
-    type: NavigationActionTypes.TILBAKE;
-}
-
-export function navigerTilProsesser(): NavigerProsesserAction {
-    return {
-        type: NavigationActionTypes.PROSESSER
-    };
-}
-
-export function navigerTilStartEskalering(): NavigerStartEskaleringAction {
-    return {
-        type: NavigationActionTypes.START_ESKALERING
-    };
-}
-
-export function navigerTilbake(): NavigerTilbakeAction {
-    return {
-        type: NavigationActionTypes.TILBAKE
-    };
-}
-
-export type NavigationActions = NavigerProsesserAction | NavigerStartEskaleringAction | NavigerStartEskaleringKvitteringAction | NavigerTilbakeAction;
+export const navigerAction = (location: StringOrNothing): NavigerAction => ({
+    type: 'NAVIGER',
+    location
+});

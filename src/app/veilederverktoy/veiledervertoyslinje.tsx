@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import './veilederverktoy.less';
-import Arbeidslistekomponent from './arbeidsliste/arbeidslistekomponent';
+import Arbeidslistekomponent from './arbeidsliste/arbeidsliste-controller';
 import TildelVeileder from './tildel-veileder/tildel-veileder';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import VeilederVerktoyNavigation from './veilederverktoy/veilederverktoy-navigation';
 import { hentTilgangTilBrukersKontor } from '../../store/tilgang-til-brukerskontor/actions';
-import { navigerTilProsesser } from '../../store/navigation/actions';
+import { navigerAction } from '../../store/navigation/actions';
 import VeilederVerktoyKnapp from './veilederverktoy/veileder-verktoy-knapp';
 import { Appstate } from '../../types/appstate';
 
@@ -52,7 +52,7 @@ const mapStateToProps = (state: Appstate): StateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     hentTilgangTilBrukersKontor: (fnr: string) => dispatch(hentTilgangTilBrukersKontor(fnr)),
-    navigerTilProsesser: () => dispatch(navigerTilProsesser())
+    navigerTilProsesser: () => dispatch(navigerAction('prosesser'))
 });
 
 export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps) (Veilederverktoyslinje);

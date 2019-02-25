@@ -1,28 +1,27 @@
 import { Reducer } from 'redux';
-import { NavigationActions, NavigationActionTypes } from './actions';
+import { NavigerAction } from './actions';
 import { StringOrNothing } from '../../types/utils/stringornothings';
 
 export interface NavigationState {
     location: StringOrNothing;
 }
-const navigationReducer: Reducer<NavigationState, NavigationActions> = (state = {location: null}, action) => {
+const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = {location: null}, action) => {
     switch (action.type) {
-        case NavigationActionTypes.PROSESSER: {
-            return {location: 'prosesser'};
-        }
-        case NavigationActionTypes.START_ESKALERING: {
-            return {location: 'start_eskalering'};
-        }
-        case NavigationActionTypes.START_ESKALERING_KVITTERING: {
-            return {location: 'start_esklaering_kvittering'};
-        }
-        case NavigationActionTypes.TILBAKE: {
-            return {location: null};
-        }
-        default:
+        case 'NAVIGER':
+            return {
+                location : action.location
+            };
+        case 'START_ESKALERING_SUCCESS':
+            return {
+                location : 'eskalering_kvittering'
+            };
+        case 'SETT_MANUELL_SUCCESS':
+            return {
+                location: 'sett_manuell_kvittering'
+            };
+        default :
             return state;
     }
-
 };
 
 export default navigationReducer;

@@ -1,110 +1,58 @@
 import React from 'react';
-import { Formik, FormikValues } from 'formik';
-import { Input, Textarea } from 'nav-frontend-skjema';
-import * as Yup from 'yup';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { Arbeidsliste } from '../../../types/arbeidsliste';
-import Modal from '../../components/modal/modal';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { oppdaterArbeidsliste } from '../../../store/arbeidsliste/actions';
-import ModalContainer from '../../components/modal/modal-container';
-import ModalHeader from '../../components/modal/modal-header';
-import ModalFooter from '../../components/modal/modal-footer';
 import './arbeidsliste.less';
+import { OrNothing } from '../../../types/utils/ornothing';
+import FormikInput from "../../components/formik/formik-inputs";
+import FormikTekstArea from "../../components/formik/formik-textarea";
+import FormikDatoVelger from "../../components/formik/formik-datepicker";
+import {Hovedknapp} from "nav-frontend-knapper";
+import {FormattedMessage} from "react-intl";
+import {Undertekst} from "nav-frontend-typografi";
 
-interface OwnProps {
-    isOpen: boolean;
-    onRequestClose: () => void;
-    arbeidsliste: Arbeidsliste;
-    innholdstittel: string;
-    children: React.ReactNode;
-}
-
-interface DispatchProps {
-    lagreArbeidsliste: (values: FormikValues) => void;
-}
 
 export interface ArbeidslisteForm {
     kommentar: string;
     overskrift: string;
-    frist?: string;
+    frist: OrNothing<Date>;
 }
 
-type LeggTilArbeidslisteProps = DispatchProps & OwnProps;
+interface ArbeidslisteFormProps {
+    onRequestClose: () => void;
+    laster: boolean;
+    sistEndretAv?: string;
+    sistEndretDato?: Date;
 
-const ArbeidslisteSchema = Yup.object().shape({
-    overskrift: Yup.string()
-        .min(1, 'Før kort')
-        .max(20, 'Too Long!')
-        .required('Pakrevd'),
-    kommentar: Yup.string()
-        .min(1, 'Too Short!')
-        .max(100, 'Too Long!')
-        .required('Pakrevd'),
-});
+}
 
-function ArbeidslisteForm (props: LeggTilArbeidslisteProps) {
-    const initalValues = {
-        overskrift: props.arbeidsliste.overskrift ? props.arbeidsliste.overskrift :  '',
-        kommentar: props.arbeidsliste.kommentar ? props.arbeidsliste.kommentar : '' };
+
+function ArbeidslisteForm (props: ArbeidslisteFormProps) {
     return (
-        <Formik
-            initialValues={initalValues}
-            onSubmit={props.lagreArbeidsliste}
-            validationSchema={ArbeidslisteSchema}
-            render={formikProps => {
-
-                const harFeilIOverskrift = formikProps.errors.overskrift && formikProps.touched.overskrift ?
-                    {feilmelding: formikProps.errors.overskrift} : undefined;
-
-                const harFeilIKommentar =  formikProps.errors.kommentar && formikProps.touched.kommentar ?
-                    {feilmelding: formikProps.errors.kommentar} : undefined;
-
-                return (
-                    <Modal
-                        isOpen={props.isOpen}
-                        onRequestClose={props.onRequestClose}
-                        className=""
-                        header={<ModalHeader/>}
-                    >
-                        <section className="arbeidsliste__form">
-                            <ModalContainer className="arbeidsliste__form-container">
-                                {props.children}
-                                <form onSubmit={formikProps.handleSubmit}>
-                                    <Input
-                                        label="Overskrift"
-                                        onChange={formikProps.handleChange}
-                                        onBlur={formikProps.handleBlur}
-                                        value={formikProps.values.overskrift}
-                                        name="overskrift"
-                                        feil={harFeilIOverskrift}
-                                    />
-                                    <Textarea
-                                        label="Kommentar"
-                                        onChange={formikProps.handleChange}
-                                        onBlur={formikProps.handleBlur}
-                                        value={formikProps.values.kommentar}
-                                        name="kommentar"
-                                        feil={harFeilIKommentar}
-                                    />
-                                    <ModalFooter>
-                                        <Hovedknapp htmlType="submit">Lagre</Hovedknapp>
-                                        <Knapp htmlType="button" onClick={props.onRequestClose}> Avbryt </Knapp>
-                                    </ModalFooter>
-                                </form>
-                            </ModalContainer>
-                        </section>
-                    </Modal>
-                ); }}
-        />
-    );
+        <div className="input-fields">
+            <div className="nav-input blokk-s">
+                <FormikInput name="overskrift"/>
+                <FormikTekstArea name = "kommentar"/>
+            </div>
+            {props.sistEndretDato && <Undertekst className="arbeidsliste--modal-redigering">
+                <FormattedMessage
+                    id="arbeidsliste.kommentar.footer"
+                    values={{
+                        dato: props.sistEndretDato.toLocaleDateString(),
+                        veileder: props.sistEndretAv
+                    }}
+                />
+            </Undertekst>}
+            <FormikDatoVelger name="frist"/>
+            <div>
+                <div className="modal-footer">
+                    <Hovedknapp htmlType="submit" className="knapp knapp--hoved" spinner={props.laster}>
+                        <FormattedMessage id="modal.knapp.lagre" />
+                    </Hovedknapp>
+                    <button type="button" className="knapp" onClick={props.onRequestClose}>
+                        <FormattedMessage id="modal.knapp.avbryt" />
+                    </button>
+                </div>
+            </div>
+        </div>
+    )
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-    lagreArbeidsliste: (values: FormikValues) => dispatch(
-        oppdaterArbeidsliste({kommentar: values.kommentar, overskrift: values.overskrift})
-    )
-});
-
-export default connect<{}, DispatchProps, OwnProps>(null, mapDispatchToProps)(ArbeidslisteForm);
+export default ArbeidslisteForm;

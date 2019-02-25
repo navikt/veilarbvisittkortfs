@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: InitialDataProviderPro
 });
 
 const mapStateToProps = (state: Appstate): StateProps => ({
-    isLoading: false,
+    isLoading: state.arbeidsliste.isLoading || state.oppfolgingstatus.isLoading || state.oppfolging.isLoading || state.personalia.isLoading,
 });
 
 export default connect<StateProps, DispatchProps, InitialDataProviderProps>(mapStateToProps, mapDispatchToProps)(InitialDataProvider);

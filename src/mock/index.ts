@@ -1,6 +1,6 @@
 import Oppfolgingsstatus from './oppfolging-status';
 import Oppfolging from './oppfolging';
-import FetchMock, { Middleware, MiddlewareUtils } from 'yet-another-fetch-mock';
+import FetchMock, { HandlerArgument, Middleware, MiddlewareUtils, ResponseUtils } from 'yet-another-fetch-mock';
 import Personalia from './personalia';
 import Arbeidsliste from './arbeidsliste';
 import Veilederliste from './veiledereliste';
@@ -42,4 +42,5 @@ mock.get('/veilarbperson/api/person/:fnr', Personalia);
 mock.get('/veilarbportefolje/api/arbeidsliste/:fnr', Arbeidsliste);
 mock.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', Veilederliste);
 mock.get('/veilarbveileder/api/veileder/me', VeilederData);
-mock.post('/veilarbportefolje/api/arbeidsliste/:fnr?fnr=${fnr}', Arbeidsliste);
+mock.post(`/veilarbportefolje/api/arbeidsliste/:fnr?`, (args: HandlerArgument) => {
+    return ResponseUtils.jsonPromise(Arbeidsliste); });

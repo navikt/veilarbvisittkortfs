@@ -10,7 +10,7 @@ import { FormattedMessage } from 'react-intl';
 interface FjernArbeidsliste {
     isOpen: boolean;
     onRequestClose: () => void;
-    onBekreft: (fnr: string) => void;
+    onSubmit: (fnr: string) => void;
     fnr: string;
     navn: string;
 }
@@ -38,7 +38,7 @@ function FjernArbeidsliste(props: FjernArbeidsliste) {
                 </Undertittel>
             </ModalContainer>
             <ModalFooter>
-                <Hovedknapp onClick={() => props.onBekreft(props.fnr)}>Slett</Hovedknapp>
+                <Hovedknapp onClick={() => props.onSubmit(props.fnr)}>Slett</Hovedknapp>
                 <Knapp onClick={props.onRequestClose}>Avbryt</Knapp>
             </ModalFooter>
         </Modal>

@@ -1,19 +1,21 @@
 /* eslint-disable no-restricted-globals */
 import React from 'react';
+import {connect} from 'react-redux';
 import PT from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { VenstreChevron } from 'nav-frontend-chevron';
 import {Knapp} from "nav-frontend-knapper";
+import {navigerAction} from "../../../store/navigation/actions";
 
 function Tilbakeknapp(props) {
     function tilbake(e) {
         e.preventDefault();
         const dialogTekst = props.intl.formatMessage({
-            id: 'aktkivitet-skjema.lukk-advarsel',
+            id: 'modal-skjema.lukk-advarsel',
         });
         // eslint-disable-next-line no-alert
         if (!props.visConfirmDialog || confirm(dialogTekst)) {
-            //props.history.goBack();
+            props.goBack();
         }
     }
 
@@ -44,4 +46,8 @@ Tilbakeknapp.propTypes = {
     intl: intlShape.isRequired,
 };
 
-export default injectIntl(Tilbakeknapp);
+const mapDispatchToProps = (dispatch)=> ({
+    goBack: ()=> dispatch(navigerAction('prosesser'))
+});
+
+export default connect(null, mapDispatchToProps)(injectIntl(Tilbakeknapp));

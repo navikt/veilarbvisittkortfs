@@ -1,7 +1,7 @@
 import { fork, all } from 'redux-saga/effects';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import createReduxSaga from 'redux-saga';
-import oppfolgingReducer, { oppfolgingSaga } from './oppfolging/reducer';
+import oppfolgingReducer from './oppfolging/reducer';
 import oppfolgingStatusReducer, { oppfolgingstatusSaga } from './oppfolging-status/reducer';
 import personaliaReducer, { personaliaSaga } from './personalia/reducer';
 import arbeidslisteReducer, { arbeidslisteSaga } from './arbeidsliste/reducer';
@@ -9,6 +9,7 @@ import dialogReducer, { dialogSaga } from './dialog/reducer';
 import navigationReducer from './navigation/reducer';
 import tildelVelederReducer, { tildelVeilederSaga } from './tildel-veileder/reducer';
 import tilgangTilBrukersKontorReducer, { tilgangTilBrukersKontorSaga } from './tilgang-til-brukerskontor/reducer';
+import { oppfolgingSaga } from './oppfolging/sagas';
 
 const sagaMiddleware = createReduxSaga();
 
