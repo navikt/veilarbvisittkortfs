@@ -4,6 +4,7 @@ import StartEskaleringProsess from '../start-eskalering/start-eskalering-prosess
 import StarManuellOppfolging from '../start-manuell-oppfolging/start-manuell-oppfolging-prosess';
 import StartKvpPeriodeProsess from '../start-kvp-periode/start-kvp-periode-prosess';
 import StoppKvpPeriodeProsess from '../stopp-kvp-periode/stopp-kvp-periode-prosess';
+import "./prosesser.less";
 
 function Prosesser () {
     return (

@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
-import { Innholdstittel } from 'nav-frontend-typografi';
+import {Innholdstittel} from 'nav-frontend-typografi';
 import { Appstate } from '../../../types/appstate';
-import Modal from '../../components/modal/modal';
-import ModalHeader from '../../components/modal/modal-header';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../store/navigation/actions';
+import NavFrontendModal from "nav-frontend-modal";
 
 interface OwnProps {
     children: React.ReactNode;
@@ -25,43 +24,29 @@ interface DispatchProps {
 type VeilederVerktoyModalProps = OwnProps & StateProps & DispatchProps & InjectedIntlProps;
 
 function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
-
-    const onRequestClose = () => {
-        const dialogTekst = props.intl.formatMessage({id: 'aktkivitet-skjema.lukk-advarsel'});
-        if (!props.touched || confirm(dialogTekst)) {
-            props.tilbake();
-        }
-    };
-
     return (
-        <Modal
-            header={
-                <ModalHeader
-                    visConfirmDialog={props.visConfirmDialog}
-                    tilbakeTekstId={props.ingenTilbakeKnapp
-                        ? null
-                        : 'innstillinger.modal.tilbake'
-                    }
-                />
-            }
-            contentLabel="instillinger-modal"
-            contentClass="innstillinger"
-            onRequestClose={onRequestClose}
-            className=""
+        <NavFrontendModal
+            className="arbeidsliste-modal"
+            contentLabel="arbeidsliste"
             isOpen={true}
+            onRequestClose={props.tilbake}
+            closeButton
         >
-            <article className="innstillinger__container">
-                <Innholdstittel className="innstillinger__overskrift">
-                    <FormattedMessage
-                        id="innstillinger.modal.overskrift"
-                        values={{ navn: props.navnPaMotpart }}
-                    />
-                </Innholdstittel>
-                <div className="innstillinger__innhold">
-                    {props.children}
+            <div className="modal-header-wrapper">
+                <header className="modal-header"/>
+            </div>
+            <div className="arbeidsliste__modal">
+                <div className="arbeidsliste-info-tekst">
+                    <Innholdstittel className="arbeidsliste__overskrift">
+                        <FormattedMessage
+                            id="innstillinger.modal.overskrift"
+                            values={{ navn: props.navnPaMotpart }}
+                        />
+                    </Innholdstittel>
                 </div>
-            </article>
-        </Modal>
+                {props.children}
+            </div>
+        </NavFrontendModal>
     );
 }
 
