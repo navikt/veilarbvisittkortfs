@@ -1,7 +1,7 @@
 import React from 'react';
 import TannHjulIkon from './../tannhjul.svg';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import hiddenIf from '../../components/hidden-if';
+import hiddenIf from '../../components/hidden-if/hidden-if';
 
 const HiddenIfHovedKnapp = hiddenIf(Hovedknapp);
 

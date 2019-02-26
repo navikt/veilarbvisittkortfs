@@ -17,9 +17,9 @@ interface DispatchProps {
     navigerTilbake: () => void;
 }
 
-type StoppKVPKvittering = StateProps & DispatchProps;
+type StartOppfolgingKvittering = StateProps & DispatchProps;
 
-function StoppKVPKvittering({navn, navigerTilbake}: StoppKVPKvittering) {
+function StartDigitalOppfolgingKvittering({navn, navigerTilbake}: StartOppfolgingKvittering) {
     return (
         <Modal
             onRequestClose={navigerTilbake}
@@ -38,12 +38,12 @@ function StoppKVPKvittering({navn, navigerTilbake}: StoppKVPKvittering) {
                 </Innholdstittel>
                 <div className="innstillinger__innhold blokk-xs">
                     <Systemtittel>
-                        <FormattedMessage id="innstillinger.modal.stopp-kvp.tittel" />
+                        <FormattedMessage id="innstillinger.modal.startoppfolging.overskrift" />
                     </Systemtittel>
                 </div>
                 <AlertStripeSuksess className="blokk-m">
                     <FormattedMessage
-                        id="iinnstillinger.modal.stopp-kvp.kvittering.ok"
+                        id="innstillinger.modal.startoppfolging.kvittering"
                     />
                 </AlertStripeSuksess>
             </article>
@@ -59,4 +59,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigerTilbake: () => dispatch(navigerAction(null))
 });
 
-export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(StoppKVPKvittering);
+export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(StartDigitalOppfolgingKvittering);

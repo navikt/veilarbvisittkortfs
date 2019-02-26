@@ -13,7 +13,7 @@ const oppfolging: Oppfolging & JSONValue = {
     inaktiveringsdato: null,
     kanReaktiveras: false,
     kanStarteOppfolging: false,
-    manuell: false,
+    manuell: true,
     oppfolgingUtgang: null,
     oppfolgingsPerioder: [],
     reservarsjonKRR: false,

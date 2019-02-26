@@ -1,5 +1,5 @@
 import React from 'react';
-import hiddenIf from '../../components/hidden-if';
+import hiddenIf from '../../components/hidden-if/hidden-if';
 import { EtikettInfo, EtikettAdvarsel } from 'nav-frontend-etiketter';
 import { OppfolgingStatus } from '../../../types/oppfolging-status';
 import { Personalia } from '../../../types/personalia';
