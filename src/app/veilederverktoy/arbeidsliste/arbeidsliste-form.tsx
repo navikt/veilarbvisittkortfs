@@ -13,6 +13,7 @@ export interface ArbeidslisteForm {
     kommentar: string;
     overskrift: string;
     frist: OrNothing<Date>;
+    fnr: string;
 }
 
 interface ArbeidslisteFormProps {

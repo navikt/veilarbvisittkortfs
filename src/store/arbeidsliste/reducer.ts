@@ -78,7 +78,8 @@ function* hentArbeidsliste(action: HentArbeidslisteAction) {
 function* lagreArbeidsliste(action: OppdaterArbeidslisteAction) {
     try {
         const fnr = yield select(PersonaliaSelectors.selectFodselsnummer);
-        const response = yield call( () => ArbeidslisteApi.lagreArbeidsliste(fnr, action.arbeidsliste));
+        const arbeidslisteForm = Object.assign({fnr}, action.arbeidsliste);
+        const response = yield call( () => ArbeidslisteApi.lagreArbeidsliste(fnr, [arbeidslisteForm]));
         yield put(oppdaterArbeidslisteSuccess(response));
     } catch (e) {
         yield put(oppdaterArbeidslisteError(e));
