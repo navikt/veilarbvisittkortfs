@@ -9,7 +9,7 @@ import PersonaliaSelectors from '../../../store/personalia/selectors';
 import LeggTilArbeidsliste from './legg-til-arbeidsliste';
 import RedigerArbeidsliste from './rediger-arbeidsliste';
 import { Dispatch } from 'redux';
-import {oppdaterArbeidsliste, slettArbeidsliste} from '../../../store/arbeidsliste/actions';
+import {oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste} from '../../../store/arbeidsliste/actions';
 import {FormikValues} from "formik";
 
 interface StateProps {
@@ -97,7 +97,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         oppdaterArbeidsliste({kommentar: values.kommentar, overskrift: values.overskrift, frist: values.frist})
     ),
     redigerArbeidsliste: (values: FormikValues) => dispatch(
-        oppdaterArbeidsliste({kommentar: values.kommentar, overskrift: values.overskrift, frist: values.frist})
+        redigerArbeidsliste({kommentar: values.kommentar, overskrift: values.overskrift, frist: values.frist})
     )
 
 });

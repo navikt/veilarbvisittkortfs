@@ -13,6 +13,9 @@ export interface ArbeidslisteForm {
     kommentar: string;
     overskrift: string;
     frist: OrNothing<Date>;
+}
+
+export interface ArbeidslisteFormMedFnr extends  ArbeidslisteForm {
     fnr: string;
 }
 

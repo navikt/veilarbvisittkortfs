@@ -8,9 +8,12 @@ export enum ArbeidslisteActionType {
     SLETT_ARBEIDSLISTE = 'SLETT_ARBEIDSLISTE',
     SLETT_ARBEIDSLISTE_SUCCESS = 'SLETT_ARBEIDSLISTE_SUCCESS',
     SLETT_ARBEIDSLISTE_ERROR = 'SLETT_ARBEIDSLISTE_ERROR',
-    OPPDATER_ARBEIDSLISTE = 'OPPDATER_TIL_ARBEIDSLISTE',
-    OPPDATER_ARBEIDSLISTE_SUCESS = 'OPPDATER_TIL_ARBEIDSLISTE_SUCCESS',
-    OPPDATER_ARBEIDSLISTE_ERROR = 'OPPDATER_TIL_ARBEIDSLISTE_ERROR',
+    LAGRE_ARBEIDSLISTE = 'LAGRE_ARBEIDSLISTE',
+    LAGRE_ARBEIDSLISTE_SUCESS = 'LAGRE_ARBEIDSLISTE_SUCCESS',
+    LAGRE_ARBEIDSLISTE_ERROR = 'LAGRE_ARBEIDSLISTE_ERROR',
+    REDIGER_ARBEIDSLISTE = 'REDIGER_ARBEIDSLISTE',
+    REDIGER_ARBEIDSLISTE_SUCCESS = 'REDIGER_ARBEIDSLISTE_SUCCESS',
+    REDIGER_ARBEIDSLISTE_ERROR = 'REDIGER_ARBEIDSLISTE_ERROR',
 
 }
 
@@ -35,6 +38,48 @@ export const slettArbeidslisteActionError = (error: Error): SlettArbeidslisteAct
     };
 };
 
+export const oppdaterArbeidsliste = (arbeidsliste: ArbeidslisteForm): OppdaterArbeidslisteAction => {
+    return {
+        type: ArbeidslisteActionType.LAGRE_ARBEIDSLISTE,
+        arbeidsliste,
+    };
+};
+
+export const oppdaterArbeidslisteSuccess = (data: Arbeidsliste): OppdaterArbeidslisteActionSuccess => {
+    return {
+        type: ArbeidslisteActionType.LAGRE_ARBEIDSLISTE_SUCESS,
+        data,
+    };
+};
+
+export const oppdaterArbeidslisteError = (error: Error): OppdaterArbeidslisteActionError => {
+    return {
+        type: ArbeidslisteActionType.LAGRE_ARBEIDSLISTE_ERROR,
+        error
+    };
+};
+
+export const redigerArbeidsliste = (arbeidsliste: ArbeidslisteForm): RedigerArbeidslisteAction => {
+    return {
+        type: ArbeidslisteActionType.REDIGER_ARBEIDSLISTE,
+        arbeidsliste,
+    };
+};
+
+export const redigerArbeidslisteSuccess = (data: Arbeidsliste): RedigerArbeidslisteActionSuccess => {
+    return {
+        type: ArbeidslisteActionType.REDIGER_ARBEIDSLISTE_SUCCESS,
+        data,
+    };
+};
+
+export const redigerArbeidslisteError = (error: Error): RedigerArbeidslisteActionError => {
+    return {
+        type: ArbeidslisteActionType.REDIGER_ARBEIDSLISTE_ERROR,
+        error
+    };
+};
+
 export const hentArbeidsliste = (fnr: string): HentArbeidslisteAction => {
     return {
         type: ArbeidslisteActionType.HENT_ARBEIDSLISTE,
@@ -42,26 +87,6 @@ export const hentArbeidsliste = (fnr: string): HentArbeidslisteAction => {
     };
 };
 
-export const oppdaterArbeidsliste = (arbeidsliste: ArbeidslisteForm): OppdaterArbeidslisteAction => {
-    return {
-        type: ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE,
-        arbeidsliste,
-    };
-};
-
-export const oppdaterArbeidslisteSuccess = (data: Arbeidsliste): OppdaterArbeidslisteActionSuccess => {
-    return {
-        type: ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE_SUCESS,
-        data,
-    };
-};
-
-export const oppdaterArbeidslisteError = (error: Error): OppdaterArbeidslisteActionError => {
-    return {
-        type: ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE_ERROR,
-        error
-    };
-};
 
 export const hentArbeidslisteSuccess = (data: Arbeidsliste): HentArbeidslisteActionSuccess => {
     return {
@@ -77,24 +102,41 @@ export const hentArbeidslisteError = (error: Error): HentArbeidslisteActionError
     };
 };
 
-export interface HentArbeidslisteAction {
-    type: ArbeidslisteActionType.HENT_ARBEIDSLISTE;
-    fnr: string;
-}
-
 export interface OppdaterArbeidslisteAction {
-    type: ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE;
+    type: ArbeidslisteActionType.LAGRE_ARBEIDSLISTE;
     arbeidsliste: ArbeidslisteForm;
 }
 
 export interface OppdaterArbeidslisteActionSuccess {
-    type: ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE_SUCESS;
+    type: ArbeidslisteActionType.LAGRE_ARBEIDSLISTE_SUCESS;
     data: Arbeidsliste;
 }
 
 export interface OppdaterArbeidslisteActionError {
-    type: ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE_ERROR;
+    type: ArbeidslisteActionType.LAGRE_ARBEIDSLISTE_ERROR;
     error: Error;
+}
+
+export interface RedigerArbeidslisteAction {
+    type: ArbeidslisteActionType.REDIGER_ARBEIDSLISTE;
+    arbeidsliste: ArbeidslisteForm;
+}
+
+export interface RedigerArbeidslisteActionSuccess {
+    type: ArbeidslisteActionType.REDIGER_ARBEIDSLISTE_SUCCESS;
+    data: Arbeidsliste;
+}
+
+export interface RedigerArbeidslisteActionError {
+    type: ArbeidslisteActionType.REDIGER_ARBEIDSLISTE_ERROR;
+    error: Error;
+}
+
+
+
+export interface HentArbeidslisteAction {
+    type: ArbeidslisteActionType.HENT_ARBEIDSLISTE;
+    fnr: string;
 }
 
 export interface HentArbeidslisteActionSuccess {
@@ -131,5 +173,7 @@ export type ArbeidslisteActions =
     OppdaterArbeidslisteActionError |
     SlettArbeidslisteAction |
     SlettArbeidslisteActionSuccess |
-    SlettArbeidslisteActionError
-    ;
+    SlettArbeidslisteActionError |
+    RedigerArbeidslisteAction |
+    RedigerArbeidslisteActionSuccess |
+    RedigerArbeidslisteActionError;

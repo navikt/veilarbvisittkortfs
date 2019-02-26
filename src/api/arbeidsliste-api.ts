@@ -1,5 +1,5 @@
 import { deleteAsJson, fetchToJson, postAsJson, putAsJson } from './api-utils';
-import { ArbeidslisteForm } from '../app/veilederverktoy/arbeidsliste/arbeidsliste-form';
+import {ArbeidslisteForm, ArbeidslisteFormMedFnr} from '../app/veilederverktoy/arbeidsliste/arbeidsliste-form';
 import { Arbeidsliste } from '../types/arbeidsliste';
 
 export interface ArbeidslisteApi {
@@ -9,12 +9,12 @@ export interface ArbeidslisteApi {
     redigerArbeidsliste: (fnr: string, arbeidsliste: ArbeidslisteForm) => Promise<Arbeidsliste>;
 }
 
-function lagreArbeidsliste (fnr: string, arbeidsliste: ArbeidslisteForm[]) {
-    return postAsJson(`/veilarbportefolje/api/arbeidsliste/${fnr}?fnr=${fnr}`, arbeidsliste);
+function lagreArbeidsliste (fnr: string, arbeidsliste: ArbeidslisteFormMedFnr[]) {
+    return postAsJson(`/veilarbportefolje/api/arbeidsliste/${fnr}`, arbeidsliste);
 }
 
 function redigerArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteForm) {
-    return putAsJson(`/veilarbportefolje/api/arbeidsliste/${fnr}?fnr=${fnr}`, arbeidsliste);
+    return putAsJson(`/veilarbportefolje/api/arbeidsliste/${fnr}`, arbeidsliste);
 }
 
 function fetchArbeidslisteData(fnr: string) {

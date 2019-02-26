@@ -10,7 +10,11 @@ import {
     hentArbeidslisteSuccess,
     OppdaterArbeidslisteAction,
     oppdaterArbeidslisteError,
-    oppdaterArbeidslisteSuccess, SlettArbeidslisteAction, slettArbeidslisteActionError, slettArbeidslisteActionSuccess
+    oppdaterArbeidslisteSuccess,
+    RedigerArbeidslisteAction,
+    SlettArbeidslisteAction,
+    slettArbeidslisteActionError,
+    slettArbeidslisteActionSuccess
 } from './actions';
 import PersonaliaSelectors from '../personalia/selectors';
 import ArbeidslisteApi from '../../api/arbeidsliste-api';
@@ -36,16 +40,18 @@ const initialState: ArbeidslisteState = {
 const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (state = initialState, action) => {
     switch (action.type) {
         case ArbeidslisteActionType.HENT_ARBEIDSLISTE:
-        case ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE:
-        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE: {
+        case ArbeidslisteActionType.LAGRE_ARBEIDSLISTE:
+        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE:
+        case ArbeidslisteActionType.REDIGER_ARBEIDSLISTE:{
             return {
                 ...state,
                 isLoading: true
             };
         }
         case ArbeidslisteActionType.HENT_ARBEIDSLISTE_SUCCESS:
-        case ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE_SUCESS:
-        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE_SUCCESS: {
+        case ArbeidslisteActionType.LAGRE_ARBEIDSLISTE_SUCESS:
+        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE_SUCCESS:
+        case ArbeidslisteActionType.REDIGER_ARBEIDSLISTE_SUCCESS:{
             return {
                 ...state,
                 data: action.data,
@@ -53,8 +59,9 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
             };
         }
         case ArbeidslisteActionType.HENT_ARBEIDSLISTE_ERROR:
-        case ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE_ERROR:
-        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE_ERROR: {
+        case ArbeidslisteActionType.LAGRE_ARBEIDSLISTE_ERROR:
+        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE_ERROR:
+        case ArbeidslisteActionType.REDIGER_ARBEIDSLISTE_ERROR:{
             return {
                 ...state,
                 isLoading: false,
@@ -86,6 +93,17 @@ function* lagreArbeidsliste(action: OppdaterArbeidslisteAction) {
     }
 }
 
+function* redigerArbeidsliste(action: RedigerArbeidslisteAction) {
+    try {
+        const fnr = yield select(PersonaliaSelectors.selectFodselsnummer);
+        const response = yield call( () => ArbeidslisteApi.redigerArbeidsliste(fnr, action.arbeidsliste));
+        yield put(oppdaterArbeidslisteSuccess(response));
+    } catch (e) {
+        yield put(oppdaterArbeidslisteError(e));
+    }
+}
+
+
 function* slettArbeidsliste(action: SlettArbeidslisteAction) {
     try {
         const response = yield call( () => ArbeidslisteApi.slettArbeidsliste(action.fnr));
@@ -97,8 +115,9 @@ function* slettArbeidsliste(action: SlettArbeidslisteAction) {
 
 export function* arbeidslisteSaga() {
     yield takeLatest(ArbeidslisteActionType.HENT_ARBEIDSLISTE, hentArbeidsliste);
-    yield takeLatest(ArbeidslisteActionType.OPPDATER_ARBEIDSLISTE, lagreArbeidsliste);
+    yield takeLatest(ArbeidslisteActionType.LAGRE_ARBEIDSLISTE, lagreArbeidsliste);
     yield takeLatest(ArbeidslisteActionType.SLETT_ARBEIDSLISTE, slettArbeidsliste);
+    yield takeLatest(ArbeidslisteActionType.REDIGER_ARBEIDSLISTE, redigerArbeidsliste);
 }
 
 export default arbeidslisteReducer;
