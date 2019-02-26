@@ -1,4 +1,4 @@
-import {deleteAsJson, fetchToJson, postAsJson, putAsJson} from './api-utils';
+import { deleteAsJson, fetchToJson, postAsJson, putAsJson } from './api-utils';
 import { ArbeidslisteForm } from '../app/veilederverktoy/arbeidsliste/arbeidsliste-form';
 import { Arbeidsliste } from '../types/arbeidsliste';
 
