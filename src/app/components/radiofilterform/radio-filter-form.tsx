@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Radio } from 'nav-frontend-skjema';
 import { useState } from 'react';
-import hiddenIf from '../hidden-if';
+import hiddenIf from '../hidden-if/hidden-if';
 import './radio-filterform.less';
 
 const HiddenIfKnapp = hiddenIf(Knapp);
@@ -34,7 +34,7 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
         ...rest
     } = props;
 
-    const submitForm = (event: React.SyntheticEvent) => onSubmit({ event, value: selected, ...rest });
+    const submitForm = (event: React.FormEvent<HTMLFormElement>) => onSubmit({ event, value: selected, ...rest });
 
     return (
         <div className="radio-filterform">

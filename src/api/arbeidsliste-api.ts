@@ -3,13 +3,13 @@ import { ArbeidslisteformData, ArbeidslisteformDataMedFnr, } from '../types/arbe
 import { Arbeidsliste } from '../types/arbeidsliste';
 
 export interface ArbeidslisteApi {
-    lagreArbeidsliste: (fnr: string, arbeidsliste: ArbeidslisteformDataMedFnr[]) => Promise<Arbeidsliste>;
+    lagreArbeidsliste: (fnr: string, arbeidsliste: ArbeidslisteformDataMedFnr) => Promise<Arbeidsliste>;
     fetchArbeidslisteData: (fnr: string) => Promise<Arbeidsliste>;
     slettArbeidsliste: (fnr: string) => Promise<Arbeidsliste>;
     redigerArbeidsliste: (fnr: string, arbeidsliste: ArbeidslisteformData) => Promise<Arbeidsliste>;
 }
 
-function lagreArbeidsliste (fnr: string, arbeidsliste: ArbeidslisteformDataMedFnr[]) {
+function lagreArbeidsliste (fnr: string, arbeidsliste: ArbeidslisteformDataMedFnr) {
     return postAsJson(`/veilarbportefolje/api/arbeidsliste/${fnr}/`, arbeidsliste);
 }
 
@@ -22,7 +22,7 @@ function fetchArbeidslisteData(fnr: string) {
 }
 
 export function slettArbeidsliste(fnr: string) {
-    return deleteAsJson(`veilarbportefolje/arbeidsliste/${fnr}/`);
+    return deleteAsJson(`/veilarbportefolje/arbeidsliste/${fnr}/`);
 }
 
 export default {

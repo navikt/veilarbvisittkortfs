@@ -86,7 +86,7 @@ function* lagreArbeidsliste(action: OppdaterArbeidslisteAction) {
     try {
         const fnr = yield select(PersonaliaSelectors.selectFodselsnummer);
         const arbeidslisteForm = Object.assign({fnr}, action.arbeidsliste);
-        const response = yield call( () => ArbeidslisteApi.lagreArbeidsliste(fnr, [arbeidslisteForm]));
+        const response = yield call( () => ArbeidslisteApi.lagreArbeidsliste(fnr, arbeidslisteForm));
         yield put(oppdaterArbeidslisteSuccess(response));
     } catch (e) {
         yield put(oppdaterArbeidslisteError(e));
