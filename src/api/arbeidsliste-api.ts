@@ -1,5 +1,5 @@
 import { deleteAsJson, fetchToJson, postAsJson, putAsJson } from './api-utils';
-import {ArbeidslisteForm, ArbeidslisteFormMedFnr} from '../app/veilederverktoy/arbeidsliste/arbeidsliste-form';
+import { ArbeidslisteForm, ArbeidslisteFormMedFnr } from '../app/veilederverktoy/arbeidsliste/arbeidsliste-form';
 import { Arbeidsliste } from '../types/arbeidsliste';
 
 export interface ArbeidslisteApi {
