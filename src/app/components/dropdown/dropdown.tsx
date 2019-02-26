@@ -32,7 +32,7 @@ interface DropdownProps {
     knappeTekst: string;
     children: React.ReactChildren | React.ReactChild | React.ReactNode;
     className?: string;
-    onLukk: () => void;
+    onLukk?: () => void;
 }
 
 interface DropdownState {
@@ -75,7 +75,9 @@ class Dropdown extends Component<DropdownProps, DropdownState> {
         document.body.removeEventListener('keyup', this.eventHandler); // eslint-disable-line no-undef
         this.setState({ apen: false });
         this.btn.focus();
-        this.props.onLukk();
+        if(this.props.onLukk) {
+            this.props.onLukk();
+        }
     }
 
     toggleDropdown() {

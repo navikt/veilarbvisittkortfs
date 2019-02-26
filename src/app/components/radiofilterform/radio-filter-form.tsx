@@ -34,7 +34,7 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
         ...rest
     } = props;
 
-    const submitForm = (event: React.SyntheticEvent) => onSubmit({ event, value: selected, ...rest });
+    const submitForm = (event: React.FormEvent<HTMLFormElement>) => onSubmit({ event, value: selected, ...rest });
 
     return (
         <div className="radio-filterform">

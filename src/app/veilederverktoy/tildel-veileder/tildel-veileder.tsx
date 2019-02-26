@@ -39,7 +39,7 @@ function TildelVeileder(props: StateProps & DispatchProps ) {
         props.hentPaloggetVeileder();
     }, []);
 
-    const setValgtVeileder = (event: React.SyntheticEvent, value: string, closeDropdown: () => void ) => {
+    const setValgtVeileder = (event: React.FormEvent<HTMLFormElement>, value: string, closeDropdown: () => void ) => {
         event.preventDefault();
         if (props.paloggetVeileder) {
             props.tildelTilVeileder([{
@@ -56,7 +56,6 @@ function TildelVeileder(props: StateProps & DispatchProps ) {
             knappeTekst={'Tildel veileder'}
             className="input-m tildel-veileder-dropdown"
             name="tildel-veileder-dropdown"
-            onLukk={() => 'hello world'}
         >
             <SokFilter
                 data={props.veiledere}
