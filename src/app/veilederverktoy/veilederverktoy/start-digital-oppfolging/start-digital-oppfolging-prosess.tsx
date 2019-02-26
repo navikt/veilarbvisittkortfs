@@ -28,6 +28,7 @@ function StartDigitalOppfolgingProsess({skjulStartDigitalOppfolging, navigerTilS
                 tittelId="innstillinger.prosess.digital.tittel"
                 knappetekstId="innstillinger.modal.prosess.start.knapp"
                 onClick={navigerTilStartDigitalOppfolgingForm}
+                disabled={reservasjonKRR}
             >
                 <div className="blokk-xs">
                     <Normaltekst>

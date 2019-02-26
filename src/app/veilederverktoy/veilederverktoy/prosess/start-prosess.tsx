@@ -10,6 +10,7 @@ interface StartProsessProps {
     onClick: () => void;
     className: string;
     children: React.ReactNode;
+    disabled?:boolean
 }
 
 function StartProcess(props: StartProsessProps) {
@@ -22,6 +23,7 @@ function StartProcess(props: StartProsessProps) {
             <Hovedknapp
                 onClick={props.onClick}
                 aria-labelledby={props.tittelId}
+                disabled={props.disabled}
             >
                 <FormattedMessage id={props.knappetekstId} />
             </Hovedknapp>

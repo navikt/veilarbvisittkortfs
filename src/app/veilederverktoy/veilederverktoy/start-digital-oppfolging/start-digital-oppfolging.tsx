@@ -32,7 +32,7 @@ function StartDigitalOppfolging(props: StartEskaleringProps) {
             tekst={null}
             handleSubmit={props.handleSubmit(props.fnr, props.veilederId)}
             tekstariaLabel="Skriv en begrunnelse for hvorfor brukeren trenger manuell oppfølging"
-            overskriftTekstId="innstillinger.digital.tittel"
+            overskriftTekstId="innstillinger.modal.digital.overskrift"
             infoTekst={infoTekst}
             isLoading={props.isLoading}
         />
@@ -48,7 +48,7 @@ const mapStateToProps = (state: Appstate) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         handleSubmit(fnr: string, veilederId: string) {
-            return (tekst: string) => dispatch(settDigital( tekst, fnr, veilederId));
+            return (tekst: string) => dispatch(settDigital(tekst, fnr, veilederId));
         },
     };
 };

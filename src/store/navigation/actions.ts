@@ -1,6 +1,12 @@
 import { StringOrNothing } from '../../types/utils/stringornothings';
 
-export type NavigerActionType = 'NAVIGER' | 'START_ESKALERING_SUCCESS' | 'SETT_MANUELL_SUCCESS';
+export type NavigerActionType =
+    'NAVIGER' |
+    'START_ESKALERING_SUCCESS' |
+    'SETT_MANUELL_SUCCESS' |
+    'SETT_DIGITAL_SUCCESS' |
+    'STOPP_KVP_SUCCESS' |
+    'START_KVP_SUCCESS';
 
 export interface NavigerAction {
     type: NavigerActionType;

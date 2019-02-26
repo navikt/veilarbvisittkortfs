@@ -10,6 +10,7 @@ import StartKVPKvittering from './start-kvp-periode/start-kvp-periode-kvittering
 import StoppKvpPeriode from './stopp-kvp-periode/stopp-kvp-periode';
 import StoppKVPKvittering from './stopp-kvp-periode/stopp-kvp-periode-kvittering';
 import StartDigitalOppfolgingKvittering from './start-digital-oppfolging/start-digital-oppfolging-kvittering';
+import StartDigitalOppfolging from "./start-digital-oppfolging/start-digital-oppfolging";
 import hiddenIf from '../../components/hidden-if/hidden-if';
 import { StringOrNothing } from '../../../types/utils/stringornothings';
 
@@ -31,8 +32,10 @@ function VeilederVerktoyNavigation(props: VeilederVerktoyNavigationProps) {
             return <StarManuellOppfolging/>;
         case 'sett_manuell_kvittering':
             return <StartManuellOppfolgingKvittering/>;
+        case 'start_digital_oppfolging':
+            return <StartDigitalOppfolging/>;
         case 'start_digital_oppfoling_kvitterig':
-            return <StartDigitalOppfolgingKvittering/>
+            return <StartDigitalOppfolgingKvittering/>;
         case 'start_kvp_periode':
             return <StarKvpPeriode/>;
         case 'start_kvp_periode_kvittering':

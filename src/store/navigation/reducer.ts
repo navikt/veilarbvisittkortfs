@@ -19,6 +19,18 @@ const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = {loc
             return {
                 location: 'sett_manuell_kvittering'
             };
+        case 'SETT_DIGITAL_SUCCESS' :
+            return{
+                location: 'start_digital_oppfoling_kvitterig',
+            };
+        case 'STOPP_KVP_SUCCESS':
+            return {
+                location: 'stopp_kvp_periode_kvittering',
+            };
+        case 'START_KVP_SUCCESS':
+            return{
+                location: 'start_kvp_periode_kvittering',
+            };
         default :
             return state;
     }

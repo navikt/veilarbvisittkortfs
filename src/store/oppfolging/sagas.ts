@@ -1,7 +1,13 @@
 import { HentOppfolgingAction, hentOppfolgingError, hentOppfolgingSuccess } from './actions';
 import { hentOppfolgingData } from '../../api/oppfolging-api-utils';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { SettManuellAction, settManuellError, settManuellSuccess } from './sett-manuell-digitial-actions';
+import {
+    setDigitalError,
+    SettDigitalAction, settDigitalSuccess,
+    SettManuellAction,
+    settManuellError,
+    settManuellSuccess
+} from './sett-manuell-digitial-actions';
 import { OppfolgingActionType } from './action-type';
 import {
     StartKVPAction,
@@ -32,6 +38,18 @@ function* settManuell(action: SettManuellAction) {
     }
 }
 
+
+function* settDigital(action: SettDigitalAction) {
+    try {
+        const response = yield call( () => OppfolgingApi.settDigital(action.begrunnelse, action.veilederId, action.fnr));
+        yield put(settDigitalSuccess(response));
+        yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr: action.fnr});
+    } catch (e) {
+        yield put(setDigitalError(e));
+    }
+}
+
+
 function* startKVP(action: StartKVPAction) {
     try {
         const fnr = yield select(PersonaliaSelectors.selectFodselsnummer);
@@ -59,4 +77,5 @@ export function* oppfolgingSaga() {
     yield takeLatest(OppfolgingActionType.SETT_MANUELL, settManuell);
     yield takeLatest(OppfolgingActionType.START_KVP, startKVP);
     yield takeLatest(OppfolgingActionType.STOPP_KVP, stopKVP);
+    yield takeLatest(OppfolgingActionType.SETT_DIGITAL, settDigital);
 }

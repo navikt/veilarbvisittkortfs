@@ -8,6 +8,7 @@ export interface OppfolgingApi {
     startEskalering: (dialogId: string, begrunnelse: string) => Promise<void>; //TODO ELLER NOE
     hentVeilederTilgang: (fnr: string) => Promise<void>; //TODO ELLER NOE
     settManuellOppfolging: (begrunnelse: string, veilederId: string, fnr: string) => Promise<Oppfolging>; // TODO SJEKK HVA DET SKA VARA
+    settDigital: (begrunnelse: string, veilederId: string, fnr: string) => Promise<Oppfolging>; // TODO SJEKK HVA DET SKA VARA
     startKvpOppfolging: (begrunnelse: string, fnr: string) => Promise<void>; // TODO SJEKK HVA DET SKA VARA
     stoppKvpOppfolging: (begrunnelse: string, fnr: string) => Promise<void>; // TODO SJEKK HVA DET SKA VARA
 }
@@ -25,6 +26,13 @@ function startEskalering(dialogId: string, begrunnelse: string) {
 
 function hentVeilederTilgang(fnr: string) {
     return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/veilederTilgang?fnr=${fnr}`);
+}
+
+function settDigital(begrunnelse: string, veilederId: string, fnr: string) {
+    return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/settDigital?fnr=${fnr}`, {
+        begrunnelse,
+        veilederId,
+    });
 }
 
 function settManuellOppfolging(begrunnelse: string, veilederId: string, fnr: string) {
@@ -52,5 +60,6 @@ export default {
     hentVeilederTilgang,
     settManuellOppfolging,
     startKvpOppfolging,
-    stoppKvpOppfolging
+    stoppKvpOppfolging,
+    settDigital
 } as OppfolgingApi;

@@ -59,7 +59,7 @@ export const settDigital = (begrunnelse: string, fnr: string, veilederId: string
     veilederId
 });
 
-export const settDigitallSuccess = ( data: Oppfolging): SettDigitalActionSuccess => ({
+export const settDigitalSuccess = ( data: Oppfolging): SettDigitalActionSuccess => ({
     type: OppfolgingActionType.SETT_DIGITAL_SUCCESS,
     data
 });
