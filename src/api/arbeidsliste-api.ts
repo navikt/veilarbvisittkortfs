@@ -22,7 +22,7 @@ function fetchArbeidslisteData(fnr: string) {
 }
 
 export function slettArbeidsliste(fnr: string) {
-    return deleteAsJson(`/veilarbportefolje/arbeidsliste/${fnr}/`);
+    return deleteAsJson(`/veilarbportefolje/api/arbeidsliste/${fnr}/`);
 }
 
 export default {

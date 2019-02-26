@@ -18,7 +18,7 @@ interface DispatchProps {
 }
 
 function StartDigitalOppfolgingProsess({skjulStartDigitalOppfolging, navigerTilStartDigitalOppfolgingForm, reservasjonKRR }: StateProps & DispatchProps) {
-    if (!skjulStartDigitalOppfolging) {
+    if (skjulStartDigitalOppfolging) {
         return null;
     }
     return (
