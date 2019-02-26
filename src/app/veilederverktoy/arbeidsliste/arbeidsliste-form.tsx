@@ -1,23 +1,13 @@
 import React from 'react';
 import './arbeidsliste.less';
-import { OrNothing } from '../../../types/utils/ornothing';
 import FormikInput from "../../components/formik/formik-inputs";
 import FormikTekstArea from "../../components/formik/formik-textarea";
 import FormikDatoVelger from "../../components/formik/formik-datepicker";
 import {Hovedknapp} from "nav-frontend-knapper";
 import {FormattedMessage} from "react-intl";
 import {Undertekst} from "nav-frontend-typografi";
+import {Form} from "formik";
 
-
-export interface ArbeidslisteForm {
-    kommentar: string;
-    overskrift: string;
-    frist: OrNothing<Date>;
-}
-
-export interface ArbeidslisteFormMedFnr extends  ArbeidslisteForm {
-    fnr: string;
-}
 
 interface ArbeidslisteFormProps {
     onRequestClose: () => void;
@@ -27,10 +17,9 @@ interface ArbeidslisteFormProps {
 
 }
 
-
 function ArbeidslisteForm (props: ArbeidslisteFormProps) {
     return (
-        <div>
+        <Form>
             <div className="nav-input blokk-s">
                 <FormikInput name="overskrift"/>
                 <FormikTekstArea name = "kommentar"/>
@@ -55,7 +44,7 @@ function ArbeidslisteForm (props: ArbeidslisteFormProps) {
                     </button>
                 </div>
             </div>
-        </div>
+        </Form>
     )
 }
 

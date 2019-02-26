@@ -1,5 +1,4 @@
-import { Arbeidsliste } from '../../types/arbeidsliste';
-import { ArbeidslisteForm } from '../../app/veilederverktoy/arbeidsliste/arbeidsliste-form';
+import {Arbeidsliste, ArbeidslisteformData} from '../../types/arbeidsliste';
 
 export enum ArbeidslisteActionType {
     HENT_ARBEIDSLISTE = 'HENT_ARBEIDSLISTE',
@@ -38,7 +37,7 @@ export const slettArbeidslisteActionError = (error: Error): SlettArbeidslisteAct
     };
 };
 
-export const oppdaterArbeidsliste = (arbeidsliste: ArbeidslisteForm): OppdaterArbeidslisteAction => {
+export const oppdaterArbeidsliste = (arbeidsliste: ArbeidslisteformData): OppdaterArbeidslisteAction => {
     return {
         type: ArbeidslisteActionType.LAGRE_ARBEIDSLISTE,
         arbeidsliste,
@@ -59,7 +58,7 @@ export const oppdaterArbeidslisteError = (error: Error): OppdaterArbeidslisteAct
     };
 };
 
-export const redigerArbeidsliste = (arbeidsliste: ArbeidslisteForm): RedigerArbeidslisteAction => {
+export const redigerArbeidsliste = (arbeidsliste: ArbeidslisteformData): RedigerArbeidslisteAction => {
     return {
         type: ArbeidslisteActionType.REDIGER_ARBEIDSLISTE,
         arbeidsliste,
@@ -104,7 +103,7 @@ export const hentArbeidslisteError = (error: Error): HentArbeidslisteActionError
 
 export interface OppdaterArbeidslisteAction {
     type: ArbeidslisteActionType.LAGRE_ARBEIDSLISTE;
-    arbeidsliste: ArbeidslisteForm;
+    arbeidsliste: ArbeidslisteformData;
 }
 
 export interface OppdaterArbeidslisteActionSuccess {
@@ -119,7 +118,7 @@ export interface OppdaterArbeidslisteActionError {
 
 export interface RedigerArbeidslisteAction {
     type: ArbeidslisteActionType.REDIGER_ARBEIDSLISTE;
-    arbeidsliste: ArbeidslisteForm;
+    arbeidsliste: ArbeidslisteformData;
 }
 
 export interface RedigerArbeidslisteActionSuccess {

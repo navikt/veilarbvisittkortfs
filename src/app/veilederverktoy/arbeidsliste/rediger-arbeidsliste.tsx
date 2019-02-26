@@ -1,48 +1,49 @@
 import React from 'react';
 import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
-import { Arbeidsliste } from '../../../types/arbeidsliste';
+import {Arbeidsliste, ArbeidslisteformData} from '../../../types/arbeidsliste';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
-import {Formik} from "formik";
+import {Formik, FormikProps} from "formik";
 import NavFrontendModal from 'nav-frontend-modal';
 import ArbeidslisteForm from "./arbeidsliste-form";
 
-interface LeggTilArbeidslisteProps {
+interface RedigerArbeidslisteProps {
     navn: string;
     fnr: string;
     isOpen: boolean;
     lukkModal: () => void;
     arbeidsliste: Arbeidsliste;
     arbeidslisteStatus: boolean;
-    onSubmit: (values: any)=> void;
+    onSubmit: (values: ArbeidslisteformData) => void;
 
 }
 
-function RedigerArbeidsliste(props: LeggTilArbeidslisteProps & InjectedIntlProps) {
+function RedigerArbeidsliste(props: RedigerArbeidslisteProps & InjectedIntlProps) {
 
     const initalValues = {
         overskrift:  props.arbeidsliste.overskrift,
         kommentar: props.arbeidsliste.kommentar,
-        frist: props.arbeidsliste.frist ? new Date(props.arbeidsliste.frist) : null};
+        frist: props.arbeidsliste.frist ? new Date(props.arbeidsliste.frist) : null} as ArbeidslisteformData;
 
-    const onRequestClose = (dirty: boolean) => {
+    const onRequestClose = (formikProps: FormikProps<ArbeidslisteformData>) => {
         const dialogTekst = props.intl.formatMessage({
-            id: 'arbeidsliste-skjema.lukk-advarsel',
+            id: 'lukk-advarsel',
         });
-        if (!dirty || confirm(dialogTekst)) {
+        if (!formikProps.dirty || confirm(dialogTekst)) {
             props.lukkModal();
+            formikProps.resetForm();
         }
     };
 
     return (
         <Formik
             initialValues={initalValues}
-            onSubmit={()=>"HERPS"}
+            onSubmit={props.onSubmit}
             render={formikProps => (
                 <NavFrontendModal
                     className="arbeidsliste-modal"
                     contentLabel="arbeidsliste"
                     isOpen={props.isOpen}
-                    onRequestClose={()=> onRequestClose(formikProps.dirty)}
+                    onRequestClose={()=> onRequestClose(formikProps)}
                     closeButton
                 >
                     <div className="modal-header-wrapper">
@@ -60,7 +61,7 @@ function RedigerArbeidsliste(props: LeggTilArbeidslisteProps & InjectedIntlProps
                                 />
                             </Undertittel>
                             <ArbeidslisteForm
-                                onRequestClose={()=>onRequestClose(formikProps.dirty)}
+                                onRequestClose={()=>onRequestClose(formikProps)}
                                 laster={props.arbeidslisteStatus}
                             />
                         </div>

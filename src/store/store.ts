@@ -1,6 +1,7 @@
 import { fork, all } from 'redux-saga/effects';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import createReduxSaga from 'redux-saga';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import oppfolgingReducer from './oppfolging/reducer';
 import oppfolgingStatusReducer, { oppfolgingstatusSaga } from './oppfolging-status/reducer';
 import personaliaReducer, { personaliaSaga } from './personalia/reducer';
@@ -24,7 +25,7 @@ const store = createStore(
         tildelVeileder: tildelVelederReducer,
         tilgangTilBrukersKontor : tilgangTilBrukersKontorReducer,
     }),
-    applyMiddleware(sagaMiddleware)
+    composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 
 function* rootSaga() {

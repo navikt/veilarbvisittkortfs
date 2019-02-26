@@ -44,3 +44,6 @@ mock.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', Veilederliste);
 mock.get('/veilarbveileder/api/veileder/me', VeilederData);
 mock.post(`/veilarbportefolje/api/arbeidsliste/:fnr?`, (args: HandlerArgument) => {
     return ResponseUtils.jsonPromise(Arbeidsliste); });
+
+mock.put(`/veilarbportefolje/api/arbeidsliste/:fnr?`, (args: HandlerArgument) => {
+    return ResponseUtils.jsonPromise(Arbeidsliste); });
