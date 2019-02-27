@@ -9,16 +9,17 @@ import {
     OppfolgingstatusActionType
 } from './actions';
 import { fetchOppfolgingsstatusData } from '../../api/api';
+import {FETCH_STATUS} from "../../types/fetch-status";
 
-export type OppfolgingStatusState = {data: OppfolgingStatus} & {isLoading: boolean; error: OrNothing<Error>};
+export type OppfolgingStatusState = {data: OppfolgingStatus} & {status: FETCH_STATUS; error: OrNothing<Error>};
 
 const initialState: OppfolgingStatusState = {
-    isLoading: false,
+    status: 'NOT_STARTED',
     error: null,
     data: {
         oppfolgingsenhet: {
-            navn: 'NAV TestHeim',
-            enhetId: '007'},
+            navn: '',
+            enhetId: ''},
         veilederId: null,
         formidlingsgruppe: null,
         servicegruppe: null,
@@ -30,20 +31,20 @@ const oppfolgingStatusReducer: Reducer<OppfolgingStatusState, OppfolgingStatusAc
         case OppfolgingstatusActionType.HENT_OPPFOLGINGSTATUS: {
             return {
                 ...state,
-                isLoading: true
+                status: 'LOADING'
             };
         }
         case OppfolgingstatusActionType.HENT_OPPFOLGINGSTATUS_SUCCESS: {
             return {
                 ...state,
                 data: action.data,
-                isLoading: false
+                status: 'DONE'
             };
         }
         case OppfolgingstatusActionType.HENT_OPPFOLGINGSTATUS_ERROR: {
             return {
                 ...state,
-                isLoading: false,
+                status: 'ERROR',
                 error: action.error
             };
         }

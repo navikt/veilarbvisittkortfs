@@ -18,8 +18,9 @@ import {
 } from './actions';
 import PersonaliaSelectors from '../personalia/selectors';
 import ArbeidslisteApi from '../../api/arbeidsliste-api';
+import {FETCH_STATUS} from "../../types/fetch-status";
 
-export type ArbeidslisteState = {data: Arbeidsliste} & {isLoading: boolean; error: OrNothing<Error>};
+export type ArbeidslisteState = {data: Arbeidsliste} & {status: FETCH_STATUS; error: OrNothing<Error>};
 
 const initialState: ArbeidslisteState = {
     data: {
@@ -33,7 +34,7 @@ const initialState: ArbeidslisteState = {
         sistEndretAv: null,
         veilederId: null,
     },
-    isLoading: false,
+    status: 'NOT_STARTED',
     error: null
 };
 
@@ -45,7 +46,7 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
         case ArbeidslisteActionType.REDIGER_ARBEIDSLISTE:{
             return {
                 ...state,
-                isLoading: true
+                status: 'LOADING'
             };
         }
         case ArbeidslisteActionType.HENT_ARBEIDSLISTE_SUCCESS:
@@ -55,7 +56,7 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
             return {
                 ...state,
                 data: action.data,
-                isLoading: false
+                status: 'DONE'
             };
         }
         case ArbeidslisteActionType.HENT_ARBEIDSLISTE_ERROR:
@@ -64,7 +65,7 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
         case ArbeidslisteActionType.REDIGER_ARBEIDSLISTE_ERROR:{
             return {
                 ...state,
-                isLoading: false,
+                status: 'ERROR',
                 error: action.error
             };
         }

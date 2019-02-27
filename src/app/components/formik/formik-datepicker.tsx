@@ -4,6 +4,7 @@ import Datovelger from "nav-datovelger/dist/datovelger/Datovelger";
 import SkjemaelementFeilmelding from "nav-frontend-skjema/lib/skjemaelement-feilmelding";
 import {moment} from "../../../App";
 import "./datovelger.less";
+import classNames from 'classnames';
 
 
 interface FormikDatepickerProps {
@@ -41,14 +42,15 @@ function FormikDatoVelger({name}: FormikDatepickerProps) {
         >
             {({ field, form: {errors, setFieldValue}}: FieldProps) => {
                 const error = getIn(errors, name);
+                const datePickerClassName = classNames( 'skjemaelement', 'datovelger', { 'datovelger--harFeil': error });
                 return(
-                    <div className="datovelger skjemaelement">
+                    <div className={datePickerClassName}>
                         <Datovelger
                             input={{
                                 id: 'fristInput',
                                 name: 'frist',
                                 placeholder: 'dd.mm.åååå',
-                                ariaLabel: 'Frist:'
+                                ariaLabel: 'Frist:',
                             }}
                             id="fristDatovelger"
                             onChange={(date: Date) => setFieldValue(field.name, date)}

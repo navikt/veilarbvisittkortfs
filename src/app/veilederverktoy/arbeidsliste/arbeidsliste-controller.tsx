@@ -11,6 +11,7 @@ import RedigerArbeidsliste from './rediger-arbeidsliste';
 import { Dispatch } from 'redux';
 import {oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste} from '../../../store/arbeidsliste/actions';
 import {FormikValues} from "formik";
+import ArbeidslisteSelector from "../../../store/arbeidsliste/selector";
 
 interface StateProps {
     arbeidsliste: Arbeidsliste;
@@ -88,7 +89,7 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     arbeidsliste: state.arbeidsliste.data,
     fnr: PersonaliaSelectors.selectFodselsnummer(state),
     navn: PersonaliaSelectors.selectSammensattNavn(state),
-    arbeidslisteStatus: state.arbeidsliste.isLoading
+    arbeidslisteStatus: ArbeidslisteSelector.selectArbeidslisteStatus(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

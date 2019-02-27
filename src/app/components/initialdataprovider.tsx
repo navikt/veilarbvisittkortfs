@@ -7,6 +7,10 @@ import { hentArbeidsliste } from '../../store/arbeidsliste/actions';
 import { Appstate } from '../../types/appstate';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { hentOppfolging } from '../../store/oppfolging/actions';
+import OppfolgingsstatusSelector from "../../store/oppfolging-status/selectors";
+import PersonaliaSelector from "../../store/personalia/selectors";
+import ArbeidsListeSelector from "../../store/arbeidsliste/selector";
+import OppfolgingSelector from "../../store/oppfolging/selector";
 
 interface DispatchProps {
     doHentPersonData: () => void;
@@ -36,7 +40,7 @@ function InitialDataProvider(props: Props) {
     }, []);
 
     if (props.isLoading) {
-        return <NavFrontendSpinner/>;
+        return <NavFrontendSpinner type= "XL"/>;
     }
     return (
         <>
@@ -53,7 +57,11 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: InitialDataProviderPro
 });
 
 const mapStateToProps = (state: Appstate): StateProps => ({
-    isLoading: state.arbeidsliste.isLoading || state.oppfolgingstatus.isLoading || state.oppfolging.isLoading || state.personalia.isLoading,
+    isLoading:
+        OppfolgingsstatusSelector.selectOppfolgingStatusStatus(state) ||
+        PersonaliaSelector.selectPersonaliaIsLoading(state) ||
+        ArbeidsListeSelector.selectArbeidslisteStatus(state) ||
+        OppfolgingSelector.selectoppfolgingStatus(state)
 });
 
 export default connect<StateProps, DispatchProps, InitialDataProviderProps>(mapStateToProps, mapDispatchToProps)(InitialDataProvider);

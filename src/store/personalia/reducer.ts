@@ -10,11 +10,12 @@ import {
     PersonaliaActionType
 } from './actions';
 import { fetchPersonaliaData } from '../../api/api';
+import {FETCH_STATUS} from "../../types/fetch-status";
 
-export type PersonaliaState = {data: Personalia} & {isLoading: boolean; error: OrNothing<Error>};
+export type PersonaliaState = {data: Personalia} & {status: FETCH_STATUS; error: OrNothing<Error>};
 
 const initialState: PersonaliaState = {
-    isLoading: false,
+    status: 'NOT_STARTED',
     error: null,
     data: {
         fornavn: '',
@@ -36,20 +37,20 @@ const personaliaReducer: Reducer<PersonaliaState, PersonaliaActions> = (state = 
         case PersonaliaActionType.HENT_PERSONALIA: {
             return {
                 ...state,
-                isLoading: true
+                status: 'LOADING'
             };
         }
         case PersonaliaActionType.HENT_PERSONALIA_SUCCESS: {
             return {
                 ...state,
                 data: action.data,
-                isLoading: false
+                status: 'DONE'
             };
         }
         case PersonaliaActionType.HENT_PERSONALIA_ERROR: {
             return {
                 ...state,
-                isLoading: false,
+                status: 'ERROR',
                 error: action.error
             };
         }

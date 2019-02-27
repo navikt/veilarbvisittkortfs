@@ -2,7 +2,7 @@ import { Appstate } from '../../types/appstate';
 import { Personalia } from '../../types/personalia';
 import { PersonaliaState } from './reducer';
 
-export interface PersonaliaSelectors {
+export interface PersonaliaSelector {
     selectPersonaliaData: (state: Appstate) => Personalia;
     selectFodselsnummer: (state: Appstate) => string;
     selectPersonaliaIsLoading: (state: Appstate) => boolean;
@@ -22,7 +22,8 @@ function selectFodselsnummer(state: Appstate): string {
 }
 
 function selectPersonaliaIsLoading(state: Appstate): boolean {
-    return selectPersonaliaSlice(state).isLoading;
+    const personaliaStatus = selectPersonaliaSlice(state).status;
+    return  personaliaStatus=== 'NOT_STARTED' || personaliaStatus === 'LOADING';
 }
 
 function selectSammensattNavn (state: Appstate): string {
@@ -34,4 +35,4 @@ export default {
     selectFodselsnummer,
     selectPersonaliaIsLoading,
     selectSammensattNavn
-} as PersonaliaSelectors;
+} as PersonaliaSelector;

@@ -6,6 +6,7 @@ import BegrunnelseForm from '../begrunnelseform/begrunnelse-form';
 import { FormattedMessage } from 'react-intl';
 import { startKVP } from '../../../../store/oppfolging/start-stopp-kvp-periode-actions';
 import { Normaltekst } from 'nav-frontend-typografi';
+import OppfolgingSelector from "../../../../store/oppfolging/selector";
 
 interface DispatchProps {
     handleSubmit: (tekst: string) => void;
@@ -36,7 +37,7 @@ function StarKvpPeriode(props: StartKvpPeriodeProsessProps) {
 }
 
 const mapStateToProps = (state: Appstate) => ({
-    isLoading: state.oppfolging.isLoading,
+    isLoading: OppfolgingSelector.selectoppfolgingStatus(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

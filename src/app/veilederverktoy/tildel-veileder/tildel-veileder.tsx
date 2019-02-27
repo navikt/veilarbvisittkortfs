@@ -5,7 +5,6 @@ import RadioFilterForm from '../../components/radiofilterform/radio-filter-form'
 import { VeilederData } from '../../../types/veilederdata';
 import personalia from '../../../mock/personalia';
 import { Appstate } from '../../../types/appstate';
-import OppfolgingsstatusSelector from '../../../store/oppfolging-status/selectors';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
@@ -13,9 +12,10 @@ import {
     hentPaloggetVeileder, HentPaloggetVeilederAction,
     HentVeilederPaEnhetenAction, tildelTilVeileder, TildelVeilederAction
 } from '../../../store/tildel-veileder/actions';
-import { StringOrNothing } from '../../../types/utils/stringornothings';
 import { TildelVeilederData } from '../../../types/tildel-veileder';
 import './tildel-veileder.less';
+import OppfolgingsstatusSelector from "../../../store/oppfolging-status/selectors";
+import {StringOrNothing} from "../../../types/utils/stringornothings";
 
 function settSammenNavn(veileder: VeilederData) {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
@@ -35,8 +35,10 @@ interface DispatchProps {
 
 function TildelVeileder(props: StateProps & DispatchProps ) {
     useEffect(() => {
-        props.hentAlleVeiledereForEnheten(props.oppfolgingsenhetId || '1234');
-        props.hentPaloggetVeileder();
+        if(props.oppfolgingsenhetId) {
+            props.hentAlleVeiledereForEnheten(props.oppfolgingsenhetId);
+            props.hentPaloggetVeileder();
+        }
     }, []);
 
     const setValgtVeileder = (event: React.FormEvent<HTMLFormElement>, value: string, closeDropdown: () => void ) => {

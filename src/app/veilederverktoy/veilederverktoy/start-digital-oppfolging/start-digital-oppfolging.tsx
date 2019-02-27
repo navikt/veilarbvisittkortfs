@@ -7,6 +7,7 @@ import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { FormattedMessage } from 'react-intl';
 import PersonaliaSelectors from '../../../../store/personalia/selectors';
 import {settDigital} from '../../../../store/oppfolging/sett-manuell-digitial-actions';
+import OppfolgingSelector from "../../../../store/oppfolging/selector";
 
 interface DispatchProps {
     handleSubmit: (fnr: string, veilederId: string) => ((tekst: string) => void);
@@ -40,7 +41,7 @@ function StartDigitalOppfolging(props: StartEskaleringProps) {
 }
 
 const mapStateToProps = (state: Appstate) => ({
-    isLoading: state.oppfolging.isLoading,
+    isLoading: OppfolgingSelector.selectoppfolgingStatus(state),
     fnr: PersonaliaSelectors.selectFodselsnummer(state),
     veilederId: state.tildelVeileder.paloggetVeileder.data.ident
 });

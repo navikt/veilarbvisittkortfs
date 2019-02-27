@@ -14,9 +14,10 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import TildelVeilederApi from '../../api/tildel-veileder-api';
 import { TildelVeilederData } from '../../types/tildel-veileder';
 import { VeilederListe } from '../../mock/veiledereliste';
+import {FETCH_STATUS} from "../../types/fetch-status";
 
 export interface TildelVeilederState {
-    isLoading: boolean;
+    status: FETCH_STATUS;
     error: OrNothing<Error>;
     paloggetVeileder: {
         data: VeilederData;
@@ -33,7 +34,7 @@ export interface TildelVeilederState {
 }
 
 const initialState: TildelVeilederState = {
-    isLoading: false,
+    status: 'NOT_STARTED',
     error: null,
     paloggetVeileder: {
         data: {
@@ -57,13 +58,13 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
         case TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN:
         case TildelVeilederActionType.TILDEL_VEILEDER:
             return {
-                isLoading: true,
+                status: 'LOADING',
                 ...state
             };
         case TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN_SUCCESS: {
             return {
                 ...state,
-                isLoading: false,
+                status: 'DONE',
                 veilederPaEnheten: {
                     data : action.data
                 },
@@ -72,7 +73,7 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
         case TildelVeilederActionType.HENT_PALOGGET_VEILEDER_SUCCESS: {
             return {
                 ...state,
-                isLoading: false,
+                status: 'DONE',
                 paloggetVeileder: {
                     data: action.data
                 }
@@ -81,7 +82,7 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
         case TildelVeilederActionType.TILDEL_VEILEDER_SUCCESS: {
             return {
                 ...state,
-                isLoading: false,
+                status: 'DONE',
                 tildeltVeileder: {
                     data: action.data
                 },
@@ -92,7 +93,7 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
         case TildelVeilederActionType.TILDEL_VEILEDER_ERROR: {
             return {
                 ...state,
-                isLoading: false,
+                status: 'ERROR',
                 error: action.error,
 
             };

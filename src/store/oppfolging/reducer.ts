@@ -4,11 +4,12 @@ import { OppfolgingActions
 import { Oppfolging } from '../../types/oppfolging';
 import { OrNothing } from '../../types/utils/ornothing';
 import { OppfolgingActionType } from './action-type';
+import {FETCH_STATUS} from "../../types/fetch-status";
 
-export type OppfogingState = {data: Oppfolging} & {isLoading: boolean; error: OrNothing<Error>};
+export type OppfogingState = {data: Oppfolging} & {status: FETCH_STATUS; error: OrNothing<Error>};
 
 const initialState: OppfogingState = {
-    isLoading: false,
+    status: 'NOT_STARTED',
     error: null,
     data: {
         avslutningStatus: null,
@@ -42,7 +43,7 @@ const oppfolgingReducer: Reducer<OppfogingState, OppfolgingActions> = (state = i
         case OppfolgingActionType.STOPP_KVP: {
             return {
                 ...state,
-                isLoading: true
+                status: 'LOADING'
             };
         }
         case OppfolgingActionType.HENT_OPPFOLGING_SUCCESS:
@@ -52,7 +53,7 @@ const oppfolgingReducer: Reducer<OppfogingState, OppfolgingActions> = (state = i
             return {
                 ...state,
                 data: action.data,
-                isLoading: false
+                status: 'DONE'
             };
         }
         case OppfolgingActionType.HENT_OPPFOLGING_ERROR:
@@ -63,7 +64,7 @@ const oppfolgingReducer: Reducer<OppfogingState, OppfolgingActions> = (state = i
         case OppfolgingActionType.STOPP_KVP_ERROR: {
             return {
                 ...state,
-                isLoading: false,
+                status: 'ERROR',
                 error: action.error
             };
         }

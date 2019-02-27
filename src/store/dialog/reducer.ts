@@ -14,11 +14,12 @@ import OppfolgingApi from '../../api/oppfolging-api';
 import PersonaliaSelectors from '../personalia/selectors';
 import { startEskaleringError, startEskaleringSuccess } from '../oppfolging/actions';
 import { hentOppfolgingstatusSuccess } from '../oppfolging-status/actions';
+import {FETCH_STATUS} from "../../types/fetch-status";
 
-export type DialogState = {data: Dialog} & {isLoading: boolean; error: OrNothing<Error>};
+export type DialogState = {data: Dialog} & {status: FETCH_STATUS; error: OrNothing<Error>};
 
 const initialState: DialogState = {
-    isLoading: false,
+    status: 'NOT_STARTED',
     error: null,
     data: {
         aktvitetId: null,
@@ -41,20 +42,20 @@ const initialState: DialogState = {
 const dialogReducer: Reducer<DialogState, DialogActions> = (state = initialState, action) => {
     switch (action.type) {
         case HenvendelseActionType.OPPRETTET_HENVENDELSE: {
-            return {...state, isLoading: true};
+            return {...state, status: 'LOADING'};
         }
         case HenvendelseActionType.OPPRETTET_HENVENDELSE_SUCCESS:
         case DialogActionType.OPPDATER_DIALOG_SUCCESS: {
             return {
                 ...state,
-                isLoading: false,
+                status: 'DONE',
                 data: action.data
             };
         }
         case HenvendelseActionType.OPPRETTET_HENVENDELSE_ERROR: {
             return {
                 ...state,
-                isLoading: false,
+                status: 'ERROR',
                 error: action.error
             };
         }

@@ -3,19 +3,27 @@ import { OppfolgingStatus } from '../../types/oppfolging-status';
 import { StringOrNothing } from '../../types/utils/stringornothings';
 
 export interface OppfolgingsstatusSelector {
-    selectOppfolgingslice: (state: Appstate) => OppfolgingStatus;
+    selectOppfolgingStatusData: (state: Appstate) => OppfolgingStatus;
     selectOppfolgingsenhetsId: (state: Appstate) => StringOrNothing;
+    selectOppfolgingStatusStatus: (state: Appstate) => boolean;
 }
 
-function selectOppfolgingslice(state: Appstate): OppfolgingStatus {
+function selectOppfolgingStatusData(state: Appstate): OppfolgingStatus {
     return state.oppfolgingstatus.data;
 }
 
 function selectOppfolgingsenhetsId(state: Appstate): StringOrNothing {
-    return selectOppfolgingslice(state).oppfolgingsenhet.enhetId;
+    return selectOppfolgingStatusData(state).oppfolgingsenhet.enhetId;
 }
 
+function selectOppfolgingStatusStatus (state: Appstate): boolean {
+    const oppfolgingStatus = state.oppfolgingstatus.status;
+    return oppfolgingStatus === 'NOT_STARTED' ||oppfolgingStatus === 'LOADING';
+}
+
+
 export default {
-    selectOppfolgingslice,
-    selectOppfolgingsenhetsId
+    selectOppfolgingStatusData,
+    selectOppfolgingsenhetsId,
+    selectOppfolgingStatusStatus
 } as OppfolgingsstatusSelector;

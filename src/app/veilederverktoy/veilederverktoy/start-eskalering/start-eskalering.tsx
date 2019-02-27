@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { navigerAction } from '../../../../store/navigation/actions';
 import { Appstate } from '../../../../types/appstate';
 import BegrunnelseForm from '../begrunnelseform/begrunnelse-form';
+import OppfolgingSelector from "../../../../store/oppfolging/selector";
+import DialogSelector from "../../../../store/dialog/selector";
 
 interface DispatchProps {
     handleSubmit: (overskrift: string) => ((tekst: string) => void);
@@ -46,7 +48,7 @@ function StartEskalering(props: StartEskaleringProps) {
 }
 
 const mapStateToProps = (state: Appstate) => ({
-    isLoading: state.dialog.isLoading || state.oppfolging.isLoading
+    isLoading: OppfolgingSelector.selectoppfolgingStatus(state) || DialogSelector.selectDialogStatus(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
