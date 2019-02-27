@@ -6,7 +6,6 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import VeilederVerktoyNavigation from './veilederverktoy/veilederverktoy-navigation';
 import { hentTilgangTilBrukersKontor } from '../../store/tilgang-til-brukerskontor/actions';
-import { navigerAction } from '../../store/navigation/actions';
 import VeilederVerktoyKnapp from './veilederverktoy/veileder-verktoy-knapp';
 import { Appstate } from '../../types/appstate';
 
@@ -20,10 +19,16 @@ interface OwnProps {
 
 interface DispatchProps {
     hentTilgangTilBrukersKontor: (fnr: string) => void;
-    navigerTilProsesser: () => void;
 }
 
 type VeilederverktoyslinjeProps = StateProps & OwnProps & DispatchProps;
+
+const handleVeilederKnappClicked = () => {
+    const win = window as any; //tslint:disable-line no-any
+    if (win.apneVerktoyModal) {
+        win.apneVerktoyModal();
+    }
+};
 
 function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
 
@@ -37,7 +42,7 @@ function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
                 <Arbeidslistekomponent/>
                 <TildelVeileder/>
                 <VeilederVerktoyKnapp
-                    onClick={props.navigerTilProsesser}
+                    onClick={handleVeilederKnappClicked}
                     hidden={props.tilgangTilBrukersKontor}
                 />
                 <VeilederVerktoyNavigation/>
@@ -50,9 +55,8 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     tilgangTilBrukersKontor: state.tilgangTilBrukersKontor.data.tilgangTilBrukersKontor
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     hentTilgangTilBrukersKontor: (fnr: string) => dispatch(hentTilgangTilBrukersKontor(fnr)),
-    navigerTilProsesser: () => dispatch(navigerAction('prosesser'))
 });
 
 export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps) (Veilederverktoyslinje);
