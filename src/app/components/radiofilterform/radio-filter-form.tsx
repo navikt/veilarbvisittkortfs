@@ -10,12 +10,12 @@ const HiddenIfHovedknapp = hiddenIf(Hovedknapp);
 /* tslint:disable */
 
 interface RadioFilterFormProps<T> {
-    onSubmit: (event: any) => void;
+    onSubmit: (event: React.FormEvent<HTMLFormElement>, value: string, closeDropdown: () => void) => void;
     data: T[];
     createLabel: (foo: T) => string;
     createValue: (foo: T) => string;
     radioName: string;
-    closeDropdown: (event: any) => void;
+    closeDropdown: () => void;
     fjernNullstill?: boolean;
     visLukkKnapp?: boolean;
 }
@@ -29,12 +29,10 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
         createLabel,
         createValue,
         radioName,
-        fjernNullstill,
         visLukkKnapp,
-        ...rest
     } = props;
 
-    const submitForm = (event: React.FormEvent<HTMLFormElement>) => onSubmit({ event, value: selected, ...rest });
+    const submitForm = (event: React.FormEvent<HTMLFormElement> ) => onSubmit(event, selected, props.closeDropdown);
 
     return (
         <div className="radio-filterform">
@@ -67,17 +65,6 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
                         hidden={!visLukkKnapp || !!selected}
                     >
                         Lukk
-                    </HiddenIfKnapp>
-                    <HiddenIfKnapp
-                        mini={true}
-                        hidden={fjernNullstill}
-                        htmlType="button"
-                        onClick={event => {
-                            changeSelected('');
-                            onSubmit({ event, value: null, ...rest });
-                        }}
-                    >
-                        Nullstill
                     </HiddenIfKnapp>
                 </div>
             </form>

@@ -71,7 +71,6 @@ function TildelVeileder(props: StateProps & DispatchProps ) {
                         createLabel={settSammenNavn}
                         createValue={(veileder: VeilederData) => veileder.ident}
                         radioName="tildel-veileder"
-                        fjernNullstill={true}
                         visLukkKnapp={true}
                         {...radioFilterProps}
                     />}

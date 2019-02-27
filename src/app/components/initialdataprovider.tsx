@@ -62,6 +62,7 @@ const mapStateToProps = (state: Appstate): StateProps => ({
         PersonaliaSelector.selectPersonaliaIsLoading(state) ||
         ArbeidsListeSelector.selectArbeidslisteStatus(state) ||
         OppfolgingSelector.selectoppfolgingStatus(state)
+
 });
 
 export default connect<StateProps, DispatchProps, InitialDataProviderProps>(mapStateToProps, mapDispatchToProps)(InitialDataProvider);
