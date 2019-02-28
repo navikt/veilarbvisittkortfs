@@ -4,14 +4,10 @@ import Veilederverktoyslinje from './app/veilederverktoy/veiledervertoyslinje';
 import Tilbakelenke from './app/tilbakelenke';
 import './index.less';
 import AppProvider from './app-provider';
-import momentImpl from 'moment';
-import 'moment-timezone';
+import * as moment from 'moment';
 import 'moment/locale/nb';
 
-momentImpl.locale('nb');
-momentImpl.tz.setDefault('Europe/Oslo');
-
-export const moment = momentImpl;
+moment.locale('nb');
 
 export interface AppProps {
     fnr: string;

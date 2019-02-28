@@ -1,6 +1,6 @@
 import React from 'react';
 import Kvittering from '../prosess/kvittering'
-import {moment} from "../../../../App";
+import moment from "moment";
 import {Appstate} from "../../../../types/appstate";
 import {connect} from "react-redux";
 import {StringOrNothing} from "../../../../types/utils/stringornothings";
