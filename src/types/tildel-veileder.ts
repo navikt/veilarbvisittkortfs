@@ -4,7 +4,6 @@ export interface TildelVeilederData {
     brukerFnr: string;
 }
 
-
 export interface TildelVeilederResponse {
     resultat: string;
     feilendeTilordninger: TildelVeilederData[];
