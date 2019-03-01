@@ -3,3 +3,9 @@ export interface TildelVeilederData {
     tilVeilederId: string;
     brukerFnr: string;
 }
+
+
+export interface TildelVeilederResponse {
+    resultat: string;
+    feilendeTilordninger: TildelVeilederData[];
+}

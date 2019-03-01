@@ -12,12 +12,15 @@ import { Dispatch } from 'redux';
 import {oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste} from '../../../store/arbeidsliste/actions';
 import {FormikValues} from "formik";
 import ArbeidslisteSelector from "../../../store/arbeidsliste/selector";
+import {HiddenIfHovedKnapp, HiddenIfKnapp} from "../../components/hidden-if/hidden-if-knapp";
 
 interface StateProps {
     arbeidsliste: Arbeidsliste;
     fnr: string;
     navn: string;
     arbeidslisteStatus: boolean;
+    kanLeggeIArbeidsliste: boolean;
+    kanFjerneArbeidsliste: boolean;
 }
 
 interface DispatchProps {
@@ -40,10 +43,15 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
     if (!props.arbeidsliste.endringstidspunkt) {
         return(
             <>
-                <Knapp className="arbeidsliste__knapp" htmlType="button" onClick={() => setLeggTilArbeidslisteAktivt(true)}>
+                <HiddenIfHovedKnapp
+                    className="arbeidsliste__knapp"
+                    htmlType="button"
+                    onClick={() => setLeggTilArbeidslisteAktivt(true)}
+                    hidden={!props.kanLeggeIArbeidsliste}
+                >
                     <img src={ArbeidslisteIkon} alt="Legg til i arbeidsliste"/>
                     Legg til i arbeidsliste
-                </Knapp>
+                </HiddenIfHovedKnapp>
                 <LeggTilArbeidsliste
                     isOpen={leggTilArbeidsliste}
                     lukkModal={() => setLeggTilArbeidslisteAktivt(false)}
@@ -58,10 +66,14 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
     }
     return (
         <>
-            <Knapp className="arbeidsliste__knapp" htmlType="button" onClick={() => setFjernArbeidslisteAktivt(true)}>
+            <HiddenIfKnapp
+                className="arbeidsliste__knapp"
+                htmlType="button" onClick={() => setFjernArbeidslisteAktivt(true)}
+                hidden={!props.kanFjerneArbeidsliste}
+            >
                 <img src={ArbeidslisteIkon} alt="Fjern fra arbeidsliste"/>
                 <span>Fjern</span>
-            </Knapp>
+            </HiddenIfKnapp>
             <Knapp className="arbeidsliste__knapp" htmlType="button" onClick={() => setVisKommentarAktivt(true)}>
                 <span>Vis kommentar</span>
             </Knapp>
@@ -89,7 +101,9 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     arbeidsliste: state.arbeidsliste.data,
     fnr: PersonaliaSelectors.selectFodselsnummer(state),
     navn: PersonaliaSelectors.selectSammensattNavn(state),
-    arbeidslisteStatus: ArbeidslisteSelector.selectArbeidslisteStatus(state)
+    arbeidslisteStatus: ArbeidslisteSelector.selectArbeidslisteStatus(state),
+    kanLeggeIArbeidsliste: ArbeidslisteSelector.selectKanLeggeIArbeidsListe(state),
+    kanFjerneArbeidsliste: ArbeidslisteSelector.selectKanFjerneArbeidsliste(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -1,15 +1,19 @@
 import { Appstate } from '../../types/appstate';
 import { OppfolgingStatus } from '../../types/oppfolging-status';
 import { StringOrNothing } from '../../types/utils/stringornothings';
-
 export interface OppfolgingsstatusSelector {
     selectOppfolgingStatusData: (state: Appstate) => OppfolgingStatus;
     selectOppfolgingsenhetsId: (state: Appstate) => StringOrNothing;
     selectOppfolgingStatusStatus: (state: Appstate) => boolean;
+    selectOppfolgingsVeileder: (state: Appstate) => StringOrNothing
 }
 
 function selectOppfolgingStatusData(state: Appstate): OppfolgingStatus {
     return state.oppfolgingstatus.data;
+}
+
+function selectOppfolgingsVeileder(state: Appstate): StringOrNothing {
+    return selectOppfolgingStatusData(state).veilederId;
 }
 
 function selectOppfolgingsenhetsId(state: Appstate): StringOrNothing {
@@ -25,5 +29,6 @@ function selectOppfolgingStatusStatus (state: Appstate): boolean {
 export default {
     selectOppfolgingStatusData,
     selectOppfolgingsenhetsId,
-    selectOppfolgingStatusStatus
+    selectOppfolgingStatusStatus,
+    selectOppfolgingsVeileder
 } as OppfolgingsstatusSelector;
