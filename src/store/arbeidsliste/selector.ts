@@ -22,7 +22,7 @@ function selectKanLeggeIArbeidsListe(state: Appstate): boolean {
 function selectKanFjerneArbeidsliste (state: Appstate): boolean {
     const endringstidspunkt = state.arbeidsliste.data.endringstidspunkt;
     const erOppfolgingsVeileder = VeilederSelector.selectErOppfolgingsVeileder(state);
-    return !endringstidspunkt && erOppfolgingsVeileder;
+    return !!endringstidspunkt && erOppfolgingsVeileder;
 }
 
 export default {
