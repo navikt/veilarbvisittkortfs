@@ -1,5 +1,5 @@
-import {fetchToJson} from './api-utils';
-import {BehandlandeEnhet, OppgaveTema} from "../types/oppgave";
+import { fetchToJson } from './api-utils';
+import { BehandlandeEnhet, OppgaveTema } from '../types/oppgave';
 
 export interface OppgaveApi {
     hentBehandlandeEnheter: (tema: OppgaveTema) => Promise<BehandlandeEnhet[]>;

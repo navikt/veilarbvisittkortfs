@@ -17,8 +17,8 @@ function FormikDatoVelger({name}: FormikDatepickerProps) {
 
     const validerDatoFeldt = (input: Date, fra: Date, valgfritt:boolean) => {
         let error;
-        const inputDato = moment(input);
-        const fraDato = moment(fra);
+        const inputDato = moment(new Date(input));
+        const fraDato = moment(new Date(fra));
         if (!valgfritt && !input) {
             error = 'Du må angi en frist';
 
@@ -40,20 +40,30 @@ function FormikDatoVelger({name}: FormikDatepickerProps) {
             name={name}
             id={name}
         >
-            {({ field, form: {errors, setFieldValue}}: FieldProps) => {
+            {({ field, form: {errors, setFieldValue, values}}: FieldProps) => {
                 const error = getIn(errors, name);
                 const datePickerClassName = classNames( 'skjemaelement', 'datovelger', { 'datovelger--harFeil': error });
                 return(
                     <div className={datePickerClassName}>
                         <Datovelger
                             input={{
-                                id: 'fristInput',
-                                name: 'frist',
+                                id: name,
+                                name,
                                 placeholder: 'dd.mm.åååå',
                                 ariaLabel: 'Frist:',
+                                onChange: (value: string, evt: React.ChangeEvent<HTMLInputElement>) => {
+                                    if(!value) {
+                                        setFieldValue(field.name, '')
+                                    }
+                                    else {
+                                        setFieldValue(field.name, value)
+                                    }
+                                }
                             }}
                             id="fristDatovelger"
-                            onChange={(date: string) => setFieldValue(field.name, date)}
+                            onChange={(date: string) => {
+                                console.log('inputdate changing', date);
+                                setFieldValue(field.name, date)}}
                             valgtDato={field.value}
                         />
                         <SkjemaelementFeilmelding feil={error ? {feilmelding: error}: undefined}/>

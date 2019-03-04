@@ -1,15 +1,15 @@
-import {StringOrNothing} from "./utils/stringornothings";
+import { StringOrNothing } from './utils/stringornothings';
 
 export type OppgaveTema =
     'DAGPENGER' |
     'OPPFOLGING' |
     'ARBEIDSAVKLARING' |
     'INDIVIDSTONAD' |
-    'ENSLIG_FORSIRGER'|
+    'ENSLIG_FORSORGER'|
     'TILLEGGSTONAD';
 
-export type OppgaveType = 'VURDER_HENVENDELSE' | 'VURDER_KONSEKVENS_FOR_YTELSE'
-export type PrioritetType = 'NORM' | 'LAV' | 'HOY'
+export type OppgaveType = 'VURDER_HENVENDELSE' | 'VURDER_KONSEKVENS_FOR_YTELSE';
+export type PrioritetType = 'NORM' | 'LAV' | 'HOY';
 
 export interface OppgaveFormData {
     avsenderenhetId: string;

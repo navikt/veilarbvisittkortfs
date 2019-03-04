@@ -1,22 +1,59 @@
 import React from 'react';
-import {Formik} from "formik";
+import {Formik, FormikProps} from "formik";
 import NavFrontendModal from "nav-frontend-modal";
 import {Innholdstittel, Undertittel} from "nav-frontend-typografi";
 import {FormattedMessage} from "react-intl";
-import ArbeidslisteForm from "../../arbeidsliste/arbeidsliste-form";
+import OpprettOppgaveForm from "./components/opprett-oppgave-form";
+import {Appstate} from "../../../../types/appstate";
+import PersonaliaSelector from "../../../../store/personalia/selectors";
+import {connect} from "react-redux";
+import {OppgaveTema, OppgaveType, PrioritetType} from "../../../../types/oppgave";
+import {StringOrNothing} from "../../../../types/utils/stringornothings";
+import {OrNothing} from "../../../../types/utils/ornothing";
+import moment from 'moment';
 
-function OpprettOppgave() {
-   //const [valgtTema, settTema] = useState(null);
+interface OpprettOppgaveFormValues {
+    beskrivelse: string;
+    enhetId: string;
+    fnr: string;
+    fraDato: StringOrNothing;
+    tilDato: StringOrNothing;
+    prioritet: OrNothing<PrioritetType>;
+    tema: OrNothing<OppgaveTema>;
+    type: OrNothing<OppgaveType>;
+}
 
-    //useEffect(()=> {},[]);
+interface StateProps {
+    navn: string;
+    fnr: string
+}
+
+/*
+interface DispatchProps {
+    handleSubmit: (formData: OpprettOppgaveFormValues) => void;
+}
+*/
+
+function OpprettOppgave({navn, fnr}:StateProps) {
+
+    const opprettOppgaveInitialValues: OpprettOppgaveFormValues = {
+        beskrivelse: '',
+        enhetId: '',
+        fnr,
+        fraDato: moment().format('YYYY-MM-DD'),
+        tilDato:moment().format('YYYY-MM-DD'),
+        prioritet: 'NORM',
+        tema: null,
+        type: 'VURDER_HENVENDELSE',
+    };
 
     return (
         <Formik
-            initialValues={{}}
+            initialValues={opprettOppgaveInitialValues}
             onSubmit={(values, actions)=> {
                 actions.resetForm();
             }}
-            render ={ formikProps =>
+            render ={ (formikProps: FormikProps<any>) =>
                 <NavFrontendModal
                     className="arbeidsliste-modal"
                     contentLabel="arbeidsliste"
@@ -35,13 +72,10 @@ function OpprettOppgave() {
                             <Undertittel>
                                 <FormattedMessage
                                     id="arbeidsliste.modal.personalia"
-                                    values={{ navn: 'herps', fnr: 'derps' }}
+                                    values={{ navn, fnr }}
                                 />
                             </Undertittel>
-                            <ArbeidslisteForm
-                                onRequestClose={()=>{}}
-                                laster={false}
-                            />
+                            <OpprettOppgaveForm formikProps={formikProps}/>
                         </div>
                     </div>
                 </NavFrontendModal>
@@ -50,7 +84,16 @@ function OpprettOppgave() {
     )
 }
 
+const mapStateToProps = (state: Appstate) => ({
+    fnr: PersonaliaSelector.selectFodselsnummer(state),
+    navn: PersonaliaSelector.selectSammensattNavn(state),
 
+});
 
+/*
+const mapDispatchToProps = (dispatch: Dispatch)=> ({
+    handleSubmit: () => dispatch()
+});
+*/
 
-export default OpprettOppgave;
+export default connect<StateProps>(mapStateToProps)(OpprettOppgave);
