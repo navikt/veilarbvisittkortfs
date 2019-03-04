@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Arbeidsliste } from '../../../types/arbeidsliste';
+import {Arbeidsliste, ArbeidslisteformData} from '../../../types/arbeidsliste';
 import { Knapp } from 'nav-frontend-knapper';
 import ArbeidslisteIkon from './arbeidsliste.svg';
 import FjernArbeidsliste from './fjern-arbeidsliste';
@@ -13,6 +13,7 @@ import {oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste} from '../.
 import {FormikValues} from "formik";
 import ArbeidslisteSelector from "../../../store/arbeidsliste/selector";
 import {HiddenIfHovedKnapp, HiddenIfKnapp} from "../../components/hidden-if/hidden-if-knapp";
+import moment from "moment";
 
 interface StateProps {
     arbeidsliste: Arbeidsliste;
@@ -30,6 +31,11 @@ interface DispatchProps {
 }
 
 type ArbeidslisteStateProps = StateProps & DispatchProps;
+
+export const dateToISODate = (dato: string) => {
+    const parsetDato = moment(dato);
+    return dato && parsetDato.isValid() ? parsetDato.toISOString() : null;
+};
 
 function ArbeidslisteController (props: ArbeidslisteStateProps) {
     const [leggTilArbeidsliste, setLeggTilArbeidslisteAktivt] = useState( false);
@@ -109,11 +115,17 @@ const mapStateToProps = (state: Appstate): StateProps => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
    doSlettArbeidsliste : (fnr: string) => dispatch(slettArbeidsliste(fnr)),
     lagreArbeidsliste: (values: FormikValues) => dispatch(
-        oppdaterArbeidsliste({kommentar: values.kommentar, overskrift: values.overskrift, frist: values.frist})
+        oppdaterArbeidsliste({
+            kommentar: values.kommentar,
+            overskrift: values.overskrift,
+            frist: values.frist ? dateToISODate(values.frist) : null} as ArbeidslisteformData)
     ),
     redigerArbeidsliste: (values: FormikValues) => dispatch(
-        redigerArbeidsliste({kommentar: values.kommentar, overskrift: values.overskrift, frist: values.frist})
-    )
+        redigerArbeidsliste({
+            kommentar: values.kommentar,
+            overskrift: values.overskrift,
+            frist: values.frist ? dateToISODate(values.frist): null
+        } as ArbeidslisteformData))
 
 });
 
