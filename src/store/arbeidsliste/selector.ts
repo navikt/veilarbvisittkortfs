@@ -1,12 +1,11 @@
-import {Appstate} from "../../types/appstate";
-import VeilederSelector from "../tildel-veileder/selector";
+import { Appstate } from '../../types/appstate';
+import VeilederSelector from '../tildel-veileder/selector';
 
 export interface ArbeidslisteSelector {
     selectArbeidslisteStatus: (state: Appstate) => boolean;
     selectKanLeggeIArbeidsListe: (state: Appstate) => boolean;
     selectKanFjerneArbeidsliste: (state: Appstate) => boolean;
 }
-
 
 function selectArbeidslisteStatus(state: Appstate): boolean {
     const arbeidslisteStatus = state.arbeidsliste.status;
@@ -29,4 +28,4 @@ export default {
     selectArbeidslisteStatus,
     selectKanLeggeIArbeidsListe,
     selectKanFjerneArbeidsliste
-}as ArbeidslisteSelector
+}as ArbeidslisteSelector;

@@ -1,11 +1,11 @@
 import React from 'react';
-import Kvittering from '../prosess/kvittering'
-import moment from "moment";
-import {Appstate} from "../../../../types/appstate";
-import {connect} from "react-redux";
-import {StringOrNothing} from "../../../../types/utils/stringornothings";
+import Kvittering from '../prosess/kvittering';
+import moment from 'moment';
+import { Appstate } from '../../../../types/appstate';
+import { connect } from 'react-redux';
+import { StringOrNothing } from '../../../../types/utils/stringornothings';
 
-function formatter(format: string, dato:string): string| undefined {
+function formatter(format: string, dato: string): string| undefined {
     const datoVerdi = moment(dato);
     return datoVerdi.isValid() ? datoVerdi.format(format) : undefined;
 }
@@ -31,7 +31,7 @@ function StartEskaleringKvittering({dato}: StateProps) {
     );
 }
 
-const mapStateToProps = (state: Appstate): StateProps=> ({
+const mapStateToProps = (state: Appstate): StateProps => ({
     dato: state.oppfolging.data.gjeldeneEskaleringsvarsel && state.oppfolging.data.gjeldeneEskaleringsvarsel.opprettetDato
 });
 

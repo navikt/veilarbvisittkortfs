@@ -1,13 +1,12 @@
 import React from 'react';
 import './arbeidsliste.less';
-import FormikInput from "../../components/formik/formik-inputs";
-import FormikTekstArea from "../../components/formik/formik-textarea";
-import FormikDatoVelger from "../../components/formik/formik-datepicker";
-import {Hovedknapp} from "nav-frontend-knapper";
-import {FormattedMessage} from "react-intl";
-import {Undertekst} from "nav-frontend-typografi";
-import {Form} from "formik";
-
+import FormikInput from '../../components/formik/formik-inputs';
+import FormikTekstArea from '../../components/formik/formik-textarea';
+import FormikDatoVelger from '../../components/formik/formik-datepicker';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { FormattedMessage } from 'react-intl';
+import { Undertekst } from 'nav-frontend-typografi';
+import { Form } from 'formik';
 
 interface ArbeidslisteFormProps {
     onRequestClose: () => void;
@@ -22,7 +21,7 @@ function ArbeidslisteForm (props: ArbeidslisteFormProps) {
         <Form>
             <div className="nav-input blokk-s">
                 <FormikInput name="overskrift"/>
-                <FormikTekstArea name = "kommentar"/>
+                <FormikTekstArea name="kommentar"/>
             </div>
             {props.sistEndretDato && <Undertekst className="arbeidsliste--modal-redigering">
                 <FormattedMessage
@@ -45,7 +44,7 @@ function ArbeidslisteForm (props: ArbeidslisteFormProps) {
                 </div>
             </div>
         </Form>
-    )
+    );
 }
 
 export default ArbeidslisteForm;

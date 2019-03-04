@@ -2,9 +2,9 @@ import React from 'react';
 import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
 import { Arbeidsliste } from '../../../types/arbeidsliste';
 import { FormattedMessage } from 'react-intl';
-import {Formik, FormikProps} from "formik";
+import { Formik, FormikProps } from 'formik';
 import NavFrontendModal from 'nav-frontend-modal';
-import ArbeidslisteForm from "./arbeidsliste-form";
+import ArbeidslisteForm from './arbeidsliste-form';
 
 interface LeggTilArbeidslisteProps {
     navn: string;
@@ -13,7 +13,7 @@ interface LeggTilArbeidslisteProps {
     lukkModal: () => void;
     arbeidsliste: Arbeidsliste;
     arbeidslisteStatus: boolean;
-    onSubmit: (values: any)=> void;
+    onSubmit: (values: any) => void;
 
 }
 
@@ -22,7 +22,7 @@ function LeggTilArbeidsliste(props: LeggTilArbeidslisteProps) {
     const initalValues = {overskrift:  '', kommentar: '', frist: '' };
 
     const onRequestClose = (formikProps: FormikProps<any>) => {
-        const dialogTekst = "Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?";
+        const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
         if (!formikProps.dirty || confirm(dialogTekst)) {
             props.lukkModal();
             formikProps.resetForm();
@@ -32,18 +32,18 @@ function LeggTilArbeidsliste(props: LeggTilArbeidslisteProps) {
     return (
         <Formik
             initialValues={initalValues}
-            onSubmit={(values, actions)=> {
+            onSubmit={(values, actions) => {
                 props.onSubmit(values);
                 actions.resetForm();
                 props.lukkModal();
             }}
-            render ={ formikProps =>
+            render={ formikProps =>
                 <NavFrontendModal
                     className="arbeidsliste-modal"
                     contentLabel="arbeidsliste"
                     isOpen={props.isOpen}
-                    onRequestClose={()=> onRequestClose(formikProps)}
-                    closeButton
+                    onRequestClose={() => onRequestClose(formikProps)}
+                    closeButton={true}
                 >
                     <div className="modal-header-wrapper">
                         <header className="modal-header"/>
@@ -60,7 +60,7 @@ function LeggTilArbeidsliste(props: LeggTilArbeidslisteProps) {
                                 />
                             </Undertittel>
                             <ArbeidslisteForm
-                                onRequestClose={()=> onRequestClose(formikProps)}
+                                onRequestClose={() => onRequestClose(formikProps)}
                                 laster={props.arbeidslisteStatus}
                             />
                         </div>
@@ -69,9 +69,7 @@ function LeggTilArbeidsliste(props: LeggTilArbeidslisteProps) {
             }
         />
 
-    )
+    );
 }
-
-
 
 export default LeggTilArbeidsliste;

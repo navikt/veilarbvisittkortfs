@@ -38,7 +38,6 @@ function* settManuell(action: SettManuellAction) {
     }
 }
 
-
 function* settDigital(action: SettDigitalAction) {
     try {
         const response = yield call( () => OppfolgingApi.settDigital(action.begrunnelse, action.veilederId, action.fnr));
@@ -48,7 +47,6 @@ function* settDigital(action: SettDigitalAction) {
         yield put(setDigitalError(e));
     }
 }
-
 
 function* startKVP(action: StartKVPAction) {
     try {

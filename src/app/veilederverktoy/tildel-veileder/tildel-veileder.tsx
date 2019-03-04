@@ -10,12 +10,12 @@ import {
     hentAlleVeiledereForEnheten,
     HentVeilederPaEnhetenAction, tildelTilVeileder, TildelVeilederAction
 } from '../../../store/tildel-veileder/actions';
-import {TildelVeilederData, TildelVeilederResponse} from '../../../types/tildel-veileder';
+import { TildelVeilederData, TildelVeilederResponse } from '../../../types/tildel-veileder';
 import './tildel-veileder.less';
-import OppfolgingsstatusSelector from "../../../store/oppfolging-status/selectors";
-import {StringOrNothing} from "../../../types/utils/stringornothings";
-import {HiddenIfDropDown} from "../../components/hidden-if/hidden-if-dropdown";
-import {OrNothing} from "../../../types/utils/ornothing";
+import OppfolgingsstatusSelector from '../../../store/oppfolging-status/selectors';
+import { StringOrNothing } from '../../../types/utils/stringornothings';
+import { HiddenIfDropDown } from '../../components/hidden-if/hidden-if-dropdown';
+import { OrNothing } from '../../../types/utils/ornothing';
 
 function settSammenNavn(veileder: VeilederData) {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
@@ -25,7 +25,7 @@ interface StateProps {
     oppfolgingsenhetId: StringOrNothing;
     veiledere: VeilederData[];
     paloggetVeileder: VeilederData;
-    skalSkjules: OrNothing<TildelVeilederResponse>
+    skalSkjules: OrNothing<TildelVeilederResponse>;
 }
 
 interface DispatchProps {
@@ -35,7 +35,7 @@ interface DispatchProps {
 
 function TildelVeileder(props: StateProps & DispatchProps ) {
     useEffect(() => {
-        if(props.oppfolgingsenhetId) {
+        if (props.oppfolgingsenhetId) {
             props.hentAlleVeiledereForEnheten(props.oppfolgingsenhetId);
         }
     }, []);

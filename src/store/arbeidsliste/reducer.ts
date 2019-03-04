@@ -18,7 +18,7 @@ import {
 } from './actions';
 import PersonaliaSelectors from '../personalia/selectors';
 import ArbeidslisteApi from '../../api/arbeidsliste-api';
-import {FETCH_STATUS} from "../../types/fetch-status";
+import { FETCH_STATUS } from '../../types/fetch-status';
 
 export type ArbeidslisteState = {data: Arbeidsliste} & {status: FETCH_STATUS; error: OrNothing<Error>};
 
@@ -43,7 +43,7 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
         case ArbeidslisteActionType.HENT_ARBEIDSLISTE:
         case ArbeidslisteActionType.LAGRE_ARBEIDSLISTE:
         case ArbeidslisteActionType.SLETT_ARBEIDSLISTE:
-        case ArbeidslisteActionType.REDIGER_ARBEIDSLISTE:{
+        case ArbeidslisteActionType.REDIGER_ARBEIDSLISTE: {
             return {
                 ...state,
                 status: 'LOADING'
@@ -52,7 +52,7 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
         case ArbeidslisteActionType.HENT_ARBEIDSLISTE_SUCCESS:
         case ArbeidslisteActionType.LAGRE_ARBEIDSLISTE_SUCESS:
         case ArbeidslisteActionType.SLETT_ARBEIDSLISTE_SUCCESS:
-        case ArbeidslisteActionType.REDIGER_ARBEIDSLISTE_SUCCESS:{
+        case ArbeidslisteActionType.REDIGER_ARBEIDSLISTE_SUCCESS: {
             return {
                 ...state,
                 data: action.data,
@@ -62,7 +62,7 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
         case ArbeidslisteActionType.HENT_ARBEIDSLISTE_ERROR:
         case ArbeidslisteActionType.LAGRE_ARBEIDSLISTE_ERROR:
         case ArbeidslisteActionType.SLETT_ARBEIDSLISTE_ERROR:
-        case ArbeidslisteActionType.REDIGER_ARBEIDSLISTE_ERROR:{
+        case ArbeidslisteActionType.REDIGER_ARBEIDSLISTE_ERROR: {
             return {
                 ...state,
                 status: 'ERROR',
@@ -103,7 +103,6 @@ function* redigerArbeidsliste(action: RedigerArbeidslisteAction) {
         yield put(oppdaterArbeidslisteError(e));
     }
 }
-
 
 function* slettArbeidsliste(action: SlettArbeidslisteAction) {
     try {

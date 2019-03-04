@@ -1,10 +1,10 @@
 import React from 'react';
 import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
-import {Arbeidsliste, ArbeidslisteformData} from '../../../types/arbeidsliste';
+import { Arbeidsliste, ArbeidslisteformData } from '../../../types/arbeidsliste';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
-import {Formik, FormikProps} from "formik";
+import { Formik, FormikProps } from 'formik';
 import NavFrontendModal from 'nav-frontend-modal';
-import ArbeidslisteForm from "./arbeidsliste-form";
+import ArbeidslisteForm from './arbeidsliste-form';
 
 interface RedigerArbeidslisteProps {
     navn: string;
@@ -43,8 +43,8 @@ function RedigerArbeidsliste(props: RedigerArbeidslisteProps & InjectedIntlProps
                     className="arbeidsliste-modal"
                     contentLabel="arbeidsliste"
                     isOpen={props.isOpen}
-                    onRequestClose={()=> onRequestClose(formikProps)}
-                    closeButton
+                    onRequestClose={() => onRequestClose(formikProps)}
+                    closeButton={true}
                 >
                     <div className="modal-header-wrapper">
                         <header className="modal-header"/>
@@ -61,7 +61,7 @@ function RedigerArbeidsliste(props: RedigerArbeidslisteProps & InjectedIntlProps
                                 />
                             </Undertittel>
                             <ArbeidslisteForm
-                                onRequestClose={()=>onRequestClose(formikProps)}
+                                onRequestClose={() => onRequestClose(formikProps)}
                                 laster={props.arbeidslisteStatus}
                             />
                         </div>
@@ -70,9 +70,7 @@ function RedigerArbeidsliste(props: RedigerArbeidslisteProps & InjectedIntlProps
             )}
         />
 
-    )
+    );
 }
-
-
 
 export default injectIntl(RedigerArbeidsliste);

@@ -2,7 +2,7 @@ import React from 'react';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Innholdstittel, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import NavFrontendModal from "nav-frontend-modal";
+import NavFrontendModal from 'nav-frontend-modal';
 
 interface FjernArbeidsliste {
     isOpen: boolean;
@@ -19,7 +19,7 @@ function FjernArbeidsliste(props: FjernArbeidsliste) {
             contentLabel="arbeidsliste"
             isOpen={props.isOpen}
             onRequestClose={props.onRequestClose}
-            closeButton
+            closeButton={true}
         >
             <div className="modal-header-wrapper">
                 <header className="modal-header"/>

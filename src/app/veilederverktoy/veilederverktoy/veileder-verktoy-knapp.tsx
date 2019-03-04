@@ -1,7 +1,6 @@
 import React from 'react';
 import TannHjulIkon from './../tannhjul.svg';
-import {HiddenIfHovedKnapp} from "../../components/hidden-if/hidden-if-knapp";
-
+import { HiddenIfHovedKnapp } from '../../components/hidden-if/hidden-if-knapp';
 
 function VeilederVerktoyKnapp (props: {hidden: boolean, onClick: () => void}) {
     return (

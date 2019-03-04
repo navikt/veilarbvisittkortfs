@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Arbeidsliste, ArbeidslisteformData} from '../../../types/arbeidsliste';
+import { Arbeidsliste, ArbeidslisteformData } from '../../../types/arbeidsliste';
 import { Knapp } from 'nav-frontend-knapper';
 import ArbeidslisteIkon from './arbeidsliste.svg';
 import FjernArbeidsliste from './fjern-arbeidsliste';
@@ -9,11 +9,11 @@ import PersonaliaSelectors from '../../../store/personalia/selectors';
 import LeggTilArbeidsliste from './legg-til-arbeidsliste';
 import RedigerArbeidsliste from './rediger-arbeidsliste';
 import { Dispatch } from 'redux';
-import {oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste} from '../../../store/arbeidsliste/actions';
-import {FormikValues} from "formik";
-import ArbeidslisteSelector from "../../../store/arbeidsliste/selector";
-import {HiddenIfHovedKnapp, HiddenIfKnapp} from "../../components/hidden-if/hidden-if-knapp";
-import moment from "moment";
+import { oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste } from '../../../store/arbeidsliste/actions';
+import { FormikValues } from 'formik';
+import ArbeidslisteSelector from '../../../store/arbeidsliste/selector';
+import { HiddenIfHovedKnapp, HiddenIfKnapp } from '../../components/hidden-if/hidden-if-knapp';
+import moment from 'moment';
 
 interface StateProps {
     arbeidsliste: Arbeidsliste;
@@ -124,7 +124,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         redigerArbeidsliste({
             kommentar: values.kommentar,
             overskrift: values.overskrift,
-            frist: values.frist ? dateToISODate(values.frist): null
+            frist: values.frist ? dateToISODate(values.frist) : null
         } as ArbeidslisteformData))
 
 });

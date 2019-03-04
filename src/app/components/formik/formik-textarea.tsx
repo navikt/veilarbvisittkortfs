@@ -1,12 +1,11 @@
 import React from 'react';
-import {Textarea} from "nav-frontend-skjema";
-import {Field, getIn, FieldProps} from "formik";
+import { Textarea } from 'nav-frontend-skjema';
+import { Field, getIn, FieldProps } from 'formik';
 
 interface FormikTekstAreaProps {
     name: string;
     validate?: (value: string) => string | undefined;
 }
-
 
 function FormikTekstArea({name, validate}: FormikTekstAreaProps) {
 
@@ -21,16 +20,15 @@ function FormikTekstArea({name, validate}: FormikTekstAreaProps) {
     };
 
     const validateFunc = (value: string): string | undefined => {
-        if(validate) {
+        if (validate) {
             return validate(value);
         }
         return defaultValidation(value);
     };
 
-
     return (
         <Field validate={validateFunc} name={name}>
-            {({field, form}: FieldProps) =>{
+            {({field, form}: FieldProps) => {
                 const touched = getIn(form.touched, name);
                 const errors = getIn(form.errors, name);
                 return (
@@ -44,10 +42,10 @@ function FormikTekstArea({name, validate}: FormikTekstAreaProps) {
                         name={name}
                         maxLength={500}
                         feil={errors && touched ? {feilmelding: errors} : undefined}
-                    />)
+                    />);
             }}
         </Field>
-    )
+    );
 }
 
 export default FormikTekstArea;
