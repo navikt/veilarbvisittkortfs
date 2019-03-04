@@ -37,7 +37,7 @@ function StarKvpPeriode(props: StartKvpPeriodeProsessProps) {
 }
 
 const mapStateToProps = (state: Appstate) => ({
-    isLoading: OppfolgingSelector.selectoppfolgingStatus(state)
+    isLoading: OppfolgingSelector.selectOppfolgingStatus(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

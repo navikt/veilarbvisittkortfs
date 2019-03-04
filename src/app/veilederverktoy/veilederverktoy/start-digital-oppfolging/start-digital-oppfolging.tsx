@@ -41,7 +41,7 @@ function StartDigitalOppfolging(props: StartEskaleringProps) {
 }
 
 const mapStateToProps = (state: Appstate) => ({
-    isLoading: OppfolgingSelector.selectoppfolgingStatus(state),
+    isLoading: OppfolgingSelector.selectOppfolgingStatus(state),
     fnr: PersonaliaSelectors.selectFodselsnummer(state),
     veilederId: state.tildelVeileder.paloggetVeileder.data.ident
 });

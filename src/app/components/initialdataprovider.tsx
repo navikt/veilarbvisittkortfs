@@ -63,7 +63,7 @@ const mapStateToProps = (state: Appstate): StateProps => ({
         OppfolgingsstatusSelector.selectOppfolgingStatusStatus(state) ||
         PersonaliaSelector.selectPersonaliaIsLoading(state) ||
         ArbeidsListeSelector.selectArbeidslisteStatus(state) ||
-        OppfolgingSelector.selectoppfolgingStatus(state)
+        OppfolgingSelector.selectOppfolgingStatus(state)
 
 });
 
