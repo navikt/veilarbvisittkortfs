@@ -19,7 +19,7 @@ function selectIdentPaloggetVeileder (state: Appstate): string {
 function selectErOppfolgingsVeileder(state: Appstate): boolean {
     const oppfolgingVeileder = OppfolgingsstatusSelector.selectOppfolgingsVeileder(state);
     const inloggedVeileder = selectIdentPaloggetVeileder(state);
-    return  !oppfolgingVeileder || (oppfolgingVeileder !== inloggedVeileder);
+    return  oppfolgingVeileder ? (oppfolgingVeileder === inloggedVeileder) : false;
 
 }
 
