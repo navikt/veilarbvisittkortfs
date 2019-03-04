@@ -8,6 +8,8 @@ import VeilederVerktoyNavigation from './veilederverktoy/veilederverktoy-navigat
 import { hentTilgangTilBrukersKontor } from '../../store/tilgang-til-brukerskontor/actions';
 import VeilederVerktoyKnapp from './veilederverktoy/veileder-verktoy-knapp';
 import { Appstate } from '../../types/appstate';
+import env from '../utils/environment';
+import { navigerAction } from '../../store/navigation/actions';
 
 interface StateProps {
     tilgangTilBrukersKontor: boolean;
@@ -19,11 +21,18 @@ interface OwnProps {
 
 interface DispatchProps {
     hentTilgangTilBrukersKontor: (fnr: string) => void;
+    navigerTilProsesser: () => void;
 }
 
 type VeilederverktoyslinjeProps = StateProps & OwnProps & DispatchProps;
 
-const handleVeilederKnappClicked = () => {
+const handleVeilederKnappClicked = (props: VeilederverktoyslinjeProps) => {
+
+    if (env.isDevelopment) {
+        props.navigerTilProsesser();
+        return;
+    }
+
     const win = window as any; //tslint:disable-line no-any
     if (win.apneVerktoyModal) {
         win.apneVerktoyModal();
@@ -42,7 +51,7 @@ function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
                 <Arbeidslistekomponent/>
                 <TildelVeileder/>
                 <VeilederVerktoyKnapp
-                    onClick={handleVeilederKnappClicked}
+                    onClick={() => handleVeilederKnappClicked(props)}
                     hidden={props.tilgangTilBrukersKontor}
                 />
                 <VeilederVerktoyNavigation/>
@@ -57,6 +66,7 @@ const mapStateToProps = (state: Appstate): StateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     hentTilgangTilBrukersKontor: (fnr: string) => dispatch(hentTilgangTilBrukersKontor(fnr)),
+    navigerTilProsesser: () => dispatch(navigerAction('prosesser'))
 });
 
 export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps) (Veilederverktoyslinje);
