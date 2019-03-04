@@ -3,6 +3,7 @@ import hiddenIf from '../../components/hidden-if/hidden-if';
 import { EtikettInfo, EtikettAdvarsel } from 'nav-frontend-etiketter';
 import { OppfolgingStatus } from '../../../types/oppfolging-status';
 import { Personalia } from '../../../types/personalia';
+import './etiketter.less';
 
 const Advarsel = hiddenIf(EtikettAdvarsel);
 const Info = hiddenIf(EtikettInfo);

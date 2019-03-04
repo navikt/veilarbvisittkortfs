@@ -19,8 +19,8 @@ function PersonInfo(props: StateProps) {
         <div className="personinfo">
             <Icon kjonn={props.personalia.kjonn}/>
             <div className="personinfo__container">
-                <Fodelsnummer fnr={props.personalia.fodselsnummer}/>
                 <NavnOgAlder personalia={props.personalia}/>
+                <Fodelsnummer fnr={props.personalia.fodselsnummer}/>
                 <Etiketter personalia={props.personalia} oppfolgingstatus={props.oppfolgingstatus}/>
             </div>
         </div>
