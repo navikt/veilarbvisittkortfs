@@ -3,57 +3,13 @@
 .tildel-veileder-dropdown {
   margin-bottom: 0;
 
-  .dropdown__btn {
-    .knappelenke();
-    border-radius: 0;
-    border: 0;
-    padding: 0 1.6rem 0 0;
-
-    &:hover {
-      border-bottom: 1px solid @navGra40;
-    }
-
-    &:before,
-    &:after {
-      right: 0.5rem;
-      top: 0.7rem;
-    }
+  &-dropdown__innhold {
+    right: 0;
+    width: 250px;
   }
 
-  .dropdown__innhold {
-    width: 286px;
-    box-shadow: 2px 2px 2px @navGra60;
-    right: -0.5rem;
-    border: 0;
-  }
-}
-
-
-.knappelenke {
-  color: @navBla;
-  border: 0;
-  text-decoration: none;
-  background-color: transparent;
-  cursor: pointer;
-  padding: 0;
-
-  &:focus {
-    outline: none;
-    background-color: @orangeFocus;
-
-    span {
-      border-bottom-color: @orangeFocus;
-    }
+  .knapperad {
+    margin: 0.5rem;
   }
 
-  &:hover {
-    span {
-      border-bottom-color: @navBla;
-    }
-  }
-
-  span {
-    display: inline-block;
-    border-bottom: 1px solid @navGra40;
-  }
 }

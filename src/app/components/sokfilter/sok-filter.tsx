@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Input } from 'nav-frontend-skjema';
+import './sok-filter.less';
+
 /* tslint:disable */
 interface SokFilterProps<T> {
     data: T[];
@@ -25,7 +27,7 @@ function SokFilter<T> (props: SokFilterProps<T>) {
             : limit(rawfilteredData, limitSize || 20);
 
     return (
-        <div>
+        <>
             <div className="sokfilter">
                 <Input
                     label={props.label}
@@ -35,7 +37,7 @@ function SokFilter<T> (props: SokFilterProps<T>) {
                 />
             </div>
             {children(filteredData, rest)}
-        </div>
+        </>
     );
 }
 

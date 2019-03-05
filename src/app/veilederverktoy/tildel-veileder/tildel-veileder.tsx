@@ -11,11 +11,11 @@ import {
     HentVeilederPaEnhetenAction, tildelTilVeileder, TildelVeilederAction
 } from '../../../store/tildel-veileder/actions';
 import { TildelVeilederData, TildelVeilederResponse } from '../../../types/tildel-veileder';
-import './tildel-veileder.less';
 import OppfolgingsstatusSelector from '../../../store/oppfolging-status/selectors';
 import { StringOrNothing } from '../../../types/utils/stringornothings';
 import { HiddenIfDropDown } from '../../components/hidden-if/hidden-if-dropdown';
 import { OrNothing } from '../../../types/utils/ornothing';
+import './tildel-veileder.less';
 
 function settSammenNavn(veileder: VeilederData) {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
@@ -55,14 +55,14 @@ function TildelVeileder(props: StateProps & DispatchProps ) {
     return (
         <HiddenIfDropDown
             knappeTekst={'Tildel veileder'}
-            className=""
+            className="tildel-veileder-dropdown"
             name="tildel-veileder-dropdown"
             hidden={!!props.skalSkjules}
         >
             <SokFilter
                 data={props.veiledere}
                 label=""
-                placeholder=""
+                placeholder="Navn eller ident"
             >
                 {(data, radioFilterProps) =>
                     <RadioFilterForm

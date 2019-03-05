@@ -49,7 +49,7 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
                         />
                     )}
                 </div>
-                <div className="knapperad--alignleft blokk-xxs">
+                <div className="knapperad">
                     <HiddenIfHovedknapp
                         mini={true}
                         hidden={visLukkKnapp && !selected}

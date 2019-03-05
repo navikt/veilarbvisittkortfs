@@ -1,14 +1,12 @@
 import React, { Children, cloneElement, Component } from 'react';
 import classNames from 'classnames';
 import './dropdown.less';
+
 /* tslint:disable */
 const btnCls = (erApen: boolean, className: string|undefined) =>
     classNames('dropdown', className, {
         'dropdown--apen': erApen,
     });
-
-// const dropDownCls = (className: string) =>
-//     classNames('dropdown__btnwrapper', className);
 
 function isChildOf(parent: any, element: any): boolean {
     if (element === document) {
@@ -21,6 +19,7 @@ function isChildOf(parent: any, element: any): boolean {
     }
     return isChildOf(parent, element.parentNode);
 }
+
 function settFokus(element: any) {
     if (element !== null) {
         const elementer = element.querySelector('button, a, input, select');
@@ -29,6 +28,7 @@ function settFokus(element: any) {
         }
     }
 }
+
 interface DropdownProps {
     apen?: boolean;
     name: string;
@@ -43,8 +43,10 @@ interface DropdownState {
 }
 
 class Dropdown extends Component<DropdownProps, DropdownState> {
+
     // @ts-ignore
     private btn: HTMLButtonElement;
+
     // @ts-ignore
     private component: React.ReactNode;
 
