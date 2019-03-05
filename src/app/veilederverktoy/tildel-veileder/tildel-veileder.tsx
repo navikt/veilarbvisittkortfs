@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import SokFilter from '../../components/sokfilter/sok-filter';
 import RadioFilterForm from '../../components/radiofilterform/radio-filter-form';
 import { VeilederData } from '../../../types/veilederdata';
@@ -34,22 +34,23 @@ interface DispatchProps {
 }
 
 function TildelVeileder(props: StateProps & DispatchProps ) {
+    const [selected, changeSelected] = useState('');
+
     useEffect(() => {
         if(props.oppfolgingsenhetId) {
             props.hentAlleVeiledereForEnheten(props.oppfolgingsenhetId);
         }
     }, []);
 
-    const setValgtVeileder = (event: React.FormEvent<HTMLFormElement>, value: string, closeDropdown: () => void ) => {
+    const setValgtVeileder = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (props.paloggetVeileder) {
             props.tildelTilVeileder([{
-                    fraVeilederId: props.paloggetVeileder.ident,
-                    tilVeilederId: value,
-                    brukerFnr: personalia.fodselsnummer,
-                }]);
+                fraVeilederId: props.paloggetVeileder.ident,
+                tilVeilederId: selected,
+                brukerFnr: personalia.fodselsnummer,
+            }]);
         }
-        closeDropdown();
     };
 
     return (
@@ -58,24 +59,32 @@ function TildelVeileder(props: StateProps & DispatchProps ) {
             className="input-m tildel-veileder-dropdown"
             name="tildel-veileder-dropdown"
             hidden={!!props.skalSkjules}
-        >
-            <SokFilter
-                data={props.veiledere}
-                label=""
-                placeholder=""
-            >
-                {(data, radioFilterProps) =>
-                    <RadioFilterForm
-                        data={data}
-                        onSubmit={setValgtVeileder}
-                        createLabel={settSammenNavn}
-                        createValue={(veileder: VeilederData) => veileder.ident}
-                        radioName="tildel-veileder"
-                        visLukkKnapp={true}
-                        {...radioFilterProps}
-                    />}
-            </SokFilter>
-        </HiddenIfDropDown>);
+            render ={(lukkDropdown) =>
+                <form onSubmit={(event: React.FormEvent<HTMLFormElement>)=> {
+                    setValgtVeileder(event);
+                    lukkDropdown();
+                }}>
+                    <SokFilter
+                        data={props.veiledere}
+                        label=""
+                        placeholder=""
+                    >
+                        {(data) =>
+                            <RadioFilterForm
+                                data={data}
+                                createLabel={settSammenNavn}
+                                createValue={(veileder: VeilederData) => veileder.ident}
+                                radioName="tildel-veileder"
+                                visLukkKnapp={true}
+                                selected={selected}
+                                changeSelected={(e: React.ChangeEvent<HTMLInputElement>)=> changeSelected(e.target.value)}
+                                closeDropdown={lukkDropdown}
+                            />}
+                    </SokFilter>
+                </form>
+            }
+        />
+    )
 }
 
 const mapStateToProps = (state: Appstate): StateProps => ({
