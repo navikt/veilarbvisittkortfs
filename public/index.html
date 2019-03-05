@@ -5,25 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Veilarbvisittkort</title>
-  <style>
-    html, body {
-      margin: 0;
-    }
-    #app {
-      width: 100%;
-    }
-  </style>
 </head>
 <body onload="initFnr()">
 <div role="main">
   <noscript>
     You need to enable JavaScript to run this app.
   </noscript>
-  <form onsubmit="return onSubmit()">
-    <label for="fnr">Fnr: </label>
-    <input type="text" name="fnr" id="fnr" />
-    <button>Søk</button>
-  </form>
   <div id="app"></div>
 </div>
 </body>
@@ -34,20 +21,8 @@
     window.frontendlogger.appname = 'veilarbvisittkortfs'; // this will be overwritten i veilarpersonflatefs
 </script>
 <script>
-    const defaultFnr = "10108000398";
     function initFnr() {
-        document.getElementById('fnr').value = defaultFnr;
+        NAVSPA['veilarbvisittkortfs'](document.getElementById('app'), {fnr: '10108000398', enhet:'1234'});
     }
-
-    function render(fnr) {
-        return NAVSPA['veilarbvisittkortfs'](document.getElementById('app'), {fnr: fnr, enhet:'1234'});
-    }
-
-    function onSubmit() {
-        render(document.getElementById('fnr').value);
-        return false;
-    }
-
-    render(defaultFnr);
 </script>
 </html>

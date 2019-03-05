@@ -9,7 +9,7 @@ import {
     OppfolgingstatusActionType
 } from './actions';
 import { fetchOppfolgingsstatusData } from '../../api/api';
-import {FETCH_STATUS} from "../../types/fetch-status";
+import { FETCH_STATUS } from '../../types/fetch-status';
 
 export type OppfolgingStatusState = {data: OppfolgingStatus} & {status: FETCH_STATUS; error: OrNothing<Error>};
 

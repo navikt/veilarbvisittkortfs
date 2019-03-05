@@ -1,8 +1,8 @@
 import React from 'react';
-import {Textarea, TextareaProps} from "nav-frontend-skjema";
-import {Field, FieldProps} from "formik";
-import {getErrors} from "./formik-utils";
-import {Omit} from "../../../types/omit-type";
+import { Textarea, TextareaProps } from 'nav-frontend-skjema';
+import { Field, FieldProps } from 'formik';
+import {getErrors} from './formik-utils';
+import {Omit} from '../../../types/omit-type';
 import {injectIntl, InjectedIntlProps}  from 'react-intl';
 
 interface TekstAreaProps {
@@ -31,7 +31,7 @@ function FormikTekstArea({name, validate,labelId, intl, ...textAreaProps}: Tekst
                     />)
             }}
         </Field>
-    )
+    );
 }
 
 export default injectIntl(FormikTekstArea);

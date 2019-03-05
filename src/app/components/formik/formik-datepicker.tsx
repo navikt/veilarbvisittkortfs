@@ -1,11 +1,10 @@
 import React from 'react';
-import {Field, FieldProps,getIn} from "formik";
-import Datovelger from "nav-datovelger/dist/datovelger/Datovelger";
-import SkjemaelementFeilmelding from "nav-frontend-skjema/lib/skjemaelement-feilmelding";
-import "./datovelger.less";
+import { Field, FieldProps, getIn } from 'formik';
+import Datovelger from 'nav-datovelger/dist/datovelger/Datovelger';
+import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
+import './datovelger.less';
 import classNames from 'classnames';
 import moment from 'moment';
-
 
 interface FormikDatepickerProps {
     name: string;
@@ -37,20 +36,19 @@ function FormikDatoVelger({name, validate, label}: FormikDatepickerProps) {
                             id="fristDatovelger"
                             onChange={(date: string) => {
                                 // HAKS FØR ATT NAV-DATOVELGER  IKKE STØTTER OPTIONAL DATO
-                                if(!field.value && !moment(date).isValid()) {
+                                if (!field.value && !moment(date).isValid()) {
                                     return;
                                 }
-                                setFieldValue(field.name, date)}
+                                setFieldValue(field.name, date); }
                             }
                             valgtDato={field.value}
                         />
-                        <SkjemaelementFeilmelding feil={error ? {feilmelding: error}: undefined}/>
+                        <SkjemaelementFeilmelding feil={error ? {feilmelding: error} : undefined}/>
                     </div>
-                )
+                );
             }}
         </Field>
-    )
+    );
 }
-
 
 export default FormikDatoVelger;

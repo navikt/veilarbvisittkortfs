@@ -14,7 +14,7 @@ import OppfolgingApi from '../../api/oppfolging-api';
 import PersonaliaSelectors from '../personalia/selectors';
 import { startEskaleringError, startEskaleringSuccess } from '../oppfolging/actions';
 import { hentOppfolgingstatusSuccess } from '../oppfolging-status/actions';
-import {FETCH_STATUS} from "../../types/fetch-status";
+import { FETCH_STATUS } from '../../types/fetch-status';
 
 export type DialogState = {data: Dialog} & {status: FETCH_STATUS; error: OrNothing<Error>};
 

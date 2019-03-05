@@ -12,9 +12,9 @@ import {
 import { OrNothing } from '../../types/utils/ornothing';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import TildelVeilederApi from '../../api/tildel-veileder-api';
-import { TildelVeilederResponse} from '../../types/tildel-veileder';
+import { TildelVeilederResponse } from '../../types/tildel-veileder';
 import { VeilederListe } from '../../mock/veiledereliste';
-import {FETCH_STATUS} from "../../types/fetch-status";
+import { FETCH_STATUS } from '../../types/fetch-status';
 
 export interface TildelVeilederState {
     status: FETCH_STATUS;

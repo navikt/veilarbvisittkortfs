@@ -1,6 +1,6 @@
-import {Appstate} from "../../types/appstate";
-import TilgangTilKontorSelector from "../tilgang-til-brukerskontor/selector";
-import {Oppfolging} from "../../types/oppfolging";
+import { Appstate } from '../../types/appstate';
+import TilgangTilKontorSelector from '../tilgang-til-brukerskontor/selector';
+import {Oppfolging} from '../../types/oppfolging';
 
 export interface OppfolgingSelector {
     selectOppfolgingStatus: (state: Appstate) => boolean;

@@ -10,7 +10,7 @@ import {
     PersonaliaActionType
 } from './actions';
 import { fetchPersonaliaData } from '../../api/api';
-import {FETCH_STATUS} from "../../types/fetch-status";
+import { FETCH_STATUS } from '../../types/fetch-status';
 
 export type PersonaliaState = {data: Personalia} & {status: FETCH_STATUS; error: OrNothing<Error>};
 

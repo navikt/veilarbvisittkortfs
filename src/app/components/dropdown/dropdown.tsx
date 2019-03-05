@@ -1,14 +1,11 @@
-import React, {Component } from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 import './dropdown.less';
 /* tslint:disable */
 const btnCls = (erApen: boolean, className: string|undefined) =>
-    classNames('dropdown','gra-border', className, {
+    classNames('dropdown', className, {
         'dropdown--apen': erApen,
     });
-
-const dropDownCls = (className: string) =>
-    classNames('dropdown__btnwrapper', className);
 
 function isChildOf(parent: any, element: any): boolean {
     if (element === document) {
@@ -105,18 +102,16 @@ class Dropdown extends Component<DropdownProps, DropdownState> {
 
         return (
             <div className={btnCls(apen, className)} ref={this.bindComponent}>
-                <div className={dropDownCls('juster-button')}>
                     <button
                         ref={this.bindBtn}
                         type="button"
-                        className="dropdown__btn"
+                        className="dropdown__btn knapp knapp--standard knapp-fss"
                         onClick={this.toggleDropdown}
                         aria-expanded={apen}
                         aria-controls={`${name}-dropdown__innhold`}
                     >
                         {knappeTekst}
                     </button>
-                </div>
                 <div
                     hidden={!apen}
                     className={`${name}-dropdown__innhold dropdown__innhold`}

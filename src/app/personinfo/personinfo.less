@@ -1,28 +1,29 @@
 
 .personinfo {
-  width: 50%;
-  padding-left: 3rem;
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
 
-  &__container > * {
-    margin-bottom: 0.7rem;
-  }
-
-  &__ikon {
-    padding-bottom: 3.4rem;
-    padding-right: 0.8rem;
-  }
-
-  &__personalia {
-    margin-left: 1rem;
+  &__navn_og_alder {
+    font-weight: bold;
   }
 
   &__fodselsnummer {
-    font-size: 1.2rem;
-    font-weight: 200;
-    line-height: 1.35rem;
-    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 17px !important;
+    letter-spacing: 1px;
   }
+
+  &__ikon {
+    margin-top: 0.25rem;
+    width: 44px;
+    height: 44px;
+  }
+
+  &__container {
+    margin-left: 1rem;
+  }
+
 }
 
 

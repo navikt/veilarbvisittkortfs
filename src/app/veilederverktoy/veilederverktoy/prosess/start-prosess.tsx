@@ -10,7 +10,7 @@ interface StartProsessProps {
     onClick: () => void;
     className: string;
     children: React.ReactNode;
-    disabled?:boolean
+    disabled?: boolean;
 }
 
 function StartProcess(props: StartProsessProps) {
