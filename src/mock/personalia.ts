@@ -6,7 +6,7 @@ const personalia: Personalia & JSONValue = {
     'fornavn': 'BRUCE',
     'mellomnavn': 'BATTY',
     'etternavn': 'WAYNE',
-    'sammensattNavn': 'BRUCE BATTY WAYNE',
+    'sammensattNavn': 'Bruce Batty Wayne',
     'fodselsnummer': '10108000398',
     'fodselsdato': '1974-09-16',
     'dodsdato': null,

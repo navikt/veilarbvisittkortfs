@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Element } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 function Fodelsnummer(prop: {fnr: string}) {
-    return <Element className="personinfo__fodselsnummer" tag="h3">{prop.fnr}</Element>;
+    return <Normaltekst className="personinfo__fodselsnummer" tag="span">{prop.fnr}</Normaltekst>;
 }
 
 export default Fodelsnummer;

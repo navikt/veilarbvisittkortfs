@@ -33,7 +33,7 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
     return (
         <div className="radio-filterform">
             <form onSubmit={submitForm}>
-                <div className="radio-filterform__valg">
+                <div className="radio-filterform__valg scrollbar">
                     {data.map(o =>
                         <Radio
                             name={radioName}

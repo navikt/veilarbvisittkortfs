@@ -10,8 +10,8 @@ interface Props {
 function Tilbakelenke(props: Props) {
     return (
         <Lenke className="tilbakelenke" href={`/veilarbportefoljeflatefs/tilbake?enhet=${props.enhet}`}>
-            <VenstreChevron/>
-            <span>Tilbake</span>
+            <VenstreChevron className="tilbakelenke__chevron"/>
+            <span className="tilbakelenke__tekst">Tilbake</span>
         </Lenke>
     );
 }

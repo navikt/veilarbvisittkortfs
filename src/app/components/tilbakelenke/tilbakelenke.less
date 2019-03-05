@@ -1,7 +1,17 @@
+@import (reference) '~nav-frontend-core/less/_variabler';
+
 .tilbakelenke {
 	text-decoration: none;
+	padding-bottom: 0.25rem;
+
+	&__chevron {
+		margin-bottom: 0.25rem;
+	}
 
 	&:hover {
-		text-decoration: underline;
+		.tilbakelenke__tekst {
+			border-bottom: 1px solid @navBla;
+		}
 	}
+
 }
