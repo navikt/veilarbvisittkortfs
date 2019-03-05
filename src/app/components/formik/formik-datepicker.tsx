@@ -50,9 +50,23 @@ function FormikDatoVelger({name}: FormikDatepickerProps) {
                                 name: 'frist',
                                 placeholder: 'dd.mm.åååå',
                                 ariaLabel: 'Frist:',
+                                onChange: (value: string) => {
+                                    if (!value) {
+                                        setFieldValue(field.name, '');
+                                    } else {
+                                        setFieldValue(field.name, value);
+                                    }
+                                }
+
                             }}
                             id="fristDatovelger"
-                            onChange={(date: string) => setFieldValue(field.name, date)}
+                            onChange={(date: string) => {
+                                // HAKS FØR ATT NAV-DATOVELGER  IKKE STØTTER OPTIONAL DATO
+                                if (!field.value && !moment(date).isValid()) {
+                                    return;
+                                }
+                                setFieldValue(field.name, date); }
+                            }
                             valgtDato={field.value}
                         />
                         <SkjemaelementFeilmelding feil={error ? {feilmelding: error} : undefined}/>

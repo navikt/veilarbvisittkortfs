@@ -1,7 +1,6 @@
-import React, { Children, cloneElement, Component } from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 import './dropdown.less';
-
 /* tslint:disable */
 const btnCls = (erApen: boolean, className: string|undefined) =>
     classNames('dropdown', className, {
@@ -19,7 +18,6 @@ function isChildOf(parent: any, element: any): boolean {
     }
     return isChildOf(parent, element.parentNode);
 }
-
 function settFokus(element: any) {
     if (element !== null) {
         const elementer = element.querySelector('button, a, input, select');
@@ -28,12 +26,11 @@ function settFokus(element: any) {
         }
     }
 }
-
 interface DropdownProps {
     apen?: boolean;
     name: string;
     knappeTekst: string;
-    children: React.ReactChildren | React.ReactChild | React.ReactNode;
+    render: (lukkDropdown:()=>void) => React.ReactNode;
     className?: string;
     onLukk?: () => void;
 }
@@ -43,10 +40,8 @@ interface DropdownState {
 }
 
 class Dropdown extends Component<DropdownProps, DropdownState> {
-
     // @ts-ignore
     private btn: HTMLButtonElement;
-
     // @ts-ignore
     private component: React.ReactNode;
 
@@ -102,40 +97,30 @@ class Dropdown extends Component<DropdownProps, DropdownState> {
     }
 
     render() {
-        const { name, className, children, knappeTekst } = this.props;
+        const { name, className, knappeTekst } = this.props;
         const { apen } = this.state;
-
-        const augmentedChild = Children.map(children, child => {
-            if (typeof child === 'string') {
-                return child;
-            }
-
-            return cloneElement(child as React.ReactElement<any>, { closeDropdown: this.lukkDropdown });
-        });
-        const innhold = (
-            <div
-                hidden={!apen}
-                className={`${name}-dropdown__innhold dropdown__innhold`}
-                id={`${name}-dropdown__innhold`}
-                ref={settFokus}
-            >
-                {augmentedChild}
-            </div>
-        );
 
         return (
             <div className={btnCls(apen, className)} ref={this.bindComponent}>
-                <button
-                    ref={this.bindBtn}
-                    type="button"
-                    className="dropdown__btn knapp knapp--standard knapp-fss"
-                    onClick={this.toggleDropdown}
-                    aria-expanded={apen}
-                    aria-controls={`${name}-dropdown__innhold`}
+                    <button
+                        ref={this.bindBtn}
+                        type="button"
+                        className="dropdown__btn knapp knapp--standard knapp-fss"
+                        onClick={this.toggleDropdown}
+                        aria-expanded={apen}
+                        aria-controls={`${name}-dropdown__innhold`}
+                    >
+                        {knappeTekst}
+                    </button>
+                <div
+                    hidden={!apen}
+                    className={`${name}-dropdown__innhold dropdown__innhold`}
+                    id={`${name}-dropdown__innhold`}
+                    ref={settFokus}
                 >
-                    {knappeTekst}
-                </button>
-                {innhold}
+
+                    {this.props.render(this.lukkDropdown)}
+                </div>
             </div>
         );
     }

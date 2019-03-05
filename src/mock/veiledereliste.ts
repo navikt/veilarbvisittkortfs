@@ -20,6 +20,6 @@ export interface VeilederListe {
      veilederListe: VeilederData[];
  }
 
-const veiledare: VeilederListe & JSONValue = {veilederListe: new Array(20).fill(0).map(() => lagVeileder())};
+const veiledare: VeilederListe & JSONValue = {veilederListe: new Array(40).fill(0).map(() => lagVeileder())};
 
 export default veiledare;

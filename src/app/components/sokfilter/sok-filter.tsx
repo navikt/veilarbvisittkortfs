@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Input } from 'nav-frontend-skjema';
-// import SearchIkon from './search.svg';
 import './sok-filter.less';
 
 /* tslint:disable */
 interface SokFilterProps<T> {
     data: T[];
-    children: (filteredData: T[], rest: any) => React.ReactNode;
+    children: (filteredData: T[]) => React.ReactNode;
     label: string;
     placeholder: string;
     limitSize?: number;
@@ -19,11 +18,11 @@ function limit<T>(liste: T[], antall: number) {
 function SokFilter<T> (props: SokFilterProps<T>) {
     const [query, changeQuery] = useState('');
 
-    const { data, limitSize, children, ...rest } = props;
+    const { data, limitSize, children} = props;
     const rawfilteredData = data.filter(elem => !query || JSON.stringify(elem).toLowerCase().includes(query.toLowerCase()));
 
     const filteredData =
-        limitSize === null
+        limitSize === undefined
             ? rawfilteredData
             : limit(rawfilteredData, limitSize || 20);
 
@@ -31,14 +30,14 @@ function SokFilter<T> (props: SokFilterProps<T>) {
         <>
             <div className="sokfilter">
                 <Input
-                    inputClassName="sokfilter__input"
                     label={props.label}
                     placeholder={props.placeholder}
                     value={query}
+                    inputClassName="sokfilter__input"
                     onChange={e => changeQuery(e.target.value)}
                 />
             </div>
-            {children(filteredData, rest)}
+            {children(filteredData)}
         </>
     );
 }
