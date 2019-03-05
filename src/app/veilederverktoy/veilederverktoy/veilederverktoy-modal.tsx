@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
-import {Innholdstittel} from 'nav-frontend-typografi';
+import { Innholdstittel } from 'nav-frontend-typografi';
 import { Appstate } from '../../../types/appstate';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../store/navigation/actions';
-import NavFrontendModal from "nav-frontend-modal";
+import NavFrontendModal from 'nav-frontend-modal';
 
 interface OwnProps {
     children: React.ReactNode;
@@ -30,7 +30,7 @@ function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
             contentLabel="arbeidsliste"
             isOpen={true}
             onRequestClose={props.tilbake}
-            closeButton
+            closeButton={true}
         >
             <div className="modal-header-wrapper">
                 <header className="modal-header"/>

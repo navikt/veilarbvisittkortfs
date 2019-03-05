@@ -1,24 +1,24 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import {hentPersonalia, HentPersonaliaAction} from '../../store/personalia/actions';
-import {hentOppfolgingsstatus, HentOppfolgingstatusAction} from '../../store/oppfolging-status/actions';
-import {bindActionCreators, Dispatch} from 'redux';
-import {hentArbeidsliste, HentArbeidslisteAction} from '../../store/arbeidsliste/actions';
+import { hentPersonalia, HentPersonaliaAction } from '../../store/personalia/actions';
+import { hentOppfolgingsstatus, HentOppfolgingstatusAction } from '../../store/oppfolging-status/actions';
+import { bindActionCreators, Dispatch } from 'redux';
+import { hentArbeidsliste, HentArbeidslisteAction } from '../../store/arbeidsliste/actions';
 import { Appstate } from '../../types/appstate';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import {hentOppfolging, HentOppfolgingAction} from '../../store/oppfolging/actions';
-import OppfolgingsstatusSelector from "../../store/oppfolging-status/selectors";
-import PersonaliaSelector from "../../store/personalia/selectors";
-import ArbeidsListeSelector from "../../store/arbeidsliste/selector";
-import OppfolgingSelector from "../../store/oppfolging/selector";
-import {HentPaloggetVeilederAction, hentPaloggetVeileder} from "../../store/tildel-veileder/actions";
+import { hentOppfolging, HentOppfolgingAction } from '../../store/oppfolging/actions';
+import OppfolgingsstatusSelector from '../../store/oppfolging-status/selectors';
+import PersonaliaSelector from '../../store/personalia/selectors';
+import ArbeidsListeSelector from '../../store/arbeidsliste/selector';
+import OppfolgingSelector from '../../store/oppfolging/selector';
+import { HentPaloggetVeilederAction, hentPaloggetVeileder } from '../../store/tildel-veileder/actions';
 
 interface DispatchProps {
-    hentPersonalia:(fnr: string) => HentPersonaliaAction;
+    hentPersonalia: (fnr: string) => HentPersonaliaAction;
     hentOppfolgingsstatus: (fnr: string) => HentOppfolgingstatusAction;
-    hentArbeidsliste: (fnr:string) => HentArbeidslisteAction;
-    hentOppfolging: (fnr:string ) => HentOppfolgingAction;
-    hentPaloggetVeileder:() => HentPaloggetVeilederAction;
+    hentArbeidsliste: (fnr: string) => HentArbeidslisteAction;
+    hentOppfolging: (fnr: string ) => HentOppfolgingAction;
+    hentPaloggetVeileder: () => HentPaloggetVeilederAction;
 }
 
 interface InitialDataProviderProps {
@@ -43,7 +43,7 @@ function InitialDataProvider(props: Props) {
     }, []);
 
     if (props.isLoading) {
-        return <NavFrontendSpinner type= "XL"/>;
+        return <NavFrontendSpinner type="XL"/>;
     }
     return (
         <>

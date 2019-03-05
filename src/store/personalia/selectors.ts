@@ -23,7 +23,7 @@ function selectFodselsnummer(state: Appstate): string {
 
 function selectPersonaliaIsLoading(state: Appstate): boolean {
     const personaliaStatus = selectPersonaliaSlice(state).status;
-    return  personaliaStatus=== 'NOT_STARTED' || personaliaStatus === 'LOADING';
+    return  personaliaStatus === 'NOT_STARTED' || personaliaStatus === 'LOADING';
 }
 
 function selectSammensattNavn (state: Appstate): string {

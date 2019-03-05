@@ -5,7 +5,7 @@ export interface OppfolgingsstatusSelector {
     selectOppfolgingStatusData: (state: Appstate) => OppfolgingStatus;
     selectOppfolgingsenhetsId: (state: Appstate) => StringOrNothing;
     selectOppfolgingStatusStatus: (state: Appstate) => boolean;
-    selectOppfolgingsVeileder: (state: Appstate) => StringOrNothing
+    selectOppfolgingsVeileder: (state: Appstate) => StringOrNothing;
 }
 
 function selectOppfolgingStatusData(state: Appstate): OppfolgingStatus {
@@ -22,9 +22,8 @@ function selectOppfolgingsenhetsId(state: Appstate): StringOrNothing {
 
 function selectOppfolgingStatusStatus (state: Appstate): boolean {
     const oppfolgingStatus = state.oppfolgingstatus.status;
-    return oppfolgingStatus === 'NOT_STARTED' ||oppfolgingStatus === 'LOADING';
+    return oppfolgingStatus === 'NOT_STARTED' || oppfolgingStatus === 'LOADING';
 }
-
 
 export default {
     selectOppfolgingStatusData,

@@ -1,4 +1,4 @@
-import {Arbeidsliste, ArbeidslisteformData} from '../../types/arbeidsliste';
+import { Arbeidsliste, ArbeidslisteformData } from '../../types/arbeidsliste';
 
 export enum ArbeidslisteActionType {
     HENT_ARBEIDSLISTE = 'HENT_ARBEIDSLISTE',
@@ -86,7 +86,6 @@ export const hentArbeidsliste = (fnr: string): HentArbeidslisteAction => {
     };
 };
 
-
 export const hentArbeidslisteSuccess = (data: Arbeidsliste): HentArbeidslisteActionSuccess => {
     return {
         type: ArbeidslisteActionType.HENT_ARBEIDSLISTE_SUCCESS,
@@ -130,8 +129,6 @@ export interface RedigerArbeidslisteActionError {
     type: ArbeidslisteActionType.REDIGER_ARBEIDSLISTE_ERROR;
     error: Error;
 }
-
-
 
 export interface HentArbeidslisteAction {
     type: ArbeidslisteActionType.HENT_ARBEIDSLISTE;

@@ -10,7 +10,7 @@ import StartKVPKvittering from './start-kvp-periode/start-kvp-periode-kvittering
 import StoppKvpPeriode from './stopp-kvp-periode/stopp-kvp-periode';
 import StoppKVPKvittering from './stopp-kvp-periode/stopp-kvp-periode-kvittering';
 import StartDigitalOppfolgingKvittering from './start-digital-oppfolging/start-digital-oppfolging-kvittering';
-import StartDigitalOppfolging from "./start-digital-oppfolging/start-digital-oppfolging";
+import StartDigitalOppfolging from './start-digital-oppfolging/start-digital-oppfolging';
 import hiddenIf from '../../components/hidden-if/hidden-if';
 import { StringOrNothing } from '../../../types/utils/stringornothings';
 

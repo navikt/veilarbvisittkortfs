@@ -4,7 +4,7 @@ import { OppfolgingActions
 import { Oppfolging } from '../../types/oppfolging';
 import { OrNothing } from '../../types/utils/ornothing';
 import { OppfolgingActionType } from './action-type';
-import {FETCH_STATUS} from "../../types/fetch-status";
+import { FETCH_STATUS } from '../../types/fetch-status';
 
 export type OppfogingState = {data: Oppfolging} & {status: FETCH_STATUS; error: OrNothing<Error>};
 

@@ -3,6 +3,7 @@ import hiddenIf from '../../components/hidden-if/hidden-if';
 import { EtikettInfo, EtikettAdvarsel } from 'nav-frontend-etiketter';
 import { OppfolgingStatus } from '../../../types/oppfolging-status';
 import { Personalia } from '../../../types/personalia';
+import './etiketter.less';
 
 const Advarsel = hiddenIf(EtikettAdvarsel);
 const Info = hiddenIf(EtikettInfo);
@@ -26,9 +27,9 @@ function Etiketter(props: {personalia: Personalia, oppfolgingstatus: OppfolgingS
             <Advarsel hidden={!diskresjonskode}>Kode {diskresjonskode}</Advarsel>
             <Advarsel hidden={!sikkerhetstiltak}>{sikkerhetstiltak}</Advarsel>
             <Advarsel hidden={!egenAnsatt}>Egen ansatt</Advarsel>
-            <Info hidden={!(trengerVurdering(props.oppfolgingstatus))} className="etikett--info2">Trenger vurdering</Info>
-            <Info hidden={!(trengerAEV(props.oppfolgingstatus))} className="etikett--info2">Behov for AEV</Info>
-            <Info hidden={!erBrukerSykmeldt(props.oppfolgingstatus)} className="etikett--info2">Sykmeldt</Info>
+            <Info hidden={!(trengerVurdering(props.oppfolgingstatus))}>Trenger vurdering</Info>
+            <Info hidden={!(trengerAEV(props.oppfolgingstatus))}>Behov for AEV</Info>
+            <Info hidden={!erBrukerSykmeldt(props.oppfolgingstatus)}>Sykmeldt</Info>
         </div>
     );
 }

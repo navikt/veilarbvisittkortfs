@@ -7,7 +7,7 @@ import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { FormattedMessage } from 'react-intl';
 import PersonaliaSelectors from '../../../../store/personalia/selectors';
 import { settManuell } from '../../../../store/oppfolging/sett-manuell-digitial-actions';
-import OppfolgingSelector from "../../../../store/oppfolging/selector";
+import OppfolgingSelector from '../../../../store/oppfolging/selector';
 
 interface DispatchProps {
     handleSubmit: (fnr: string, veilederId: string) => ((tekst: string) => void);

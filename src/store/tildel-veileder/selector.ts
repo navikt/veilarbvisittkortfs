@@ -1,5 +1,5 @@
-import {Appstate} from "../../types/appstate";
-import OppfolgingsstatusSelector from "../oppfolging-status/selectors";
+import { Appstate } from '../../types/appstate';
+import OppfolgingsstatusSelector from '../oppfolging-status/selectors';
 
 export interface VeilederSelector {
     selectVeilederStatus: (state: Appstate) => boolean;
@@ -7,8 +7,7 @@ export interface VeilederSelector {
     selectErOppfolgingsVeileder: (state: Appstate) => boolean;
 }
 
-
-function selectVeilederStatus(state: Appstate): boolean{
+function selectVeilederStatus(state: Appstate): boolean {
     const veilederStatus = state.tildelVeileder.status;
     return veilederStatus === 'NOT_STARTED' || veilederStatus === 'LOADING';
 }
@@ -24,9 +23,8 @@ function selectErOppfolgingsVeileder(state: Appstate): boolean {
 
 }
 
-
 export default {
     selectVeilederStatus,
     selectIdentPaloggetVeileder,
     selectErOppfolgingsVeileder
-}as VeilederSelector
+}as VeilederSelector;

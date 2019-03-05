@@ -6,7 +6,7 @@ import { Appstate } from '../../../../types/appstate';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../../store/navigation/actions';
-import {HiddenIfAlertStripeInfoSolid} from "../../../components/hidden-if/hidden-if-alertstripe";
+import { HiddenIfAlertStripeInfoSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
 
 interface StateProps {
     skjulStartDigitalOppfolging: boolean;

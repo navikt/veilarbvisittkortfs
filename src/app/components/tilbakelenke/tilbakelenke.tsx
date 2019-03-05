@@ -1,6 +1,7 @@
-import Lenke from 'nav-frontend-lenker';
 import * as React from 'react';
+import Lenke from 'nav-frontend-lenker';
 import { VenstreChevron } from 'nav-frontend-chevron';
+import './tilbakelenke.less';
 
 interface Props {
     enhet?: string;
@@ -9,8 +10,8 @@ interface Props {
 function Tilbakelenke(props: Props) {
     return (
         <Lenke className="tilbakelenke" href={`/veilarbportefoljeflatefs/tilbake?enhet=${props.enhet}`}>
-            <VenstreChevron/>
-            <span>Tilbake</span> {/* Todo: tekst */}
+            <VenstreChevron className="tilbakelenke__chevron"/>
+            <span className="tilbakelenke__tekst">Tilbake</span>
         </Lenke>
     );
 }

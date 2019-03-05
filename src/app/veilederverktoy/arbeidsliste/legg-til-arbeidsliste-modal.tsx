@@ -1,33 +1,28 @@
 import React from 'react';
 import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
-import {Arbeidsliste, ArbeidslisteformData} from '../../../types/arbeidsliste';
-import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
-import {Formik, FormikProps} from "formik";
+import { Arbeidsliste } from '../../../types/arbeidsliste';
+import { FormattedMessage } from 'react-intl';
+import { Formik, FormikProps } from 'formik';
 import NavFrontendModal from 'nav-frontend-modal';
-import ArbeidslisteForm from "./arbeidsliste-form";
+import ArbeidslisteForm from './arbeidsliste-form';
 
-interface RedigerArbeidslisteProps {
+interface LeggTilArbeidslisteProps {
     navn: string;
     fnr: string;
     isOpen: boolean;
     lukkModal: () => void;
     arbeidsliste: Arbeidsliste;
     arbeidslisteStatus: boolean;
-    onSubmit: (values: ArbeidslisteformData) => void;
+    onSubmit: (values: any) => void;
 
 }
 
-function RedigerArbeidsliste(props: RedigerArbeidslisteProps & InjectedIntlProps) {
+function LeggTilArbeidslisteModal(props: LeggTilArbeidslisteProps) {
 
-    const initalValues = {
-        overskrift:  props.arbeidsliste.overskrift,
-        kommentar: props.arbeidsliste.kommentar,
-        frist: props.arbeidsliste.frist ? new Date(props.arbeidsliste.frist) : null} as ArbeidslisteformData;
+    const initalValues = {overskrift:  '', kommentar: '', frist: '' };
 
-    const onRequestClose = (formikProps: FormikProps<ArbeidslisteformData>) => {
-        const dialogTekst = props.intl.formatMessage({
-            id: 'lukk-advarsel',
-        });
+    const onRequestClose = (formikProps: FormikProps<any>) => {
+        const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
         if (!formikProps.dirty || confirm(dialogTekst)) {
             props.lukkModal();
             formikProps.resetForm();
@@ -37,14 +32,18 @@ function RedigerArbeidsliste(props: RedigerArbeidslisteProps & InjectedIntlProps
     return (
         <Formik
             initialValues={initalValues}
-            onSubmit={props.onSubmit}
-            render={formikProps => (
+            onSubmit={(values, actions) => {
+                props.onSubmit(values);
+                actions.resetForm();
+                props.lukkModal();
+            }}
+            render={ formikProps =>
                 <NavFrontendModal
                     className="arbeidsliste-modal"
                     contentLabel="arbeidsliste"
                     isOpen={props.isOpen}
-                    onRequestClose={()=> onRequestClose(formikProps)}
-                    closeButton
+                    onRequestClose={() => onRequestClose(formikProps)}
+                    closeButton={true}
                 >
                     <div className="modal-header-wrapper">
                         <header className="modal-header"/>
@@ -52,7 +51,7 @@ function RedigerArbeidsliste(props: RedigerArbeidslisteProps & InjectedIntlProps
                     <div className="arbeidsliste__modal">
                         <div className="arbeidsliste-info-tekst">
                             <Innholdstittel className="arbeidsliste__overskrift">
-                                <FormattedMessage id="arbeidsliste.modal.rediger.overskrift" />
+                                <FormattedMessage id="arbeidsliste.modal.legg.til.overskrift" />
                             </Innholdstittel>
                             <Undertittel>
                                 <FormattedMessage
@@ -61,18 +60,16 @@ function RedigerArbeidsliste(props: RedigerArbeidslisteProps & InjectedIntlProps
                                 />
                             </Undertittel>
                             <ArbeidslisteForm
-                                onRequestClose={()=>onRequestClose(formikProps)}
+                                onRequestClose={() => onRequestClose(formikProps)}
                                 laster={props.arbeidslisteStatus}
                             />
                         </div>
                     </div>
                 </NavFrontendModal>
-            )}
+            }
         />
 
-    )
+    );
 }
 
-
-
-export default injectIntl(RedigerArbeidsliste);
+export default LeggTilArbeidslisteModal;

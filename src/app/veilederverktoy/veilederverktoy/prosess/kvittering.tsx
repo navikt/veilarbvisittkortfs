@@ -8,12 +8,12 @@ import { Appstate } from '../../../../types/appstate';
 import PersonaliaSelectors from '../../../../store/personalia/selectors';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../../store/navigation/actions';
-import {OrNothing} from "../../../../types/utils/ornothing";
+import { OrNothing } from '../../../../types/utils/ornothing';
 
 interface OwnProps {
-    tittelId: string,
+    tittelId: string;
     alertStripeTekstId: string;
-    alertStripeTekstValues: OrNothing<{ [key:string]: any}>
+    alertStripeTekstValues: OrNothing<{ [key: string]: any}>;
 }
 
 interface StateProps {
@@ -51,7 +51,7 @@ function Kvittering({navn, navigerTilbake, tittelId, alertStripeTekstId, alertSt
                 <AlertStripeSuksess className="blokk-m">
                     <FormattedMessage
                         id={alertStripeTekstId}
-                        values={alertStripeTekstValues? alertStripeTekstValues : {}}
+                        values={alertStripeTekstValues ? alertStripeTekstValues : {}}
                     />
                 </AlertStripeSuksess>
             </article>

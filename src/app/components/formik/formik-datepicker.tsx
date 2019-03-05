@@ -1,11 +1,10 @@
 import React from 'react';
-import {Field, FieldProps, getIn} from "formik";
-import Datovelger from "nav-datovelger/dist/datovelger/Datovelger";
-import SkjemaelementFeilmelding from "nav-frontend-skjema/lib/skjemaelement-feilmelding";
-import "./datovelger.less";
+import { Field, FieldProps, getIn } from 'formik';
+import Datovelger from 'nav-datovelger/dist/datovelger/Datovelger';
+import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
+import './datovelger.less';
 import classNames from 'classnames';
 import moment from 'moment';
-
 
 interface FormikDatepickerProps {
     name: string;
@@ -15,7 +14,7 @@ export const erGyldigISODato = (isoDato: Date) => isoDato && moment(isoDato, mom
 
 function FormikDatoVelger({name}: FormikDatepickerProps) {
 
-    const validerDatoFeldt = (input: Date, fra: Date, valgfritt:boolean) => {
+    const validerDatoFeldt = (input: Date, fra: Date, valgfritt: boolean) => {
         let error;
         const inputDato = moment(input);
         const fraDato = moment(fra);
@@ -29,14 +28,14 @@ function FormikDatoVelger({name}: FormikDatepickerProps) {
             (fraDato.isAfter(inputDato, 'day'))
         ) {
 
-            error = 'Fristen må være i dag eller senere'
+            error = 'Fristen må være i dag eller senere';
         }
         return error;
     };
 
     return (
         <Field
-            validate={(value:Date) => validerDatoFeldt(value, new Date(), true)}
+            validate={(value: Date) => validerDatoFeldt(value, new Date(), true)}
             name={name}
             id={name}
         >
@@ -53,10 +52,9 @@ function FormikDatoVelger({name}: FormikDatepickerProps) {
                                 ariaLabel: 'Frist:',
                                 onChange: (value: string) => {
                                     if (!value) {
-                                        setFieldValue(field.name, '')
-                                    }
-                                    else {
-                                        setFieldValue(field.name, value)
+                                        setFieldValue(field.name, '');
+                                    } else {
+                                        setFieldValue(field.name, value);
                                     }
                                 }
 
@@ -64,20 +62,19 @@ function FormikDatoVelger({name}: FormikDatepickerProps) {
                             id="fristDatovelger"
                             onChange={(date: string) => {
                                 // HAKS FØR ATT NAV-DATOVELGER  IKKE STØTTER OPTIONAL DATO
-                                if(!field.value && !moment(date).isValid()) {
+                                if (!field.value && !moment(date).isValid()) {
                                     return;
                                 }
-                                setFieldValue(field.name, date)}
+                                setFieldValue(field.name, date); }
                             }
                             valgtDato={field.value}
                         />
-                        <SkjemaelementFeilmelding feil={error ? {feilmelding: error}: undefined}/>
+                        <SkjemaelementFeilmelding feil={error ? {feilmelding: error} : undefined}/>
                     </div>
-                )
+                );
             }}
         </Field>
-    )
+    );
 }
-
 
 export default FormikDatoVelger;

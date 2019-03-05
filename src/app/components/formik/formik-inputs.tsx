@@ -1,12 +1,11 @@
 import React from 'react';
-import {Field, FieldProps, getIn} from "formik";
-import {Input} from "nav-frontend-skjema";
+import { Field, FieldProps, getIn } from 'formik';
+import { Input } from 'nav-frontend-skjema';
 
 interface FormikInputProps {
     name: string;
     validate?: (value: string) => string | undefined;
 }
-
 
 function FormikInput ({name, validate}: FormikInputProps) {
 
@@ -21,7 +20,7 @@ function FormikInput ({name, validate}: FormikInputProps) {
     };
 
     const validateFunc = (value: string): string | undefined => {
-        if(validate) {
+        if (validate) {
             return validate(value);
         }
         return defaultValidation(value);
@@ -43,10 +42,10 @@ function FormikInput ({name, validate}: FormikInputProps) {
                         feil={errors && touched ? {feilmelding: errors} : undefined}
                         value={field.value}
                     />
-                )
+                );
             }}
         </Field>
-    )
+    );
 }
 
 export default FormikInput;

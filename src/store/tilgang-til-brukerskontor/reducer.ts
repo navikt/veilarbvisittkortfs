@@ -10,12 +10,12 @@ import {
 } from './actions';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import OppfolgingApi from '../../api/oppfolging-api';
-import {FETCH_STATUS} from "../../types/fetch-status";
+import { FETCH_STATUS } from '../../types/fetch-status';
 
 export type TilgangTilBrukersKontorState = {data: TilgangTilBrukersKontor} & {status: FETCH_STATUS, error: OrNothing<Error>};
 
 const initialState: TilgangTilBrukersKontorState = {
-    status: "NOT_STARTED",
+    status: 'NOT_STARTED',
     data : {tilgangTilBrukersKontor: false},
     error: null
 };
@@ -25,20 +25,20 @@ const tilgangTilBrukersKontorReducer: Reducer<TilgangTilBrukersKontorState, Tilg
         case TilgangTilBrukersKontorActionType.HENT_TILGANG_TIL_BRUKERSKONTOR: {
             return {
                 ...state,
-                status: "LOADING"
+                status: 'LOADING'
             };
         }
         case TilgangTilBrukersKontorActionType.HENT_TILGANG_TIL_BRUKERSKONTOR_SUCCESS: {
             return {
                 ...state,
-                status: "DONE",
+                status: 'DONE',
                 data: action.data
             };
         }
         case TilgangTilBrukersKontorActionType.HENT_TILGANG_TIL_BRUKERSKONTOR_ERROR: {
             return {
                 ...state,
-                status: "ERROR",
+                status: 'ERROR',
                 error: action.error
             };
         }
