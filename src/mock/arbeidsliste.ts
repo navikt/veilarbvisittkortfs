@@ -3,7 +3,7 @@ import { Arbeidsliste } from '../types/arbeidsliste';
 
 const arbeidsliste: Arbeidsliste & JSONValue = {
     arbeidslisteAktiv: null,
-    endringstidspunkt: 'hasdsa',
+    endringstidspunkt: null,
     frist: null,
     harVeilederTilgang: true,
     isOppfolgendeVeileder: true,

@@ -13,19 +13,8 @@
   position: absolute;
 }
 
-.gra-border {
-  padding: 0 1rem 0 1rem;
-  border: 1px solid @navGra40;
-  border-radius: 0.2rem;
-}
-
-.juster-button {
-  margin-top: 0.4rem;
-}
-
 .dropdown {
   position: relative;
-  margin-bottom: 0.5rem;
 
   &__btnwrapper {
     width: 100%;
@@ -34,13 +23,7 @@
   }
 
   &__btn {
-    text-align: left;
-    width: 100%;
-    padding: 0.7rem 3rem 0.7rem 2rem;
-    background: @white;
-    border: 1px solid @grayIcon;
-    border-radius: @border-radius-small;
-    white-space: nowrap;
+    padding: 0.5rem 3rem 0.5rem 1rem;
 
     &:before {
       .chevronline-mixin();
@@ -54,11 +37,21 @@
       transition: transform 0.3s;
     }
 
-    &:focus {
-      outline: none;
-      box-shadow: 0 0 0 3px @orangeFocus;
+    &:hover {
+      color: white;
+
+      &:before {
+        background: white;
+      }
+
+      &:after {
+        background: white;
+      }
+
     }
+
   }
+
 
   &__innhold {
     position: absolute;
@@ -79,11 +72,9 @@
     }
 
     .dropdown__btn {
-      position: relative;
-      z-index: 120;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-      border-bottom: 1px solid @white;
+      //border-bottom-left-radius: 0;
+      //border-bottom-right-radius: 0;
+      //border-bottom: 1px solid @white;
 
       &:before {
         transform: translateX(3px) rotate(45deg);
@@ -94,6 +85,7 @@
         transform: translateX(-3px) rotate(-45deg);
         transition: transform 0.3s;
       }
+
     }
   }
 
@@ -111,5 +103,6 @@
     &--alignleft {
       padding-left: 0.5rem;
     }
+
   }
 }

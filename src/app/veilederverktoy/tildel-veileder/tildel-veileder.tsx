@@ -55,7 +55,7 @@ function TildelVeileder(props: StateProps & DispatchProps ) {
     return (
         <HiddenIfDropDown
             knappeTekst={'Tildel veileder'}
-            className="input-m tildel-veileder-dropdown"
+            className=""
             name="tildel-veileder-dropdown"
             hidden={!!props.skalSkjules}
         >

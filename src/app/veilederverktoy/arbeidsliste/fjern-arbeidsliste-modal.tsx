@@ -4,7 +4,7 @@ import { Innholdstittel, Normaltekst, Undertittel } from 'nav-frontend-typografi
 import { FormattedMessage } from 'react-intl';
 import NavFrontendModal from 'nav-frontend-modal';
 
-interface FjernArbeidsliste {
+interface FjernArbeidslisteModal {
     isOpen: boolean;
     onRequestClose: () => void;
     onSubmit: (fnr: string) => void;
@@ -12,7 +12,7 @@ interface FjernArbeidsliste {
     navn: string;
 }
 
-function FjernArbeidsliste(props: FjernArbeidsliste) {
+function FjernArbeidslisteModal(props: FjernArbeidslisteModal) {
     return(
         <NavFrontendModal
             className="arbeidsliste-modal"
@@ -57,4 +57,4 @@ function FjernArbeidsliste(props: FjernArbeidsliste) {
     );
 }
 
-export default FjernArbeidsliste;
+export default FjernArbeidslisteModal;

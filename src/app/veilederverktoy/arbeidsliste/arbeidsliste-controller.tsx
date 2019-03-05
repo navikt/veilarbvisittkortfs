@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { Arbeidsliste, ArbeidslisteformData } from '../../../types/arbeidsliste';
-import { Knapp } from 'nav-frontend-knapper';
 import ArbeidslisteIkon from './arbeidsliste.svg';
-import FjernArbeidsliste from './fjern-arbeidsliste';
+import RedigerIkon from './rediger.svg';
+import FjernArbeidslisteModal from './fjern-arbeidsliste-modal';
 import { connect } from 'react-redux';
 import { Appstate } from '../../../types/appstate';
 import PersonaliaSelectors from '../../../store/personalia/selectors';
-import LeggTilArbeidsliste from './legg-til-arbeidsliste';
-import RedigerArbeidsliste from './rediger-arbeidsliste';
+import LeggTilArbeidslisteModal from './legg-til-arbeidsliste-modal';
+import RedigerArbeidslisteModal from './rediger-arbeidsliste-modal';
 import { Dispatch } from 'redux';
 import { oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste } from '../../../store/arbeidsliste/actions';
 import { FormikValues } from 'formik';
 import ArbeidslisteSelector from '../../../store/arbeidsliste/selector';
-import { HiddenIfHovedKnapp, HiddenIfKnapp } from '../../components/hidden-if/hidden-if-knapp';
+import { HiddenIfKnapp, HiddenIfKnappFss } from '../../components/hidden-if/hidden-if-knapp';
 import moment from 'moment';
 
 interface StateProps {
@@ -42,48 +42,38 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
     const [fjernArbeidsliste, setFjernArbeidslisteAktivt] = useState( false);
     const [visKommentar, setVisKommentarAktivt] = useState( false);
 
-    if (!props.arbeidsliste.harVeilederTilgang) {
-        return <div/>;
-    }
-
-    if (!props.arbeidsliste.endringstidspunkt) {
-        return(
-            <>
-                <HiddenIfHovedKnapp
-                    className="arbeidsliste__knapp"
-                    htmlType="button"
-                    onClick={() => setLeggTilArbeidslisteAktivt(true)}
-                    hidden={!props.kanLeggeIArbeidsliste}
-                >
-                    <img src={ArbeidslisteIkon} alt="Legg til i arbeidsliste"/>
-                    Legg til i arbeidsliste
-                </HiddenIfHovedKnapp>
-                <LeggTilArbeidsliste
-                    isOpen={leggTilArbeidsliste}
-                    lukkModal={() => setLeggTilArbeidslisteAktivt(false)}
-                    arbeidsliste={props.arbeidsliste}
-                    fnr={props.fnr}
-                    navn={props.navn}
-                    arbeidslisteStatus={props.arbeidslisteStatus}
-                    onSubmit={props.lagreArbeidsliste}
-                />
-            </>
-        );
-    }
     return (
         <>
+            <HiddenIfKnappFss
+                icon={ArbeidslisteIkon}
+                onClick={() => setLeggTilArbeidslisteAktivt(true)}
+                hidden={!props.kanLeggeIArbeidsliste}
+            >
+                Legg til i arbeidsliste
+            </HiddenIfKnappFss>
             <HiddenIfKnapp
-                className="arbeidsliste__knapp"
-                htmlType="button" onClick={() => setFjernArbeidslisteAktivt(true)}
+                htmlType="button"
+                onClick={() => setFjernArbeidslisteAktivt(true)}
                 hidden={!props.kanFjerneArbeidsliste}
             >
-                <img src={ArbeidslisteIkon} alt="Fjern fra arbeidsliste"/>
-                <span>Fjern</span>
+                Fjern
             </HiddenIfKnapp>
-            <Knapp className="arbeidsliste__knapp" htmlType="button" onClick={() => setVisKommentarAktivt(true)}>
-                <span>Vis kommentar</span>
-            </Knapp>
-            <RedigerArbeidsliste
+            <HiddenIfKnappFss
+                icon={RedigerIkon}
+                onClick={() => setVisKommentarAktivt(true)}
+            >
+                Rediger
+            </HiddenIfKnappFss>
+            <LeggTilArbeidslisteModal
+                isOpen={leggTilArbeidsliste}
+                lukkModal={() => setLeggTilArbeidslisteAktivt(false)}
+                arbeidsliste={props.arbeidsliste}
+                fnr={props.fnr}
+                navn={props.navn}
+                arbeidslisteStatus={props.arbeidslisteStatus}
+                onSubmit={props.lagreArbeidsliste}
+            />
+            <RedigerArbeidslisteModal
                 isOpen={visKommentar}
                 lukkModal={() => setVisKommentarAktivt(false)}
                 arbeidsliste={props.arbeidsliste}
@@ -92,7 +82,7 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
                 arbeidslisteStatus={props.arbeidslisteStatus}
                 onSubmit={props.redigerArbeidsliste}
             />
-            <FjernArbeidsliste
+            <FjernArbeidslisteModal
                 isOpen={fjernArbeidsliste}
                 onRequestClose={() => setFjernArbeidslisteAktivt(false)}
                 onSubmit={props.doSlettArbeidsliste}

@@ -17,7 +17,7 @@ interface LeggTilArbeidslisteProps {
 
 }
 
-function LeggTilArbeidsliste(props: LeggTilArbeidslisteProps) {
+function LeggTilArbeidslisteModal(props: LeggTilArbeidslisteProps) {
 
     const initalValues = {overskrift:  '', kommentar: '', frist: '' };
 
@@ -72,4 +72,4 @@ function LeggTilArbeidsliste(props: LeggTilArbeidslisteProps) {
     );
 }
 
-export default LeggTilArbeidsliste;
+export default LeggTilArbeidslisteModal;

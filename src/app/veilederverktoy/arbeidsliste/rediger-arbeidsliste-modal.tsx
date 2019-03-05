@@ -17,7 +17,7 @@ interface RedigerArbeidslisteProps {
 
 }
 
-function RedigerArbeidsliste(props: RedigerArbeidslisteProps & InjectedIntlProps) {
+function RedigerArbeidslisteModal(props: RedigerArbeidslisteProps & InjectedIntlProps) {
 
     const initalValues = {
         overskrift:  props.arbeidsliste.overskrift,
@@ -73,4 +73,4 @@ function RedigerArbeidsliste(props: RedigerArbeidslisteProps & InjectedIntlProps
     );
 }
 
-export default injectIntl(RedigerArbeidsliste);
+export default injectIntl(RedigerArbeidslisteModal);

@@ -1,0 +1,28 @@
+@import '~nav-frontend-core/less/_variabler';
+
+.knapp-fss {
+	border: 1px solid @navMorkGra;
+	color: @navMorkGra;
+	font-weight: normal;
+	text-transform: none;
+	padding: 0.25rem 1rem;
+
+	.knapp-fss__icon {
+		margin-left: 0.5rem;
+		margin-bottom: 0.2rem;
+		width: 20px;
+		height: 20px;
+		//black
+		filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+	}
+
+}
+
+.knapp-fss:hover {
+	background-color: @navMorkGra;
+
+	.knapp-fss__icon {
+		//white
+		filter: invert(0%) sepia(0%) saturate(17%) hue-rotate(308deg) brightness(99%) contrast(106%);
+	}
+}
