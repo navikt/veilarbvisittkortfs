@@ -19,7 +19,7 @@ interface LeggTilArbeidslisteProps {
 
 function LeggTilArbeidsliste(props: LeggTilArbeidslisteProps) {
 
-    const initalValues = {overskrift:  '', kommentar: '', frist: null };
+    const initalValues = {overskrift:  '', kommentar: '', frist: '' };
 
     const onRequestClose = (formikProps: FormikProps<any>) => {
         const dialogTekst = "Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?";

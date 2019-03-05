@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, Component } from 'react';
+import React, {Component } from 'react';
 import classNames from 'classnames';
 import './dropdown.less';
 /* tslint:disable */
@@ -33,7 +33,7 @@ interface DropdownProps {
     apen?: boolean;
     name: string;
     knappeTekst: string;
-    children: React.ReactChildren | React.ReactChild | React.ReactNode;
+    render: (lukkDropdown:()=>void) => React.ReactNode;
     className?: string;
     onLukk?: () => void;
 }
@@ -100,26 +100,8 @@ class Dropdown extends Component<DropdownProps, DropdownState> {
     }
 
     render() {
-        const { name, className, children, knappeTekst } = this.props;
+        const { name, className, knappeTekst } = this.props;
         const { apen } = this.state;
-
-        const augmentedChild = Children.map(children, child => {
-            if (typeof child === 'string') {
-                return child;
-            }
-
-            return cloneElement(child as React.ReactElement<any>, { closeDropdown: this.lukkDropdown });
-        });
-        const innhold = (
-            <div
-                hidden={!apen}
-                className={`${name}-dropdown__innhold dropdown__innhold`}
-                id={`${name}-dropdown__innhold`}
-                ref={settFokus}
-            >
-                {augmentedChild}
-            </div>
-        );
 
         return (
             <div className={btnCls(apen, className)} ref={this.bindComponent}>
@@ -135,7 +117,15 @@ class Dropdown extends Component<DropdownProps, DropdownState> {
                         {knappeTekst}
                     </button>
                 </div>
-                {innhold}
+                <div
+                    hidden={!apen}
+                    className={`${name}-dropdown__innhold dropdown__innhold`}
+                    id={`${name}-dropdown__innhold`}
+                    ref={settFokus}
+                >
+
+                    {this.props.render(this.lukkDropdown)}
+                </div>
             </div>
         );
     }

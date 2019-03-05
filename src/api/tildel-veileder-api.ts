@@ -17,13 +17,7 @@ function hentVeieldere() {
 }
 
 function tildelTilVeileder(tilordninger: TildelVeilederData[]) {
-    return postAsJson(`/veilarboppfolging/api/tilordneveileder`, tilordninger)
-        .then(json => {
-            if (json.feilendeTilordninger.length > 0) {
-                throw new Error('TILDEL_VEILEDER_ERROR');
-            }
-            return json;
-        });
+    return postAsJson(`/veilarboppfolging/api/tilordneveileder`, tilordninger);
 }
 
 export default {
