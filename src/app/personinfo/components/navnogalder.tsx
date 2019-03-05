@@ -12,7 +12,7 @@ export function lagAlderTekst(personalia: Personalia): string {
         return '(DØD)';
     }
     const alder = kalkulerAlder(new Date(personalia.fodselsdato));
-    return `${alder} år`;
+    return `(${alder} år)`;
 }
 
 function NavnOgAlder(props: { personalia: Personalia }) {
@@ -27,8 +27,5 @@ function NavnOgAlder(props: { personalia: Personalia }) {
         </>
     );
 }
-
-
-// <span className="personinfo__alder">{aldersvisning}</span>
 
 export default NavnOgAlder;

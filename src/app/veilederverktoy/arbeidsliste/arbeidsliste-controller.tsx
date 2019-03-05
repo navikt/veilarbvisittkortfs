@@ -12,8 +12,9 @@ import { Dispatch } from 'redux';
 import { oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste } from '../../../store/arbeidsliste/actions';
 import { FormikValues } from 'formik';
 import ArbeidslisteSelector from '../../../store/arbeidsliste/selector';
-import { HiddenIfKnapp, HiddenIfKnappFss } from '../../components/hidden-if/hidden-if-knapp';
+import { HiddenIfKnappFss } from '../../components/hidden-if/hidden-if-knapp';
 import moment from 'moment';
+import './arbeidsliste-controller.less';
 
 interface StateProps {
     arbeidsliste: Arbeidsliste;
@@ -51,13 +52,13 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
             >
                 Legg til i arbeidsliste
             </HiddenIfKnappFss>
-            <HiddenIfKnapp
-                htmlType="button"
+            <HiddenIfKnappFss
+                icon={ArbeidslisteIkon}
                 onClick={() => setFjernArbeidslisteAktivt(true)}
                 hidden={!props.kanFjerneArbeidsliste}
             >
                 Fjern
-            </HiddenIfKnapp>
+            </HiddenIfKnappFss>
             <HiddenIfKnappFss
                 icon={RedigerIkon}
                 onClick={() => setVisKommentarAktivt(true)}

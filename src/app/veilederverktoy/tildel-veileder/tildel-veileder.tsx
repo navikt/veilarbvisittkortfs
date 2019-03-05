@@ -62,7 +62,7 @@ function TildelVeileder(props: StateProps & DispatchProps ) {
             <SokFilter
                 data={props.veiledere}
                 label=""
-                placeholder="Navn eller ident"
+                placeholder="Søk etter navn eller ident"
             >
                 {(data, radioFilterProps) =>
                     <RadioFilterForm

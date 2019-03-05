@@ -8,7 +8,7 @@ function VeilederVerktoyKnapp (props: {hidden: boolean, onClick: () => void}) {
             icon={TannHjulIkon}
             onClick={props.onClick}
         >
-            Veilederverktoy
+            Veilederverktøy
         </HiddenIfKnappFss>
     );
 }

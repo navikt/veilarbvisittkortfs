@@ -2,11 +2,8 @@ import * as React from 'react';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Radio } from 'nav-frontend-skjema';
 import { useState } from 'react';
-import hiddenIf from '../hidden-if/hidden-if';
 import './radio-filterform.less';
 
-const HiddenIfKnapp = hiddenIf(Knapp);
-const HiddenIfHovedknapp = hiddenIf(Hovedknapp);
 /* tslint:disable */
 
 interface RadioFilterFormProps<T> {
@@ -29,7 +26,6 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
         createLabel,
         createValue,
         radioName,
-        visLukkKnapp,
     } = props;
 
     const submitForm = (event: React.FormEvent<HTMLFormElement> ) => onSubmit(event, selected, props.closeDropdown);
@@ -50,22 +46,22 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
                     )}
                 </div>
                 <div className="knapperad">
-                    <HiddenIfHovedknapp
+                    <Hovedknapp
                         mini={true}
-                        hidden={visLukkKnapp && !selected}
+                        className="radio-filterform__velg-knapp"
                         htmlType="submit"
-                        disabled={!selected}
                     >
                         Velg
-                    </HiddenIfHovedknapp>
-                    <HiddenIfKnapp
+                    </Hovedknapp>
+                    <Knapp
                         mini={true}
                         htmlType="button"
+                        className="radio-filterform__lukk-knapp"
                         onClick={props.closeDropdown}
-                        hidden={!visLukkKnapp || !!selected}
+                        hidden={false}
                     >
                         Lukk
-                    </HiddenIfKnapp>
+                    </Knapp>
                 </div>
             </form>
         </div>

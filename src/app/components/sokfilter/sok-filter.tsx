@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Input } from 'nav-frontend-skjema';
+// import SearchIkon from './search.svg';
 import './sok-filter.less';
 
 /* tslint:disable */
@@ -30,6 +31,7 @@ function SokFilter<T> (props: SokFilterProps<T>) {
         <>
             <div className="sokfilter">
                 <Input
+                    inputClassName="sokfilter__input"
                     label={props.label}
                     placeholder={props.placeholder}
                     value={query}

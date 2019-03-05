@@ -1,7 +1,7 @@
 import React from 'react';
 import PersonInfo from './app/personinfo/personinfo';
 import Veilederverktoyslinje from './app/veilederverktoy/veiledervertoyslinje';
-import Tilbakelenke from './app/tilbakelenke';
+import Tilbakelenke from './app/components/tilbakelenke/tilbakelenke';
 import AppProvider from './app-provider';
 import * as moment from 'moment';
 import 'moment/locale/nb';
