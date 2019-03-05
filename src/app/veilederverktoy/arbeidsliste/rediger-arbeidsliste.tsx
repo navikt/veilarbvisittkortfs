@@ -1,10 +1,11 @@
 import React from 'react';
 import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
-import {Arbeidsliste, ArbeidslisteformData} from '../../../types/arbeidsliste';
+import {Arbeidsliste, ArbeidslisteformValues} from '../../../types/arbeidsliste';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import {Formik, FormikProps} from "formik";
 import NavFrontendModal from 'nav-frontend-modal';
 import ArbeidslisteForm from "./arbeidsliste-form";
+import moment from "moment";
 
 interface RedigerArbeidslisteProps {
     navn: string;
@@ -13,7 +14,7 @@ interface RedigerArbeidslisteProps {
     lukkModal: () => void;
     arbeidsliste: Arbeidsliste;
     arbeidslisteStatus: boolean;
-    onSubmit: (values: ArbeidslisteformData) => void;
+    onSubmit: (values: ArbeidslisteformValues) => void;
 
 }
 
@@ -22,9 +23,10 @@ function RedigerArbeidsliste(props: RedigerArbeidslisteProps & InjectedIntlProps
     const initalValues = {
         overskrift:  props.arbeidsliste.overskrift,
         kommentar: props.arbeidsliste.kommentar,
-        frist: props.arbeidsliste.frist ? new Date(props.arbeidsliste.frist) : null} as ArbeidslisteformData;
+        frist: props.arbeidsliste.frist ?
+            moment(props.arbeidsliste.frist).format('YYYY-MMM-DD') : ''} as ArbeidslisteformValues;
 
-    const onRequestClose = (formikProps: FormikProps<ArbeidslisteformData>) => {
+    const onRequestClose = (formikProps: FormikProps<ArbeidslisteformValues>) => {
         const dialogTekst = props.intl.formatMessage({
             id: 'lukk-advarsel',
         });

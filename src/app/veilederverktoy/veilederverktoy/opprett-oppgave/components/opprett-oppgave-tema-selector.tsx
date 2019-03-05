@@ -21,7 +21,7 @@ function OpprettOppgaveTemaSelector () {
 
     return (
         <FormikSelect
-            label="innstillinger.modal.oppgave-tema-label"
+            labelId="innstillinger.modal.oppgave-tema-label"
             name="tema"
             options={temaOptions}
         />

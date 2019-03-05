@@ -1,17 +1,44 @@
 import React from "react";
-import FormikDatoVelger from "../../../../components/formik/formik-datepicker";
+import {HiddenIfDropDown} from "../../../../components/hidden-if/hidden-if-dropdown";
+import {BehandlandeEnhet} from "../../../../../types/oppgave";
+import {StringOrNothing} from "../../../../../types/utils/stringornothings";
+import SokFilter from "../../../../components/sokfilter/sok-filter";
+import FormikRadioFilter from "../../../../components/formik/formik-radiofilter";
+import {OrNothing} from "../../../../../types/utils/ornothing";
+
+interface OpprettOppgaveVelgEnhet {
+    behandladeEnheter: BehandlandeEnhet[];
+    value: StringOrNothing;
+}
 
 
+function OpprettOppgaveVelgEnhet ({behandladeEnheter, value}: OpprettOppgaveVelgEnhet) {
 
-function OpprettOppgaveVelgDatoer () {
+    const valgtEnhet: OrNothing<BehandlandeEnhet> = behandladeEnheter.find(enhet => enhet.enhetId === value);
+
     return (
-        <div className="apabepa">
-            <label className="skjemaelement__label">Aktiv fra*</label>
-            <FormikDatoVelger name='fraDato'/>
-            <label className="className">Frist* </label>
-            <FormikDatoVelger name='tilDato'/>
-        </div>
+        <HiddenIfDropDown
+            name="Velg enhet dropdown"
+            knappeTekst={(valgtEnhet && valgtEnhet.navn) || behandladeEnheter[0].navn}
+            render={(lukkDropdown)=>
+                <SokFilter
+                    data={behandladeEnheter}
+                    label=""
+                    placeholder="Søk etter enhet"
+                >
+                    {(data) =>
+                        <FormikRadioFilter
+                            data={data}
+                            createLabel={(behandlandeEnhet: BehandlandeEnhet) => behandlandeEnhet.navn}
+                            createValue={(behandlandeEnhet: BehandlandeEnhet) => behandlandeEnhet.enhetId}
+                            radioName="Velg enhet"
+                            visLukkKnapp={true}
+                            closeDropdown={lukkDropdown}
+                            name="enhetId"
+                        />}
+                </SokFilter>}
+        />
     )
 }
 
-export default OpprettOppgaveVelgDatoer;
+export default OpprettOppgaveVelgEnhet;

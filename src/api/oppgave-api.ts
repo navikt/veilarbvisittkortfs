@@ -2,7 +2,7 @@ import { fetchToJson } from './api-utils';
 import { BehandlandeEnhet, OppgaveTema } from '../types/oppgave';
 
 export interface OppgaveApi {
-    hentBehandlandeEnheter: (tema: OppgaveTema) => Promise<BehandlandeEnhet[]>;
+    hentBehandlandeEnheter: (tema: OppgaveTema, fnr: string) => Promise<BehandlandeEnhet[]>;
 }
 
 function hentBehandlandeEnheter(tema: OppgaveTema, fnr: string) {

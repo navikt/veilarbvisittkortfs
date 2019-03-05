@@ -1,5 +1,5 @@
 import React from 'react';
-import {Field, FieldProps, getIn} from "formik";
+import {Field, FieldProps,getIn} from "formik";
 import Datovelger from "nav-datovelger/dist/datovelger/Datovelger";
 import SkjemaelementFeilmelding from "nav-frontend-skjema/lib/skjemaelement-feilmelding";
 import "./datovelger.less";
@@ -9,34 +9,14 @@ import moment from 'moment';
 
 interface FormikDatepickerProps {
     name: string;
+    validate: (value: string) => string | undefined;
+    label: string;
 }
 
-export const erGyldigISODato = (isoDato: Date) => isoDato && moment(isoDato, moment.ISO_8601).isValid();
-
-function FormikDatoVelger({name}: FormikDatepickerProps) {
-
-    const validerDatoFeldt = (input: Date, fra: Date, valgfritt:boolean) => {
-        let error;
-        const inputDato = moment(input);
-        const fraDato = moment(fra);
-        if (!valgfritt && !input) {
-            error = 'Du må angi en frist';
-
-        } else if (input && !erGyldigISODato(input)) {
-            error = 'Ugyldig dato';
-        } else if (
-            fra &&
-            (fraDato.isAfter(inputDato, 'day'))
-        ) {
-
-            error = 'Fristen må være i dag eller senere'
-        }
-        return error;
-    };
-
+function FormikDatoVelger({name, validate, label}: FormikDatepickerProps) {
     return (
         <Field
-            validate={(value:Date) => validerDatoFeldt(value, new Date(), true)}
+            validate={validate}
             name={name}
             id={name}
         >
@@ -45,21 +25,14 @@ function FormikDatoVelger({name}: FormikDatepickerProps) {
                 const datePickerClassName = classNames( 'skjemaelement', 'datovelger', { 'datovelger--harFeil': error });
                 return(
                     <div className={datePickerClassName}>
+                        <span>{label}</span>
                         <Datovelger
                             input={{
                                 id: name,
                                 name,
                                 placeholder: 'dd.mm.åååå',
                                 ariaLabel: 'Frist:',
-                                onChange: (value: string) => {
-                                    if (!value) {
-                                        setFieldValue(field.name, '')
-                                    }
-                                    else {
-                                        setFieldValue(field.name, value)
-                                    }
-                                }
-
+                                onChange: (value: string) => setFieldValue(field.name, value)
                             }}
                             id="fristDatovelger"
                             onChange={(date: string) => {

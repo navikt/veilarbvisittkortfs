@@ -1,53 +1,37 @@
 import React from 'react';
-import {Textarea} from "nav-frontend-skjema";
-import {Field, getIn, FieldProps} from "formik";
+import {Textarea, TextareaProps} from "nav-frontend-skjema";
+import {Field, FieldProps} from "formik";
+import {getErrors} from "./formik-utils";
+import {Omit} from "../../../types/omit-type";
+import {injectIntl, InjectedIntlProps}  from 'react-intl';
 
-interface FormikTekstAreaProps {
+interface TekstAreaProps {
     name: string;
     validate?: (value: string) => string | undefined;
+    labelId: string;
 }
 
+type OmitProps = 'onChange' | 'value' | 'feil' | 'onBlur' | 'label';
 
-function FormikTekstArea({name, validate}: FormikTekstAreaProps) {
-
-    const defaultValidation = (value: string): string|undefined  => {
-        let error: undefined | string;
-        if (!value) {
-            error = 'Påkreved';
-        } else if (value.length > 500) {
-            error = 'Før langt';
-        }
-        return error;
-    };
-
-    const validateFunc = (value: string): string | undefined => {
-        if(validate) {
-            return validate(value);
-        }
-        return defaultValidation(value);
-    };
-
-
+function FormikTekstArea({name, validate,labelId, intl, ...textAreaProps}: TekstAreaProps & InjectedIntlProps & Omit<TextareaProps, OmitProps>) {
     return (
-        <Field validate={validateFunc} name={name}>
+        <Field validate={validate} name={name}>
             {({field, form}: FieldProps) =>{
-                const touched = getIn(form.touched, name);
-                const errors = getIn(form.errors, name);
+                const feil = getErrors(form.errors, form.touched, name);
+                const labelTekstArea = intl.formatMessage({id: labelId});
                 return (
                     <Textarea
                         id={name}
-                        textareaClass="skjemaelement__input input--fullbredde arbeidslistekommentar"
-                        label="Kommentar"
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
                         value={field.value}
-                        name={name}
-                        maxLength={500}
-                        feil={errors && touched ? {feilmelding: errors} : undefined}
+                        feil={feil}
+                        label={labelTekstArea}
+                        {...textAreaProps}
                     />)
             }}
         </Field>
     )
 }
 
-export default FormikTekstArea;
+export default injectIntl(FormikTekstArea);

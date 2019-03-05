@@ -42,6 +42,7 @@ mock.get('/veilarbperson/api/person/:fnr', Personalia);
 mock.get('/veilarbportefolje/api/arbeidsliste/:fnr', Arbeidsliste);
 mock.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', Veilederliste);
 mock.get('/veilarbveileder/api/veileder/me', VeilederData);
+mock.get('/veilarboppgave/api/enhet', [{enhetId: '0000', navn: 'NAV Ost'},{enhetId: '0001', navn: 'NAV Kjeks'}]);
 mock.post(`/veilarbportefolje/api/arbeidsliste/:fnr?`, (args: HandlerArgument) => {
     return ResponseUtils.jsonPromise(Arbeidsliste); });
 

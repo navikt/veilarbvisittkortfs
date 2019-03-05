@@ -1,15 +1,20 @@
 import React from "react";
 import FormikDatoVelger from "../../../../components/formik/formik-datepicker";
-
-
+import {validerOppgaveDatoFeldt} from "../../../../utils/formik-validation";
 
 function OpprettOppgaveVelgDatoer () {
     return (
        <div className="apabepa">
-           <span>Aktiv fra*</span>
-        <FormikDatoVelger name='fraDato'/>
-           <span>Frist* </span>
-        <FormikDatoVelger name='tilDato'/>
+        <FormikDatoVelger
+            name='fraDato'
+            validate={validerOppgaveDatoFeldt}
+            label="Aktiv fra*"
+        />
+        <FormikDatoVelger
+            name='tilDato'
+            validate={validerOppgaveDatoFeldt}
+            label="Frist* "
+        />
        </div>
     )
 }

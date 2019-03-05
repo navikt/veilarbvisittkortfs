@@ -8,7 +8,7 @@ const HiddenIfKnapp = hiddenIf(Knapp);
 const HiddenIfHovedknapp = hiddenIf(Hovedknapp);
 /* tslint:disable */
 
-interface RadioFilterFormProps<T> {
+export interface RadioFilterFormProps<T> {
     data: T[];
     createLabel: (foo: T) => string;
     createValue: (foo: T) => string;
@@ -29,6 +29,8 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
         visLukkKnapp,
     } = props;
 
+    console.log('selected', props.selected);
+
     return (
         <div className="radio-filterform">
                 <div className="radio-filterform__valg">
@@ -47,8 +49,9 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
                     <HiddenIfHovedknapp
                         mini={true}
                         hidden={visLukkKnapp && !props.selected}
-                        htmlType="submit"
+                        htmlType="button"
                         disabled={!props.selected}
+                        onClick={props.closeDropdown}
                     >
                         Velg
                     </HiddenIfHovedknapp>

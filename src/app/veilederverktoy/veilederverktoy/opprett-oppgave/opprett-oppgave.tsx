@@ -1,23 +1,27 @@
 import React from 'react';
-import {Formik, FormikProps} from "formik";
+import {Form, Formik, FormikProps} from "formik";
 import NavFrontendModal from "nav-frontend-modal";
 import {Innholdstittel, Undertittel} from "nav-frontend-typografi";
 import {FormattedMessage} from "react-intl";
-import OpprettOppgaveForm from "./components/opprett-oppgave-form";
 import {Appstate} from "../../../../types/appstate";
 import PersonaliaSelector from "../../../../store/personalia/selectors";
 import {connect} from "react-redux";
 import {OppgaveTema, OppgaveType, PrioritetType} from "../../../../types/oppgave";
-import {StringOrNothing} from "../../../../types/utils/stringornothings";
 import {OrNothing} from "../../../../types/utils/ornothing";
 import moment from 'moment';
+import {
+    validerOppgaveDatoer
+} from "../../../utils/formik-validation";
+import {StringOrNothing} from "../../../../types/utils/stringornothings";
+import OpprettOppgaveTemaSelector from "./components/opprett-oppgave-tema-selector";
+import OppgaveInnerForm from "./components/oppgave-inner-form";
 
-interface OpprettOppgaveFormValues {
+export interface OpprettOppgaveFormValues {
     beskrivelse: string;
-    enhetId: string;
+    enhetId: StringOrNothing;
     fnr: string;
-    fraDato: StringOrNothing;
-    tilDato: StringOrNothing;
+    fraDato: string;
+    tilDato: string;
     prioritet: OrNothing<PrioritetType>;
     tema: OrNothing<OppgaveTema>;
     type: OrNothing<OppgaveType>;
@@ -38,7 +42,7 @@ function OpprettOppgave({navn, fnr}:StateProps) {
 
     const opprettOppgaveInitialValues: OpprettOppgaveFormValues = {
         beskrivelse: '',
-        enhetId: '',
+        enhetId: null,
         fnr,
         fraDato: moment().format('YYYY-MM-DD'),
         tilDato:moment().format('YYYY-MM-DD'),
@@ -50,10 +54,13 @@ function OpprettOppgave({navn, fnr}:StateProps) {
     return (
         <Formik
             initialValues={opprettOppgaveInitialValues}
+            validate={(values) => validerOppgaveDatoer(values.fraDato, values.tilDato)}
             onSubmit={(values, actions)=> {
                 actions.resetForm();
             }}
-            render ={ (formikProps: FormikProps<any>) =>
+            render ={ (formikProps: FormikProps<OpprettOppgaveFormValues>) =>{
+                console.log('formikProps', formikProps);
+                return (
                 <NavFrontendModal
                     className="arbeidsliste-modal"
                     contentLabel="arbeidsliste"
@@ -75,11 +82,18 @@ function OpprettOppgave({navn, fnr}:StateProps) {
                                     values={{ navn, fnr }}
                                 />
                             </Undertittel>
-                            <OpprettOppgaveForm formikProps={formikProps}/>
+                            <Form>
+                                <OpprettOppgaveTemaSelector/>
+                                <OppgaveInnerForm
+                                    tema={formikProps.values.tema}
+                                    fnr={fnr}
+                                    enhetId={formikProps.values.enhetId}
+                                />
+                            </Form>
                         </div>
                     </div>
-                </NavFrontendModal>
-            }
+                </NavFrontendModal>)
+            }}
         />
     )
 }

@@ -16,7 +16,7 @@ function OpprettOppgaveTypeSelector () {
 
     return (
         <FormikSelect
-            label="innstillinger.modal.oppgave-type-label"
+            labelId="innstillinger.modal.oppgave-type-label"
             name="type"
             options={typeOptions}
         />

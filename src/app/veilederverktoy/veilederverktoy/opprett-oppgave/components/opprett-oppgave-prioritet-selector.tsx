@@ -17,7 +17,7 @@ function OpprettOppgavePrioritetSelector () {
 
     return (
         <FormikSelect
-            label="innstillinger.modal.oppgave-prioritet-label"
+            labelId="innstillinger.modal.oppgave-prioritet-label"
             name="prioritet"
             options={typeOptions}
         />
