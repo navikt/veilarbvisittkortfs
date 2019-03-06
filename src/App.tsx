@@ -6,8 +6,11 @@ import AppProvider from './app-provider';
 import * as moment from 'moment';
 import 'moment/locale/nb';
 import './index.less';
+import NavFrontendModal from 'nav-frontend-modal';
 
 moment.locale('nb');
+
+NavFrontendModal.setAppElement(document.getElementById("modal-a11y-wrapper"));
 
 export interface AppProps {
     fnr: string;

@@ -4,9 +4,6 @@ import { Innholdstittel, Normaltekst, Undertittel } from 'nav-frontend-typografi
 import { FormattedMessage } from 'react-intl';
 import NavFrontendModal from 'nav-frontend-modal';
 
-
-NavFrontendModal.setAppElement("#app");
-
 interface FjernArbeidslisteModal {
     isOpen: boolean;
     onRequestClose: () => void;

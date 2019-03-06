@@ -1,4 +1,4 @@
-import {fetchToJson} from './api-utils';
+import { fetchToJson } from './api-utils';
 
 export interface FeatureApi {
     hentFeatures: (feature: string) => Promise<{}>;
@@ -7,7 +7,6 @@ export interface FeatureApi {
 function hentFeatures(feature: string) {
     return fetchToJson(`/api/feature?feature=${feature}`);
 }
-
 
 export default {
     hentFeatures

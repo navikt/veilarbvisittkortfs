@@ -17,8 +17,6 @@ interface LeggTilArbeidslisteProps {
 
 }
 
-NavFrontendModal.setAppElement("#app");
-
 function LeggTilArbeidslisteModal(props: LeggTilArbeidslisteProps) {
 
     const initalValues = {overskrift:  '', kommentar: '', frist: '' };

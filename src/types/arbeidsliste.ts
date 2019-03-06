@@ -18,7 +18,6 @@ export interface ArbeidslisteformValues {
     overskrift: string;
 }
 
-
 export interface ArbeidslisteformData {
     kommentar: string;
     frist: OrNothing<Date>;
