@@ -5,7 +5,6 @@ import VeilederVerktoyModal from '../veilederverktoy-modal';
 import BegrunnelseFooter from './begrunnelse-form-footer';
 import { StringOrNothing } from '../../../../types/utils/stringornothings';
 import BergrunnelseOverskrift from './begrunnelse-overskrift';
-import './begrunnelse-form.less';
 
 interface BegrunnelseFormProps {
     tekst: StringOrNothing;

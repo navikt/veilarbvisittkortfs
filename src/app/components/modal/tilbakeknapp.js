@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import PT from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { VenstreChevron } from 'nav-frontend-chevron';
-import {Knapp} from "nav-frontend-knapper";
+import {Knapp} from 'nav-frontend-knapper';
 import {navigerAction} from "../../../store/navigation/actions";
 
 function Tilbakeknapp(props) {

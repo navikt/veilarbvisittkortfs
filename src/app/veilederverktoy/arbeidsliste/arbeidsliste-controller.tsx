@@ -14,7 +14,6 @@ import { FormikValues } from 'formik';
 import ArbeidslisteSelector from '../../../store/arbeidsliste/selector';
 import { HiddenIfKnappFss } from '../../components/hidden-if/hidden-if-knapp';
 import moment from 'moment';
-import './arbeidsliste-controller.less';
 
 interface StateProps {
     arbeidsliste: Arbeidsliste;
