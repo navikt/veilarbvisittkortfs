@@ -22,6 +22,7 @@ interface StateProps {
     arbeidslisteStatus: boolean;
     kanLeggeIArbeidsliste: boolean;
     kanFjerneArbeidsliste: boolean;
+    kanRedigereArbeidsliste: boolean;
 }
 
 interface DispatchProps {
@@ -61,6 +62,7 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
             <HiddenIfKnappFss
                 icon={RedigerIkon}
                 onClick={() => setVisKommentarAktivt(true)}
+                hidden={!props.kanRedigereArbeidsliste}
             >
                 Rediger
             </HiddenIfKnappFss>
@@ -99,7 +101,8 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     navn: PersonaliaSelectors.selectSammensattNavn(state),
     arbeidslisteStatus: ArbeidslisteSelector.selectArbeidslisteStatus(state),
     kanLeggeIArbeidsliste: ArbeidslisteSelector.selectKanLeggeIArbeidsListe(state),
-    kanFjerneArbeidsliste: ArbeidslisteSelector.selectKanFjerneArbeidsliste(state)
+    kanFjerneArbeidsliste: ArbeidslisteSelector.selectKanFjerneArbeidsliste(state),
+    kanRedigereArbeidsliste: ArbeidslisteSelector.selectKanRedigereArbeidsliste(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
