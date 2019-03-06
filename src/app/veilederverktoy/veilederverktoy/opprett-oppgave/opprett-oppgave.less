@@ -8,20 +8,12 @@
   height: 2.385rem;
 
   &__button {
-    width: inherit;
-    height: inherit;
     border-radius: 4px;
     text-align: left;
-    padding: 0.45rem;
     border: 1px solid #78706A
   }
 
   &__button:hover {
-    width: inherit;
-    height: inherit;
-    border-radius: 4px;
-    text-align: left;
-    padding: 0.45rem;
     border: 1px solid #0067c5;
     color: #3e3832;
   }
@@ -31,12 +23,22 @@
     box-shadow: 0 0 0 3px #FFBD66;
   }
 
-  .dropdown__btn:hover:after {
+  .dropdown__btn {
+    width: inherit;
+    height: inherit;
+    padding: 0.45rem;
+  }
+
+  .dropdown__btn:hover {
     color: #3e3832;
   }
 
+  .dropdown__btn:hover:after {
+    background: #3e3832;
+  }
+
   .dropdown__btn:hover:before {
-    color: #3e3832;
+    background: #3e3832;
   }
 
 }

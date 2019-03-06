@@ -17,7 +17,7 @@ function FormikRadioGroup<T> ({name, data, radioName, createLabel, createValue, 
     return (
         <Field name={name}>
             {({ field, form}: FieldProps)  =>
-                <div className="radio-filterform">
+                <div className="visittkortfs-radio-filterform">
                     <div className="radio-filterform__valg scrollbar">
                         {data.map(o =>
                             <Radio

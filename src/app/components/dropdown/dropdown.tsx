@@ -102,6 +102,7 @@ class Dropdown extends Component<DropdownProps, DropdownState> {
         const { apen } = this.state;
 
         return (
+          <div className="visittkortfs--dropdown">
             <div className={btnCls(apen, className)} ref={this.bindComponent}>
                     <button
                         ref={this.bindBtn}
@@ -123,6 +124,7 @@ class Dropdown extends Component<DropdownProps, DropdownState> {
                     {this.props.render(this.lukkDropdown)}
                 </div>
             </div>
+          </div>
         );
     }
 }
