@@ -45,7 +45,7 @@ function ArbeidslisteForm (props: ArbeidslisteFormProps & InjectedIntlProps) {
             </div>
             {props.sistEndretAv && props.endringstidspunkt && <Undertekst className="arbeidsliste--modal-redigering">
                 <FormattedMessage
-                    id="arbeidsliste.kommentar.footer"
+                    id="arbeidsliste.endringsinfo"
                     values={{
                         dato: moment(props.endringstidspunkt).format('DD.MM.YYYY'),
                         veileder: props.sistEndretAv.veilederId
