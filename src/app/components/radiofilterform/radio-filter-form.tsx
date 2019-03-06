@@ -43,7 +43,7 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
                 <div className="knapperad">
                     <Hovedknapp
                         hidden={visLukkKnapp && !props.selected}
-                        htmlType="button"
+                        htmlType="submit"
                         disabled={!props.selected}
                         onClick={props.closeDropdown}
                     >
