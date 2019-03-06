@@ -49,7 +49,7 @@ function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
         <div className="veilederverktoyslinje">
             <div className="veilederverktoyslinje__container">
                 <Arbeidslistekomponent/>
-                <TildelVeileder/>
+                <TildelVeileder fnr={props.fnr}/>
                 <VeilederVerktoyKnapp
                     onClick={() => handleVeilederKnappClicked(props)}
                     hidden={props.tilgangTilBrukersKontor}

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import SokFilter from '../../components/sokfilter/sok-filter';
 import RadioFilterForm from '../../components/radiofilterform/radio-filter-form';
 import { VeilederData } from '../../../types/veilederdata';
-import personalia from '../../../mock/personalia';
 import { Appstate } from '../../../types/appstate';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -33,7 +32,13 @@ interface DispatchProps {
     tildelTilVeileder: (veilederData: TildelVeilederData[]) => TildelVeilederAction;
 }
 
-function TildelVeileder(props: StateProps & DispatchProps ) {
+interface OwnProps {
+    fnr: string;
+}
+
+type TildelVeilederProps = StateProps & DispatchProps & OwnProps;
+
+function TildelVeileder(props: TildelVeilederProps) {
     const [selected, changeSelected] = useState('');
 
     useEffect(() => {
@@ -48,7 +53,7 @@ function TildelVeileder(props: StateProps & DispatchProps ) {
         props.tildelTilVeileder([{
             fraVeilederId: props.oppfolgendeVeileder,
             tilVeilederId: selected,
-            brukerFnr: personalia.fodselsnummer,
+            brukerFnr: props.fnr,
         }]);
 
     };
@@ -101,4 +106,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators({hentAlleVeiledereForEnheten, tildelTilVeileder}, dispatch);
 };
 
-export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(TildelVeileder);
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(TildelVeileder);
