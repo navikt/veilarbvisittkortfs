@@ -21,10 +21,11 @@ interface RedigerArbeidslisteProps {
 function RedigerArbeidslisteModal(props: RedigerArbeidslisteProps & InjectedIntlProps) {
 
     const initalValues = {
-        overskrift:  props.arbeidsliste.overskrift,
-        kommentar: props.arbeidsliste.kommentar,
+        overskrift:  props.arbeidsliste.overskrift || '',
+        kommentar: props.arbeidsliste.kommentar || '',
         frist: props.arbeidsliste.frist ?
             moment(props.arbeidsliste.frist).format('YYYY-MMM-DD') : ''} as ArbeidslisteformValues;
+
 
     const onRequestClose = (formikProps: FormikProps<ArbeidslisteformValues>) => {
         const dialogTekst = props.intl.formatMessage({
