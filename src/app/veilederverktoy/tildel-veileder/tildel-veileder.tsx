@@ -24,7 +24,7 @@ function settSammenNavn(veileder: VeilederData) {
 interface StateProps {
     oppfolgingsenhetId: StringOrNothing;
     veiledere: VeilederData[];
-    paloggetVeileder: VeilederData;
+    oppfolgendeVeileder: StringOrNothing;
     skalSkjules: OrNothing<TildelVeilederResponse>;
 }
 
@@ -44,13 +44,13 @@ function TildelVeileder(props: StateProps & DispatchProps ) {
 
     const setValgtVeileder = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (props.paloggetVeileder) {
-            props.tildelTilVeileder([{
-                fraVeilederId: props.paloggetVeileder.ident,
-                tilVeilederId: selected,
-                brukerFnr: personalia.fodselsnummer,
-            }]);
-        }
+
+        props.tildelTilVeileder([{
+            fraVeilederId: props.oppfolgendeVeileder,
+            tilVeilederId: selected,
+            brukerFnr: personalia.fodselsnummer,
+        }]);
+
     };
 
     return (
@@ -93,7 +93,7 @@ function TildelVeileder(props: StateProps & DispatchProps ) {
 const mapStateToProps = (state: Appstate): StateProps => ({
     oppfolgingsenhetId: OppfolgingsstatusSelector.selectOppfolgingsenhetsId(state),
     veiledere: state.tildelVeileder.veilederPaEnheten.data.veilederListe,
-    paloggetVeileder: state.tildelVeileder.paloggetVeileder.data,
+    oppfolgendeVeileder: state.oppfolgingstatus.data.veilederId,
     skalSkjules : state.tildelVeileder.tildeltVeileder.data
 });
 

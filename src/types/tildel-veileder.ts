@@ -1,5 +1,7 @@
+import {StringOrNothing} from "./utils/stringornothings";
+
 export interface TildelVeilederData {
-    fraVeilederId: string;
+    fraVeilederId: StringOrNothing;
     tilVeilederId: string;
     brukerFnr: string;
 }
