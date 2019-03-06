@@ -20,8 +20,8 @@ interface RedigerArbeidslisteProps {
 function RedigerArbeidslisteModal(props: RedigerArbeidslisteProps & InjectedIntlProps) {
 
     const initalValues = {
-        overskrift:  props.arbeidsliste.overskrift,
-        kommentar: props.arbeidsliste.kommentar,
+        overskrift:  props.arbeidsliste.overskrift || '',
+        kommentar: props.arbeidsliste.kommentar || '',
         frist: props.arbeidsliste.frist ? new Date(props.arbeidsliste.frist) : null} as ArbeidslisteformData;
 
     const onRequestClose = (formikProps: FormikProps<ArbeidslisteformData>) => {

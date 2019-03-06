@@ -2,15 +2,14 @@ import { StringOrNothing } from './utils/stringornothings';
 import { OrNothing } from './utils/ornothing';
 
 export interface Arbeidsliste {
-    arbeidslisteAktiv: StringOrNothing;
-    endringstidspunkt: StringOrNothing;
-    frist: StringOrNothing;
+    arbeidslisteAktiv: StringOrNothing; //TODO WHAT IS ZIS?
+    endringstidspunkt: OrNothing<Date>;
+    frist: OrNothing<Date>;
     harVeilederTilgang: boolean;
     isOppfolgendeVeileder: boolean;
     kommentar: StringOrNothing;
     overskrift: StringOrNothing;
-    sistEndretAv: StringOrNothing;
-    veilederId: StringOrNothing;
+    sistEndretAv: OrNothing<{veilederId: string}>;
 }
 
 export interface ArbeidslisteformData {
