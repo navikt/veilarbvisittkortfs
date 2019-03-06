@@ -12,6 +12,12 @@ export interface Arbeidsliste {
     sistEndretAv: OrNothing<{veilederId: string}>;
 }
 
+export interface ArbeidslisteformValues {
+    kommentar: string;
+    frist: string;
+    overskrift: string;
+}
+
 export interface ArbeidslisteformData {
     kommentar: string;
     frist: OrNothing<Date>;

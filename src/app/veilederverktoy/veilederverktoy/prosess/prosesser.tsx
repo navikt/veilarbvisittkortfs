@@ -5,6 +5,7 @@ import StarManuellOppfolging from '../start-manuell-oppfolging/start-manuell-opp
 import StartKvpPeriodeProsess from '../start-kvp-periode/start-kvp-periode-prosess';
 import StoppKvpPeriodeProsess from '../stopp-kvp-periode/stopp-kvp-periode-prosess';
 import StartDigitalOppfolgingProsess from '../start-digital-oppfolging/start-digital-oppfolging-prosess';
+import OpprettOppgaveProsess from '../opprett-oppgave/opprett-oppgave-prosess';
 import './prosesser.less';
 
 function Prosesser () {
@@ -19,6 +20,7 @@ function Prosesser () {
             <StartKvpPeriodeProsess/>
             <StoppKvpPeriodeProsess/>
             <StartDigitalOppfolgingProsess/>
+            <OpprettOppgaveProsess/>
         </VeilederVerktoyModal>
     );
 }

@@ -5,7 +5,7 @@ import './radio-filterform.less';
 
 /* tslint:disable */
 
-interface RadioFilterFormProps<T> {
+export interface RadioFilterFormProps<T> {
     data: T[];
     createLabel: (foo: T) => string;
     createValue: (foo: T) => string;
@@ -27,7 +27,7 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
     } = props;
 
     return (
-        <div className="radio-filterform">
+        <div className="visittkortfs-radio-filterform">
                 <div className="radio-filterform__valg scrollbar">
                     {data.map(o =>
                         <Radio
@@ -43,8 +43,9 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
                 <div className="knapperad">
                     <Hovedknapp
                         hidden={visLukkKnapp && !props.selected}
-                        htmlType="submit"
+                        htmlType="button"
                         disabled={!props.selected}
+                        onClick={props.closeDropdown}
                     >
                         Velg
                     </Hovedknapp>

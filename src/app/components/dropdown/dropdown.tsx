@@ -33,6 +33,7 @@ interface DropdownProps {
     render: (lukkDropdown:()=>void) => React.ReactNode;
     className?: string;
     onLukk?: () => void;
+    btnClassnames?: string;
 }
 
 interface DropdownState {
@@ -101,11 +102,12 @@ class Dropdown extends Component<DropdownProps, DropdownState> {
         const { apen } = this.state;
 
         return (
+          <div className="visittkortfs--dropdown">
             <div className={btnCls(apen, className)} ref={this.bindComponent}>
                     <button
                         ref={this.bindBtn}
                         type="button"
-                        className="dropdown__btn knapp knapp--standard knapp-fss"
+                        className={classNames("dropdown__btn", this.props.btnClassnames)}
                         onClick={this.toggleDropdown}
                         aria-expanded={apen}
                         aria-controls={`${name}-dropdown__innhold`}
@@ -122,6 +124,7 @@ class Dropdown extends Component<DropdownProps, DropdownState> {
                     {this.props.render(this.lukkDropdown)}
                 </div>
             </div>
+          </div>
         );
     }
 }

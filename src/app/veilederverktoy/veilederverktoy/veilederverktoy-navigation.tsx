@@ -13,6 +13,7 @@ import StartDigitalOppfolgingKvittering from './start-digital-oppfolging/start-d
 import StartDigitalOppfolging from './start-digital-oppfolging/start-digital-oppfolging';
 import hiddenIf from '../../components/hidden-if/hidden-if';
 import { StringOrNothing } from '../../../types/utils/stringornothings';
+import OpprettOppgave from "./opprett-oppgave/opprett-oppgave";
 
 interface StateProps {
     location: StringOrNothing;
@@ -44,6 +45,8 @@ function VeilederVerktoyNavigation(props: VeilederVerktoyNavigationProps) {
             return <StoppKvpPeriode/>;
         case 'stopp_kvp_periode_kvittering':
             return <StoppKVPKvittering/>;
+        case 'opprett_oppgave':
+            return <OpprettOppgave/>
         default:
             return null;
     }
