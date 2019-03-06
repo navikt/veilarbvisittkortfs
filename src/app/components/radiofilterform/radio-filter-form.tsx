@@ -26,8 +26,6 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
         visLukkKnapp,
     } = props;
 
-    console.log('selected', props.selected);
-
     return (
         <div className="radio-filterform">
                 <div className="radio-filterform__valg scrollbar">

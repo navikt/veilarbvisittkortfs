@@ -59,6 +59,7 @@ function TildelVeileder(props: StateProps & DispatchProps ) {
             className="input-m tildel-veileder-dropdown"
             name="tildel-veileder-dropdown"
             hidden={!!props.skalSkjules}
+            btnClassnames="knapp knapp--standard knapp-fss"
             render={(lukkDropdown) =>
                 <form
                     onSubmit={(event: React.FormEvent<HTMLFormElement>) => {

@@ -24,7 +24,7 @@ function FormikDatoVelger({name, validate, label}: FormikDatepickerProps) {
                 const datePickerClassName = classNames( 'skjemaelement', 'datovelger', { 'datovelger--harFeil': error });
                 return(
                     <div className={datePickerClassName}>
-                        <span>{label}</span>
+                        <span className="skjemaelement__label">{label}</span>
                         <Datovelger
                             input={{
                                 id: name,

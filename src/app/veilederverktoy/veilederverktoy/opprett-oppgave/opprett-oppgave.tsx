@@ -15,6 +15,7 @@ import {
 import {StringOrNothing} from "../../../../types/utils/stringornothings";
 import OpprettOppgaveTemaSelector from "./components/opprett-oppgave-tema-selector";
 import OppgaveInnerForm from "./components/oppgave-inner-form";
+import './opprett-oppgave.less'
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;

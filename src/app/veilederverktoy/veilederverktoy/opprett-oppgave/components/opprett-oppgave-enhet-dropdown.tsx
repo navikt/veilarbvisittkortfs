@@ -3,7 +3,7 @@ import {HiddenIfDropDown} from "../../../../components/hidden-if/hidden-if-dropd
 import {BehandlandeEnhet} from "../../../../../types/oppgave";
 import {StringOrNothing} from "../../../../../types/utils/stringornothings";
 import SokFilter from "../../../../components/sokfilter/sok-filter";
-import FormikRadioFilter from "../../../../components/formik/formik-radiofilter";
+import FormikRadioGroup from "../../../../components/formik/formik-radiogroup";
 import {OrNothing} from "../../../../../types/utils/ornothing";
 
 interface OpprettOppgaveVelgEnhet {
@@ -20,6 +20,8 @@ function OpprettOppgaveVelgEnhet ({behandladeEnheter, value}: OpprettOppgaveVelg
         <HiddenIfDropDown
             name="Velg enhet dropdown"
             knappeTekst={(valgtEnhet && valgtEnhet.navn) || behandladeEnheter[0].navn}
+            className="skjemaelement velg-enhet-dropdown"
+            btnClassnames="velg-enhet-dropdown__button"
             render={(lukkDropdown)=>
                 <SokFilter
                     data={behandladeEnheter}
@@ -27,12 +29,11 @@ function OpprettOppgaveVelgEnhet ({behandladeEnheter, value}: OpprettOppgaveVelg
                     placeholder="Søk etter enhet"
                 >
                     {(data) =>
-                        <FormikRadioFilter
+                        <FormikRadioGroup
                             data={data}
                             createLabel={(behandlandeEnhet: BehandlandeEnhet) => behandlandeEnhet.navn}
                             createValue={(behandlandeEnhet: BehandlandeEnhet) => behandlandeEnhet.enhetId}
                             radioName="Velg enhet"
-                            visLukkKnapp={true}
                             closeDropdown={lukkDropdown}
                             name="enhetId"
                         />}
