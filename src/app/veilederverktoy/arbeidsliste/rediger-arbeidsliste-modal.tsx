@@ -63,6 +63,8 @@ function RedigerArbeidslisteModal(props: RedigerArbeidslisteProps & InjectedIntl
                             <ArbeidslisteForm
                                 onRequestClose={() => onRequestClose(formikProps)}
                                 laster={props.arbeidslisteStatus}
+                                sistEndretAv={props.arbeidsliste.sistEndretAv}
+                                endringstidspunkt={props.arbeidsliste.endringstidspunkt}
                             />
                         </div>
                     </div>

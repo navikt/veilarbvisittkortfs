@@ -7,12 +7,14 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Form } from 'formik';
+import {OrNothing} from '../../../types/utils/ornothing';
+import moment from 'moment';
 
 interface ArbeidslisteFormProps {
     onRequestClose: () => void;
     laster: boolean;
-    sistEndretAv?: string;
-    sistEndretDato?: Date;
+    sistEndretAv?: OrNothing<{veilederId: string}>;
+    endringstidspunkt?: OrNothing<Date>;
 
 }
 
@@ -23,12 +25,12 @@ function ArbeidslisteForm (props: ArbeidslisteFormProps) {
                 <FormikInput name="overskrift"/>
                 <FormikTekstArea name="kommentar"/>
             </div>
-            {props.sistEndretDato && <Undertekst className="arbeidsliste--modal-redigering">
+            {props.sistEndretAv && props.endringstidspunkt && <Undertekst className="arbeidsliste--modal-redigering">
                 <FormattedMessage
                     id="arbeidsliste.kommentar.footer"
                     values={{
-                        dato: props.sistEndretDato.toLocaleDateString(),
-                        veileder: props.sistEndretAv
+                        dato: moment(props.endringstidspunkt).format('DD.MM.YYYY'),
+                        veileder: props.sistEndretAv.veilederId
                     }}
                 />
             </Undertekst>}
