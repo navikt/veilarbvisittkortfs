@@ -21,6 +21,7 @@ function FormikInput<P>({name, validate, ...inputProps}: InputProps & NavFronten
                         onBlur={form.handleBlur}
                         name={name}
                         feil={feil}
+                        value={field.value}
                         {...inputProps}
                     />
                 )
