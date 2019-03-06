@@ -17,6 +17,8 @@ interface LeggTilArbeidslisteProps {
 
 }
 
+NavFrontendModal.setAppElement("#app");
+
 function LeggTilArbeidslisteModal(props: LeggTilArbeidslisteProps) {
 
     const initalValues = {overskrift:  '', kommentar: '', frist: '' };
@@ -39,7 +41,7 @@ function LeggTilArbeidslisteModal(props: LeggTilArbeidslisteProps) {
             }}
             render={ formikProps =>
                 <NavFrontendModal
-                    className="arbeidsliste-modal"
+                    className="visittkortfs-modal arbeidsliste-modal"
                     contentLabel="arbeidsliste"
                     isOpen={props.isOpen}
                     onRequestClose={() => onRequestClose(formikProps)}

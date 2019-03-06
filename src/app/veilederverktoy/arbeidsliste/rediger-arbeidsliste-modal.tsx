@@ -18,6 +18,8 @@ interface RedigerArbeidslisteProps {
 
 }
 
+NavFrontendModal.setAppElement("#app");
+
 function RedigerArbeidslisteModal(props: RedigerArbeidslisteProps & InjectedIntlProps) {
 
     const initalValues = {
