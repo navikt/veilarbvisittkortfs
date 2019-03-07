@@ -1,6 +1,6 @@
 import { fetchToJson, postAsJson } from './api-utils';
 import { Oppfolging } from '../types/oppfolging';
-import {InnstillingsHistorikk} from "../types/innstillings-historikk";
+import { InnstillingsHistorikk } from '../types/innstillings-historikk';
 
 const OPPFOLGING_BASE_URL = '/veilarboppfolging/api';
 
@@ -57,7 +57,7 @@ export function stoppKvpOppfolging(begrunnelse: string, fnr: string) {
 }
 
 export function hentInnstillingsHistorikk(fnr: string) {
-    return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/innstillingsHistorikk?fnr=${fnr}`)
+    return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/innstillingsHistorikk?fnr=${fnr}`);
 }
 
 export default {

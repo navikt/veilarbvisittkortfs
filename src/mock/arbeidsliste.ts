@@ -7,8 +7,8 @@ const arbeidsliste: Arbeidsliste & JSONValue = {
     frist: null,
     harVeilederTilgang: true,
     isOppfolgendeVeileder: true,
-    kommentar: 'herpsderots',
-    overskrift: 'jeps',
+    kommentar: null,
+    overskrift: null,
     sistEndretAv: null,
 };
 

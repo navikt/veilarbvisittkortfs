@@ -1,6 +1,6 @@
 import React from 'react';
 import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
-import { Arbeidsliste } from '../../../types/arbeidsliste';
+import {Arbeidsliste, ArbeidslisteformValues} from '../../../types/arbeidsliste';
 import { FormattedMessage } from 'react-intl';
 import { Formik, FormikProps } from 'formik';
 import NavFrontendModal from 'nav-frontend-modal';
@@ -21,20 +21,18 @@ function LeggTilArbeidslisteModal(props: LeggTilArbeidslisteProps) {
 
     const initalValues = {overskrift:  '', kommentar: '', frist: '' };
 
-    const onRequestClose = (formikProps: FormikProps<any>) => {
+    const onRequestClose = (formikProps: FormikProps<ArbeidslisteformValues>) => {
         const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
         if (!formikProps.dirty || confirm(dialogTekst)) {
             props.lukkModal();
             formikProps.resetForm();
         }
     };
-
     return (
         <Formik
             initialValues={initalValues}
-            onSubmit={(values, actions) => {
+            onSubmit={(values) => {
                 props.onSubmit(values);
-                actions.resetForm();
                 props.lukkModal();
             }}
             render={ formikProps =>

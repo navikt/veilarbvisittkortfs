@@ -1,4 +1,4 @@
-import {OppgaveTema, OppgaveType} from "./oppgave";
+import { OppgaveTema, OppgaveType } from './oppgave';
 
 export interface OppgaveHistorikk {
     type: 'OPPRETTET_OPPGAVE';

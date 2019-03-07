@@ -13,7 +13,7 @@ function hentBehandlandeEnheter(tema: OppgaveTema, fnr: string) {
 }
 
 export function hentOppgaveHistorikk(fnr: string) {
-    return fetchToJson(`${OPPGAVE_BASE_URL}//oppgavehistorikk?fnr=${fnr}`)
+    return fetchToJson(`${OPPGAVE_BASE_URL}/oppgavehistorikk?fnr=${fnr}`);
 }
 
 export default {

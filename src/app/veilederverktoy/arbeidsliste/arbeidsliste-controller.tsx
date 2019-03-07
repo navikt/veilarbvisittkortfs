@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Arbeidsliste, ArbeidslisteformData } from '../../../types/arbeidsliste';
+import React, {useEffect, useState} from 'react';
+import {Arbeidsliste, ArbeidslisteformData, ArbeidslisteformValues} from '../../../types/arbeidsliste';
 import ArbeidslisteIkon from './arbeidsliste.svg';
 import RedigerIkon from './rediger.svg';
 import FjernArbeidslisteModal from './fjern-arbeidsliste-modal';
@@ -10,10 +10,11 @@ import LeggTilArbeidslisteModal from './legg-til-arbeidsliste-modal';
 import RedigerArbeidslisteModal from './rediger-arbeidsliste-modal';
 import { Dispatch } from 'redux';
 import { oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste } from '../../../store/arbeidsliste/actions';
-import { FormikValues } from 'formik';
 import ArbeidslisteSelector from '../../../store/arbeidsliste/selector';
 import { HiddenIfKnappFss } from '../../components/hidden-if/hidden-if-knapp';
 import moment from 'moment';
+import NavFrontendSpinner from 'nav-frontend-spinner';
+import { hentArbeidsliste } from '../../../store/arbeidsliste/actions';
 
 interface StateProps {
     arbeidsliste: Arbeidsliste;
@@ -23,12 +24,14 @@ interface StateProps {
     kanLeggeIArbeidsliste: boolean;
     kanFjerneArbeidsliste: boolean;
     kanRedigereArbeidsliste: boolean;
+    isLoading: boolean;
 }
 
 interface DispatchProps {
     doSlettArbeidsliste: (fnr: string) => void;
-    lagreArbeidsliste: (values: any) => void;
-    redigerArbeidsliste: (values: any) => void;
+    lagreArbeidsliste: (values: ArbeidslisteformValues) => void;
+    redigerArbeidsliste: (values: ArbeidslisteformValues) => void;
+    hentArbeidsliste: (fnr: string) => void;
 }
 
 type ArbeidslisteStateProps = StateProps & DispatchProps;
@@ -43,6 +46,14 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
     const [fjernArbeidsliste, setFjernArbeidslisteAktivt] = useState( false);
     const [visKommentar, setVisKommentarAktivt] = useState( false);
 
+    console.log('kanLegge', props.kanLeggeIArbeidsliste);
+
+    useEffect(() =>
+    {props.hentArbeidsliste(props.fnr)},[]);
+
+    if(props.isLoading) {
+        return <NavFrontendSpinner type='XL'/>
+    }
     return (
         <>
             <HiddenIfKnappFss
@@ -102,23 +113,26 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     arbeidslisteStatus: ArbeidslisteSelector.selectArbeidslisteStatus(state),
     kanLeggeIArbeidsliste: ArbeidslisteSelector.selectKanLeggeIArbeidsListe(state),
     kanFjerneArbeidsliste: ArbeidslisteSelector.selectKanFjerneArbeidsliste(state),
-    kanRedigereArbeidsliste: ArbeidslisteSelector.selectKanRedigereArbeidsliste(state)
+    kanRedigereArbeidsliste: ArbeidslisteSelector.selectKanRedigereArbeidsliste(state),
+    isLoading: ArbeidslisteSelector.selectArbeidslisteStatus(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-   doSlettArbeidsliste : (fnr: string) => dispatch(slettArbeidsliste(fnr)),
-    lagreArbeidsliste: (values: FormikValues) => dispatch(
+    doSlettArbeidsliste : (fnr: string) => dispatch(slettArbeidsliste(fnr)),
+    lagreArbeidsliste: (values: ArbeidslisteformValues) => dispatch(
         oppdaterArbeidsliste({
             kommentar: values.kommentar,
             overskrift: values.overskrift,
             frist: values.frist ? dateToISODate(values.frist) : null} as ArbeidslisteformData)
     ),
-    redigerArbeidsliste: (values: FormikValues) => dispatch(
+    redigerArbeidsliste: (values: ArbeidslisteformValues) => dispatch(
         redigerArbeidsliste({
             kommentar: values.kommentar,
             overskrift: values.overskrift,
             frist: values.frist ? dateToISODate(values.frist) : null
-        } as ArbeidslisteformData))
+        } as ArbeidslisteformData)
+    ),
+    hentArbeidsliste:(fnr:string) => dispatch(hentArbeidsliste(fnr))
 
 });
 

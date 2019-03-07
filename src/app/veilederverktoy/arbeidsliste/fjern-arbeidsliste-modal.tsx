@@ -26,31 +26,36 @@ function FjernArbeidslisteModal(props: FjernArbeidslisteModal) {
             </div>
             <div className="arbeidsliste__modal">
                 <div className="arbeidsliste-info-tekst">
-                    <Innholdstittel className="arbeidsliste__overskrift">
-                        <FormattedMessage id="arbeidsliste.modal.fjern.overskrift" />
-                    </Innholdstittel>
-                    <Normaltekst>
-                        <FormattedMessage id="arbeidsliste.modal.fjern.infotekst" />
-                    </Normaltekst>
-                    <Undertittel>
-                        <FormattedMessage
-                            id="arbeidsliste.modal.personalia"
-                            values={{ navn: props.navn, fnr: props.fnr }}
-                        />
-                    </Undertittel>
-                </div>
-                <div className="modal-footer">
-                    <Hovedknapp
-                        htmlType="submit"
-                        onClick={() => props.onSubmit(props.fnr)}
-                    >
-                        <FormattedMessage id="modal.knapp.lagre" />
-                    </Hovedknapp>
-                    <Knapp
-                        htmlType="button"
-                        onClick={props.onRequestClose}>
-                        <FormattedMessage id="modal.knapp.avbryt" />
-                    </Knapp>
+                    <div className="nav-input blokk-s">
+                        <Innholdstittel className="arbeidsliste__overskrift">
+                            <FormattedMessage id="arbeidsliste.modal.fjern.overskrift" />
+                        </Innholdstittel>
+                        <Normaltekst>
+                            <FormattedMessage id="arbeidsliste.modal.fjern.infotekst" />
+                        </Normaltekst>
+                        <Undertittel>
+                            <FormattedMessage
+                                id="arbeidsliste.modal.personalia"
+                                values={{ navn: props.navn, fnr: props.fnr }}
+                            />
+                        </Undertittel>
+                        <div className="modal-footer">
+                            <Hovedknapp
+                                htmlType="submit"
+                                onClick={() => {
+                                    props.onSubmit(props.fnr);
+                                    props.onRequestClose();
+                                }}
+                            >
+                                <FormattedMessage id="modal.knapp.lagre" />
+                            </Hovedknapp>
+                            <Knapp
+                                htmlType="button"
+                                onClick={props.onRequestClose}>
+                                <FormattedMessage id="modal.knapp.avbryt" />
+                            </Knapp>
+                        </div>
+                    </div>
                 </div>
             </div>
         </NavFrontendModal>

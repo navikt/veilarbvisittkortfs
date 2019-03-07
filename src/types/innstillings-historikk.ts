@@ -1,4 +1,4 @@
-import {StringOrNothing} from "./utils/stringornothings";
+import { StringOrNothing } from './utils/stringornothings';
 
 type InnstillingsHistorikkType =
     'SATT_TIL_DIGITAL' |
@@ -7,7 +7,7 @@ type InnstillingsHistorikkType =
     'ESKALERING_STARTET' |
     'ESKALERING_STOPPET'|
     'KVP_STARTET'|
-    'KVP_STOPPET'
+    'KVP_STOPPET';
 
 export interface InnstillingsHistorikk {
     type: InnstillingsHistorikkType;
