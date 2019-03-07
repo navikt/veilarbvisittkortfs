@@ -40,7 +40,9 @@ function RedigerArbeidslisteModal(props: RedigerArbeidslisteProps & InjectedIntl
     return (
         <Formik
             initialValues={initalValues}
-            onSubmit={props.onSubmit}
+            onSubmit={(values, actions) => {
+                props.onSubmit(values);
+                props.lukkModal()}}
             render={formikProps => (
                 <NavFrontendModal
                     className="arbeidsliste-modal"

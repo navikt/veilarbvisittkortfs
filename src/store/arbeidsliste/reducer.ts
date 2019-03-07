@@ -1,7 +1,7 @@
-import { Arbeidsliste } from '../../types/arbeidsliste';
-import { Reducer } from 'redux';
-import { OrNothing } from '../../types/utils/ornothing';
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import {Arbeidsliste} from '../../types/arbeidsliste';
+import {Reducer} from 'redux';
+import {OrNothing} from '../../types/utils/ornothing';
+import {call, put, select, takeLatest} from 'redux-saga/effects';
 import {
     ArbeidslisteActions,
     ArbeidslisteActionType,
@@ -16,9 +16,10 @@ import {
     slettArbeidslisteActionError,
     slettArbeidslisteActionSuccess
 } from './actions';
-import PersonaliaSelectors from '../personalia/selectors';
 import ArbeidslisteApi from '../../api/arbeidsliste-api';
-import { FETCH_STATUS } from '../../types/fetch-status';
+import {FETCH_STATUS} from '../../types/fetch-status';
+import {TildelVeilederActionType} from "../tildel-veileder/actions";
+import OppfolgingSelector from "../oppfolging/selector";
 
 export type ArbeidslisteState = {data: Arbeidsliste} & {status: FETCH_STATUS; error: OrNothing<Error>};
 
@@ -51,7 +52,6 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
         }
         case ArbeidslisteActionType.HENT_ARBEIDSLISTE_SUCCESS:
         case ArbeidslisteActionType.LAGRE_ARBEIDSLISTE_SUCESS:
-        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE_SUCCESS:
         case ArbeidslisteActionType.REDIGER_ARBEIDSLISTE_SUCCESS: {
             return {
                 ...state,
@@ -69,6 +69,13 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
                 error: action.error
             };
         }
+        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE_SUCCESS: {
+            return {
+                ...state,
+                data: initialState.data,
+                status: 'DONE'
+            }
+        }
         default:
             return state;
     }
@@ -76,7 +83,8 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
 
 function* hentArbeidsliste(action: HentArbeidslisteAction) {
     try {
-        const response = yield call( () => ArbeidslisteApi.fetchArbeidslisteData(action.fnr));
+        const fodselsnummer = yield select(OppfolgingSelector.selectFnr);
+        const response = yield call( () => ArbeidslisteApi.fetchArbeidslisteData(action.fnr || fodselsnummer));
         yield put(hentArbeidslisteSuccess(response));
     } catch (e) {
         yield put(hentArbeidslisteError(e));
@@ -85,7 +93,7 @@ function* hentArbeidsliste(action: HentArbeidslisteAction) {
 
 function* lagreArbeidsliste(action: OppdaterArbeidslisteAction) {
     try {
-        const fnr = yield select(PersonaliaSelectors.selectFodselsnummer);
+        const fnr = yield select(OppfolgingSelector.selectFnr);
         const arbeidslisteForm = Object.assign({fnr}, action.arbeidsliste);
         const response = yield call( () => ArbeidslisteApi.lagreArbeidsliste(fnr, arbeidslisteForm));
         yield put(oppdaterArbeidslisteSuccess(response));
@@ -96,7 +104,7 @@ function* lagreArbeidsliste(action: OppdaterArbeidslisteAction) {
 
 function* redigerArbeidsliste(action: RedigerArbeidslisteAction) {
     try {
-        const fnr = yield select(PersonaliaSelectors.selectFodselsnummer);
+        const fnr = yield select(OppfolgingSelector.selectFnr);
         const response = yield call( () => ArbeidslisteApi.redigerArbeidsliste(fnr, action.arbeidsliste));
         yield put(oppdaterArbeidslisteSuccess(response));
     } catch (e) {
@@ -118,6 +126,7 @@ export function* arbeidslisteSaga() {
     yield takeLatest(ArbeidslisteActionType.LAGRE_ARBEIDSLISTE, lagreArbeidsliste);
     yield takeLatest(ArbeidslisteActionType.SLETT_ARBEIDSLISTE, slettArbeidsliste);
     yield takeLatest(ArbeidslisteActionType.REDIGER_ARBEIDSLISTE, redigerArbeidsliste);
+    yield takeLatest(TildelVeilederActionType.TILDEL_VEILEDER_SUCCESS, hentArbeidsliste);
 }
 
 export default arbeidslisteReducer;
