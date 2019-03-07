@@ -24,7 +24,7 @@ function RedigerArbeidslisteModal(props: RedigerArbeidslisteProps & InjectedIntl
         overskrift:  props.arbeidsliste.overskrift || '',
         kommentar: props.arbeidsliste.kommentar || '',
         frist: props.arbeidsliste.frist ?
-            moment(props.arbeidsliste.frist).format('YYYY-MMM-DD') : ''} as ArbeidslisteformValues;
+            moment(props.arbeidsliste.frist).format('DD.MM.YYYY') : ''} as ArbeidslisteformValues;
 
 
     const onRequestClose = (formikProps: FormikProps<ArbeidslisteformValues>) => {
