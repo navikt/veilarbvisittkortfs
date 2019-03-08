@@ -3,7 +3,6 @@ import PT from 'prop-types';
 import NavFrontendModal from 'nav-frontend-modal';
 import classNames from 'classnames';
 import ModalHeader from './modal-header';
-import './modal.less'
 
 function Modal({
     header,

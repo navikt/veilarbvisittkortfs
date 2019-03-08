@@ -50,6 +50,7 @@ function RedigerArbeidslisteModal(props: RedigerArbeidslisteProps & InjectedIntl
                     isOpen={props.isOpen}
                     onRequestClose={() => onRequestClose(formikProps)}
                     closeButton={true}
+                    portalClassName="visittkortfs"
                 >
                     <div className="modal-header-wrapper">
                         <header className="modal-header"/>

@@ -12,7 +12,7 @@ export interface OppfolgingApi {
     settDigital: (begrunnelse: string, veilederId: string, fnr: string) => Promise<Oppfolging>; // TODO SJEKK HVA DET SKA VARA
     startKvpOppfolging: (begrunnelse: string, fnr: string) => Promise<void>; // TODO SJEKK HVA DET SKA VARA
     stoppKvpOppfolging: (begrunnelse: string, fnr: string) => Promise<void>; // TODO SJEKK HVA DET SKA VARA
-    hentInnstillingsHistorikk: (begrunnelse: string, fnr: string) => Promise<InnstillingsHistorikk[]>; //
+    hentInnstillingsHistorikk: (fnr: string) => Promise<InnstillingsHistorikk[]>; //
 }
 
 function hentOppfolgingData(fnr?: string) {
@@ -67,5 +67,6 @@ export default {
     settManuellOppfolging,
     startKvpOppfolging,
     stoppKvpOppfolging,
-    settDigital
+    settDigital,
+    hentInnstillingsHistorikk
 } as OppfolgingApi;

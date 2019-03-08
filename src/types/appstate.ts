@@ -6,6 +6,8 @@ import { DialogState } from '../store/dialog/reducer';
 import { NavigationState } from '../store/navigation/reducer';
 import { TildelVeilederState } from '../store/tildel-veileder/reducer';
 import { TilgangTilBrukersKontorState } from '../store/tilgang-til-brukerskontor/reducer';
+import { InnstillingsHistorikkState } from '../store/innstillingshistorikk/reducer';
+import { OppgaveHistorikkState } from '../store/oppgavehistorikk/reducer';
 
 export interface Appstate {
     oppfolging: OppfogingState;
@@ -16,4 +18,6 @@ export interface Appstate {
     navigation: NavigationState;
     tildelVeileder: TildelVeilederState;
     tilgangTilBrukersKontor: TilgangTilBrukersKontorState;
+    instillingshistorikk: InnstillingsHistorikkState;
+    oppgavehistorikk: OppgaveHistorikkState;
 }

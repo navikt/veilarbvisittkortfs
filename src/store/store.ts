@@ -11,6 +11,8 @@ import navigationReducer from './navigation/reducer';
 import tildelVelederReducer, { tildelVeilederSaga } from './tildel-veileder/reducer';
 import tilgangTilBrukersKontorReducer, { tilgangTilBrukersKontorSaga } from './tilgang-til-brukerskontor/reducer';
 import { oppfolgingSaga } from './oppfolging/sagas';
+import instillingshistorikkReducer, { instillingshistorikkSaga } from './innstillingshistorikk/reducer';
+import oppgavehistorikkReducer, { oppgaveHistorikkSaga } from './oppgavehistorikk/reducer';
 
 const sagaMiddleware = createReduxSaga();
 
@@ -24,6 +26,8 @@ const store = createStore(
         navigation: navigationReducer,
         tildelVeileder: tildelVelederReducer,
         tilgangTilBrukersKontor : tilgangTilBrukersKontorReducer,
+        instillingshistorikk: instillingshistorikkReducer,
+        oppgavehistorikk: oppgavehistorikkReducer,
     }),
     composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
@@ -36,7 +40,9 @@ function* rootSaga() {
         fork(arbeidslisteSaga),
         fork(dialogSaga),
         fork(tildelVeilederSaga),
-        fork(tilgangTilBrukersKontorSaga)
+        fork(tilgangTilBrukersKontorSaga),
+        fork(instillingshistorikkSaga),
+        fork(oppgaveHistorikkSaga)
     ]);
 }
 

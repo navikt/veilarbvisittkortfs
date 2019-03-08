@@ -20,6 +20,7 @@ function FjernArbeidslisteModal(props: FjernArbeidslisteModal) {
             isOpen={props.isOpen}
             onRequestClose={props.onRequestClose}
             closeButton={true}
+            portalClassName="visittkortfs"
         >
             <div className="modal-header-wrapper">
                 <header className="modal-header"/>
