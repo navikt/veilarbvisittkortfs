@@ -11,11 +11,11 @@ interface TemaOption {
 function OpprettOppgaveTemaSelector () {
     const temaOptions: TemaOption [] = [
         {value: '', label: 'Velg tema'},
-        {value: 'DAGPENGER', label: 'Dagpenger'},
         {value: 'OPPFOLGING', label: 'Oppfølging'},
+        {value: 'DAGPENGER', label: 'Dagpenger'},
         {value: 'ARBEIDSAVKLARING', label: 'Arbeidsavklaringspenger'},
         {value: 'INDIVIDSTONAD', label: 'Individstønad (Tiltakspenger)'},
-        {value: 'ENSLIG_FORSORGER', label: 'Enslig førsørger'},
+        {value: 'ENSLIG_FORSORGER', label: 'Enslig forsørger'},
         {value: 'TILLEGGSTONAD', label: 'Tilleggsstønad'},
     ];
 

@@ -54,8 +54,11 @@ mock.get('/veilarboppgave/api/enhet', [
     {enhetId: '0000', navn: 'NAV Ost'},
     {enhetId: '0001', navn: 'NAV Kjeks'},
     {enhetId: '0002', navn: 'NAV Med jætte lang navn'},
+    {enhetId: '1234', navn: 'NAV jepps'},
 
 ]);
+
+mock.get('/veilarboppgave/api/enhet/:enhetsId/veiledere', Veilederliste);
 
 mock.get('/veilarboppgave/api/oppgavehistorikk', Oppgavehistorikk);
 mock.post(`/veilarbportefolje/api/arbeidsliste/:fnr?`, (args: HandlerArgument) => {

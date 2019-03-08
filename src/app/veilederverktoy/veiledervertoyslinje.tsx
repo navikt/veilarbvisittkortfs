@@ -10,6 +10,7 @@ import VeilederVerktoyKnapp from './veilederverktoy/veileder-verktoy-knapp';
 import { Appstate } from '../../types/appstate';
 import env from '../utils/environment';
 import { navigerAction } from '../../store/navigation/actions';
+import {StringOrNothing} from "../../types/utils/stringornothings";
 
 interface StateProps {
     tilgangTilBrukersKontor: boolean;
@@ -17,11 +18,13 @@ interface StateProps {
 
 interface OwnProps {
     fnr: string;
+    enhet?: string;
 }
 
 interface DispatchProps {
     hentTilgangTilBrukersKontor: (fnr: string) => void;
     navigerTilProsesser: () => void;
+    settEnhetsId: (enhet: StringOrNothing) => void;
 }
 
 type VeilederverktoyslinjeProps = StateProps & OwnProps & DispatchProps;
@@ -45,6 +48,10 @@ function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
         props.hentTilgangTilBrukersKontor(props.fnr); //TODO flytta in i initialdataprovidern?
     }, []);
 
+    useEffect(()=> {
+        props.settEnhetsId(props.enhet)
+    },[props.enhet]);
+
     return (
         <div className="veilederverktoyslinje">
             <div className="veilederverktoyslinje__container">
@@ -66,7 +73,8 @@ const mapStateToProps = (state: Appstate): StateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     hentTilgangTilBrukersKontor: (fnr: string) => dispatch(hentTilgangTilBrukersKontor(fnr)),
-    navigerTilProsesser: () => dispatch(navigerAction('prosesser'))
+    navigerTilProsesser: () => dispatch(navigerAction('prosesser')),
+    settEnhetsId: (enhet: string)=> dispatch({type: 'SETT_ENHET_FRA_PERSONFLATEFS', enhet}) //TRENGER DENNE INNE I OPPGAVEFORM
 });
 
 export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps) (Veilederverktoyslinje);

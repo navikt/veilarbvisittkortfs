@@ -1,18 +1,26 @@
 import FormikSelect from "../../../../components/formik/formik-select";
 import React from "react";
-import {OppgaveType} from "../../../../../types/oppgave";
+import {OppgaveTema, OppgaveType} from "../../../../../types/oppgave";
+import {OrNothing} from "../../../../../types/utils/ornothing";
 
+interface OpprettOppgaveTypeSelectorProps {
+    oppgaveTema: OrNothing<OppgaveTema>;
+}
 
 interface TypeOption {
     value: OppgaveType ;
     label: string;
 }
 
-function OpprettOppgaveTypeSelector () {
+function OpprettOppgaveTypeSelector ({oppgaveTema}: OpprettOppgaveTypeSelectorProps) {
     const typeOptions: TypeOption [] = [
         {value: 'VURDER_HENVENDELSE', label: 'Vurder henvendelse'},
-        {value: 'VURDER_KONSEKVENS_FOR_YTELSE', label: 'Vurder konsekvens for ytelse'},
     ];
+
+    if(oppgaveTema && oppgaveTema !== 'OPPFOLGING') {
+        typeOptions.push( {value: 'VURDER_KONSEKVENS_FOR_YTELSE', label: 'Vurder konsekvens for ytelse'})
+    }
+
 
     return (
         <FormikSelect

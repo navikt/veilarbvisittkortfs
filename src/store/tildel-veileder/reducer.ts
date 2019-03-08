@@ -102,7 +102,7 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
 
 function* hentAlleVeileder(action: HentVeilederPaEnhetenAction) {
     try {
-        const response = yield call( () => TildelVeilederApi.hentVeieldereForEnhet(action.enhetId));
+        const response = yield call( () => TildelVeilederApi.hentVeiledereForEnhet(action.enhetId));
         yield put(hentAlleVeiledereForEnhetenSuccess(response));
     } catch (e) {
         yield put(hentAlleVeiledereForEnhetenError(e));
