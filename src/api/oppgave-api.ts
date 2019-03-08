@@ -1,6 +1,6 @@
 import { fetchToJson } from './api-utils';
 import { BehandlandeEnhet, OppgaveTema } from '../types/oppgave';
-import {OppgaveHistorikk} from "../types/oppgave-historikk";
+import { OppgaveHistorikk } from '../types/oppgave-historikk';
 
 export interface OppgaveApi {
     hentBehandlandeEnheter: (tema: OppgaveTema, fnr: string) => Promise<BehandlandeEnhet[]>;
