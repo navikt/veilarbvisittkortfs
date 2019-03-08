@@ -46,8 +46,6 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
     const [fjernArbeidsliste, setFjernArbeidslisteAktivt] = useState( false);
     const [visKommentar, setVisKommentarAktivt] = useState( false);
 
-    console.log('kanLegge', props.kanLeggeIArbeidsliste);
-
     useEffect(() =>
     {props.hentArbeidsliste(props.fnr)},[]);
 

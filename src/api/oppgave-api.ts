@@ -1,9 +1,10 @@
 import { fetchToJson } from './api-utils';
 import { BehandlandeEnhet, OppgaveTema } from '../types/oppgave';
+import {OppgaveHistorikk} from "../types/oppgave-historikk";
 
 export interface OppgaveApi {
     hentBehandlandeEnheter: (tema: OppgaveTema, fnr: string) => Promise<BehandlandeEnhet[]>;
-    hentOppgaveHistorikk: (fnr: string) => Promise<BehandlandeEnhet[]>;
+    hentOppgaveHistorikk: (fnr: string) => Promise<OppgaveHistorikk[]>;
 }
 
 const OPPGAVE_BASE_URL = '/veilarboppgave/api';
@@ -18,4 +19,5 @@ export function hentOppgaveHistorikk(fnr: string) {
 
 export default {
     hentBehandlandeEnheter,
+    hentOppgaveHistorikk
 } as OppgaveApi;

@@ -10,7 +10,7 @@ import Personalia from './personalia';
 import Arbeidsliste from './arbeidsliste';
 import Veilederliste from './veiledereliste';
 import VeilederData from './veiledere';
-import InnstillingsHistorikk from './instillings-historikk';
+import InnstillingsHistorikk from './instillingshistorikk';
 import Oppgavehistorikk from './oppgave-historikk';
 
 const loggingMiddleware: Middleware = (request, response) => {
