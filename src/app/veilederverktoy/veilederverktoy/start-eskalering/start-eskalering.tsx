@@ -7,7 +7,7 @@ import { navigerAction } from '../../../../store/navigation/actions';
 import { Appstate } from '../../../../types/appstate';
 import BegrunnelseForm from '../begrunnelseform/begrunnelse-form';
 import OppfolgingSelector from '../../../../store/oppfolging/selector';
-import DialogSelector from '../../../../store/dialog/selector';
+import {Normaltekst} from "nav-frontend-typografi";
 
 interface DispatchProps {
     handleSubmit: (overskrift: string) => ((tekst: string) => void);
@@ -22,9 +22,9 @@ type StartEskaleringProps = StateProps & DispatchProps;
 
 function StartEskalering(props: StartEskaleringProps) {
     const infoTekst = (
-        <div className="blokk-xxs">
+        <Normaltekst className="blokk-xs">
             <FormattedMessage id="innstillinger.modal.start-eskalering.beskrivelse" />
-        </div>
+        </Normaltekst>
     );
     return (
         <FormattedMessage id="dialog.eskalering.overskrift">
@@ -48,7 +48,7 @@ function StartEskalering(props: StartEskaleringProps) {
 }
 
 const mapStateToProps = (state: Appstate) => ({
-    isLoading: OppfolgingSelector.selectOppfolgingStatus(state) || DialogSelector.selectDialogStatus(state)
+    isLoading: OppfolgingSelector.selectOppfolgingStatus(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => {

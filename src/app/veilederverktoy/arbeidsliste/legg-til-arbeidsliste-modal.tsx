@@ -37,7 +37,7 @@ function LeggTilArbeidslisteModal(props: LeggTilArbeidslisteProps) {
             }}
             render={ formikProps =>
                 <NavFrontendModal
-                    className="visittkortfs-modal arbeidsliste-modal"
+                    className="modal"
                     contentLabel="arbeidsliste"
                     isOpen={props.isOpen}
                     onRequestClose={() => onRequestClose(formikProps)}

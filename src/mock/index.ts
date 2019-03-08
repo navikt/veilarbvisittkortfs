@@ -43,6 +43,7 @@ const mock = FetchMock.configure({
 });
 
 mock.get('/veilarboppfolging/api/person/:fnr/oppfolgingsstatus', Oppfolgingsstatus);
+mock.get('/veilarbpersonflatefs/api/feature', {visittkort_innstillinger: true});
 mock.get('/veilarboppfolging/api/oppfolging', Oppfolging);
 mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', {tilgangTilBrukersKontor: true});
 mock.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', InnstillingsHistorikk);

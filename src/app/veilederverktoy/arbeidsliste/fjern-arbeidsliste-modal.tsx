@@ -15,7 +15,7 @@ interface FjernArbeidslisteModal {
 function FjernArbeidslisteModal(props: FjernArbeidslisteModal) {
     return(
         <NavFrontendModal
-            className="arbeidsliste-modal"
+            className="modal"
             contentLabel="arbeidsliste"
             isOpen={props.isOpen}
             onRequestClose={props.onRequestClose}

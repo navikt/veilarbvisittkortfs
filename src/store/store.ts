@@ -13,7 +13,7 @@ import tilgangTilBrukersKontorReducer, { tilgangTilBrukersKontorSaga } from './t
 import { oppfolgingSaga } from './oppfolging/sagas';
 import instillingshistorikkReducer, { instillingshistorikkSaga } from './innstillingshistorikk/reducer';
 import oppgavehistorikkReducer, { oppgaveHistorikkSaga } from './oppgavehistorikk/reducer';
-import enhetIdReducer from "./enhet/reducer";
+import enhetIdReducer from './enhet/reducer';
 
 const sagaMiddleware = createReduxSaga();
 

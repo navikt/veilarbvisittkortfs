@@ -8,7 +8,7 @@ import { TildelVeilederState } from '../store/tildel-veileder/reducer';
 import { TilgangTilBrukersKontorState } from '../store/tilgang-til-brukerskontor/reducer';
 import { InnstillingsHistorikkState } from '../store/innstillingshistorikk/reducer';
 import { OppgaveHistorikkState } from '../store/oppgavehistorikk/reducer';
-import {EnhetState} from "../store/enhet/reducer";
+import { EnhetState } from '../store/enhet/reducer';
 
 export interface Appstate {
     oppfolging: OppfogingState;

@@ -26,18 +26,19 @@ type VeilederVerktoyModalProps = OwnProps & StateProps & DispatchProps & Injecte
 function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
     return (
         <NavFrontendModal
-            className="arbeidsliste-modal"
-            contentLabel="arbeidsliste"
+            className="modal"
+            contentLabel="veilederverktoy"
             isOpen={true}
             onRequestClose={props.tilbake}
             closeButton={true}
+            portalClassName="visittkortfs"
         >
             <div className="modal-header-wrapper">
                 <header className="modal-header"/>
             </div>
-            <div className="arbeidsliste__modal">
-                <div className="arbeidsliste-info-tekst">
-                    <Innholdstittel className="arbeidsliste__overskrift">
+            <div className="modal-innhold">
+                <div className="modal-innhold__info-tekst">
+                    <Innholdstittel className="modal-innhold__overskrift">
                         <FormattedMessage
                             id="innstillinger.modal.overskrift"
                             values={{ navn: props.navnPaMotpart }}

@@ -45,7 +45,7 @@ function RedigerArbeidslisteModal(props: RedigerArbeidslisteProps & InjectedIntl
                 props.lukkModal()}}
             render={formikProps => (
                 <NavFrontendModal
-                    className="arbeidsliste-modal"
+                    className="modal"
                     contentLabel="arbeidsliste"
                     isOpen={props.isOpen}
                     onRequestClose={() => onRequestClose(formikProps)}
