@@ -5,7 +5,6 @@ import OpprettOppgavePrioritetSelector from "./opprett-oppgave-prioritet-selecto
 import OpprettOppgaveVelgDatoer from "./opprett-oppgave-dato-velger";
 import OpprettOppgaveVelgEnhet from "./opprett-oppgave-enhet-dropdown";
 import OpprettOppgaveVelgVeileder from "./opprett-oppgave-veileder-selector";
-import {OrNothing} from "../../../../../types/utils/ornothing";
 import {StringOrNothing} from "../../../../../types/utils/stringornothings";
 import OpprettOppgaveBeskrivelseTekstArea from "./opprett-oppgave-beskrivelse-textarea";
 import HiddenIfDiv from "../../../../components/hidden-if/hidden-if-div";
@@ -14,12 +13,15 @@ import {FormattedMessage} from "react-intl";
 
 interface OppgaveInnerForm {
     fnr: string
-    tema: OrNothing<OppgaveTema>;
+    tema: OppgaveTema | '';
     enhetId: StringOrNothing;
 }
 
 
 function OppgaveInnerForm({fnr, tema, enhetId}: OppgaveInnerForm) {
+    if(!tema){
+        return null;
+    }
 
     return (
         <>

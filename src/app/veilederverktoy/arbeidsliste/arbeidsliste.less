@@ -2,30 +2,12 @@
 
 .visittkortfs {
 
-  .modal {
-    position: relative;
-    border: 1px solid #B7B1A9;
-    background-color: #efefef;
-    outline: none;
-    max-width: 40rem;
-    padding: 0;
-    width: 100%;
-    margin: 4rem auto;
-
-    .modal-header {
-      height: 4rem;
-      border-bottom: 1px solid #B7B1A9;
-      padding: 1.13rem 1rem;
-    }
-
-    .modal-innhold__info-tekst {
-      padding: 1rem 2rem 0 2rem;
-    }
-
-    .arbeidsliste-normaltekst {
+  .arbeidsliste-content {
+    padding: 2rem 2rem 0 2rem;
+    &__normaltekst {
       padding-left: 2rem;
     }
-    .arbeidsliste-listetekst {
+    &__listetekst {
       padding-left: 1rem;
       padding-bottom: 0.5rem;
       p {
@@ -41,7 +23,7 @@
       padding: 1rem 2rem;
       border: 0;
     }
-    .arbeidslistekommentar {
+    &__arbeidslistekommentar {
       width: 100%;
       padding-bottom: 0.6rem;
     }
@@ -61,13 +43,6 @@
     .skjemaelement__label {
       margin-bottom: .25em;
     }
-
-    .modal-footer {
-      display: flex;
-      border-top: 1px solid #B7B1A9;
-      padding: 1.5rem 0rem 2rem 0rem
-    }
-
     .arbeidsliste--modal-redigering {
       margin-bottom: 0.625rem;
     }
@@ -76,11 +51,9 @@
       padding: 1.7rem 2rem;
     }
   }
-
-  .modal__overlay {
-    display: block;
-  }
 }
+
+
 
 
 

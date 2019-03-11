@@ -6,8 +6,7 @@ import {FormattedMessage} from "react-intl";
 import {Appstate} from "../../../../types/appstate";
 import PersonaliaSelector from "../../../../store/personalia/selectors";
 import {connect} from "react-redux";
-import {OppgaveTema, OppgaveType, PrioritetType} from "../../../../types/oppgave";
-import {OrNothing} from "../../../../types/utils/ornothing";
+import {OppgaveFormData, OppgaveTema, OppgaveType, PrioritetType} from "../../../../types/oppgave";
 import moment from 'moment';
 import {
     validerOppgaveDatoer
@@ -16,58 +15,79 @@ import {StringOrNothing} from "../../../../types/utils/stringornothings";
 import OpprettOppgaveTemaSelector from "./components/opprett-oppgave-tema-selector";
 import OppgaveInnerForm from "./components/oppgave-inner-form";
 import './opprett-oppgave.less'
+import {Dispatch} from "redux";
+import {lagreOppgave} from "../../../../store/oppgave/actions";
+import {navigerAction} from "../../../../store/navigation/actions";
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
-    enhetId: StringOrNothing;
+    enhetId: string;
     fnr: string;
     fraDato: string;
     tilDato: string;
-    prioritet: OrNothing<PrioritetType>;
-    tema: OrNothing<OppgaveTema>;
-    type: OrNothing<OppgaveType>;
+    prioritet: PrioritetType;
+    tema: OppgaveTema;
+    type: OppgaveType;
+    avsenderenhetId: string;
+    veilederId: StringOrNothing;
 }
 
 interface StateProps {
     navn: string;
-    fnr: string
+    fnr: string;
+    avsenderenhetId: StringOrNothing;
 }
 
-/*
+
 interface DispatchProps {
-    handleSubmit: (formData: OpprettOppgaveFormValues) => void;
+    handleSubmit: (formData: OppgaveFormData) => void;
+    lukkModal: () => void;
 }
-*/
 
-function OpprettOppgave({navn, fnr}:StateProps) {
+
+type OpprettOppgaveProps = StateProps & DispatchProps;
+
+function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, lukkModal}: OpprettOppgaveProps) {
 
     const opprettOppgaveInitialValues: OpprettOppgaveFormValues = {
         beskrivelse: '',
-        enhetId: null,
+        enhetId: '',
         fnr,
         fraDato: moment().format('YYYY-MM-DD'),
         tilDato:moment().format('YYYY-MM-DD'),
         prioritet: 'NORM',
-        tema: null,
+        tema: 'OPPFOLGING' ,
         type: 'VURDER_HENVENDELSE',
+        veilederId: null,
+        avsenderenhetId: avsenderenhetId || '',
+    };
+
+    const onRequestClose = (formikProps: FormikProps<OpprettOppgaveFormValues>) => {
+        const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
+        if (formikProps.dirty || confirm(dialogTekst)) {
+            lukkModal();
+            formikProps.resetForm();
+        }
     };
 
     return (
         <Formik
             initialValues={opprettOppgaveInitialValues}
             validate={(values) => validerOppgaveDatoer(values.fraDato, values.tilDato)}
-            onSubmit={(values, actions)=> {
-                actions.resetForm();
+            onSubmit={(values)=> {
+                const {fraDato, tilDato, ...rest} = values;
+                const formData: OppgaveFormData = Object.assign({fraDato: new Date(fraDato), tilDato: new Date(tilDato)}, rest);
+                handleSubmit(formData);
             }}
             render ={ (formikProps: FormikProps<OpprettOppgaveFormValues>) =>{
-                console.log('formikProps', formikProps);
                 return (
                 <NavFrontendModal
-                    className="arbeidsliste-modal"
+                    className="modal"
                     contentLabel="arbeidsliste"
                     isOpen={true}
-                    onRequestClose={()=> console.log('')}
-                    closeButton
+                    onRequestClose={()=> onRequestClose(formikProps)}
+                    portalClassName="visittkortfs"
+                    closeButton={true}
                 >
                     <div className="modal-header-wrapper">
                         <header className="modal-header"/>
@@ -102,13 +122,15 @@ function OpprettOppgave({navn, fnr}:StateProps) {
 const mapStateToProps = (state: Appstate) => ({
     fnr: PersonaliaSelector.selectFodselsnummer(state),
     navn: PersonaliaSelector.selectSammensattNavn(state),
+    avsenderenhetId: state.enhetId.enhet,
 
 });
 
-/*
+
 const mapDispatchToProps = (dispatch: Dispatch)=> ({
-    handleSubmit: () => dispatch()
+    handleSubmit: (formdata: OppgaveFormData) => dispatch(lagreOppgave(formdata)),
+    lukkModal: () => dispatch(navigerAction(null))
 });
-*/
 
-export default connect<StateProps>(mapStateToProps)(OpprettOppgave);
+
+export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(OpprettOppgave);

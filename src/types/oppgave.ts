@@ -28,3 +28,13 @@ export interface BehandlandeEnhet {
     enhetId: string;
     navn: string;
 }
+
+
+export interface OppgaveFormResponse {
+    ID: string;
+    aktoerid: string;
+    opprettetAv: string;
+    opprettetDato: string;
+    tema: OppgaveTema;
+    type: OppgaveType;
+}

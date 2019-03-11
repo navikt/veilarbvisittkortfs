@@ -30,11 +30,9 @@ function Kvittering({navn, navigerTilbake, tittelId, alertStripeTekstId, alertSt
     return (
         <Modal
             onRequestClose={navigerTilbake}
-            contentLabel="instillinger-modal"
-            contentClass="innstillinger"
+            contentLabel="veilederverktoy-modal"
             isOpen={true}
             className=""
-            header={null}
         >
             <article className="innstillinger__container">
                 <Innholdstittel>

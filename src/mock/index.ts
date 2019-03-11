@@ -45,12 +45,49 @@ const mock = FetchMock.configure({
 mock.get('/veilarboppfolging/api/person/:fnr/oppfolgingsstatus', Oppfolgingsstatus);
 mock.get('/veilarbpersonflatefs/api/feature', {visittkort_innstillinger: true});
 mock.get('/veilarboppfolging/api/oppfolging', Oppfolging);
-mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', {tilgangTilBrukersKontor: true});
-mock.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', InnstillingsHistorikk);
+
+
 mock.get('/veilarbperson/api/person/:fnr', Personalia);
-mock.get('/veilarbportefolje/api/arbeidsliste/:fnr', Arbeidsliste);
+
 mock.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', Veilederliste);
 mock.get('/veilarbveileder/api/veileder/me', VeilederData);
+
+/*--OPPFOLGING--*/
+mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', {tilgangTilBrukersKontor: true});
+mock.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', InnstillingsHistorikk);
+mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
+    avslutningStatus: {
+        kanAvslutte: false,
+        harTiltak: true,
+        harYtelser: true,
+        underOppfolging: true,
+        inaktiveringsdato: null,
+        underKvp: true
+
+    },
+    erIkkeArbeidssokerUtenOppfolging: false,
+    erSykmeldtMedArbeidsgiver: false,
+    fnr: '10108000398',
+    gjeldeneEskaleringsvarsel: null,
+    harSkriveTilgang: false,
+    inaktivtIArena: false,
+    inaktiveringsdato: null,
+    kanReaktiveras: false,
+    kanStarteOppfolging: false,
+    manuell: true,
+    oppfolgingUtgang: null,
+    oppfolgingsPerioder: [],
+    reservarsjonKRR: true,
+    underKvp: false,
+    underOppfolging: true,
+    veilederId: null,
+    vilkarMaBesvarel: false,
+});
+mock.post('/veilarboppfolging/api/oppfolging/startKvp', {});
+
+
+
+/*--OPPGAVE--*/
 mock.get('/veilarboppgave/api/enhet', [
     {enhetId: '0000', navn: 'NAV Ost'},
     {enhetId: '0001', navn: 'NAV Kjeks'},
@@ -60,8 +97,23 @@ mock.get('/veilarboppgave/api/enhet', [
 ]);
 
 mock.get('/veilarboppgave/api/enhet/:enhetsId/veiledere', Veilederliste);
+mock.post('/veilarboppgave/api/oppgave', (args: HandlerArgument) => {
+    console.log('args', args.body);
+    return ResponseUtils.jsonPromise({
+        ID: 123,
+        aktoerid: '00000012345',
+        gsakID: '1234',
+        opprettetAv : 'Z007',
+        tema: args.body.tema,
+        type: args.body.type
+    })
+});
 
 mock.get('/veilarboppgave/api/oppgavehistorikk', Oppgavehistorikk);
+
+
+/*--ARBEIDSLISTE--*/
+mock.get('/veilarbportefolje/api/arbeidsliste/:fnr', Arbeidsliste);
 mock.post(`/veilarbportefolje/api/arbeidsliste/:fnr?`, (args: HandlerArgument) => {
     return ResponseUtils.jsonPromise({
         arbeidslisteAktiv: null,

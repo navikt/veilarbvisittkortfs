@@ -7,6 +7,7 @@ export interface OppfolgingSelector {
     selectKanStarteDigitalOppfolging: (state: Appstate) => boolean;
     selectKanStarteManuellOppfolging: (state: Appstate) => boolean;
     selectKanOppretteOppgave: (state: Appstate) => boolean;
+    selectErKRR: (state: Appstate) => boolean;
     selectFnr: (state: Appstate) => string;
 }
 
@@ -25,6 +26,10 @@ function selectOppfolgingStatus(state: Appstate): boolean {
 
 function selectErManuell(state: Appstate): boolean {
     return selectOppfolgingData(state).manuell
+}
+
+function selectErKRR (state: Appstate): boolean {
+    return selectOppfolgingData(state).reservarsjonKRR;
 }
 
 function selectKanStarteManuellOppfolging(state: Appstate): boolean {
@@ -56,6 +61,7 @@ export default {
     selectKanStarteManuellOppfolging,
     selectKanStarteDigitalOppfolging,
     selectKanOppretteOppgave,
-    selectFnr
+    selectFnr,
+    selectErKRR
 
 }as OppfolgingSelector

@@ -29,7 +29,11 @@ function FormikSelect ({name, validate, intl, labelId, options, ...selectProps}:
                         {...selectProps}
                         value={field.value}
                     >
-                        {options.map(  (option) => <option value={option.value}>{option.label}</option>)}
+                        {options.map(  (option) =>
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
+                        )}
                     </Select>
                 )
             }}

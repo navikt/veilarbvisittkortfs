@@ -1,5 +1,6 @@
 import { StringOrNothing } from './utils/stringornothings';
 import { OrNothing } from './utils/ornothing';
+import {AvslutningStatus} from "./avslutningsstatus";
 /* tslint:disable */
 
 export interface EskaleringsVarsel {
@@ -13,7 +14,7 @@ export interface EskaleringsVarsel {
 
 
 export interface Oppfolging {
-    avslutningStatus: StringOrNothing;
+    avslutningStatus: OrNothing<AvslutningStatus>;
     erIkkeArbeidssokerUtenOppfolging: boolean;
     erSykmeldtMedArbeidsgiver: boolean;
     fnr: string;

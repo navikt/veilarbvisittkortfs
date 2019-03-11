@@ -23,11 +23,8 @@ function StartKVPKvittering({navn, navigerTilbake}: StartOppfolgingKvittering) {
     return (
         <Modal
             onRequestClose={navigerTilbake}
-            contentLabel="instillinger-modal"
-            contentClass="innstillinger"
-            isOpen={true}
-            className=""
-            header={null}
+            className="veilederverktoy-modal"
+            contentLabel="veilederverktoy-modal"
         >
             <article className="innstillinger__container">
                 <Innholdstittel>

@@ -11,10 +11,10 @@ import {
 } from './actions';
 import DialogApi from '../../api/dialog-api';
 import OppfolgingApi from '../../api/oppfolging-api';
-import PersonaliaSelectors from '../personalia/selectors';
 import { startEskaleringError, startEskaleringSuccess } from '../oppfolging/actions';
 import { hentOppfolgingstatusSuccess } from '../oppfolging-status/actions';
 import { FETCH_STATUS } from '../../types/fetch-status';
+import OppfolgingSelector from "../oppfolging/selector";
 
 export type DialogState = {data: Dialog} & {status: FETCH_STATUS; error: OrNothing<Error>};
 
@@ -75,7 +75,7 @@ function* opprettHenvendelse(action: OpprettHenvendelseAction) {
 
 function* startEskaleringMedDialog(action: OpprettHenvendelseActionSuccess) {
     try {
-        const fnr = yield select(PersonaliaSelectors.selectFodselsnummer);
+        const fnr = yield select(OppfolgingSelector.selectFnr);
 
         const [dialogData1, dialogData2, oppfolgingStatus] = yield all([
             DialogApi.oppdaterFerdigbehandlet(action.data.id, true),
