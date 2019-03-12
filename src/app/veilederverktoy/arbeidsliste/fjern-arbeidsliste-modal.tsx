@@ -16,7 +16,7 @@ function FjernArbeidslisteModal(props: FjernArbeidslisteModal) {
     return(
         <NavFrontendModal
             className="arbeidsliste-modal"
-            contentLabel="arbeidsliste"
+            contentLabel="Fjern arbeidsliste"
             isOpen={props.isOpen}
             onRequestClose={props.onRequestClose}
             closeButton={true}
@@ -47,7 +47,7 @@ function FjernArbeidslisteModal(props: FjernArbeidslisteModal) {
                                 props.onRequestClose();
                             }}
                         >
-                            <FormattedMessage id="modal.knapp.lagre" />
+                            <FormattedMessage id="modal.knapp.fjern" />
                         </Hovedknapp>
                         <Knapp
                             htmlType="button"

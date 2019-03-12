@@ -62,7 +62,7 @@ function TildelVeileder(props: TildelVeilederProps) {
         <HiddenIfDropDown
             knappeTekst={'Tildel veileder'}
             className="input-m tildel-veileder-dropdown"
-            name="tildel-veileder-dropdown"
+            name="tildel veileder"
             hidden={!!props.skalSkjules}
             btnClassnames="knapp knapp--standard knapp-fss"
             render={(lukkDropdown) =>

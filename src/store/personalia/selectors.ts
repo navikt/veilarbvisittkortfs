@@ -1,12 +1,17 @@
 import { Appstate } from '../../types/appstate';
 import { Personalia } from '../../types/personalia';
 import { PersonaliaState } from './reducer';
+import {StringOrNothing} from "../../types/utils/stringornothings";
+import {storeForbokstaver} from "../../app/utils/utils";
 
 export interface PersonaliaSelector {
     selectPersonaliaData: (state: Appstate) => Personalia;
     selectFodselsnummer: (state: Appstate) => string;
     selectPersonaliaIsLoading: (state: Appstate) => boolean;
     selectSammensattNavn: (state: Appstate) => string;
+    selectFornavn: (state: Appstate) => string;
+    selectEtternavn: (state: Appstate) => string;
+    selectMellomnavn: (state: Appstate) => string;
 }
 
 function selectPersonaliaSlice (state: Appstate): PersonaliaState {
@@ -27,12 +32,30 @@ function selectPersonaliaIsLoading(state: Appstate): boolean {
 }
 
 function selectSammensattNavn (state: Appstate): string {
-    return selectPersonaliaData(state).sammensattNavn;
+    const fornavn = selectFornavn(state);
+    const mellomnavn = selectMellomnavn(state) || '';
+    const etternavn = selectEtternavn(state);
+    return storeForbokstaver([fornavn, mellomnavn, etternavn]);
+}
+
+function selectFornavn (state: Appstate): string {
+    return selectPersonaliaData(state).fornavn
+}
+
+function selectEtternavn (state: Appstate): string {
+    return selectPersonaliaData(state).etternavn;
+}
+
+function selectMellomnavn (state: Appstate): StringOrNothing {
+    return selectPersonaliaData(state).mellomnavn;
 }
 
 export default {
     selectPersonaliaData,
     selectFodselsnummer,
     selectPersonaliaIsLoading,
-    selectSammensattNavn
+    selectSammensattNavn,
+    selectEtternavn,
+    selectFornavn,
+    selectMellomnavn,
 } as PersonaliaSelector;

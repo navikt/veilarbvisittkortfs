@@ -59,7 +59,7 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
                 onClick={() => setLeggTilArbeidslisteAktivt(true)}
                 hidden={!props.kanLeggeIArbeidsliste}
             >
-                Legg til i arbeidsliste
+                Legg i arbeidsliste
             </HiddenIfKnappFss>
             <HiddenIfKnappFss
                 icon={ArbeidslisteIkon}

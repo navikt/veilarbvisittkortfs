@@ -10,9 +10,10 @@ interface FormikDatepickerProps {
     name: string;
     validate: (value: string) => string | undefined;
     label: string;
+    ariaLabel: string;
 }
 
-function FormikDatoVelger({name, validate, label}: FormikDatepickerProps) {
+function FormikDatoVelger({name, validate, label, ariaLabel}: FormikDatepickerProps) {
     return (
         <Field
             validate={validate}
@@ -30,12 +31,17 @@ function FormikDatoVelger({name, validate, label}: FormikDatepickerProps) {
                                 id: name,
                                 name,
                                 placeholder: 'dd.mm.åååå',
-                                ariaLabel: 'Frist:',
-                                onChange: (value: string) => setFieldValue(field.name, value)
+                                ariaLabel,
+                                onChange: (value: string) => {
+                                    console.log('value', value);
+                                    setFieldValue(field.name, value)
+                                }
                             }}
                             id="fristDatovelger"
                             onChange={(date: string) => {
                                 // HAKS FØR ATT NAV-DATOVELGER  IKKE STØTTER OPTIONAL DATO
+                                console.log('isValid', moment(date).isValid());
+                                console.log('data', date);
                                 if (!field.value && !moment(date).isValid()) {
                                     return;
                                 }

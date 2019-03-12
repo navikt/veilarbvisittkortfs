@@ -8,34 +8,19 @@ import { connect } from 'react-redux';
 import { Personalia } from '../../types/personalia';
 import { OppfolgingStatus } from '../../types/oppfolging-status';
 import { Appstate } from '../../types/appstate';
-import {useEffect} from "react";
-import {hentPersonalia} from "../../store/personalia/actions";
-import {Dispatch} from "redux";
-import PersonaliaSelector from "../../store/personalia/selectors";
-import NavFrontendSpinner from "nav-frontend-spinner";
 
 interface StateProps {
     personalia: Personalia;
     oppfolgingstatus: OppfolgingStatus;
-    isLoading: boolean;
-}
-
-interface DispatchProps {
-    hentPersonalia: (fnr: string) => void;
 }
 
 interface OwnProps {
     fnr: string;
 }
 
-type PersonInfoProps = StateProps & DispatchProps & OwnProps;
+type PersonInfoProps = StateProps & OwnProps;
 
 function PersonInfo(props: PersonInfoProps) {
-    useEffect(()=> {props.hentPersonalia(props.fnr)},[props.fnr]);
-
-    if(props.isLoading){
-        return <NavFrontendSpinner type='XL'/>
-    }
 
     return (
         <div className="personinfo">
@@ -52,11 +37,6 @@ function PersonInfo(props: PersonInfoProps) {
 const mapStateToProps = (state: Appstate): StateProps => ({
     personalia: state.personalia.data,
     oppfolgingstatus: state.oppfolgingstatus.data,
-    isLoading: PersonaliaSelector.selectPersonaliaIsLoading(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-    hentPersonalia: (fnr: string) => dispatch(hentPersonalia(fnr))
-});
-
-export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(PersonInfo);
+export default connect<StateProps, OwnProps>(mapStateToProps)(PersonInfo);
