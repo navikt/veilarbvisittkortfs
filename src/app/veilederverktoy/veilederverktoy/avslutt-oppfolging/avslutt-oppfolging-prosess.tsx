@@ -5,32 +5,17 @@ import { Appstate } from '../../../../types/appstate';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../../store/navigation/actions';
-import OppfolgingSelector from "../../../../store/oppfolging/selector";
 import classNames from "classnames";
 
 interface StateProps {
     skjulAvsluttOppfolging: boolean;
-    fnr: string
 }
 
 interface DispatchProps {
     navigerTilAvsluttOppfolging: () => void;
 }
 
-function AvsluttOppfolgingProsess({skjulAvsluttOppfolging, navigerTilAvsluttOppfolging, fnr }: StateProps & DispatchProps) {
-    //const[avslutningStatus, setAvslutningStatus] = useState({} as AvslutningStatus);
-    //const[isLoading, setIsLoding] = useState(true);
-    /*
-    useEffect(()=> {
-        OppfolgingApi.kanAvslutte(fnr)
-            .then((avslutningStatus)=> {
-                setAvslutningStatus(avslutningStatus);
-                setIsLoding(false);
-            })
-    },[]);
-
-    */
-
+function AvsluttOppfolgingProsess({skjulAvsluttOppfolging, navigerTilAvsluttOppfolging, }: StateProps & DispatchProps) {
     if (skjulAvsluttOppfolging) {
         return null;
     }
@@ -53,7 +38,6 @@ const mapStateToProps = (state: Appstate): StateProps => {
     const oppfolging = state.oppfolging.data;
     return {
         skjulAvsluttOppfolging: !oppfolging.underOppfolging || !state.tilgangTilBrukersKontor.data.tilgangTilBrukersKontor,
-        fnr: OppfolgingSelector.selectFnr(state)
     };
 };
 

@@ -27,10 +27,6 @@ function AvsluttOppfolging (props: AvsluttOppfolging) {
             })
     },[]);
 
-    if(isLoading){
-        return
-    }
-
     return (
         <Modal
             contentLabel="veilederverktoy-modal"
@@ -38,7 +34,7 @@ function AvsluttOppfolging (props: AvsluttOppfolging) {
             onRequestClose={()=>""}
         >
             {isLoading && <NavFrontendSpinner type="XL"/> }
-            {avslutningStatus.kanAvslutte &&<VarselStripeAvsluttOppfolging {...avslutningStatus}/>}
+            {!avslutningStatus.kanAvslutte &&<VarselStripeAvsluttOppfolging {...avslutningStatus}/>}
         </Modal>
     )
 
@@ -51,4 +47,4 @@ const mapStateToProps = (state: Appstate) => ({
 
 
 
-export default connect(mapStateToProps)(AvsluttOppfolging);
+export default connect<StateProps>(mapStateToProps)(AvsluttOppfolging);

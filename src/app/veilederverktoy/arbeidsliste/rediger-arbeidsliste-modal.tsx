@@ -55,7 +55,7 @@ function RedigerArbeidslisteModal(props: RedigerArbeidslisteProps & InjectedIntl
                     <div className="modal-header-wrapper">
                         <header className="modal-header"/>
                     </div>
-                    <div className="arbeidsliste__modal">
+                    <div className="arbeidsliste-content">
                         <div className="arbeidsliste-info-tekst">
                             <Innholdstittel className="arbeidsliste__overskrift">
                                 <FormattedMessage id="arbeidsliste.modal.rediger.overskrift" />

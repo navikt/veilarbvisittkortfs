@@ -7,7 +7,7 @@ import StoppKvpPeriodeProsess from '../stopp-kvp-periode/stopp-kvp-periode-prose
 import StartDigitalOppfolgingProsess from '../start-digital-oppfolging/start-digital-oppfolging-prosess';
 import OpprettOppgaveProsess from '../opprett-oppgave/opprett-oppgave-prosess';
 import Historikk from '../historikk/historikk';
-import AvsluttOppfolgingProsess from '../avslutt-oppfolging/avlutt-oppfolging-prosess';
+import AvsluttOppfolgingProsess from '../avslutt-oppfolging/avslutt-oppfolging-prosess';
 import './prosesser.less';
 
 function Prosesser () {
