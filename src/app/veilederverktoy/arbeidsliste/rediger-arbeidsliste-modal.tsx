@@ -5,7 +5,7 @@ import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import { Formik, FormikProps } from 'formik';
 import NavFrontendModal from 'nav-frontend-modal';
 import ArbeidslisteForm from './arbeidsliste-form';
-import moment from 'moment';
+import moment  from "moment";
 
 interface RedigerArbeidslisteProps {
     navn: string;
@@ -24,7 +24,7 @@ function RedigerArbeidslisteModal(props: RedigerArbeidslisteProps & InjectedIntl
         overskrift:  props.arbeidsliste.overskrift || '',
         kommentar: props.arbeidsliste.kommentar || '',
         frist: props.arbeidsliste.frist ?
-            moment(props.arbeidsliste.frist).format('DD.MM.YYYY') : ''} as ArbeidslisteformValues;
+            moment(props.arbeidsliste.frist).format('YYYY-MM-DD') : ''} as ArbeidslisteformValues;
 
 
     const onRequestClose = (formikProps: FormikProps<ArbeidslisteformValues>) => {
@@ -40,13 +40,13 @@ function RedigerArbeidslisteModal(props: RedigerArbeidslisteProps & InjectedIntl
     return (
         <Formik
             initialValues={initalValues}
-            onSubmit={(values, actions) => {
+            onSubmit={(values) => {
                 props.onSubmit(values);
                 props.lukkModal()}}
             render={formikProps => (
                 <NavFrontendModal
-                    className="modal"
-                    contentLabel="arbeidsliste"
+                    className="arbeidsliste-modal"
+                    contentLabel="Rediger arbeidsliste"
                     isOpen={props.isOpen}
                     onRequestClose={() => onRequestClose(formikProps)}
                     closeButton={true}

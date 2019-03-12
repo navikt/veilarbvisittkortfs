@@ -8,11 +8,14 @@ import { hentOppfolging, HentOppfolgingAction } from '../../store/oppfolging/act
 import OppfolgingsstatusSelector from '../../store/oppfolging-status/selectors';
 import OppfolgingSelector from '../../store/oppfolging/selector';
 import { HentPaloggetVeilederAction, hentPaloggetVeileder } from '../../store/tildel-veileder/actions';
+import {hentPersonalia, HentPersonaliaAction} from "../../store/personalia/actions";
+import PersonaliaSelector from "../../store/personalia/selectors";
 
 interface DispatchProps {
     hentOppfolgingsstatus: (fnr: string) => HentOppfolgingstatusAction;
     hentOppfolging: (fnr: string ) => HentOppfolgingAction;
     hentPaloggetVeileder: () => HentPaloggetVeilederAction;
+    hentPersonalia: (fnr: string) => HentPersonaliaAction;
 }
 
 interface InitialDataProviderProps {
@@ -31,8 +34,9 @@ function InitialDataProvider(props: Props) {
     useEffect( () => {
         props.hentOppfolgingsstatus(props.fnr);
         props.hentOppfolging(props.fnr);
-        props.hentPaloggetVeileder(); //TODO SPLIT UP I OPPFOLGINGSPROVIDER ?
-    }, []);
+        props.hentPaloggetVeileder();
+        props.hentPersonalia(props.fnr);
+    }, [props.fnr]);
 
     if (props.isLoading) {
         return <NavFrontendSpinner type="XL"/>;
@@ -46,14 +50,15 @@ function InitialDataProvider(props: Props) {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators(
-        {hentOppfolgingsstatus,hentOppfolging,hentPaloggetVeileder},
+        {hentOppfolgingsstatus,hentOppfolging,hentPaloggetVeileder,hentPersonalia},
         dispatch);
 };
 
 const mapStateToProps = (state: Appstate): StateProps => ({
     isLoading:
         OppfolgingsstatusSelector.selectOppfolgingStatusStatus(state) ||
-        OppfolgingSelector.selectOppfolgingStatus(state)
+        OppfolgingSelector.selectOppfolgingStatus(state) ||
+        PersonaliaSelector.selectPersonaliaIsLoading(state)
 
 });
 

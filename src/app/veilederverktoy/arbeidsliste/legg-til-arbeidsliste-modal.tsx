@@ -38,10 +38,10 @@ function LeggTilArbeidslisteModal(props: LeggTilArbeidslisteProps) {
             }}
             render={ formikProps =>
                 <Modal
-                    onRequestClose={()=> onRequestClose(formikProps)}
-                    contentLabel='legg-til-arbeidsliste-modal'
-                    className="arbeidsliste-modal"
+                    contentLabel="Legg i arbeidsliste"
                     isOpen={props.isOpen}
+                    className="arbeidsliste-modal"
+                    onRequestClose={() => onRequestClose(formikProps)}
                 >
                     <ModalHeader/>
                     <div className="arbeidsliste-content">

@@ -6,6 +6,7 @@ function VeilederVerktoyKnapp (props: {hidden: boolean, onClick: () => void}) {
     return (
         <HiddenIfKnappFss
             icon={TannHjulIkon}
+            iconAlt="Veilederverktoy"
             onClick={props.onClick}
         >
             Veilederverktøy

@@ -6,7 +6,6 @@ import FormikDatoVelger from '../../components/formik/formik-datepicker';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
-import { Form } from 'formik';
 import {OrNothing} from '../../../types/utils/ornothing';
 import moment from 'moment';
 import {
@@ -15,6 +14,7 @@ import {
     validerArbeidslisteTittelFeldt
 } from '../../utils/formik-validation';
 import {injectIntl, InjectedIntlProps}  from 'react-intl';
+import {Form} from "formik";
 
 
 interface ArbeidslisteFormProps {
@@ -40,6 +40,7 @@ function ArbeidslisteForm (props: ArbeidslisteFormProps & InjectedIntlProps) {
                 <FormikTekstArea
                     name="kommentar"
                     labelId="arbeidsliste.modal.kommentar"
+                    maxLength={500}
                     validate={validerArbeidslisteKommentarFeldt}
                 />
             </div>
@@ -56,6 +57,7 @@ function ArbeidslisteForm (props: ArbeidslisteFormProps & InjectedIntlProps) {
                 name="frist"
                 validate={validerArbeidslisteDatoFeldt}
                 label="Frist"
+                ariaLabel="Frist før arbeidslisten"
             />
             <div>
                 <div className="modal-footer">
