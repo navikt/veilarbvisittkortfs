@@ -9,34 +9,35 @@ interface FormikRadioFilterProps<T>{
     createLabel: (object: T) =>  string;
     createValue: (object: T) =>  string;
     closeDropdown: () => void;
+    defaultValue?: string;
 }
 
-
-
-function FormikRadioGroup<T> ({name, data, radioName, createLabel, createValue, closeDropdown}: FormikRadioFilterProps<T>) {
+function FormikRadioGroup<T> ({name, data, radioName, createLabel, createValue, closeDropdown, defaultValue}: FormikRadioFilterProps<T>) {
     return (
         <Field name={name}>
-            {({ field, form}: FieldProps)  =>
-                <div className="visittkortfs-radio-filterform">
-                    <div className="radio-filterform__valg scrollbar">
-                        {data.map(o =>
-                            <Radio
-                                name={radioName}
-                                label={createLabel(o)}
-                                value={createValue(o)}
-                                id={`${createValue(o)}-${radioName}`}
-                                key={`${createValue(o)}-${radioName}`}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                    form.setFieldValue(field.name, e.target.value);
-                                    closeDropdown();
-                                }
-                                }
-                            />
-                        )}
+            {({ field, form}: FieldProps)  => {
+                if(!field.value && defaultValue){
+                    form.setFieldValue(field.name, defaultValue);
+                }
+                return(
+                    <div className="visittkortfs-radio-filterform">
+                        <div className="radio-filterform__valg scrollbar">
+                            {data.map(o =>
+                                <Radio
+                                    name={radioName}
+                                    label={createLabel(o)}
+                                    value={createValue(o)}
+                                    id={`${createValue(o)}-${radioName}`}
+                                    key={`${createValue(o)}-${radioName}`}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                        form.setFieldValue(field.name, e.target.value);
+                                        closeDropdown();
+                                    }}
+                                />
+                            )}
+                        </div>
                     </div>
-                </div>
-
-            }
+                )}}
         </Field>
     )
 }
