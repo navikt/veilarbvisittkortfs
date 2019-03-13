@@ -14,6 +14,10 @@ interface OwnProps {
     begrunnelse?: string;
 }
 
+interface OwnProps {
+    begrunnelse?: string;
+}
+
 interface StateProps {
     navn: string;
 }
