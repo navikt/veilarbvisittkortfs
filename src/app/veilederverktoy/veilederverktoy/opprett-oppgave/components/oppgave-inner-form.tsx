@@ -36,19 +36,16 @@ function OppgaveInnerForm({fnr, tema, enhetId, veilederId, avsenderenhetId}: Opp
                 value={enhetId}
                 tema={tema}
                 fnr={fnr}
-                avsenderenhetId={avsenderenhetId}
             />
             <OpprettOppgaveVelgVeileder
-                fnr={fnr}
-                oppgaveTema={tema}
-                valgtFormEnhet={enhetId}
+                hidden={!(avsenderenhetId===enhetId && tema==='OPPFOLGING')}
                 veilederId={veilederId}
             />
         </div>
         <OpprettOppgaveBeskrivelseTekstArea/>
         <HiddenIfDiv className="modal-footer" hidden = {!tema}>
-            <Hovedknapp htmlType="submit" className="knapp knapp--hoved" spinner={false}>
-                <FormattedMessage id="modal.knapp.lagre" />
+            <Hovedknapp className="btn--mr1" htmlType="submit" spinner={false}>
+                Bekreft
             </Hovedknapp>
             <button type="button" className="knapp" onClick={()=> "hersp"}>
                 <FormattedMessage id="modal.knapp.avbryt" />

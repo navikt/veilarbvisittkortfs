@@ -21,6 +21,7 @@ function BegrunnelseFooter(props: StartEskaleringProsessFooterProps ) {
                 htmlType="submit"
                 spinner={props.spinner}
                 autoDisableVedSpinner={true}
+                className="btn--mr1"
             >
                 <FormattedMessage id="innstillinger.modal.start-eskalering.knapp.bekreft" />
             </Hovedknapp>

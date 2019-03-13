@@ -42,7 +42,7 @@ function StoppKVPKvittering({navn, navigerTilbake}: StoppKVPKvittering) {
                 </div>
                 <AlertStripeSuksess className="blokk-m">
                     <FormattedMessage
-                        id="iinnstillinger.modal.stopp-kvp.kvittering.ok"
+                        id="innstillinger.modal.stopp-kvp.kvittering.ok"
                     />
                 </AlertStripeSuksess>
             </article>

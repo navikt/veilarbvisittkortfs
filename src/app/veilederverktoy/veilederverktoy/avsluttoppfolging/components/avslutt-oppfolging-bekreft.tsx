@@ -14,15 +14,17 @@ function AvsluttOppfolgingBekreft ({navn}: AvsluttOppfolgingBekreftelseModalProp
 
     return (
         <div className="prosess">
-            <AlertStripeInfoSolid>
+            <AlertStripeInfoSolid className="blokk-s">
                 Er du sikker på att du vil avslutte oppfølgingsperioden til {navn} ?
             </AlertStripeInfoSolid>
-            <Hovedknapp htmlType="submit">
+           <div className="modal-footer">
+            <Hovedknapp htmlType="submit" className="btn--mr1">
                 Bekreft
             </Hovedknapp>
             <Knapp>
                 Avbryt
             </Knapp>
+           </div>
         </div>
     )
 }

@@ -4,7 +4,8 @@ import moment from "moment";
 import OppgaveHistorikkKomponent from "./components/oppgavehistorikk";
 import InnstillingsHistorikkKomponent from "./components/instillingshistorikk";
 import React from "react";
-import {Normaltekst, Undertittel} from "nav-frontend-typografi";
+import {Normaltekst} from "nav-frontend-typografi";
+import Lesmerpanel from 'nav-frontend-lesmerpanel';
 
 interface OwnProps {
     historikkInnslag : (InnstillingsHistorikk | OppgaveHistorikk)[];
@@ -20,23 +21,16 @@ function HistorikkVisning ({historikkInnslag}:OwnProps) {
 
 
     if(historikkInnslag.length == 0){
-        return (
-            <article className="prosess innstillinger__prosess">
-                <Undertittel>Historikk</Undertittel>
-                <Normaltekst> Ingen historikk</Normaltekst>
-            </article>
-        )
+
+               return <Normaltekst> Ingen historikk</Normaltekst>
     }
 
     if(historikkInnslag.length == 1) {
         return (
-            <article className="prosess innstillinger__prosess">
-                <Undertittel>Historikk</Undertittel>
-                {mapTilOppgaveEllerInnstillinger(historikkInnslag[0])}
-            </article>
+
+                mapTilOppgaveEllerInnstillinger(historikkInnslag[0])
         )
     }
-
     const sortertEtterDatoHistorikkInnslag= historikkInnslag.sort((a,b) => moment(b.dato).diff(a.dato));
 
     const historikkKomponenter =
@@ -46,18 +40,16 @@ function HistorikkVisning ({historikkInnslag}:OwnProps) {
 
     const [forstaHistorikkElemenetet, ...rest] = historikkKomponenter;
 
-    const apneTekst =
-        <>
-            <Undertittel>Historikk</Undertittel>
-            {forstaHistorikkElemenetet}
-        </>;
-
 
     return(
-        <article className="prosess">
-            {apneTekst}
+        <Lesmerpanel
+            intro={forstaHistorikkElemenetet}
+            apneTekst="Vis mer"
+            className=""
+            lukkTekst="Vis mindre"
+        >
             {rest}
-        </article>
+        </Lesmerpanel>
     )
 }
 

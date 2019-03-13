@@ -9,6 +9,7 @@ import {OppgaveHistorikk} from "../../../../types/oppgave-historikk";
 import HistorikkVisning from "./historikk-visning";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import "./historikk.less"
+import {Undertittel} from "nav-frontend-typografi";
 
 interface StateProps {
     fnr: string;
@@ -28,16 +29,23 @@ function Historikk (props: HistorikkProps) {
             .then((innstillingsHistorikk: InnstillingsHistorikk[])=> setInnstillingsHistorikk(innstillingsHistorikk));
 
         OppgaveApi.hentOppgaveHistorikk(props.fnr).
-            then((oppgaveHistorikk: OppgaveHistorikk[]) => setOppgaveHistorikk(oppgaveHistorikk));
-        setIsLoading(false);
+        then((oppgaveHistorikk: OppgaveHistorikk[]) => {
+            setOppgaveHistorikk(oppgaveHistorikk);
+            setIsLoading(false);
+        });
+
     }, []);
 
     if(isLoading){
-      return <NavFrontendSpinner type="XL"/>
+        return <NavFrontendSpinner type="XL"/>
     }
 
     return (
-      <HistorikkVisning historikkInnslag={[...innstillingsHistorikk, ...oppgaveHistorikk]}/>
+        <article className="prosess">
+            <Undertittel>Historikk</Undertittel>
+            <HistorikkVisning historikkInnslag={[...innstillingsHistorikk, ...oppgaveHistorikk]}/>
+        </article>
+
     )
 
 }

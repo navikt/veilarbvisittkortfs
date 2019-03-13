@@ -32,7 +32,7 @@ function StartDigitalOppfolging(props: StartEskaleringProps) {
         <BegrunnelseForm
             tekst={null}
             handleSubmit={props.handleSubmit(props.fnr, props.veilederId)}
-            tekstariaLabel="Skriv en begrunnelse for hvorfor brukeren trenger manuell oppfølging"
+            tekstariaLabel="Skriv en begrunnelse for hvorfor brukeren nå kan få digital oppfølging"
             overskriftTekstId="innstillinger.modal.digital.overskrift"
             infoTekst={infoTekst}
             isLoading={props.isLoading}

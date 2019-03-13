@@ -26,26 +26,28 @@ function AvsluttOppfolgingBegrunnelseForm({formikProps, onHovedKnappClick, onAvb
             </Normaltekst>
             <AlertStripeInfoSolid>
                 Du kan avslutte oppfølgingsperioden selv om:
-                <ul>
+                <ul className="margin--0">
                     <li>Brukeren har ubehandlede dialoger</li>
                     <li>Brukeren har aktive saker i Arena</li>
                     <li>Brukeren har aktive tiltak i Arena</li>
                 </ul>
             </AlertStripeInfoSolid>
-                <Textarea
-                    label="Begrunnelse"
-                    maxLength={500}
-                    value={formikProps.values.tekst}
-                    name="tekst"
-                    onChange={formikProps.handleChange}
-                    onBlur={formikProps.handleBlur}
-                />
-                <Hovedknapp htmlType="submit" onClick={onHovedKnappClick}>
+            <Textarea
+                label="Begrunnelse"
+                maxLength={500}
+                value={formikProps.values.tekst}
+                name="tekst"
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur}
+            />
+            <div className="modal-footer">
+                <Hovedknapp className="btn--mr1" htmlType="submit" onClick={onHovedKnappClick}>
                     Avslutt oppfølging
                 </Hovedknapp>
                 <Knapp htmlType="button" onClick={onAvbryt}>
                     Avbryt
                 </Knapp>
+            </div>
         </section>
     )
 }

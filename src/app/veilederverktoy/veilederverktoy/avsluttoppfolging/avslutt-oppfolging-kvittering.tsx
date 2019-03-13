@@ -26,7 +26,7 @@ function AvsluttOppfolgingKvittering({navn, navigerTilbake}: AvsluttOppfolgingKv
             contentLabel="veilederverktoy-modal"
             className="veilederverktoy-modal"
         >
-            <article className="innstillinger__container">
+            <article className="prosess">
                 <Innholdstittel>
                     <FormattedMessage
                         id="innstillinger.modal.overskrift"
