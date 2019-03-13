@@ -9,6 +9,10 @@ import PersonaliaSelectors from '../../../../store/personalia/selectors';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../../store/navigation/actions';
 
+interface OwnProps {
+    begrunnelse?: string;
+}
+
 interface StateProps {
     navn: string;
 }
@@ -17,9 +21,9 @@ interface DispatchProps {
     navigerTilbake: () => void;
 }
 
-type StartOppfolgingKvittering = StateProps & DispatchProps;
+type StartOppfolgingKvittering = StateProps & DispatchProps & OwnProps;
 
-function StartManuellOppfolgingKvittering({navn, navigerTilbake}: StartOppfolgingKvittering) {
+function StartManuellOppfolgingKvittering({navn, navigerTilbake, begrunnelse}: StartOppfolgingKvittering) {
     return (
         <Modal
             onRequestClose={navigerTilbake}

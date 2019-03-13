@@ -9,6 +9,10 @@ import PersonaliaSelectors from '../../../../store/personalia/selectors';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../../store/navigation/actions';
 
+interface OwnProps {
+    begrunnelse?: string;
+}
+
 interface StateProps {
     navn: string;
 }
@@ -17,9 +21,9 @@ interface DispatchProps {
     navigerTilbake: () => void;
 }
 
-type StartOppfolgingKvittering = StateProps & DispatchProps;
+type StartOppfolgingKvittering = StateProps & DispatchProps & OwnProps;
 
-function StartDigitalOppfolgingKvittering({navn, navigerTilbake}: StartOppfolgingKvittering) {
+function StartDigitalOppfolgingKvittering({navn, navigerTilbake, begrunnelse}: StartOppfolgingKvittering) {
     return (
         <Modal
             onRequestClose={navigerTilbake}
@@ -35,12 +39,13 @@ function StartDigitalOppfolgingKvittering({navn, navigerTilbake}: StartOppfolgin
                 </Innholdstittel>
                 <div className="innstillinger__innhold blokk-xs">
                     <Systemtittel>
-                        <FormattedMessage id="innstillinger.modal.startoppfolging.overskrift" />
+                        <FormattedMessage id="innstillinger.prosess.digital.tittel" />
                     </Systemtittel>
                 </div>
                 <AlertStripeSuksess className="blokk-m">
                     <FormattedMessage
-                        id="innstillinger.modal.startoppfolging.kvittering"
+                        id="innstillinger.prosess.digital.kvittering"
+                        values={{begrunnelse}}
                     />
                 </AlertStripeSuksess>
             </article>

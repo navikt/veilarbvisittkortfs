@@ -8,6 +8,7 @@ import { Appstate } from '../../../../types/appstate';
 import PersonaliaSelectors from '../../../../store/personalia/selectors';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../../store/navigation/actions';
+import ModalHeader from "../../../components/modal/modal-header";
 
 interface StateProps {
     navn: string;
@@ -26,7 +27,8 @@ function StartKVPKvittering({navn, navigerTilbake}: StartOppfolgingKvittering) {
             className="veilederverktoy-modal"
             contentLabel="veilederverktoy-modal"
         >
-            <article className="innstillinger__container">
+            <ModalHeader/>
+            <article className="prosess">
                 <Innholdstittel>
                     <FormattedMessage
                         id="innstillinger.modal.overskrift"
@@ -35,7 +37,7 @@ function StartKVPKvittering({navn, navigerTilbake}: StartOppfolgingKvittering) {
                 </Innholdstittel>
                 <div className="innstillinger__innhold blokk-xs">
                     <Systemtittel>
-                        <FormattedMessage id="innstillinger.modal.start-kvp.tittel" />
+                        <FormattedMessage id="innstillinger.prosess.start-kvp.tittel" />
                     </Systemtittel>
                 </div>
                 <AlertStripeSuksess className="blokk-m">

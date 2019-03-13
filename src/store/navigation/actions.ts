@@ -12,15 +12,15 @@ export type NavigerActionType =
 export interface NavigerAction {
     type: NavigerActionType;
     location: StringOrNothing;
-    payload?: any;
+    begrunnelse?: string;
 }
 export const navigerAction = (location: StringOrNothing): NavigerAction => ({
     type: 'NAVIGER',
     location
 });
 
-export const navigerActionMedPayload = (type: NavigerActionType ,location: StringOrNothing, payload?: any): NavigerAction => ({
-    type: 'NAVIGER',
+export const navigerActionMedPayload = (type: NavigerActionType ,location: StringOrNothing, begrunnelse?: string): NavigerAction => ({
+    type,
     location,
-    payload
+    begrunnelse
 });
