@@ -11,9 +11,10 @@ interface FormikDatepickerProps {
     validate: (value: string) => string | undefined;
     label: string;
     ariaLabel: string;
+    className?: string;
 }
 
-function FormikDatoVelger({name, validate, label, ariaLabel}: FormikDatepickerProps) {
+function FormikDatoVelger({name, validate, label, ariaLabel, className}: FormikDatepickerProps) {
     return (
         <Field
             validate={validate}
@@ -22,7 +23,7 @@ function FormikDatoVelger({name, validate, label, ariaLabel}: FormikDatepickerPr
         >
             {({ field, form: {errors, setFieldValue}}: FieldProps) => {
                 const error = getIn(errors, name);
-                const datePickerClassName = classNames( 'skjemaelement', 'datovelger', { 'datovelger--harFeil': error });
+                const datePickerClassName = classNames( 'skjemaelement', 'datovelger', className, { 'datovelger--harFeil': error });
                 return(
                     <div className={datePickerClassName}>
                         <span className="skjemaelement__label">{label}</span>
@@ -33,15 +34,11 @@ function FormikDatoVelger({name, validate, label, ariaLabel}: FormikDatepickerPr
                                 placeholder: 'dd.mm.åååå',
                                 ariaLabel,
                                 onChange: (value: string) => {
-                                    console.log('value', value);
                                     setFieldValue(field.name, value)
                                 }
                             }}
                             id="fristDatovelger"
                             onChange={(date: string) => {
-                                // HAKS FØR ATT NAV-DATOVELGER  IKKE STØTTER OPTIONAL DATO
-                                console.log('isValid', moment(date).isValid());
-                                console.log('data', date);
                                 if (!field.value && !moment(date).isValid()) {
                                     return;
                                 }

@@ -12,7 +12,8 @@ import tildelVelederReducer, { tildelVeilederSaga } from './tildel-veileder/redu
 import tilgangTilBrukersKontorReducer, { tilgangTilBrukersKontorSaga } from './tilgang-til-brukerskontor/reducer';
 import { oppfolgingSaga } from './oppfolging/sagas';
 import instillingshistorikkReducer, { instillingshistorikkSaga } from './innstillingshistorikk/reducer';
-import oppgavehistorikkReducer, { oppgaveHistorikkSaga } from './oppgavehistorikk/reducer';
+import oppgavehistorikkReducer, { oppgaveHistorikkSaga } from './oppgave/reducer';
+import enhetIdReducer from './enhet/reducer';
 
 const sagaMiddleware = createReduxSaga();
 
@@ -28,6 +29,7 @@ const store = createStore(
         tilgangTilBrukersKontor : tilgangTilBrukersKontorReducer,
         instillingshistorikk: instillingshistorikkReducer,
         oppgavehistorikk: oppgavehistorikkReducer,
+        enhetId: enhetIdReducer,
     }),
     composeWithDevTools(applyMiddleware(sagaMiddleware))
 );

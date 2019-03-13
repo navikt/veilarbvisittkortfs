@@ -4,7 +4,7 @@ import {validerOppgaveDatoFeldt} from "../../../../utils/formik-validation";
 
 function OpprettOppgaveVelgDatoer () {
     return (
-       <div className="velg-oppgave-datoer">
+       <div className="sentrert">
         <FormikDatoVelger
             name='fraDato'
             validate={validerOppgaveDatoFeldt}

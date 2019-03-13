@@ -3,12 +3,12 @@ import { VeilederData } from '../types/veilederdata';
 import { TildelVeilederData } from '../types/tildel-veileder';
 
 interface TildelVeilederApi {
-    hentVeieldereForEnhet: (enhetId: string) => Promise<VeilederData[]>;
+    hentVeiledereForEnhet: (enhetId: string) => Promise<VeilederData[]>;
     hentVeieldere: () => Promise<VeilederData>;
     tildelTilVeileder: (tilordninger: TildelVeilederData[]) => Promise<{resultat: string, feilendeTilordninger: TildelVeilederData[]}>;
 }
 
-function hentVeieldereForEnhet(enhetId: string) {
+function hentVeiledereForEnhet(enhetId: string) {
     return fetchToJson(`/veilarbveileder/api/enhet/${enhetId}/veiledere`);
 }
 
@@ -21,7 +21,7 @@ function tildelTilVeileder(tilordninger: TildelVeilederData[]) {
 }
 
 export default {
-    hentVeieldereForEnhet,
+    hentVeiledereForEnhet,
     hentVeieldere,
     tildelTilVeileder,
 } as TildelVeilederApi;

@@ -23,11 +23,8 @@ function StartManuellOppfolgingKvittering({navn, navigerTilbake}: StartOppfolgin
     return (
         <Modal
             onRequestClose={navigerTilbake}
-            contentLabel="instillinger-modal"
-            contentClass="Manuell Oppfolging Kvittering"
-            isOpen={true}
-            className=""
-            header={null}
+            contentLabel="veilederverktoy-modal"
+            className="veilederverktoy-modal"
         >
                 <article className="prosess">
                     <Innholdstittel>

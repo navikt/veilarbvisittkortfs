@@ -1,7 +1,8 @@
 import * as React from "react";
 import {FormattedMessage} from "react-intl";
 import {Element, Normaltekst, Undertekst} from "nav-frontend-typografi";
-import {OppgaveHistorikk} from "../../../../types/oppgave-historikk";
+import {OppgaveHistorikk} from "../../../../../types/oppgave-historikk";
+import {opprettetAv} from "./opprettet-av";
 
 interface OwnProps {
     oppgaveHistorikk: OppgaveHistorikk
@@ -10,7 +11,7 @@ interface OwnProps {
 function OppgaveHistorikkKomponent({oppgaveHistorikk}: OwnProps) {
     const {oppgaveTema, oppgaveType} = oppgaveHistorikk;
     return (
-        <div>
+        <div className="historikk__elem">
             <Element>
                 <FormattedMessage id="innstillinger.modal.historikk-gosys-oppgave"/>
             </Element>
@@ -20,7 +21,9 @@ function OppgaveHistorikkKomponent({oppgaveHistorikk}: OwnProps) {
                     values={{oppgaveTema,oppgaveType}}
                 />
             </Normaltekst>
-            <Undertekst>Undertekst</Undertekst>
+            <Undertekst>
+                {opprettetAv(oppgaveHistorikk.opprettetAv, oppgaveHistorikk.opprettetAvBrukerId)}
+            </Undertekst>
         </div>
     )
 }

@@ -6,7 +6,8 @@ export type NavigerActionType =
     'SETT_MANUELL_SUCCESS' |
     'SETT_DIGITAL_SUCCESS' |
     'STOPP_KVP_SUCCESS' |
-    'START_KVP_SUCCESS';
+    'START_KVP_SUCCESS' |
+    'LAGRE_OPPGAVE_SUCCESS';
 
 export interface NavigerAction {
     type: NavigerActionType;

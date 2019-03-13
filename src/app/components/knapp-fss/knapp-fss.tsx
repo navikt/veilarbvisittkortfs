@@ -14,7 +14,7 @@ const KnappFss: React.FunctionComponent<KnappFssProps> = (props: KnappFssProps) 
     return (
         <Knapp className={cls('knapp-fss', className)} {...rest}>
             {children}
-            {icon && <img src={icon} alt={iconAlt} className="knapp-fss__icon"/>}
+            {icon && <img src={icon} alt={iconAlt || ''} className="knapp-fss__icon"/>}
         </Knapp>
     );
 };

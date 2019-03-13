@@ -7,7 +7,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 interface StartProsessProps {
     tittelId: string;
     knappetekstId: string;
-    onClick: () => void;
+    onClick?: () => void;
     className: string;
     children: React.ReactNode;
     disabled?: boolean;
@@ -20,13 +20,14 @@ function StartProcess(props: StartProsessProps) {
                 <FormattedMessage id={props.tittelId} />
             </Undertittel>
             {props.children}
-            <Hovedknapp
+            {props.onClick && <Hovedknapp
                 onClick={props.onClick}
                 aria-labelledby={props.tittelId}
                 disabled={props.disabled}
             >
-                <FormattedMessage id={props.knappetekstId} />
+                <FormattedMessage id={props.knappetekstId}/>
             </Hovedknapp>
+            }
         </article>
     );
 }
