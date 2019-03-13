@@ -6,13 +6,21 @@ import { Appstate } from '../../../types/appstate';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../store/navigation/actions';
 import NavFrontendModal from 'nav-frontend-modal';
+import classNames from 'classnames';
+import ModalHeader from "../../components/modal/modal-header";
+
+const cls = (className?: string)=> classNames('modal', className);
+
 
 interface OwnProps {
     children: React.ReactNode;
-    ingenTilbakeKnapp?: boolean;
     visConfirmDialog?: boolean;
-    touched: boolean;
+    touched?: boolean;
+    className?: string;
+    tilbakeTekstId?: string;
+    tilbakeFunksjon?: ()=> void;
 }
+
 interface StateProps {
     navnPaMotpart: string;
 }
@@ -26,18 +34,20 @@ type VeilederVerktoyModalProps = OwnProps & StateProps & DispatchProps & Injecte
 function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
     return (
         <NavFrontendModal
-            className="arbeidsliste-modal"
-            contentLabel="arbeidsliste"
+            className={cls(props.className)}
+            contentLabel="veilederverktoy"
             isOpen={true}
             onRequestClose={props.tilbake}
             closeButton={true}
+            portalClassName="visittkortfs"
         >
-            <div className="modal-header-wrapper">
-                <header className="modal-header"/>
-            </div>
-            <div className="arbeidsliste__modal">
-                <div className="arbeidsliste-info-tekst">
-                    <Innholdstittel className="arbeidsliste__overskrift">
+            <ModalHeader
+                tilbakeTekstId={props.tilbakeTekstId}
+                tilbake={props.tilbakeFunksjon}
+            />
+            <div className="modal-innhold">
+                <div className="modal-innhold__info-tekst">
+                    <Innholdstittel className="modal-innhold__overskrift">
                         <FormattedMessage
                             id="innstillinger.modal.overskrift"
                             values={{ navn: props.navnPaMotpart }}
@@ -55,7 +65,7 @@ const mapStateToProps = (state: Appstate) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    tilbake: () => dispatch(navigerAction(null))
+    tilbake: () => dispatch(navigerAction(null)),
 });
 
 export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(injectIntl(VeilederVerktoyModal));

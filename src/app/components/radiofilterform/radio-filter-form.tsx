@@ -27,7 +27,7 @@ function RadioFilterForm<T> (props: RadioFilterFormProps<T>) {
     } = props;
 
     return (
-        <div className="visittkortfs-radio-filterform">
+        <div className="radio-filterform">
                 <div className="radio-filterform__valg scrollbar">
                     {data.map(o =>
                         <Radio

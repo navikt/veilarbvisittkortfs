@@ -40,7 +40,8 @@ const oppfolgingReducer: Reducer<OppfogingState, OppfolgingActions> = (state = i
         case OppfolgingActionType.SETT_MANUELL:
         case OppfolgingActionType.SETT_DIGITAL:
         case OppfolgingActionType.START_KVP:
-        case OppfolgingActionType.STOPP_KVP: {
+        case OppfolgingActionType.STOPP_KVP:
+        case OppfolgingActionType.AVSLUTT_OPPFOLGING: {
             return {
                 ...state,
                 status: 'LOADING'
@@ -49,7 +50,8 @@ const oppfolgingReducer: Reducer<OppfogingState, OppfolgingActions> = (state = i
         case OppfolgingActionType.HENT_OPPFOLGING_SUCCESS:
         case OppfolgingActionType.START_ESKALERING_SUCCESS:
         case OppfolgingActionType.SETT_MANUELL_SUCCESS:
-        case OppfolgingActionType.SETT_DIGITAL_SUCCESS: {
+        case OppfolgingActionType.SETT_DIGITAL_SUCCESS:
+        case OppfolgingActionType.AVSLUTT_OPPFOLGING_SUCCESS: {
             return {
                 ...state,
                 data: action.data,
@@ -61,6 +63,7 @@ const oppfolgingReducer: Reducer<OppfogingState, OppfolgingActions> = (state = i
         case OppfolgingActionType.SETT_MANUELL_ERROR:
         case OppfolgingActionType.SETT_DIGITAL_ERROR:
         case OppfolgingActionType.START_KVP_ERROR:
+        case OppfolgingActionType.AVSLUTT_OPPFOLGING_ERROR:
         case OppfolgingActionType.STOPP_KVP_ERROR: {
             return {
                 ...state,

@@ -4,3 +4,7 @@ export interface VeilederData {
     fornavn: string;
     etternavn: string;
 }
+
+export interface VeilederListe {
+    veilederListe: VeilederData[];
+}

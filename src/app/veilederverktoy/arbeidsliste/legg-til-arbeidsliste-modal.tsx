@@ -1,10 +1,11 @@
 import React from 'react';
-import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
+import {Innholdstittel, Undertittel} from 'nav-frontend-typografi';
 import {Arbeidsliste, ArbeidslisteformValues} from '../../../types/arbeidsliste';
-import { FormattedMessage } from 'react-intl';
-import { Formik, FormikProps } from 'formik';
-import NavFrontendModal from 'nav-frontend-modal';
+import {FormattedMessage} from 'react-intl';
+import {Formik, FormikProps} from 'formik';
 import ArbeidslisteForm from './arbeidsliste-form';
+import Modal from "../../components/modal/modal";
+import ModalHeader from "../../components/modal/modal-header";
 
 interface LeggTilArbeidslisteProps {
     navn: string;
@@ -36,18 +37,14 @@ function LeggTilArbeidslisteModal(props: LeggTilArbeidslisteProps) {
                 props.lukkModal();
             }}
             render={ formikProps =>
-                <NavFrontendModal
-                    className="visittkortfs-modal arbeidsliste-modal"
+                <Modal
                     contentLabel="Legg i arbeidsliste"
                     isOpen={props.isOpen}
+                    className="arbeidsliste-modal"
                     onRequestClose={() => onRequestClose(formikProps)}
-                    closeButton={true}
-                    portalClassName='visittkortfs'
                 >
-                    <div className="modal-header-wrapper">
-                        <header className="modal-header"/>
-                    </div>
-                    <div className="arbeidsliste__modal">
+                    <ModalHeader/>
+                    <div className="arbeidsliste-content">
                         <div className="arbeidsliste-info-tekst">
                             <Innholdstittel className="arbeidsliste__overskrift">
                                 <FormattedMessage id="arbeidsliste.modal.legg.til.overskrift" />
@@ -64,7 +61,7 @@ function LeggTilArbeidslisteModal(props: LeggTilArbeidslisteProps) {
                             />
                         </div>
                     </div>
-                </NavFrontendModal>
+                </Modal>
             }
         />
 

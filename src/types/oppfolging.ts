@@ -12,8 +12,18 @@ export interface EskaleringsVarsel {
 }
 
 
+export interface AvslutningStatus {
+    harTiltak: boolean;
+    harYtelser: boolean;
+    inaktiveringsDato: StringOrNothing;
+    kanAvslutte: boolean;
+    underKvp: boolean;
+    underOppfolging: boolean;
+}
+
+
 export interface Oppfolging {
-    avslutningStatus: StringOrNothing;
+    avslutningStatus: OrNothing<AvslutningStatus>;
     erIkkeArbeidssokerUtenOppfolging: boolean;
     erSykmeldtMedArbeidsgiver: boolean;
     fnr: string;

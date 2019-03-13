@@ -8,10 +8,12 @@ import { connect } from 'react-redux';
 import { Personalia } from '../../types/personalia';
 import { OppfolgingStatus } from '../../types/oppfolging-status';
 import { Appstate } from '../../types/appstate';
+import PersonaliaSelector from "../../store/personalia/selectors";
 
 interface StateProps {
     personalia: Personalia;
     oppfolgingstatus: OppfolgingStatus;
+    navn: string;
 }
 
 interface OwnProps {
@@ -27,7 +29,7 @@ function PersonInfo(props: PersonInfoProps) {
             <Icon kjonn={props.personalia.kjonn}/>
             <div className="personinfo__container">
                 <Fodelsnummer fnr={props.fnr}/>
-                <NavnOgAlder personalia={props.personalia}/>
+                <NavnOgAlder navn={props.navn} personalia={props.personalia}/>
                 <Etiketter personalia={props.personalia} oppfolgingstatus={props.oppfolgingstatus}/>
             </div>
         </div>
@@ -36,6 +38,7 @@ function PersonInfo(props: PersonInfoProps) {
 
 const mapStateToProps = (state: Appstate): StateProps => ({
     personalia: state.personalia.data,
+    navn: PersonaliaSelector.selectSammensattNavn(state),
     oppfolgingstatus: state.oppfolgingstatus.data,
 });
 

@@ -31,6 +31,10 @@ const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = {loc
             return{
                 location: 'start_kvp_periode_kvittering',
             };
+        case 'LAGRE_OPPGAVE_SUCCESS':
+            return {
+                location: 'oppgave_kvittering',
+            };
         default :
             return state;
     }

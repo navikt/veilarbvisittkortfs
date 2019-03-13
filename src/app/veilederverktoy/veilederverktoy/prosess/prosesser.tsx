@@ -7,16 +7,17 @@ import StoppKvpPeriodeProsess from '../stopp-kvp-periode/stopp-kvp-periode-prose
 import StartDigitalOppfolgingProsess from '../start-digital-oppfolging/start-digital-oppfolging-prosess';
 import OpprettOppgaveProsess from '../opprett-oppgave/opprett-oppgave-prosess';
 import Historikk from '../historikk/historikk';
+import AvsluttOppfolgingProsess from '../avsluttoppfolging/avslutt-oppfolging-prosess';
 import './prosesser.less';
 
 function Prosesser () {
     return (
         <VeilederVerktoyModal
-            ingenTilbakeKnapp={true}
             visConfirmDialog={false}
-            touched={false}
+            className='vis-overflow'
         >
             <StartEskaleringProsess/>
+            <AvsluttOppfolgingProsess/>
             <StarManuellOppfolging/>
             <StartKvpPeriodeProsess/>
             <StoppKvpPeriodeProsess/>
