@@ -6,5 +6,5 @@ export interface VeilederData {
 }
 
 export interface VeilederListe {
-    veilederListe?: VeilederData[];
+    veilederListe: VeilederData[];
 }

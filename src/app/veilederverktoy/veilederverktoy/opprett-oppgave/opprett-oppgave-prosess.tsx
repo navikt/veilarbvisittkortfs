@@ -21,20 +21,18 @@ function OpprettOppgaveProsess({skjulOpprettOppgave, navigerTilOpprettOppgave }:
         return null;
     }
     return (
-        <>
-            <StartProsess
-                className="innstillinger__prosess"
-                tittelId="innstillinger.prosess.opprett-oppgave.tittel"
-                knappetekstId="innstillinger.modal.prosess.start.knapp"
-                onClick={navigerTilOpprettOppgave}
-            >
-                <div className="blokk-xs">
-                    <Normaltekst>
-                        <FormattedMessage id="innstillinger.prosess.opprett-oppgave.tekst" />
-                    </Normaltekst>
-                </div>
-            </StartProsess>
-        </>
+        <StartProsess
+            className="innstillinger__prosess"
+            tittelId="innstillinger.prosess.opprett-oppgave.tittel"
+            knappetekstId="innstillinger.modal.prosess.start.knapp"
+            onClick={navigerTilOpprettOppgave}
+        >
+            <div className="blokk-xs">
+                <Normaltekst>
+                    <FormattedMessage id="innstillinger.prosess.opprett-oppgave.tekst" />
+                </Normaltekst>
+            </div>
+        </StartProsess>
     );
 }
 

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {HiddenIfDropDown} from "../../../../components/hidden-if/hidden-if-dropdown";
 import {OppgaveTema} from "../../../../../types/oppgave";
 import SokFilter from "../../../../components/sokfilter/sok-filter";
 import FormikRadioGroup from "../../../../components/formik/formik-radiogroup";
@@ -9,11 +8,13 @@ import {VeilederData, VeilederListe} from "../../../../../types/veilederdata";
 import {Appstate} from "../../../../../types/appstate";
 import {connect} from "react-redux";
 import {StringOrNothing} from "../../../../../types/utils/stringornothings";
+import Dropdown from "../../../../components/dropdown/dropdown";
 
 interface OwnProps {
     oppgaveTema: OrNothing<OppgaveTema>;
     valgtFormEnhet: StringOrNothing;
     fnr: string;
+    veilederId: StringOrNothing;
 }
 
 interface StateProps{
@@ -23,55 +24,59 @@ interface StateProps{
 type OpprettOppgaveVelgVeilederProps = OwnProps & StateProps;
 
 
-function OpprettOppgaveVelgVeileder ({oppgaveTema, valgtFormEnhet, enhet, fnr}: OpprettOppgaveVelgVeilederProps) {
-    const [veilederListeData, setVeilederListe] = useState({} as VeilederListe);
+function OpprettOppgaveVelgVeileder ({oppgaveTema, valgtFormEnhet, enhet, fnr, veilederId}: OpprettOppgaveVelgVeilederProps) {
+    const [veilederListe, setVeilederListe] = useState([] as VeilederData[]);
     const [isLoading, setIsLoading] = useState(true);
-    const kanHenteVeileder = (oppgaveTema && oppgaveTema === 'OPPFOLGING') &&
-        valgtFormEnhet && enhet && valgtFormEnhet === enhet;
+    const kanHenteVeileder = oppgaveTema === 'OPPFOLGING' && valgtFormEnhet === enhet;
 
     useEffect(()=> {
         if(kanHenteVeileder && enhet) {
             OppgaveApi
                 .hentOppgaveVeileder(fnr, enhet)
-                .then((veilederListe: VeilederListe)=> setVeilederListe(veilederListe));
+                .then((veilederListe: VeilederListe)=> setVeilederListe(veilederListe.veilederListe));
             setIsLoading(false)
         }
     },[oppgaveTema,valgtFormEnhet]);
 
-    if(isLoading){
+    if(isLoading || !kanHenteVeileder){
         return <div/>
     }
 
+    const valgtVeileder: OrNothing<VeilederData>  = veilederListe.find(veileder => veileder.ident === veilederId);
+
+
     return (
-        <HiddenIfDropDown
-            name="Velg veileder dropdown"
-            knappeTekst={""}
-            className="skjemaelement velg-enhet-dropdown"
-            btnClassnames="velg-enhet-dropdown__button"
-            hidden={!kanHenteVeileder}
-            render={(lukkDropdown)=>
-                <SokFilter
-                    data={veilederListeData.veilederListe || []}
-                    label=""
-                    placeholder="Søk etter enhet"
-                >
-                    {(data) =>
-                        <FormikRadioGroup
-                            data={data}
-                            createLabel={(veileder: VeilederData) => veileder.navn}
-                            createValue={(veileder: VeilederData) => veileder.ident}
-                            radioName="Velg veileder"
-                            closeDropdown={lukkDropdown}
-                            name="enhetId"
-                        />}
-                </SokFilter>}
-        />
+        <div className="skjemaelement">
+            <label className="skjemaelement__label">Veileder</label>
+            <Dropdown
+                name="Velg veileder dropdown"
+                knappeTekst={valgtVeileder && valgtVeileder.navn || ''}
+                className="skjemaelement velg-enhet-dropdown"
+                btnClassnames="velg-enhet-dropdown__button"
+                render={(lukkDropdown)=>
+                    <SokFilter
+                        data={veilederListe || []}
+                        label=""
+                        placeholder="Søk etter veileder"
+                    >
+                        {(data) =>
+                            <FormikRadioGroup
+                                data={data}
+                                createLabel={(veileder: VeilederData) => veileder.navn}
+                                createValue={(veileder: VeilederData) => veileder.ident}
+                                radioName="Velg veileder"
+                                closeDropdown={lukkDropdown}
+                                name="veilederId"
+                            />}
+                    </SokFilter>}
+            />
+        </div>
     )
 }
 
 
 const mapStateToProps= (state: Appstate) => ({
-   enhet: state.enhetId.enhet
+    enhet: state.enhetId.enhet
 });
 
 export default connect<StateProps,{},OwnProps>(mapStateToProps)(OpprettOppgaveVelgVeileder);

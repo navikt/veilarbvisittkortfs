@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Appstate } from '../../../../types/appstate';
 import BegrunnelseForm from '../begrunnelseform/begrunnelse-form';
 import { FormattedMessage } from 'react-intl';
-import { startKVP } from '../../../../store/oppfolging/start-stopp-kvp-periode-actions';
+import { startKVP } from '../../../../store/oppfolging/actions';
 import { Normaltekst } from 'nav-frontend-typografi';
 import OppfolgingSelector from '../../../../store/oppfolging/selector';
 

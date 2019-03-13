@@ -2,7 +2,6 @@
 import React from 'react';
 import { FormattedMessage} from 'react-intl';
 import { VenstreChevron } from 'nav-frontend-chevron';
-import {Knapp} from 'nav-frontend-knapper';
 import {injectIntl, InjectedIntlProps} from 'react-intl';
 
 interface TilbakeknappProps {
@@ -27,14 +26,12 @@ function Tilbakeknapp(props: TilbakeknappProps & InjectedIntlProps) {
     }
 
     return (
-        <Knapp onClick={tilbake} className="tilbakeknapp">
-            <div className="tilbakeknapp-innhold">
-                <VenstreChevron />
-                <span className="tilbakeknapp-innhold__tekst">
+        <button onClick={tilbake} className="tilbakeknapp">
+            <VenstreChevron />
+            <span className="tilbakeknapp-innhold__tekst">
                     <FormattedMessage id={props.tekstId}/>
                 </span>
-            </div>
-        </Knapp>
+        </button>
     );
 }
 

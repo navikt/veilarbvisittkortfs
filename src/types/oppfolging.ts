@@ -1,6 +1,5 @@
 import { StringOrNothing } from './utils/stringornothings';
 import { OrNothing } from './utils/ornothing';
-import {AvslutningStatus} from "./avslutningsstatus";
 /* tslint:disable */
 
 export interface EskaleringsVarsel {
@@ -10,6 +9,16 @@ export interface EskaleringsVarsel {
     opprettetDato: string;
     avsluttetDato: StringOrNothing;
     tilhorendeDialogId:string;
+}
+
+
+export interface AvslutningStatus {
+    harTiltak: boolean;
+    harYtelser: boolean;
+    inaktiveringsDato: StringOrNothing;
+    kanAvslutte: boolean;
+    underKvp: boolean;
+    underOppfolging: boolean;
 }
 
 

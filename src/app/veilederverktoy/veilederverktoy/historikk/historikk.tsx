@@ -8,6 +8,7 @@ import OppgaveApi from "../../../../api/oppgave-api";
 import {OppgaveHistorikk} from "../../../../types/oppgave-historikk";
 import HistorikkVisning from "./historikk-visning";
 import NavFrontendSpinner from "nav-frontend-spinner";
+import "./historikk.less"
 
 interface StateProps {
     fnr: string;
@@ -34,6 +35,7 @@ function Historikk (props: HistorikkProps) {
     if(isLoading){
       return <NavFrontendSpinner type="XL"/>
     }
+
     return (
       <HistorikkVisning historikkInnslag={[...innstillingsHistorikk, ...oppgaveHistorikk]}/>
     )

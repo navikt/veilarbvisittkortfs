@@ -1,4 +1,10 @@
-import { HentOppfolgingAction, hentOppfolgingError, hentOppfolgingSuccess } from './actions';
+import {
+    AvsluttOppfolgingAction, avsluttOppfolgingError,
+    avsluttOppfolgingSuccess,
+    HentOppfolgingAction,
+    hentOppfolgingError,
+    hentOppfolgingSuccess
+} from './actions';
 import { hentOppfolgingData } from '../../api/oppfolging-api-utils';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
@@ -7,7 +13,7 @@ import {
     SettManuellAction,
     settManuellError,
     settManuellSuccess
-} from './sett-manuell-digitial-actions';
+} from './actions';
 import { OppfolgingActionType } from './action-type';
 import {
     StartKVPAction,
@@ -15,9 +21,10 @@ import {
     startKVPSuccess,
     StoppKVPAction, stoppKVPError,
     stoppKVPSuccess
-} from './start-stopp-kvp-periode-actions';
-import PersonaliaSelectors from '../personalia/selectors';
+} from './actions';
 import OppfolgingApi from '../../api/oppfolging-api';
+import OppfolgingSelector from "./selector";
+import VeilederSelector from "../tildel-veileder/selector";
 
 function* hentOppfolging(action: HentOppfolgingAction) {
     try {
@@ -50,7 +57,7 @@ function* settDigital(action: SettDigitalAction) {
 
 function* startKVP(action: StartKVPAction) {
     try {
-        const fnr = yield select(PersonaliaSelectors.selectFodselsnummer);
+        const fnr = yield select(OppfolgingSelector.selectFnr);
         yield call( () => OppfolgingApi.startKvpOppfolging(action.begrunnelse, fnr));
         yield put(startKVPSuccess());
         yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr});
@@ -61,12 +68,23 @@ function* startKVP(action: StartKVPAction) {
 
 function* stopKVP(action: StoppKVPAction) {
     try {
-        const fnr = yield select(PersonaliaSelectors.selectFodselsnummer);
+        const fnr = yield select(OppfolgingSelector.selectFnr);
         yield call( () => OppfolgingApi.stoppKvpOppfolging(action.begrunnelse, fnr));
         yield put(stoppKVPSuccess());
         yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr});
     } catch (e) {
         yield put(stoppKVPError(e));
+    }
+}
+
+function* avsluttOppfolging(action: AvsluttOppfolgingAction) {
+    try{
+        const fnr = yield select(OppfolgingSelector.selectFnr);
+        const veilederId = yield select(VeilederSelector.selectIdentPaloggetVeileder);
+        const data = yield call( () => OppfolgingApi.avsluttOppfolging(action.begrunnelse, veilederId,fnr));
+        yield put(avsluttOppfolgingSuccess(data));
+    } catch (e) {
+        yield put(avsluttOppfolgingError(e));
     }
 }
 
@@ -76,4 +94,5 @@ export function* oppfolgingSaga() {
     yield takeLatest(OppfolgingActionType.START_KVP, startKVP);
     yield takeLatest(OppfolgingActionType.STOPP_KVP, stopKVP);
     yield takeLatest(OppfolgingActionType.SETT_DIGITAL, settDigital);
+    yield takeLatest(OppfolgingActionType.AVSLUTT_OPPFOLGING, avsluttOppfolging);
 }

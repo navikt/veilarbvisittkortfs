@@ -29,7 +29,6 @@ export interface BehandlandeEnhet {
     navn: string;
 }
 
-
 export interface OppgaveFormResponse {
     ID: string;
     aktoerid: string;

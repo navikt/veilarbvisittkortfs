@@ -1,7 +1,6 @@
 import { fetchToJson, postAsJson } from './api-utils';
 import { Oppfolging } from '../types/oppfolging';
 import { InnstillingsHistorikk } from '../types/innstillings-historikk';
-import {AvslutningStatus} from "../types/avslutningsstatus";
 
 const OPPFOLGING_BASE_URL = '/veilarboppfolging/api';
 
@@ -14,7 +13,8 @@ export interface OppfolgingApi {
     startKvpOppfolging: (begrunnelse: string, fnr: string) => Promise<void>; // TODO SJEKK HVA DET SKA VARA
     stoppKvpOppfolging: (begrunnelse: string, fnr: string) => Promise<void>; // TODO SJEKK HVA DET SKA VARA
     hentInnstillingsHistorikk: (fnr: string) => Promise<InnstillingsHistorikk[]>; //
-    kanAvslutte: (fnr: string) => Promise<AvslutningStatus>; //
+    kanAvslutte: (fnr: string) => Promise<Oppfolging>; //
+    avsluttOppfolging: (begrunnelse: string, veilederId: string, fnr: string) => Promise<Oppfolging>; //
 }
 
 function hentOppfolgingData(fnr?: string) {
@@ -66,6 +66,10 @@ export function kanAvslutte(fnr: string) {
     return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/avslutningStatus?fnr=${fnr}`);
 }
 
+export function avsluttOppfolging(begrunnelse: string, veilederId: string, fnr: string ) {
+    return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/avsluttOppfolging?fnr=${fnr}`, begrunnelse, veilederId);
+}
+
 export default {
     hentOppfolgingData,
     startEskalering,
@@ -75,5 +79,6 @@ export default {
     stoppKvpOppfolging,
     settDigital,
     hentInnstillingsHistorikk,
-    kanAvslutte
+    kanAvslutte,
+    avsluttOppfolging
 } as OppfolgingApi;

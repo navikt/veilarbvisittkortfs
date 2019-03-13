@@ -1,5 +1,5 @@
-import {fetchToJson, postAsJson} from './api-utils';
-import {BehandlandeEnhet, OppgaveFormData, OppgaveFormResponse, OppgaveTema} from '../types/oppgave';
+import { fetchToJson, postAsJson } from './api-utils';
+import { BehandlandeEnhet, OppgaveFormData, OppgaveFormResponse, OppgaveTema } from '../types/oppgave';
 import { OppgaveHistorikk } from '../types/oppgave-historikk';
 import { VeilederListe } from '../types/veilederdata';
 

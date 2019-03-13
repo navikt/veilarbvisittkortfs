@@ -15,19 +15,21 @@ interface OppgaveInnerForm {
     fnr: string
     tema: OppgaveTema | '';
     enhetId: StringOrNothing;
+    veilederId: StringOrNothing;
 }
 
 
-function OppgaveInnerForm({fnr, tema, enhetId}: OppgaveInnerForm) {
+function OppgaveInnerForm({fnr, tema, enhetId, veilederId}: OppgaveInnerForm) {
     if(!tema){
         return null;
     }
 
     return (
         <>
-            <OpprettOppgaveTypeSelector oppgaveTema={tema}/>
-            <OpprettOppgavePrioritetSelector/>
-            <OpprettOppgaveVelgDatoer/>
+        <OpprettOppgaveTypeSelector oppgaveTema={tema}/>
+        <OpprettOppgavePrioritetSelector/>
+        <OpprettOppgaveVelgDatoer/>
+        <div className="sentrert">
             <OpprettOppgaveVelgEnhet
                 value={enhetId}
                 tema={tema}
@@ -36,16 +38,19 @@ function OppgaveInnerForm({fnr, tema, enhetId}: OppgaveInnerForm) {
             <OpprettOppgaveVelgVeileder
                 fnr={fnr}
                 oppgaveTema={tema}
-                valgtFormEnhet={enhetId}/>
-            <OpprettOppgaveBeskrivelseTekstArea/>
-            <HiddenIfDiv className="modal-footer" hidden = {!tema}>
-                <Hovedknapp htmlType="submit" className="knapp knapp--hoved" spinner={false}>
-                    <FormattedMessage id="modal.knapp.lagre" />
-                </Hovedknapp>
-                <button type="button" className="knapp" onClick={()=> "hersp"}>
-                    <FormattedMessage id="modal.knapp.avbryt" />
-                </button>
-            </HiddenIfDiv>
+                valgtFormEnhet={enhetId}
+                veilederId={veilederId}
+            />
+        </div>
+        <OpprettOppgaveBeskrivelseTekstArea/>
+        <HiddenIfDiv className="modal-footer" hidden = {!tema}>
+            <Hovedknapp htmlType="submit" className="knapp knapp--hoved" spinner={false}>
+                <FormattedMessage id="modal.knapp.lagre" />
+            </Hovedknapp>
+            <button type="button" className="knapp" onClick={()=> "hersp"}>
+                <FormattedMessage id="modal.knapp.avbryt" />
+            </button>
+        </HiddenIfDiv>
         </>
     )
 }

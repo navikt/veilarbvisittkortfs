@@ -1,7 +1,8 @@
-import {InnstillingsHistorikk} from "../../../../types/innstillings-historikk";
+import {InnstillingsHistorikk} from "../../../../../types/innstillings-historikk";
 import * as React from "react";
 import {FormattedMessage} from "react-intl";
 import {Element, Normaltekst, Undertekst} from "nav-frontend-typografi";
+import {opprettetAv} from "./opprettet-av";
 
 interface OwnProps {
     instillingsHistorikk: InnstillingsHistorikk
@@ -10,14 +11,16 @@ interface OwnProps {
 function InnstillingHistorikkKomponent({instillingsHistorikk}: OwnProps) {
     const {type, begrunnelse} = instillingsHistorikk;
     return (
-        <div>
+        <div className="historikk__elem">
             <Element>
                 <FormattedMessage id={`innstillinger.modal.historikk-${type.toLowerCase()}`}/>
             </Element>
             <Normaltekst>
                 {begrunnelse}
             </Normaltekst>
-            <Undertekst>Undertekst</Undertekst>
+            <Undertekst>
+                {opprettetAv(instillingsHistorikk.opprettetAv, instillingsHistorikk.opprettetAvBrukerId)}
+                </Undertekst>
         </div>
     )
 }

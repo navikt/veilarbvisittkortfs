@@ -18,6 +18,7 @@ import './opprett-oppgave.less'
 import {Dispatch} from "redux";
 import {lagreOppgave} from "../../../../store/oppgave/actions";
 import {navigerAction} from "../../../../store/navigation/actions";
+import ModalHeader from "../../../components/modal/modal-header";
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
@@ -42,12 +43,13 @@ interface StateProps {
 interface DispatchProps {
     handleSubmit: (formData: OppgaveFormData) => void;
     lukkModal: () => void;
+    tilbakeTilProcesser: () => void;
 }
 
 
 type OpprettOppgaveProps = StateProps & DispatchProps;
 
-function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, lukkModal}: OpprettOppgaveProps) {
+function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, lukkModal, tilbakeTilProcesser}: OpprettOppgaveProps) {
 
     const opprettOppgaveInitialValues: OpprettOppgaveFormValues = {
         beskrivelse: '',
@@ -83,16 +85,17 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, lukkModal}: O
                 return (
                 <NavFrontendModal
                     className="modal"
-                    contentLabel="arbeidsliste"
+                    contentLabel="Opprett gosys oppgave"
                     isOpen={true}
                     onRequestClose={()=> onRequestClose(formikProps)}
                     portalClassName="visittkortfs"
                     closeButton={true}
                 >
-                    <div className="modal-header-wrapper">
-                        <header className="modal-header"/>
-                    </div>
-                    <div className="arbeidsliste__modal">
+                   <ModalHeader
+                       tilbake={tilbakeTilProcesser}
+                       tilbakeTekstId="innstillinger.modal.tilbake"
+                   />
+                    <div className="prosess">
                         <div className="arbeidsliste-info-tekst">
                             <Innholdstittel className="arbeidsliste__overskrift">
                                 <FormattedMessage id="arbeidsliste.modal.legg.til.overskrift" />
@@ -109,6 +112,7 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, lukkModal}: O
                                     tema={formikProps.values.tema}
                                     fnr={fnr}
                                     enhetId={formikProps.values.enhetId}
+                                    veilederId={formikProps.values.veilederId}
                                 />
                             </Form>
                         </div>
@@ -129,7 +133,8 @@ const mapStateToProps = (state: Appstate) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch)=> ({
     handleSubmit: (formdata: OppgaveFormData) => dispatch(lagreOppgave(formdata)),
-    lukkModal: () => dispatch(navigerAction(null))
+    lukkModal: () => dispatch(navigerAction(null)),
+    tilbakeTilProcesser: () => dispatch(navigerAction('prosesser'))
 });
 
 

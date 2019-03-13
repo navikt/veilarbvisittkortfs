@@ -46,7 +46,6 @@ mock.get('/veilarboppfolging/api/person/:fnr/oppfolgingsstatus', Oppfolgingsstat
 mock.get('/veilarbpersonflatefs/api/feature', {visittkort_innstillinger: true});
 mock.get('/veilarboppfolging/api/oppfolging', Oppfolging);
 
-
 mock.get('/veilarbperson/api/person/:fnr', Personalia);
 
 mock.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', Veilederliste);
@@ -55,9 +54,13 @@ mock.get('/veilarbveileder/api/veileder/me', VeilederData);
 /*--OPPFOLGING--*/
 mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', {tilgangTilBrukersKontor: true});
 mock.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', InnstillingsHistorikk);
+mock.post('/veilarboppfolging/api/oppfolging/avsluttOppfolging', (args: HandlerArgument) => {
+    return ResponseUtils.jsonPromise(args.body);
+});
+
 mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
     avslutningStatus: {
-        kanAvslutte: false,
+        kanAvslutte: true,
         harTiltak: true,
         harYtelser: true,
         underOppfolging: true,
@@ -85,8 +88,6 @@ mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
 });
 mock.post('/veilarboppfolging/api/oppfolging/startKvp', {});
 
-
-
 /*--OPPGAVE--*/
 mock.get('/veilarboppgave/api/enhet', [
     {enhetId: '0000', navn: 'NAV Ost'},
@@ -98,7 +99,6 @@ mock.get('/veilarboppgave/api/enhet', [
 
 mock.get('/veilarboppgave/api/enhet/:enhetsId/veiledere', Veilederliste);
 mock.post('/veilarboppgave/api/oppgave', (args: HandlerArgument) => {
-    console.log('args', args.body);
     return ResponseUtils.jsonPromise({
         ID: 123,
         aktoerid: '00000012345',
@@ -106,11 +106,10 @@ mock.post('/veilarboppgave/api/oppgave', (args: HandlerArgument) => {
         opprettetAv : 'Z007',
         tema: args.body.tema,
         type: args.body.type
-    })
+    });
 });
 
 mock.get('/veilarboppgave/api/oppgavehistorikk', Oppgavehistorikk);
-
 
 /*--ARBEIDSLISTE--*/
 mock.get('/veilarbportefolje/api/arbeidsliste/:fnr', Arbeidsliste);

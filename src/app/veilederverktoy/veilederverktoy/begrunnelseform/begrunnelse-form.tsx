@@ -30,7 +30,7 @@ function BegrunnelseForm(props: BegrunnelseFormProps) {
     return (
         <Formik
             initialValues={{tekst: props.tekst || ''}}
-            onSubmit={(values, actions) => props.handleSubmit(values.tekst)}
+            onSubmit={(values) => props.handleSubmit(values.tekst)}
             validationSchema={{}}
             render={formikProps => {
                 return (
@@ -42,7 +42,7 @@ function BegrunnelseForm(props: BegrunnelseFormProps) {
 
                     >
                         <div>
-                            <section className="innstillinger__prosess">
+                            <section className="prosess">
                                 <BergrunnelseOverskrift
                                     overskriftTekstId={props.overskriftTekstId}
                                     infoTekst={props.infoTekst}
