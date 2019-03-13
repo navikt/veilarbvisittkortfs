@@ -7,6 +7,7 @@ export interface StartKVPAction {
 
 export interface StartKVPActionSuccess {
     type: OppfolgingActionType.START_KVP_SUCCESS;
+    begrunnelse:string;
 }
 
 export interface StartKVPActionError {
@@ -21,6 +22,7 @@ export interface StoppKVPAction {
 
 export interface StoppKVPActionSuccess {
     type: OppfolgingActionType.STOPP_KVP_SUCCESS;
+    begrunnelse: string;
 }
 
 export interface StoppKVPActionError {
@@ -33,8 +35,9 @@ export const startKVP = (begrunnelse: string): StartKVPAction => ({
     begrunnelse
 });
 
-export const startKVPSuccess = (): StartKVPActionSuccess => ({
+export const startKVPSuccess = (begrunnelse:string): StartKVPActionSuccess => ({
     type: OppfolgingActionType.START_KVP_SUCCESS,
+    begrunnelse
 });
 
 export const startKVPError = (error: Error): StartKVPActionError => ({
@@ -47,8 +50,9 @@ export const stoppKVP = (begrunnelse: string): StoppKVPAction => ({
     begrunnelse
 });
 
-export const stoppKVPSuccess = (): StoppKVPActionSuccess => ({
-    type: OppfolgingActionType.STOPP_KVP_SUCCESS
+export const stoppKVPSuccess = (begrunnelse: string): StoppKVPActionSuccess => ({
+    type: OppfolgingActionType.STOPP_KVP_SUCCESS,
+    begrunnelse
 });
 
 export const stoppKVPError = (error: Error): StoppKVPActionError => ({

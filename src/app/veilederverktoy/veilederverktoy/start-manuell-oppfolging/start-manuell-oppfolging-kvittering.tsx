@@ -24,12 +24,12 @@ function StartManuellOppfolgingKvittering({navn, navigerTilbake}: StartOppfolgin
         <Modal
             onRequestClose={navigerTilbake}
             contentLabel="instillinger-modal"
-            contentClass="innstillinger"
+            contentClass="Manuell Oppfolging Kvittering"
             isOpen={true}
             className=""
             header={null}
         >
-                <article className="innstillinger__container">
+                <article className="prosess">
                     <Innholdstittel>
                         <FormattedMessage
                             id="innstillinger.modal.overskrift"
@@ -38,12 +38,13 @@ function StartManuellOppfolgingKvittering({navn, navigerTilbake}: StartOppfolgin
                     </Innholdstittel>
                     <div className="innstillinger__innhold blokk-xs">
                         <Systemtittel>
-                            <FormattedMessage id="innstillinger.modal.startoppfolging.overskrift" />
+                            <FormattedMessage id="innstillinger.modal.manuell.overskrift" />
                         </Systemtittel>
                     </div>
                     <AlertStripeSuksess className="blokk-m">
                         <FormattedMessage
-                            id="innstillinger.modal.startoppfolging.kvittering"
+                            id="innstillinger.prosess.manuell.kvittering"
+                            values={{begrunnelse}}
                         />
                     </AlertStripeSuksess>
                 </article>

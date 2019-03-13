@@ -11,8 +11,15 @@ export type NavigerActionType =
 export interface NavigerAction {
     type: NavigerActionType;
     location: StringOrNothing;
+    payload?: any;
 }
 export const navigerAction = (location: StringOrNothing): NavigerAction => ({
     type: 'NAVIGER',
     location
+});
+
+export const navigerActionMedPayload = (type: NavigerActionType ,location: StringOrNothing, payload?: any): NavigerAction => ({
+    type: 'NAVIGER',
+    location,
+    payload
 });

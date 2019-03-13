@@ -4,6 +4,7 @@ import { StringOrNothing } from '../../types/utils/stringornothings';
 
 export interface NavigationState {
     location: StringOrNothing;
+    payload?: any;
 }
 const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = {location: null}, action) => {
     switch (action.type) {
