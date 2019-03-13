@@ -70,6 +70,7 @@ export interface SettManuellAction {
 
 export interface SettManuellActionSuccess {
     type: OppfolgingActionType.SETT_MANUELL_SUCCESS;
+    begrunnelse: string;
     data: Oppfolging;
 }
 
@@ -87,6 +88,7 @@ export interface SettDigitalAction {
 
 export interface SettDigitalActionSuccess {
     type: OppfolgingActionType.SETT_DIGITAL_SUCCESS;
+    begrunnelse: string;
     data: Oppfolging;
 }
 
@@ -102,8 +104,9 @@ export const settManuell = (begrunnelse: string, fnr: string, veilederId: string
     veilederId
 });
 
-export const settManuellSuccess = ( data: Oppfolging): SettManuellActionSuccess => ({
+export const settManuellSuccess = ( begrunnelse: string, data: Oppfolging): SettManuellActionSuccess => ({
     type: OppfolgingActionType.SETT_MANUELL_SUCCESS,
+    begrunnelse,
     data
 });
 
@@ -119,9 +122,10 @@ export const settDigital = (begrunnelse: string, fnr: string, veilederId: string
     veilederId
 });
 
-export const settDigitalSuccess = ( data: Oppfolging): SettDigitalActionSuccess => ({
+export const settDigitalSuccess = (begrunnelse:string, data: Oppfolging): SettDigitalActionSuccess => ({
     type: OppfolgingActionType.SETT_DIGITAL_SUCCESS,
-    data
+    data,
+    begrunnelse,
 });
 
 export const setDigitalError = (error: Error): SettDigitalActionError => ({

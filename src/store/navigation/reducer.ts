@@ -4,6 +4,7 @@ import { StringOrNothing } from '../../types/utils/stringornothings';
 
 export interface NavigationState {
     location: StringOrNothing;
+    begrunnelse?: string;
 }
 const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = {location: null}, action) => {
     switch (action.type) {
@@ -17,11 +18,14 @@ const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = {loc
             };
         case 'SETT_MANUELL_SUCCESS':
             return {
-                location: 'sett_manuell_kvittering'
+                location: 'sett_manuell_kvittering',
+                begrunnelse: action.begrunnelse
             };
         case 'SETT_DIGITAL_SUCCESS' :
             return{
                 location: 'start_digital_oppfoling_kvitterig',
+                begrunnelse: action.begrunnelse
+
             };
         case 'STOPP_KVP_SUCCESS':
             return {

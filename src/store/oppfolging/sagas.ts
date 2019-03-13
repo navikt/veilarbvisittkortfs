@@ -38,7 +38,7 @@ function* hentOppfolging(action: HentOppfolgingAction) {
 function* settManuell(action: SettManuellAction) {
     try {
         const response = yield call( () => OppfolgingApi.settManuellOppfolging(action.begrunnelse, action.veilederId, action.fnr));
-        yield put(settManuellSuccess(response));
+        yield put(settManuellSuccess(action.begrunnelse, response));
         yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr: action.fnr});
     } catch (e) {
         yield put(settManuellError(e));
@@ -48,7 +48,7 @@ function* settManuell(action: SettManuellAction) {
 function* settDigital(action: SettDigitalAction) {
     try {
         const response = yield call( () => OppfolgingApi.settDigital(action.begrunnelse, action.veilederId, action.fnr));
-        yield put(settDigitalSuccess(response));
+        yield put(settDigitalSuccess(action.begrunnelse, response));
         yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr: action.fnr});
     } catch (e) {
         yield put(setDigitalError(e));

@@ -23,7 +23,7 @@ function StoppKvpPeriodeProsess({skjulStoppKvpPeriode, navigerTilStopKvpPeriode 
         <>
             <StartProsess
                 className="innstillinger__prosess"
-                tittelId="innstillinger.prosess.start-kvp.tittel"
+                tittelId="innstillinger.prosess.stopp-kvp.tittel"
                 knappetekstId="innstillinger.modal.prosess.start.knapp"
                 onClick={navigerTilStopKvpPeriode}
             >

@@ -9,6 +9,10 @@ import PersonaliaSelectors from '../../../../store/personalia/selectors';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../../store/navigation/actions';
 
+interface OwnProps {
+    begrunnelse?: string;
+}
+
 interface StateProps {
     navn: string;
 }
@@ -17,16 +21,16 @@ interface DispatchProps {
     navigerTilbake: () => void;
 }
 
-type StartOppfolgingKvittering = StateProps & DispatchProps;
+type StartOppfolgingKvittering = StateProps & DispatchProps & OwnProps;
 
-function StartManuellOppfolgingKvittering({navn, navigerTilbake}: StartOppfolgingKvittering) {
+function StartManuellOppfolgingKvittering({navn, navigerTilbake, begrunnelse}: StartOppfolgingKvittering) {
     return (
         <Modal
             onRequestClose={navigerTilbake}
             contentLabel="veilederverktoy-modal"
             className="veilederverktoy-modal"
         >
-                <article className="innstillinger__container">
+                <article className="prosess">
                     <Innholdstittel>
                         <FormattedMessage
                             id="innstillinger.modal.overskrift"
@@ -35,12 +39,13 @@ function StartManuellOppfolgingKvittering({navn, navigerTilbake}: StartOppfolgin
                     </Innholdstittel>
                     <div className="innstillinger__innhold blokk-xs">
                         <Systemtittel>
-                            <FormattedMessage id="innstillinger.modal.startoppfolging.overskrift" />
+                            <FormattedMessage id="innstillinger.modal.manuell.overskrift" />
                         </Systemtittel>
                     </div>
                     <AlertStripeSuksess className="blokk-m">
                         <FormattedMessage
-                            id="innstillinger.modal.startoppfolging.kvittering"
+                            id="innstillinger.prosess.manuell.kvittering"
+                            values={{begrunnelse}}
                         />
                     </AlertStripeSuksess>
                 </article>

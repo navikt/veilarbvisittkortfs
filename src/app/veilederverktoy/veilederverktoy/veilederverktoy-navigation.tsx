@@ -19,13 +19,16 @@ import AvsluttOppfolging from "./avsluttoppfolging/avslutt-oppfolging";
 import AvsluttOppfolgingKvittering from "./avsluttoppfolging/avslutt-oppfolging-kvittering";
 
 interface StateProps {
-    location: StringOrNothing;
+    navigation: {
+        location: StringOrNothing,
+        begrunnelse?: string
+    };
 }
 
 type VeilederVerktoyNavigationProps = StateProps;
 
 function VeilederVerktoyNavigation(props: VeilederVerktoyNavigationProps) {
-    switch (props.location) {
+    switch (props.navigation.location) {
         case 'prosesser':
             return <Prosesser/>;
         case 'start_eskalering':
@@ -35,11 +38,11 @@ function VeilederVerktoyNavigation(props: VeilederVerktoyNavigationProps) {
         case 'manuell_oppfolging':
             return <StarManuellOppfolging/>;
         case 'sett_manuell_kvittering':
-            return <StartManuellOppfolgingKvittering/>;
+            return <StartManuellOppfolgingKvittering begrunnelse={props.navigation.begrunnelse}/>;
         case 'start_digital_oppfolging':
             return <StartDigitalOppfolging/>;
         case 'start_digital_oppfoling_kvitterig':
-            return <StartDigitalOppfolgingKvittering/>;
+            return <StartDigitalOppfolgingKvittering begrunnelse={props.navigation.begrunnelse}/>;
         case 'start_kvp_periode':
             return <StarKvpPeriode/>;
         case 'start_kvp_periode_kvittering':
@@ -62,7 +65,7 @@ function VeilederVerktoyNavigation(props: VeilederVerktoyNavigationProps) {
 }
 
 const mapStateToProps = (state: Appstate): StateProps => ({
-    location: state.navigation.location,
+    navigation: state.navigation,
 });
 
 export default connect<StateProps>(mapStateToProps)(hiddenIf(VeilederVerktoyNavigation));
