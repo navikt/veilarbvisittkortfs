@@ -66,7 +66,8 @@ const dialogReducer: Reducer<DialogState, DialogActions> = (state = initialState
 
 function* opprettHenvendelse(action: OpprettHenvendelseAction) {
     try {
-        const response = yield call( () => DialogApi.nyHenvendelse(action.data));
+        const fnr = yield select(OppfolgingSelector.selectFnr);
+        const response = yield call( () => DialogApi.nyHenvendelse(action.data,fnr));
         yield put(opprettHenvendelseSuccess(response));
     } catch (e) {
         yield put(opprettHenvendelseError(e));

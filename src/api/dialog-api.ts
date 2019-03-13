@@ -3,7 +3,7 @@ import { postAsJson, putAsJson } from './api-utils';
 import Dialog from '../types/dialog';
 
 export interface DialogApi {
-    nyHenvendelse: (henvendelse: HenvendelseData) => Promise<Dialog>;
+    nyHenvendelse: (henvendelse: HenvendelseData, fnr:string) => Promise<Dialog>;
     oppdaterFerdigbehandlet: (dialogId: string, erFerdigbehandlet: boolean) => Promise<Dialog>;
     oppdaterVenterPaSvar: (dialogId: string, venterPaSvar: boolean) => Promise<Dialog>;
 }
