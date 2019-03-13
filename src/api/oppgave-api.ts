@@ -13,7 +13,7 @@ export interface OppgaveApi {
 const OPPGAVE_BASE_URL = '/veilarboppgave/api';
 
 function hentBehandlandeEnheter(tema: OppgaveTema, fnr: string) {
-    return fetchToJson(`${OPPGAVE_BASE_URL}/enhet?fnr=${fnr}&tema=${tema}`);
+    return fetchToJson(`${OPPGAVE_BASE_URL}/enheter?tema=${tema}&fnr=${fnr}`);
 }
 
 function hentOppgaveHistorikk(fnr: string) {

@@ -89,7 +89,7 @@ mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
 mock.post('/veilarboppfolging/api/oppfolging/startKvp', {});
 
 /*--OPPGAVE--*/
-mock.get('/veilarboppgave/api/enhet', [
+mock.get('/veilarboppgave/api/enheter', [
     {enhetId: '0000', navn: 'NAV Ost'},
     {enhetId: '0001', navn: 'NAV Kjeks'},
     {enhetId: '0002', navn: 'NAV Med jætte lang navn'},

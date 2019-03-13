@@ -10,16 +10,18 @@ import OpprettOppgaveBeskrivelseTekstArea from "./opprett-oppgave-beskrivelse-te
 import HiddenIfDiv from "../../../../components/hidden-if/hidden-if-div";
 import {Hovedknapp} from "nav-frontend-knapper";
 import {FormattedMessage} from "react-intl";
+import {OrNothing} from "../../../../../types/utils/ornothing";
 
 interface OppgaveInnerForm {
     fnr: string
-    tema: OppgaveTema | '';
+    tema: OrNothing<OppgaveTema>;
     enhetId: StringOrNothing;
     veilederId: StringOrNothing;
+    avsenderenhetId: StringOrNothing;
 }
 
 
-function OppgaveInnerForm({fnr, tema, enhetId, veilederId}: OppgaveInnerForm) {
+function OppgaveInnerForm({fnr, tema, enhetId, veilederId, avsenderenhetId}: OppgaveInnerForm) {
     if(!tema){
         return null;
     }
@@ -34,6 +36,7 @@ function OppgaveInnerForm({fnr, tema, enhetId, veilederId}: OppgaveInnerForm) {
                 value={enhetId}
                 tema={tema}
                 fnr={fnr}
+                avsenderenhetId={avsenderenhetId}
             />
             <OpprettOppgaveVelgVeileder
                 fnr={fnr}

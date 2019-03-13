@@ -19,6 +19,7 @@ import {Dispatch} from "redux";
 import {lagreOppgave} from "../../../../store/oppgave/actions";
 import {navigerAction} from "../../../../store/navigation/actions";
 import ModalHeader from "../../../components/modal/modal-header";
+import {OrNothing} from "../../../../types/utils/ornothing";
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
@@ -27,7 +28,7 @@ export interface OpprettOppgaveFormValues {
     fraDato: string;
     tilDato: string;
     prioritet: PrioritetType;
-    tema: OppgaveTema;
+    tema: OrNothing<OppgaveTema>;
     type: OppgaveType;
     avsenderenhetId: string;
     veilederId: StringOrNothing;
@@ -55,10 +56,10 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, lukkModal, ti
         beskrivelse: '',
         enhetId: '',
         fnr,
-        fraDato: moment().format('YYYY-MM-DD'),
-        tilDato:moment().format('YYYY-MM-DD'),
+        fraDato: moment().format('YYYY-MM-DD').toString(),
+        tilDato:moment().format('YYYY-MM-DD').toString(),
         prioritet: 'NORM',
-        tema: 'OPPFOLGING' ,
+        tema: null ,
         type: 'VURDER_HENVENDELSE',
         veilederId: null,
         avsenderenhetId: avsenderenhetId || '',
@@ -76,11 +77,7 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, lukkModal, ti
         <Formik
             initialValues={opprettOppgaveInitialValues}
             validate={(values) => validerOppgaveDatoer(values.fraDato, values.tilDato)}
-            onSubmit={(values)=> {
-                const {fraDato, tilDato, ...rest} = values;
-                const formData: OppgaveFormData = Object.assign({fraDato: new Date(fraDato), tilDato: new Date(tilDato)}, rest);
-                handleSubmit(formData);
-            }}
+            onSubmit={(values)=> handleSubmit(values as OppgaveFormData)}
             render ={ (formikProps: FormikProps<OpprettOppgaveFormValues>) =>{
                 return (
                 <NavFrontendModal
@@ -113,6 +110,7 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, lukkModal, ti
                                     fnr={fnr}
                                     enhetId={formikProps.values.enhetId}
                                     veilederId={formikProps.values.veilederId}
+                                    avsenderenhetId={avsenderenhetId}
                                 />
                             </Form>
                         </div>

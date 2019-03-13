@@ -16,8 +16,8 @@ export interface OppgaveFormData {
     beskrivelse: string;
     enhetId: string;
     fnr: string;
-    fraDato: Date;
-    tilDato: Date;
+    fraDato: string; //DATE??
+    tilDato: string;
     prioritet: PrioritetType;
     tema: OppgaveTema;
     type: OppgaveType;

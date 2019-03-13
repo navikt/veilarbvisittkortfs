@@ -11,10 +11,19 @@ interface OpprettOppgaveVelgEnhet {
     tema: OrNothing<OppgaveTema>;
     value: StringOrNothing;
     fnr: string;
+    avsenderenhetId: StringOrNothing;
 }
 
+const mapTemaTilDefaultEnhetId = (defaultEnhet: string, enhetIContextId?: StringOrNothing) => ({
+    DAGPENGER: "4450",
+    OPPFOLGING: enhetIContextId || defaultEnhet,
+    ARBEIDSAVKLARING: "4404",
+    INDIVIDSTONAD: "0287",
+    ENSLIG_FORSORGER: "4415",
+    TILLEGGSTONAD: "4404"
+});
 
-function OpprettOppgaveVelgEnhet ({value, tema, fnr}: OpprettOppgaveVelgEnhet) {
+function OpprettOppgaveVelgEnhet ({value, tema, fnr, avsenderenhetId}: OpprettOppgaveVelgEnhet) {
     const [behandladeEnheter, setBehandladeEnheter] = useState([] as BehandlandeEnhet[]);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(()=> {
@@ -32,6 +41,10 @@ function OpprettOppgaveVelgEnhet ({value, tema, fnr}: OpprettOppgaveVelgEnhet) {
     }
 
     const valgtEnhet: OrNothing<BehandlandeEnhet> = behandladeEnheter.find(enhet => enhet.enhetId === value);
+    const defaultValue = Object
+        .entries(mapTemaTilDefaultEnhetId(behandladeEnheter[0].enhetId, avsenderenhetId))
+        .filter(([key,value]) => key === tema)
+        .reduce((acc,[key,value]) => value, "");
 
     return (
         <div className="skjemaelement">
@@ -49,13 +62,15 @@ function OpprettOppgaveVelgEnhet ({value, tema, fnr}: OpprettOppgaveVelgEnhet) {
                     >
                         {(data) =>
                             <FormikRadioGroup
+                                defaultValue={defaultValue}
                                 data={data}
                                 createLabel={(behandlandeEnhet: BehandlandeEnhet) => behandlandeEnhet.navn}
                                 createValue={(behandlandeEnhet: BehandlandeEnhet) => behandlandeEnhet.enhetId}
                                 radioName="Velg enhet"
                                 closeDropdown={lukkDropdown}
                                 name="enhetId"
-                            />}
+                            />
+                        }
                     </SokFilter>}
             />
         </div>
