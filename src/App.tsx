@@ -15,6 +15,7 @@ NavFrontendModal.setAppElement(document.getElementById("modal-a11y-wrapper"));
 export interface AppProps {
     fnr: string;
     enhet?: string;
+    tilbakeTilFlate:string;
 }
 
 class App extends React.Component<AppProps> {
@@ -22,7 +23,11 @@ class App extends React.Component<AppProps> {
         return (
             <AppProvider fnr={this.props.fnr}>
                 <div className="visittkortfs">
-                    <Tilbakelenke enhet={this.props.enhet}/>
+                    <Tilbakelenke
+                        enhet={this.props.enhet}
+                        fnr={this.props.fnr}
+                        tilbakeTilFlate={this.props.tilbakeTilFlate}
+                    />
                     <div className="visittkortfs__container">
                         <PersonInfo fnr={this.props.fnr}/>
                         <Veilederverktoyslinje
