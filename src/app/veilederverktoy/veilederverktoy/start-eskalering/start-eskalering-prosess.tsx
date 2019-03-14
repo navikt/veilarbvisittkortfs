@@ -6,6 +6,7 @@ import { Appstate } from '../../../../types/appstate';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../../store/navigation/actions';
+import OppfolgingSelector from "../../../../store/oppfolging/selector";
 
 interface StateProps {
     skjulStartEskalering: boolean;
@@ -37,16 +38,10 @@ function StartEskaleringProsess({skjulStartEskalering, navigerTilStartEsklaringF
     );
 }
 
-const mapStateToProps = (state: Appstate): StateProps => {
-    const oppfolging = state.oppfolging.data;
-    return{
-        skjulStartEskalering:
-            !oppfolging.underOppfolging ||
-            !oppfolging.gjeldeneEskaleringsvarsel ||
-            oppfolging.reservarsjonKRR ||
-            oppfolging.manuell
-    };
-};
+const mapStateToProps = (state: Appstate): StateProps => ({
+    skjulStartEskalering: OppfolgingSelector.selectKanIkkeSendeEskaleringsVarsel(state)
+
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigerTilStartEsklaringForm: () => dispatch(navigerAction('start_eskalering'))

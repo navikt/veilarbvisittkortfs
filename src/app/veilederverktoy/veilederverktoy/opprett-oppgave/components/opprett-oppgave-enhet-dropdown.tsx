@@ -30,14 +30,13 @@ function OpprettOppgaveVelgEnhet ({value, tema, fnr}: OpprettOppgaveVelgEnhet) {
         return <div/>
     }
 
-    const valgtEnhet: OrNothing<BehandlandeEnhet> = behandladeEnheter.find(enhet => enhet.enhetId === value);
-
+    const valgtEnhet: OrNothing<BehandlandeEnhet> = behandladeEnheter.find(enhet => enhet.enhetId === value) || behandladeEnheter [0];
     return (
         <div className="skjemaelement">
             <label className="skjemaelement__label">Enhet*</label>
             <HiddenIfDropDown
                 name="Velg enhet dropdown"
-                knappeTekst={(valgtEnhet && valgtEnhet.navn) || behandladeEnheter[0].navn}
+                knappeTekst={`${valgtEnhet.enhetId} ${valgtEnhet.navn}`}
                 className="velg-enhet-dropdown"
                 btnClassnames="velg-enhet-dropdown__button"
                 render={(lukkDropdown)=>
@@ -50,7 +49,7 @@ function OpprettOppgaveVelgEnhet ({value, tema, fnr}: OpprettOppgaveVelgEnhet) {
                             <FormikRadioGroup
                                 defaultValue={behandladeEnheter[0].enhetId}
                                 data={data}
-                                createLabel={(behandlandeEnhet: BehandlandeEnhet) => behandlandeEnhet.navn}
+                                createLabel={(behandlandeEnhet: BehandlandeEnhet) => `${behandlandeEnhet.enhetId} ${behandlandeEnhet.navn}`}
                                 createValue={(behandlandeEnhet: BehandlandeEnhet) => behandlandeEnhet.enhetId}
                                 radioName="Velg enhet"
                                 closeDropdown={lukkDropdown}
