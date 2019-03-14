@@ -11,6 +11,7 @@ export interface OppfolgingSelector {
     selectErKRR: (state: Appstate) => boolean;
     selectFnr: (state: Appstate) => string;
     selectKanIkkeSendeEskaleringsVarsel: (state: Appstate) => boolean;
+    selectErIkkeArbeidssoker: (state: Appstate) => boolean;
 }
 
 function selectOppfolgingData(state: Appstate): Oppfolging {
@@ -72,6 +73,10 @@ function selectFnr(state: Appstate): string {
     return selectOppfolgingData(state).fnr;
 }
 
+function selectErIkkeArbeidssoker (state: Appstate): boolean{
+    return !selectOppfolgingData(state).underOppfolging && !selectOppfolgingData(state).kanReaktiveras
+}
+
 export default {
     selectOppfolgingStatus,
     selectKanStarteManuellOppfolging,
@@ -79,6 +84,7 @@ export default {
     selectKanOppretteOppgave,
     selectFnr,
     selectErKRR,
-    selectKanIkkeSendeEskaleringsVarsel
+    selectKanIkkeSendeEskaleringsVarsel,
+    selectErIkkeArbeidssoker
 
 }as OppfolgingSelector

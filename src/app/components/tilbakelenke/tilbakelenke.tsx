@@ -5,11 +5,15 @@ import './tilbakelenke.less';
 
 interface Props {
     enhet?: string;
+    fnr: string;
 }
 
 function Tilbakelenke(props: Props) {
+    const tilbakeLenke = props.enhet? `/veilarbportefoljeflatefs/tilbake?enhet=${props.enhet}`:
+        `/veilarbpersonflatefs/${props.fnr}`;
+
     return (
-        <Lenke className="tilbakelenke" href={`/veilarbportefoljeflatefs/tilbake?enhet=${props.enhet}`}>
+        <Lenke className="tilbakelenke" href={tilbakeLenke}>
             <VenstreChevron
                 className="tilbakelenke__chevron"
             />

@@ -22,7 +22,10 @@ class App extends React.Component<AppProps> {
         return (
             <AppProvider fnr={this.props.fnr}>
                 <div className="visittkortfs">
-                    <Tilbakelenke enhet={this.props.enhet}/>
+                    <Tilbakelenke
+                        enhet={this.props.enhet}
+                        fnr={this.props.fnr}
+                    />
                     <div className="visittkortfs__container">
                         <PersonInfo fnr={this.props.fnr}/>
                         <Veilederverktoyslinje
