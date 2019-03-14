@@ -59,7 +59,7 @@ function selectKanIkkeSendeEskaleringsVarsel (state: Appstate): boolean {
     return(
         !TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) ||
         !selectErUnderOppfolging(state) ||
-        !!selectGjeldeneEskaleringsVarsel||
+        !selectGjeldeneEskaleringsVarsel||
         selectErKRR(state)||
         selectErManuell(state)
     )

@@ -6,11 +6,13 @@ import './tilbakelenke.less';
 interface Props {
     enhet?: string;
     fnr: string;
+    tilbakeTilFlate: string;
 }
 
 function Tilbakelenke(props: Props) {
-    const tilbakeLenke = props.enhet? `/veilarbportefoljeflatefs/tilbake?enhet=${props.enhet}`:
-        `/veilarbpersonflatefs/${props.fnr}`;
+    const tilbakeLenke =
+        props.tilbakeTilFlate === 'veilarbportefoljeflatefs' ? `/${props.tilbakeTilFlate}/tilbake?enhet=${props.enhet}`:
+        `/${props.tilbakeTilFlate}/${props.fnr}?enhet=${props.enhet}`;
 
     return (
         <Lenke className="visittkortfs__tilbakelenke" href={tilbakeLenke}>
