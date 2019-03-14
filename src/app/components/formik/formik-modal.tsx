@@ -61,3 +61,9 @@ function FormikModal () {
     )
 }
 */
+
+function FormikModal () {
+    return "Hello";
+}
+
+export default FormikModal;
