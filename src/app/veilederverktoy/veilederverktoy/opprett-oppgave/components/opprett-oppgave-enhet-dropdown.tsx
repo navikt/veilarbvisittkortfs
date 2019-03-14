@@ -6,14 +6,17 @@ import SokFilter from "../../../../components/sokfilter/sok-filter";
 import FormikRadioGroup from "../../../../components/formik/formik-radiogroup";
 import {OrNothing} from "../../../../../types/utils/ornothing";
 import OppgaveApi from "../../../../../api/oppgave-api";
+import {FormikProps} from "formik";
+import {OpprettOppgaveFormValues} from "../opprett-oppgave";
 
 interface OpprettOppgaveVelgEnhet {
     tema: OrNothing<OppgaveTema>;
     value: StringOrNothing;
     fnr: string;
+    formikProps: FormikProps<OpprettOppgaveFormValues>
 }
 
-function OpprettOppgaveVelgEnhet ({value, tema, fnr}: OpprettOppgaveVelgEnhet) {
+function OpprettOppgaveVelgEnhet ({value, tema, fnr, formikProps}: OpprettOppgaveVelgEnhet) {
     const [behandladeEnheter, setBehandladeEnheter] = useState([] as BehandlandeEnhet[]);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(()=> {
@@ -21,6 +24,7 @@ function OpprettOppgaveVelgEnhet ({value, tema, fnr}: OpprettOppgaveVelgEnhet) {
             OppgaveApi.hentBehandlandeEnheter(tema, fnr)
                 .then((behandladeEnheter: BehandlandeEnhet[]) => {
                     setBehandladeEnheter(behandladeEnheter);
+                    formikProps.setFieldValue("enhetId",behandladeEnheter[0].enhetId);
                     setIsLoading(false);
                 });
         }
@@ -29,6 +33,7 @@ function OpprettOppgaveVelgEnhet ({value, tema, fnr}: OpprettOppgaveVelgEnhet) {
     if(isLoading){
         return <div/>
     }
+
 
     const valgtEnhet: OrNothing<BehandlandeEnhet> = behandladeEnheter.find(enhet => enhet.enhetId === value) || behandladeEnheter [0];
     return (

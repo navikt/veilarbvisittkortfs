@@ -111,6 +111,7 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, lukkModal, ti
                                     enhetId={formikProps.values.enhetId}
                                     veilederId={formikProps.values.veilederId}
                                     avsenderenhetId={avsenderenhetId}
+                                    formikProps={formikProps}
                                 />
                             </Form>
                         </div>
