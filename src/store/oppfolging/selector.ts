@@ -1,6 +1,7 @@
 import { Appstate } from '../../types/appstate';
 import TilgangTilKontorSelector from '../tilgang-til-brukerskontor/selector';
-import {Oppfolging} from '../../types/oppfolging';
+import {EskaleringsVarsel, Oppfolging} from '../../types/oppfolging';
+import {OrNothing} from "../../types/utils/ornothing";
 
 export interface OppfolgingSelector {
     selectOppfolgingStatus: (state: Appstate) => boolean;
@@ -9,6 +10,7 @@ export interface OppfolgingSelector {
     selectKanOppretteOppgave: (state: Appstate) => boolean;
     selectErKRR: (state: Appstate) => boolean;
     selectFnr: (state: Appstate) => string;
+    selectKanIkkeSendeEskaleringsVarsel: (state: Appstate) => boolean;
 }
 
 function selectOppfolgingData(state: Appstate): Oppfolging {
@@ -40,11 +42,25 @@ function selectKanStarteManuellOppfolging(state: Appstate): boolean {
     )
 }
 
+function selectGjeldeneEskaleringsVarsel(state: Appstate): OrNothing<EskaleringsVarsel> {
+    return selectOppfolgingData(state).gjeldeneEskaleringsvarsel;
+}
+
 function selectKanStarteDigitalOppfolging(state: Appstate): boolean {
     return (
         !TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) ||
         !selectErUnderOppfolging(state) ||
         !selectErManuell(state)
+    )
+}
+
+function selectKanIkkeSendeEskaleringsVarsel (state: Appstate): boolean {
+    return(
+        !TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) ||
+        !selectErUnderOppfolging(state) ||
+        !!selectGjeldeneEskaleringsVarsel||
+        selectErKRR(state)||
+        selectErManuell(state)
     )
 }
 
@@ -62,6 +78,7 @@ export default {
     selectKanStarteDigitalOppfolging,
     selectKanOppretteOppgave,
     selectFnr,
-    selectErKRR
+    selectErKRR,
+    selectKanIkkeSendeEskaleringsVarsel
 
 }as OppfolgingSelector
