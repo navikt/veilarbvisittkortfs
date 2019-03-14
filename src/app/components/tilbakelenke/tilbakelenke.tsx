@@ -13,11 +13,11 @@ function Tilbakelenke(props: Props) {
         `/veilarbpersonflatefs/${props.fnr}`;
 
     return (
-        <Lenke className="tilbakelenke" href={tilbakeLenke}>
+        <Lenke className="visittkortfs__tilbakelenke" href={tilbakeLenke}>
             <VenstreChevron
-                className="tilbakelenke__chevron"
+                className="visittkortfs__tilbakelenke--chevron"
             />
-            <span className="tilbakelenke__tekst">Tilbake</span>
+            <span className="visittkortfs__tilbakelenke--tekst">Tilbake</span>
         </Lenke>
     );
 }

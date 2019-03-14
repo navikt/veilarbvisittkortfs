@@ -11,6 +11,8 @@ import HiddenIfDiv from "../../../../components/hidden-if/hidden-if-div";
 import {Hovedknapp} from "nav-frontend-knapper";
 import {FormattedMessage} from "react-intl";
 import {OrNothing} from "../../../../../types/utils/ornothing";
+import {FormikProps} from "formik";
+import {OpprettOppgaveFormValues} from "../opprett-oppgave";
 
 interface OppgaveInnerForm {
     fnr: string
@@ -18,10 +20,11 @@ interface OppgaveInnerForm {
     enhetId: StringOrNothing;
     veilederId: StringOrNothing;
     avsenderenhetId: StringOrNothing;
+    formikProps: FormikProps<OpprettOppgaveFormValues>
 }
 
 
-function OppgaveInnerForm({fnr, tema, enhetId, veilederId, avsenderenhetId}: OppgaveInnerForm) {
+function OppgaveInnerForm({fnr, tema, enhetId, veilederId, avsenderenhetId, formikProps}: OppgaveInnerForm) {
     if(!tema){
         return null;
     }
@@ -36,6 +39,7 @@ function OppgaveInnerForm({fnr, tema, enhetId, veilederId, avsenderenhetId}: Opp
                 value={enhetId}
                 tema={tema}
                 fnr={fnr}
+                formikProps={formikProps}
             />
             <OpprettOppgaveVelgVeileder
                 hidden={!(avsenderenhetId===enhetId && tema==='OPPFOLGING')}
