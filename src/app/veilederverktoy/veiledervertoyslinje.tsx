@@ -19,7 +19,7 @@ interface StateProps {
 interface OwnProps {
     fnr: string;
     enhet?: string;
-    hovedFlate?: string;
+    visVeilederVerktoy?: boolean;
 }
 
 interface DispatchProps {
@@ -48,7 +48,7 @@ const handleVeilederKnappClicked = (props: VeilederverktoyslinjeProps, feature: 
 };
 
 function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
-    if(!props.hovedFlate || props.hovedFlate !== "veilarbpersonflatefs") {
+    if(!props.visVeilederVerktoy) {
         return null;
     }
 

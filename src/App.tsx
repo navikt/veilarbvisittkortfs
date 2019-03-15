@@ -16,7 +16,7 @@ export interface AppProps {
     fnr: string;
     enhet?: string;
     tilbakeTilFlate:string;
-    hovedFlate?: string;
+    visVeilederVerktoy?: boolean;
 }
 
 class App extends React.Component<AppProps> {
@@ -34,7 +34,7 @@ class App extends React.Component<AppProps> {
                         <Veilederverktoyslinje
                             fnr={this.props.fnr}
                             enhet={this.props.enhet}
-                            hovedFlate={this.props.hovedFlate}
+                            visVeilederVerktoy={this.props.visVeilederVerktoy}
                         />
                     </div>
                 </div>
