@@ -11,16 +11,15 @@ import { Appstate } from '../../types/appstate';
 import { navigerAction } from '../../store/navigation/actions';
 import {StringOrNothing} from "../../types/utils/stringornothings";
 import FeatureApi from "../../api/feature-api";
-import OppfolgingSelector from "../../store/oppfolging/selector";
 
 interface StateProps {
     tilgangTilBrukersKontor: boolean;
-    skjulVeilederVerktoy: boolean;
 }
 
 interface OwnProps {
     fnr: string;
     enhet?: string;
+    hovedFlate?: string;
 }
 
 interface DispatchProps {
@@ -49,7 +48,7 @@ const handleVeilederKnappClicked = (props: VeilederverktoyslinjeProps, feature: 
 };
 
 function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
-    if(props.skjulVeilederVerktoy) {
+    if(!props.hovedFlate || props.hovedFlate !== "veilarbpersonflatefs") {
         return null;
     }
 
@@ -89,8 +88,7 @@ function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
 }
 
 const mapStateToProps = (state: Appstate): StateProps => ({
-    tilgangTilBrukersKontor: state.tilgangTilBrukersKontor.data.tilgangTilBrukersKontor,
-    skjulVeilederVerktoy: OppfolgingSelector.selectErIkkeArbeidssoker(state)
+    tilgangTilBrukersKontor: state.tilgangTilBrukersKontor.data.tilgangTilBrukersKontor
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
