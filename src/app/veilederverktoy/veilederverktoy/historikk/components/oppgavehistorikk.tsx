@@ -3,6 +3,7 @@ import {FormattedMessage} from "react-intl";
 import {Element, Normaltekst, Undertekst} from "nav-frontend-typografi";
 import {OppgaveHistorikk} from "../../../../../types/oppgave-historikk";
 import {opprettetAv} from "./opprettet-av";
+import moment from "moment";
 
 interface OwnProps {
     oppgaveHistorikk: OppgaveHistorikk
@@ -22,7 +23,7 @@ function OppgaveHistorikkKomponent({oppgaveHistorikk}: OwnProps) {
                 />
             </Normaltekst>
             <Undertekst>
-                {opprettetAv(oppgaveHistorikk.opprettetAv, oppgaveHistorikk.opprettetAvBrukerId)}
+                {`for ${moment(oppgaveHistorikk.dato).fromNow()} ${opprettetAv(oppgaveHistorikk.opprettetAv, oppgaveHistorikk.opprettetAvBrukerId)}`}
             </Undertekst>
         </div>
     )

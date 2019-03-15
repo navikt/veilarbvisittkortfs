@@ -3,6 +3,7 @@ import * as React from "react";
 import {FormattedMessage} from "react-intl";
 import {Element, Normaltekst, Undertekst} from "nav-frontend-typografi";
 import {opprettetAv} from "./opprettet-av";
+import moment from "moment";
 
 interface OwnProps {
     instillingsHistorikk: InnstillingsHistorikk
@@ -19,8 +20,8 @@ function InnstillingHistorikkKomponent({instillingsHistorikk}: OwnProps) {
                 {begrunnelse}
             </Normaltekst>
             <Undertekst>
-                {opprettetAv(instillingsHistorikk.opprettetAv, instillingsHistorikk.opprettetAvBrukerId)}
-                </Undertekst>
+                {`for ${moment(instillingsHistorikk.dato).fromNow()} ${opprettetAv(instillingsHistorikk.opprettetAv, instillingsHistorikk.opprettetAvBrukerId)}`}
+            </Undertekst>
         </div>
     )
 }
