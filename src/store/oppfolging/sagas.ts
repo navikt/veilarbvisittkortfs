@@ -86,6 +86,7 @@ function* avsluttOppfolging() {
 
         const data = yield call( () => OppfolgingApi.avsluttOppfolging(begrunnelse, veilederId, fnr));
         yield put(avsluttOppfolgingSuccess(data));
+        yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr});
     } catch (e) {
         yield put(avsluttOppfolgingError(e));
     }
@@ -98,5 +99,4 @@ export function* oppfolgingSaga() {
     yield takeLatest(OppfolgingActionType.STOPP_KVP, stopKVP);
     yield takeLatest(OppfolgingActionType.SETT_DIGITAL, settDigital);
     yield takeLatest(OppfolgingActionType.AVSLUTT_OPPFOLGING, avsluttOppfolging);
-    yield takeLatest(OppfolgingActionType.AVSLUTT_OPPFOLGING_SUCCESS, hentOppfolging);
 }
