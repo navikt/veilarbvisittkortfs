@@ -8,7 +8,7 @@ import { Appstate } from '../../../../types/appstate';
 import PersonaliaSelectors from '../../../../store/personalia/selectors';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../../store/navigation/actions';
-import ModalHeader from "../../../components/modal/modal-header";
+import ModalHeader from '../../../components/modal/modal-header';
 
 interface StateProps {
     navn: string;

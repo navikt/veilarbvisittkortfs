@@ -1,79 +1,60 @@
-import React, {useState} from "react";
-import {connect} from "react-redux";
-import {Formik} from "formik";
-import VeilederVerktoyModal from "../veilederverktoy-modal";
-import {Dispatch} from "redux";
-import {navigerAction} from "../../../../store/navigation/actions";
-import {Appstate} from "../../../../types/appstate";
-import OppfolgingSelector from "../../../../store/oppfolging/selector";
-import AvsluttOppfolgingBegrunnelseForm from "./components/avslutt-oppfolging-begrunnelse-form";
-import AvsluttOppfolgingBekreft from "./components/avslutt-oppfolging-bekreft";
-import PersonaliaSelector from "../../../../store/personalia/selectors";
-import {avsluttOppfolging} from "../../../../store/oppfolging/actions";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { Appstate } from '../../../../types/appstate';
+import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
+import { AvsluttOppfolgingInfoText } from './components/avslutt-oppfolging-info-text';
+import AvsluttOppfolgingStatusSelector from '../../../../store/avslutningstatus/selector';
+import { OrNothing } from '../../../../types/utils/ornothing';
+import { AvslutningStatus } from '../../../../types/oppfolging';
+import { lagreBegrunnelse } from '../../../../store/avslutningstatus/actions';
+import moment from 'moment';
 
 interface StateProps {
-    fnr: string;
-    navn: string;
+    begrunnelse: string;
+    avslutningStatus: OrNothing<AvslutningStatus>;
+    datoErInnenFor28DagerSiden: boolean;
 }
 
 interface DispatchProps {
-    handleSubmit : (tekst:string) => void;
-    tilbakeTilProcesser: ()=> void;
-    tilbake: ()=> void;
+    handleSubmit: (values: BegrunnelseValues) => void;
 }
 
-
-type AvsluttOppfolging = StateProps & DispatchProps
+type AvsluttOppfolging = StateProps & DispatchProps;
 
 function AvsluttOppfolging (props: AvsluttOppfolging) {
-    //const[harUbehandledeDialoger, setHarUbehandledeDialoger] = useState(false);
-    const [harBekreftetAvsluttOppfolging, setHarBekreftetAvsluttOppfolging] = useState(false);
+
+    const aktivMindreEnn28Dager = props.datoErInnenFor28DagerSiden ?
+        'innstillinger.modal.avslutt.oppfolging.beskrivelse.innenfor-28-dager'
+         : 'innstillinger.modal.avlutt.oppfolging.overskrift';
 
     return (
-        <Formik
-            initialValues={{tekst:''}}
-            onSubmit={(values) => props.handleSubmit(values.tekst)}
-            validationSchema={{}}
-            render={formikProps => {
-                return (
-                    <VeilederVerktoyModal
-                        touched={formikProps.touched.tekst as boolean}
-                        visConfirmDialog={formikProps.touched.tekst as boolean}
-                        tilbakeFunksjon={props.tilbakeTilProcesser}
-                        tilbakeTekstId="innstillinger.modal.tilbake"
-
-                    >
-                        <form>
-                            {!harBekreftetAvsluttOppfolging && <AvsluttOppfolgingBegrunnelseForm
-                                formikProps={formikProps}
-                                onHovedKnappClick={()=>setHarBekreftetAvsluttOppfolging(true)}
-                                onAvbryt={props.tilbake}
-                            />}
-                            {harBekreftetAvsluttOppfolging && <AvsluttOppfolgingBekreft navn={props.navn}/>}
-                        </form>
-
-                    </VeilederVerktoyModal>
-                );
-            }}
+        <BegrunnelseForm
+            initialValues={{begrunnelse: props.begrunnelse}}
+            handleSubmit={props.handleSubmit}
+            tekstariaLabel="Skriv en begrunnelse for hvorfor brukeren nå kan få digital oppfølging"
+            overskriftTekstId={aktivMindreEnn28Dager}
+            isLoading={false}
+            infoTekst={<AvsluttOppfolgingInfoText avslutningStatus={props.avslutningStatus}/>}
         />
     );
-
-
 }
 
+//FLYTTE TIL VEILEDERVERTOY NAVIGATION ???
 
-const mapStateToProps = (state: Appstate) => ({
-    fnr: OppfolgingSelector.selectFnr(state),
-    navn: PersonaliaSelector.selectSammensattNavn(state)
-})
-
+const mapStateToProps = (state: Appstate) => {
+    const avslutningStatus =  AvsluttOppfolgingStatusSelector.selectAvsluttOppfolgingData(state);
+    const for28dagerSide = moment().subtract(28, 'day').toISOString();
+    const datoErInnenFor28DagerSiden = ((avslutningStatus && avslutningStatus.inaktiveringsDato) || 0) > for28dagerSide;
+    return {
+        begrunnelse: AvsluttOppfolgingStatusSelector.selectBegrunnelse(state) || '',
+        avslutningStatus,
+        datoErInnenFor28DagerSiden
+    };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    tilbakeTilProcesser: () => dispatch(navigerAction('prosesser')),
-    handleSubmit: (begrunnelse: string)=> dispatch(avsluttOppfolging(begrunnelse)),
-    tilbake: ()=> dispatch(navigerAction(null))
+    handleSubmit: (values: BegrunnelseValues) => dispatch(lagreBegrunnelse(values.begrunnelse)),
 });
 
-
-
-export default connect<StateProps , DispatchProps>(mapStateToProps ,mapDispatchToProps)(AvsluttOppfolging);
+export default connect<StateProps , DispatchProps>(mapStateToProps , mapDispatchToProps)(AvsluttOppfolging);

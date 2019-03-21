@@ -1,16 +1,16 @@
 import React from 'react';
-import {Field, FieldProps} from "formik";
-import {Input, NavFrontendInputProps} from "nav-frontend-skjema";
-import {getErrors} from "./formik-utils";
+import { Field, FieldProps } from 'formik';
+import { Input, NavFrontendInputProps } from 'nav-frontend-skjema';
+import { getErrors } from './formik-utils';
 
-interface InputProps{
+interface InputProps {
     name: string;
     validate: (value: string) => string | undefined;
     label: string;
 }
 
 function FormikInput<P>({name, validate, ...inputProps}: InputProps & NavFrontendInputProps)
-    : React.ReactElement<FieldProps & NavFrontendInputProps>{
+    : React.ReactElement<FieldProps & NavFrontendInputProps> {
     return (
         <Field validate={validate} name={name}>
             {({ field, form}: FieldProps)  => {
@@ -24,10 +24,10 @@ function FormikInput<P>({name, validate, ...inputProps}: InputProps & NavFronten
                         value={field.value}
                         {...inputProps}
                     />
-                )
+                );
             }}
         </Field>
-    )
+    );
 }
 
 export default FormikInput;

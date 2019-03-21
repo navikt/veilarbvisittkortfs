@@ -1,99 +1,65 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import {Normaltekst} from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
+import StartProsess from '../prosess/start-prosess';
+import VarselStripeAvsluttOppfolging from './components/varsel-stripe-avslutt-oppfolging';
+import visibleIf from '../../../components/visible-if';
 import { Appstate } from '../../../../types/appstate';
-import { connect } from 'react-redux';
+import AvsluttOppfolgingStatusSelector from '../../../../store/avslutningstatus/selector';
 import { Dispatch } from 'redux';
-import { navigerAction } from '../../../../store/navigation/actions';
-import StartProsess from "../prosess/start-prosess";
-import {AvslutningStatus} from "../../../../types/oppfolging";
-import OppfolgingApi from "../../../../api/oppfolging-api";
-import OppfolgingSelector from "../../../../store/oppfolging/selector";
-import NavFrontendSpinner from "nav-frontend-spinner";
-import VarselStripeAvsluttOppfolging from "./components/varsel-stripe-avslutt-oppfolging";
+import { hentAvsluttningStatus } from '../../../../store/avslutningstatus/actions';
+import { connect } from 'react-redux';
+import NavFrontendSpinner from 'nav-frontend-spinner';
+import { OrNothing } from '../../../../types/utils/ornothing';
+import { AvslutningStatus } from '../../../../types/oppfolging';
 
 interface StateProps {
-    skjulAvsluttOppfolging: boolean;
-    fnr: string
+    isLoading: boolean;
+    avslutningStatus: OrNothing<AvslutningStatus>;
 }
 
 interface DispatchProps {
-    navigerTilAvsluttOppfolging: () => void;
+    hentAvsluttOppfolgingStatus: () => void;
 }
 
-function AvsluttOppfolgingProsess({skjulAvsluttOppfolging, navigerTilAvsluttOppfolging, fnr }: StateProps & DispatchProps) {
-    const[avslutningStatus, setAvslutningStatus] = useState({} as AvslutningStatus);
-    const[harHentetAvslutningStatus, setHarHentetAvslutningStatus] = useState(false);
-    const[isLoading, setIsLoading] = useState(true);
+type AvsluttOppfolgingProsessProps = StateProps & DispatchProps;
 
-    const hentAvslutningStatus = () => {
-        if(!harHentetAvslutningStatus) {
-            OppfolgingApi.kanAvslutte(fnr)
-                .then((oppfolging) => {
-                    if(oppfolging.avslutningStatus){
-                        setAvslutningStatus(oppfolging.avslutningStatus);
-                    }
-                    setIsLoading(false);
-                    setHarHentetAvslutningStatus(true)
+function AvsluttOppfolgingProsess(props: AvsluttOppfolgingProsessProps) {
+    const kanAvslutte = props.avslutningStatus && props.avslutningStatus.kanAvslutte;
 
-                })
-        }
+    const handleClick = () => {
+        props.hentAvsluttOppfolgingStatus();
     };
 
-    if(!harHentetAvslutningStatus) {
-        return (
-            <StartProsess
-                className="innstillinger__prosess"
-                tittelId="innstillinger.prosess.avslutt.oppfolging.tittel"
-                knappetekstId="innstillinger.modal.prosess.start.knapp"
-                onClick={()=> hentAvslutningStatus()}
-            >
-                <div className="blokk-xs">
-                    <Normaltekst>
-                        <FormattedMessage id="innstillinger.prosess.avslutt.oppfolging.tekst"/>
-                    </Normaltekst>
-                </div>
-            </StartProsess>
-        );
+    if (props.isLoading) {
+        return <NavFrontendSpinner type="XL"/>;
     }
 
-    if(isLoading){
-        return <NavFrontendSpinner type="XL"/>
-    }
-
-    if(!avslutningStatus.kanAvslutte){
-        return (
-            <StartProsess
-                className="innstillinger__prosess"
-                tittelId="innstillinger.prosess.avslutt.oppfolging.tittel"
-                knappetekstId="innstillinger.modal.prosess.start.knapp"
-            >
-                <div className="blokk-xs">
-                    <Normaltekst>
-                        <FormattedMessage id="innstillinger.prosess.avslutt.oppfolging.tekst"/>
-                    </Normaltekst>
-                    <VarselStripeAvsluttOppfolging {...avslutningStatus}/>
-                </div>
-            </StartProsess>
-        )
-    }
-    else {
-        navigerTilAvsluttOppfolging();
-        return null;
-    }
+    return (
+        <StartProsess
+            tittelId="innstillinger.prosess.avslutt.oppfolging.tittel"
+            knappetekstId="innstillinger.modal.prosess.start.knapp"
+            onClick={handleClick}
+            hiddenKnapp={!!props.avslutningStatus && !props.avslutningStatus.kanAvslutte}
+        >
+            <div className="blokk-xs">
+                <Normaltekst>
+                    <FormattedMessage id="innstillinger.prosess.avslutt.oppfolging.tekst"/>
+                </Normaltekst>
+                {!kanAvslutte && <VarselStripeAvsluttOppfolging avslutningStatus={props.avslutningStatus}/>}
+            </div>
+        </StartProsess>
+    );
 
 }
 
-const mapStateToProps = (state: Appstate): StateProps => {
-    const oppfolging = state.oppfolging.data;
-    return {
-        skjulAvsluttOppfolging: !oppfolging.underOppfolging || !state.tilgangTilBrukersKontor.data.tilgangTilBrukersKontor,
-        fnr: OppfolgingSelector.selectFnr(state)
-    };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-    navigerTilAvsluttOppfolging: () => dispatch(navigerAction('avslutt_oppfolging'))
+const mapStateToProps = (state: Appstate): StateProps => ({
+    isLoading: AvsluttOppfolgingStatusSelector.selectAvsluttOppfolgingIsLoading(state),
+    avslutningStatus: AvsluttOppfolgingStatusSelector.selectAvsluttOppfolgingData(state),
 });
 
-export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(AvsluttOppfolgingProsess);
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
+   hentAvsluttOppfolgingStatus :  () => dispatch(hentAvsluttningStatus())
+});
+
+export default visibleIf(connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(AvsluttOppfolgingProsess));

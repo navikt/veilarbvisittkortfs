@@ -1,11 +1,11 @@
 /* eslint-disable no-restricted-globals */
 import React from 'react';
-import { FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { VenstreChevron } from 'nav-frontend-chevron';
-import {injectIntl, InjectedIntlProps} from 'react-intl';
+import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 interface TilbakeknappProps {
-    tilbake? : () => void;
+    tilbake?: () => void;
     visConfirmDialog?: boolean;
     tekstId: string;
 }
@@ -34,6 +34,5 @@ function Tilbakeknapp(props: TilbakeknappProps & InjectedIntlProps) {
         </button>
     );
 }
-
 
 export default injectIntl(Tilbakeknapp);

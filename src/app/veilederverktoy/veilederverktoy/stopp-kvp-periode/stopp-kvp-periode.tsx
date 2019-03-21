@@ -2,14 +2,14 @@ import React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Appstate } from '../../../../types/appstate';
-import BegrunnelseForm from '../begrunnelseform/begrunnelse-form';
+import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { FormattedMessage } from 'react-intl';
 import { stoppKVP } from '../../../../store/oppfolging/actions';
 import { Normaltekst } from 'nav-frontend-typografi';
 import OppfolgingSelector from '../../../../store/oppfolging/selector';
 
 interface DispatchProps {
-    handleSubmit: (tekst: string) => void;
+    handleSubmit: (values: BegrunnelseValues) => void;
 }
 
 interface StateProps {
@@ -24,9 +24,11 @@ function StoppKvpPeriode(props: StartKvpPeriodeProsessProps) {
             <FormattedMessage id="innstillinger.modal.stopp-kvp.infotekst" />
         </Normaltekst>);
 
+    const initialValues = {begrunnelse: ''};
+
     return (
         <BegrunnelseForm
-            tekst={null}
+            initialValues={initialValues}
             handleSubmit={props.handleSubmit}
             tekstariaLabel="Begrunnelse:"
             overskriftTekstId="innstillinger.prosess.stopp-kvp.tittel"
@@ -41,7 +43,7 @@ const mapStateToProps = (state: Appstate) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    handleSubmit: (begrunnelse: string) => dispatch(stoppKVP(begrunnelse))
+    handleSubmit: (values: BegrunnelseValues) => dispatch(stoppKVP(values.begrunnelse))
 });
 
 export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(StoppKvpPeriode);

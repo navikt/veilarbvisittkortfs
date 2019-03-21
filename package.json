@@ -13,7 +13,7 @@
     "test:coverage": "echo \"her testar vi ingenting\"",
     "eject": "react-scripts eject",
     "lint": "tslint ./src/**/*.ts*",
-    "lint:fix": "tslint ./src/**/*.ts* --fix",
+    "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
     "precommit": "npm run lint:fix",
     "prepush": "npm run lint"
   },

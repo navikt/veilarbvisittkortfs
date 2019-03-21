@@ -14,7 +14,7 @@ import OppfolgingApi from '../../api/oppfolging-api';
 import { startEskaleringError, startEskaleringSuccess } from '../oppfolging/actions';
 import { hentOppfolgingstatusSuccess } from '../oppfolging-status/actions';
 import { FETCH_STATUS } from '../../types/fetch-status';
-import OppfolgingSelector from "../oppfolging/selector";
+import OppfolgingSelector from '../oppfolging/selector';
 
 export type DialogState = {data: Dialog} & {status: FETCH_STATUS; error: OrNothing<Error>};
 
@@ -67,8 +67,8 @@ const dialogReducer: Reducer<DialogState, DialogActions> = (state = initialState
 function* opprettHenvendelse(action: OpprettHenvendelseAction) {
     try {
         const fnr = yield select(OppfolgingSelector.selectFnr);
-        const response = yield call( () => DialogApi.nyHenvendelse(action.data,fnr));
-        yield put(opprettHenvendelseSuccess(response));
+        const response = yield call( () => DialogApi.nyHenvendelse(action.data, fnr));
+        yield put(opprettHenvendelseSuccess(response, fnr));
     } catch (e) {
         yield put(opprettHenvendelseError(e));
     }
@@ -76,19 +76,18 @@ function* opprettHenvendelse(action: OpprettHenvendelseAction) {
 
 function* startEskaleringMedDialog(action: OpprettHenvendelseActionSuccess) {
     try {
-        const fnr = yield select(OppfolgingSelector.selectFnr);
 
         const [dialogData1, dialogData2, oppfolgingStatus] = yield all([
-            DialogApi.oppdaterFerdigbehandlet(action.data.id, true),
-            DialogApi.oppdaterVenterPaSvar(action.data.id, true),
-            OppfolgingApi.startEskalering(action.data.id, action.data.henvendelser[0].tekst)
+            DialogApi.oppdaterFerdigbehandlet(action.data.id, true, action.fnr),
+            DialogApi.oppdaterVenterPaSvar(action.data.id, true, action.fnr),
+            OppfolgingApi.startEskalering(action.data.id, action.data.henvendelser[0].tekst, action.fnr)
         ]);
 
         yield put(oppdaterDialogSuccess(dialogData1));
         yield put(oppdaterDialogSuccess(dialogData2));
         yield put(startEskaleringSuccess(oppfolgingStatus));
 
-        const response = yield call (() => OppfolgingApi.hentOppfolgingData(fnr));
+        const response = yield call (() => OppfolgingApi.hentOppfolgingData(action.fnr));
 
         yield put(hentOppfolgingstatusSuccess(response));
 
