@@ -5,7 +5,8 @@ import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import { Formik, FormikProps } from 'formik';
 import NavFrontendModal from 'nav-frontend-modal';
 import ArbeidslisteForm from './arbeidsliste-form';
-import moment  from "moment";
+import moment  from 'moment';
+import ModalHeader from "../../components/modal/modal-header";
 
 interface RedigerArbeidslisteProps {
     navn: string;
@@ -15,7 +16,6 @@ interface RedigerArbeidslisteProps {
     arbeidsliste: Arbeidsliste;
     arbeidslisteStatus: boolean;
     onSubmit: (values: ArbeidslisteformValues) => void;
-
 }
 
 function RedigerArbeidslisteModal(props: RedigerArbeidslisteProps & InjectedIntlProps) {
@@ -25,7 +25,6 @@ function RedigerArbeidslisteModal(props: RedigerArbeidslisteProps & InjectedIntl
         kommentar: props.arbeidsliste.kommentar || '',
         frist: props.arbeidsliste.frist ?
             moment(props.arbeidsliste.frist).format('YYYY-MM-DD') : ''} as ArbeidslisteformValues;
-
 
     const onRequestClose = (formikProps: FormikProps<ArbeidslisteformValues>) => {
         const dialogTekst = props.intl.formatMessage({
@@ -42,25 +41,23 @@ function RedigerArbeidslisteModal(props: RedigerArbeidslisteProps & InjectedIntl
             initialValues={initalValues}
             onSubmit={(values) => {
                 props.onSubmit(values);
-                props.lukkModal()}}
+                props.lukkModal();
+            }}
             render={formikProps => (
                 <NavFrontendModal
-                    className="arbeidsliste-modal"
                     contentLabel="Rediger arbeidsliste"
                     isOpen={props.isOpen}
                     onRequestClose={() => onRequestClose(formikProps)}
                     closeButton={true}
-                    portalClassName="visittkortfs"
+                    portalClassName="visittkortfs-modal"
                 >
-                    <div className="modal-header-wrapper">
-                        <header className="modal-header"/>
-                    </div>
-                    <div className="arbeidsliste-content">
-                        <div className="arbeidsliste-info-tekst">
-                            <Innholdstittel className="arbeidsliste__overskrift">
+                  <ModalHeader/>
+                    <div className="modal-innhold">
+                        <div className="modal-info-tekst">
+                            <Innholdstittel className="modal-info-tekst__overskrift">
                                 <FormattedMessage id="arbeidsliste.modal.rediger.overskrift" />
                             </Innholdstittel>
-                            <Undertittel>
+                            <Undertittel className="modal-info-tekst__undertekst">
                                 <FormattedMessage
                                     id="arbeidsliste.modal.personalia"
                                     values={{ navn: props.navn, fnr: props.fnr }}

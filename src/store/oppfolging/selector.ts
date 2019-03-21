@@ -1,7 +1,7 @@
 import { Appstate } from '../../types/appstate';
 import TilgangTilKontorSelector from '../tilgang-til-brukerskontor/selector';
-import {EskaleringsVarsel, Oppfolging} from '../../types/oppfolging';
-import {OrNothing} from "../../types/utils/ornothing";
+import { EskaleringsVarsel, Oppfolging } from '../../types/oppfolging';
+import { OrNothing } from '../../types/utils/ornothing';
 
 export interface OppfolgingSelector {
     selectOppfolgingStatus: (state: Appstate) => boolean;
@@ -10,8 +10,12 @@ export interface OppfolgingSelector {
     selectKanOppretteOppgave: (state: Appstate) => boolean;
     selectErKRR: (state: Appstate) => boolean;
     selectFnr: (state: Appstate) => string;
-    selectKanIkkeSendeEskaleringsVarsel: (state: Appstate) => boolean;
+    selectKanSendeEskaleringsVarsel: (state: Appstate) => boolean;
+    selectKanStoppeEskaleringsVarsel: (state: Appstate) => boolean;
     selectErIkkeArbeidssoker: (state: Appstate) => boolean;
+    selectKanStarteKVP: (state: Appstate) => boolean;
+    selectKanStoppeKVP: (state: Appstate) => boolean;
+    selectKanAvslutteOppfolging: (state: Appstate) => boolean;
 }
 
 function selectOppfolgingData(state: Appstate): Oppfolging {
@@ -27,20 +31,27 @@ function selectOppfolgingStatus(state: Appstate): boolean {
     return oppfolgingStatus === 'NOT_STARTED' || oppfolgingStatus === 'LOADING';
 }
 
+function selectFnr(state: Appstate): string {
+    return selectOppfolgingData(state).fnr;
+}
 function selectErManuell(state: Appstate): boolean {
-    return selectOppfolgingData(state).manuell
+    return selectOppfolgingData(state).manuell;
 }
 
 function selectErKRR (state: Appstate): boolean {
     return selectOppfolgingData(state).reservarsjonKRR;
 }
 
+function selectKVP(state: Appstate): boolean {
+    return selectOppfolgingData(state).underKvp;
+}
+
 function selectKanStarteManuellOppfolging(state: Appstate): boolean {
     return (
-        !TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) ||
-        !selectErUnderOppfolging(state) ||
-        selectErManuell(state)
-    )
+        TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) &&
+        selectErUnderOppfolging(state) &&
+        !selectErManuell(state)
+    );
 }
 
 function selectGjeldeneEskaleringsVarsel(state: Appstate): OrNothing<EskaleringsVarsel> {
@@ -49,32 +60,54 @@ function selectGjeldeneEskaleringsVarsel(state: Appstate): OrNothing<Eskalerings
 
 function selectKanStarteDigitalOppfolging(state: Appstate): boolean {
     return (
-        !TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) ||
-        !selectErUnderOppfolging(state) ||
-        !selectErManuell(state)
-    )
+        TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) &&
+        selectErUnderOppfolging(state) &&
+        selectErManuell(state)
+    );
 }
 
-function selectKanIkkeSendeEskaleringsVarsel (state: Appstate): boolean {
+function selectKanSendeEskaleringsVarsel (state: Appstate): boolean {
     return(
-        !TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) ||
-        !selectErUnderOppfolging(state) ||
-        !selectGjeldeneEskaleringsVarsel||
-        selectErKRR(state)||
-        selectErManuell(state)
-    )
+        TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) &&
+        selectErUnderOppfolging(state) &&
+        !selectGjeldeneEskaleringsVarsel(state) &&
+        !selectErKRR(state) &&
+        !selectErManuell(state)
+    );
+}
+
+function selectKanStoppeEskaleringsVarsel (state: Appstate): boolean {
+    return(
+        TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) &&
+        selectErUnderOppfolging(state) &&
+        !!selectGjeldeneEskaleringsVarsel(state) &&
+        !selectErKRR(state) &&
+        !selectErManuell(state)
+    );
 }
 
 function selectKanOppretteOppgave(state: Appstate): boolean {
-    return !selectErUnderOppfolging(state);
+    return selectErUnderOppfolging(state);
 }
 
-function selectFnr(state: Appstate): string {
-    return selectOppfolgingData(state).fnr;
+function selectKanStarteKVP(state: Appstate): boolean {
+    return TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) &&
+        selectErUnderOppfolging(state) &&
+        !selectKVP(state);
 }
 
-function selectErIkkeArbeidssoker (state: Appstate): boolean{
-    return !selectOppfolgingData(state).underOppfolging && !selectOppfolgingData(state).kanReaktiveras
+function selectKanStoppeKVP(state: Appstate): boolean {
+    return TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) &&
+        selectErUnderOppfolging(state) &&
+        selectKVP(state);
+}
+
+function selectKanAvslutteOppfolging(state: Appstate): boolean {
+    return TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) && selectErUnderOppfolging(state);
+}
+
+function selectErIkkeArbeidssoker (state: Appstate): boolean {
+    return !selectOppfolgingData(state).underOppfolging && !selectOppfolgingData(state).kanReaktiveras;
 }
 
 export default {
@@ -84,7 +117,10 @@ export default {
     selectKanOppretteOppgave,
     selectFnr,
     selectErKRR,
-    selectKanIkkeSendeEskaleringsVarsel,
-    selectErIkkeArbeidssoker
-
-}as OppfolgingSelector
+    selectKanSendeEskaleringsVarsel,
+    selectKanStoppeEskaleringsVarsel,
+    selectErIkkeArbeidssoker,
+    selectKanStarteKVP,
+    selectKanStoppeKVP,
+    selectKanAvslutteOppfolging
+}as OppfolgingSelector;

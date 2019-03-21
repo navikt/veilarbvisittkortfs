@@ -1,4 +1,4 @@
-import {InnstillingsHistorikk} from "../../types/innstillings-historikk";
+import { InnstillingsHistorikk } from '../../types/innstillings-historikk';
 
 export enum InnstillingshistorikActionType {
     HENT_INNSTILLINGSHISTORIKK = 'HENT_INNSTILLINGSHISTORIKK',
@@ -35,6 +35,5 @@ export const hentInstillingshistorikkError = (error: Error): InstillinghistorikA
     type: InnstillingshistorikActionType.HENT_INNSTILLINGSHISTORIKK_ERROR,
     error
 });
-
 
 export type InnstillingshistorikActions = HentInnstillinghistorikAction | HentInnstillingshistorikkActionSuccess | InstillinghistorikActionError;

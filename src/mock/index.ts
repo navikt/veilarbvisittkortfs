@@ -61,12 +61,11 @@ mock.post('/veilarboppfolging/api/oppfolging/avsluttOppfolging', (args: HandlerA
 mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
     avslutningStatus: {
         kanAvslutte: true,
-        harTiltak: true,
-        harYtelser: true,
+        harTiltak: false,
+        harYtelser: false,
         underOppfolging: true,
-        inaktiveringsdato: null,
+        inaktiveringsDato: null,
         underKvp: true
-
     },
     erIkkeArbeidssokerUtenOppfolging: false,
     erSykmeldtMedArbeidsgiver: false,

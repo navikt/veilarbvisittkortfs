@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { Personalia } from '../../types/personalia';
 import { OppfolgingStatus } from '../../types/oppfolging-status';
 import { Appstate } from '../../types/appstate';
-import PersonaliaSelector from "../../store/personalia/selectors";
+import PersonaliaSelector from '../../store/personalia/selectors';
 
 interface StateProps {
     personalia: Personalia;

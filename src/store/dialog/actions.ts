@@ -27,6 +27,7 @@ export interface OpprettHenvendelseAction {
 export interface OpprettHenvendelseActionSuccess {
     type: HenvendelseActionType.OPPRETTET_HENVENDELSE_SUCCESS;
     data: Dialog;
+    fnr: string;
 }
 
 export interface OpprettHenvendelseActionError {
@@ -53,10 +54,11 @@ export function opprettHenvendelse(data: HenvendelseData): OpprettHenvendelseAct
     };
 }
 
-export function opprettHenvendelseSuccess(data: Dialog): OpprettHenvendelseActionSuccess {
+export function opprettHenvendelseSuccess(data: Dialog, fnr: string): OpprettHenvendelseActionSuccess {
     return {
         type: HenvendelseActionType.OPPRETTET_HENVENDELSE_SUCCESS,
-        data
+        data,
+        fnr
     };
 }
 

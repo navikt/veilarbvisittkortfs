@@ -9,6 +9,7 @@ import { TilgangTilBrukersKontorState } from '../store/tilgang-til-brukerskontor
 import { InnstillingsHistorikkState } from '../store/innstillingshistorikk/reducer';
 import { OppgaveHistorikkState } from '../store/oppgave/reducer';
 import { EnhetState } from '../store/enhet/reducer';
+import { AvsluttOppfolgingState } from '../store/avslutningstatus/reducer';
 
 export interface Appstate {
     oppfolging: OppfogingState;
@@ -22,4 +23,5 @@ export interface Appstate {
     instillingshistorikk: InnstillingsHistorikkState;
     oppgavehistorikk: OppgaveHistorikkState;
     enhetId: EnhetState;
+    avsluttOppfolgingStatus: AvsluttOppfolgingState;
 }

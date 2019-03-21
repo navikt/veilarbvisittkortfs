@@ -1,5 +1,5 @@
 import {
-    AvsluttOppfolgingAction, avsluttOppfolgingError,
+    avsluttOppfolgingError,
     avsluttOppfolgingSuccess,
     HentOppfolgingAction,
     hentOppfolgingError,
@@ -23,8 +23,9 @@ import {
     stoppKVPSuccess
 } from './actions';
 import OppfolgingApi from '../../api/oppfolging-api';
-import OppfolgingSelector from "./selector";
-import VeilederSelector from "../tildel-veileder/selector";
+import OppfolgingSelector from './selector';
+import VeilederSelector from '../tildel-veileder/selector';
+import AvsluttOppfolgingStatusSelector from '../avslutningstatus/selector';
 
 function* hentOppfolging(action: HentOppfolgingAction) {
     try {
@@ -77,11 +78,13 @@ function* stopKVP(action: StoppKVPAction) {
     }
 }
 
-function* avsluttOppfolging(action: AvsluttOppfolgingAction) {
-    try{
+function* avsluttOppfolging() {
+    try {
         const fnr = yield select(OppfolgingSelector.selectFnr);
+        const begrunnelse = yield select(AvsluttOppfolgingStatusSelector.selectBegrunnelse);
         const veilederId = yield select(VeilederSelector.selectIdentPaloggetVeileder);
-        const data = yield call( () => OppfolgingApi.avsluttOppfolging(action.begrunnelse, veilederId,fnr));
+
+        const data = yield call( () => OppfolgingApi.avsluttOppfolging(begrunnelse, veilederId, fnr));
         yield put(avsluttOppfolgingSuccess(data));
     } catch (e) {
         yield put(avsluttOppfolgingError(e));
@@ -95,4 +98,5 @@ export function* oppfolgingSaga() {
     yield takeLatest(OppfolgingActionType.STOPP_KVP, stopKVP);
     yield takeLatest(OppfolgingActionType.SETT_DIGITAL, settDigital);
     yield takeLatest(OppfolgingActionType.AVSLUTT_OPPFOLGING, avsluttOppfolging);
+    yield takeLatest(OppfolgingActionType.AVSLUTT_OPPFOLGING_SUCCESS, hentOppfolging);
 }

@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Arbeidsliste, ArbeidslisteformData, ArbeidslisteformValues} from '../../../types/arbeidsliste';
+import React, { useEffect, useState } from 'react';
+import { Arbeidsliste, ArbeidslisteformData, ArbeidslisteformValues } from '../../../types/arbeidsliste';
 import ArbeidslisteIkon from './arbeidsliste.svg';
 import RedigerIkon from './rediger.svg';
 import FjernArbeidslisteModal from './fjern-arbeidsliste-modal';
@@ -46,11 +46,10 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
     const [fjernArbeidsliste, setFjernArbeidslisteAktivt] = useState( false);
     const [visKommentar, setVisKommentarAktivt] = useState( false);
 
-    useEffect(() =>
-    {props.hentArbeidsliste(props.fnr)},[]);
+    useEffect(() => {props.hentArbeidsliste(props.fnr); }, []);
 
-    if(props.isLoading) {
-        return <NavFrontendSpinner type='XL'/>
+    if (props.isLoading) {
+        return <NavFrontendSpinner type="XL"/>;
     }
     return (
         <>
@@ -130,7 +129,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
             frist: values.frist ? dateToISODate(values.frist) : null
         } as ArbeidslisteformData)
     ),
-    hentArbeidsliste:(fnr:string) => dispatch(hentArbeidsliste(fnr))
+    hentArbeidsliste: (fnr: string) => dispatch(hentArbeidsliste(fnr))
 
 });
 

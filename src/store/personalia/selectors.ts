@@ -1,8 +1,8 @@
 import { Appstate } from '../../types/appstate';
 import { Personalia } from '../../types/personalia';
 import { PersonaliaState } from './reducer';
-import {StringOrNothing} from "../../types/utils/stringornothings";
-import {storeForbokstaver} from "../../app/utils/utils";
+import { StringOrNothing } from '../../types/utils/stringornothings';
+import { storeForbokstaver } from '../../app/utils/utils';
 
 export interface PersonaliaSelector {
     selectPersonaliaData: (state: Appstate) => Personalia;
@@ -39,7 +39,7 @@ function selectSammensattNavn (state: Appstate): string {
 }
 
 function selectFornavn (state: Appstate): string {
-    return selectPersonaliaData(state).fornavn
+    return selectPersonaliaData(state).fornavn;
 }
 
 function selectEtternavn (state: Appstate): string {

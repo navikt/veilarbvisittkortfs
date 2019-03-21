@@ -1,25 +1,21 @@
 import React from 'react';
-import {Form, Formik, FormikProps} from "formik";
-import NavFrontendModal from "nav-frontend-modal";
-import {Innholdstittel, Undertittel} from "nav-frontend-typografi";
-import {FormattedMessage} from "react-intl";
-import {Appstate} from "../../../../types/appstate";
-import PersonaliaSelector from "../../../../store/personalia/selectors";
-import {connect} from "react-redux";
-import {OppgaveFormData, OppgaveTema, OppgaveType, PrioritetType} from "../../../../types/oppgave";
+import { Form } from 'formik';
+import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
+import { FormattedMessage } from 'react-intl';
+import { Appstate } from '../../../../types/appstate';
+import PersonaliaSelector from '../../../../store/personalia/selectors';
+import { connect } from 'react-redux';
+import { OppgaveFormData, OppgaveTema, OppgaveType, PrioritetType } from '../../../../types/oppgave';
 import moment from 'moment';
-import {
-    validerOppgaveDatoer
-} from "../../../utils/formik-validation";
-import {StringOrNothing} from "../../../../types/utils/stringornothings";
-import OpprettOppgaveTemaSelector from "./components/opprett-oppgave-tema-selector";
-import OppgaveInnerForm from "./components/oppgave-inner-form";
-import './opprett-oppgave.less'
-import {Dispatch} from "redux";
-import {lagreOppgave} from "../../../../store/oppgave/actions";
-import {navigerAction} from "../../../../store/navigation/actions";
-import ModalHeader from "../../../components/modal/modal-header";
-import {OrNothing} from "../../../../types/utils/ornothing";
+import { StringOrNothing } from '../../../../types/utils/stringornothings';
+import OpprettOppgaveTemaSelector from './components/opprett-oppgave-tema-selector';
+import OppgaveInnerForm from './components/oppgave-inner-form';
+import './opprett-oppgave.less';
+import { Dispatch } from 'redux';
+import { lagreOppgave } from '../../../../store/oppgave/actions';
+import { navigerAction, navigerTilProcesser } from '../../../../store/navigation/actions';
+import { OrNothing } from '../../../../types/utils/ornothing';
+import FormikModal from '../../../components/formik/formik-modal';
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
@@ -40,13 +36,11 @@ interface StateProps {
     avsenderenhetId: StringOrNothing;
 }
 
-
 interface DispatchProps {
     handleSubmit: (formData: OppgaveFormData) => void;
     lukkModal: () => void;
     tilbakeTilProcesser: () => void;
 }
-
 
 type OpprettOppgaveProps = StateProps & DispatchProps;
 
@@ -57,7 +51,7 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, lukkModal, ti
         enhetId: '',
         fnr,
         fraDato: moment().format('YYYY-MM-DD').toString(),
-        tilDato:moment().format('YYYY-MM-DD').toString(),
+        tilDato: moment().format('YYYY-MM-DD').toString(),
         prioritet: 'NORM',
         tema: null ,
         type: 'VURDER_HENVENDELSE',
@@ -65,61 +59,38 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, lukkModal, ti
         avsenderenhetId: avsenderenhetId || '',
     };
 
-    const onRequestClose = (formikProps: FormikProps<OpprettOppgaveFormValues>) => {
-        const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
-        if (formikProps.dirty || confirm(dialogTekst)) {
-            lukkModal();
-            formikProps.resetForm();
-        }
-    };
-
     return (
-        <Formik
+        <FormikModal
             initialValues={opprettOppgaveInitialValues}
-            validate={(values) => validerOppgaveDatoer(values.fraDato, values.tilDato)}
-            onSubmit={(values)=> handleSubmit(values as OppgaveFormData)}
-            render ={ (formikProps: FormikProps<OpprettOppgaveFormValues>) =>{
-                return (
-                <NavFrontendModal
-                    className="modal"
-                    contentLabel="Opprett gosys oppgave"
-                    isOpen={true}
-                    onRequestClose={()=> onRequestClose(formikProps)}
-                    portalClassName="visittkortfs"
-                    closeButton={true}
-                >
-                   <ModalHeader
-                       tilbake={tilbakeTilProcesser}
-                       tilbakeTekstId="innstillinger.modal.tilbake"
-                   />
-                    <div className="prosess">
-                        <div className="arbeidsliste-info-tekst">
-                            <Innholdstittel className="arbeidsliste__overskrift">
-                                <FormattedMessage id="arbeidsliste.modal.legg.til.overskrift" />
-                            </Innholdstittel>
-                            <Undertittel>
-                                <FormattedMessage
-                                    id="arbeidsliste.modal.personalia"
-                                    values={{ navn, fnr }}
-                                />
-                            </Undertittel>
-                            <Form>
-                                <OpprettOppgaveTemaSelector/>
-                                <OppgaveInnerForm
-                                    tema={formikProps.values.tema}
-                                    fnr={fnr}
-                                    enhetId={formikProps.values.enhetId}
-                                    veilederId={formikProps.values.veilederId}
-                                    avsenderenhetId={avsenderenhetId}
-                                    formikProps={formikProps}
-                                />
-                            </Form>
-                        </div>
-                    </div>
-                </NavFrontendModal>)
-            }}
+            handleSubmit={handleSubmit}
+            contentLabel="Opprett gosys oppgave"
+            render={(formikProps) =>
+                <>
+                    <Innholdstittel className="arbeidsliste__overskrift">
+                        <FormattedMessage id="arbeidsliste.modal.legg.til.overskrift" />
+                    </Innholdstittel>
+                    <Undertittel>
+                        <FormattedMessage
+                            id="arbeidsliste.modal.personalia"
+                            values={{ navn, fnr }}
+                        />
+                    </Undertittel>
+                    <Form>
+                        <OpprettOppgaveTemaSelector/>
+                        <OppgaveInnerForm
+                            tema={formikProps.values.tema}
+                            fnr={fnr}
+                            enhetId={formikProps.values.enhetId}
+                            veilederId={formikProps.values.veilederId}
+                            avsenderenhetId={avsenderenhetId}
+                            formikProps={formikProps}
+                        />
+                    </Form>
+                </>
+            }
+
         />
-    )
+    );
 }
 
 const mapStateToProps = (state: Appstate) => ({
@@ -129,12 +100,10 @@ const mapStateToProps = (state: Appstate) => ({
 
 });
 
-
-const mapDispatchToProps = (dispatch: Dispatch)=> ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     handleSubmit: (formdata: OppgaveFormData) => dispatch(lagreOppgave(formdata)),
     lukkModal: () => dispatch(navigerAction(null)),
-    tilbakeTilProcesser: () => dispatch(navigerAction('prosesser'))
+    tilbakeTilProcesser: () => dispatch(navigerTilProcesser())
 });
-
 
 export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(OpprettOppgave);
