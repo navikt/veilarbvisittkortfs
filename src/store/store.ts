@@ -14,6 +14,7 @@ import { oppfolgingSaga } from './oppfolging/sagas';
 import instillingshistorikkReducer, { instillingshistorikkSaga } from './innstillingshistorikk/reducer';
 import oppgavehistorikkReducer, { oppgaveHistorikkSaga } from './oppgave/reducer';
 import enhetIdReducer from './enhet/reducer';
+import avsluttOppfolgingStatusReducer, { avsluttOppfolgingStatusSaga } from './avslutningstatus/reducer';
 
 const sagaMiddleware = createReduxSaga();
 
@@ -30,6 +31,7 @@ const store = createStore(
         instillingshistorikk: instillingshistorikkReducer,
         oppgavehistorikk: oppgavehistorikkReducer,
         enhetId: enhetIdReducer,
+        avsluttOppfolgingStatus: avsluttOppfolgingStatusReducer
     }),
     composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
@@ -44,7 +46,8 @@ function* rootSaga() {
         fork(tildelVeilederSaga),
         fork(tilgangTilBrukersKontorSaga),
         fork(instillingshistorikkSaga),
-        fork(oppgaveHistorikkSaga)
+        fork(oppgaveHistorikkSaga),
+        fork(avsluttOppfolgingStatusSaga)
     ]);
 }
 

@@ -13,10 +13,13 @@ import StartDigitalOppfolgingKvittering from './start-digital-oppfolging/start-d
 import StartDigitalOppfolging from './start-digital-oppfolging/start-digital-oppfolging';
 import hiddenIf from '../../components/hidden-if/hidden-if';
 import { StringOrNothing } from '../../../types/utils/stringornothings';
-import OpprettOppgave from "./opprett-oppgave/opprett-oppgave";
-import OpprettOppgaveKvittering from "./opprett-oppgave/oprett-oppgave-kvittering";
-import AvsluttOppfolging from "./avsluttoppfolging/avslutt-oppfolging";
-import AvsluttOppfolgingKvittering from "./avsluttoppfolging/avslutt-oppfolging-kvittering";
+import OpprettOppgave from './opprett-oppgave/opprett-oppgave';
+import OpprettOppgaveKvittering from './opprett-oppgave/oprett-oppgave-kvittering';
+import AvsluttOppfolging from './avsluttoppfolging/avslutt-oppfolging';
+import AvsluttOppfolgingKvittering from './avsluttoppfolging/avslutt-oppfolging-kvittering';
+import StoppEskalering from './stopp-eskalering/stopp-eskalering';
+import AvsluttOppfolgingBekreft from './avsluttoppfolging/avslutt-oppfolging-bekreft';
+import StopEskaleringKvittering from "./stopp-eskalering/stopp-esklaring-kvittering";
 
 interface StateProps {
     navigation: {
@@ -57,8 +60,14 @@ function VeilederVerktoyNavigation(props: VeilederVerktoyNavigationProps) {
             return <OpprettOppgaveKvittering/>;
         case 'avslutt_oppfolging':
             return <AvsluttOppfolging/>;
+        case 'avlutt_oppfolging_bekreft':
+            return <AvsluttOppfolgingBekreft/>;
         case 'avslutt_oppfolging_kvittering':
             return <AvsluttOppfolgingKvittering/>;
+        case 'stopp_eskalering':
+            return <StoppEskalering/>;
+        case 'stopp_eskalering_kvittering':
+            return <StopEskaleringKvittering/>;
         default:
             return null;
     }

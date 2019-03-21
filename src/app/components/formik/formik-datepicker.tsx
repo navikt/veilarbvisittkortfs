@@ -34,7 +34,7 @@ function FormikDatoVelger({name, validate, label, ariaLabel, className}: FormikD
                                 placeholder: 'dd.mm.åååå',
                                 ariaLabel,
                                 onChange: (value: string) => {
-                                    setFieldValue(field.name, value)
+                                    setFieldValue(field.name, value);
                                 }
                             }}
                             id="fristDatovelger"

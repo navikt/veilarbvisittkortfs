@@ -7,14 +7,15 @@ import { connect } from 'react-redux';
 
 interface OwnProps {
     spinner: boolean;
+    disabled?: boolean;
 }
 
 interface DispatchProps {
     tilbake: () => void;
 }
-type StartEskaleringProsessFooterProps = OwnProps & DispatchProps;
+type BegrunnelseFooterProps = OwnProps & DispatchProps;
 
-function BegrunnelseFooter(props: StartEskaleringProsessFooterProps ) {
+function BegrunnelseFooter(props: BegrunnelseFooterProps ) {
     return(
         <div className="modal-footer">
             <Hovedknapp
@@ -22,6 +23,7 @@ function BegrunnelseFooter(props: StartEskaleringProsessFooterProps ) {
                 spinner={props.spinner}
                 autoDisableVedSpinner={true}
                 className="btn--mr1"
+                disabled={props.disabled}
             >
                 <FormattedMessage id="innstillinger.modal.start-eskalering.knapp.bekreft" />
             </Hovedknapp>

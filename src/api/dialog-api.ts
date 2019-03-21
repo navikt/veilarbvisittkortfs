@@ -4,8 +4,8 @@ import Dialog from '../types/dialog';
 
 export interface DialogApi {
     nyHenvendelse: (henvendelse: HenvendelseData, fnr: string) => Promise<Dialog>;
-    oppdaterFerdigbehandlet: (dialogId: string, erFerdigbehandlet: boolean) => Promise<Dialog>;
-    oppdaterVenterPaSvar: (dialogId: string, venterPaSvar: boolean) => Promise<Dialog>;
+    oppdaterFerdigbehandlet: (dialogId: string, erFerdigbehandlet: boolean, fnr: string) => Promise<Dialog>;
+    oppdaterVenterPaSvar: (dialogId: string, venterPaSvar: boolean, fnr: string) => Promise<Dialog>;
 }
 
 function nyHenvendelse(henvendelse: HenvendelseData, fnr: string) {
@@ -20,7 +20,7 @@ function oppdaterFerdigbehandlet(dialogId: string, erFerdigbehandlet: boolean, f
 
 function oppdaterVenterPaSvar(dialogId: string, venterPaSvar: boolean, fnr: string) {
     return putAsJson(
-        `/veilarbdialog/api/dialog/${dialogId}/venter_pa_svar/${venterPaSvar}}?fnr=${fnr}`
+        `/veilarbdialog/api/dialog/${dialogId}/venter_pa_svar/${venterPaSvar}?fnr=${fnr}`
     );
 }
 

@@ -1,5 +1,5 @@
-import {OppgaveHistorikk} from "../../types/oppgave-historikk";
-import {OppgaveFormData, OppgaveFormResponse, OppgaveTema, OppgaveType} from "../../types/oppgave";
+import { OppgaveHistorikk } from '../../types/oppgave-historikk';
+import { OppgaveFormData, OppgaveFormResponse, OppgaveTema, OppgaveType } from '../../types/oppgave';
 
 export enum OppgaveActionType {
     HENT_OPPGAVEHISTORIKK = 'HENT_OPPGAVEHISTORIKK',
@@ -26,18 +26,18 @@ interface HentOppgavehistorikkActionError {
 }
 
 export interface LagreOppgaveAction {
-    type: OppgaveActionType.LAGRE_OPPGAVE,
-    data: OppgaveFormData
+    type: OppgaveActionType.LAGRE_OPPGAVE;
+    data: OppgaveFormData;
 }
 
 export interface LagreOppgaveActionSuccess {
-    type: OppgaveActionType.LAGRE_OPPGAVE_SUCCESS
-    data: {tema: OppgaveTema, type: OppgaveType}
+    type: OppgaveActionType.LAGRE_OPPGAVE_SUCCESS;
+    data: {tema: OppgaveTema, type: OppgaveType};
 }
 
 export interface LagreOppgaveActionError {
-    type: OppgaveActionType.LAGRE_OPPGAVE_ERROR,
-    error: Error
+    type: OppgaveActionType.LAGRE_OPPGAVE_ERROR;
+    error: Error;
 }
 
 export const hentOppgavehistorikk = (fnr: string): HentOppgavehistorikkAction => ({
@@ -64,7 +64,6 @@ export const lagreOppgaveSuccess = (response: OppgaveFormResponse): LagreOppgave
     type: OppgaveActionType.LAGRE_OPPGAVE_SUCCESS,
     data: {tema: response.tema, type: response.type}
 });
-
 
 export const lagreOppgaveError = (error: Error): LagreOppgaveActionError => ({
     type: OppgaveActionType.LAGRE_OPPGAVE_ERROR,

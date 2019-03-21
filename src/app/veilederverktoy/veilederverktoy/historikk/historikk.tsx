@@ -1,20 +1,19 @@
-import React, {useEffect, useState} from "react";
-import {Appstate} from "../../../../types/appstate";
-import OppfolgingSelector from "../../../../store/oppfolging/selector";
-import OppfolgingApi from "../../../../api/oppfolging-api";
-import {InnstillingsHistorikk} from "../../../../types/innstillings-historikk";
-import {connect} from "react-redux";
-import OppgaveApi from "../../../../api/oppgave-api";
-import {OppgaveHistorikk} from "../../../../types/oppgave-historikk";
-import HistorikkVisning from "./historikk-visning";
-import NavFrontendSpinner from "nav-frontend-spinner";
-import "./historikk.less"
-import {Undertittel} from "nav-frontend-typografi";
+import React, { useEffect, useState } from 'react';
+import { Appstate } from '../../../../types/appstate';
+import OppfolgingSelector from '../../../../store/oppfolging/selector';
+import OppfolgingApi from '../../../../api/oppfolging-api';
+import { InnstillingsHistorikk } from '../../../../types/innstillings-historikk';
+import { connect } from 'react-redux';
+import OppgaveApi from '../../../../api/oppgave-api';
+import { OppgaveHistorikk } from '../../../../types/oppgave-historikk';
+import HistorikkVisning from './historikk-visning';
+import NavFrontendSpinner from 'nav-frontend-spinner';
+import './historikk.less';
+import { Undertittel } from 'nav-frontend-typografi';
 
 interface StateProps {
     fnr: string;
 }
-
 
 type HistorikkProps = StateProps;
 
@@ -26,18 +25,18 @@ function Historikk (props: HistorikkProps) {
     useEffect(() => {
 
         OppfolgingApi.hentInnstillingsHistorikk(props.fnr)
-            .then((innstillingsHistorikk: InnstillingsHistorikk[])=> setInnstillingsHistorikk(innstillingsHistorikk));
+            .then((innstillingsHistorikkData: InnstillingsHistorikk[]) => setInnstillingsHistorikk(innstillingsHistorikkData));
 
         OppgaveApi.hentOppgaveHistorikk(props.fnr).
-        then((oppgaveHistorikk: OppgaveHistorikk[]) => {
-            setOppgaveHistorikk(oppgaveHistorikk);
+        then((oppgaveHistorikkData: OppgaveHistorikk[]) => {
+            setOppgaveHistorikk(oppgaveHistorikkData);
             setIsLoading(false);
         });
 
     }, []);
 
-    if(isLoading){
-        return <NavFrontendSpinner type="XL"/>
+    if (isLoading) {
+        return <NavFrontendSpinner type="XL"/>;
     }
 
     return (
@@ -46,7 +45,7 @@ function Historikk (props: HistorikkProps) {
             <HistorikkVisning historikkInnslag={[...innstillingsHistorikk, ...oppgaveHistorikk]}/>
         </article>
 
-    )
+    );
 
 }
 

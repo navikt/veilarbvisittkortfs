@@ -1,24 +1,27 @@
 import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import { Dispatch } from 'redux';
 import { opprettHenvendelse } from '../../../../store/dialog/actions';
 import { connect } from 'react-redux';
-import { navigerAction } from '../../../../store/navigation/actions';
 import { Appstate } from '../../../../types/appstate';
-import BegrunnelseForm from '../begrunnelseform/begrunnelse-form';
+import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import OppfolgingSelector from '../../../../store/oppfolging/selector';
-import {Normaltekst} from "nav-frontend-typografi";
+import { Normaltekst } from 'nav-frontend-typografi';
 
 interface DispatchProps {
-    handleSubmit: (overskrift: string) => ((tekst: string) => void);
-    tilbake: () => void;
+    handleSubmit: (values: StartEskaleringValues) => void;
 }
 
 interface StateProps {
     isLoading: boolean;
 }
 
-type StartEskaleringProps = StateProps & DispatchProps;
+interface StartEskaleringValues extends BegrunnelseValues {
+    overskrift: string;
+    tekst: string;
+}
+
+type StartEskaleringProps = StateProps & DispatchProps & InjectedIntlProps;
 
 function StartEskalering(props: StartEskaleringProps) {
     const infoTekst = (
@@ -26,24 +29,24 @@ function StartEskalering(props: StartEskaleringProps) {
             <FormattedMessage id="innstillinger.modal.start-eskalering.beskrivelse" />
         </Normaltekst>
     );
+
+    const initialValues = {
+        begrunnelse:  props.intl.formatMessage({id: 'innstillinger.modal.start-eskalering.automatisk-tekst'}),
+        overskrift:  props.intl.formatMessage({id: 'dialog.eskalering.overskrift'}),
+        tekst: props.intl.formatMessage({id: 'innstillinger.modal.start-eskalering.automatisk-tekst'})
+    };
     return (
-        <FormattedMessage id="dialog.eskalering.overskrift">
-            {overskrift =>
-                <FormattedMessage id="innstillinger.modal.start-eskalering.automatisk-tekst">
-                    {defaultTekst =>
-                        <BegrunnelseForm
-                            tekst={defaultTekst as string}
-                            handleSubmit={props.handleSubmit(overskrift as string)}
-                            tekstariaLabel="Rediger teksten under slik at den passer."
-                            maxLength={5000}
-                            overskriftTekstId="innstillinger.modal.start-eskalering.overskrift"
-                            infoTekst={infoTekst}
-                            isLoading={props.isLoading}
-                        />
-                    }
-                </FormattedMessage>
-            }
-        </FormattedMessage>
+
+        <BegrunnelseForm
+            handleSubmit={props.handleSubmit}
+            initialValues={initialValues}
+            tekstariaLabel="Rediger teksten under slik at den passer."
+            maxLength={5000}
+            overskriftTekstId="innstillinger.modal.start-eskalering.overskrift"
+            infoTekst={infoTekst}
+            isLoading={props.isLoading}
+        />
+
     );
 }
 
@@ -51,14 +54,9 @@ const mapStateToProps = (state: Appstate) => ({
     isLoading: OppfolgingSelector.selectOppfolgingStatus(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        handleSubmit(overskrift: string) {
-            return (tekst: string) => dispatch(opprettHenvendelse(
-                    {begrunnelse: tekst, overskrift, egenskaper: ['ESKALERINGSVARSEL'], tekst}));
-        },
-        tilbake: () => dispatch(navigerAction(null))
-    };
-};
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    handleSubmit: (values: StartEskaleringValues) => dispatch(opprettHenvendelse (
+                {begrunnelse: values.tekst, overskrift: values.overskrift, egenskaper: ['ESKALERINGSVARSEL'], tekst: values.tekst})),
+});
 
 export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(injectIntl(StartEskalering));

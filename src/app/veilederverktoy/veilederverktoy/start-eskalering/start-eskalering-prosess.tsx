@@ -2,49 +2,26 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import StartProsess from './../prosess/start-prosess';
-import { Appstate } from '../../../../types/appstate';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { navigerAction } from '../../../../store/navigation/actions';
-import OppfolgingSelector from "../../../../store/oppfolging/selector";
+import visibleIf from '../../../components/visible-if';
 
-interface StateProps {
-    skjulStartEskalering: boolean;
+interface StartEskaleringProsessProps {
+    navigerTilStartEsklaring: () => void;
 }
 
-interface DispatchProps {
-    navigerTilStartEsklaringForm: () => void;
-}
-
-function StartEskaleringProsess({skjulStartEskalering, navigerTilStartEsklaringForm }: StateProps & DispatchProps) {
-    if (skjulStartEskalering) {
-        return null;
-    }
+function StartEskaleringProsess({navigerTilStartEsklaring }: StartEskaleringProsessProps) {
     return (
-        <>
-            <StartProsess
-                className="innstillinger__prosess"
-                tittelId="innstillinger.prosess.start-eskalering.tittel"
-                knappetekstId="innstillinger.modal.prosess.start.knapp"
-                onClick={navigerTilStartEsklaringForm}
-            >
-                <div className="blokk-xs">
-                    <Normaltekst>
-                        <FormattedMessage id="innstillinger.prosess.start-eskalering.tekst" />
-                    </Normaltekst>
-                </div>
-            </StartProsess>
-        </>
+        <StartProsess
+            tittelId="innstillinger.prosess.start-eskalering.tittel"
+            knappetekstId="innstillinger.modal.prosess.start.knapp"
+            onClick={navigerTilStartEsklaring}
+        >
+            <div className="blokk-xs">
+                <Normaltekst>
+                    <FormattedMessage id="innstillinger.prosess.start-eskalering.tekst" />
+                </Normaltekst>
+            </div>
+        </StartProsess>
     );
 }
 
-const mapStateToProps = (state: Appstate): StateProps => ({
-    skjulStartEskalering: OppfolgingSelector.selectKanIkkeSendeEskaleringsVarsel(state)
-
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-    navigerTilStartEsklaringForm: () => dispatch(navigerAction('start_eskalering'))
-});
-
-export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(StartEskaleringProsess);
+export default visibleIf(StartEskaleringProsess);

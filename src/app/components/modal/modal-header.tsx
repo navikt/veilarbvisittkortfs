@@ -13,9 +13,9 @@ function ModalHeader({className, tilbakeTekstId, visConfirmDialog, tilbake}: Own
     return (
         <div className={classNames('modal-header-wrapper', className)}>
             <header className="modal-header">
-                {tilbakeTekstId &&
+                {tilbake &&
                     <Tilbakeknapp
-                        tekstId={tilbakeTekstId}
+                        tekstId={tilbakeTekstId || 'Tilbake'}
                         visConfirmDialog={visConfirmDialog}
                         tilbake={tilbake}
                     />}

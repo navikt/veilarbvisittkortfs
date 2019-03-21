@@ -1,4 +1,6 @@
-.visittkortfs {
+@import (reference) '~nav-frontend-core/less/_variabler';
+
+.visittkortfs-modal {
 
   .modal {
     position: relative;
@@ -17,8 +19,19 @@
       padding: 1.13rem 1rem;
     }
 
-    .modal-innhold__info-tekst {
-      padding: 1rem 2rem 0 2rem;
+    .modal-innhold {
+      padding: 1rem 1.5rem 0 1.5rem;
+    }
+
+    .modal-info-tekst {
+
+      &__overskrift {
+        margin-bottom: 0.5rem;
+      }
+
+      &__undertekst {
+        margin-bottom: 0.5rem;
+      }
     }
 
     .modal__overlay {
@@ -28,7 +41,7 @@
     .modal-footer {
       display: flex;
       border-top: 1px solid #B7B1A9;
-      padding: 1.5rem 0rem 2rem 0rem
+      padding: 1.5rem 0 2rem 0;
     }
 
     .tilbakeknapp {
@@ -45,8 +58,24 @@
 
   }
 
+  .btn--mr1 {
+    margin-right: 1rem;
+  }
+
+  .btn--mb1 {
+    margin-bottom: 1rem;
+  }
+
+  .margin--0 {
+    margin: 0;
+  }
+
+  .gra-border {
+    border-bottom: 1px solid @navGra40;
+  }
+
   .vis-overflow {
   overflow: auto;
-}
+  }
 
 }

@@ -1,22 +1,22 @@
 import React from 'react';
-import {Field, FieldProps} from "formik";
-import {Select, SelectProps} from "nav-frontend-skjema";
-import {injectIntl, InjectedIntlProps}  from 'react-intl';
-import {getErrors} from "./formik-utils";
-import {Partial} from "../../../types/partial-type";
+import { Field, FieldProps } from 'formik';
+import { Select, SelectProps } from 'nav-frontend-skjema';
+import { injectIntl, InjectedIntlProps }  from 'react-intl';
+import { getErrors } from './formik-utils';
+import { Partial } from '../../../types/partial-type';
 
 interface FormikInputProps {
     name: string;
     validate?: (value: string) => string | undefined;
     labelId: string;
-    options: {value: string, label: string}[]
+    options: {value: string, label: string}[];
 }
 
 function FormikSelect ({name, validate, intl, labelId, options, ...selectProps}: FormikInputProps & InjectedIntlProps & Partial<SelectProps>) {
     return (
         <Field validate={validate} name={name}>
             {({ field, form}: FieldProps)  => {
-                const feil = getErrors(form.errors,form.touched, name);
+                const feil = getErrors(form.errors, form.touched, name);
                 const label = intl.formatMessage({id: labelId});
                 return(
                     <Select
@@ -35,10 +35,10 @@ function FormikSelect ({name, validate, intl, labelId, options, ...selectProps}:
                             </option>
                         )}
                     </Select>
-                )
+                );
             }}
         </Field>
-    )
+    );
 }
 
 export default injectIntl(FormikSelect);

@@ -1,15 +1,15 @@
 import React from 'react';
 import TannHjulIkon from './../tannhjul.svg';
-import { HiddenIfKnappFss } from '../../components/hidden-if/hidden-if-knapp';
+import KnappFss from '../../components/knapp-fss/knapp-fss';
 
-function VeilederVerktoyKnapp (props: {hidden: boolean, onClick: () => void}) {
+function VeilederVerktoyKnapp (props: {onClick: () => void}) {
     return (
-        <HiddenIfKnappFss
+        <KnappFss
             icon={TannHjulIkon}
             onClick={props.onClick}
         >
             Veilederverktøy
-        </HiddenIfKnappFss>
+        </KnappFss>
     );
 }
 

@@ -7,10 +7,9 @@ import { Dispatch } from 'redux';
 import { navigerAction } from '../../../store/navigation/actions';
 import NavFrontendModal from 'nav-frontend-modal';
 import classNames from 'classnames';
-import ModalHeader from "../../components/modal/modal-header";
+import ModalHeader from '../../components/modal/modal-header';
 
-const cls = (className?: string)=> classNames('modal', className);
-
+const cls = (className?: string) => classNames('modal', className);
 
 interface OwnProps {
     children: React.ReactNode;
@@ -18,7 +17,7 @@ interface OwnProps {
     touched?: boolean;
     className?: string;
     tilbakeTekstId?: string;
-    tilbakeFunksjon?: ()=> void;
+    tilbakeFunksjon?: () => void;
 }
 
 interface StateProps {
@@ -39,7 +38,7 @@ function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
             isOpen={true}
             onRequestClose={props.tilbake}
             closeButton={true}
-            portalClassName="visittkortfs"
+            portalClassName="visittkortfs-modal"
         >
             <ModalHeader
                 tilbakeTekstId={props.tilbakeTekstId}

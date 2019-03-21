@@ -1,69 +1,69 @@
-/*
-import NavFrontendModal from "nav-frontend-modal";
-import ModalHeader from "../modal/modal-header";
-import React from "react";
-import classNames from "classnames";
-import {Formik} from "formik";
-import {VenstreChevron} from "nav-frontend-chevron";
-import {FormattedMessage} from "react-intl";
+import NavFrontendModal from 'nav-frontend-modal';
+import React, { useState } from 'react';
+import classNames from 'classnames';
+import { Formik, FormikProps } from 'formik';
+import ModalHeader from '../modal/modal-header';
 
-const cls = (className:string) => classNames('modal',className);
+const cls = (className?: string) => classNames('modal', className);
 
-function TilbakeKnapp() {
-    function tilbake(e: React.SyntheticEvent) {
-        e.preventDefault();
-        const dialogTekst = props.intl.formatMessage({
-            id: 'modal-skjema.lukk-advarsel',
-        });
-        // eslint-disable-next-line no-alert
-        if (!props.visConfirmDialog || confirm(dialogTekst)) {
-            if (props.tilbake) {
-                props.tilbake();
-                return;
-            }
-        }
-    }
+interface FormikModalProps<Values> {
+    initialValues: Values;
+    handleSubmit: (values: Values) => void;
+    validationSchema?: (values: Values) => void;
+    className?: string;
+    contentLabel: string;
+    render: (formikProps: FormikProps<Values>) => React.ReactNode;
 
-    return (
-        <button onClick={tilbake} className="tilbakeknapp">
-            <VenstreChevron />
-            <span className="tilbakeknapp-innhold__tekst">
-                    <FormattedMessage id={props.tekstId}/>
-                </span>
-        </button>
-    );
+    tilbakeTekstId?: string;
+    visConfirmDialog?: boolean;
+    tilbake?: () => void;
+    isOpen?: boolean;
 }
 
+//Er du sikker på at du vil lukke siden? Ulagrede endringer vil da gå tapt.
 
-function FormikModal () {
+function FormikModal<Values> ({visConfirmDialog= true, ...props}: FormikModalProps<Values>) {
+    const[isOpen, setIsOpen] = useState(true);
+
+    const tilbake = (formikProps: FormikProps<Values>) => {
+
+        const confirmTekst = 'Er du sikker på at du vil lukke siden? Ulagrede endringer vil da gå tapt.';
+
+        if (formikProps.dirty) {
+            if (visConfirmDialog && confirm(confirmTekst)) {
+                setIsOpen(false);
+            }
+            if(!visConfirmDialog) {
+                setIsOpen(false)
+            }
+        } else {
+            setIsOpen(false);
+        }
+    };
 
     return (
         <Formik
-            initialValues={initialValues}
-            onSubmit={(values) => handleSubmit(values)}
-            validationSchema={{}}
+            initialValues={props.initialValues}
+            validationSchema={props.validationSchema}
+            onSubmit={(values) => props.handleSubmit(values)}
             render={formikProps =>
                 <NavFrontendModal
-                    className={cls(className)}
-                    contentLabel={contentLabel}
-                    isOpen={true}
-                    onRequestClose={tilbake}
+                    className={cls(props.className)}
+                    contentLabel={props.contentLabel}
+                    isOpen={props.isOpen ? props.isOpen : isOpen}
+                    onRequestClose={() => tilbake(formikProps)}
                     closeButton={true}
-                    portalClassName="visittkortfs"
+                    portalClassName="visittkortfs-modal"
                 >
-                    <ModalHeader/>
-                    <div className="modal-innhold">
-                        {children(formikProps)}
-                    </div>
+                   <ModalHeader
+                       tilbake={props.tilbake}
+                       tilbakeTekstId={props.tilbakeTekstId}
+                   />
+                    {props.render(formikProps)}
                 </NavFrontendModal>
             }
         />
-    )
-}
-*/
-
-function FormikModal () {
-    return "Hello";
+    );
 }
 
 export default FormikModal;
