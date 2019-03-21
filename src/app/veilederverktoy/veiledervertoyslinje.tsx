@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './veilederverktoy.less';
 import Arbeidslistekomponent from './arbeidsliste/arbeidsliste-controller';
 import TildelVeileder from './tildel-veileder/tildel-veileder';
@@ -7,14 +7,9 @@ import { connect } from 'react-redux';
 import VeilederVerktoyNavigation from './veilederverktoy/veilederverktoy-navigation';
 import { hentTilgangTilBrukersKontor } from '../../store/tilgang-til-brukerskontor/actions';
 import VeilederVerktoyKnapp from './veilederverktoy/veileder-verktoy-knapp';
-import { Appstate } from '../../types/appstate';
-import { navigerAction } from '../../store/navigation/actions';
-import {StringOrNothing} from "../../types/utils/stringornothings";
-import FeatureApi from "../../api/feature-api";
-
-interface StateProps {
-    tilgangTilBrukersKontor: boolean;
-}
+import { navigerTilProcesser } from '../../store/navigation/actions';
+import { StringOrNothing } from '../../types/utils/stringornothings';
+import FeatureApi from '../../api/feature-api';
 
 interface OwnProps {
     fnr: string;
@@ -28,10 +23,10 @@ interface DispatchProps {
     settEnhetsId: (enhet: StringOrNothing) => void;
 }
 
-type VeilederverktoyslinjeProps = StateProps & OwnProps & DispatchProps;
+type VeilederverktoyslinjeProps = OwnProps & DispatchProps;
 
 interface Feature {
-    visittkort_innstillinger: boolean
+    visittkort_innstillinger: boolean;
 }
 
 const handleVeilederKnappClicked = (props: VeilederverktoyslinjeProps, feature: Feature) => {
@@ -48,29 +43,25 @@ const handleVeilederKnappClicked = (props: VeilederverktoyslinjeProps, feature: 
 };
 
 function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
-    if(!props.visVeilederVerktoy) {
+    if (!props.visVeilederVerktoy) {
         return null;
     }
-
 
     const [harVisInnstillingsFeature, setFeature] = useState({visittkort_innstillinger: false});
 
     useEffect(() => {
         FeatureApi
             .hentFeatures('visittkort_innstillinger')
-            .then((harVisInnstillingsFeature: Feature) => setFeature(harVisInnstillingsFeature))
+            .then((harVisInnstillingsFeature: Feature) => setFeature(harVisInnstillingsFeature));
     }, []);
-
 
     useEffect(() => {
         props.hentTilgangTilBrukersKontor(props.fnr);
     }, [props.fnr]);
 
-    useEffect(()=> {
-        props.settEnhetsId(props.enhet) //TODO FLYTTE TIL DATA-PROVIDERN
-    },[props.enhet]);
-
-
+    useEffect(() => {
+        props.settEnhetsId(props.enhet); //TODO FLYTTE TIL DATA-PROVIDERN
+    }, [props.enhet]);
 
     return (
         <div className="veilederverktoyslinje">
@@ -79,7 +70,6 @@ function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
                 <TildelVeileder fnr={props.fnr}/>
                 <VeilederVerktoyKnapp
                     onClick={() => handleVeilederKnappClicked(props, harVisInnstillingsFeature)}
-                    hidden={props.tilgangTilBrukersKontor}
                 />
                 <VeilederVerktoyNavigation/>
             </div>
@@ -87,14 +77,10 @@ function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
     );
 }
 
-const mapStateToProps = (state: Appstate): StateProps => ({
-    tilgangTilBrukersKontor: state.tilgangTilBrukersKontor.data.tilgangTilBrukersKontor
-});
-
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     hentTilgangTilBrukersKontor: (fnr: string) => dispatch(hentTilgangTilBrukersKontor(fnr)),
-    navigerTilProsesser: () => dispatch(navigerAction('prosesser')),
-    settEnhetsId: (enhet: string)=> dispatch({type: 'SETT_ENHET_FRA_PERSONFLATEFS', enhet}) //TRENGER DENNE INNE I OPPGAVEFORM
+    navigerTilProsesser: () => dispatch(navigerTilProcesser()),
+    settEnhetsId: (enhet: string) => dispatch({type: 'SETT_ENHET_FRA_PERSONFLATEFS', enhet}) //TRENGER DENNE INNE I OPPGAVEFORM
 });
 
-export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps) (Veilederverktoyslinje);
+export default connect<{}, DispatchProps, OwnProps>(null, mapDispatchToProps) (Veilederverktoyslinje);

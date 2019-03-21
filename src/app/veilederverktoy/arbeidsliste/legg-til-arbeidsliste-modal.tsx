@@ -44,9 +44,9 @@ function LeggTilArbeidslisteModal(props: LeggTilArbeidslisteProps) {
                     onRequestClose={() => onRequestClose(formikProps)}
                 >
                     <ModalHeader/>
-                    <div className="arbeidsliste-content">
-                        <div className="arbeidsliste-info-tekst">
-                            <Innholdstittel className="arbeidsliste__overskrift">
+                    <div className="modal-innhold">
+                        <div className="modal-info-tekst">
+                            <Innholdstittel className="modal-info-tekst__overskrift">
                                 <FormattedMessage id="arbeidsliste.modal.legg.til.overskrift" />
                             </Innholdstittel>
                             <Undertittel>

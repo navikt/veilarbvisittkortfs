@@ -8,6 +8,10 @@ export interface NavigationState {
 }
 const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = {location: null}, action) => {
     switch (action.type) {
+        case 'NAVIGER_TIL_PROSSER':
+            return {
+                location: 'prosesser'
+            };
         case 'NAVIGER':
             return {
                 location : action.location
@@ -16,6 +20,11 @@ const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = {loc
             return {
                 location : 'eskalering_kvittering'
             };
+        case 'STOPP_ESKALERING_SUCCESS': {
+            return {
+                location: 'stopp_eskalering_kvittering'
+            }
+        }
         case 'SETT_MANUELL_SUCCESS':
             return {
                 location: 'sett_manuell_kvittering',
@@ -39,6 +48,16 @@ const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = {loc
             return {
                 location: 'oppgave_kvittering',
             };
+        case 'LAGRE_AVSLUTT_OPPFOLGING_BEGRUNNELSE': {
+            return {
+                location: 'avlutt_oppfolging_bekreft'
+            };
+        }
+        case 'AVSLUTT_OPPFOLGING_SUCCESS': {
+            return {
+                location: 'avlutt_oppfolging_kvittering'
+            }
+        }
         default :
             return state;
     }

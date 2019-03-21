@@ -1,76 +1,77 @@
 import React from 'react';
-import { Formik } from 'formik';
-import { Textarea } from 'nav-frontend-skjema';
-import VeilederVerktoyModal from '../veilederverktoy-modal';
 import BegrunnelseFooter from './begrunnelse-form-footer';
-import { StringOrNothing } from '../../../../types/utils/stringornothings';
+import { Dispatch } from 'redux';
+import { navigerTilProcesser } from '../../../../store/navigation/actions';
+import { connect } from 'react-redux';
+import FormikModal from '../../../components/formik/formik-modal';
+import { Form, FormikProps } from 'formik';
 import BergrunnelseOverskrift from './begrunnelse-overskrift';
-import {Dispatch} from "redux";
-import {navigerAction} from "../../../../store/navigation/actions";
-import {connect} from "react-redux";
+import { Appstate } from '../../../../types/appstate';
+import PersonaliaSelector from '../../../../store/personalia/selectors';
+import { BegrunnelseTextArea } from './begrunnelse-textarea';
 
-interface OwnProps {
-    tekst: StringOrNothing;
-    handleSubmit: (tekst: string) => void;
-    tekstariaLabel: React.ReactNode;
-    overskriftTekstId: string;
-    infoTekst: React.ReactNode;
-    maxLength?: number;
+export interface BegrunnelseValues {
+    begrunnelse: string;
+}
+
+interface OwnProps<T extends BegrunnelseValues> {
+    initialValues: T;
+    handleSubmit: (values: T) => void;
+    tekstariaLabel: string;
     isLoading: boolean;
+    overskriftTekstId: string;
+    infoTekst?: React.ReactNode;
+    render?: (formikProps: FormikProps<T>) => React.ReactNode;
+    maxLength?: number;
 }
 
 interface DispatchProps {
     tilbakeTilProcesser: () => void;
 }
 
-type BegrunnelseFormProps = OwnProps & DispatchProps;
+interface StateProps {
+    navnPaMotpart: string;
+}
 
+type BegrunnelseFormProps<T extends BegrunnelseValues> = OwnProps<T> & DispatchProps & StateProps;
 
-function BegrunnelseForm(props: BegrunnelseFormProps) {
+function BegrunnelseForm<T extends BegrunnelseValues>(props: BegrunnelseFormProps<T>) {
     return (
-        <Formik
-            initialValues={{tekst: props.tekst || ''}}
-            onSubmit={(values) => props.handleSubmit(values.tekst)}
-            validationSchema={{}}
-            render={formikProps => {
-                return (
-                    <VeilederVerktoyModal
-                        touched={formikProps.touched.tekst as boolean}
-                        visConfirmDialog={formikProps.touched.tekst as boolean}
-                        tilbakeFunksjon={props.tilbakeTilProcesser}
-                        tilbakeTekstId="innstillinger.modal.tilbake"
-
-                    >
-                        <div>
-                            <section className="prosess">
-                                <BergrunnelseOverskrift
-                                    overskriftTekstId={props.overskriftTekstId}
-                                    infoTekst={props.infoTekst}
-                                />
-                                <form onSubmit={formikProps.handleSubmit}>
-                                    <Textarea
-                                        label={props.tekstariaLabel}
-                                        maxLength={props.maxLength || 500}
-                                        value={formikProps.values.tekst}
-                                        name="tekst"
-                                        onChange={formikProps.handleChange}
-                                        onBlur={formikProps.handleBlur}
-                                    />
-                                    <BegrunnelseFooter
-                                        spinner={props.isLoading}
-                                    />
-                                </form>
-                            </section>
-                        </div>
-                    </VeilederVerktoyModal>
-                );
-            }}
+        <FormikModal
+            initialValues={props.initialValues}
+            handleSubmit={props.handleSubmit}
+            contentLabel=""
+            visConfirmDialog={true}
+            tilbake={props.tilbakeTilProcesser}
+            tilbakeTekstId="Tilbake"
+            render={formikProps =>
+                <div className="modal-innhold">
+                    <BergrunnelseOverskrift
+                        overskriftTekstId={props.overskriftTekstId}
+                        infoTekst={props.infoTekst}
+                        navnPaMotpart={props.navnPaMotpart}
+                    />
+                    <Form>
+                        <BegrunnelseTextArea
+                            tekstariaLabel={props.tekstariaLabel}
+                            maxLength={props.maxLength}
+                        />
+                        <BegrunnelseFooter
+                            spinner={props.isLoading}
+                        />
+                    </Form>
+                </div>
+            }
         />
     );
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-    tilbakeTilProcesser: () => dispatch(navigerAction('prosesser'))
+const mapStateToProps = (state: Appstate) => ({
+    navnPaMotpart: PersonaliaSelector.selectSammensattNavn(state),
 });
 
-export default connect<{}, DispatchProps, OwnProps>(null, mapDispatchToProps)(BegrunnelseForm);
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
+    tilbakeTilProcesser: () => dispatch(navigerTilProcesser())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BegrunnelseForm);

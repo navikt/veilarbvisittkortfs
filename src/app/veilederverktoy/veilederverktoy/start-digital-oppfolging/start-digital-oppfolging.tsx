@@ -2,7 +2,7 @@ import React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Appstate } from '../../../../types/appstate';
-import BegrunnelseForm from '../begrunnelseform/begrunnelse-form';
+import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { FormattedMessage } from 'react-intl';
 import PersonaliaSelectors from '../../../../store/personalia/selectors';
@@ -10,7 +10,7 @@ import { settDigital } from '../../../../store/oppfolging/actions';
 import OppfolgingSelector from '../../../../store/oppfolging/selector';
 
 interface DispatchProps {
-    handleSubmit: (fnr: string, veilederId: string) => ((tekst: string) => void);
+    handleSubmit: (fnr: string, veilederId: string) => ((values: BegrunnelseValues) => void);
 }
 
 interface StateProps {
@@ -30,7 +30,7 @@ function StartDigitalOppfolging(props: StartEskaleringProps) {
 
     return (
         <BegrunnelseForm
-            tekst={null}
+            initialValues={{begrunnelse: ''}}
             handleSubmit={props.handleSubmit(props.fnr, props.veilederId)}
             tekstariaLabel="Skriv en begrunnelse for hvorfor brukeren nå kan få digital oppfølging"
             overskriftTekstId="innstillinger.modal.digital.overskrift"
@@ -49,7 +49,7 @@ const mapStateToProps = (state: Appstate) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         handleSubmit(fnr: string, veilederId: string) {
-            return (tekst: string) => dispatch(settDigital(tekst, fnr, veilederId));
+            return (values: BegrunnelseValues) => dispatch(settDigital(values.begrunnelse, fnr, veilederId));
         },
     };
 };

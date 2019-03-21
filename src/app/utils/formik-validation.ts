@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from 'moment';
 
 export const erGyldigISODato = (isoDato: string) => isoDato && moment(isoDato, moment.ISO_8601).isValid();
 
@@ -9,17 +9,16 @@ export const validerArbeidslisteDatoFeldt = (input: string): string| undefined =
     if (input && !erGyldigISODato(input)) {
         error = 'Ugyldig dato';
     } else if (inputDato && (fraDato.isAfter(inputDato, 'day'))) {
-        error = 'Fristen må være i dag eller senere'
+        error = 'Fristen må være i dag eller senere';
     }
     return error;
 };
 
 export const validerOppgaveDatoFeldt = (input: string): string| undefined => {
     let error;
-    if(!input) {
-        error= 'Du må angi en dato'
-    }
-    else if (input && !erGyldigISODato(input)) {
+    if (!input) {
+        error = 'Du må angi en dato';
+    } else if (input && !erGyldigISODato(input)) {
         error = 'Ugyldig dato';
     }
     return error;
@@ -34,7 +33,6 @@ export const validerOppgaveDatoer = (fra: string, frist: string) => {
     }
     return errors;
 };
-
 
 export const validerArbeidslisteTittelFeldt = (input: string): string | undefined => {
     let error;
@@ -65,7 +63,7 @@ export function validerBeskrivelse (maxTegn: number)  {
             error = `Du må korte ned teksten til ${maxTegn} tegn`;
         }
         return error;
-    }
+    };
 }
 
 export const validerBeskrivelse500TegnFeldt = (beskrivelse: string): string | undefined => {

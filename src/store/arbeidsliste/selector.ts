@@ -1,6 +1,6 @@
 import { Appstate } from '../../types/appstate';
-import {Arbeidsliste} from "../../types/arbeidsliste";
-import {OrNothing} from "../../types/utils/ornothing";
+import { Arbeidsliste } from '../../types/arbeidsliste';
+import { OrNothing } from '../../types/utils/ornothing';
 
 export interface ArbeidslisteSelector {
     selectArbeidslisteStatus: (state: Appstate) => boolean;
@@ -47,7 +47,6 @@ function selectKanRedigereArbeidsliste (state: Appstate): boolean {
     const harVeilederTilgang = selectHarVeilederTilgang(state);
     return !!endringstidspunkt && harVeilederTilgang;
 }
-
 
 export default {
     selectArbeidslisteStatus,

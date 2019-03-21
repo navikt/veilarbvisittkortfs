@@ -1,11 +1,11 @@
-import {Field, FieldProps} from "formik";
-import React from "react";
-import {Radio} from "nav-frontend-skjema";
+import { Field, FieldProps } from 'formik';
+import React from 'react';
+import { Radio } from 'nav-frontend-skjema';
 
-interface FormikRadioFilterProps<T>{
+interface FormikRadioFilterProps<T> {
     name: string;
-    data: T[],
-    radioName: string
+    data: T[];
+    radioName: string;
     createLabel: (object: T) =>  string;
     createValue: (object: T) =>  string;
     closeDropdown: () => void;
@@ -16,7 +16,7 @@ function FormikRadioGroup<T> ({name, data, radioName, createLabel, createValue, 
     return (
         <Field name={name}>
             {({ field, form}: FieldProps)  => {
-                if(!field.value && defaultValue){
+                if (!field.value && defaultValue) {
                     form.setFieldValue(field.name, defaultValue);
                 }
                 return(
@@ -37,9 +37,9 @@ function FormikRadioGroup<T> ({name, data, radioName, createLabel, createValue, 
                             )}
                         </div>
                     </div>
-                )}}
+                ); }}
         </Field>
-    )
+    );
 }
 
 export default FormikRadioGroup;
