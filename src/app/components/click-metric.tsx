@@ -6,24 +6,23 @@ interface ClickMetricProps {
     children: React.ReactNode;
 }
 
-class ClickMetric extends React.Component<ClickMetricProps> {
+const handleClickMetricWrapperClicked = (metricName: string) => {
+    return () => {
+        logEvent(`veilarbvisittkortfs.metrikker.${metricName}`);
+    };
+};
 
-    handleClickMetricWrapperClicked = () => {
-        logEvent(`veilarbvisittkortfs.metrikker.${this.props.metricName}`);
+function ClickMetric(props: ClickMetricProps) {
+
+    if (props.children == null) {
+        return null;
     }
 
-    render() {
-
-        if (this.props.children == null) {
-            return null;
-        }
-
-        return (
-            <div onClick={this.handleClickMetricWrapperClicked}>
-                {this.props.children}
-            </div>
-        );
-    }
+    return (
+        <div onClick={handleClickMetricWrapperClicked(props.metricName)}>
+            {props.children}
+        </div>
+    );
 }
 
 export default ClickMetric;
