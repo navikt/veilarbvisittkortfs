@@ -55,7 +55,7 @@ const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = {loc
         }
         case 'AVSLUTT_OPPFOLGING_SUCCESS': {
             return {
-                location: 'avlutt_oppfolging_kvittering'
+                location: 'avslutt_oppfolging_kvittering'
             }
         }
         default :
