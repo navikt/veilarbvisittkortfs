@@ -1,39 +1,38 @@
-import React, {useEffect, useState} from "react";
-import {HiddenIfDropDown} from "../../../../components/hidden-if/hidden-if-dropdown";
-import {BehandlandeEnhet, OppgaveTema} from "../../../../../types/oppgave";
-import {StringOrNothing} from "../../../../../types/utils/stringornothings";
-import SokFilter from "../../../../components/sokfilter/sok-filter";
-import FormikRadioGroup from "../../../../components/formik/formik-radiogroup";
-import {OrNothing} from "../../../../../types/utils/ornothing";
-import OppgaveApi from "../../../../../api/oppgave-api";
-import {FormikProps} from "formik";
-import {OpprettOppgaveFormValues} from "../opprett-oppgave";
+import React, { useEffect, useState } from 'react';
+import { HiddenIfDropDown } from '../../../../components/hidden-if/hidden-if-dropdown';
+import { BehandlandeEnhet, OppgaveTema } from '../../../../../types/oppgave';
+import { StringOrNothing } from '../../../../../types/utils/stringornothings';
+import SokFilter from '../../../../components/sokfilter/sok-filter';
+import FormikRadioGroup from '../../../../components/formik/formik-radiogroup';
+import { OrNothing } from '../../../../../types/utils/ornothing';
+import OppgaveApi from '../../../../../api/oppgave-api';
+import { FormikProps } from 'formik';
+import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 
 interface OpprettOppgaveVelgEnhet {
     tema: OrNothing<OppgaveTema>;
     value: StringOrNothing;
     fnr: string;
-    formikProps: FormikProps<OpprettOppgaveFormValues>
+    formikProps: FormikProps<OpprettOppgaveFormValues>;
 }
 
 function OpprettOppgaveVelgEnhet ({value, tema, fnr, formikProps}: OpprettOppgaveVelgEnhet) {
     const [behandladeEnheter, setBehandladeEnheter] = useState([] as BehandlandeEnhet[]);
     const [isLoading, setIsLoading] = useState(true);
-    useEffect(()=> {
-        if(tema) {
+    useEffect(() => {
+        if (tema) {
             OppgaveApi.hentBehandlandeEnheter(tema, fnr)
                 .then((behandladeEnheter: BehandlandeEnhet[]) => {
                     setBehandladeEnheter(behandladeEnheter);
-                    formikProps.setFieldValue("enhetId",behandladeEnheter[0].enhetId);
+                    formikProps.setFieldValue('enhetId', behandladeEnheter[0].enhetId);
                     setIsLoading(false);
                 });
         }
-    },[tema]);
+    }, [tema]);
 
-    if(isLoading){
-        return <div/>
+    if (isLoading) {
+        return <div/>;
     }
-
 
     const valgtEnhet: OrNothing<BehandlandeEnhet> = behandladeEnheter.find(enhet => enhet.enhetId === value) || behandladeEnheter [0];
     return (
@@ -44,7 +43,7 @@ function OpprettOppgaveVelgEnhet ({value, tema, fnr, formikProps}: OpprettOppgav
                 knappeTekst={`${valgtEnhet.enhetId} ${valgtEnhet.navn}`}
                 className="velg-enhet-dropdown"
                 btnClassnames="velg-enhet-dropdown__button"
-                render={(lukkDropdown)=>
+                render={(lukkDropdown) =>
                     <SokFilter
                         data={behandladeEnheter}
                         label=""
@@ -64,7 +63,7 @@ function OpprettOppgaveVelgEnhet ({value, tema, fnr, formikProps}: OpprettOppgav
                     </SokFilter>}
             />
         </div>
-    )
+    );
 }
 
 export default OpprettOppgaveVelgEnhet;

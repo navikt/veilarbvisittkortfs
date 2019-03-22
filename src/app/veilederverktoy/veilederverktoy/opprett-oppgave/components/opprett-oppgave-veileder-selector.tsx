@@ -1,24 +1,23 @@
-import React from "react";
-import SokFilter from "../../../../components/sokfilter/sok-filter";
-import FormikRadioGroup from "../../../../components/formik/formik-radiogroup";
-import {OrNothing} from "../../../../../types/utils/ornothing";
-import {VeilederData} from "../../../../../types/veilederdata";
-import {Appstate} from "../../../../../types/appstate";
-import {connect} from "react-redux";
-import {StringOrNothing} from "../../../../../types/utils/stringornothings";
-import Dropdown from "../../../../components/dropdown/dropdown";
-import hiddenIf from "../../../../components/hidden-if/hidden-if";
+import React from 'react';
+import SokFilter from '../../../../components/sokfilter/sok-filter';
+import FormikRadioGroup from '../../../../components/formik/formik-radiogroup';
+import { OrNothing } from '../../../../../types/utils/ornothing';
+import { VeilederData } from '../../../../../types/veilederdata';
+import { Appstate } from '../../../../../types/appstate';
+import { connect } from 'react-redux';
+import { StringOrNothing } from '../../../../../types/utils/stringornothings';
+import Dropdown from '../../../../components/dropdown/dropdown';
+import hiddenIf from '../../../../components/hidden-if/hidden-if';
 
 interface OwnProps {
     veilederId: StringOrNothing;
 }
 
-interface StateProps{
+interface StateProps {
     veilederListe: VeilederData[];
 }
 
 type OpprettOppgaveVelgVeilederProps = OwnProps & StateProps;
-
 
 function OpprettOppgaveVelgVeileder ({veilederListe, veilederId}: OpprettOppgaveVelgVeilederProps) {
 
@@ -32,7 +31,7 @@ function OpprettOppgaveVelgVeileder ({veilederListe, veilederId}: OpprettOppgave
                 knappeTekst={valgtVeileder && valgtVeileder.navn || ''}
                 className="skjemaelement velg-enhet-dropdown"
                 btnClassnames="velg-enhet-dropdown__button"
-                render={(lukkDropdown)=>
+                render={(lukkDropdown) =>
                     <SokFilter
                         data={veilederListe}
                         label=""
@@ -50,12 +49,11 @@ function OpprettOppgaveVelgVeileder ({veilederListe, veilederId}: OpprettOppgave
                     </SokFilter>}
             />
         </div>
-    )
+    );
 }
 
-
-const mapStateToProps= (state: Appstate):StateProps => ({
+const mapStateToProps = (state: Appstate): StateProps => ({
     veilederListe: state.tildelVeileder.veilederPaEnheten.data.veilederListe
 });
 
-export default hiddenIf(connect<StateProps,{},OwnProps>(mapStateToProps)(OpprettOppgaveVelgVeileder));
+export default hiddenIf(connect<StateProps, {}, OwnProps>(mapStateToProps)(OpprettOppgaveVelgVeileder));

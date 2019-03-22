@@ -15,6 +15,7 @@ import { HiddenIfKnappFss } from '../../components/hidden-if/hidden-if-knapp';
 import moment from 'moment';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { hentArbeidsliste } from '../../../store/arbeidsliste/actions';
+import ClickMetric from '../../components/click-metric';
 
 interface StateProps {
     arbeidsliste: Arbeidsliste;
@@ -53,27 +54,36 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
     }
     return (
         <>
-            <HiddenIfKnappFss
-                icon={ArbeidslisteIkon}
-                onClick={() => setLeggTilArbeidslisteAktivt(true)}
-                hidden={!props.kanLeggeIArbeidsliste}
-            >
-                Legg i arbeidsliste
-            </HiddenIfKnappFss>
-            <HiddenIfKnappFss
-                icon={ArbeidslisteIkon}
-                onClick={() => setFjernArbeidslisteAktivt(true)}
-                hidden={!props.kanFjerneArbeidsliste}
-            >
-                Fjern
-            </HiddenIfKnappFss>
-            <HiddenIfKnappFss
-                icon={RedigerIkon}
-                onClick={() => setVisKommentarAktivt(true)}
-                hidden={!props.kanRedigereArbeidsliste}
-            >
-                Rediger
-            </HiddenIfKnappFss>
+            <ClickMetric metricName="legg-i-arbeidsliste-trykket">
+                <HiddenIfKnappFss
+                    icon={ArbeidslisteIkon}
+                    onClick={() => setLeggTilArbeidslisteAktivt(true)}
+                    hidden={!props.kanLeggeIArbeidsliste}
+                >
+                    Legg i arbeidsliste
+                </HiddenIfKnappFss>
+            </ClickMetric>
+
+            <ClickMetric metricName="fjern-fra-arbeidsliste-trykket">
+                <HiddenIfKnappFss
+                    icon={ArbeidslisteIkon}
+                    onClick={() => setFjernArbeidslisteAktivt(true)}
+                    hidden={!props.kanFjerneArbeidsliste}
+                >
+                    Fjern
+                </HiddenIfKnappFss>
+            </ClickMetric>
+
+            <ClickMetric metricName="rediger-arbeidsliste-trykket">
+                <HiddenIfKnappFss
+                    icon={RedigerIkon}
+                    onClick={() => setVisKommentarAktivt(true)}
+                    hidden={!props.kanRedigereArbeidsliste}
+                >
+                    Rediger
+                </HiddenIfKnappFss>
+            </ClickMetric>
+
             <LeggTilArbeidslisteModal
                 isOpen={leggTilArbeidsliste}
                 lukkModal={() => setLeggTilArbeidslisteAktivt(false)}

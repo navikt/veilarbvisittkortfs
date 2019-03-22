@@ -19,7 +19,7 @@ import AvsluttOppfolging from './avsluttoppfolging/avslutt-oppfolging';
 import AvsluttOppfolgingKvittering from './avsluttoppfolging/avslutt-oppfolging-kvittering';
 import StoppEskalering from './stopp-eskalering/stopp-eskalering';
 import AvsluttOppfolgingBekreft from './avsluttoppfolging/avslutt-oppfolging-bekreft';
-import StopEskaleringKvittering from "./stopp-eskalering/stopp-esklaring-kvittering";
+import StopEskaleringKvittering from './stopp-eskalering/stopp-esklaring-kvittering';
 
 interface StateProps {
     navigation: {

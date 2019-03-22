@@ -1,11 +1,11 @@
-import {Normaltekst} from "nav-frontend-typografi";
-import {AlertStripeInfoSolid} from "nav-frontend-alertstriper";
-import React from "react";
-import {AvslutningStatus} from "../../../../../types/oppfolging";
-import {OrNothing} from "../../../../../types/utils/ornothing";
+import { Normaltekst } from 'nav-frontend-typografi';
+import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
+import React from 'react';
+import { AvslutningStatus } from '../../../../../types/oppfolging';
+import { OrNothing } from '../../../../../types/utils/ornothing';
 
 export function AvsluttOppfolgingInfoText(props: {avslutningStatus: OrNothing<AvslutningStatus>}) {
-    if(!props.avslutningStatus){
+    if (!props.avslutningStatus) {
       return null;
     }
 
@@ -25,5 +25,5 @@ export function AvsluttOppfolgingInfoText(props: {avslutningStatus: OrNothing<Av
                 </ul>
             </AlertStripeInfoSolid>
         </>
-    )
+    );
 }

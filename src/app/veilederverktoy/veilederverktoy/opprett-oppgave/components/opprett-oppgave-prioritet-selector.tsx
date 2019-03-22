@@ -1,7 +1,6 @@
-import FormikSelect from "../../../../components/formik/formik-select";
-import React from "react";
-import {PrioritetType} from "../../../../../types/oppgave";
-
+import FormikSelect from '../../../../components/formik/formik-select';
+import React from 'react';
+import { PrioritetType } from '../../../../../types/oppgave';
 
 interface PrioritetOption {
     value: PrioritetType;
@@ -21,7 +20,7 @@ function OpprettOppgavePrioritetSelector () {
             name="prioritet"
             options={typeOptions}
         />
-    )
+    );
 }
 
 export default OpprettOppgavePrioritetSelector;

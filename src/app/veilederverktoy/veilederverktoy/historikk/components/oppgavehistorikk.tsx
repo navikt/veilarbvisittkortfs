@@ -1,12 +1,12 @@
-import * as React from "react";
-import {FormattedMessage} from "react-intl";
-import {Element, Normaltekst, Undertekst} from "nav-frontend-typografi";
-import {OppgaveHistorikk} from "../../../../../types/oppgave-historikk";
-import {opprettetAv} from "./opprettet-av";
-import moment from "moment";
+import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { OppgaveHistorikk } from '../../../../../types/oppgave-historikk';
+import { opprettetAv } from './opprettet-av';
+import moment from 'moment';
 
 interface OwnProps {
-    oppgaveHistorikk: OppgaveHistorikk
+    oppgaveHistorikk: OppgaveHistorikk;
 }
 
 function OppgaveHistorikkKomponent({oppgaveHistorikk}: OwnProps) {
@@ -19,14 +19,14 @@ function OppgaveHistorikkKomponent({oppgaveHistorikk}: OwnProps) {
             <Normaltekst>
                 <FormattedMessage
                     id="innstillinger.modal.historikk-gosys-oppgave-tekst"
-                    values={{oppgaveTema,oppgaveType}}
+                    values={{oppgaveTema, oppgaveType}}
                 />
             </Normaltekst>
             <Undertekst>
                 {`for ${moment(oppgaveHistorikk.dato).fromNow()} ${opprettetAv(oppgaveHistorikk.opprettetAv, oppgaveHistorikk.opprettetAvBrukerId)}`}
             </Undertekst>
         </div>
-    )
+    );
 }
 
 export default OppgaveHistorikkKomponent;

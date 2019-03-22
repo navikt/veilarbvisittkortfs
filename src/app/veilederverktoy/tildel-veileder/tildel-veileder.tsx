@@ -15,6 +15,7 @@ import OppfolgingsstatusSelector from '../../../store/oppfolging-status/selector
 import { StringOrNothing } from '../../../types/utils/stringornothings';
 import { HiddenIfDropDown } from '../../components/hidden-if/hidden-if-dropdown';
 import { OrNothing } from '../../../types/utils/ornothing';
+import ClickMetric from '../../components/click-metric';
 
 function settSammenNavn(veileder: VeilederData) {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
@@ -59,39 +60,41 @@ function TildelVeileder(props: TildelVeilederProps) {
     };
 
     return (
-        <HiddenIfDropDown
-            knappeTekst={'Tildel veileder'}
-            className="input-m tildel-veileder-dropdown"
-            name="tildel veileder"
-            hidden={!!props.skalSkjules}
-            btnClassnames="knapp knapp--standard knapp-fss"
-            render={(lukkDropdown) =>
-                <form
-                    onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
-                        setValgtVeileder(event);
-                        lukkDropdown();
-                    }}
-                >
-                    <SokFilter
-                        data={props.veiledere}
-                        label=""
-                        placeholder="Søk etter navn eller ident"
+        <ClickMetric metricName="tildel-veileder-trykket">
+            <HiddenIfDropDown
+                knappeTekst={'Tildel veileder'}
+                className="input-m tildel-veileder-dropdown"
+                name="tildel veileder"
+                hidden={!!props.skalSkjules}
+                btnClassnames="knapp knapp--standard knapp-fss"
+                render={(lukkDropdown) =>
+                    <form
+                        onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
+                            setValgtVeileder(event);
+                            lukkDropdown();
+                        }}
                     >
-                        {(data) =>
-                            <RadioFilterForm
-                                data={data}
-                                createLabel={settSammenNavn}
-                                createValue={(veileder: VeilederData) => veileder.ident}
-                                radioName="tildel-veileder"
-                                visLukkKnapp={true}
-                                selected={selected}
-                                changeSelected={(e: React.ChangeEvent<HTMLInputElement>) => changeSelected(e.target.value)}
-                                closeDropdown={lukkDropdown}
-                            />}
-                    </SokFilter>
-                </form>
-            }
-        />
+                        <SokFilter
+                            data={props.veiledere}
+                            label=""
+                            placeholder="Søk etter navn eller ident"
+                        >
+                            {(data) =>
+                                <RadioFilterForm
+                                    data={data}
+                                    createLabel={settSammenNavn}
+                                    createValue={(veileder: VeilederData) => veileder.ident}
+                                    radioName="tildel-veileder"
+                                    visLukkKnapp={true}
+                                    selected={selected}
+                                    changeSelected={(e: React.ChangeEvent<HTMLInputElement>) => changeSelected(e.target.value)}
+                                    closeDropdown={lukkDropdown}
+                                />}
+                        </SokFilter>
+                    </form>
+                }
+            />
+        </ClickMetric>
     );
 }
 
