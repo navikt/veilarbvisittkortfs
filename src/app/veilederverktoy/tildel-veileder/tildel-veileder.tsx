@@ -13,8 +13,8 @@ import { TildelVeilederData, TildelVeilederResponse } from '../../../types/tilde
 import './tildel-veileder.less';
 import OppfolgingsstatusSelector from '../../../store/oppfolging-status/selectors';
 import { StringOrNothing } from '../../../types/utils/stringornothings';
-import { HiddenIfDropDown } from '../../components/hidden-if/hidden-if-dropdown';
 import { OrNothing } from '../../../types/utils/ornothing';
+import Dropdown from '../../components/dropdown/dropdown';
 
 function settSammenNavn(veileder: VeilederData) {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
@@ -59,7 +59,8 @@ function TildelVeileder(props: TildelVeilederProps) {
     };
 
     return (
-        <HiddenIfDropDown
+        <Dropdown
+            metricName="tildel-veileder-trykket"
             knappeTekst={'Tildel veileder'}
             className="input-m tildel-veileder-dropdown"
             name="tildel veileder"

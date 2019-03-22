@@ -3,6 +3,8 @@ import { Knapp } from 'nav-frontend-knapper';
 import { KnappProps } from 'nav-frontend-knapper/lib/knapp';
 import cls from 'classnames';
 import './knapp-fss.less';
+import withClickMetric from '../click-metric';
+import hiddenIf from '../hidden-if/hidden-if';
 
 interface KnappFssProps extends KnappProps {
     icon?: string;
@@ -19,4 +21,4 @@ const KnappFss: React.FunctionComponent<KnappFssProps> = (props: KnappFssProps) 
     );
 };
 
-export default KnappFss;
+export default withClickMetric(hiddenIf(KnappFss));
