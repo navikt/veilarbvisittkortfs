@@ -2,60 +2,72 @@
 
 .visittkortfs-modal {
 
-  .modal {
-    position: relative;
-    border: 1px solid #B7B1A9;
-    background-color: #efefef;
-    outline: none;
-    max-width: 40rem;
-    padding: 0;
-    width: 100%;
+  .ReactModal__Overlay {
+    overflow-y: auto;
+  }
+
+  .ReactModal__Content {
     margin: 4rem auto;
-    overflow: hidden;
+    overflow: visible;
+  }
 
-    .modal-header {
-      height: 4rem;
-      border-bottom: 1px solid #B7B1A9;
-      padding: 1.13rem 1rem;
-    }
+  .modal__overlay {
+    display: block;
+    padding: 0;
 
-    .modal-innhold {
-      padding: 1rem 1.5rem 0 1.5rem;
-    }
-
-    .modal-info-tekst {
-
-      &__overskrift {
-        margin-bottom: 0.5rem;
-      }
-
-      &__undertekst {
-        margin-bottom: 0.5rem;
-      }
-    }
-
-    .modal__overlay {
-      display: block;
-    }
-
-    .modal-footer {
-      display: flex;
-      border-top: 1px solid #B7B1A9;
-      padding: 1.5rem 0 2rem 0;
-    }
-
-    .tilbakeknapp {
-      border: none;
-      font-family: 'Source Sans Pro', Arial, sans-serif;
-      color: #0067c5;
+    .modal {
+      position: relative;
+      border: 1px solid #B7B1A9;
       background-color: #efefef;
-    }
-
-    .tilbakeknapp:focus {
       outline: none;
-      box-shadow: 0 0 0 3px #FFBD66;
-    }
+      max-width: 40rem;
+      max-height: none;
+      padding: 0;
+      width: 100%;
 
+      .modal-header {
+        height: 4rem;
+        border-bottom: 1px solid #B7B1A9;
+        padding: 1.13rem 1rem;
+      }
+
+      .modal-innhold {
+        padding: 1rem 1.5rem 0 1.5rem;
+      }
+
+      .modal-info-tekst {
+
+        &__overskrift {
+          margin-bottom: 0.5rem;
+        }
+
+        &__undertekst {
+          margin-bottom: 0.5rem;
+        }
+      }
+
+      .modal__overlay {
+        display: block;
+      }
+
+      .modal-footer {
+        display: flex;
+        border-top: 1px solid #B7B1A9;
+        padding: 1.5rem 0 2rem 0;
+      }
+
+      .tilbakeknapp {
+        border: none;
+        font-family: 'Source Sans Pro', Arial, sans-serif;
+        color: #0067c5;
+        background-color: #efefef;
+      }
+
+      .tilbakeknapp:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px #FFBD66;
+      }
+    }
   }
 
   .btn--mr1 {
@@ -72,10 +84,6 @@
 
   .gra-border {
     border-bottom: 1px solid @navGra40;
-  }
-
-  .vis-overflow {
-  overflow: auto;
   }
 
 }
