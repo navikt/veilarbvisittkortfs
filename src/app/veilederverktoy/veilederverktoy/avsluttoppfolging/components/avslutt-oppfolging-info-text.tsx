@@ -1,29 +1,35 @@
 import {Normaltekst} from "nav-frontend-typografi";
-import {AlertStripeInfoSolid} from "nav-frontend-alertstriper";
 import React from "react";
 import {AvslutningStatus} from "../../../../../types/oppfolging";
 import {OrNothing} from "../../../../../types/utils/ornothing";
+import { FormattedMessage } from 'react-intl';
+import {HiddenIfAlertStripeInfoSolid} from "../../../../components/hidden-if/hidden-if-alertstripe";
 
-export function AvsluttOppfolgingInfoText(props: {avslutningStatus: OrNothing<AvslutningStatus>}) {
+
+export function AvsluttOppfolgingInfoText(props: {
+    avslutningStatus: OrNothing<AvslutningStatus>,
+    datoErInnenFor28DagerSiden : boolean,
+    harUbehandledeDialoger : boolean }) {
     if(!props.avslutningStatus){
-      return null;
+        return null;
     }
-
+    const aktivMindreEnn28Dager = props.datoErInnenFor28DagerSiden ?
+        'innstillinger.modal.avslutt.oppfolging.beskrivelse.innenfor-28-dager'
+        : 'innstillinger.modal.avslutt.oppfolging.beskrivelse';
     const {harTiltak, harYtelser} = props.avslutningStatus;
     return (
         <>
             <Normaltekst>
-                Her avslutter du brukerens oppfølgingsperioden og legger inn en kort begrunnelse
-                om hvorfor.
+                <FormattedMessage id={aktivMindreEnn28Dager}/>
             </Normaltekst>
-            <AlertStripeInfoSolid>
+            <HiddenIfAlertStripeInfoSolid hidden={!props.harUbehandledeDialoger && !harTiltak && !harYtelser}>
                 Du kan avslutte oppfølgingsperioden selv om:
                 <ul className="margin--0">
-                    <li>Brukeren har ubehandlede dialoger</li>
+                    {props.harUbehandledeDialoger && <li>Brukeren har ubehandlede dialoger</li> }
                     {harTiltak && <li>Brukeren har aktive saker i Arena</li>}
                     {harYtelser && <li>Brukeren har aktive tiltak i Arena</li>}
                 </ul>
-            </AlertStripeInfoSolid>
+            </HiddenIfAlertStripeInfoSolid>
         </>
     )
 }

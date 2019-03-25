@@ -16,7 +16,7 @@ export interface Appstate {
     oppfolgingstatus: OppfolgingStatusState;
     personalia: PersonaliaState;
     arbeidsliste: ArbeidslisteState;
-    dialog: DialogState;
+    dialoger: DialogState;
     navigation: NavigationState;
     tildelVeileder: TildelVeilederState;
     tilgangTilBrukersKontor: TilgangTilBrukersKontorState;
