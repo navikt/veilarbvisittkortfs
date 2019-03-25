@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {HiddenIfDropDown} from "../../../../components/hidden-if/hidden-if-dropdown";
 import {BehandlandeEnhet, OppgaveTema} from "../../../../../types/oppgave";
 import {StringOrNothing} from "../../../../../types/utils/stringornothings";
 import SokFilter from "../../../../components/sokfilter/sok-filter";
@@ -8,6 +7,7 @@ import {OrNothing} from "../../../../../types/utils/ornothing";
 import OppgaveApi from "../../../../../api/oppgave-api";
 import {FormikProps} from "formik";
 import {OpprettOppgaveFormValues} from "../opprett-oppgave";
+import Dropdown from '../../../../components/dropdown/dropdown';
 
 interface OpprettOppgaveVelgEnhet {
     tema: OrNothing<OppgaveTema>;
@@ -39,12 +39,12 @@ function OpprettOppgaveVelgEnhet ({value, tema, fnr, formikProps}: OpprettOppgav
     return (
         <div className="skjemaelement">
             <label className="skjemaelement__label">Enhet*</label>
-            <HiddenIfDropDown
+            <Dropdown
                 name="Velg enhet dropdown"
                 knappeTekst={`${valgtEnhet.enhetId} ${valgtEnhet.navn}`}
                 className="velg-enhet-dropdown"
                 btnClassnames="velg-enhet-dropdown__button"
-                render={(lukkDropdown)=>
+                render={(lukkDropdown) =>
                     <SokFilter
                         data={behandladeEnheter}
                         label=""

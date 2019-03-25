@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import './dropdown.less';
+import withClickMetric from '../click-metric';
+import hiddenIf from '../hidden-if/hidden-if';
+
 /* tslint:disable */
 const btnCls = (erApen: boolean, className: string|undefined) =>
     classNames('dropdown', className, {
@@ -33,6 +36,7 @@ interface DropdownProps {
     render: (lukkDropdown:()=>void) => React.ReactNode;
     className?: string;
     onLukk?: () => void;
+    onClick?: () => void;
     btnClassnames?: string;
 }
 
@@ -82,9 +86,16 @@ class Dropdown extends Component<DropdownProps, DropdownState> {
     }
 
     toggleDropdown() {
+
         if (this.state.apen) {
             this.lukkDropdown();
         } else {
+            const { onClick } = this.props;
+
+            if (onClick) {
+                onClick();
+            }
+
             this.apneDropdown();
         }
     }
@@ -129,4 +140,4 @@ class Dropdown extends Component<DropdownProps, DropdownState> {
     }
 }
 
-export default Dropdown;
+export default withClickMetric(hiddenIf(Dropdown));

@@ -11,10 +11,10 @@ import RedigerArbeidslisteModal from './rediger-arbeidsliste-modal';
 import { Dispatch } from 'redux';
 import { oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste } from '../../../store/arbeidsliste/actions';
 import ArbeidslisteSelector from '../../../store/arbeidsliste/selector';
-import { HiddenIfKnappFss } from '../../components/hidden-if/hidden-if-knapp';
 import moment from 'moment';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { hentArbeidsliste } from '../../../store/arbeidsliste/actions';
+import KnappFss from '../../components/knapp-fss/knapp-fss';
 
 interface StateProps {
     arbeidsliste: Arbeidsliste;
@@ -53,27 +53,30 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
     }
     return (
         <>
-            <HiddenIfKnappFss
+            <KnappFss
+                metricName="legg-i-arbeidsliste-trykket"
                 icon={ArbeidslisteIkon}
                 onClick={() => setLeggTilArbeidslisteAktivt(true)}
                 hidden={!props.kanLeggeIArbeidsliste}
             >
                 Legg i arbeidsliste
-            </HiddenIfKnappFss>
-            <HiddenIfKnappFss
+            </KnappFss>
+            <KnappFss
+                metricName="fjern-fra-arbeidsliste-trykket"
                 icon={ArbeidslisteIkon}
                 onClick={() => setFjernArbeidslisteAktivt(true)}
                 hidden={!props.kanFjerneArbeidsliste}
             >
                 Fjern
-            </HiddenIfKnappFss>
-            <HiddenIfKnappFss
+            </KnappFss>
+            <KnappFss
+                metricName="rediger-arbeidsliste-trykket"
                 icon={RedigerIkon}
                 onClick={() => setVisKommentarAktivt(true)}
                 hidden={!props.kanRedigereArbeidsliste}
             >
                 Rediger
-            </HiddenIfKnappFss>
+            </KnappFss>
             <LeggTilArbeidslisteModal
                 isOpen={leggTilArbeidsliste}
                 lukkModal={() => setLeggTilArbeidslisteAktivt(false)}
