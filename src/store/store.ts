@@ -24,7 +24,7 @@ const store = createStore(
         oppfolgingstatus: oppfolgingStatusReducer,
         personalia: personaliaReducer,
         arbeidsliste: arbeidslisteReducer,
-        dialog: dialogReducer,
+        dialoger: dialogReducer,
         navigation: navigationReducer,
         tildelVeileder: tildelVelederReducer,
         tilgangTilBrukersKontor : tilgangTilBrukersKontorReducer,

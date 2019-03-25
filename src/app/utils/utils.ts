@@ -6,3 +6,9 @@ export function storeForbokstaver(tekster: string[]): string {
         .map(ord => ord.charAt(0).toUpperCase() + ord.slice(1).toLowerCase())
         .join(' ');
 }
+
+export function replaceAt<T>(array: T[], index: number, value: T) {
+    const ret = array.slice(0);
+    ret[index] = value;
+    return ret;
+}
