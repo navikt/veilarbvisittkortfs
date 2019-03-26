@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import './dropdown.less';
-import withClickMetric from '../click-metric';
+import withClickMetric from '../click-metric/click-metric';
 import hiddenIf from '../hidden-if/hidden-if';
 
 /* tslint:disable */
