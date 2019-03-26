@@ -15,7 +15,8 @@
     "lint": "tslint ./src/**/*.ts*",
     "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
     "precommit": "npm run lint:fix",
-    "prepush": "npm run lint"
+    "prepush": "npm run lint",
+    "heroku-postbuild": "npm start"
   },
   "eslintConfig": {
     "extends": "react-app"
