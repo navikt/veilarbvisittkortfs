@@ -5,6 +5,7 @@ import { OrNothing } from '../../types/utils/ornothing';
 
 export interface OppfolgingSelector {
     selectOppfolgingStatus: (state: Appstate) => boolean;
+    selectErUnderOppfolging: (state: Appstate) => boolean;
     selectKanStarteDigitalOppfolging: (state: Appstate) => boolean;
     selectKanStarteManuellOppfolging: (state: Appstate) => boolean;
     selectKanOppretteOppgave: (state: Appstate) => boolean;
@@ -16,14 +17,20 @@ export interface OppfolgingSelector {
     selectKanStarteKVP: (state: Appstate) => boolean;
     selectKanStoppeKVP: (state: Appstate) => boolean;
     selectKanAvslutteOppfolging: (state: Appstate) => boolean;
+    selectKanReaktiveres: (state: Appstate) => boolean;
+    selectErSykmeldtMedArbeidsgiver: (state: Appstate) => boolean;
 }
 
 function selectOppfolgingData(state: Appstate): Oppfolging {
     return state.oppfolging.data;
 }
 
-function selectErUnderOppfolging (state: Appstate) {
+function selectErUnderOppfolging (state: Appstate):boolean {
     return selectOppfolgingData(state).underOppfolging;
+}
+
+function selectKanReaktiveres (state: Appstate): boolean {
+    return !!selectOppfolgingData(state).kanReaktiveras;
 }
 
 function selectOppfolgingStatus(state: Appstate): boolean {
@@ -110,6 +117,10 @@ function selectErIkkeArbeidssoker (state: Appstate): boolean {
     return !selectOppfolgingData(state).underOppfolging && !selectOppfolgingData(state).kanReaktiveras;
 }
 
+function selectErSykmeldtMedArbeidsgiver (state: Appstate): boolean {
+    return selectOppfolgingData(state).erSykmeldtMedArbeidsgiver;
+}
+
 export default {
     selectOppfolgingStatus,
     selectKanStarteManuellOppfolging,
@@ -122,5 +133,8 @@ export default {
     selectErIkkeArbeidssoker,
     selectKanStarteKVP,
     selectKanStoppeKVP,
-    selectKanAvslutteOppfolging
+    selectKanAvslutteOppfolging,
+    selectErUnderOppfolging,
+    selectKanReaktiveres,
+    selectErSykmeldtMedArbeidsgiver
 }as OppfolgingSelector;

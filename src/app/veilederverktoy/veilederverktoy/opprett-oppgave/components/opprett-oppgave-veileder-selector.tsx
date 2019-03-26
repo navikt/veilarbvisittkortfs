@@ -7,10 +7,16 @@ import {Appstate} from "../../../../../types/appstate";
 import {connect} from "react-redux";
 import {StringOrNothing} from "../../../../../types/utils/stringornothings";
 import Dropdown from "../../../../components/dropdown/dropdown";
-import hiddenIf from "../../../../components/hidden-if/hidden-if";
+import {OppgaveTema} from "../../../../../types/oppgave";
+import {FormikProps} from "formik";
+import {OpprettOppgaveFormValues} from "../opprett-oppgave";
 
 interface OwnProps {
     veilederId: StringOrNothing;
+    avsenderenhetId: StringOrNothing;
+    enhetId: StringOrNothing;
+    tema: OrNothing<OppgaveTema>
+    formikProps: FormikProps<OpprettOppgaveFormValues>
 }
 
 interface StateProps{
@@ -20,7 +26,16 @@ interface StateProps{
 type OpprettOppgaveVelgVeilederProps = OwnProps & StateProps;
 
 
-function OpprettOppgaveVelgVeileder ({veilederListe, veilederId}: OpprettOppgaveVelgVeilederProps) {
+function OpprettOppgaveVelgVeileder ({veilederListe, veilederId, tema, enhetId, avsenderenhetId, formikProps}: OpprettOppgaveVelgVeilederProps) {
+
+    if(tema!=='OPPFOLGING' && formikProps.values.veilederId) {
+        formikProps.setFieldValue("veilederId", null);
+    }
+
+    if( !(avsenderenhetId===enhetId && tema==='OPPFOLGING')) {
+       return null;
+   }
+
 
     const valgtVeileder: OrNothing<VeilederData>  = veilederListe.find(veileder => veileder.ident === veilederId);
 
@@ -54,8 +69,8 @@ function OpprettOppgaveVelgVeileder ({veilederListe, veilederId}: OpprettOppgave
 }
 
 
-const mapStateToProps= (state: Appstate):StateProps => ({
+const mapStateToProps = (state: Appstate): StateProps => ({
     veilederListe: state.tildelVeileder.veilederPaEnheten.data.veilederListe
 });
 
-export default hiddenIf(connect<StateProps,{},OwnProps>(mapStateToProps)(OpprettOppgaveVelgVeileder));
+export default connect<StateProps,{},OwnProps>(mapStateToProps)(OpprettOppgaveVelgVeileder);

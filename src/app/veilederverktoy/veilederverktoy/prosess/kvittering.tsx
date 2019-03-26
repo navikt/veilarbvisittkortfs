@@ -17,7 +17,7 @@ function Kvittering({tittelId, alertStripeTekstId, alertStripeTekstValues}: Kvit
     return (
         <VeilederVerktoyModal>
             <div className="blokk-xs">
-                <Systemtittel>
+                <Systemtittel className="modal-info-tekst__undertekst">
                     <FormattedMessage id={tittelId} />
                 </Systemtittel>
                 <AlertStripeSuksess className="blokk-m">
