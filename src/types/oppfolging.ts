@@ -31,7 +31,7 @@ export interface Oppfolging {
     harSkriveTilgang: boolean;
     inaktivtIArena: boolean;
     inaktiveringsdato: StringOrNothing;
-    kanReaktiveras: boolean;
+    kanReaktiveras: OrNothing<boolean>;
     kanStarteOppfolging: boolean;
     manuell: boolean;
     oppfolgingUtgang: StringOrNothing;

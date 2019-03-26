@@ -66,15 +66,19 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, lukkModal, ti
             contentLabel="Opprett gosys oppgave"
             render={(formikProps) =>
                 <div className="modal-innhold">
-                    <Innholdstittel className="modal-info-tekst__overskrift">
-                        <FormattedMessage id="innstillinger.modal.oppgave-overskrift" />
-                    </Innholdstittel>
-                    <Undertittel>
-                        <FormattedMessage
-                            id="arbeidsliste.modal.personalia"
-                            values={{ navn, fnr }}
-                        />
-                    </Undertittel>
+                    <div className="blokk-xs">
+                        <Innholdstittel className="modal-info-tekst__overskrift">
+                            <FormattedMessage
+                                id="innstillinger.modal.overskrift"
+                                values={{navn}}
+                            />
+                        </Innholdstittel>
+                        <Undertittel>
+                            <FormattedMessage
+                                id="innstillinger.modal.oppgave-overskrift"
+                            />
+                        </Undertittel>
+                    </div>
                     <Form>
                         <OpprettOppgaveTemaSelector/>
                         <OppgaveInnerForm
@@ -88,7 +92,6 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, lukkModal, ti
                     </Form>
                 </div>
             }
-
         />
     );
 }

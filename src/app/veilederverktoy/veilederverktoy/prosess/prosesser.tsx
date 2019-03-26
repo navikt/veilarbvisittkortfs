@@ -8,6 +8,7 @@ import StartDigitalOppfolgingProsess from '../start-digital-oppfolging/start-dig
 import OpprettOppgaveProsess from '../opprett-oppgave/opprett-oppgave-prosess';
 import Historikk from '../historikk/historikk';
 import AvsluttOppfolgingProsess from '../avsluttoppfolging/avslutt-oppfolging-prosess';
+import StartRegistreringProsess from '../start-registrering/start-registrering-prosess';
 import './prosesser.less';
 import StoppEskaleringsProsess from '../stopp-eskalering/stopp-eskalering-prosess';
 import { Appstate } from '../../../../types/appstate';
@@ -25,6 +26,7 @@ interface StateProps {
     kanStarteKVP: boolean;
     kanStoppeKVP: boolean;
     kanOppretteOppgave: boolean;
+    kanRegistrere: boolean;
 }
 
 interface DispatchProps {
@@ -48,6 +50,7 @@ function Prosesser (props: StateProps & DispatchProps) {
             <AvsluttOppfolgingProsess
                 visible={props.kanAvslutteOppfolging} //ROUTINGEN SKJER I AVSLUTTOPPFOLGINGSAGAN HVIS KAN AVSLUTTE
             />
+            <StartRegistreringProsess visible={props.kanRegistrere}/>
             <StartManuellOppfolging
                 visible={props.kanStarteManuellOppfolging}
                 navigerTilStartManuellOppfolging={() => props.navigerTil('manuell_oppfolging')}
@@ -82,6 +85,7 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     kanStarteKVP: OppfolgingSelector.selectKanStarteKVP(state),
     kanStoppeKVP: OppfolgingSelector.selectKanStoppeKVP(state),
     kanOppretteOppgave: OppfolgingSelector.selectKanOppretteOppgave(state),
+    kanRegistrere: !OppfolgingSelector.selectErUnderOppfolging(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
