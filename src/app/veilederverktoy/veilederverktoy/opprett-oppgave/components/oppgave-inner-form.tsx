@@ -34,7 +34,7 @@ function OppgaveInnerForm({fnr, tema, enhetId, veilederId, avsenderenhetId, form
         <OpprettOppgaveTypeSelector oppgaveTema={tema}/>
         <OpprettOppgavePrioritetSelector/>
         <OpprettOppgaveVelgDatoer/>
-        <div className="sentrert">
+        <div className="oppgave-enhet-container">
             <OpprettOppgaveVelgEnhet
                 value={enhetId}
                 tema={tema}
@@ -42,8 +42,11 @@ function OppgaveInnerForm({fnr, tema, enhetId, veilederId, avsenderenhetId, form
                 formikProps={formikProps}
             />
             <OpprettOppgaveVelgVeileder
-                hidden={!(avsenderenhetId===enhetId && tema==='OPPFOLGING')}
+                avsenderenhetId={avsenderenhetId}
+                enhetId={enhetId}
+                tema={tema}
                 veilederId={veilederId}
+                formikProps={formikProps}
             />
         </div>
         <OpprettOppgaveBeskrivelseTekstArea/>

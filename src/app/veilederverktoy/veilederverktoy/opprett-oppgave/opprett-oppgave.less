@@ -1,17 +1,23 @@
-.sentrert {
+.oppgave-dato-container, .oppgave-enhet-container {
   display: flex;
   justify-content: space-between;
+
+  .dropdown__innhold {
+    width: 100%;
+  }
 }
 
 .velg-enhet-dropdown {
   width: 11rem;
   height: 2.385rem;
-  background-color: white;
 
   &__button {
     border-radius: 4px;
     text-align: left;
-    border: 1px solid #78706A
+    border: 1px solid #78706A;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   &__button:hover {
@@ -28,6 +34,7 @@
     width: inherit;
     height: inherit;
     padding: 0.45rem;
+    background-color: white;
   }
 
   .dropdown__btn:hover {
