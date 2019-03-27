@@ -25,7 +25,7 @@ export interface AvslutningStatus {
 export interface Oppfolging {
     avslutningStatus: OrNothing<AvslutningStatus>;
     erIkkeArbeidssokerUtenOppfolging: boolean;
-    erSykmeldtMedArbeidsgiver: boolean;
+    erSykmeldtMedArbeidsgiver: OrNothing<boolean>;
     fnr: string;
     gjeldeneEskaleringsvarsel: OrNothing<EskaleringsVarsel>;
     harSkriveTilgang: boolean;

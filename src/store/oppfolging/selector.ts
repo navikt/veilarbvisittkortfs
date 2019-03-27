@@ -118,7 +118,7 @@ function selectErIkkeArbeidssoker (state: Appstate): boolean {
 }
 
 function selectErSykmeldtMedArbeidsgiver (state: Appstate): boolean {
-    return selectOppfolgingData(state).erSykmeldtMedArbeidsgiver;
+    return !!selectOppfolgingData(state).erSykmeldtMedArbeidsgiver;
 }
 
 export default {

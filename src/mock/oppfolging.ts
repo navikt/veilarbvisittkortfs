@@ -5,7 +5,7 @@ import { Oppfolging } from '../types/oppfolging';
 const oppfolging: Oppfolging & JSONValue = {
     avslutningStatus: null,
     erIkkeArbeidssokerUtenOppfolging: false,
-    erSykmeldtMedArbeidsgiver: true,
+    erSykmeldtMedArbeidsgiver: null,
     fnr: '10108000398',
     gjeldeneEskaleringsvarsel: null,
     harSkriveTilgang: false,
