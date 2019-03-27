@@ -25,7 +25,6 @@ interface StateProps {
     kanStarteDigitalOppfolging: boolean;
     kanStarteKVP: boolean;
     kanStoppeKVP: boolean;
-    kanOppretteOppgave: boolean;
     kanRegistrere: boolean;
 }
 
@@ -68,7 +67,6 @@ function Prosesser (props: StateProps & DispatchProps) {
                 navigerTilStartDigitalOppfolging={() => props.navigerTil('start_digital_oppfolging')}
             />
             <OpprettOppgaveProsess
-                visible={props.kanOppretteOppgave}
                 navigerTilOpprettOppgave={() => props.navigerTil('opprett_oppgave')}
             />
             <Historikk/>
@@ -84,7 +82,6 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     kanStarteDigitalOppfolging: OppfolgingSelector.selectKanStarteDigitalOppfolging(state),
     kanStarteKVP: OppfolgingSelector.selectKanStarteKVP(state),
     kanStoppeKVP: OppfolgingSelector.selectKanStoppeKVP(state),
-    kanOppretteOppgave: OppfolgingSelector.selectKanOppretteOppgave(state),
     kanRegistrere: !OppfolgingSelector.selectErUnderOppfolging(state),
 });
 

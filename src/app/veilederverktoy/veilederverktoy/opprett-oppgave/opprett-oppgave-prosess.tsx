@@ -2,7 +2,6 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import StartProsess from './../prosess/start-prosess';
-import visibleIf from '../../../components/visible-if';
 
 interface OwnProps {
     navigerTilOpprettOppgave: () => void;
@@ -24,4 +23,4 @@ function OpprettOppgaveProsess({navigerTilOpprettOppgave }: OwnProps) {
     );
 }
 
-export default visibleIf(OpprettOppgaveProsess);
+export default OpprettOppgaveProsess;

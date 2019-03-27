@@ -6,9 +6,8 @@ import { Appstate } from '../../../../types/appstate';
 import OppfolgingSelector from '../../../../store/oppfolging/selector';
 import visibleIf from '../../../components/visible-if';
 import { connect } from 'react-redux';
-import * as queryString from 'querystring';
 import { logEvent } from '../../../utils/frontend-logger';
-export const getEnhetFromUrl = () => queryString.parse(window.location.search).enhet;
+import {StringOrNothing} from "../../../../types/utils/stringornothings";
 
 function byggRegistreringUrl(fnr: string, enhet: string | string[]) {
     return `https://arbeidssokerregistrering${finnMiljoStreng()}${finnNaisDomene()}?fnr=${fnr}&enhetId=${enhet}`;
@@ -22,14 +21,14 @@ interface StateProps {
     fnr: string;
     kanReaktiveres: boolean;
     erSykmeldtMedArbeidsgiver: boolean;
+    enhet: StringOrNothing;
 }
 
 type StartRegistreringProsessProps = StateProps;
 
 function StartRegistreringProsess(props: StartRegistreringProsessProps) {
-    const enhet = getEnhetFromUrl();
     const veilarbLoginUrl = byggVeilarbLoginUrl();
-    const registreringUrl = byggRegistreringUrl(props.fnr, enhet);
+    const registreringUrl = byggRegistreringUrl(props.fnr, props.enhet|| "");
     const brukerType = props.erSykmeldtMedArbeidsgiver ?
         'erSykemeldtMedArbeidsgiver' :
         props.kanReaktiveres ? 'kanReaktiveres' : 'kanIkkeReaktiveres';
@@ -68,6 +67,7 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     kanReaktiveres: OppfolgingSelector.selectKanReaktiveres(state),
     fnr: OppfolgingSelector.selectFnr(state),
     erSykmeldtMedArbeidsgiver: OppfolgingSelector.selectErSykmeldtMedArbeidsgiver(state),
+    enhet: state.enhetId.enhet,
 });
 
 export default visibleIf(connect<StateProps>(mapStateToProps)(StartRegistreringProsess));
