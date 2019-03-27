@@ -16,7 +16,8 @@
     "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
     "precommit": "npm run lint:fix",
     "prepush": "npm run lint",
-    "heroku-postbuild": "npm start"
+    "heroku-serve": "node heroku-server.js",
+    "heroku-postbuild": "npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -93,6 +94,7 @@
     "@types/react-redux": "^7.0.1",
     "@types/yup": "^0.26.9",
     "cross-spawn": "^6.0.5",
+    "express": "^4.16.4",
     "husky": "^1.3.1",
     "less-plugin-npm-import": "^2.1.0",
     "nav-faker": "^3.2.1",
