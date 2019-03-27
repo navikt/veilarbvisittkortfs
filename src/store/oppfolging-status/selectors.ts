@@ -28,7 +28,7 @@ function selectOppfolgingStatusStatus (state: Appstate): boolean {
 
 function selectErSykemeldtMedArbeidsgiver (state: Appstate): boolean {
     const data = selectOppfolgingStatusData(state);
-    return data.formidlingsgruppe === "IARBS" && data.servicegruppe === "VURDI"
+    return data.formidlingsgruppe === 'IARBS' && data.servicegruppe === 'VURDI';
 }
 
 export default {

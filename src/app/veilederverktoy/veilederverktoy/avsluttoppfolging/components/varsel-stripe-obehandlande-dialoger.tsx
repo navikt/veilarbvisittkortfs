@@ -1,6 +1,6 @@
-import React from "react";
-import {AlertStripeInfoSolid} from "nav-frontend-alertstriper";
-import {AvslutningStatus} from "../../../../../types/oppfolging";
+import React from 'react';
+import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
+import { AvslutningStatus } from '../../../../../types/oppfolging';
 
 function VarselStripeAvsluttOppfolging(props: AvslutningStatus) {
     return(
@@ -11,7 +11,7 @@ function VarselStripeAvsluttOppfolging(props: AvslutningStatus) {
                 {props.underKvp && <li>Brukeren deltar i på KVP. KVP må avsluttes først.</li>}
             </ul>
         </AlertStripeInfoSolid>
-    )
+    );
 }
 
 export default VarselStripeAvsluttOppfolging;

@@ -25,7 +25,7 @@ function selectOppfolgingData(state: Appstate): Oppfolging {
     return state.oppfolging.data;
 }
 
-function selectErUnderOppfolging (state: Appstate):boolean {
+function selectErUnderOppfolging (state: Appstate): boolean {
     return selectOppfolgingData(state).underOppfolging;
 }
 
@@ -118,7 +118,7 @@ function selectErIkkeArbeidssoker (state: Appstate): boolean {
 }
 
 function selectErSykmeldtMedArbeidsgiver (state: Appstate): boolean {
-    return selectOppfolgingData(state).erSykmeldtMedArbeidsgiver;
+    return !!selectOppfolgingData(state).erSykmeldtMedArbeidsgiver;
 }
 
 export default {

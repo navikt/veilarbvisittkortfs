@@ -41,6 +41,7 @@ function AvsluttOppfolgingProsess(props: AvsluttOppfolgingProsessProps) {
             knappetekstId="innstillinger.modal.prosess.start.knapp"
             onClick={handleClick}
             hiddenKnapp={!!props.avslutningStatus && !props.avslutningStatus.kanAvslutte}
+            metricName="avslutt_oppfolging"
         >
             <div className="blokk-xs">
                 <Normaltekst>

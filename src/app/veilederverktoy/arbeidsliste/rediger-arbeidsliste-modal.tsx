@@ -6,7 +6,7 @@ import { Formik, FormikProps } from 'formik';
 import NavFrontendModal from 'nav-frontend-modal';
 import ArbeidslisteForm from './arbeidsliste-form';
 import moment  from 'moment';
-import ModalHeader from "../../components/modal/modal-header";
+import ModalHeader from '../../components/modal/modal-header';
 
 interface RedigerArbeidslisteProps {
     navn: string;

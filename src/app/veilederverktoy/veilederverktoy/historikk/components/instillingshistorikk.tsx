@@ -1,29 +1,53 @@
-import {InnstillingsHistorikk} from "../../../../../types/innstillings-historikk";
-import * as React from "react";
-import {FormattedMessage} from "react-intl";
-import {Element, Normaltekst, Undertekst} from "nav-frontend-typografi";
-import {opprettetAv} from "./opprettet-av";
-import moment from "moment";
+import { InnstillingsHistorikk } from '../../../../../types/innstillings-historikk';
+import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { opprettetAvTekst } from './opprettet-av';
+import moment from 'moment';
+import Lenke from 'nav-frontend-lenker';
+import { Appstate } from '../../../../../types/appstate';
+import OppfolgingSelector from '../../../../../store/oppfolging/selector';
+import { connect } from 'react-redux';
 
 interface OwnProps {
-    instillingsHistorikk: InnstillingsHistorikk
+    instillingsHistorikk: InnstillingsHistorikk;
 }
 
-function InnstillingHistorikkKomponent({instillingsHistorikk}: OwnProps) {
-    const {type, begrunnelse} = instillingsHistorikk;
+interface StateProps {
+    fnr: string;
+}
+
+const ESKALERING_MAX_LENGTH = 120;
+
+type InnstillingHistorikkKomponentProps = StateProps & OwnProps;
+
+function InnstillingHistorikkKomponent({instillingsHistorikk, fnr}: InnstillingHistorikkKomponentProps) {
+    const {type, begrunnelse, dialogId} = instillingsHistorikk;
+    const begrunnelseTekst =
+        !!begrunnelse && begrunnelse.length > ESKALERING_MAX_LENGTH
+            ? `${begrunnelse.substring(
+            0,
+            ESKALERING_MAX_LENGTH
+            )}... `
+            : `${begrunnelse} `;
     return (
-        <div className="historikk__elem">
+        <div className="historikk__elem blokk-xs">
             <Element>
                 <FormattedMessage id={`innstillinger.modal.historikk-${type.toLowerCase()}`}/>
             </Element>
             <Normaltekst>
-                {begrunnelse}
+                {begrunnelseTekst}
+                {dialogId && <Lenke href={`/veilarbpersonflatefs/${fnr}/dialog/${dialogId}`}>Les mer i dialog</Lenke>}
             </Normaltekst>
             <Undertekst>
-                {`for ${moment(instillingsHistorikk.dato).fromNow()} ${opprettetAv(instillingsHistorikk.opprettetAv, instillingsHistorikk.opprettetAvBrukerId)}`}
+                {`for ${moment(instillingsHistorikk.dato).fromNow()} ${opprettetAvTekst(instillingsHistorikk.opprettetAv, instillingsHistorikk.opprettetAvBrukerId || '')}`}
             </Undertekst>
         </div>
-    )
+    );
 }
 
-export default InnstillingHistorikkKomponent;
+const mapStateToProps = (state: Appstate): StateProps => ({
+   fnr: OppfolgingSelector.selectFnr(state)
+});
+
+export default connect<StateProps, {}, OwnProps>(mapStateToProps)(InnstillingHistorikkKomponent);

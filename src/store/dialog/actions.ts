@@ -73,19 +73,18 @@ export function opprettHenvendelseError(error: Error): OpprettHenvendelseActionE
 }
 
 export interface HentDialogerAction {
-    type: HenvendelseActionType.HENT_DIALOGER
+    type: HenvendelseActionType.HENT_DIALOGER;
 }
 
 export interface HentDialogerActionSuccess {
-    type: HenvendelseActionType.HENT_DIALOGER_SUCCESS,
-    data: Dialog[],
+    type: HenvendelseActionType.HENT_DIALOGER_SUCCESS;
+    data: Dialog[];
 }
 
 export interface HentDialogerActionError {
-    type: HenvendelseActionType.HENT_DIALOGER_ERROR,
-    error: Error
+    type: HenvendelseActionType.HENT_DIALOGER_ERROR;
+    error: Error;
 }
-
 
 export const hentDialoger = (): HentDialogerAction => ({
     type: HenvendelseActionType.HENT_DIALOGER

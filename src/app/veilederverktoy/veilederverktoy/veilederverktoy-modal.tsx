@@ -8,6 +8,7 @@ import { navigerAction } from '../../../store/navigation/actions';
 import NavFrontendModal from 'nav-frontend-modal';
 import classNames from 'classnames';
 import ModalHeader from '../../components/modal/modal-header';
+import PersonaliaSelector from '../../../store/personalia/selectors';
 
 const cls = (className?: string) => classNames('modal', className);
 
@@ -60,7 +61,7 @@ function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
 }
 
 const mapStateToProps = (state: Appstate) => ({
-    navnPaMotpart: state.personalia.data.sammensattNavn,
+    navnPaMotpart: PersonaliaSelector.selectSammensattNavn(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

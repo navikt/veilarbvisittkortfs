@@ -3,7 +3,7 @@ import './arbeidsliste.less';
 import FormikInput from '../../components/formik/formik-input';
 import FormikTekstArea from '../../components/formik/formik-textarea';
 import FormikDatoVelger from '../../components/formik/formik-datepicker';
-import {Hovedknapp, Knapp} from 'nav-frontend-knapper';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { OrNothing } from '../../../types/utils/ornothing';

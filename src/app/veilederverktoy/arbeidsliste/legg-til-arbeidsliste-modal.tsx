@@ -1,11 +1,11 @@
 import React from 'react';
-import {Innholdstittel, Undertittel} from 'nav-frontend-typografi';
-import {Arbeidsliste, ArbeidslisteformValues} from '../../../types/arbeidsliste';
-import {FormattedMessage} from 'react-intl';
-import {Formik, FormikProps} from 'formik';
+import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
+import { Arbeidsliste, ArbeidslisteformValues } from '../../../types/arbeidsliste';
+import { FormattedMessage } from 'react-intl';
+import { Formik, FormikProps } from 'formik';
 import ArbeidslisteForm from './arbeidsliste-form';
-import Modal from "../../components/modal/modal";
-import ModalHeader from "../../components/modal/modal-header";
+import Modal from '../../components/modal/modal';
+import ModalHeader from '../../components/modal/modal-header';
 
 interface LeggTilArbeidslisteProps {
     navn: string;

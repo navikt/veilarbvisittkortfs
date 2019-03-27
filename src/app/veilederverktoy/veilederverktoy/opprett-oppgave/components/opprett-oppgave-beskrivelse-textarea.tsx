@@ -1,7 +1,6 @@
-import FormikTekstArea from "../../../../components/formik/formik-textarea";
-import { validerBeskrivelse} from "../../../../utils/formik-validation";
-import React from "react";
-
+import FormikTekstArea from '../../../../components/formik/formik-textarea';
+import { validerBeskrivelse } from '../../../../utils/formik-validation';
+import React from 'react';
 
 function OpprettOppgaveBeskrivelseTekstArea() {
     return (
@@ -11,8 +10,7 @@ function OpprettOppgaveBeskrivelseTekstArea() {
             validate={validerBeskrivelse(250)}
             maxLength={250}
         />
-    )
+    );
 }
-
 
 export default OpprettOppgaveBeskrivelseTekstArea;

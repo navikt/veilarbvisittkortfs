@@ -1,4 +1,5 @@
 import { StringOrNothing } from './utils/stringornothings';
+import { OrNothing } from './utils/ornothing';
 
 export type InnstillingsHistorikkType =
     'SATT_TIL_DIGITAL' |
@@ -14,8 +15,8 @@ export type InnstillingsHistorikkOpprettetAvType = 'NAV' | 'SYSTEM' | 'EKSTERN';
 export interface InnstillingsHistorikk {
     type: InnstillingsHistorikkType;
     dato: string;
-    begrunnelse: string;
+    begrunnelse: StringOrNothing;
     opprettetAv: InnstillingsHistorikkOpprettetAvType;
-    opprettetAvBrukerId: string;
-    dialogId: StringOrNothing;
+    opprettetAvBrukerId: StringOrNothing;
+    dialogId: OrNothing<number>;
 }

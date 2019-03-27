@@ -52,7 +52,7 @@ function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
     useEffect(() => {
         FeatureApi
             .hentFeatures('visittkort_innstillinger')
-            .then((harVisInnstillingsFeature: Feature) => setFeature(harVisInnstillingsFeature));
+            .then((harVisInnstillingsFeatureData: Feature) => setFeature(harVisInnstillingsFeatureData));
     }, []);
 
     useEffect(() => {
