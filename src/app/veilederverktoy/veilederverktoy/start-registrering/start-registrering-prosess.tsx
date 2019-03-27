@@ -7,7 +7,7 @@ import OppfolgingSelector from '../../../../store/oppfolging/selector';
 import visibleIf from '../../../components/visible-if';
 import { connect } from 'react-redux';
 import { logEvent } from '../../../utils/frontend-logger';
-import {StringOrNothing} from "../../../../types/utils/stringornothings";
+import { StringOrNothing } from '../../../../types/utils/stringornothings';
 
 function byggRegistreringUrl(fnr: string, enhet: string | string[]) {
     return `https://arbeidssokerregistrering${finnMiljoStreng()}${finnNaisDomene()}?fnr=${fnr}&enhetId=${enhet}`;
