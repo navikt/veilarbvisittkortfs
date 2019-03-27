@@ -23,7 +23,7 @@ const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = {loc
         case 'STOPP_ESKALERING_SUCCESS': {
             return {
                 location: 'stopp_eskalering_kvittering'
-            }
+            };
         }
         case 'SETT_MANUELL_SUCCESS':
             return {
@@ -56,7 +56,7 @@ const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = {loc
         case 'AVSLUTT_OPPFOLGING_SUCCESS': {
             return {
                 location: 'avslutt_oppfolging_kvittering'
-            }
+            };
         }
         default :
             return state;

@@ -3,8 +3,8 @@ import { logEvent } from '../../utils/frontend-logger';
 
 export interface ClickMetricProps {
    metricName?: string;
-   tags?: any, // TODO
-   fields?: any //TODO
+   tags?: any; // TODO
+   fields?: any; //TODO
 }
 
 export interface OnClickProps {
@@ -16,7 +16,7 @@ const handleClickMetricWrapperClicked = (metricName?: string, tags?: any, fields
         console.log("Clicked"); // tslint:disable-line
 
         if (metricName) {
-            logEvent(`veilarbvisittkortfs.metrikker.${metricName}`,fields, tags);
+            logEvent(`veilarbvisittkortfs.metrikker.${metricName}`, fields, tags);
         }
 
         if (onClick) {

@@ -25,7 +25,7 @@ function selectOppfolgingData(state: Appstate): Oppfolging {
     return state.oppfolging.data;
 }
 
-function selectErUnderOppfolging (state: Appstate):boolean {
+function selectErUnderOppfolging (state: Appstate): boolean {
     return selectOppfolgingData(state).underOppfolging;
 }
 

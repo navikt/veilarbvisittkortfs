@@ -13,7 +13,6 @@ export function replaceAt<T>(array: T[], index: number, value: T) {
     return ret;
 }
 
-
 export const NAIS_PREPROD_SUFFIX = 'preprod.local/';
 export const NAIS_PROD_SUFFIX = 'adeo.no/';
 

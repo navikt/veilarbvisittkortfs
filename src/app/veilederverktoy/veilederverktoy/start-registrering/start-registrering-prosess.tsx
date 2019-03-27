@@ -7,7 +7,7 @@ import OppfolgingSelector from '../../../../store/oppfolging/selector';
 import visibleIf from '../../../components/visible-if';
 import { connect } from 'react-redux';
 import * as queryString from 'querystring';
-import {logEvent} from "../../../utils/frontend-logger";
+import { logEvent } from '../../../utils/frontend-logger';
 export const getEnhetFromUrl = () => queryString.parse(window.location.search).enhet;
 
 function byggRegistreringUrl(fnr: string, enhet: string | string[]) {
@@ -55,7 +55,7 @@ function StartRegistreringProsess(props: StartRegistreringProsessProps) {
             <a
                 href={erITestMiljo() ? veilarbLoginUrl(registreringUrl) : registreringUrl}
                 className="knapp knapp--hoved btn--mb1"
-                onClick={()=> logEvent("veilarbvisittkortfs.metrikker.registrering", {}, {brukerType: brukerType})}
+                onClick={() => logEvent('veilarbvisittkortfs.metrikker.registrering', {}, {brukerType: brukerType})}
             >
                 <FormattedMessage id="innstillinger.modal.prosess.start.knapp"/>
             </a>

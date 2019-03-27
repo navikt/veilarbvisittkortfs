@@ -26,6 +26,7 @@ import OppfolgingApi from '../../api/oppfolging-api';
 import OppfolgingSelector from './selector';
 import VeilederSelector from '../tildel-veileder/selector';
 import AvsluttOppfolgingStatusSelector from '../avslutningstatus/selector';
+import { navigerAction } from '../navigation/actions';
 
 function* hentOppfolging(action: HentOppfolgingAction) {
     try {
@@ -43,6 +44,7 @@ function* settManuell(action: SettManuellAction) {
         yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr: action.fnr});
     } catch (e) {
         yield put(settManuellError(e));
+        yield put(navigerAction('feil_i_veilederverktoy'));
     }
 }
 
@@ -53,6 +55,7 @@ function* settDigital(action: SettDigitalAction) {
         yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr: action.fnr});
     } catch (e) {
         yield put(setDigitalError(e));
+        yield put(navigerAction('feil_i_veilederverktoy'));
     }
 }
 
@@ -64,6 +67,7 @@ function* startKVP(action: StartKVPAction) {
         yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr});
     } catch (e) {
         yield put(startKVPError(e));
+        yield put(navigerAction('feil_i_veilederverktoy'));
     }
 }
 
@@ -75,6 +79,7 @@ function* stopKVP(action: StoppKVPAction) {
         yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr});
     } catch (e) {
         yield put(stoppKVPError(e));
+        yield put(navigerAction('feil_i_veilederverktoy'));
     }
 }
 
@@ -89,6 +94,7 @@ function* avsluttOppfolging() {
         yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr});
     } catch (e) {
         yield put(avsluttOppfolgingError(e));
+        yield put(navigerAction('feil_i_veilederverktoy'));
     }
 }
 

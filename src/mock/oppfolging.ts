@@ -18,7 +18,7 @@ const oppfolging: Oppfolging & JSONValue = {
     oppfolgingsPerioder: [],
     reservarsjonKRR: false,
     underKvp: false,
-    underOppfolging: false,
+    underOppfolging: true,
     veilederId: null,
     vilkarMaBesvarel: false,
 };
