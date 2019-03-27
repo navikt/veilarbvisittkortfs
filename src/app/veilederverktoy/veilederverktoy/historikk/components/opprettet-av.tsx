@@ -2,8 +2,8 @@ export function opprettetAvTekst(opprettetAv: string, opprettetAvBrukerId: strin
    if (opprettetAv === 'NAV') {
        return `av ${opprettetAvBrukerId}`;
    }
-   if(opprettetAv === 'SYSTEM') {
-       return "av system (automatisk oppdatering)";
+   if (opprettetAv === 'SYSTEM') {
+       return 'av system (automatisk oppdatering)';
    }
 
    return 'av brukeren';

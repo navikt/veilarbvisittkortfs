@@ -8,7 +8,6 @@ export interface OppfolgingSelector {
     selectErUnderOppfolging: (state: Appstate) => boolean;
     selectKanStarteDigitalOppfolging: (state: Appstate) => boolean;
     selectKanStarteManuellOppfolging: (state: Appstate) => boolean;
-    selectKanOppretteOppgave: (state: Appstate) => boolean;
     selectErKRR: (state: Appstate) => boolean;
     selectFnr: (state: Appstate) => string;
     selectKanSendeEskaleringsVarsel: (state: Appstate) => boolean;
@@ -93,9 +92,6 @@ function selectKanStoppeEskaleringsVarsel (state: Appstate): boolean {
     );
 }
 
-function selectKanOppretteOppgave(state: Appstate): boolean {
-    return selectErUnderOppfolging(state);
-}
 
 function selectKanStarteKVP(state: Appstate): boolean {
     return TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) &&
@@ -125,7 +121,6 @@ export default {
     selectOppfolgingStatus,
     selectKanStarteManuellOppfolging,
     selectKanStarteDigitalOppfolging,
-    selectKanOppretteOppgave,
     selectFnr,
     selectErKRR,
     selectKanSendeEskaleringsVarsel,
