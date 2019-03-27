@@ -28,7 +28,7 @@ type StartRegistreringProsessProps = StateProps;
 
 function StartRegistreringProsess(props: StartRegistreringProsessProps) {
     const veilarbLoginUrl = byggVeilarbLoginUrl();
-    const registreringUrl = byggRegistreringUrl(props.fnr, props.enhet|| "");
+    const registreringUrl = byggRegistreringUrl(props.fnr, props.enhet || '');
     const brukerType = props.erSykmeldtMedArbeidsgiver ?
         'erSykemeldtMedArbeidsgiver' :
         props.kanReaktiveres ? 'kanReaktiveres' : 'kanIkkeReaktiveres';

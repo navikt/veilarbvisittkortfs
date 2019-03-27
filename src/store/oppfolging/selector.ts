@@ -92,7 +92,6 @@ function selectKanStoppeEskaleringsVarsel (state: Appstate): boolean {
     );
 }
 
-
 function selectKanStarteKVP(state: Appstate): boolean {
     return TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) &&
         selectErUnderOppfolging(state) &&
