@@ -29,7 +29,7 @@ export interface Oppfolging {
     fnr: string;
     gjeldeneEskaleringsvarsel: OrNothing<EskaleringsVarsel>;
     harSkriveTilgang: boolean;
-    inaktivtIArena: boolean;
+    inaktivtIArena: OrNothing<boolean>;
     inaktiveringsdato: StringOrNothing;
     kanReaktiveras: OrNothing<boolean>;
     kanStarteOppfolging: boolean;

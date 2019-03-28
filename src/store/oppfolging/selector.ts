@@ -18,6 +18,7 @@ export interface OppfolgingSelector {
     selectKanAvslutteOppfolging: (state: Appstate) => boolean;
     selectKanReaktiveres: (state: Appstate) => boolean;
     selectErSykmeldtMedArbeidsgiver: (state: Appstate) => boolean;
+    selectOppfolgingData: (state: Appstate) => Oppfolging;
 }
 
 function selectOppfolgingData(state: Appstate): Oppfolging {
@@ -130,5 +131,6 @@ export default {
     selectKanAvslutteOppfolging,
     selectErUnderOppfolging,
     selectKanReaktiveres,
-    selectErSykmeldtMedArbeidsgiver
+    selectErSykmeldtMedArbeidsgiver,
+    selectOppfolgingData
 }as OppfolgingSelector;
