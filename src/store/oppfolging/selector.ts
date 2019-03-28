@@ -12,7 +12,6 @@ export interface OppfolgingSelector {
     selectFnr: (state: Appstate) => string;
     selectKanSendeEskaleringsVarsel: (state: Appstate) => boolean;
     selectKanStoppeEskaleringsVarsel: (state: Appstate) => boolean;
-    selectErIkkeArbeidssoker: (state: Appstate) => boolean;
     selectKanStarteKVP: (state: Appstate) => boolean;
     selectKanStoppeKVP: (state: Appstate) => boolean;
     selectKanAvslutteOppfolging: (state: Appstate) => boolean;
@@ -30,7 +29,7 @@ function selectErUnderOppfolging (state: Appstate): boolean {
 }
 
 function selectKanReaktiveres (state: Appstate): boolean {
-    return !!selectOppfolgingData(state).kanReaktiveras;
+    return !!selectOppfolgingData(state).kanReaktiveres;
 }
 
 function selectOppfolgingStatus(state: Appstate): boolean {
@@ -46,7 +45,7 @@ function selectErManuell(state: Appstate): boolean {
 }
 
 function selectErKRR (state: Appstate): boolean {
-    return selectOppfolgingData(state).reservarsjonKRR;
+    return selectOppfolgingData(state).reservasjonKRR;
 }
 
 function selectKVP(state: Appstate): boolean {
@@ -62,7 +61,7 @@ function selectKanStarteManuellOppfolging(state: Appstate): boolean {
 }
 
 function selectGjeldeneEskaleringsVarsel(state: Appstate): OrNothing<EskaleringsVarsel> {
-    return selectOppfolgingData(state).gjeldeneEskaleringsvarsel;
+    return selectOppfolgingData(state).gjeldendeEskaleringsvarsel;
 }
 
 function selectKanStarteDigitalOppfolging(state: Appstate): boolean {
@@ -109,10 +108,6 @@ function selectKanAvslutteOppfolging(state: Appstate): boolean {
     return TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) && selectErUnderOppfolging(state);
 }
 
-function selectErIkkeArbeidssoker (state: Appstate): boolean {
-    return !selectOppfolgingData(state).underOppfolging && !selectOppfolgingData(state).kanReaktiveras;
-}
-
 function selectErSykmeldtMedArbeidsgiver (state: Appstate): boolean {
     return !!selectOppfolgingData(state).erSykmeldtMedArbeidsgiver;
 }
@@ -125,7 +120,6 @@ export default {
     selectErKRR,
     selectKanSendeEskaleringsVarsel,
     selectKanStoppeEskaleringsVarsel,
-    selectErIkkeArbeidssoker,
     selectKanStarteKVP,
     selectKanStoppeKVP,
     selectKanAvslutteOppfolging,

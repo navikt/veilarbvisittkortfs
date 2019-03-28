@@ -70,7 +70,7 @@ mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
     erIkkeArbeidssokerUtenOppfolging: false,
     erSykmeldtMedArbeidsgiver: false,
     fnr: '10108000398',
-    gjeldeneEskaleringsvarsel: null,
+    gjeldendeEskaleringsvarsel: null,
     harSkriveTilgang: false,
     inaktivtIArena: false,
     inaktiveringsdato: null,

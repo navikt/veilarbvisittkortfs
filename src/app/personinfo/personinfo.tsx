@@ -9,9 +9,9 @@ import { Personalia } from '../../types/personalia';
 import { OppfolgingStatus } from '../../types/oppfolging-status';
 import { Appstate } from '../../types/appstate';
 import PersonaliaSelector from '../../store/personalia/selectors';
-import OppfolgingsstatusSelector from "../../store/oppfolging-status/selectors";
-import OppfolgingSelector from "../../store/oppfolging/selector";
-import {Oppfolging} from "../../types/oppfolging";
+import OppfolgingsstatusSelector from '../../store/oppfolging-status/selectors';
+import OppfolgingSelector from '../../store/oppfolging/selector';
+import { Oppfolging } from '../../types/oppfolging';
 
 interface StateProps {
     personalia: Personalia;

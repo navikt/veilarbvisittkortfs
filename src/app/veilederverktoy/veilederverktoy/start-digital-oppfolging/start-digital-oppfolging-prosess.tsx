@@ -6,6 +6,7 @@ import { Appstate } from '../../../../types/appstate';
 import { connect } from 'react-redux';
 import { HiddenIfAlertStripeInfoSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
 import visibleIf from '../../../components/visible-if';
+import OppfolgingSelector from '../../../../store/oppfolging/selector';
 
 interface StateProps {
     reservasjonKRR: boolean;
@@ -17,7 +18,7 @@ interface OwnProps {
 
 type StartDigitalOppfolgingProsess = StateProps & OwnProps;
 
-function StartDigitalOppfolgingProsess({navigerTilStartDigitalOppfolging, reservasjonKRR }: StartDigitalOppfolgingProsess) {
+function StartDigitalOppfolgingProsess({navigerTilStartDigitalOppfolging, reservasjonKRR}: StartDigitalOppfolgingProsess) {
     return (
         <StartProsess
             tittelId="innstillinger.prosess.digital.tittel"
@@ -38,7 +39,7 @@ function StartDigitalOppfolgingProsess({navigerTilStartDigitalOppfolging, reserv
 }
 
 const mapStateToProps = (state: Appstate): StateProps => ({
-    reservasjonKRR: state.oppfolging.data.reservarsjonKRR
+    reservasjonKRR: OppfolgingSelector.selectErKRR(state)
 });
 
 export default visibleIf(connect<StateProps>(mapStateToProps)(StartDigitalOppfolgingProsess));
