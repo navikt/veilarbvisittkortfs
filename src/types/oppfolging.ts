@@ -25,13 +25,13 @@ export interface AvslutningStatus {
 export interface Oppfolging {
     avslutningStatus: OrNothing<AvslutningStatus>;
     erIkkeArbeidssokerUtenOppfolging: boolean;
-    erSykmeldtMedArbeidsgiver: boolean;
+    erSykmeldtMedArbeidsgiver: OrNothing<boolean>;
     fnr: string;
     gjeldeneEskaleringsvarsel: OrNothing<EskaleringsVarsel>;
     harSkriveTilgang: boolean;
     inaktivtIArena: boolean;
     inaktiveringsdato: StringOrNothing;
-    kanReaktiveras: boolean;
+    kanReaktiveras: OrNothing<boolean>;
     kanStarteOppfolging: boolean;
     manuell: boolean;
     oppfolgingUtgang: StringOrNothing;

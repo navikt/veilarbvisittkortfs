@@ -17,7 +17,7 @@ function nyHenvendelse(henvendelse: HenvendelseData, fnr: string) {
 
 function oppdaterFerdigbehandlet(dialogId: string, erFerdigbehandlet: boolean, fnr: string) {
     return putAsJson(
-        `${DIALOG_BASE_URL}${dialogId}/ferdigbehandlet/${erFerdigbehandlet}?fnr=${fnr}`
+        `${DIALOG_BASE_URL}/${dialogId}/ferdigbehandlet/${erFerdigbehandlet}?fnr=${fnr}`
     );
 }
 

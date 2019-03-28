@@ -62,7 +62,7 @@ function TildelVeileder(props: TildelVeilederProps) {
         <Dropdown
             metricName="tildel-veileder-trykket"
             knappeTekst={'Tildel veileder'}
-            className="input-m tildel-veileder-dropdown"
+            className="input-m tildel-veileder-dropdown background-color-white"
             name="tildel veileder"
             hidden={!!props.skalSkjules}
             btnClassnames="knapp knapp--standard knapp-fss"

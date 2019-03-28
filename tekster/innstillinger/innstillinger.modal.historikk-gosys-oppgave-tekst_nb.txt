@@ -1,1 +1,11 @@
-Oppgave med tema "{oppgaveTema}" og type "{oppgaveType}" opprettet.
+Oppgave med tema "{oppgaveTema, select,
+INDIVIDSTONAD {Individstønad (Tiltakspenger)}
+DAGPENGER  {Dagpenger}
+OPPFOLGING {Oppfølging}
+ARBEIDSAVKLARING {Arbeidsavklaringspenger}
+ENSLIG_FORSORGER {Enslig forsørger}
+TILLEGGSTONAD  {Tilleggsstønad}
+}" og type "{oppgaveType, select,
+VURDER_HENVENDELSE {Vurder henvendelse}
+VURDER_KONSEKVENS_FOR_YTELSE {Vurder konsekvens for ytelse}
+}" opprettet.

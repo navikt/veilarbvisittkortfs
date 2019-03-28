@@ -8,6 +8,7 @@ import { navigerAction } from '../../../store/navigation/actions';
 import NavFrontendModal from 'nav-frontend-modal';
 import classNames from 'classnames';
 import ModalHeader from '../../components/modal/modal-header';
+import PersonaliaSelector from '../../../store/personalia/selectors';
 
 const cls = (className?: string) => classNames('modal', className);
 
@@ -45,8 +46,8 @@ function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
                 tilbake={props.tilbakeFunksjon}
             />
             <div className="modal-innhold">
-                <div className="modal-innhold__info-tekst">
-                    <Innholdstittel className="modal-innhold__overskrift">
+                <div className="modal-info-tekst">
+                    <Innholdstittel className="modal-info-tekst__overskrift">
                         <FormattedMessage
                             id="innstillinger.modal.overskrift"
                             values={{ navn: props.navnPaMotpart }}
@@ -60,7 +61,7 @@ function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
 }
 
 const mapStateToProps = (state: Appstate) => ({
-    navnPaMotpart: state.personalia.data.sammensattNavn,
+    navnPaMotpart: PersonaliaSelector.selectSammensattNavn(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

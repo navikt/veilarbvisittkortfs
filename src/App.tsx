@@ -10,12 +10,12 @@ import NavFrontendModal from 'nav-frontend-modal';
 
 moment.locale('nb');
 
-NavFrontendModal.setAppElement(document.getElementById("modal-a11y-wrapper"));
+NavFrontendModal.setAppElement(document.getElementById('modal-a11y-wrapper'));
 
 export interface AppProps {
     fnr: string;
     enhet?: string;
-    tilbakeTilFlate:string;
+    tilbakeTilFlate: string;
     visVeilederVerktoy?: boolean;
 }
 

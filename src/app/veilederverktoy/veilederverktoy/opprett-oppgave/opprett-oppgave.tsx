@@ -13,7 +13,6 @@ import OppgaveInnerForm from './components/oppgave-inner-form';
 import './opprett-oppgave.less';
 import { Dispatch } from 'redux';
 import { lagreOppgave } from '../../../../store/oppgave/actions';
-import { navigerAction, navigerTilProcesser } from '../../../../store/navigation/actions';
 import { OrNothing } from '../../../../types/utils/ornothing';
 import FormikModal from '../../../components/formik/formik-modal';
 
@@ -38,13 +37,11 @@ interface StateProps {
 
 interface DispatchProps {
     handleSubmit: (formData: OppgaveFormData) => void;
-    lukkModal: () => void;
-    tilbakeTilProcesser: () => void;
 }
 
 type OpprettOppgaveProps = StateProps & DispatchProps;
 
-function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, lukkModal, tilbakeTilProcesser}: OpprettOppgaveProps) {
+function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit}: OpprettOppgaveProps) {
 
     const opprettOppgaveInitialValues: OpprettOppgaveFormValues = {
         beskrivelse: '',
@@ -66,15 +63,19 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, lukkModal, ti
             contentLabel="Opprett gosys oppgave"
             render={(formikProps) =>
                 <div className="modal-innhold">
-                    <Innholdstittel className="modal-info-tekst__overskrift">
-                        <FormattedMessage id="innstillinger.modal.oppgave-overskrift" />
-                    </Innholdstittel>
-                    <Undertittel>
-                        <FormattedMessage
-                            id="arbeidsliste.modal.personalia"
-                            values={{ navn, fnr }}
-                        />
-                    </Undertittel>
+                    <div className="blokk-xs">
+                        <Innholdstittel className="modal-info-tekst__overskrift">
+                            <FormattedMessage
+                                id="innstillinger.modal.overskrift"
+                                values={{navn}}
+                            />
+                        </Innholdstittel>
+                        <Undertittel>
+                            <FormattedMessage
+                                id="innstillinger.modal.oppgave-overskrift"
+                            />
+                        </Undertittel>
+                    </div>
                     <Form>
                         <OpprettOppgaveTemaSelector/>
                         <OppgaveInnerForm
@@ -88,7 +89,6 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, lukkModal, ti
                     </Form>
                 </div>
             }
-
         />
     );
 }
@@ -101,9 +101,7 @@ const mapStateToProps = (state: Appstate) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    handleSubmit: (formdata: OppgaveFormData) => dispatch(lagreOppgave(formdata)),
-    lukkModal: () => dispatch(navigerAction(null)),
-    tilbakeTilProcesser: () => dispatch(navigerTilProcesser())
+    handleSubmit: (formdata: OppgaveFormData) => dispatch(lagreOppgave(formdata))
 });
 
 export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(OpprettOppgave);

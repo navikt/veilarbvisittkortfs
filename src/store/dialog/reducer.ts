@@ -1,7 +1,7 @@
-import {OrNothing} from '../../types/utils/ornothing';
+import { OrNothing } from '../../types/utils/ornothing';
 import Dialog from '../../types/dialog';
-import {Reducer} from 'redux';
-import {all, call, put, select, takeLatest} from 'redux-saga/effects';
+import { Reducer } from 'redux';
+import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 import {
     DialogActions,
     DialogActionType, hentDialogerError, hentDialogerSuccess,
@@ -14,11 +14,12 @@ import {
 } from './actions';
 import DialogApi from '../../api/dialog-api';
 import OppfolgingApi from '../../api/oppfolging-api';
-import {startEskaleringError, startEskaleringSuccess} from '../oppfolging/actions';
-import {hentOppfolgingstatusSuccess} from '../oppfolging-status/actions';
-import {FETCH_STATUS} from '../../types/fetch-status';
+import { startEskaleringError, startEskaleringSuccess } from '../oppfolging/actions';
+import { hentOppfolgingstatusSuccess } from '../oppfolging-status/actions';
+import { FETCH_STATUS } from '../../types/fetch-status';
 import OppfolgingSelector from '../oppfolging/selector';
-import {replaceAt} from "../../app/utils/utils";
+import { replaceAt } from '../../app/utils/utils';
+import { navigerAction } from '../navigation/actions';
 
 export type DialogState = {data: Dialog[]} & {status: FETCH_STATUS; error: OrNothing<Error>};
 
@@ -61,7 +62,7 @@ const dialogReducer: Reducer<DialogState, DialogActions> = (state = initialState
                 ...state,
                 data: action.data,
                 status: 'DONE'
-            }
+            };
         }
         default:
             return state;
@@ -75,6 +76,7 @@ function* opprettHenvendelse(action: OpprettHenvendelseAction) {
         yield put(opprettHenvendelseSuccess(response, fnr));
     } catch (e) {
         yield put(opprettHenvendelseError(e));
+        yield put(navigerAction('feil_i_veilederverktoy'));
     }
 }
 
@@ -97,6 +99,7 @@ function* startEskaleringMedDialog(action: OpprettHenvendelseActionSuccess) {
 
     } catch (e) {
         yield put(startEskaleringError(e));
+        yield put(navigerAction('feil_i_veilederverktoy'));
     }
 }
 
@@ -104,13 +107,11 @@ function* hentDialoger() {
     try {
         const fnr = yield select(OppfolgingSelector.selectFnr);
         const response = yield call( () => DialogApi.hentDialoger(fnr));
-        yield put(hentDialogerSuccess(response))
-    }catch (e) {
-        yield put(hentDialogerError(e))
+        yield put(hentDialogerSuccess(response));
+    } catch (e) {
+        yield put(hentDialogerError(e));
     }
 }
-
-
 
 export function* dialogSaga() {
     yield takeLatest(HenvendelseActionType.OPPRETTET_HENVENDELSE, opprettHenvendelse);

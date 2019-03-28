@@ -6,6 +6,7 @@ export interface OppfolgingsstatusSelector {
     selectOppfolgingsenhetsId: (state: Appstate) => StringOrNothing;
     selectOppfolgingStatusStatus: (state: Appstate) => boolean;
     selectOppfolgingsVeileder: (state: Appstate) => StringOrNothing;
+    selectErSykemeldtMedArbeidsgiver: (state: Appstate) => boolean;
 }
 
 function selectOppfolgingStatusData(state: Appstate): OppfolgingStatus {
@@ -25,9 +26,15 @@ function selectOppfolgingStatusStatus (state: Appstate): boolean {
     return oppfolgingStatus === 'NOT_STARTED' || oppfolgingStatus === 'LOADING';
 }
 
+function selectErSykemeldtMedArbeidsgiver (state: Appstate): boolean {
+    const data = selectOppfolgingStatusData(state);
+    return data.formidlingsgruppe === 'IARBS' && data.servicegruppe === 'VURDI';
+}
+
 export default {
     selectOppfolgingStatusData,
     selectOppfolgingsenhetsId,
     selectOppfolgingStatusStatus,
-    selectOppfolgingsVeileder
+    selectOppfolgingsVeileder,
+    selectErSykemeldtMedArbeidsgiver
 } as OppfolgingsstatusSelector;

@@ -1,7 +1,6 @@
-import FormikSelect from "../../../../components/formik/formik-select";
-import React from "react";
-import {OppgaveTema} from "../../../../../types/oppgave";
-
+import FormikSelect from '../../../../components/formik/formik-select';
+import React from 'react';
+import { OppgaveTema } from '../../../../../types/oppgave';
 
 interface TemaOption {
     value: OppgaveTema | '';
@@ -25,7 +24,7 @@ function OpprettOppgaveTemaSelector () {
             name="tema"
             options={temaOptions}
         />
-    )
+    );
 }
 
 export default OpprettOppgaveTemaSelector;

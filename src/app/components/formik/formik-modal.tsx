@@ -33,8 +33,8 @@ function FormikModal<Values> ({visConfirmDialog= true, ...props}: FormikModalPro
             if (visConfirmDialog && confirm(confirmTekst)) {
                 setIsOpen(false);
             }
-            if(!visConfirmDialog) {
-                setIsOpen(false)
+            if (!visConfirmDialog) {
+                setIsOpen(false);
             }
         } else {
             setIsOpen(false);

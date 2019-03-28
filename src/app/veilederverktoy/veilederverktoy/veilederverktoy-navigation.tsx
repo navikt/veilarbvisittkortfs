@@ -19,7 +19,8 @@ import AvsluttOppfolging from './avsluttoppfolging/avslutt-oppfolging';
 import AvsluttOppfolgingKvittering from './avsluttoppfolging/avslutt-oppfolging-kvittering';
 import StoppEskalering from './stopp-eskalering/stopp-eskalering';
 import AvsluttOppfolgingBekreft from './avsluttoppfolging/avslutt-oppfolging-bekreft';
-import StopEskaleringKvittering from "./stopp-eskalering/stopp-esklaring-kvittering";
+import StopEskaleringKvittering from './stopp-eskalering/stopp-esklaring-kvittering';
+import { FeilModal } from './prosess/feil-modal';
 
 interface StateProps {
     navigation: {
@@ -68,6 +69,8 @@ function VeilederVerktoyNavigation(props: VeilederVerktoyNavigationProps) {
             return <StoppEskalering/>;
         case 'stopp_eskalering_kvittering':
             return <StopEskaleringKvittering/>;
+        case 'feil_i_veilederverktoy':
+            return <FeilModal/>;
         default:
             return null;
     }
