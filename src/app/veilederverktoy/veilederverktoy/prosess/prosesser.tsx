@@ -82,7 +82,7 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     kanStarteDigitalOppfolging: OppfolgingSelector.selectKanStarteDigitalOppfolging(state),
     kanStarteKVP: OppfolgingSelector.selectKanStarteKVP(state),
     kanStoppeKVP: OppfolgingSelector.selectKanStoppeKVP(state),
-    kanRegistrere: !OppfolgingSelector.selectErUnderOppfolging(state),
+    kanRegistrere: OppfolgingSelector.kanRegistreresEllerReaktiveres(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

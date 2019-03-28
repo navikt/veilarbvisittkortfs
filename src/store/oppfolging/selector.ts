@@ -18,6 +18,7 @@ export interface OppfolgingSelector {
     selectKanReaktiveres: (state: Appstate) => boolean;
     selectErSykmeldtMedArbeidsgiver: (state: Appstate) => boolean;
     selectOppfolgingData: (state: Appstate) => Oppfolging;
+    kanRegistreresEllerReaktiveres: (state: Appstate) => boolean;
 }
 
 function selectOppfolgingData(state: Appstate): Oppfolging {
@@ -112,6 +113,12 @@ function selectErSykmeldtMedArbeidsgiver (state: Appstate): boolean {
     return !!selectOppfolgingData(state).erSykmeldtMedArbeidsgiver;
 }
 
+function kanRegistreresEllerReaktiveres (state: Appstate): boolean {
+    const underOppfolging = selectErUnderOppfolging(state);
+    const kanReaktiveres = selectKanReaktiveres(state);
+    return (underOppfolging && kanReaktiveres) || (!underOppfolging && !kanReaktiveres);
+}
+
 export default {
     selectOppfolgingStatus,
     selectKanStarteManuellOppfolging,
@@ -126,5 +133,6 @@ export default {
     selectErUnderOppfolging,
     selectKanReaktiveres,
     selectErSykmeldtMedArbeidsgiver,
-    selectOppfolgingData
+    selectOppfolgingData,
+    kanRegistreresEllerReaktiveres
 }as OppfolgingSelector;

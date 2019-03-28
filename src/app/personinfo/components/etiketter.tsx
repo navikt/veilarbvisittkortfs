@@ -27,7 +27,7 @@ function Etiketter(props: {personalia: Personalia, oppfolgingstatus: OppfolgingS
     const {underKvp, reservasjonKRR, manuell, underOppfolging, inaktivIArena, gjeldendeEskaleringsvarsel} = props.oppfolging;
     return(
         <div className="etikett-container">
-            <Bas hidden={!dodsdato} type="info">Død</Bas>
+            <Bas hidden={!dodsdato} type="info" className="etikett--mork">Død</Bas>
             <Advarsel hidden={!diskresjonskode}>Kode {diskresjonskode}</Advarsel>
             <Advarsel hidden={!sikkerhetstiltak}>{sikkerhetstiltak}</Advarsel>
             <Advarsel hidden={!egenAnsatt}>Egen ansatt</Advarsel>
