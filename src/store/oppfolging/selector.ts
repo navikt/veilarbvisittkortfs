@@ -46,7 +46,7 @@ function selectErManuell(state: Appstate): boolean {
 }
 
 function selectErKRR (state: Appstate): boolean {
-    return selectOppfolgingData(state).reservarsjonKRR;
+    return selectOppfolgingData(state).reservasjonKRR;
 }
 
 function selectKVP(state: Appstate): boolean {

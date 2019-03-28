@@ -24,7 +24,7 @@ export function trengerAEV(oppfolging: OppfolgingStatus): boolean {
 
 function Etiketter(props: {personalia: Personalia, oppfolgingstatus: OppfolgingStatus, oppfolging: Oppfolging}) {
     const { diskresjonskode, sikkerhetstiltak, egenAnsatt, dodsdato } = props.personalia;
-    const {underKvp, reservarsjonKRR, manuell, underOppfolging, inaktivtIArena, gjeldeneEskaleringsvarsel} = props.oppfolging;
+    const {underKvp, reservasjonKRR, manuell, underOppfolging, inaktivtIArena, gjeldeneEskaleringsvarsel} = props.oppfolging;
     return(
         <div className="etikett-container">
             <Bas hidden={!dodsdato} type="info">Død</Bas>
@@ -32,8 +32,8 @@ function Etiketter(props: {personalia: Personalia, oppfolgingstatus: OppfolgingS
             <Advarsel hidden={!sikkerhetstiltak}>{sikkerhetstiltak}</Advarsel>
             <Advarsel hidden={!egenAnsatt}>Egen ansatt</Advarsel>
             <Fokus hidden={!underKvp}>KVP</Fokus>
-            <Fokus hidden={!manuell}>Manuell bruker</Fokus>
-            <Fokus hidden={!reservarsjonKRR}>KRR</Fokus>
+            <Fokus hidden={reservasjonKRR || !manuell}>Manuell bruker</Fokus>
+            <Fokus hidden={!reservasjonKRR}>KRR</Fokus>
             <Fokus hidden={!inaktivtIArena}>Inaktivert</Fokus>
             <Fokus hidden={underOppfolging}>Ikke under oppfølging</Fokus>
             <Fokus hidden={!gjeldeneEskaleringsvarsel}>Varsel</Fokus>

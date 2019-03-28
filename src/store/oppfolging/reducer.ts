@@ -25,7 +25,7 @@ const initialState: OppfogingState = {
         manuell: false,
         oppfolgingUtgang: null,
         oppfolgingsPerioder: [],
-        reservarsjonKRR: false,
+        reservasjonKRR: false,
         underKvp: false,
         underOppfolging: false,
         veilederId: null,

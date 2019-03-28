@@ -36,7 +36,7 @@ export interface Oppfolging {
     manuell: boolean;
     oppfolgingUtgang: StringOrNothing;
     oppfolgingsPerioder: any[]; //TODO TYPESCIPT
-    reservarsjonKRR: boolean;
+    reservasjonKRR: boolean;
     underKvp: boolean;
     underOppfolging: boolean;
     veilederId: StringOrNothing;
