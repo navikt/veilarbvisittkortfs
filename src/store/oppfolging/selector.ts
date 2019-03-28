@@ -12,12 +12,13 @@ export interface OppfolgingSelector {
     selectFnr: (state: Appstate) => string;
     selectKanSendeEskaleringsVarsel: (state: Appstate) => boolean;
     selectKanStoppeEskaleringsVarsel: (state: Appstate) => boolean;
-    selectErIkkeArbeidssoker: (state: Appstate) => boolean;
     selectKanStarteKVP: (state: Appstate) => boolean;
     selectKanStoppeKVP: (state: Appstate) => boolean;
     selectKanAvslutteOppfolging: (state: Appstate) => boolean;
     selectKanReaktiveres: (state: Appstate) => boolean;
     selectErSykmeldtMedArbeidsgiver: (state: Appstate) => boolean;
+    selectOppfolgingData: (state: Appstate) => Oppfolging;
+    kanRegistreresEllerReaktiveres: (state: Appstate) => boolean;
 }
 
 function selectOppfolgingData(state: Appstate): Oppfolging {
@@ -29,7 +30,7 @@ function selectErUnderOppfolging (state: Appstate): boolean {
 }
 
 function selectKanReaktiveres (state: Appstate): boolean {
-    return !!selectOppfolgingData(state).kanReaktiveras;
+    return !!selectOppfolgingData(state).kanReaktiveres;
 }
 
 function selectOppfolgingStatus(state: Appstate): boolean {
@@ -45,7 +46,7 @@ function selectErManuell(state: Appstate): boolean {
 }
 
 function selectErKRR (state: Appstate): boolean {
-    return selectOppfolgingData(state).reservarsjonKRR;
+    return selectOppfolgingData(state).reservasjonKRR;
 }
 
 function selectKVP(state: Appstate): boolean {
@@ -61,7 +62,7 @@ function selectKanStarteManuellOppfolging(state: Appstate): boolean {
 }
 
 function selectGjeldeneEskaleringsVarsel(state: Appstate): OrNothing<EskaleringsVarsel> {
-    return selectOppfolgingData(state).gjeldeneEskaleringsvarsel;
+    return selectOppfolgingData(state).gjeldendeEskaleringsvarsel;
 }
 
 function selectKanStarteDigitalOppfolging(state: Appstate): boolean {
@@ -108,12 +109,14 @@ function selectKanAvslutteOppfolging(state: Appstate): boolean {
     return TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) && selectErUnderOppfolging(state);
 }
 
-function selectErIkkeArbeidssoker (state: Appstate): boolean {
-    return !selectOppfolgingData(state).underOppfolging && !selectOppfolgingData(state).kanReaktiveras;
-}
-
 function selectErSykmeldtMedArbeidsgiver (state: Appstate): boolean {
     return !!selectOppfolgingData(state).erSykmeldtMedArbeidsgiver;
+}
+
+function kanRegistreresEllerReaktiveres (state: Appstate): boolean {
+    const underOppfolging = selectErUnderOppfolging(state);
+    const kanReaktiveres = selectKanReaktiveres(state);
+    return (underOppfolging && kanReaktiveres) || (!underOppfolging && !kanReaktiveres);
 }
 
 export default {
@@ -124,11 +127,12 @@ export default {
     selectErKRR,
     selectKanSendeEskaleringsVarsel,
     selectKanStoppeEskaleringsVarsel,
-    selectErIkkeArbeidssoker,
     selectKanStarteKVP,
     selectKanStoppeKVP,
     selectKanAvslutteOppfolging,
     selectErUnderOppfolging,
     selectKanReaktiveres,
-    selectErSykmeldtMedArbeidsgiver
+    selectErSykmeldtMedArbeidsgiver,
+    selectOppfolgingData,
+    kanRegistreresEllerReaktiveres
 }as OppfolgingSelector;
