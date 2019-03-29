@@ -8,8 +8,8 @@ export function kalkulerAlder(fodselsdato: Date): number {
 }
 
 export function lagAlderTekst(personalia: Personalia): string {
-    if (personalia.dodsdato) {
-        return '(DØD)';
+    if (!personalia.fodselsdato) {
+        return '';
     }
     const alder = kalkulerAlder(new Date(personalia.fodselsdato));
     return `(${alder} år)`;

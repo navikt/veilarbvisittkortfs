@@ -21,24 +21,32 @@ export interface AvslutningStatus {
     underOppfolging: boolean;
 }
 
+export interface OppfolgingsPerioder {
+    aktorId: string;
+    veileder: StringOrNothing;
+    startDato: string;
+    sluttDato: string;
+    begrunnelse: string;
+    kvpPerioder: any[];
+}
+
 
 export interface Oppfolging {
     avslutningStatus: OrNothing<AvslutningStatus>;
     erIkkeArbeidssokerUtenOppfolging: boolean;
     erSykmeldtMedArbeidsgiver: OrNothing<boolean>;
     fnr: string;
-    gjeldeneEskaleringsvarsel: OrNothing<EskaleringsVarsel>;
+    gjeldendeEskaleringsvarsel: OrNothing<EskaleringsVarsel>;
     harSkriveTilgang: boolean;
-    inaktivtIArena: boolean;
+    inaktivIArena: OrNothing<boolean>;
     inaktiveringsdato: StringOrNothing;
-    kanReaktiveras: OrNothing<boolean>;
+    kanReaktiveres: OrNothing<boolean>;
     kanStarteOppfolging: boolean;
     manuell: boolean;
     oppfolgingUtgang: StringOrNothing;
-    oppfolgingsPerioder: any[]; //TODO TYPESCIPT
-    reservarsjonKRR: boolean;
+    oppfolgingsPerioder: OppfolgingsPerioder[];
+    reservasjonKRR: boolean;
     underKvp: boolean;
     underOppfolging: boolean;
     veilederId: StringOrNothing;
-    vilkarMaBesvarel: boolean;
 }

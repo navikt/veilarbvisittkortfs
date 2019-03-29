@@ -32,7 +32,7 @@ function StartEskaleringKvittering({dato}: StateProps) {
 }
 
 const mapStateToProps = (state: Appstate): StateProps => ({
-    dato: state.oppfolging.data.gjeldeneEskaleringsvarsel && state.oppfolging.data.gjeldeneEskaleringsvarsel.opprettetDato
+    dato: state.oppfolging.data.gjeldendeEskaleringsvarsel && state.oppfolging.data.gjeldendeEskaleringsvarsel.opprettetDato
 });
 
 export default connect<StateProps>(mapStateToProps)(StartEskaleringKvittering);
