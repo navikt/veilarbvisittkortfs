@@ -14,12 +14,14 @@ function Tilbakelenke(props: Props) {
         props.tilbakeTilFlate === 'veilarbportefoljeflatefs' ? `/${props.tilbakeTilFlate}/tilbake?enhet=${props.enhet}` :
         `/${props.tilbakeTilFlate}/${props.fnr}?enhet=${props.enhet}`;
 
+    const tilbakeTekst =  props.tilbakeTilFlate === 'veilarbportefoljeflatefs' ? 'Oversikten' : 'Aktivitetsplan';
+
     return (
         <Lenke className="visittkortfs__tilbakelenke" href={tilbakeLenke}>
             <VenstreChevron
                 className="visittkortfs__tilbakelenke--chevron"
             />
-            <span className="visittkortfs__tilbakelenke--tekst">Tilbake</span>
+            <span className="visittkortfs__tilbakelenke--tekst">{`Til ${tilbakeTekst}`}</span>
         </Lenke>
     );
 }
