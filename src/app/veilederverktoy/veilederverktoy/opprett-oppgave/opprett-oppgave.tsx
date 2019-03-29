@@ -15,6 +15,7 @@ import { Dispatch } from 'redux';
 import { lagreOppgave } from '../../../../store/oppgave/actions';
 import { OrNothing } from '../../../../types/utils/ornothing';
 import FormikModal from '../../../components/formik/formik-modal';
+import {navigerTilProcesser} from "../../../../store/navigation/actions";
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
@@ -37,11 +38,12 @@ interface StateProps {
 
 interface DispatchProps {
     handleSubmit: (formData: OppgaveFormData) => void;
+    tilbakeTilProcesser: () => void;
 }
 
 type OpprettOppgaveProps = StateProps & DispatchProps;
 
-function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit}: OpprettOppgaveProps) {
+function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, tilbakeTilProcesser}: OpprettOppgaveProps) {
 
     const opprettOppgaveInitialValues: OpprettOppgaveFormValues = {
         beskrivelse: '',
@@ -61,6 +63,8 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit}: OpprettOppga
             initialValues={opprettOppgaveInitialValues}
             handleSubmit={handleSubmit}
             contentLabel="Opprett gosys oppgave"
+            tilbake={tilbakeTilProcesser}
+            tilbakeTekstId="Tilbake"
             render={(formikProps) =>
                 <div className="modal-innhold">
                     <div className="blokk-xs">
@@ -101,7 +105,8 @@ const mapStateToProps = (state: Appstate) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    handleSubmit: (formdata: OppgaveFormData) => dispatch(lagreOppgave(formdata))
+    handleSubmit: (formdata: OppgaveFormData) => dispatch(lagreOppgave(formdata)),
+    tilbakeTilProcesser: () => dispatch(navigerTilProcesser())
 });
 
 export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(OpprettOppgave);
