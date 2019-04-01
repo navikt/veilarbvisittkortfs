@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Undertittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { HiddenIfHovedKnapp } from '../../../components/hidden-if/hidden-if-knapp';
+import { HiddenIfKnapp } from '../../../components/hidden-if/hidden-if-knapp';
 import withClickMetric, { ClickMetricProps } from '../../../components/click-metric/click-metric';
 
 interface StartProsessProps {
@@ -15,7 +15,7 @@ interface StartProsessProps {
 
 }
 
-const ProcessKnapp = withClickMetric(HiddenIfHovedKnapp);
+const ProcessKnapp = withClickMetric(HiddenIfKnapp);
 
 function StartProcess(props: StartProsessProps & ClickMetricProps) {
     return (

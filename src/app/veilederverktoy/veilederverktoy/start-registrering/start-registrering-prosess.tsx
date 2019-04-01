@@ -53,7 +53,7 @@ function StartRegistreringProsess(props: StartRegistreringProsessProps) {
             </div>
             <a
                 href={erITestMiljo() ? veilarbLoginUrl(registreringUrl) : registreringUrl}
-                className="knapp knapp--hoved btn--mb1"
+                className="knapp btn--mb1"
                 onClick={() => logEvent('veilarbvisittkortfs.metrikker.registrering', {}, {brukerType: brukerType})}
             >
                 <FormattedMessage id="innstillinger.modal.prosess.start.knapp"/>
