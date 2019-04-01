@@ -15,7 +15,7 @@ import { Dispatch } from 'redux';
 import { lagreOppgave } from '../../../../store/oppgave/actions';
 import { OrNothing } from '../../../../types/utils/ornothing';
 import FormikModal from '../../../components/formik/formik-modal';
-import {navigerTilProcesser} from "../../../../store/navigation/actions";
+import { navigerTilProcesser } from '../../../../store/navigation/actions';
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
