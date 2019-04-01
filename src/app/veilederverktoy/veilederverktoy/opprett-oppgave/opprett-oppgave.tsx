@@ -15,7 +15,7 @@ import { Dispatch } from 'redux';
 import { lagreOppgave } from '../../../../store/oppgave/actions';
 import { OrNothing } from '../../../../types/utils/ornothing';
 import FormikModal from '../../../components/formik/formik-modal';
-import {navigerTilProcesser} from "../../../../store/navigation/actions";
+import { navigerAction, navigerTilProcesser } from '../../../../store/navigation/actions';
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
@@ -39,11 +39,12 @@ interface StateProps {
 interface DispatchProps {
     handleSubmit: (formData: OppgaveFormData) => void;
     tilbakeTilProcesser: () => void;
+    tilbake: () => void;
 }
 
 type OpprettOppgaveProps = StateProps & DispatchProps;
 
-function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, tilbakeTilProcesser}: OpprettOppgaveProps) {
+function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, tilbakeTilProcesser, tilbake}: OpprettOppgaveProps) {
 
     const opprettOppgaveInitialValues: OpprettOppgaveFormValues = {
         beskrivelse: '',
@@ -52,7 +53,7 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, tilbakeTilPro
         fraDato: moment().format('YYYY-MM-DD').toString(),
         tilDato: moment().format('YYYY-MM-DD').toString(),
         prioritet: 'NORM',
-        tema: null ,
+        tema: undefined ,
         type: 'VURDER_HENVENDELSE',
         veilederId: null,
         avsenderenhetId: avsenderenhetId || '',
@@ -89,6 +90,7 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, tilbakeTilPro
                             veilederId={formikProps.values.veilederId}
                             avsenderenhetId={avsenderenhetId}
                             formikProps={formikProps}
+                            tilbake={tilbake}
                         />
                     </Form>
                 </div>
@@ -106,7 +108,8 @@ const mapStateToProps = (state: Appstate) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     handleSubmit: (formdata: OppgaveFormData) => dispatch(lagreOppgave(formdata)),
-    tilbakeTilProcesser: () => dispatch(navigerTilProcesser())
+    tilbakeTilProcesser: () => dispatch(navigerTilProcesser()),
+    tilbake: () => dispatch(navigerAction(null))
 });
 
 export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(OpprettOppgave);

@@ -21,9 +21,10 @@ interface OppgaveInnerForm {
     veilederId: StringOrNothing;
     avsenderenhetId: StringOrNothing;
     formikProps: FormikProps<OpprettOppgaveFormValues>;
+    tilbake: () => void;
 }
 
-function OppgaveInnerForm({fnr, tema, enhetId, veilederId, avsenderenhetId, formikProps}: OppgaveInnerForm) {
+function OppgaveInnerForm({fnr, tema, enhetId, veilederId, avsenderenhetId, formikProps, tilbake}: OppgaveInnerForm) {
     if (!tema) {
         return null;
     }
@@ -53,7 +54,7 @@ function OppgaveInnerForm({fnr, tema, enhetId, veilederId, avsenderenhetId, form
             <Hovedknapp className="btn--mr1" htmlType="submit" spinner={false}>
                 Bekreft
             </Hovedknapp>
-            <button type="button" className="knapp" onClick={() => 'hersp'}>
+            <button type="button" className="knapp" onClick={tilbake}>
                 <FormattedMessage id="modal.knapp.avbryt" />
             </button>
         </HiddenIfDiv>

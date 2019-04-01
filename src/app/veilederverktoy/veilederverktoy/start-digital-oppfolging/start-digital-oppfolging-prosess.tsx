@@ -42,4 +42,4 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     reservasjonKRR: OppfolgingSelector.selectErKRR(state)
 });
 
-export default visibleIf(connect<StateProps>(mapStateToProps)(StartDigitalOppfolgingProsess));
+export default connect<StateProps, {}, OwnProps>(mapStateToProps)(visibleIf(StartDigitalOppfolgingProsess));

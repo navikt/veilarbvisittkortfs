@@ -10,7 +10,7 @@ import { logEvent } from '../../../utils/frontend-logger';
 import { StringOrNothing } from '../../../../types/utils/stringornothings';
 
 function byggRegistreringUrl(fnr: string, enhet: string | string[]) {
-    return `https://arbeidssokerregistrering${finnMiljoStreng()}${finnNaisDomene()}?fnr=${fnr}&enhetId=${enhet}`;
+    return `https://arbeidssokerregistrering-fss${finnMiljoStreng()}${finnNaisDomene()}?fnr=${fnr}&enhetId=${enhet}`;
 }
 
 function byggVeilarbLoginUrl() {
