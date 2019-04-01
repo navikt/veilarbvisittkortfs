@@ -32,8 +32,8 @@ function OpprettOppgaveVelgVeileder ({veilederListe, veilederId, tema, enhetId, 
     }
 
     if ( !(avsenderenhetId === enhetId && tema === 'OPPFOLGING')) {
-       return null;
-   }
+        return null;
+    }
 
     const valgtVeileder: OrNothing<VeilederData>  = veilederListe.find(veileder => veileder.ident === veilederId);
 

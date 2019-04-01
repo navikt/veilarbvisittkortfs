@@ -31,7 +31,6 @@ function FormikRadioGroup<T> ({name, data, radioName, createLabel, createValue, 
                                     key={`${createValue(o)}-${radioName}`}
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                         form.setFieldValue(field.name, e.target.value);
-                                        closeDropdown();
                                     }}
                                 />
                             )}

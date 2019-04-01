@@ -10,7 +10,7 @@ import { logEvent } from '../../../utils/frontend-logger';
 import { StringOrNothing } from '../../../../types/utils/stringornothings';
 
 function byggRegistreringUrl(fnr: string, enhet: string | string[]) {
-    return `https://arbeidssokerregistrering${finnMiljoStreng()}${finnNaisDomene()}?fnr=${fnr}&enhetId=${enhet}`;
+    return `https://arbeidssokerregistrering-fss${finnMiljoStreng()}${finnNaisDomene()}?fnr=${fnr}&enhetId=${enhet}`;
 }
 
 function byggVeilarbLoginUrl() {
@@ -53,7 +53,7 @@ function StartRegistreringProsess(props: StartRegistreringProsessProps) {
             </div>
             <a
                 href={erITestMiljo() ? veilarbLoginUrl(registreringUrl) : registreringUrl}
-                className="knapp knapp--hoved btn--mb1"
+                className="knapp btn--mb1"
                 onClick={() => logEvent('veilarbvisittkortfs.metrikker.registrering', {}, {brukerType: brukerType})}
             >
                 <FormattedMessage id="innstillinger.modal.prosess.start.knapp"/>

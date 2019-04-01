@@ -26,6 +26,7 @@ function OpprettOppgaveVelgEnhet ({value, tema, fnr, formikProps}: OpprettOppgav
                     setBehandladeEnheter(behandladeEnheterData);
                     formikProps.setFieldValue('enhetId', behandladeEnheterData[0].enhetId);
                     setIsLoading(false);
+                    document.getElementsByName('Velg enhet').forEach((elem) => (elem as HTMLInputElement).checked = false);
                 });
         }
     }, [tema]);

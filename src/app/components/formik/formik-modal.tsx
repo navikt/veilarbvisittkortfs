@@ -20,7 +20,6 @@ interface FormikModalProps<Values> {
     isOpen?: boolean;
 }
 
-//Er du sikker på at du vil lukke siden? Ulagrede endringer vil da gå tapt.
 
 function FormikModal<Values> ({visConfirmDialog= true, ...props}: FormikModalProps<Values>) {
     const[isOpen, setIsOpen] = useState(true);

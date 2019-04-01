@@ -29,11 +29,11 @@
     position: relative;
     padding: 1rem 0;
     user-select: none;
+  }
 
-    &:focus {
-      outline: none;
-      box-shadow: 0 0 0 3px @orangeFocus;
-    }
+  .DayPicker-wrapper:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px @orangeFocus;
   }
 
   .DayPicker-Month {
@@ -231,7 +231,6 @@
   .nav-datovelger__kalenderPortal {
     top: -15rem;
   }
-
   @fjern-ikon-bredde: 768px;
 
   @media (min-width: @fjern-ikon-bredde) {
