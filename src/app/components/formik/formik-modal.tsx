@@ -20,7 +20,6 @@ interface FormikModalProps<Values> {
     isOpen?: boolean;
 }
 
-
 function FormikModal<Values> ({visConfirmDialog= true, ...props}: FormikModalProps<Values>) {
     const[isOpen, setIsOpen] = useState(true);
 
