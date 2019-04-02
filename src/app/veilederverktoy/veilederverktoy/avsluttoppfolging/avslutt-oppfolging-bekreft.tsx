@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarselSolid } from 'nav-frontend-alertstriper';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Appstate } from '../../../../types/appstate';
 import PersonaliaSelector from '../../../../store/personalia/selectors';
@@ -27,9 +27,9 @@ function AvsluttOppfolgingBekreft ({navn, handleSubmit, isLoading, tilbake}: Avs
     return (
         <VeilederVerktoyModal tilbakeFunksjon={tilbake}>
             <div className="prosess">
-                <AlertStripeInfoSolid className="blokk-s">
+                <AlertStripeAdvarselSolid className="blokk-s">
                     Er du sikker på at du vil avslutte oppfølgingsperioden til {navn} ?
-                </AlertStripeInfoSolid>
+                </AlertStripeAdvarselSolid>
                 <div className="modal-footer">
                     <Hovedknapp htmlType="submit" className="btn--mr1" onClick={handleSubmit} spinner={isLoading}>
                         Bekreft

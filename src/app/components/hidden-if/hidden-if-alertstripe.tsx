@@ -1,4 +1,4 @@
-import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarselSolid } from 'nav-frontend-alertstriper';
 import hiddenIf from './hidden-if';
 
-export const HiddenIfAlertStripeInfoSolid = hiddenIf(AlertStripeInfoSolid);
+export const HiddenIfAlertStripeAdvarselSolid = hiddenIf(AlertStripeAdvarselSolid);
