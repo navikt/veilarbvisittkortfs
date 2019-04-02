@@ -14,7 +14,7 @@ function byggRegistreringUrl(fnr: string, enhet: string | string[]) {
 }
 
 function byggVeilarbLoginUrl() {
-    return (url?: string) => `https://veilarblogin${finnMiljoStreng()}${finnNaisDomene()}veilarblogin/api/start?url=${url}`;
+    return (url: string) => `https://veilarblogin${finnMiljoStreng()}${finnNaisDomene()}veilarblogin/api/start?url=${encodeURIComponent(url)}`;
 }
 
 interface StateProps {
