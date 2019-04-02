@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Appstate } from '../../../../types/appstate';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
-import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarselSolid } from 'nav-frontend-alertstriper';
 import { FormattedMessage } from 'react-intl';
 import PersonaliaSelectors from '../../../../store/personalia/selectors';
 import { settManuell } from '../../../../store/oppfolging/actions';
@@ -23,9 +23,9 @@ type StartEskaleringProps = StateProps & DispatchProps;
 
 function StartManuellOppfolging(props: StartEskaleringProps) {
     const infoTekst = (
-        <AlertStripeInfoSolid className="blokk-xxs">
+        <AlertStripeAdvarselSolid className="blokk-xxs">
             <FormattedMessage id="innstillinger.modal.manuell.infotekst" />
-        </AlertStripeInfoSolid>
+        </AlertStripeAdvarselSolid>
     );
 
     return (

@@ -4,7 +4,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import StartProsess from './../prosess/start-prosess';
 import { Appstate } from '../../../../types/appstate';
 import { connect } from 'react-redux';
-import { HiddenIfAlertStripeInfoSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
+import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
 import visibleIf from '../../../components/visible-if';
 import OppfolgingSelector from '../../../../store/oppfolging/selector';
 
@@ -30,9 +30,9 @@ function StartDigitalOppfolgingProsess({navigerTilStartDigitalOppfolging, reserv
                 <Normaltekst>
                     <FormattedMessage id="innstillinger.prosess.digital.tekst" />
                 </Normaltekst>
-                <HiddenIfAlertStripeInfoSolid hidden={!reservasjonKRR}>
+                <HiddenIfAlertStripeAdvarselSolid hidden={!reservasjonKRR}>
                     <FormattedMessage id="instillinger.proses.manuell.reservasjon-krr" />
-                </HiddenIfAlertStripeInfoSolid>
+                </HiddenIfAlertStripeAdvarselSolid>
             </div>
         </StartProsess>
     );

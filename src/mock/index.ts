@@ -60,7 +60,7 @@ mock.post('/veilarboppfolging/api/oppfolging/avsluttOppfolging', (args: HandlerA
 
 mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
     avslutningStatus: {
-        kanAvslutte: true,
+        kanAvslutte: false,
         harTiltak: false,
         harYtelser: false,
         underOppfolging: true,
