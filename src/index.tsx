@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import App from './App';
 import NAVSPA from './NAVSPA';
 import env from './app/utils/environment';
