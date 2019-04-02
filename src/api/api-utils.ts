@@ -1,8 +1,8 @@
 /* tslint:disable */
-const defaultHeaders = new Headers({
+const defaultHeaders = {
     'Content-Type': 'application/json',
     NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION'),
-});
+};
 
 export function sjekkStatuskode(response: Response) {
     if (

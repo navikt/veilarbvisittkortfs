@@ -1,8 +1,11 @@
 import 'babel-polyfill';
-import 'whatwg-fetch';
 import App from './App';
 import NAVSPA from './NAVSPA';
 import env from './app/utils/environment';
+
+if (!(global as any)._babelPolyfill) {
+    require('babel-polyfill');
+}
 
 if (env.isDevelopment) {
     require('./mock');
