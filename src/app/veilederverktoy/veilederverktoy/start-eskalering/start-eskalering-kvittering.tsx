@@ -22,6 +22,9 @@ interface StateProps {
 }
 
 function StartEskaleringKvittering({dato}: StateProps) {
+    if (window) {
+        window.dispatchEvent(new Event('rerenderAktivitetsplan'));
+    }
     return(
         <Kvittering
             tittelId="innstillinger.modal.start-eskalering.overskrift"
