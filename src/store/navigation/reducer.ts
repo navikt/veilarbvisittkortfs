@@ -18,7 +18,7 @@ const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = {loc
             };
         case 'START_ESKALERING_SUCCESS':
             return {
-                location : 'eskalering_kvittering'
+                location : 'start_eskalering_kvittering'
             };
         case 'STOPP_ESKALERING_SUCCESS': {
             return {
