@@ -3,7 +3,10 @@ import {
     avsluttOppfolgingSuccess,
     HentOppfolgingAction,
     hentOppfolgingError,
-    hentOppfolgingSuccess
+    hentOppfolgingSuccess,
+    StoppEskaleringAction,
+    stoppEskaleringError,
+    stoppEskaleringSuccess
 } from './actions';
 import { hentOppfolgingData } from '../../api/oppfolging-api-utils';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
@@ -83,6 +86,18 @@ function* stopKVP(action: StoppKVPAction) {
     }
 }
 
+function* stoppEskalering(action: StoppEskaleringAction) {
+    try {
+        const fnr = yield select(OppfolgingSelector.selectFnr);
+        const response = yield call( () => OppfolgingApi.stoppEskalering(fnr, action.begrunnelse));
+        yield put(stoppEskaleringSuccess(response));
+        yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr});
+    } catch (e) {
+        yield put(stoppEskaleringError(e));
+        yield put(navigerAction('feil_i_veilederverktoy'));
+    }
+}
+
 function* avsluttOppfolging() {
     try {
         const fnr = yield select(OppfolgingSelector.selectFnr);
@@ -105,4 +120,5 @@ export function* oppfolgingSaga() {
     yield takeLatest(OppfolgingActionType.STOPP_KVP, stopKVP);
     yield takeLatest(OppfolgingActionType.SETT_DIGITAL, settDigital);
     yield takeLatest(OppfolgingActionType.AVSLUTT_OPPFOLGING, avsluttOppfolging);
+    yield takeLatest(OppfolgingActionType.STOPP_ESKALERING, stoppEskalering);
 }
