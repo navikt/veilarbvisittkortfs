@@ -23,7 +23,7 @@ function hentOppfolgingData(fnr?: string) {
 }
 
 function startEskalering(dialogId: string, begrunnelse: string, fnr: string) {
-    return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/startEskalering/?fnr${fnr}`, {
+    return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/startEskalering/?fnr=${fnr}`, {
         dialogId,
         begrunnelse,
     });
