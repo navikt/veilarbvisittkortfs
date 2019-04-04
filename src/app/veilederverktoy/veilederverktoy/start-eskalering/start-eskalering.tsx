@@ -56,7 +56,7 @@ const mapStateToProps = (state: Appstate) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     handleSubmit: (values: StartEskaleringValues) => dispatch(opprettHenvendelse (
-                {begrunnelse: values.tekst, overskrift: values.overskrift, egenskaper: ['ESKALERINGSVARSEL'], tekst: values.tekst})),
+                {begrunnelse: values.begrunnelse, overskrift: values.overskrift, egenskaper: ['ESKALERINGSVARSEL'], tekst: values.begrunnelse})),
 });
 
 export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(injectIntl(StartEskalering));
