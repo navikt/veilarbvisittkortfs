@@ -14,8 +14,7 @@ import {
 } from './actions';
 import DialogApi from '../../api/dialog-api';
 import OppfolgingApi from '../../api/oppfolging-api';
-import { startEskaleringError, startEskaleringSuccess } from '../oppfolging/actions';
-import { hentOppfolgingstatusSuccess } from '../oppfolging-status/actions';
+import { hentOppfolgingSuccess, startEskaleringError, startEskaleringSuccess } from '../oppfolging/actions';
 import { FETCH_STATUS } from '../../types/fetch-status';
 import OppfolgingSelector from '../oppfolging/selector';
 import { replaceAt } from '../../app/utils/utils';
@@ -95,7 +94,7 @@ function* startEskaleringMedDialog(action: OpprettHenvendelseActionSuccess) {
 
         const response = yield call (() => OppfolgingApi.hentOppfolgingData(action.fnr));
 
-        yield put(hentOppfolgingstatusSuccess(response));
+        yield put(hentOppfolgingSuccess(response));
 
     } catch (e) {
         yield put(startEskaleringError(e));

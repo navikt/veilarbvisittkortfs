@@ -12,6 +12,7 @@ import Veilederliste from './veiledereliste';
 import VeilederData from './veiledere';
 import InnstillingsHistorikk from './instillingshistorikk';
 import Oppgavehistorikk from './oppgave-historikk';
+import Henvendelse from './henvedelse';
 
 const loggingMiddleware: Middleware = (request, response) => {
     // tslint:disable
@@ -54,6 +55,7 @@ mock.get('/veilarbveileder/api/veileder/me', VeilederData);
 /*--OPPFOLGING--*/
 mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', {tilgangTilBrukersKontor: true});
 mock.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', InnstillingsHistorikk);
+mock.post('/veilarboppfolging/api/oppfolging/startEskalering/', ResponseUtils.statusCode(204));
 mock.post('/veilarboppfolging/api/oppfolging/avsluttOppfolging', (args: HandlerArgument) => {
     return ResponseUtils.jsonPromise(args.body);
 });
@@ -107,6 +109,10 @@ mock.post('/veilarboppgave/api/oppgave', (args: HandlerArgument) => {
         type: args.body.type
     });
 });
+
+mock.post('/veilarbdialog/api/dialog', Henvendelse);
+mock.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/true', Henvendelse);
+mock.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/true', Henvendelse);
 
 mock.get('/veilarboppgave/api/oppgavehistorikk', Oppgavehistorikk);
 

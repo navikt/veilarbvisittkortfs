@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Prosesser from './prosess/prosesser';
 import * as React from 'react';
 import StartEskalering from './start-eskalering/start-eskalering';
+import StartEskaleringKvittering from './start-eskalering/start-eskalering-kvittering';
 import StarManuellOppfolging from './start-manuell-oppfolging/start-manuell-oppfolging';
 import StartManuellOppfolgingKvittering from './start-manuell-oppfolging/start-manuell-oppfolging-kvittering';
 import StarKvpPeriode from './start-kvp-periode/start-kvp-periode';
@@ -38,7 +39,7 @@ function VeilederVerktoyNavigation(props: VeilederVerktoyNavigationProps) {
         case 'start_eskalering':
             return <StartEskalering/>;
         case 'start_eskalering_kvittering':
-            return <StartEskalering/>;
+            return <StartEskaleringKvittering/>;
         case 'manuell_oppfolging':
             return <StarManuellOppfolging/>;
         case 'sett_manuell_kvittering':
