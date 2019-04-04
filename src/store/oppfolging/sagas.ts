@@ -12,7 +12,8 @@ import { hentOppfolgingData } from '../../api/oppfolging-api-utils';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
     setDigitalError,
-    SettDigitalAction, settDigitalSuccess,
+    SettDigitalAction,
+    settDigitalSuccess,
     SettManuellAction,
     settManuellError,
     settManuellSuccess
@@ -22,7 +23,8 @@ import {
     StartKVPAction,
     startKVPError,
     startKVPSuccess,
-    StoppKVPAction, stoppKVPError,
+    StoppKVPAction,
+    stoppKVPError,
     stoppKVPSuccess
 } from './actions';
 import OppfolgingApi from '../../api/oppfolging-api';

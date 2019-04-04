@@ -116,7 +116,6 @@ function* hentDialoger() {
 export function* dialogSaga() {
     yield takeLatest(HenvendelseActionType.OPPRETTET_HENVENDELSE, opprettHenvendelse);
     yield takeLatest(HenvendelseActionType.OPPRETTET_HENVENDELSE_SUCCESS, startEskaleringMedDialog);
-    yield takeLatest(HenvendelseActionType.OPPRETTET_HENVENDELSE_SUCCESS, startEskaleringMedDialog);
     yield takeLatest(HenvendelseActionType.HENT_DIALOGER, hentDialoger);
 }
 
