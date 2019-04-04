@@ -32,6 +32,7 @@ import OppfolgingSelector from './selector';
 import VeilederSelector from '../tildel-veileder/selector';
 import AvsluttOppfolgingStatusSelector from '../avslutningstatus/selector';
 import { navigerAction } from '../navigation/actions';
+import { triggerReRenderingAvAktivitesplan } from '../../app/utils/utils';
 
 function* hentOppfolging(action: HentOppfolgingAction) {
     try {
@@ -94,6 +95,7 @@ function* stoppEskalering(action: StoppEskaleringAction) {
         const response = yield call( () => OppfolgingApi.stoppEskalering(fnr, action.begrunnelse));
         yield put(stoppEskaleringSuccess(response));
         yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr});
+        triggerReRenderingAvAktivitesplan();
     } catch (e) {
         yield put(stoppEskaleringError(e));
         yield put(navigerAction('feil_i_veilederverktoy'));

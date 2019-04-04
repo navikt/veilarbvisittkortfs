@@ -17,7 +17,7 @@ import OppfolgingApi from '../../api/oppfolging-api';
 import { hentOppfolgingSuccess, startEskaleringError, startEskaleringSuccess } from '../oppfolging/actions';
 import { FETCH_STATUS } from '../../types/fetch-status';
 import OppfolgingSelector from '../oppfolging/selector';
-import { replaceAt } from '../../app/utils/utils';
+import { replaceAt, triggerReRenderingAvAktivitesplan } from '../../app/utils/utils';
 import { navigerAction } from '../navigation/actions';
 
 export type DialogState = {data: Dialog[]} & {status: FETCH_STATUS; error: OrNothing<Error>};
@@ -95,6 +95,7 @@ function* startEskaleringMedDialog(action: OpprettHenvendelseActionSuccess) {
         const response = yield call (() => OppfolgingApi.hentOppfolgingData(action.fnr));
 
         yield put(hentOppfolgingSuccess(response));
+        triggerReRenderingAvAktivitesplan();
 
     } catch (e) {
         yield put(startEskaleringError(e));

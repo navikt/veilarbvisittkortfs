@@ -46,3 +46,9 @@ export function finnNaisDomene() {
 export function erITestMiljo() {
     return window.location.hostname.indexOf('-q') >= 0;
 }
+
+export function triggerReRenderingAvAktivitesplan() {
+    if (window) {
+        window.dispatchEvent(new Event('rerenderAktivitetsplan'));
+    }
+}
