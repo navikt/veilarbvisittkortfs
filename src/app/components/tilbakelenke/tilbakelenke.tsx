@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Lenke from 'nav-frontend-lenker';
 import { VenstreChevron } from 'nav-frontend-chevron';
 import './tilbakelenke.less';
 
@@ -17,12 +16,12 @@ function Tilbakelenke(props: Props) {
     const tilbakeTekst =  props.tilbakeTilFlate === 'veilarbportefoljeflatefs' ? 'Oversikten' : 'Aktivitetsplan';
 
     return (
-        <Lenke className="visittkortfs__tilbakelenke" href={tilbakeLenke}>
+        <a className="visittkortfs__tilbakelenke" href={tilbakeLenke}>
             <VenstreChevron
                 className="visittkortfs__tilbakelenke--chevron"
             />
             <span className="visittkortfs__tilbakelenke--tekst">{`Til ${tilbakeTekst}`}</span>
-        </Lenke>
+        </a>
     );
 }
 
