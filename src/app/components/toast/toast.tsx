@@ -37,7 +37,7 @@ function Toast (props: ToastProps) {
             <span className="toast">
                 <span>Arbeidslisten har blitt slettet.</span>
                 <span className="toast__lenke" onClick={handleClick}>Ångre</span>
-                <span onClick={timeoutFunc} className="toast__close">&times;</span>
+                <button onClick={timeoutFunc} className="lukknapp lukknapp--hvit">&times;</button>
             </span>
         </div>
     );
