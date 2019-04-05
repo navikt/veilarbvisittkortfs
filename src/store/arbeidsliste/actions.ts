@@ -16,10 +16,9 @@ export enum ArbeidslisteActionType {
 
 }
 
-export const slettArbeidsliste = (fnr: string): SlettArbeidslisteAction => {
+export const slettArbeidsliste = (): SlettArbeidslisteAction => {
     return {
         type: ArbeidslisteActionType.SLETT_ARBEIDSLISTE,
-        fnr
     };
 };
 
@@ -147,7 +146,6 @@ export interface HentArbeidslisteActionError {
 
 export interface SlettArbeidslisteAction {
     type: ArbeidslisteActionType.SLETT_ARBEIDSLISTE;
-    fnr: string;
 }
 
 export interface SlettArbeidslisteActionSuccess {

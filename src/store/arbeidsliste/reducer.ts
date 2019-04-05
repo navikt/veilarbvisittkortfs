@@ -12,7 +12,6 @@ import {
     oppdaterArbeidslisteError,
     oppdaterArbeidslisteSuccess,
     RedigerArbeidslisteAction,
-    SlettArbeidslisteAction,
     slettArbeidslisteActionError,
     slettArbeidslisteActionSuccess
 } from './actions';
@@ -43,7 +42,6 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
     switch (action.type) {
         case ArbeidslisteActionType.HENT_ARBEIDSLISTE:
         case ArbeidslisteActionType.LAGRE_ARBEIDSLISTE:
-        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE:
         case ArbeidslisteActionType.REDIGER_ARBEIDSLISTE: {
             return {
                 ...state,
@@ -69,11 +67,12 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
                 error: action.error
             };
         }
-        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE_SUCCESS: {
+        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE: {
             return {
                 ...state,
                 data: {
-                    ...state.data,
+                    harVeilederTilgang: state.data.harVeilederTilgang,
+                    isOppfolgendeVeileder: state.data.isOppfolgendeVeileder,
                     kommentar: null,
                     overskrift: null,
                     sistEndretAv: null,
@@ -121,9 +120,10 @@ function* redigerArbeidsliste(action: RedigerArbeidslisteAction) {
     }
 }
 
-function* slettArbeidsliste(action: SlettArbeidslisteAction) {
+function* slettArbeidsliste() {
     try {
-        const response = yield call( () => ArbeidslisteApi.slettArbeidsliste(action.fnr));
+        const fnr = yield select(OppfolgingSelector.selectFnr);
+        const response = yield call( () => ArbeidslisteApi.slettArbeidsliste(fnr));
         yield put(slettArbeidslisteActionSuccess(response));
     } catch (e) {
         yield put(slettArbeidslisteActionError(e));

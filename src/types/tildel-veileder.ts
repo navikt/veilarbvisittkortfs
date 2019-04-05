@@ -9,4 +9,5 @@ export interface TildelVeilederData {
 export interface TildelVeilederResponse {
     resultat: string;
     feilendeTilordninger: TildelVeilederData[];
+    tilVeilederId: StringOrNothing;
 }

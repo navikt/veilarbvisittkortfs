@@ -10,6 +10,7 @@ import { InnstillingsHistorikkState } from '../store/innstillingshistorikk/reduc
 import { OppgaveHistorikkState } from '../store/oppgave/reducer';
 import { EnhetState } from '../store/enhet/reducer';
 import { AvsluttOppfolgingState } from '../store/avslutningstatus/reducer';
+import { ToastType } from '../app/components/toast/toast';
 
 export interface Appstate {
     oppfolging: OppfogingState;
@@ -17,11 +18,14 @@ export interface Appstate {
     personalia: PersonaliaState;
     arbeidsliste: ArbeidslisteState;
     dialoger: DialogState;
-    navigation: NavigationState;
     tildelVeileder: TildelVeilederState;
     tilgangTilBrukersKontor: TilgangTilBrukersKontorState;
     instillingshistorikk: InnstillingsHistorikkState;
     oppgavehistorikk: OppgaveHistorikkState;
     enhetId: EnhetState;
     avsluttOppfolgingStatus: AvsluttOppfolgingState;
+    ui: {
+        navigation: NavigationState;
+        toasts: {toasts: ToastType[]},
+    };
 }

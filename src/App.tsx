@@ -2,6 +2,7 @@ import React from 'react';
 import PersonInfo from './app/personinfo/personinfo';
 import Veilederverktoyslinje from './app/veilederverktoy/veiledervertoyslinje';
 import Tilbakelenke from './app/components/tilbakelenke/tilbakelenke';
+import Toasts from './app/components/toast/toasts';
 import AppProvider from './app-provider';
 import * as moment from 'moment';
 import 'moment/locale/nb';
@@ -31,11 +32,14 @@ class App extends React.Component<AppProps> {
                     />
                     <div className="visittkortfs__container">
                         <PersonInfo fnr={this.props.fnr}/>
+                        <div>
                         <Veilederverktoyslinje
                             fnr={this.props.fnr}
                             enhet={this.props.enhet}
                             visVeilederVerktoy={this.props.visVeilederVerktoy}
                         />
+                        <Toasts/>
+                        </div>
                     </div>
                 </div>
             </AppProvider>

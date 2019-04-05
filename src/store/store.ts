@@ -14,9 +14,15 @@ import { oppfolgingSaga } from './oppfolging/sagas';
 import instillingshistorikkReducer, { instillingshistorikkSaga } from './innstillingshistorikk/reducer';
 import oppgavehistorikkReducer, { oppgaveHistorikkSaga } from './oppgave/reducer';
 import enhetIdReducer from './enhet/reducer';
+import toastsReducer from './toast/reducer';
 import avsluttOppfolgingStatusReducer, { avsluttOppfolgingStatusSaga } from './avslutningstatus/reducer';
 
 const sagaMiddleware = createReduxSaga();
+
+const uiReducers = combineReducers( {
+    navigation: navigationReducer,
+    toasts: toastsReducer,
+});
 
 const store = createStore(
     combineReducers({
@@ -25,13 +31,13 @@ const store = createStore(
         personalia: personaliaReducer,
         arbeidsliste: arbeidslisteReducer,
         dialoger: dialogReducer,
-        navigation: navigationReducer,
         tildelVeileder: tildelVelederReducer,
         tilgangTilBrukersKontor : tilgangTilBrukersKontorReducer,
         instillingshistorikk: instillingshistorikkReducer,
         oppgavehistorikk: oppgavehistorikkReducer,
         enhetId: enhetIdReducer,
-        avsluttOppfolgingStatus: avsluttOppfolgingStatusReducer
+        avsluttOppfolgingStatus: avsluttOppfolgingStatusReducer,
+        ui: uiReducers
     }),
     composeWithDevTools(applyMiddleware(sagaMiddleware))
 );

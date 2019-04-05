@@ -121,7 +121,9 @@ function* hentPaloggetVeileder() {
 function* tildelVeileder(action: TildelVeilederAction) {
     try {
         const response = yield call( () => TildelVeilederApi.tildelTilVeileder(action.data));
-        yield put(tildelVeilederSuccess(response));
+        if (response.feilendeTilordninger.length === 0 ) {
+            yield put(tildelVeilederSuccess(Object.assign(response, {tilVeilederId : action.data[0].tilVeilederId})));
+        }
     } catch (e) {
         yield put(tildelVeilederError(e));
     }

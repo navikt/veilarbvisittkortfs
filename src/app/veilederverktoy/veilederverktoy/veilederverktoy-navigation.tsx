@@ -77,7 +77,7 @@ function VeilederVerktoyNavigation(props: VeilederVerktoyNavigationProps) {
 }
 
 const mapStateToProps = (state: Appstate): StateProps => ({
-    navigation: state.navigation,
+    navigation: state.ui.navigation,
 });
 
 export default connect<StateProps>(mapStateToProps)(hiddenIf(VeilederVerktoyNavigation));

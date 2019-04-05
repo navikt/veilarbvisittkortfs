@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Arbeidsliste, ArbeidslisteformData, ArbeidslisteformValues } from '../../../types/arbeidsliste';
 import ArbeidslisteIkon from './arbeidsliste.svg';
-import RedigerIkon from './rediger.svg';
-import FjernArbeidslisteModal from './fjern-arbeidsliste-modal';
 import { connect } from 'react-redux';
 import { Appstate } from '../../../types/appstate';
 import PersonaliaSelectors from '../../../store/personalia/selectors';
-import LeggTilArbeidslisteModal from './legg-til-arbeidsliste-modal';
-import RedigerArbeidslisteModal from './rediger-arbeidsliste-modal';
+import ArbeidslisteModal from './arbeidsliste-modal';
 import { Dispatch } from 'redux';
-import { oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste } from '../../../store/arbeidsliste/actions';
+import { oppdaterArbeidsliste, redigerArbeidsliste } from '../../../store/arbeidsliste/actions';
 import ArbeidslisteSelector from '../../../store/arbeidsliste/selector';
 import moment from 'moment';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { hentArbeidsliste } from '../../../store/arbeidsliste/actions';
 import KnappFss from '../../components/knapp-fss/knapp-fss';
+import { visToast } from '../../../store/toast/actions';
 
 interface StateProps {
     arbeidsliste: Arbeidsliste;
@@ -28,7 +26,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-    doSlettArbeidsliste: (fnr: string) => void;
+    doSlettArbeidsliste: () => void;
     lagreArbeidsliste: (values: ArbeidslisteformValues) => void;
     redigerArbeidsliste: (values: ArbeidslisteformValues) => void;
     hentArbeidsliste: (fnr: string) => void;
@@ -42,65 +40,34 @@ export const dateToISODate = (dato: string) => {
 };
 
 function ArbeidslisteController (props: ArbeidslisteStateProps) {
-    const [leggTilArbeidsliste, setLeggTilArbeidslisteAktivt] = useState( false);
-    const [fjernArbeidsliste, setFjernArbeidslisteAktivt] = useState( false);
-    const [visKommentar, setVisKommentarAktivt] = useState( false);
+    const [visArbeidsliste, setVisArbeidsliste] = useState( false);
 
     useEffect(() => {props.hentArbeidsliste(props.fnr); }, []);
 
     if (props.isLoading) {
         return <NavFrontendSpinner type="XL"/>;
     }
+
     return (
         <>
             <KnappFss
                 metricName="legg-i-arbeidsliste-trykket"
                 icon={ArbeidslisteIkon}
-                onClick={() => setLeggTilArbeidslisteAktivt(true)}
-                hidden={!props.kanLeggeIArbeidsliste}
+                onClick={() => setVisArbeidsliste(true)}
+                hidden={!(props.kanLeggeIArbeidsliste || props.kanRedigereArbeidsliste)}
             >
-                Legg i arbeidsliste
+                Arbeidsliste
             </KnappFss>
-            <KnappFss
-                metricName="fjern-fra-arbeidsliste-trykket"
-                icon={ArbeidslisteIkon}
-                onClick={() => setFjernArbeidslisteAktivt(true)}
-                hidden={!props.kanFjerneArbeidsliste}
-            >
-                Fjern
-            </KnappFss>
-            <KnappFss
-                metricName="rediger-arbeidsliste-trykket"
-                icon={RedigerIkon}
-                onClick={() => setVisKommentarAktivt(true)}
-                hidden={!props.kanRedigereArbeidsliste}
-            >
-                Rediger
-            </KnappFss>
-            <LeggTilArbeidslisteModal
-                isOpen={leggTilArbeidsliste}
-                lukkModal={() => setLeggTilArbeidslisteAktivt(false)}
+            <ArbeidslisteModal
+                isOpen={visArbeidsliste}
+                lukkModal={() => setVisArbeidsliste(false)}
                 arbeidsliste={props.arbeidsliste}
                 fnr={props.fnr}
                 navn={props.navn}
                 arbeidslisteStatus={props.arbeidslisteStatus}
-                onSubmit={props.lagreArbeidsliste}
-            />
-            <RedigerArbeidslisteModal
-                isOpen={visKommentar}
-                lukkModal={() => setVisKommentarAktivt(false)}
-                arbeidsliste={props.arbeidsliste}
-                fnr={props.fnr}
-                navn={props.navn}
-                arbeidslisteStatus={props.arbeidslisteStatus}
-                onSubmit={props.redigerArbeidsliste}
-            />
-            <FjernArbeidslisteModal
-                isOpen={fjernArbeidsliste}
-                onRequestClose={() => setFjernArbeidslisteAktivt(false)}
-                onSubmit={props.doSlettArbeidsliste}
-                fnr={props.fnr}
-                navn={props.navn}
+                onSubmit={props.arbeidsliste.endringstidspunkt ? props.redigerArbeidsliste : props.lagreArbeidsliste}
+                onDelete={props.doSlettArbeidsliste}
+                kanFjerneArbeidsliste={props.kanFjerneArbeidsliste}
             />
         </>
     );
@@ -118,7 +85,7 @@ const mapStateToProps = (state: Appstate): StateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    doSlettArbeidsliste : (fnr: string) => dispatch(slettArbeidsliste(fnr)),
+    doSlettArbeidsliste : () => dispatch(visToast('slett')),
     lagreArbeidsliste: (values: ArbeidslisteformValues) => dispatch(
         oppdaterArbeidsliste({
             kommentar: values.kommentar,
