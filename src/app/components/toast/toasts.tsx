@@ -8,7 +8,6 @@ interface StateProps {
 }
 
 function Toasts({toasts}: StateProps) {
-    console.log("toasts", toasts);
     return (
         <>
            {toasts.map((toast, index) => <Toast key={index} toast={toast}/>)}

@@ -1,7 +1,7 @@
 import React from 'react';
 import './toast.less';
-import { Dispatch } from "redux";
-import { slettArbeidsliste } from "../../../store/arbeidsliste/actions";
+import { Dispatch } from 'redux';
+import { slettArbeidsliste } from '../../../store/arbeidsliste/actions';
 import { connect } from 'react-redux';
 import { fjernToast } from '../../../store/toast/actions';
 
@@ -26,8 +26,8 @@ function Toast (props: ToastProps) {
     };
 
     const timeoutFunc = () => {
-        props.doFjernToast(props.toast);
         props.doSlettArbeidsliste();
+        props.doFjernToast(props.toast);
     };
 
     const interval: number = window.setTimeout(timeoutFunc, 100000);
@@ -37,7 +37,7 @@ function Toast (props: ToastProps) {
             <span className="toast">
                 <span>Arbeidslisten har blitt slettet.</span>
                 <span className="toast__lenke" onClick={handleClick}>Ångre</span>
-                <span onClick={handleClick} className="toast__close">&times;</span>
+                <span onClick={timeoutFunc} className="toast__close">&times;</span>
             </span>
         </div>
     );

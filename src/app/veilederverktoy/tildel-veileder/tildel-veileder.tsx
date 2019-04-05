@@ -9,11 +9,10 @@ import {
     hentAlleVeiledereForEnheten,
     HentVeilederPaEnhetenAction, tildelTilVeileder, TildelVeilederAction
 } from '../../../store/tildel-veileder/actions';
-import { TildelVeilederData, TildelVeilederResponse } from '../../../types/tildel-veileder';
+import { TildelVeilederData } from '../../../types/tildel-veileder';
 import './tildel-veileder.less';
 import OppfolgingsstatusSelector from '../../../store/oppfolging-status/selectors';
 import { StringOrNothing } from '../../../types/utils/stringornothings';
-import { OrNothing } from '../../../types/utils/ornothing';
 import Dropdown from '../../components/dropdown/dropdown';
 
 function settSammenNavn(veileder: VeilederData) {
@@ -24,7 +23,6 @@ interface StateProps {
     oppfolgingsenhetId: StringOrNothing;
     veiledere: VeilederData[];
     oppfolgendeVeileder: StringOrNothing;
-    skalSkjules: OrNothing<TildelVeilederResponse>;
 }
 
 interface DispatchProps {
@@ -64,7 +62,6 @@ function TildelVeileder(props: TildelVeilederProps) {
             knappeTekst={'Tildel veileder'}
             className="input-m tildel-veileder-dropdown background-color-white"
             name="tildel veileder"
-            hidden={!!props.skalSkjules}
             btnClassnames="knapp knapp--standard knapp-fss"
             render={(lukkDropdown) =>
                 <form
@@ -100,7 +97,6 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     oppfolgingsenhetId: OppfolgingsstatusSelector.selectOppfolgingsenhetsId(state),
     veiledere: state.tildelVeileder.veilederPaEnheten.data.veilederListe,
     oppfolgendeVeileder: state.oppfolgingstatus.data.veilederId,
-    skalSkjules : state.tildelVeileder.tildeltVeileder.data
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => {

@@ -1,6 +1,7 @@
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import { HiddenIfFlatKnapp } from '../../components/hidden-if/hidden-if-knapp';
+import { ReactComponent as SlettIcon } from './slett.svg';
 import React from 'react';
 
 interface ArbeidslisteFooterProps {
@@ -25,6 +26,7 @@ function ArbeidslisteFooter(props: ArbeidslisteFooterProps) {
                 onClick={props.slettArbeidsliste}
                 className="btn--ml10"
             >
+                <SlettIcon/>
                 Slett
             </HiddenIfFlatKnapp>
         </div>

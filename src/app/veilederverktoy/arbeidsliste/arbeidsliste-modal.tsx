@@ -7,7 +7,6 @@ import ArbeidslisteForm from './arbeidsliste-form';
 import Modal from '../../components/modal/modal';
 import ModalHeader from '../../components/modal/modal-header';
 import moment from 'moment';
-import 'react-toastify/dist/ReactToastify.css';
 import ArbeidslisteFooter from './arbeidsliste-footer';
 
 interface ArbeidslisteProps {
@@ -23,7 +22,7 @@ interface ArbeidslisteProps {
 }
 
 function ArbeidslisteModal(props: ArbeidslisteProps) {
-    const initalValues = {
+    const arbeidslisteValues = {
         overskrift: props.arbeidsliste.overskrift || '',
         kommentar: props.arbeidsliste.kommentar || '',
         frist:   props.arbeidsliste.frist ?
@@ -37,14 +36,14 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
         }
     };
 
-    const slettArbeidsliste = (formikProps: FormikProps<ArbeidslisteformValues>) => {
-        formikProps.resetForm({frist: '', kommentar: '', overskrift: ''});
+    const slettArbeidsliste = () => {
         props.lukkModal();
         props.onDelete();
     };
     return (
         <Formik
-            initialValues={initalValues}
+            key={props.arbeidsliste.endringstidspunkt ? props.arbeidsliste.endringstidspunkt.toString() : Date.now().toString()}
+            initialValues={arbeidslisteValues}
             onSubmit={(values) => {
                 props.onSubmit(values);
                 props.lukkModal();
@@ -65,7 +64,7 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
                             <Undertittel>
                                 <FormattedMessage
                                     id="arbeidsliste.modal.personalia"
-                                    values={{ navn: props.navn, fnr: props.fnr }}
+                                    values={{navn: props.navn, fnr: props.fnr}}
                                 />
                             </Undertittel>
                             <Form>
@@ -76,7 +75,7 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
                                 <ArbeidslisteFooter
                                     onRequestClose={() => onRequestClose(formikProps)}
                                     spinner={props.arbeidslisteStatus}
-                                    slettArbeidsliste={() => slettArbeidsliste(formikProps)}
+                                    slettArbeidsliste={slettArbeidsliste}
                                     kanFjerneArbeidsliste={props.kanFjerneArbeidsliste}
                                 />
                             </Form>
