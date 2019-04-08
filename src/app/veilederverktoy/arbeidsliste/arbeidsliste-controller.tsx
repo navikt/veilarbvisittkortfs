@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Arbeidsliste, ArbeidslisteformData, ArbeidslisteformValues } from '../../../types/arbeidsliste';
+import { Arbeidsliste, ArbeidslisteformValues } from '../../../types/arbeidsliste';
 
 import { connect } from 'react-redux';
 import { Appstate } from '../../../types/appstate';
@@ -55,6 +55,7 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
                 hidden={!(props.kanLeggeIArbeidsliste || props.kanRedigereArbeidsliste)}
                 onClick={() => setVisArbeidsliste(true)}
                 kanRedigereArbeidsliste={props.kanRedigereArbeidsliste}
+                ifylldIkon={props.kanRedigereArbeidsliste && !props.visFjernArbeidslisteToast}
             />
             <ArbeidslisteModal
                 isOpen={visArbeidsliste}
@@ -90,14 +91,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         oppdaterArbeidsliste({
             kommentar: values.kommentar,
             overskrift: values.overskrift,
-            frist: values.frist ? dateToISODate(values.frist) : null} as ArbeidslisteformData)
+            frist: values.frist ? dateToISODate(values.frist) : null})
     ),
     redigerArbeidsliste: (values: ArbeidslisteformValues) => dispatch(
         redigerArbeidsliste({
             kommentar: values.kommentar,
             overskrift: values.overskrift,
             frist: values.frist ? dateToISODate(values.frist) : null
-        } as ArbeidslisteformData)
+        })
     ),
     hentArbeidsliste: (fnr: string) => dispatch(hentArbeidsliste(fnr))
 

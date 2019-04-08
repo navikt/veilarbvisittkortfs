@@ -1,19 +1,19 @@
 import { deleteAsJson, fetchToJson, postAsJson, putAsJson } from './api-utils';
-import { ArbeidslisteformData, ArbeidslisteformDataMedFnr } from '../types/arbeidsliste';
+import { ArbeidslisteformValues } from '../types/arbeidsliste';
 import { Arbeidsliste } from '../types/arbeidsliste';
 
 export interface ArbeidslisteApi {
-    lagreArbeidsliste: (fnr: string, arbeidsliste: ArbeidslisteformDataMedFnr) => Promise<Arbeidsliste>;
+    lagreArbeidsliste: (fnr: string, arbeidsliste: ArbeidslisteformValues) => Promise<Arbeidsliste>;
     fetchArbeidslisteData: (fnr: string) => Promise<Arbeidsliste>;
     slettArbeidsliste: (fnr: string) => Promise<Arbeidsliste>;
-    redigerArbeidsliste: (fnr: string, arbeidsliste: ArbeidslisteformData) => Promise<Arbeidsliste>;
+    redigerArbeidsliste: (fnr: string, arbeidsliste: ArbeidslisteformValues) => Promise<Arbeidsliste>;
 }
 
-function lagreArbeidsliste (fnr: string, arbeidsliste: ArbeidslisteformDataMedFnr) {
+function lagreArbeidsliste (fnr: string, arbeidsliste: ArbeidslisteformValues) {
     return postAsJson(`/veilarbportefolje/api/arbeidsliste/${fnr}/`, arbeidsliste);
 }
 
-function redigerArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformData) {
+function redigerArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformValues) {
     return putAsJson(`/veilarbportefolje/api/arbeidsliste/${fnr}/`, arbeidsliste);
 }
 

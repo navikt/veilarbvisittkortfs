@@ -10,12 +10,17 @@ import OppfolgingSelector from '../../store/oppfolging/selector';
 import { HentPaloggetVeilederAction, hentPaloggetVeileder } from '../../store/tildel-veileder/actions';
 import { hentPersonalia, HentPersonaliaAction } from '../../store/personalia/actions';
 import PersonaliaSelector from '../../store/personalia/selectors';
+import {
+    hentTilgangTilBrukersKontor,
+    TilgangTilBrukersKontorAction
+} from '../../store/tilgang-til-brukerskontor/actions';
 
 interface DispatchProps {
     hentOppfolgingsstatus: (fnr: string) => HentOppfolgingstatusAction;
     hentOppfolging: (fnr: string ) => HentOppfolgingAction;
     hentPaloggetVeileder: () => HentPaloggetVeilederAction;
     hentPersonalia: (fnr: string) => HentPersonaliaAction;
+    hentTilgangTilBrukersKontor: (fnr: string) => TilgangTilBrukersKontorAction;
 }
 
 interface InitialDataProviderProps {
@@ -36,6 +41,7 @@ function InitialDataProvider(props: Props) {
         props.hentOppfolging(props.fnr);
         props.hentPaloggetVeileder();
         props.hentPersonalia(props.fnr);
+        props.hentTilgangTilBrukersKontor(props.fnr);
     }, [props.fnr]);
 
     if (props.isLoading) {
@@ -49,9 +55,13 @@ function InitialDataProvider(props: Props) {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
-    return bindActionCreators(
-        {hentOppfolgingsstatus, hentOppfolging, hentPaloggetVeileder, hentPersonalia},
-        dispatch);
+    return bindActionCreators({
+        hentOppfolgingsstatus,
+        hentOppfolging,
+        hentPaloggetVeileder,
+        hentPersonalia,
+        hentTilgangTilBrukersKontor
+    }, dispatch);
 };
 
 const mapStateToProps = (state: Appstate): StateProps => ({

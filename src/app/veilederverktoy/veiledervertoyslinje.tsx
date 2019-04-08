@@ -5,10 +5,10 @@ import TildelVeileder from './tildel-veileder/tildel-veileder';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import VeilederVerktoyNavigation from './veilederverktoy/veilederverktoy-navigation';
-import { hentTilgangTilBrukersKontor } from '../../store/tilgang-til-brukerskontor/actions';
 import VeilederVerktoyKnapp from './veilederverktoy/veileder-verktoy-knapp';
 import { navigerTilProcesser } from '../../store/navigation/actions';
 import { StringOrNothing } from '../../types/utils/stringornothings';
+import Toasts from '../components/toast/toasts';
 
 interface OwnProps {
     fnr: string;
@@ -17,7 +17,6 @@ interface OwnProps {
 }
 
 interface DispatchProps {
-    hentTilgangTilBrukersKontor: (fnr: string) => void;
     navigerTilProsesser: () => void;
     settEnhetsId: (enhet: StringOrNothing) => void;
 }
@@ -30,11 +29,7 @@ function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
     }
 
     useEffect(() => {
-        props.hentTilgangTilBrukersKontor(props.fnr);
-    }, [props.fnr]);
-
-    useEffect(() => {
-        props.settEnhetsId(props.enhet); //TODO FLYTTE TIL DATA-PROVIDERN
+        props.settEnhetsId(props.enhet); //TODO FLYTTE TIL DATA-PROVIDERN fast det er jobbigt....
     }, [props.enhet]);
 
     return (
@@ -47,12 +42,12 @@ function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
                 />
                 <VeilederVerktoyNavigation/>
             </div>
+            <Toasts/>
         </div>
     );
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-    hentTilgangTilBrukersKontor: (fnr: string) => dispatch(hentTilgangTilBrukersKontor(fnr)),
     navigerTilProsesser: () => dispatch(navigerTilProcesser()),
     settEnhetsId: (enhet: string) => dispatch({type: 'SETT_ENHET_FRA_PERSONFLATEFS', enhet}) //TRENGER DENNE INNE I OPPGAVEFORM
 });

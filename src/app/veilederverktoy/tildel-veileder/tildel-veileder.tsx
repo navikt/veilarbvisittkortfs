@@ -14,6 +14,8 @@ import './tildel-veileder.less';
 import OppfolgingsstatusSelector from '../../../store/oppfolging-status/selectors';
 import { StringOrNothing } from '../../../types/utils/stringornothings';
 import Dropdown from '../../components/dropdown/dropdown';
+import OppfolgingSelector from '../../../store/oppfolging/selector';
+import TilgangTilKontorSelector from '../../../store/tilgang-til-brukerskontor/selector';
 
 function settSammenNavn(veileder: VeilederData) {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
@@ -23,6 +25,7 @@ interface StateProps {
     oppfolgingsenhetId: StringOrNothing;
     veiledere: VeilederData[];
     oppfolgendeVeileder: StringOrNothing;
+    skjulTildelVeileder: boolean;
 }
 
 interface DispatchProps {
@@ -37,6 +40,9 @@ interface OwnProps {
 type TildelVeilederProps = StateProps & DispatchProps & OwnProps;
 
 function TildelVeileder(props: TildelVeilederProps) {
+    if (props.skjulTildelVeileder) {
+        return null;
+    }
     const [selected, changeSelected] = useState('');
     const [query, changeQuery] = useState('');
 
@@ -105,6 +111,9 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     oppfolgingsenhetId: OppfolgingsstatusSelector.selectOppfolgingsenhetsId(state),
     veiledere: state.tildelVeileder.veilederPaEnheten.data.veilederListe,
     oppfolgendeVeileder: state.oppfolgingstatus.data.veilederId,
+    skjulTildelVeileder:
+        OppfolgingSelector.selectErUnderOppfolging(state) ||
+        TilgangTilKontorSelector.selectHarTilgangTilKontoret(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => {

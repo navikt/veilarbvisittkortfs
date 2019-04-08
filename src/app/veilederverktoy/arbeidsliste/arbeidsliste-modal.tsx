@@ -23,16 +23,22 @@ interface ArbeidslisteProps {
 }
 
 function ArbeidslisteModal(props: ArbeidslisteProps) {
-    const arbeidslisteValues = props.visFjernArbeidslisteToast ?
-        {overskrift: '',
-            kommentar: '',
-            frist: '' } :
-        {
-            overskrift: props.arbeidsliste.overskrift || '',
-            kommentar: props.arbeidsliste.kommentar || '',
-            frist:   props.arbeidsliste.frist ?
-                moment(props.arbeidsliste.frist).format('YYYY-MM-DD') : ''
-        };
+
+    const arbeidslisteEmptyValues = {
+        overskrift: '',
+        kommentar: '',
+        frist: '',
+    } ;
+
+    const arbeidslisteValues =   {
+        overskrift: props.arbeidsliste.overskrift ,
+        kommentar: props.arbeidsliste.kommentar,
+        frist:   props.arbeidsliste.frist ?
+            moment(props.arbeidsliste.frist).format('YYYY-MM-DD') : ''
+    };
+
+    const initalValues = (props.visFjernArbeidslisteToast || !props.arbeidsliste.endringstidspunkt) ?
+        arbeidslisteEmptyValues : arbeidslisteValues;
 
     const onRequestClose = (formikProps: FormikProps<ArbeidslisteformValues>) => {
         const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
@@ -49,7 +55,7 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
     return (
         <Formik
             key={props.arbeidsliste.frist ? props.arbeidsliste.frist.toString() : Date.now().toString()}
-            initialValues={arbeidslisteValues}
+            initialValues={initalValues}
             onSubmit={(values) => {
                 props.onSubmit(values);
                 props.lukkModal();

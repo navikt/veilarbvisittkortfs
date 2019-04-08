@@ -3,14 +3,22 @@ import React from 'react';
 import { ReactComponent as ArbeidslisteIkon } from './arbeidsliste.svg';
 import classNames from 'classnames';
 
-function ArbeidslisteKnapp(props: {hidden: boolean, onClick: () => void, kanRedigereArbeidsliste: boolean}) {
+
+export interface ArbeidslisteKnappProps {
+    hidden: boolean;
+    onClick: () => void;
+    kanRedigereArbeidsliste: boolean;
+    ifylldIkon: boolean;
+}
+
+function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
     return (
         <KnappFss
-            metricName={props.kanRedigereArbeidsliste ? '' : 'legg-i-arbeidsliste-trykket'}
+            metricName={props.kanRedigereArbeidsliste ? 'rediger-arbeidsliste-trykket' : 'legg-i-arbeidsliste-trykket'} //TODO KANSKE FJERN?
             onClick={props.onClick}
             hidden={props.hidden}
         >
-            <ArbeidslisteIkon className={classNames('knapp-fss__icon', {'icon--filled': props.kanRedigereArbeidsliste})}/>
+            <ArbeidslisteIkon className={classNames('knapp-fss__icon', {'icon--filled': props.ifylldIkon})}/>
             <span>Arbeidsliste</span>
         </KnappFss>
     );
