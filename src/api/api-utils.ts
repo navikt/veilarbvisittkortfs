@@ -42,7 +42,7 @@ function methodToJson<T>(method: string, url: string, data: T, config: any) {
     });
 }
 
-export function fetchToJson(url: string, config = { headers: defaultHeaders }) {
+export function fetchToJson<T = any>(url: string, config = { headers: defaultHeaders }): Promise<T> {
     return fetch(url, config)
         .then(sjekkStatuskode)
         .then(toJson);

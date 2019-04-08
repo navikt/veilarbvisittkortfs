@@ -43,6 +43,7 @@ function selectOppfolgingStatus(state: Appstate): boolean {
 function selectFnr(state: Appstate): string {
     return selectOppfolgingData(state).fnr;
 }
+
 function selectErManuell(state: Appstate): boolean {
     return selectOppfolgingData(state).manuell;
 }

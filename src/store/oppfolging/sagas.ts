@@ -3,13 +3,17 @@ import {
     avsluttOppfolgingSuccess,
     HentOppfolgingAction,
     hentOppfolgingError,
-    hentOppfolgingSuccess
+    hentOppfolgingSuccess,
+    StoppEskaleringAction,
+    stoppEskaleringError,
+    stoppEskaleringSuccess
 } from './actions';
 import { hentOppfolgingData } from '../../api/oppfolging-api-utils';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
     setDigitalError,
-    SettDigitalAction, settDigitalSuccess,
+    SettDigitalAction,
+    settDigitalSuccess,
     SettManuellAction,
     settManuellError,
     settManuellSuccess
@@ -19,7 +23,8 @@ import {
     StartKVPAction,
     startKVPError,
     startKVPSuccess,
-    StoppKVPAction, stoppKVPError,
+    StoppKVPAction,
+    stoppKVPError,
     stoppKVPSuccess
 } from './actions';
 import OppfolgingApi from '../../api/oppfolging-api';
@@ -27,6 +32,7 @@ import OppfolgingSelector from './selector';
 import VeilederSelector from '../tildel-veileder/selector';
 import AvsluttOppfolgingStatusSelector from '../avslutningstatus/selector';
 import { navigerAction } from '../navigation/actions';
+import { triggerReRenderingAvAktivitesplan } from '../../app/utils/utils';
 
 function* hentOppfolging(action: HentOppfolgingAction) {
     try {
@@ -83,6 +89,19 @@ function* stopKVP(action: StoppKVPAction) {
     }
 }
 
+function* stoppEskalering(action: StoppEskaleringAction) {
+    try {
+        const fnr = yield select(OppfolgingSelector.selectFnr);
+        const response = yield call( () => OppfolgingApi.stoppEskalering(fnr, action.begrunnelse));
+        yield put(stoppEskaleringSuccess(response));
+        yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr});
+        triggerReRenderingAvAktivitesplan();
+    } catch (e) {
+        yield put(stoppEskaleringError(e));
+        yield put(navigerAction('feil_i_veilederverktoy'));
+    }
+}
+
 function* avsluttOppfolging() {
     try {
         const fnr = yield select(OppfolgingSelector.selectFnr);
@@ -105,4 +124,5 @@ export function* oppfolgingSaga() {
     yield takeLatest(OppfolgingActionType.STOPP_KVP, stopKVP);
     yield takeLatest(OppfolgingActionType.SETT_DIGITAL, settDigital);
     yield takeLatest(OppfolgingActionType.AVSLUTT_OPPFOLGING, avsluttOppfolging);
+    yield takeLatest(OppfolgingActionType.STOPP_ESKALERING, stoppEskalering);
 }

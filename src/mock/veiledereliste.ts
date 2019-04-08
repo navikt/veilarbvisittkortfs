@@ -2,11 +2,10 @@ import { JSONValue } from 'yet-another-fetch-mock';
 import { VeilederData } from '../types/veilederdata';
 
 function lagVeileder() {
-    const randomTal = (Math.floor(Math.random() * 1000000) + 100000);
-    const fornavn = `Herpsdeprs ${randomTal}`;
+    const fornavn = 'Herpsderps';
     const etternavn = 'Apabepa';
 
-    const id = `Z${randomTal}`;
+    const id = 'Z' + (Math.floor(Math.random() * 1000000) + 100000);
 
     return {
         ident: id,
