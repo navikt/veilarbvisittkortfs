@@ -1,11 +1,9 @@
-import faker from 'nav-faker';
-
 import { JSONValue } from 'yet-another-fetch-mock';
 import { VeilederData } from '../types/veilederdata';
 
 function lagVeileder() {
-    const fornavn = faker.navn.fornavn();
-    const etternavn = 'apabepa';
+    const fornavn = 'Herpsderps';
+    const etternavn = 'Apabepa';
 
     const id = 'Z' + (Math.floor(Math.random() * 1000000) + 100000);
 
