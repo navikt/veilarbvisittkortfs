@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './veilederverktoy.less';
 import Arbeidslistekomponent from './arbeidsliste/arbeidsliste-controller';
 import TildelVeileder from './tildel-veileder/tildel-veileder';
@@ -9,7 +9,6 @@ import { hentTilgangTilBrukersKontor } from '../../store/tilgang-til-brukerskont
 import VeilederVerktoyKnapp from './veilederverktoy/veileder-verktoy-knapp';
 import { navigerTilProcesser } from '../../store/navigation/actions';
 import { StringOrNothing } from '../../types/utils/stringornothings';
-import FeatureApi from '../../api/feature-api';
 
 interface OwnProps {
     fnr: string;
@@ -25,35 +24,10 @@ interface DispatchProps {
 
 type VeilederverktoyslinjeProps = OwnProps & DispatchProps;
 
-interface Feature {
-    visittkort_innstillinger: boolean;
-}
-
-const handleVeilederKnappClicked = (props: VeilederverktoyslinjeProps, feature: Feature) => {
-
-    if (feature.visittkort_innstillinger) {
-        props.navigerTilProsesser();
-        return;
-    }
-
-    const win = window as any; //tslint:disable-line no-any
-    if (win.apneVerktoyModal) {
-        win.apneVerktoyModal();
-    }
-};
-
 function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
     if (!props.visVeilederVerktoy) {
         return null;
     }
-
-    const [harVisInnstillingsFeature, setFeature] = useState({visittkort_innstillinger: false});
-
-    useEffect(() => {
-        FeatureApi
-            .hentFeatures('visittkort_innstillinger')
-            .then((harVisInnstillingsFeatureData: Feature) => setFeature(harVisInnstillingsFeatureData));
-    }, []);
 
     useEffect(() => {
         props.hentTilgangTilBrukersKontor(props.fnr);
@@ -69,7 +43,7 @@ function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
                 <Arbeidslistekomponent/>
                 <TildelVeileder fnr={props.fnr}/>
                 <VeilederVerktoyKnapp
-                    onClick={() => handleVeilederKnappClicked(props, harVisInnstillingsFeature)}
+                    onClick={props.navigerTilProsesser}
                 />
                 <VeilederVerktoyNavigation/>
             </div>

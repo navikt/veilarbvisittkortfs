@@ -4,7 +4,7 @@ import { Oppfolging } from '../types/oppfolging';
 
 const oppfolging: Oppfolging & JSONValue = {
     fnr: '123456',
-    veilederId: null,
+    veilederId: 'Z007',
     reservasjonKRR: false,
     manuell: false,
     underOppfolging: true,

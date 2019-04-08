@@ -1,6 +1,6 @@
 import { Appstate } from '../../types/appstate';
-import OppfolgingsstatusSelector from '../oppfolging-status/selectors';
 import { StringOrNothing } from '../../types/utils/stringornothings';
+import OppfolgingSelector from '../oppfolging/selector';
 
 export interface VeilederSelector {
     selectVeilederStatus: (state: Appstate) => boolean;
@@ -25,7 +25,7 @@ function selectTildeltVeilder (state: Appstate): StringOrNothing {
 }
 
 function selectErOppfolgingsVeileder(state: Appstate): boolean {
-    const oppfolgingVeileder = OppfolgingsstatusSelector.selectOppfolgingsVeileder(state);
+    const oppfolgingVeileder = OppfolgingSelector.selectVeilederId(state);
     const inloggedVeileder = selectIdentPaloggetVeileder(state);
     return  oppfolgingVeileder ? (oppfolgingVeileder === inloggedVeileder) : false;
 

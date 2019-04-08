@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Arbeidsliste, ArbeidslisteformData, ArbeidslisteformValues } from '../../../types/arbeidsliste';
-import ArbeidslisteIkon from './arbeidsliste.svg';
+
 import { connect } from 'react-redux';
 import { Appstate } from '../../../types/appstate';
 import PersonaliaSelectors from '../../../store/personalia/selectors';
@@ -11,8 +11,8 @@ import ArbeidslisteSelector from '../../../store/arbeidsliste/selector';
 import moment from 'moment';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { hentArbeidsliste } from '../../../store/arbeidsliste/actions';
-import KnappFss from '../../components/knapp-fss/knapp-fss';
-import { ToastActionType, visFjernArbeidslisteToast} from '../../../store/toast/actions';
+import { ToastActionType, visFjernArbeidslisteToast } from '../../../store/toast/actions';
+import ArbeidslisteKnapp from './arbeidsliste-knapp';
 
 interface StateProps {
     arbeidsliste: Arbeidsliste;
@@ -51,14 +51,11 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
 
     return (
         <>
-            <KnappFss
-                metricName="legg-i-arbeidsliste-trykket"
-                icon={ArbeidslisteIkon}
-                onClick={() => setVisArbeidsliste(true)}
+            <ArbeidslisteKnapp
                 hidden={!(props.kanLeggeIArbeidsliste || props.kanRedigereArbeidsliste)}
-            >
-                Arbeidsliste
-            </KnappFss>
+                onClick={() => setVisArbeidsliste(true)}
+                kanRedigereArbeidsliste={props.kanRedigereArbeidsliste}
+            />
             <ArbeidslisteModal
                 isOpen={visArbeidsliste}
                 lukkModal={() => setVisArbeidsliste(false)}

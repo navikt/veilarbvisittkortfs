@@ -12,10 +12,9 @@ interface KnappFssProps extends KnappProps {
 }
 
 const KnappFss: React.FunctionComponent<KnappFssProps> = (props: KnappFssProps) => {
-    const { children, icon, iconAlt, className, ...rest } = props;
+    const { children, className, ...rest } = props;
     return (
         <Knapp className={cls('knapp-fss', className)} {...rest}>
-            {icon && <img src={icon} alt={iconAlt || ''} className="knapp-fss__icon"/>}
             {children}
         </Knapp>
     );
