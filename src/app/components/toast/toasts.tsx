@@ -1,16 +1,24 @@
 import React from 'react';
 import { Appstate } from '../../../types/appstate';
 import { connect } from 'react-redux';
-import Toast, { ToastType } from './toast';
+import FjernArbeidslisteToast from './fjern-arbeidsliste-toast';
+import { ToastActionType } from '../../../store/toast/actions';
 
 interface StateProps {
-    toasts: ToastType[];
+    toasts: ToastActionType[];
 }
 
 function Toasts({toasts}: StateProps) {
     return (
         <>
-           {toasts.map((toast, index) => <Toast key={index} toast={toast}/>)}
+            {toasts.map((toast, index) => {
+                switch (toast) {
+                    case ToastActionType.VIS_ARBEIDSLISTE_TOAST:
+                        return <FjernArbeidslisteToast key={index}/>;
+                    default:
+                        return null;
+                }
+            })}
         </>
     );
 
@@ -19,10 +27,5 @@ function Toasts({toasts}: StateProps) {
 const mapStateToProps = (state: Appstate): StateProps => ({
     toasts: state.ui.toasts.toasts
 });
-/*
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-
-});
-*/
 
 export default connect<StateProps>(mapStateToProps)(Toasts);

@@ -38,6 +38,7 @@ type TildelVeilederProps = StateProps & DispatchProps & OwnProps;
 
 function TildelVeileder(props: TildelVeilederProps) {
     const [selected, changeSelected] = useState('');
+    const [query, changeQuery] = useState('');
 
     useEffect(() => {
         if (props.oppfolgingsenhetId) {
@@ -47,6 +48,11 @@ function TildelVeileder(props: TildelVeilederProps) {
 
     const setValgtVeileder = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        changeQuery('');
+        document
+            .querySelectorAll('input[type=radio]:checked')
+            .forEach(elem => (elem as HTMLInputElement).checked = false);
 
         props.tildelTilVeileder([{
             fraVeilederId: props.oppfolgendeVeileder,
@@ -74,6 +80,8 @@ function TildelVeileder(props: TildelVeilederProps) {
                         data={props.veiledere}
                         label=""
                         placeholder="Søk etter navn eller ident"
+                        query={query}
+                        changeQuery={changeQuery}
                     >
                         {(data) =>
                             <RadioFilterForm

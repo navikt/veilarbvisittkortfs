@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Input } from 'nav-frontend-skjema';
 import './sok-filter.less';
 
-/* tslint:disable */
 interface SokFilterProps<T> {
     data: T[];
     children: (filteredData: T[]) => React.ReactNode;
     label: string;
     placeholder: string;
     limitSize?: number;
+    query?: string;
+    changeQuery?: (val: string) => void;
 }
 
 function limit<T>(liste: T[], antall: number) {
@@ -16,10 +17,9 @@ function limit<T>(liste: T[], antall: number) {
 }
 
 function SokFilter<T> (props: SokFilterProps<T>) {
-    const [query, changeQuery] = useState('');
 
     const { data, limitSize, children} = props;
-    const rawfilteredData = data.filter(elem => !query || JSON.stringify(elem).toLowerCase().includes(query.toLowerCase()));
+    const rawfilteredData = data.filter(elem => !props.query || JSON.stringify(elem).toLowerCase().includes(props.query.toLowerCase()));
 
     const filteredData =
         limitSize === undefined
@@ -32,9 +32,9 @@ function SokFilter<T> (props: SokFilterProps<T>) {
                 <Input
                     label={props.label}
                     placeholder={props.placeholder}
-                    value={query}
+                    value={props.query}
                     inputClassName="sokfilter__input"
-                    onChange={e => changeQuery(e.target.value)}
+                    onChange={e => props.changeQuery && props.changeQuery(e.target.value)}
                 />
             </div>
             {children(filteredData)}

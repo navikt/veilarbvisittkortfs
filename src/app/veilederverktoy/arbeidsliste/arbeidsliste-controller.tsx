@@ -12,7 +12,7 @@ import moment from 'moment';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { hentArbeidsliste } from '../../../store/arbeidsliste/actions';
 import KnappFss from '../../components/knapp-fss/knapp-fss';
-import { visToast } from '../../../store/toast/actions';
+import { ToastActionType, visFjernArbeidslisteToast} from '../../../store/toast/actions';
 
 interface StateProps {
     arbeidsliste: Arbeidsliste;
@@ -23,6 +23,7 @@ interface StateProps {
     kanFjerneArbeidsliste: boolean;
     kanRedigereArbeidsliste: boolean;
     isLoading: boolean;
+    visFjernArbeidslisteToast: boolean;
 }
 
 interface DispatchProps {
@@ -68,6 +69,7 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
                 onSubmit={props.arbeidsliste.endringstidspunkt ? props.redigerArbeidsliste : props.lagreArbeidsliste}
                 onDelete={props.doSlettArbeidsliste}
                 kanFjerneArbeidsliste={props.kanFjerneArbeidsliste}
+                visFjernArbeidslisteToast={props.visFjernArbeidslisteToast}
             />
         </>
     );
@@ -82,10 +84,11 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     kanFjerneArbeidsliste: ArbeidslisteSelector.selectKanFjerneArbeidsliste(state),
     kanRedigereArbeidsliste: ArbeidslisteSelector.selectKanRedigereArbeidsliste(state),
     isLoading: ArbeidslisteSelector.selectArbeidslisteStatus(state),
+    visFjernArbeidslisteToast: !!state.ui.toasts.toasts.find(toast => toast === ToastActionType.VIS_ARBEIDSLISTE_TOAST)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    doSlettArbeidsliste : () => dispatch(visToast('slett')),
+    doSlettArbeidsliste : () => dispatch(visFjernArbeidslisteToast()),
     lagreArbeidsliste: (values: ArbeidslisteformValues) => dispatch(
         oppdaterArbeidsliste({
             kommentar: values.kommentar,

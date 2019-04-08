@@ -3,7 +3,7 @@ import './toast.less';
 import { Dispatch } from 'redux';
 import { slettArbeidsliste } from '../../../store/arbeidsliste/actions';
 import { connect } from 'react-redux';
-import { fjernToast } from '../../../store/toast/actions';
+import { fjernArbeidslisteToast } from '../../../store/toast/actions';
 
 export interface ToastType {
     tekst: string;
@@ -18,8 +18,7 @@ interface DispatchProps {
 
 type ToastProps = {toast: ToastType} & DispatchProps;
 
-function Toast (props: ToastProps) {
-
+function FjernArbeidslisteToast (props: ToastProps) {
     const handleClick = () => {
         clearInterval(interval);
         props.doFjernToast(props.toast);
@@ -45,7 +44,7 @@ function Toast (props: ToastProps) {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     doSlettArbeidsliste : () => dispatch(slettArbeidsliste()),
-    doFjernToast : (toast: ToastType) => dispatch(fjernToast(toast))
+    doFjernToast : () => dispatch(fjernArbeidslisteToast())
 });
 
-export default connect<{}, DispatchProps, ToastType>(null, mapDispatchToProps)(Toast);
+export default connect<{}, DispatchProps, ToastType>(null, mapDispatchToProps)(FjernArbeidslisteToast);

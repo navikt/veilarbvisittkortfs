@@ -1,27 +1,22 @@
 import { ToastAction, ToastActionType } from './actions';
-import { ToastType } from '../../app/components/toast/toast';
 
 export interface ToastState {
-    toasts: ToastType[];
+    toasts: ToastActionType[];
 }
 
 const initialState: ToastState = {
     toasts: []
 };
 
-type ActionType = ToastAction | { type: '' };
-
-export const toastReducer = (state: ToastState = initialState, action: ActionType): ToastState => {
+export const toastReducer = (state: ToastState = initialState, action: ToastAction): ToastState => {
     switch (action.type) {
-        case ToastActionType.FJERN_TOAST:
+        case ToastActionType.VIS_ARBEIDSLISTE_TOAST:
             return {
-                ...state,
-                toasts: state.toasts.filter((toast: ToastType) => toast.timestamp !== action.toast.timestamp)
+                toasts: [...state.toasts, action.type]
             };
-        case ToastActionType.VIS_TOAST:
+        case ToastActionType.FJERN_ARBEIDSLISTE_TOAST:
             return {
-                ...state,
-                toasts: [...state.toasts, action.toast]
+                toasts: state.toasts.filter(toast => toast !== ToastActionType.VIS_ARBEIDSLISTE_TOAST)
             };
         default:
             return state;

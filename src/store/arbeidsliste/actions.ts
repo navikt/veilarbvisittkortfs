@@ -13,7 +13,6 @@ export enum ArbeidslisteActionType {
     REDIGER_ARBEIDSLISTE = 'REDIGER_ARBEIDSLISTE',
     REDIGER_ARBEIDSLISTE_SUCCESS = 'REDIGER_ARBEIDSLISTE_SUCCESS',
     REDIGER_ARBEIDSLISTE_ERROR = 'REDIGER_ARBEIDSLISTE_ERROR',
-
 }
 
 export const slettArbeidsliste = (): SlettArbeidslisteAction => {

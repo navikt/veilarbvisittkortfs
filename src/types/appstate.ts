@@ -10,7 +10,7 @@ import { InnstillingsHistorikkState } from '../store/innstillingshistorikk/reduc
 import { OppgaveHistorikkState } from '../store/oppgave/reducer';
 import { EnhetState } from '../store/enhet/reducer';
 import { AvsluttOppfolgingState } from '../store/avslutningstatus/reducer';
-import { ToastType } from '../app/components/toast/toast';
+import { ToastActionType } from '../store/toast/actions';
 
 export interface Appstate {
     oppfolging: OppfogingState;
@@ -26,6 +26,6 @@ export interface Appstate {
     avsluttOppfolgingStatus: AvsluttOppfolgingState;
     ui: {
         navigation: NavigationState;
-        toasts: {toasts: ToastType[]},
+        toasts: {toasts: ToastActionType[]},
     };
 }
