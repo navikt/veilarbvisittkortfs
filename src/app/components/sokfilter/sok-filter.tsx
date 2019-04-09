@@ -18,8 +18,8 @@ function limit<T>(liste: T[], antall: number) {
 
 function SokFilter<T> (props: SokFilterProps<T>) {
 
-    const { data, limitSize, children} = props;
-    const rawfilteredData = data.filter(elem => !props.query || JSON.stringify(elem).toLowerCase().includes(props.query.toLowerCase()));
+    const { data, limitSize, children, query} = props;
+    const rawfilteredData = data.filter(elem => !query || JSON.stringify(elem).toLowerCase().includes(query.toLowerCase()));
 
     const filteredData =
         limitSize === undefined

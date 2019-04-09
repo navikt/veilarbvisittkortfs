@@ -41,5 +41,6 @@ export default {
     selectVeilederStatus,
     selectIdentPaloggetVeileder,
     selectErOppfolgingsVeileder,
-    selectErTildeltVeilder
+    selectErTildeltVeilder,
+    selectTildeltVeilder
 }as VeilederSelector;
