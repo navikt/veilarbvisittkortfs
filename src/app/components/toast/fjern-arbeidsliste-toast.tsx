@@ -29,7 +29,7 @@ function FjernArbeidslisteToast (props: ToastProps) {
         props.doFjernToast(props.toast);
     };
 
-    const interval: number = window.setTimeout(timeoutFunc, 100000);
+    const interval: number = window.setTimeout(timeoutFunc, 5000);
 
     return (
         <div className="toast-wrapper">

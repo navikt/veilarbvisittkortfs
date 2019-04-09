@@ -16,6 +16,7 @@ import { StringOrNothing } from '../../../types/utils/stringornothings';
 import Dropdown from '../../components/dropdown/dropdown';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
 import TilgangTilKontorSelector from '../../../store/tilgang-til-brukerskontor/selector';
+import VeilederSelector from '../../../store/tildel-veileder/selector';
 
 function settSammenNavn(veileder: VeilederData) {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
@@ -24,7 +25,7 @@ function settSammenNavn(veileder: VeilederData) {
 interface StateProps {
     oppfolgingsenhetId: StringOrNothing;
     veiledere: VeilederData[];
-    oppfolgendeVeileder: StringOrNothing;
+    fraVeileder: StringOrNothing;
     skjulTildelVeileder: boolean;
 }
 
@@ -61,7 +62,7 @@ function TildelVeileder(props: TildelVeilederProps) {
             .forEach(elem => (elem as HTMLInputElement).checked = false);
 
         props.tildelTilVeileder([{
-            fraVeilederId: props.oppfolgendeVeileder,
+            fraVeilederId: props.fraVeileder,
             tilVeilederId: selected,
             brukerFnr: props.fnr,
         }]);
@@ -107,14 +108,19 @@ function TildelVeileder(props: TildelVeilederProps) {
     );
 }
 
-const mapStateToProps = (state: Appstate): StateProps => ({
-    oppfolgingsenhetId: OppfolgingsstatusSelector.selectOppfolgingsenhetsId(state),
-    veiledere: state.tildelVeileder.veilederPaEnheten.data.veilederListe,
-    oppfolgendeVeileder: state.oppfolgingstatus.data.veilederId,
-    skjulTildelVeileder:
-        !(OppfolgingSelector.selectErUnderOppfolging(state) &&
-        TilgangTilKontorSelector.selectHarTilgangTilKontoret(state))
-});
+const mapStateToProps = (state: Appstate): StateProps => {
+    const tildeltVeileder = VeilederSelector.selectTildeltVeilder(state);
+    const oppfolgendeVeileder = OppfolgingSelector.selectVeilederId(state);
+    const fraVeileder = tildeltVeileder ? tildeltVeileder : oppfolgendeVeileder;
+    return {
+        oppfolgingsenhetId: OppfolgingsstatusSelector.selectOppfolgingsenhetsId(state),
+        veiledere: state.tildelVeileder.veilederPaEnheten.data.veilederListe,
+        fraVeileder,
+        skjulTildelVeileder:
+            !(OppfolgingSelector.selectErUnderOppfolging(state) &&
+                TilgangTilKontorSelector.selectHarTilgangTilKontoret(state))
+    };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators({hentAlleVeiledereForEnheten, tildelTilVeileder}, dispatch);
