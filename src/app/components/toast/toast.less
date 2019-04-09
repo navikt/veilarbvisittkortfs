@@ -1,10 +1,13 @@
 .visittkortfs {
 
   .toast-wrapper {
+    z-index: 1000;
+    top: 16rem;
     display: flex;
     justify-content: flex-end;
     -webkit-animation: slide 0.5s forwards;
     animation: slide 0.5s forwards;
+    position: relative;
   }
   .toast {
     background-color: #3E3832;
@@ -16,9 +19,6 @@
     padding: 0 2rem;
     border-radius: 0.2rem;
     height: 4rem;
-    z-index: 1000;
-    right: -20rem;
-    top: 16rem;
 
     &__lenke {
       color: #A3E0F4;
@@ -28,13 +28,5 @@
     &__close {
       cursor: pointer;
     }
-  }
-
-  @-webkit-keyframes slide {
-    100% { right: 0; }
-  }
-
-  @keyframes slide {
-    100% { right: 0; }
   }
 }
