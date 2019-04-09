@@ -112,8 +112,8 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     veiledere: state.tildelVeileder.veilederPaEnheten.data.veilederListe,
     oppfolgendeVeileder: state.oppfolgingstatus.data.veilederId,
     skjulTildelVeileder:
-        OppfolgingSelector.selectErUnderOppfolging(state) ||
-        TilgangTilKontorSelector.selectHarTilgangTilKontoret(state)
+        !(OppfolgingSelector.selectErUnderOppfolging(state) &&
+        TilgangTilKontorSelector.selectHarTilgangTilKontoret(state))
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
