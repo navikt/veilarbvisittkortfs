@@ -1,4 +1,4 @@
-import App from './App';
+import App from './app';
 import NAVSPA from './NAVSPA';
 import env from './app/utils/environment';
 

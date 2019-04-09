@@ -1,6 +1,7 @@
 import { VeilederData } from '../../types/veilederdata';
 import { TildelVeilederData } from '../../types/tildel-veileder';
 import { VeilederListe } from '../../mock/veiledereliste';
+import { StringOrNothing } from '../../types/utils/stringornothings';
 
 export enum TildelVeilederActionType {
     HENT_VEILEDER_PA_ENHETEN = 'HENT_VEILEDER_PA_ENHETEN',
@@ -21,7 +22,11 @@ export interface TildelVeilederAction {
 
 export interface TildelVeilederActionSuccess {
     type: TildelVeilederActionType.TILDEL_VEILEDER_SUCCESS;
-    data: {resultat: string, feilendeTilordninger: TildelVeilederData[]};
+    data: {
+        resultat: string,
+        feilendeTilordninger: TildelVeilederData[],
+        tilVeilederId: StringOrNothing
+    };
 }
 
 export interface TildelVeilederActionError {
@@ -63,7 +68,7 @@ export const tildelTilVeileder = (data: TildelVeilederData[]): TildelVeilederAct
     data
 });
 
-export const tildelVeilederSuccess = (data: {resultat: string, feilendeTilordninger: TildelVeilederData[]}): TildelVeilederActionSuccess => ({
+export const tildelVeilederSuccess = (data: {resultat: string, feilendeTilordninger: TildelVeilederData[], tilVeilederId: StringOrNothing}): TildelVeilederActionSuccess => ({
     type: TildelVeilederActionType.TILDEL_VEILEDER_SUCCESS,
     data
 });

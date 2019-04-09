@@ -1,15 +1,15 @@
 import React from 'react';
-import TannHjulIkon from './../tannhjul.svg';
+import { ReactComponent as TannHjulIkon } from './../tannhjul.svg';
 import KnappFss from '../../components/knapp-fss/knapp-fss';
 
 function VeilederVerktoyKnapp (props: {onClick: () => void}) {
     return (
         <KnappFss
             metricName="veileder-verktoy-trykket"
-            icon={TannHjulIkon}
             onClick={props.onClick}
         >
-            Veilederverktøy
+            <TannHjulIkon className="knapp-fss__icon"/>
+            <span> Veilederverktøy </span>
         </KnappFss>
     );
 }

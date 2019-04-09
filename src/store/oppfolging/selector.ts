@@ -2,6 +2,7 @@ import { Appstate } from '../../types/appstate';
 import TilgangTilKontorSelector from '../tilgang-til-brukerskontor/selector';
 import { EskaleringsVarsel, Oppfolging } from '../../types/oppfolging';
 import { OrNothing } from '../../types/utils/ornothing';
+import { StringOrNothing } from '../../types/utils/stringornothings';
 
 export interface OppfolgingSelector {
     selectOppfolgingStatus: (state: Appstate) => boolean;
@@ -19,6 +20,7 @@ export interface OppfolgingSelector {
     selectErSykmeldtMedArbeidsgiver: (state: Appstate) => boolean;
     selectOppfolgingData: (state: Appstate) => Oppfolging;
     kanRegistreresEllerReaktiveres: (state: Appstate) => boolean;
+    selectVeilederId: (state: Appstate) => StringOrNothing;
 }
 
 function selectOppfolgingData(state: Appstate): Oppfolging {
@@ -114,6 +116,10 @@ function selectErSykmeldtMedArbeidsgiver (state: Appstate): boolean {
     return !!selectOppfolgingData(state).erSykmeldtMedArbeidsgiver;
 }
 
+function selectVeilederId(state: Appstate): StringOrNothing {
+    return selectOppfolgingData(state).veilederId;
+}
+
 function kanRegistreresEllerReaktiveres (state: Appstate): boolean {
     const underOppfolging = selectErUnderOppfolging(state);
     const kanReaktiveres = selectKanReaktiveres(state);
@@ -135,5 +141,6 @@ export default {
     selectKanReaktiveres,
     selectErSykmeldtMedArbeidsgiver,
     selectOppfolgingData,
-    kanRegistreresEllerReaktiveres
+    kanRegistreresEllerReaktiveres,
+    selectVeilederId
 }as OppfolgingSelector;

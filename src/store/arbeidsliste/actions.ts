@@ -1,4 +1,4 @@
-import { Arbeidsliste, ArbeidslisteformData } from '../../types/arbeidsliste';
+import { Arbeidsliste, ArbeidslisteformValues } from '../../types/arbeidsliste';
 
 export enum ArbeidslisteActionType {
     HENT_ARBEIDSLISTE = 'HENT_ARBEIDSLISTE',
@@ -13,13 +13,11 @@ export enum ArbeidslisteActionType {
     REDIGER_ARBEIDSLISTE = 'REDIGER_ARBEIDSLISTE',
     REDIGER_ARBEIDSLISTE_SUCCESS = 'REDIGER_ARBEIDSLISTE_SUCCESS',
     REDIGER_ARBEIDSLISTE_ERROR = 'REDIGER_ARBEIDSLISTE_ERROR',
-
 }
 
-export const slettArbeidsliste = (fnr: string): SlettArbeidslisteAction => {
+export const slettArbeidsliste = (): SlettArbeidslisteAction => {
     return {
         type: ArbeidslisteActionType.SLETT_ARBEIDSLISTE,
-        fnr
     };
 };
 
@@ -37,7 +35,7 @@ export const slettArbeidslisteActionError = (error: Error): SlettArbeidslisteAct
     };
 };
 
-export const oppdaterArbeidsliste = (arbeidsliste: ArbeidslisteformData): OppdaterArbeidslisteAction => {
+export const oppdaterArbeidsliste = (arbeidsliste: ArbeidslisteformValues): OppdaterArbeidslisteAction => {
     return {
         type: ArbeidslisteActionType.LAGRE_ARBEIDSLISTE,
         arbeidsliste,
@@ -58,7 +56,7 @@ export const oppdaterArbeidslisteError = (error: Error): OppdaterArbeidslisteAct
     };
 };
 
-export const redigerArbeidsliste = (arbeidsliste: ArbeidslisteformData): RedigerArbeidslisteAction => {
+export const redigerArbeidsliste = (arbeidsliste: ArbeidslisteformValues): RedigerArbeidslisteAction => {
     return {
         type: ArbeidslisteActionType.REDIGER_ARBEIDSLISTE,
         arbeidsliste,
@@ -102,7 +100,7 @@ export const hentArbeidslisteError = (error: Error): HentArbeidslisteActionError
 
 export interface OppdaterArbeidslisteAction {
     type: ArbeidslisteActionType.LAGRE_ARBEIDSLISTE;
-    arbeidsliste: ArbeidslisteformData;
+    arbeidsliste: ArbeidslisteformValues;
 }
 
 export interface OppdaterArbeidslisteActionSuccess {
@@ -117,7 +115,7 @@ export interface OppdaterArbeidslisteActionError {
 
 export interface RedigerArbeidslisteAction {
     type: ArbeidslisteActionType.REDIGER_ARBEIDSLISTE;
-    arbeidsliste: ArbeidslisteformData;
+    arbeidsliste: ArbeidslisteformValues;
 }
 
 export interface RedigerArbeidslisteActionSuccess {
@@ -147,7 +145,6 @@ export interface HentArbeidslisteActionError {
 
 export interface SlettArbeidslisteAction {
     type: ArbeidslisteActionType.SLETT_ARBEIDSLISTE;
-    fnr: string;
 }
 
 export interface SlettArbeidslisteActionSuccess {

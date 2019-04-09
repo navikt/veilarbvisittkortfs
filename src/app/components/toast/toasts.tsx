@@ -1,0 +1,31 @@
+import React from 'react';
+import { Appstate } from '../../../types/appstate';
+import { connect } from 'react-redux';
+import FjernArbeidslisteToast from './fjern-arbeidsliste-toast';
+import { ToastActionType } from '../../../store/toast/actions';
+
+interface StateProps {
+    toasts: ToastActionType[];
+}
+
+function Toasts({toasts}: StateProps) {
+    return (
+        <>
+            {toasts.map((toast, index) => {
+                switch (toast) {
+                    case ToastActionType.VIS_ARBEIDSLISTE_TOAST:
+                        return <FjernArbeidslisteToast key={index}/>;
+                    default:
+                        return null;
+                }
+            })}
+        </>
+    );
+
+}
+
+const mapStateToProps = (state: Appstate): StateProps => ({
+    toasts: state.ui.toasts.toasts
+});
+
+export default connect<StateProps>(mapStateToProps)(Toasts);

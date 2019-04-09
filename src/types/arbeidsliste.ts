@@ -13,17 +13,7 @@ export interface Arbeidsliste {
 }
 
 export interface ArbeidslisteformValues {
-    kommentar: string;
-    frist: string;
-    overskrift: string;
-}
-
-export interface ArbeidslisteformData {
-    kommentar: string;
-    frist: OrNothing<Date>;
-    overskrift: string;
-}
-
-export interface ArbeidslisteformDataMedFnr {
-    fnr: string;
+    kommentar: StringOrNothing;
+    frist: StringOrNothing;
+    overskrift: StringOrNothing;
 }

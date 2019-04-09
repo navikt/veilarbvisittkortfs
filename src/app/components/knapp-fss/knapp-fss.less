@@ -10,13 +10,22 @@
 		padding: 0 1rem;
 
 		.knapp-fss__icon {
-			margin-left: 0.5rem;
-			margin-bottom: 0.2rem;
+			margin-right: 0.3rem;
+			margin-bottom: -0.2rem;
 			width: 18px;
 			height: 18px;
-			//black
-			filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
 		}
+
+		.knapp-fss__icon:first-child  {
+			stroke: @navMorkGra;
+			fill: none;
+		}
+
+		.icon--filled:first-child {
+			stroke: @navMorkGra;
+			fill: @navMorkGra;
+		}
+
 
 	}
 
@@ -24,10 +33,11 @@
 		background-color: @navMorkGra;
 		color: white;
 
-		.knapp-fss__icon {
-			//white
-			filter: invert(0%) sepia(0%) saturate(17%) hue-rotate(308deg) brightness(99%) contrast(106%);
+		.knapp-fss__icon:first-child {
+			stroke: white;
+			fill: none;
 		}
 	}
+
 
 }

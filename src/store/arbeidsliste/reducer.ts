@@ -1,7 +1,7 @@
-import { Arbeidsliste } from '../../types/arbeidsliste';
-import { Reducer } from 'redux';
-import { OrNothing } from '../../types/utils/ornothing';
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import {Arbeidsliste} from '../../types/arbeidsliste';
+import {Reducer} from 'redux';
+import {OrNothing} from '../../types/utils/ornothing';
+import {call, put, select, takeLatest} from 'redux-saga/effects';
 import {
     ArbeidslisteActions,
     ArbeidslisteActionType,
@@ -12,13 +12,12 @@ import {
     oppdaterArbeidslisteError,
     oppdaterArbeidslisteSuccess,
     RedigerArbeidslisteAction,
-    SlettArbeidslisteAction,
     slettArbeidslisteActionError,
     slettArbeidslisteActionSuccess
 } from './actions';
 import ArbeidslisteApi from '../../api/arbeidsliste-api';
-import { FETCH_STATUS } from '../../types/fetch-status';
-import { TildelVeilederActionType } from '../tildel-veileder/actions';
+import {FETCH_STATUS} from '../../types/fetch-status';
+import {TildelVeilederActionType} from '../tildel-veileder/actions';
 import OppfolgingSelector from '../oppfolging/selector';
 
 export type ArbeidslisteState = {data: Arbeidsliste} & {status: FETCH_STATUS; error: OrNothing<Error>};
@@ -43,7 +42,6 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
     switch (action.type) {
         case ArbeidslisteActionType.HENT_ARBEIDSLISTE:
         case ArbeidslisteActionType.LAGRE_ARBEIDSLISTE:
-        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE:
         case ArbeidslisteActionType.REDIGER_ARBEIDSLISTE: {
             return {
                 ...state,
@@ -73,7 +71,8 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
             return {
                 ...state,
                 data: {
-                    ...state.data,
+                    harVeilederTilgang: state.data.harVeilederTilgang,
+                    isOppfolgendeVeileder: state.data.isOppfolgendeVeileder,
                     kommentar: null,
                     overskrift: null,
                     sistEndretAv: null,
@@ -121,9 +120,10 @@ function* redigerArbeidsliste(action: RedigerArbeidslisteAction) {
     }
 }
 
-function* slettArbeidsliste(action: SlettArbeidslisteAction) {
+function* slettArbeidsliste() {
     try {
-        const response = yield call( () => ArbeidslisteApi.slettArbeidsliste(action.fnr));
+        const fnr = yield select(OppfolgingSelector.selectFnr);
+        const response = yield call( () => ArbeidslisteApi.slettArbeidsliste(fnr));
         yield put(slettArbeidslisteActionSuccess(response));
     } catch (e) {
         yield put(slettArbeidslisteActionError(e));
