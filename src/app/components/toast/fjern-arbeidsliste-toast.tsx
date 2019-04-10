@@ -21,10 +21,19 @@ type ToastProps = {toast: ToastType} & DispatchProps;
 
 function FjernArbeidslisteToast (props: ToastProps) {
     const toastRef = useRef<HTMLSpanElement>(null);
+    const startTimeMS = new Date().getTime();
 
     useEffect(() => {
         (toastRef.current as HTMLSpanElement).focus();
     }, []);
+
+    const logTidIgjen = () => {
+        logEvent(
+            'veilarbvisittkortfs.metrikker.fjern-toast-arbeidsliste-trykket',
+            {},
+            {tidIgjen: (new Date().getTime() - startTimeMS) / 1000}
+            );
+    };
 
     const handleClick = () => {
         clearInterval(interval);
@@ -33,6 +42,8 @@ function FjernArbeidslisteToast (props: ToastProps) {
     };
 
     const timeoutFunc = () => {
+        logTidIgjen();
+        clearInterval(interval);
         props.doSlettArbeidsliste();
         props.doFjernToast(props.toast);
     };
@@ -40,7 +51,7 @@ function FjernArbeidslisteToast (props: ToastProps) {
     const interval: number = window.setTimeout(timeoutFunc, 15000);
 
     return (
-        <div className="toast-wrapper">
+        <div className="toast-wrapper" key={new Date().getTime()}>
             <span ref={toastRef}  tabIndex={0} className="toast">
                 <span>Brukeren er fjernet fra arbeidslisten.</span>
                 <button

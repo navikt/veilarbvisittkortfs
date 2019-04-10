@@ -67,7 +67,7 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
                 error: action.error
             };
         }
-        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE_SUCCESS: {
+        case ArbeidslisteActionType.SLETT_ARBEIDSLISTE: {
             return {
                 ...state,
                 data: {
