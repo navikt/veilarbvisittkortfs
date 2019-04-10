@@ -24,10 +24,10 @@ function ArbeidslisteFooter(props: ArbeidslisteFooterProps) {
                 htmlType="button"
                 hidden={!props.kanFjerneArbeidsliste}
                 onClick={props.slettArbeidsliste}
-                className="btn--ml10 fjern--knapp"
+                className="fjern--knapp"
             >
                 <SlettIcon/>
-                Slett
+                <span>Fjern</span>
             </HiddenIfFlatKnapp>
         </div>
     );
