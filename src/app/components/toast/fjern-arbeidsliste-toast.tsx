@@ -20,10 +20,10 @@ interface DispatchProps {
 type ToastProps = {toast: ToastType} & DispatchProps;
 
 function FjernArbeidslisteToast (props: ToastProps) {
-    const angreRef = useRef<HTMLSpanElement>(null);
+    const toastRef = useRef<HTMLSpanElement>(null);
 
     useEffect(() => {
-        (angreRef.current as HTMLSpanElement).focus();
+        (toastRef.current as HTMLSpanElement).focus();
     }, []);
 
     const handleClick = () => {
@@ -37,14 +37,13 @@ function FjernArbeidslisteToast (props: ToastProps) {
         props.doFjernToast(props.toast);
     };
 
-    const interval: number = window.setTimeout(timeoutFunc, 20000);
+    const interval: number = window.setTimeout(timeoutFunc, 15000);
 
     return (
         <div className="toast-wrapper">
-            <span className="toast">
+            <span ref={toastRef}  tabIndex={0} className="toast">
                 <span>Brukeren er fjernet fra arbeidslisten.</span>
-                <span
-                    ref={angreRef}
+                <label
                     className="toast__lenke"
                     onClick={handleClick}
                     role="link"
@@ -52,7 +51,7 @@ function FjernArbeidslisteToast (props: ToastProps) {
                     tabIndex={0}
                 >
                     Angre
-                </span>
+                </label>
                 <button onClick={timeoutFunc} className="lukknapp lukknapp--hvit">&times;</button>
             </span>
         </div>

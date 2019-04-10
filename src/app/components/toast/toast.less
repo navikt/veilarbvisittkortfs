@@ -2,13 +2,17 @@
 
   .toast-wrapper {
     z-index: 1000;
-    top: 20rem;
+    top: 1rem;
     display: flex;
     justify-content: flex-end;
     -webkit-animation: slide 0.5s forwards;
     animation: slide 0.5s forwards;
     position: relative;
-    right: 19rem;
+  }
+
+  .toast:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #FFBD66;
   }
   .toast {
     background-color: #3E3832;
@@ -17,9 +21,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 2rem;
+    padding: 0 1rem;
     border-radius: 0.2rem;
-    height: 4rem;
+    height: 3rem;
 
     &__lenke {
       color: #66CBEC;
