@@ -89,7 +89,7 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
                                     onRequestClose={() => onRequestClose(formikProps)}
                                     spinner={props.arbeidslisteStatus}
                                     slettArbeidsliste={slettArbeidsliste}
-                                    kanFjerneArbeidsliste={props.kanFjerneArbeidsliste}
+                                    kanFjerneArbeidsliste={props.kanFjerneArbeidsliste && !props.visFjernArbeidslisteToast}
                                 />
                             </Form>
                         </div>
