@@ -8,6 +8,7 @@
     -webkit-animation: slide 0.5s forwards;
     animation: slide 0.5s forwards;
     position: relative;
+    right: 18rem;
   }
   .toast {
     background-color: #3E3832;
@@ -21,9 +22,17 @@
     height: 4rem;
 
     &__lenke {
-      color: #A3E0F4;
-      margin: 0 2rem;
+      color: #66CBEC;
       cursor: pointer;
+      padding: 1.3rem 2rem;
+      margin-right: 1.5rem;
+    }
+    &__lenke:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px #FFBD66;
+    }
+    &__lenke:hover {
+      text-decoration: underline;
     }
     &__close {
       cursor: pointer;

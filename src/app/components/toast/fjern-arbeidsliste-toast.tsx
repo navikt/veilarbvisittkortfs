@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './toast.less';
 import { Dispatch } from 'redux';
 import { slettArbeidsliste } from '../../../store/arbeidsliste/actions';
@@ -19,6 +19,12 @@ interface DispatchProps {
 type ToastProps = {toast: ToastType} & DispatchProps;
 
 function FjernArbeidslisteToast (props: ToastProps) {
+    const angreRef = useRef<HTMLSpanElement>(null);
+
+    useEffect(() => {
+        (angreRef.current as HTMLSpanElement).focus();
+    }, []);
+
     const handleClick = () => {
         clearInterval(interval);
         props.doFjernToast(props.toast);
@@ -29,13 +35,22 @@ function FjernArbeidslisteToast (props: ToastProps) {
         props.doFjernToast(props.toast);
     };
 
-    const interval: number = window.setTimeout(timeoutFunc, 5000);
+    const interval: number = window.setTimeout(timeoutFunc, 30000);
 
     return (
         <div className="toast-wrapper">
             <span className="toast">
-                <span>Arbeidslisten har blitt slettet.</span>
-                <span className="toast__lenke" onClick={handleClick}>Ångre</span>
+                <span>Brukeren er fjernet fra arbeidslisten.</span>
+                <span
+                    ref={angreRef}
+                    className="toast__lenke"
+                    onClick={handleClick}
+                    role="link"
+                    aria-label="Lenke til angre"
+                    tabIndex={0}
+                >
+                    Angre
+                </span>
                 <button onClick={timeoutFunc} className="lukknapp lukknapp--hvit">&times;</button>
             </span>
         </div>
