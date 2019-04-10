@@ -43,15 +43,14 @@ function FjernArbeidslisteToast (props: ToastProps) {
         <div className="toast-wrapper">
             <span ref={toastRef}  tabIndex={0} className="toast">
                 <span>Brukeren er fjernet fra arbeidslisten.</span>
-                <label
-                    className="toast__lenke"
+                <button
+                    className="toast--button"
                     onClick={handleClick}
-                    role="link"
-                    aria-label="Lenke til angre"
-                    tabIndex={0}
+                    role="button"
+                    aria-describedby="Knapp for angre sletting"
                 >
                     Angre
-                </label>
+                </button>
                 <button onClick={timeoutFunc} className="lukknapp lukknapp--hvit">&times;</button>
             </span>
         </div>
