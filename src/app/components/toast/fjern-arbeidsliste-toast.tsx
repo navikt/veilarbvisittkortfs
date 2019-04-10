@@ -28,11 +28,11 @@ function FjernArbeidslisteToast (props: ToastProps) {
     }, []);
 
     const logTidIgjen = () => {
-        logEvent(
+        logEvent (
             'veilarbvisittkortfs.metrikker.fjern-toast-arbeidsliste-trykket',
-            {},
-            {tidIgjen: (new Date().getTime() - startTimeMS) / 1000}
-            );
+            {tidIgjen: (new Date().getTime() - startTimeMS) / 1000},
+            {}
+        );
     };
 
     const handleClick = () => {
