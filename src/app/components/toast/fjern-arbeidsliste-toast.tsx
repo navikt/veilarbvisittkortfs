@@ -4,6 +4,7 @@ import { Dispatch } from 'redux';
 import { slettArbeidsliste } from '../../../store/arbeidsliste/actions';
 import { connect } from 'react-redux';
 import { fjernArbeidslisteToast } from '../../../store/toast/actions';
+import { logEvent } from '../../utils/frontend-logger';
 
 export interface ToastType {
     tekst: string;
@@ -27,6 +28,7 @@ function FjernArbeidslisteToast (props: ToastProps) {
 
     const handleClick = () => {
         clearInterval(interval);
+        logEvent('veilarbvisittkortfs.metrikker.angre-arbeidsliste-trykket');
         props.doFjernToast(props.toast);
     };
 
@@ -35,7 +37,7 @@ function FjernArbeidslisteToast (props: ToastProps) {
         props.doFjernToast(props.toast);
     };
 
-    const interval: number = window.setTimeout(timeoutFunc, 30000);
+    const interval: number = window.setTimeout(timeoutFunc, 20000);
 
     return (
         <div className="toast-wrapper">
