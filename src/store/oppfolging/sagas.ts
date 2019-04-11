@@ -93,7 +93,7 @@ function* stopKVP(action: StoppKVPAction) {
 function* stoppEskalering(action: StoppEskaleringAction) {
     try {
         const fnr = yield select(OppfolgingSelector.selectFnr);
-        if (action.begrunnelse) {
+        if (action.skallSendeHenvdelse && action.begrunnelse) {
             yield put (opprettHenvendelseStoppEskalering({
                 begrunnelse: action.begrunnelse,
                 egenskaper: ['ESKALERINGSVARSEL'],

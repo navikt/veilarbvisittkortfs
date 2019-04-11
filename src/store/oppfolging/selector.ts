@@ -79,6 +79,7 @@ function selectKanStarteDigitalOppfolging(state: Appstate): boolean {
 
 function selectKanSendeEskaleringsVarsel (state: Appstate): boolean {
     return(
+        TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) &&
         selectErUnderOppfolging(state) &&
         !selectGjeldeneEskaleringsVarsel(state) &&
         !selectErKRR(state) &&
@@ -88,6 +89,7 @@ function selectKanSendeEskaleringsVarsel (state: Appstate): boolean {
 
 function selectKanStoppeEskaleringsVarsel (state: Appstate): boolean {
     return(
+        TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) &&
         selectErUnderOppfolging(state) &&
         !!selectGjeldeneEskaleringsVarsel(state) &&
         !selectErKRR(state) &&

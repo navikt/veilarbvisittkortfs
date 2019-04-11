@@ -16,7 +16,7 @@ import { BegrunnelseTextArea } from '../begrunnelseform/begrunnelse-textarea';
 import BergrunnelseOverskrift from '../begrunnelseform/begrunnelse-overskrift';
 
 interface DispatchProps {
-    handleSubmit: (dialogId: string, beskrivelse?: string) => void;
+    handleSubmit: (dialogId: string, skallSendeHenvdelse: boolean, beskrivelse?: string) => void;
 }
 interface StateProps {
     navn: string;
@@ -33,7 +33,7 @@ function StoppEskalering(props: StoppEskaleringProps) {
                 begrunnelse : props.intl.formatMessage({id: 'innstillinger.modal.stopp-eskalering.automatisk-tekst'}),
                 skallSendeHenvdelse: false
             }}
-            handleSubmit={(values) => props.handleSubmit(props.tilhorendeDialogId, values.begrunnelse)}
+            handleSubmit={(values) => props.handleSubmit(props.tilhorendeDialogId, values.skallSendeHenvdelse, values.begrunnelse)}
             contentLabel="Stopp begrunnelse"
             visConfirmDialog={false}
             render={(formikProps) => {
@@ -80,7 +80,7 @@ const mapStateToProps = (state: Appstate) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    handleSubmit: (dialogId: string, beskrivelse?: string) => dispatch(stoppEskalering(dialogId, beskrivelse)),
+    handleSubmit: (dialogId: string, skallSendeHenvdelse: boolean, beskrivelse?: string) => dispatch(stoppEskalering(dialogId, skallSendeHenvdelse, beskrivelse)),
 });
 
 export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(injectIntl(StoppEskalering));
