@@ -219,6 +219,7 @@ export const avsluttOppfolgingError = (error: Error): AvsluttOppfolgingActionErr
 
 export interface StoppEskaleringAction {
     type: OppfolgingActionType.STOPP_ESKALERING;
+    dialogId: string;
     begrunnelse?: string;
 }
 
@@ -232,8 +233,9 @@ export interface StoppEskaleringActionError {
     error: Error;
 }
 
-export const stoppEskalering = (begrunnelse?: string): StoppEskaleringAction => ({
+export const stoppEskalering = (dialogId: string, begrunnelse?: string): StoppEskaleringAction => ({
     type: OppfolgingActionType.STOPP_ESKALERING,
+    dialogId,
     begrunnelse,
 });
 

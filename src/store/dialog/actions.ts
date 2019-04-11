@@ -1,9 +1,12 @@
 import Dialog, { Egenskaper } from '../../types/dialog';
 
 export enum HenvendelseActionType {
-    OPPRETTET_HENVENDELSE = 'OPPRETTET_HENVENDELSE',
-    OPPRETTET_HENVENDELSE_ERROR =  'OPPRETT_HENVENDELSE_ERROR',
-    OPPRETTET_HENVENDELSE_SUCCESS = 'OPPRETTER_HENVENDELSE_SUCCESS',
+    OPPRETTET_HENVENDELSE_START_ESKALERING = 'OPPRETTET_HENVENDELSE_START_ESKALERING',
+    OPPRETTET_HENVENDELSE_START_ESKALERING_ERROR =  'OPPRETTET_HENVENDELSE_START_ESKALERING_ERROR',
+    OPPRETTET_HENVENDELSE_START_ESKALERING_SUCCESS = 'OPPRETTET_HENVENDELSE_START_ESKALERING_SUCCESS',
+    OPPRETTET_HENVENDELSE_STOPP_ESKALERING = 'OPPRETTET_HENVENDELSE_STOPP_ESKALERING',
+    OPPRETTET_HENVENDELSE_STOPP_ESKALERING_ERROR =  'OPPRETTET_HENVENDELSE_STOPP_ESKALERING_ERROR',
+    OPPRETTET_HENVENDELSE_STOPP_ESKALERING_SUCCESS = 'OPPRETTET_HENVENDELSE_STOPP_ESKALERING_SUCCESS',
     HENT_DIALOGER = 'NAVIGER_TIL_PROSSER',
     HENT_DIALOGER_SUCCESS = 'HENT_DIALOGER_SUCCESS',
     HENT_DIALOGER_ERROR = 'HENT_DIALOGER_ERROR',
@@ -18,23 +21,62 @@ export enum DialogActionType {
 export interface HenvendelseData {
     begrunnelse: string;
     egenskaper: Egenskaper[];
-    overskrift: string;
+    overskrift?: string;
     tekst: string;
+    dialogId?: string;
+}
+
+export interface OpprettHenvendelseStoppEskaleringAction {
+    type: HenvendelseActionType.OPPRETTET_HENVENDELSE_STOPP_ESKALERING;
+    data: HenvendelseData;
+}
+
+export interface OpprettHenvendelseStoppEskaleringActionSuccess {
+    type: HenvendelseActionType.OPPRETTET_HENVENDELSE_STOPP_ESKALERING_SUCCESS;
+    data: Dialog;
+    fnr: string;
+}
+
+export interface OpprettHenvendelseStoppEskaleringActionError {
+    type: HenvendelseActionType.OPPRETTET_HENVENDELSE_STOPP_ESKALERING_ERROR;
+    error: Error;
+}
+
+export function opprettHenvendelseStoppEskalering(data: HenvendelseData): OpprettHenvendelseStoppEskaleringAction {
+    return {
+        type: HenvendelseActionType.OPPRETTET_HENVENDELSE_STOPP_ESKALERING,
+        data
+    };
+}
+
+export function opprettHenvendelseStoppEskaleringSuccess(data: Dialog, fnr: string): OpprettHenvendelseStoppEskaleringActionSuccess {
+    return {
+        type: HenvendelseActionType.OPPRETTET_HENVENDELSE_STOPP_ESKALERING_SUCCESS,
+        data,
+        fnr
+    };
+}
+
+export function opprettHenvendelseStoppEskaleringError(error: Error): OpprettHenvendelseStoppEskaleringActionError {
+   return {
+       type: HenvendelseActionType.OPPRETTET_HENVENDELSE_STOPP_ESKALERING_ERROR,
+       error
+   };
 }
 
 export interface OpprettHenvendelseAction {
-    type: HenvendelseActionType.OPPRETTET_HENVENDELSE;
+    type: HenvendelseActionType.OPPRETTET_HENVENDELSE_START_ESKALERING;
     data: HenvendelseData;
 }
 
 export interface OpprettHenvendelseActionSuccess {
-    type: HenvendelseActionType.OPPRETTET_HENVENDELSE_SUCCESS;
+    type: HenvendelseActionType.OPPRETTET_HENVENDELSE_START_ESKALERING_SUCCESS;
     data: Dialog;
     fnr: string;
 }
 
 export interface OpprettHenvendelseActionError {
-    type: HenvendelseActionType.OPPRETTET_HENVENDELSE_ERROR;
+    type: HenvendelseActionType.OPPRETTET_HENVENDELSE_START_ESKALERING_ERROR;
     error: Error;
 }
 
@@ -52,14 +94,14 @@ export function oppdaterDialogSuccess(data: Dialog): OppdaterDialogSuccess {
 
 export function opprettHenvendelse(data: HenvendelseData): OpprettHenvendelseAction {
     return {
-        type: HenvendelseActionType.OPPRETTET_HENVENDELSE,
+        type: HenvendelseActionType.OPPRETTET_HENVENDELSE_START_ESKALERING,
         data
     };
 }
 
 export function opprettHenvendelseSuccess(data: Dialog, fnr: string): OpprettHenvendelseActionSuccess {
     return {
-        type: HenvendelseActionType.OPPRETTET_HENVENDELSE_SUCCESS,
+        type: HenvendelseActionType.OPPRETTET_HENVENDELSE_START_ESKALERING_SUCCESS,
         data,
         fnr
     };
@@ -67,7 +109,7 @@ export function opprettHenvendelseSuccess(data: Dialog, fnr: string): OpprettHen
 
 export function opprettHenvendelseError(error: Error): OpprettHenvendelseActionError {
     return {
-        type: HenvendelseActionType.OPPRETTET_HENVENDELSE_ERROR,
+        type: HenvendelseActionType.OPPRETTET_HENVENDELSE_START_ESKALERING_ERROR,
         error
     };
 }
@@ -107,4 +149,7 @@ export type DialogActions =
     OppdaterDialogSuccess |
     HentDialogerAction |
     HentDialogerActionSuccess |
-    HentDialogerActionError;
+    HentDialogerActionError|
+    OpprettHenvendelseStoppEskaleringAction |
+    OpprettHenvendelseStoppEskaleringActionSuccess |
+    OpprettHenvendelseStoppEskaleringActionError;
