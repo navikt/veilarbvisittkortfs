@@ -16,12 +16,12 @@ import { BegrunnelseTextArea } from '../begrunnelseform/begrunnelse-textarea';
 import BergrunnelseOverskrift from '../begrunnelseform/begrunnelse-overskrift';
 
 interface DispatchProps {
-    handleSubmit: (beskrivelse?: string) => void;
+    handleSubmit: (dialogId: string, skallSendeHenvdelse: boolean, beskrivelse?: string) => void;
 }
-
 interface StateProps {
     navn: string;
     isLoading: boolean;
+    tilhorendeDialogId: string;
 }
 
 type StoppEskaleringProps = StateProps & DispatchProps & InjectedIntlProps;
@@ -33,7 +33,7 @@ function StoppEskalering(props: StoppEskaleringProps) {
                 begrunnelse : props.intl.formatMessage({id: 'innstillinger.modal.stopp-eskalering.automatisk-tekst'}),
                 skallSendeHenvdelse: false
             }}
-            handleSubmit={(values) => props.handleSubmit(values.begrunnelse)}
+            handleSubmit={(values) => props.handleSubmit(props.tilhorendeDialogId, values.skallSendeHenvdelse, values.begrunnelse)}
             contentLabel="Stopp begrunnelse"
             visConfirmDialog={false}
             render={(formikProps) => {
@@ -70,13 +70,17 @@ function StoppEskalering(props: StoppEskaleringProps) {
     );
 }
 
-const mapStateToProps = (state: Appstate) => ({
-    isLoading: OppfolgingSelector.selectOppfolgingStatus(state),
-    navn: PersonaliaSelectors.selectSammensattNavn(state)
-});
+const mapStateToProps = (state: Appstate) => {
+    const gjeldendeEskaleringsVarsel = OppfolgingSelector.selectGjeldeneEskaleringsVarsel(state);
+    return {
+        isLoading: OppfolgingSelector.selectOppfolgingStatus(state),
+        navn: PersonaliaSelectors.selectSammensattNavn(state),
+        tilhorendeDialogId: gjeldendeEskaleringsVarsel ? gjeldendeEskaleringsVarsel.tilhorendeDialogId : ''
+    };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    handleSubmit: (beskrivelse?: string) => dispatch(stoppEskalering(beskrivelse))
+    handleSubmit: (dialogId: string, skallSendeHenvdelse: boolean, beskrivelse?: string) => dispatch(stoppEskalering(dialogId, skallSendeHenvdelse, beskrivelse)),
 });
 
 export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(injectIntl(StoppEskalering));

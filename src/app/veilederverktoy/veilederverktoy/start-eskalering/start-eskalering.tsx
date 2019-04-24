@@ -51,7 +51,7 @@ function StartEskalering(props: StartEskaleringProps) {
 }
 
 const mapStateToProps = (state: Appstate) => ({
-    isLoading: OppfolgingSelector.selectOppfolgingStatus(state)
+    isLoading: OppfolgingSelector.selectOppfolgingStatus(state) || state.dialoger.status === 'LOADING'
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -21,6 +21,7 @@ export interface OppfolgingSelector {
     selectOppfolgingData: (state: Appstate) => Oppfolging;
     kanRegistreresEllerReaktiveres: (state: Appstate) => boolean;
     selectVeilederId: (state: Appstate) => StringOrNothing;
+    selectGjeldeneEskaleringsVarsel: (state: Appstate) => OrNothing<EskaleringsVarsel>;
 }
 
 function selectOppfolgingData(state: Appstate): Oppfolging {
@@ -142,5 +143,6 @@ export default {
     selectErSykmeldtMedArbeidsgiver,
     selectOppfolgingData,
     kanRegistreresEllerReaktiveres,
-    selectVeilederId
+    selectVeilederId,
+    selectGjeldeneEskaleringsVarsel
 }as OppfolgingSelector;

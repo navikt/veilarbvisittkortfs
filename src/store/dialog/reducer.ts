@@ -10,6 +10,8 @@ import {
     OpprettHenvendelseAction,
     OpprettHenvendelseActionSuccess,
     opprettHenvendelseError,
+    opprettHenvendelseStoppEskaleringSuccess,
+    opprettHenvendelseStoppEskaleringError,
     opprettHenvendelseSuccess
 } from './actions';
 import DialogApi from '../../api/dialog-api';
@@ -30,14 +32,16 @@ const initialState: DialogState = {
 
 const dialogReducer: Reducer<DialogState, DialogActions> = (state = initialState, action) => {
     switch (action.type) {
-        case HenvendelseActionType.OPPRETTET_HENVENDELSE:
+        case HenvendelseActionType.OPPRETTET_HENVENDELSE_START_ESKALERING:
+        case HenvendelseActionType.OPPRETTET_HENVENDELSE_STOPP_ESKALERING:
         case HenvendelseActionType.HENT_DIALOGER: {
             return {
                 ...state,
                 status: 'LOADING'
             };
         }
-        case HenvendelseActionType.OPPRETTET_HENVENDELSE_SUCCESS:
+        case HenvendelseActionType.OPPRETTET_HENVENDELSE_START_ESKALERING_SUCCESS:
+        case HenvendelseActionType.OPPRETTET_HENVENDELSE_STOPP_ESKALERING_SUCCESS:
         case DialogActionType.OPPDATER_DIALOG_SUCCESS: {
             const dialogIndex = state.data.findIndex(dialog => dialog.id === action.data.id);
             const dialogData = dialogIndex === -1 ?
@@ -48,7 +52,8 @@ const dialogReducer: Reducer<DialogState, DialogActions> = (state = initialState
                 data: dialogData
             };
         }
-        case HenvendelseActionType.OPPRETTET_HENVENDELSE_ERROR:
+        case HenvendelseActionType.OPPRETTET_HENVENDELSE_START_ESKALERING_ERROR:
+        case HenvendelseActionType.OPPRETTET_HENVENDELSE_STOPP_ESKALERING_ERROR:
         case HenvendelseActionType.HENT_DIALOGER_ERROR: {
             return {
                 ...state,
@@ -76,6 +81,16 @@ function* opprettHenvendelse(action: OpprettHenvendelseAction) {
     } catch (e) {
         yield put(opprettHenvendelseError(e));
         yield put(navigerAction('feil_i_veilederverktoy'));
+    }
+}
+
+function* opprettHenvendelseStoppEskalering(action: OpprettHenvendelseAction) {
+    try {
+        const fnr = yield select(OppfolgingSelector.selectFnr);
+        const response = yield call( () => DialogApi.nyHenvendelse(action.data, fnr));
+        yield put(opprettHenvendelseStoppEskaleringSuccess(response, fnr));
+    } catch (e) {
+        yield put(opprettHenvendelseStoppEskaleringError(e));
     }
 }
 
@@ -114,9 +129,10 @@ function* hentDialoger() {
 }
 
 export function* dialogSaga() {
-    yield takeLatest(HenvendelseActionType.OPPRETTET_HENVENDELSE, opprettHenvendelse);
-    yield takeLatest(HenvendelseActionType.OPPRETTET_HENVENDELSE_SUCCESS, startEskaleringMedDialog);
+    yield takeLatest(HenvendelseActionType.OPPRETTET_HENVENDELSE_START_ESKALERING, opprettHenvendelse);
+    yield takeLatest(HenvendelseActionType.OPPRETTET_HENVENDELSE_START_ESKALERING_SUCCESS, startEskaleringMedDialog);
     yield takeLatest(HenvendelseActionType.HENT_DIALOGER, hentDialoger);
+    yield takeLatest(HenvendelseActionType.OPPRETTET_HENVENDELSE_STOPP_ESKALERING, opprettHenvendelseStoppEskalering);
 }
 
 export default dialogReducer;
