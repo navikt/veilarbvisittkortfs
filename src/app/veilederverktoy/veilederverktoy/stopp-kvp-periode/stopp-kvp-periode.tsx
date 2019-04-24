@@ -34,6 +34,7 @@ function StoppKvpPeriode(props: StartKvpPeriodeProsessProps) {
             overskriftTekstId="innstillinger.prosess.stopp-kvp.tittel"
             infoTekst={infoTekst}
             isLoading={props.isLoading}
+            maxLength={250}
         />
     );
 }

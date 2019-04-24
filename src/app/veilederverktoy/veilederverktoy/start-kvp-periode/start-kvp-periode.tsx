@@ -34,6 +34,7 @@ function StarKvpPeriode(props: StartKvpPeriodeProsessProps) {
             overskriftTekstId="innstillinger.prosess.start-kvp.tittel"
             infoTekst={infoTekst}
             isLoading={props.isLoading}
+            maxLength={250}
         />
     );
 }
