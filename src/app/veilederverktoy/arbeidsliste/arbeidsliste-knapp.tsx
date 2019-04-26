@@ -3,7 +3,6 @@ import React from 'react';
 import { ReactComponent as ArbeidslisteIkon } from './arbeidsliste.svg';
 import classNames from 'classnames';
 
-
 export interface ArbeidslisteKnappProps {
     hidden: boolean;
     onClick: () => void;

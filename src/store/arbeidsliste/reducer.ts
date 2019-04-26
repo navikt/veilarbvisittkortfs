@@ -1,7 +1,7 @@
-import {Arbeidsliste} from '../../types/arbeidsliste';
-import {Reducer} from 'redux';
-import {OrNothing} from '../../types/utils/ornothing';
-import {call, put, select, takeLatest} from 'redux-saga/effects';
+import { Arbeidsliste } from '../../types/arbeidsliste';
+import { Reducer } from 'redux';
+import { OrNothing } from '../../types/utils/ornothing';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
     ArbeidslisteActions,
     ArbeidslisteActionType,
@@ -16,8 +16,8 @@ import {
     slettArbeidslisteActionSuccess
 } from './actions';
 import ArbeidslisteApi from '../../api/arbeidsliste-api';
-import {FETCH_STATUS} from '../../types/fetch-status';
-import {TildelVeilederActionType} from '../tildel-veileder/actions';
+import { FETCH_STATUS } from '../../types/fetch-status';
+import { TildelVeilederActionType } from '../tildel-veileder/actions';
 import OppfolgingSelector from '../oppfolging/selector';
 
 export type ArbeidslisteState = {data: Arbeidsliste} & {status: FETCH_STATUS; error: OrNothing<Error>};
