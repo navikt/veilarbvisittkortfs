@@ -1,3 +1,5 @@
+import queryString from 'query-string';
+
 export function storeForbokstaver(tekster: string[]): string {
     const tekst = tekster.filter(s => s).join(' ');
 
@@ -51,4 +53,12 @@ export function triggerReRenderingAvAktivitesplan() {
     if (window) {
         window.dispatchEvent(new Event('rerenderAktivitetsplan'));
     }
+}
+
+export function hentEnhetsIdFraUrl(): string {
+  const enhetId = queryString.parse(location.search).enhet;
+  if (Array.isArray(enhetId)) {
+        return enhetId[0];
+    }
+  return enhetId || '';
 }

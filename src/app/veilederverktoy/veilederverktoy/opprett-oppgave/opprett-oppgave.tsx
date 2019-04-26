@@ -16,6 +16,7 @@ import { lagreOppgave } from '../../../../store/oppgave/actions';
 import { OrNothing } from '../../../../types/utils/ornothing';
 import FormikModal from '../../../components/formik/formik-modal';
 import { navigerAction, navigerTilProcesser } from '../../../../store/navigation/actions';
+import { hentEnhetsIdFraUrl } from '../../../utils/utils';
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
@@ -33,7 +34,6 @@ export interface OpprettOppgaveFormValues {
 interface StateProps {
     navn: string;
     fnr: string;
-    avsenderenhetId: StringOrNothing;
 }
 
 interface DispatchProps {
@@ -44,7 +44,9 @@ interface DispatchProps {
 
 type OpprettOppgaveProps = StateProps & DispatchProps;
 
-function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, tilbakeTilProcesser, tilbake}: OpprettOppgaveProps) {
+function OpprettOppgave({navn, fnr, handleSubmit, tilbakeTilProcesser, tilbake}: OpprettOppgaveProps) {
+
+    const avsenderenhetId = hentEnhetsIdFraUrl();
 
     const opprettOppgaveInitialValues: OpprettOppgaveFormValues = {
         beskrivelse: '',
@@ -56,7 +58,7 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, tilbakeTilPro
         tema: undefined ,
         type: 'VURDER_HENVENDELSE',
         veilederId: null,
-        avsenderenhetId: avsenderenhetId || '',
+        avsenderenhetId,
     };
 
     return (
@@ -101,8 +103,7 @@ function OpprettOppgave({navn, fnr, avsenderenhetId, handleSubmit, tilbakeTilPro
 
 const mapStateToProps = (state: Appstate) => ({
     fnr: PersonaliaSelector.selectFodselsnummer(state),
-    navn: PersonaliaSelector.selectSammensattNavn(state),
-    avsenderenhetId: state.enhetId.enhet,
+    navn: PersonaliaSelector.selectSammensattNavn(state)
 
 });
 
