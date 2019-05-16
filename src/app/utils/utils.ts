@@ -50,9 +50,11 @@ export function erITestMiljo() {
 }
 
 export function triggerReRenderingAvAktivitesplan() {
-    if (window) {
-        window.dispatchEvent(new Event('rerenderAktivitetsplan'));
-    }
+    window.dispatchEvent(new Event('rerenderAktivitetsplan'));
+}
+
+export function triggerReRenderingAvMao() {
+    window.dispatchEvent(new Event('rerenderMao'));
 }
 
 export function hentEnhetsIdFraUrl(): string {
