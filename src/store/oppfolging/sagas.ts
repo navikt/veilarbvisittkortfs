@@ -32,7 +32,7 @@ import OppfolgingSelector from './selector';
 import VeilederSelector from '../tildel-veileder/selector';
 import AvsluttOppfolgingStatusSelector from '../avslutningstatus/selector';
 import { navigerAction } from '../navigation/actions';
-import { triggerReRenderingAvAktivitesplan } from '../../app/utils/utils';
+import { triggerReRenderingAvAktivitesplan, triggerReRenderingAvMao } from '../../app/utils/utils';
 import { opprettHenvendelseStoppEskalering } from '../dialog/actions';
 
 function* hentOppfolging(action: HentOppfolgingAction) {
@@ -49,6 +49,7 @@ function* settManuell(action: SettManuellAction) {
         const response = yield call( () => OppfolgingApi.settManuellOppfolging(action.begrunnelse, action.veilederId, action.fnr));
         yield put(settManuellSuccess(action.begrunnelse, response));
         yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr: action.fnr});
+        triggerReRenderingAvMao();
     } catch (e) {
         yield put(settManuellError(e));
         yield put(navigerAction('feil_i_veilederverktoy'));
@@ -60,6 +61,7 @@ function* settDigital(action: SettDigitalAction) {
         const response = yield call( () => OppfolgingApi.settDigital(action.begrunnelse, action.veilederId, action.fnr));
         yield put(settDigitalSuccess(action.begrunnelse, response));
         yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr: action.fnr});
+        triggerReRenderingAvMao();
     } catch (e) {
         yield put(setDigitalError(e));
         yield put(navigerAction('feil_i_veilederverktoy'));

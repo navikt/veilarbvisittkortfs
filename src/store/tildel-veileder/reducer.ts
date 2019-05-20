@@ -15,6 +15,7 @@ import TildelVeilederApi from '../../api/tildel-veileder-api';
 import { TildelVeilederResponse } from '../../types/tildel-veileder';
 import { VeilederListe } from '../../mock/veiledereliste';
 import { FETCH_STATUS } from '../../types/fetch-status';
+import { triggerReRenderingAvMao } from '../../app/utils/utils';
 
 export interface TildelVeilederState {
     status: FETCH_STATUS;
@@ -123,6 +124,7 @@ function* tildelVeileder(action: TildelVeilederAction) {
         const response = yield call( () => TildelVeilederApi.tildelTilVeileder(action.data));
         if (response.feilendeTilordninger.length === 0 ) {
             yield put(tildelVeilederSuccess(Object.assign(response, {tilVeilederId : action.data[0].tilVeilederId})));
+            triggerReRenderingAvMao();
         }
     } catch (e) {
         yield put(tildelVeilederError(e));
