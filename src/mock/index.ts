@@ -60,6 +60,9 @@ mock.post('/veilarboppfolging/api/oppfolging/avsluttOppfolging', (args: HandlerA
     return ResponseUtils.jsonPromise(args.body);
 });
 
+mock.post('/veilarboppfolging/api/oppfolging/settManuell',
+    Object.assign({}, Oppfolging, { manuell: true}));
+
 mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
     avslutningStatus: {
         kanAvslutte: false,

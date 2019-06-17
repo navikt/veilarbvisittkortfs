@@ -5,15 +5,14 @@ import { OrNothing } from '../../../../types/utils/ornothing';
 import VeilederVerktoyModal from '../veilederverktoy-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 
-interface OwnProps {
+interface KvitteringProps {
     tittelId: string;
     alertStripeTekstId: string;
     alertStripeTekstValues?: OrNothing<{ [key: string]: any}>;
+    footer?: React.ReactNode;
 }
 
-type KvitteringProps = OwnProps;
-
-function Kvittering({tittelId, alertStripeTekstId, alertStripeTekstValues}: KvitteringProps) {
+function Kvittering({tittelId, alertStripeTekstId, alertStripeTekstValues, footer}: KvitteringProps) {
     return (
         <VeilederVerktoyModal>
             <div className="blokk-xs">
@@ -26,6 +25,11 @@ function Kvittering({tittelId, alertStripeTekstId, alertStripeTekstValues}: Kvit
                         values={alertStripeTekstValues ? alertStripeTekstValues : {}}
                     />
                 </AlertStripeSuksess>
+                {!!footer && (
+                    <div className="kvittering-footer">
+                        {footer}
+                    </div>
+                )}
             </div>
         </VeilederVerktoyModal>
     );
