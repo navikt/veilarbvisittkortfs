@@ -5,6 +5,8 @@ import OppfolgingSelector from '../../../../store/oppfolging/selector';
 import { connect } from 'react-redux';
 import { fetchRegistreringData } from '../../../../api/registrering-api';
 import { logEvent } from '../../../utils/frontend-logger';
+import { FormattedMessage } from 'react-intl';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 
 interface OwnProps {
     begrunnelse?: string;
@@ -32,11 +34,17 @@ function loggMetrikk(props: StartOppfolgingKvittering) {
 
 function StartManuellOppfolgingKvittering(props: StartOppfolgingKvittering) {
     useEffect(() => loggMetrikk(props), []);
+    const kvitteringFooter = (
+        <AlertStripeAdvarsel>
+            <FormattedMessage id="innstillinger.prosess.manuell.kvittering.footer"/>
+        </AlertStripeAdvarsel>
+    );
     return (
         <Kvittering
             tittelId="innstillinger.modal.manuell.overskrift"
             alertStripeTekstId="innstillinger.prosess.manuell.kvittering"
             alertStripeTekstValues={{begrunnelse: props.begrunnelse}}
+            footer={kvitteringFooter}
         />
     );
 }

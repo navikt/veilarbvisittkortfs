@@ -1,0 +1,2 @@
+Brukere som ikke kan legge inn CV og jobbprofil selv skal få hjelp til dette.
+Klikk på "Detaljer" og velg "Endre CV/jobbprofil" i feltet for CV eller jobbprofil for å legge inn opplysningene for brukeren.
