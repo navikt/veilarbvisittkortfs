@@ -28,7 +28,7 @@ function AvsluttOppfolgingBekreft ({navn, handleSubmit, isLoading, tilbake}: Avs
         <VeilederVerktoyModal tilbakeFunksjon={tilbake}>
             <div className="prosess">
                 <AlertStripeAdvarselSolid className="blokk-s">
-                    Er du sikker på at du vil avslutte oppfølgingsperioden til {navn} ?
+                    Er du sikker på at du vil avslutte oppfølgingsperioden til {navn}?
                 </AlertStripeAdvarselSolid>
                 <div className="modal-footer">
                     <Hovedknapp htmlType="submit" className="btn--mr1" onClick={handleSubmit} spinner={isLoading}>
