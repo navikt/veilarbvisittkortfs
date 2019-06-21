@@ -1,5 +1,5 @@
 { brukerType, select,
     kanReaktiveres { Reaktiver arbeidssøker}
-    kanIkkeReaktiveres { Registrer arbeidssøker}
+    kanIkkeReaktiveres { Registrer person}
     erSykemeldtMedArbeidsgiver {Start oppfølging}
 }
