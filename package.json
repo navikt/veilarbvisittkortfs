@@ -108,8 +108,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "sudo npm run lint:fix",
-      "pre-push": "sudo npm run lint"
+      "pre-commit": "npm run lint:fix",
+      "pre-push": "npm run lint"
     }
   }
 }
