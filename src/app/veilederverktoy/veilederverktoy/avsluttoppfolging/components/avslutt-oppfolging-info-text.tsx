@@ -1,14 +1,29 @@
 import { Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AvslutningStatus } from '../../../../../types/oppfolging';
 import { OrNothing } from '../../../../../types/utils/ornothing';
 import { FormattedMessage } from 'react-intl';
 import { HiddenIfAlertStripeAdvarselSolid } from '../../../../components/hidden-if/hidden-if-alertstripe';
+import VedtaksstotteApi from '../../../../../api/vedtaksstotte-api';
 
 export function AvsluttOppfolgingInfoText(props: {
     avslutningStatus: OrNothing<AvslutningStatus>,
     datoErInnenFor28DagerSiden: boolean,
-    harUbehandledeDialoger: boolean }) {
+    harUbehandledeDialoger: boolean,
+    fnr: string
+    }) {
+
+    const [harUtkast, oppdaterHarUtkast] = useState(false);
+
+    useEffect( () => {
+        VedtaksstotteApi.fetchHarUtkast(props.fnr).then(
+            (resp) => {
+                oppdaterHarUtkast(() => resp );
+            }
+
+        );
+    });
+
     if (!props.avslutningStatus) {
         return null;
     }
@@ -30,6 +45,11 @@ export function AvsluttOppfolgingInfoText(props: {
                     {harTiltak && <li>Brukeren har aktive saker i Arena</li>}
                     {harYtelser && <li>Brukeren har aktive tiltak i Arena</li>}
                 </ul>
+            </HiddenIfAlertStripeAdvarselSolid>
+            <HiddenIfAlertStripeAdvarselSolid
+                hidden={!harUtkast}
+            >
+                Påbegynte vedtak vil bli slettet.
             </HiddenIfAlertStripeAdvarselSolid>
         </>
     );
