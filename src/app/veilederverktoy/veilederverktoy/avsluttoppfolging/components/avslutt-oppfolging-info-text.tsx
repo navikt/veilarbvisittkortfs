@@ -5,6 +5,7 @@ import { OrNothing } from '../../../../../types/utils/ornothing';
 import { FormattedMessage } from 'react-intl';
 import { HiddenIfAlertStripeAdvarselSolid } from '../../../../components/hidden-if/hidden-if-alertstripe';
 import VedtaksstotteApi from '../../../../../api/vedtaksstotte-api';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 
 export function AvsluttOppfolgingInfoText(props: {
     avslutningStatus: OrNothing<AvslutningStatus>,
@@ -14,18 +15,19 @@ export function AvsluttOppfolgingInfoText(props: {
     }) {
 
     const [harUtkast, oppdaterHarUtkast] = useState(false);
-
+    const [lasterUtkast, oppdaterLasterUtkast] = useState(true);
     useEffect( () => {
         VedtaksstotteApi.fetchHarUtkast(props.fnr).then(
             (resp) => {
                 oppdaterHarUtkast(() => resp );
+                oppdaterLasterUtkast(false);
             }
 
         );
     });
 
-    if (!props.avslutningStatus) {
-        return null;
+    if (!props.avslutningStatus || lasterUtkast) {
+        return <NavFrontendSpinner type="XL"/>;
     }
     const aktivMindreEnn28Dager = props.datoErInnenFor28DagerSiden ?
         'innstillinger.modal.avslutt.oppfolging.beskrivelse.innenfor-28-dager'
@@ -46,6 +48,7 @@ export function AvsluttOppfolgingInfoText(props: {
                     {harYtelser && <li>Brukeren har aktive tiltak i Arena</li>}
                 </ul>
             </HiddenIfAlertStripeAdvarselSolid>
+
             <HiddenIfAlertStripeAdvarselSolid
                 hidden={!harUtkast}
             >

@@ -14,8 +14,6 @@
     "eject": "react-scripts eject",
     "lint": "tslint ./src/**/*.ts*",
     "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
-    "precommit": "npm run lint:fix",
-    "prepush": "npm run lint",
     "heroku-serve": "serve -s build -l 5000",
     "heroku-postbuild": "npm run build"
   },
@@ -107,5 +105,11 @@
     "typescript": "3.3.1",
     "watch": "^1.0.2",
     "yet-another-fetch-mock": "^2.4.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "sudo npm run lint:fix",
+      "pre-push": "sudo npm run lint"
+    }
   }
 }

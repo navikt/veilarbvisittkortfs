@@ -36,12 +36,14 @@ function AvsluttOppfolging (props: AvsluttOppfolgingProps) {
             overskriftTekstId="innstillinger.modal.avlutt.oppfolging.overskrift"
             isLoading={false}
             infoTekst={
+                <>
                 <AvsluttOppfolgingInfoText
                     avslutningStatus={props.avslutningStatus}
                     datoErInnenFor28DagerSiden={props.datoErInnenFor28DagerSiden}
                     harUbehandledeDialoger={props.harUbehandledeDialoger}
                     fnr={props.fnr}
                 />
+                </>
             }
         />
     );
