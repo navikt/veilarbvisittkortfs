@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { HiddenIfAlertStripeAdvarselSolid } from '../../../../components/hidden-if/hidden-if-alertstripe';
 import VedtaksstotteApi from '../../../../../api/vedtaksstotte-api';
 import NavFrontendSpinner from 'nav-frontend-spinner';
+import FeatureApi from '../../../../../api/feature-api';
 
 export function AvsluttOppfolgingInfoText(props: {
     avslutningStatus: OrNothing<AvslutningStatus>,
@@ -15,18 +16,26 @@ export function AvsluttOppfolgingInfoText(props: {
     }) {
 
     const [harUtkast, oppdaterHarUtkast] = useState(false);
-    const [lasterUtkast, oppdaterLasterUtkast] = useState(true);
-    useEffect( () => {
-        VedtaksstotteApi.fetchHarUtkast(props.fnr).then(
-            (resp) => {
-                oppdaterHarUtkast(() => resp );
-                oppdaterLasterUtkast(false);
-            }
+    const [lasterData, setLasterData] = useState(true);
 
-        );
+    useEffect( () => {
+        FeatureApi.hentFeatures('veilarbvedtaksstottefs.prelansering').then(resp => {
+            if (!resp['veilarbvedtaksstottefs.prelansering']) {
+                VedtaksstotteApi.fetchHarUtkast(props.fnr).then(
+                    (harUtkastResp) => {
+                        oppdaterHarUtkast(() => harUtkastResp );
+                    }
+                );
+            }
+            setLasterData(false);
+        });
     });
 
-    if (!props.avslutningStatus || lasterUtkast) {
+    if (!props.avslutningStatus) {
+        return null;
+    }
+
+    if (lasterData) {
         return <NavFrontendSpinner type="XL"/>;
     }
     const aktivMindreEnn28Dager = props.datoErInnenFor28DagerSiden ?
