@@ -18,11 +18,13 @@ interface StateProps {
 interface DispatchProps {
     handleSubmit: () => void;
     tilbake: () => void;
+    avbryt: () => void;
+
 }
 
 type AvsluttOppfolgingBekreftelseModalProps = StateProps & DispatchProps;
 
-function AvsluttOppfolgingBekreft ({navn, handleSubmit, isLoading, tilbake}: AvsluttOppfolgingBekreftelseModalProps) {
+function AvsluttOppfolgingBekreft ({navn, handleSubmit, isLoading, tilbake, avbryt}: AvsluttOppfolgingBekreftelseModalProps) {
 
     return (
         <VeilederVerktoyModal tilbakeFunksjon={tilbake}>
@@ -34,7 +36,7 @@ function AvsluttOppfolgingBekreft ({navn, handleSubmit, isLoading, tilbake}: Avs
                     <Hovedknapp htmlType="submit" className="btn--mr1" onClick={handleSubmit} spinner={isLoading}>
                         Bekreft
                     </Hovedknapp>
-                    <Knapp>
+                    <Knapp onClick={avbryt}>
                         Avbryt
                     </Knapp>
                 </div>
@@ -50,7 +52,8 @@ const mapStateToProps = (state: Appstate): StateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     handleSubmit: () => dispatch(avsluttOppfolging()),
-    tilbake: () => dispatch(navigerAction('avslutt_oppfolging'))
+    tilbake: () => dispatch(navigerAction('avslutt_oppfolging')),
+    avbryt: () => dispatch(navigerAction(null))
 });
 
 export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(AvsluttOppfolgingBekreft);

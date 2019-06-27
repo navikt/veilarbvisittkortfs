@@ -44,10 +44,11 @@ const mock = FetchMock.configure({
 });
 
 mock.get('/veilarboppfolging/api/person/:fnr/oppfolgingsstatus', Oppfolgingsstatus);
-mock.get('/veilarbpersonflatefs/api/feature', {visittkort_innstillinger: true});
+mock.get('/veilarbpersonflatefs/api/feature', {visittkort_innstillinger: true, 'veilarbvedtaksstottefs.prelansering': true});
 mock.get('/veilarboppfolging/api/oppfolging', Oppfolging);
 
 mock.get('/veilarbperson/api/person/:fnr', Personalia);
+mock.get('/veilarbvedtaksstotte/api/:fnr/harutkast', true);
 
 mock.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', Veilederliste);
 mock.get('/veilarbveileder/api/veileder/me', VeilederData);
@@ -65,19 +66,19 @@ mock.post('/veilarboppfolging/api/oppfolging/settManuell',
 
 mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
     avslutningStatus: {
-        kanAvslutte: false,
+        kanAvslutte: true,
         harTiltak: false,
         harYtelser: false,
         underOppfolging: true,
         inaktiveringsDato: null,
-        underKvp: true
+        underKvp: false
     },
     erIkkeArbeidssokerUtenOppfolging: false,
     erSykmeldtMedArbeidsgiver: false,
     fnr: '10108000398',
     gjeldendeEskaleringsvarsel: null,
     harSkriveTilgang: false,
-    inaktivtIArena: false,
+    inaktivtIArena: true,
     inaktiveringsdato: null,
     kanReaktiveras: false,
     kanStarteOppfolging: false,
