@@ -32,7 +32,11 @@ import OppfolgingSelector from './selector';
 import VeilederSelector from '../tildel-veileder/selector';
 import AvsluttOppfolgingStatusSelector from '../avslutningstatus/selector';
 import { navigerAction } from '../navigation/actions';
-import { triggerReRenderingAvAktivitesplan, triggerReRenderingAvMao } from '../../app/utils/utils';
+import {
+    dispatchOppfolgingAvslutet,
+    triggerReRenderingAvAktivitesplan,
+    triggerReRenderingAvMao
+} from '../../app/utils/utils';
 import { opprettHenvendelseStoppEskalering } from '../dialog/actions';
 
 function* hentOppfolging(action: HentOppfolgingAction) {
@@ -121,7 +125,7 @@ function* avsluttOppfolging() {
         const data = yield call( () => OppfolgingApi.avsluttOppfolging(begrunnelse, veilederId, fnr));
         yield put(avsluttOppfolgingSuccess(data));
         yield put({type: OppfolgingActionType.HENT_OPPFOLGING, fnr});
-        triggerReRenderingAvAktivitesplan();
+        dispatchOppfolgingAvslutet();
     } catch (e) {
         yield put(avsluttOppfolgingError(e));
         yield put(navigerAction('feil_i_veilederverktoy'));

@@ -57,6 +57,10 @@ export function triggerReRenderingAvMao() {
     window.dispatchEvent(new Event('rerenderMao'));
 }
 
+export function dispatchOppfolgingAvslutet() {
+    window.dispatchEvent(new Event('oppfolgingAvslutet'));
+}
+
 export function hentEnhetsIdFraUrl(): string {
   const enhetId = queryString.parse(location.search).enhet;
   if (Array.isArray(enhetId)) {
