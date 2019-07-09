@@ -61,7 +61,7 @@ export function AvsluttOppfolgingInfoText(props: {
             <HiddenIfAlertStripeAdvarselSolid
                 hidden={!harUtkast}
             >
-                Påbegynte vedtak vil bli slettet.
+                Utkast til oppfølgingsvedtak vil bli slettet
             </HiddenIfAlertStripeAdvarselSolid>
         </>
     );
