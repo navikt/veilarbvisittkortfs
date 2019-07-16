@@ -113,6 +113,7 @@ function* startEskaleringMedDialog(action: OpprettHenvendelseActionSuccess) {
         triggerReRenderingAvAktivitesplan();
 
     } catch (e) {
+        console.log(e); // tslint:disable-line
         yield put(startEskaleringError(e));
         yield put(navigerAction('feil_i_veilederverktoy'));
     }
