@@ -13,6 +13,7 @@ export function sjekkStatuskode(response: Response) {
     ) {
         return response;
     }
+    console.log(response); // tslint:disable-line
     throw new Error(response.statusText || response.type);
 }
 
