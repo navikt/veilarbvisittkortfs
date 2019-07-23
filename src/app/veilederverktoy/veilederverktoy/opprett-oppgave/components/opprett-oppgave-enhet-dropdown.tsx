@@ -19,23 +19,25 @@ interface OpprettOppgaveVelgEnhet {
 function OpprettOppgaveVelgEnhet ({value, tema, fnr, formikProps}: OpprettOppgaveVelgEnhet) {
     const [behandladeEnheter, setBehandladeEnheter] = useState([] as BehandlandeEnhet[]);
     const [isLoading, setIsLoading] = useState(true);
+    const {setFieldValue} = formikProps;
+
     useEffect(() => {
         if (tema) {
             OppgaveApi.hentBehandlandeEnheter(tema, fnr)
                 .then((behandladeEnheterData: BehandlandeEnhet[]) => {
                     setBehandladeEnheter(behandladeEnheterData);
-                    formikProps.setFieldValue('enhetId', behandladeEnheterData[0].enhetId);
+                    setFieldValue('enhetId', behandladeEnheterData[0].enhetId);
                     setIsLoading(false);
                     document.getElementsByName('Velg enhet').forEach((elem) => (elem as HTMLInputElement).checked = false);
                 });
         }
-    }, [tema]);
+    }, [tema, fnr, setFieldValue]);
 
     if (isLoading) {
         return <div/>;
     }
 
-    const valgtEnhet: OrNothing<BehandlandeEnhet> = behandladeEnheter.find(enhet => enhet.enhetId === value) || behandladeEnheter [0];
+    const valgtEnhet: OrNothing<BehandlandeEnhet> = behandladeEnheter.find(enhet => enhet.enhetId === value) || behandladeEnheter[0];
     return (
         <div className="skjemaelement">
             <label className="skjemaelement__label">Enhet*</label>

@@ -33,7 +33,7 @@ function loggMetrikk(props: StartOppfolgingKvittering) {
 }
 
 function StartManuellOppfolgingKvittering(props: StartOppfolgingKvittering) {
-    useEffect(() => loggMetrikk(props), []);
+    useEffect(() => loggMetrikk(props), [props]);
     const kvitteringFooter = (
         <AlertStripeAdvarsel>
             <FormattedMessage id="innstillinger.prosess.manuell.kvittering.footer"/>

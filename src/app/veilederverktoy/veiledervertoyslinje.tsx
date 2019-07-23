@@ -23,22 +23,22 @@ interface DispatchProps {
 
 type VeilederverktoyslinjeProps = OwnProps & DispatchProps;
 
-function Veilederverktoyslinje(props: VeilederverktoyslinjeProps) {
-    if (!props.visVeilederVerktoy) {
+function Veilederverktoyslinje({enhet, fnr, visVeilederVerktoy, settEnhetsId, navigerTilProsesser}: VeilederverktoyslinjeProps) {
+    useEffect(() => {
+       settEnhetsId(enhet); //TODO FLYTTE TIL DATA-PROVIDERN fast det er jobbigt....
+    }, [enhet, settEnhetsId]);
+
+    if (!visVeilederVerktoy) {
         return null;
     }
-
-    useEffect(() => {
-        props.settEnhetsId(props.enhet); //TODO FLYTTE TIL DATA-PROVIDERN fast det er jobbigt....
-    }, [props.enhet]);
 
     return (
         <div className="veilederverktoyslinje">
             <div className="veilederverktoyslinje__container">
                 <Arbeidslistekomponent/>
-                <TildelVeileder fnr={props.fnr}/>
+                <TildelVeileder fnr={fnr}/>
                 <VeilederVerktoyKnapp
-                    onClick={props.navigerTilProsesser}
+                    onClick={navigerTilProsesser}
                 />
                 <VeilederVerktoyNavigation/>
             </div>

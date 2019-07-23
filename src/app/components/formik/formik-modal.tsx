@@ -28,7 +28,7 @@ function FormikModal<Values> ({visConfirmDialog= true, ...props}: FormikModalPro
         const confirmTekst = 'Er du sikker på at du vil lukke siden? Ulagrede endringer vil da gå tapt.';
 
         if (formikProps.dirty) {
-            if (visConfirmDialog && confirm(confirmTekst)) {
+            if (visConfirmDialog && window.confirm(confirmTekst)) {
                 setIsOpen(false);
             }
             if (!visConfirmDialog) {

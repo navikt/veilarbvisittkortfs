@@ -30,7 +30,7 @@ interface DispatchProps {
     doSlettArbeidsliste: () => void;
     lagreArbeidsliste: (values: ArbeidslisteformValues) => void;
     redigerArbeidsliste: (values: ArbeidslisteformValues) => void;
-    hentArbeidsliste: (fnr: string) => void;
+    doHentArbeidsliste: (fnr: string) => void;
 }
 
 type ArbeidslisteStateProps = StateProps & DispatchProps;
@@ -42,8 +42,12 @@ export const dateToISODate = (dato: string) => {
 
 function ArbeidslisteController (props: ArbeidslisteStateProps) {
     const [visArbeidsliste, setVisArbeidsliste] = useState( false);
+    const {fnr, doHentArbeidsliste} =  props;
 
-    useEffect(() => {props.hentArbeidsliste(props.fnr); }, []);
+    useEffect(() => {
+        doHentArbeidsliste(fnr);
+        },
+        [fnr, doHentArbeidsliste]);
 
     if (props.isLoading) {
         return <NavFrontendSpinner type="XL"/>;
@@ -100,7 +104,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
             frist: values.frist ? dateToISODate(values.frist) : null
         })
     ),
-    hentArbeidsliste: (fnr: string) => dispatch(hentArbeidsliste(fnr))
+    doHentArbeidsliste: (fnr: string) => dispatch(hentArbeidsliste(fnr))
 
 });
 

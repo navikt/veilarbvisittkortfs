@@ -42,7 +42,7 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
 
     const onRequestClose = (formikProps: FormikProps<ArbeidslisteformValues>) => {
         const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
-        if (!formikProps.dirty || confirm(dialogTekst)) {
+        if (!formikProps.dirty || window.confirm(dialogTekst)) {
             props.lukkModal();
             formikProps.resetForm();
         }

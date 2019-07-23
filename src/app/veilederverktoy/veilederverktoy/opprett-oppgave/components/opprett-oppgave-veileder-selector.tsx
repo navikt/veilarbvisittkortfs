@@ -42,7 +42,7 @@ function OpprettOppgaveVelgVeileder ({veilederListe, veilederId, tema, enhetId, 
             <label className="skjemaelement__label">Veileder</label>
             <Dropdown
                 name="Velg veileder dropdown"
-                knappeTekst={valgtVeileder && valgtVeileder.navn || ''}
+                knappeTekst={(valgtVeileder && valgtVeileder.navn) || ''}
                 className="skjemaelement velg-enhet-dropdown"
                 btnClassnames="velg-enhet-dropdown__button"
                 render={(lukkDropdown) =>
