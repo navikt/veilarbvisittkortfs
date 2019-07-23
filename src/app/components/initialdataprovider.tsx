@@ -15,27 +15,26 @@ import {
 
 interface InitialDataProviderProps {
     fnr: string;
+    enhet?: string;
     children: React.ReactNode;
 }
 
-function InitialDataProvider({fnr, children}: InitialDataProviderProps) {
+function InitialDataProvider({fnr, enhet, children}: InitialDataProviderProps) {
     const dispatch = useDispatch();
-    const isLoading = useSelector((state: Appstate) =>  OppfolgingsstatusSelector.selectOppfolgingStatusStatus(state) ||
+
+    const isLoading = useSelector((state: Appstate) =>
+        OppfolgingsstatusSelector.selectOppfolgingStatusStatus(state) ||
         OppfolgingSelector.selectOppfolgingStatus(state) ||
         PersonaliaSelector.selectPersonaliaIsLoading(state));
 
     useEffect( () => {
-        const actionCreator = () => {
-            return (dispatchActions: any) => {
-                dispatchActions(hentOppfolgingsstatus(fnr));
-                dispatchActions(hentOppfolging(fnr));
-                dispatchActions(hentPaloggetVeileder());
-                dispatchActions(hentPersonalia(fnr));
-                dispatchActions(hentTilgangTilBrukersKontor(fnr));
-            };
-        };
-        actionCreator()(dispatch);
-    }, [fnr, dispatch]);
+        dispatch(hentOppfolgingsstatus(fnr));
+        dispatch(hentOppfolging(fnr));
+        dispatch(hentPaloggetVeileder());
+        dispatch(hentPersonalia(fnr));
+        dispatch(hentTilgangTilBrukersKontor(fnr));
+        dispatch({type: 'SETT_ENHET_FRA_PERSONFLATEFS', enhet});
+    }, [fnr, dispatch, enhet]);
 
     if (isLoading) {
         return <NavFrontendSpinner type="XL"/>;

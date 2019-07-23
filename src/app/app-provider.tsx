@@ -8,11 +8,11 @@ import messageBundle from '../tekster-built/bundle';
 
 addLocaleData(nb);
 
-function AppProvider (props: {fnr: string, children: React.ReactNode}) {
+function AppProvider (props: {fnr: string, children: React.ReactNode, enhet?: string}) {
     return(
         <Provider store={store}>
             <IntlProvider locale="nb" messages={messageBundle.nb}>
-                <InitialDataProvider fnr={props.fnr}>
+                <InitialDataProvider fnr={props.fnr} enhet={props.enhet}>
                     {props.children}
                 </InitialDataProvider>
             </IntlProvider>

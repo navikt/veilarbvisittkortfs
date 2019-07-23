@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import './veilederverktoy.less';
 import Arbeidslistekomponent from './arbeidsliste/arbeidsliste-controller';
 import TildelVeileder from './tildel-veileder/tildel-veileder';
@@ -7,49 +7,50 @@ import { connect } from 'react-redux';
 import VeilederVerktoyNavigation from './veilederverktoy/veilederverktoy-navigation';
 import VeilederVerktoyKnapp from './veilederverktoy/veileder-verktoy-knapp';
 import { navigerTilProcesser } from '../../store/navigation/actions';
-import { StringOrNothing } from '../../types/utils/stringornothings';
+import FeatureApi from '../../api/feature-api';
 import Toasts from '../components/toast/toasts';
 
 interface OwnProps {
     fnr: string;
-    enhet?: string;
     visVeilederVerktoy?: boolean;
 }
 
 interface DispatchProps {
     navigerTilProsesser: () => void;
-    settEnhetsId: (enhet: StringOrNothing) => void;
 }
 
 type VeilederverktoyslinjeProps = OwnProps & DispatchProps;
 
-function Veilederverktoyslinje({enhet, fnr, visVeilederVerktoy, settEnhetsId, navigerTilProsesser}: VeilederverktoyslinjeProps) {
+function Veilederverktoyslinje({ fnr, visVeilederVerktoy, navigerTilProsesser}: VeilederverktoyslinjeProps) {
+    const [fjernToastFeature, setFjernToastFeature] =  useState(false);
+
     useEffect(() => {
-       settEnhetsId(enhet); //TODO FLYTTE TIL DATA-PROVIDERN fast det er jobbigt....
-    }, [enhet, settEnhetsId]);
+        FeatureApi.hentFeatures('veilarbvisittkortfs.fjerntoast')
+            .then(resp => setFjernToastFeature(resp['veilarbvisittkortfs.fjerntoast']));
+    }, []);
 
     if (!visVeilederVerktoy) {
         return null;
     }
 
+    console.log('fjernToastFeatureState', fjernToastFeature);
     return (
         <div className="veilederverktoyslinje">
             <div className="veilederverktoyslinje__container">
-                <Arbeidslistekomponent/>
+                <Arbeidslistekomponent fjernToastFeature={fjernToastFeature}/>
                 <TildelVeileder fnr={fnr}/>
                 <VeilederVerktoyKnapp
                     onClick={navigerTilProsesser}
                 />
                 <VeilederVerktoyNavigation/>
             </div>
-            <Toasts/>
+            <Toasts hidden={fjernToastFeature}/>
         </div>
     );
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-    navigerTilProsesser: () => dispatch(navigerTilProcesser()),
-    settEnhetsId: (enhet: string) => dispatch({type: 'SETT_ENHET_FRA_PERSONFLATEFS', enhet}) //TRENGER DENNE INNE I OPPGAVEFORM
+    navigerTilProsesser: () => dispatch(navigerTilProcesser())
 });
 
 export default connect<{}, DispatchProps, OwnProps>(null, mapDispatchToProps) (Veilederverktoyslinje);
