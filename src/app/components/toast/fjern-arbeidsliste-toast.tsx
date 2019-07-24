@@ -25,7 +25,7 @@ function FjernArbeidslisteToast (props: ToastProps) {
 
     useEffect(() => {
         (toastRef.current as HTMLSpanElement).focus();
-    }, [toastRef.current]);
+    }, [toastRef]);
 
     const logTidIgjen = () => {
         logEvent (

@@ -105,7 +105,7 @@
     "tslint-react": "^3.6.0",
     "typescript": "3.3.1",
     "watch": "^1.0.2",
-    "yet-another-fetch-mock": "^2.4.0"
+    "yet-another-fetch-mock": "3.2.0"
   },
   "husky": {
     "hooks": {

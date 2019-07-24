@@ -4,7 +4,6 @@ import './advarsel-modal.less';
 import { ReactComponent as AdvarselSirkelIkon } from './advarsel-sirkel.svg';
 import classNames from 'classnames';
 
-
 interface VarselModalProps {
     contentLabel: string;
     isOpen: boolean;
@@ -23,7 +22,7 @@ export function AdvarselModal({contentLabel, isOpen, onRequestClose, children, c
             onRequestClose={onRequestClose}
             closeTimeoutMS={closeTimeoutMS}
             closeButton={closeButton}
-            portalClassName=".visittkortfs-modal advarsel-modal"
+            portalClassName="advarsel-modal"
             shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
         >
             <AdvarselSirkelIkon/>

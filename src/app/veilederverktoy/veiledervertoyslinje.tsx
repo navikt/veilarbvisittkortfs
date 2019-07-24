@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './veilederverktoy.less';
 import Arbeidslistekomponent from './arbeidsliste/arbeidsliste-controller';
 import TildelVeileder from './tildel-veileder/tildel-veileder';
@@ -33,7 +33,6 @@ function Veilederverktoyslinje({ fnr, visVeilederVerktoy, navigerTilProsesser}: 
         return null;
     }
 
-    console.log('fjernToastFeatureState', fjernToastFeature);
     return (
         <div className="veilederverktoyslinje">
             <div className="veilederverktoyslinje__container">
