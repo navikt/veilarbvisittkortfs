@@ -1,0 +1,32 @@
+.advarsel-modal {
+  .modal__overlay {
+    z-index: 2002;
+
+    .ReactModal__Content {
+      overflow: visible;
+      width: 448px;
+      padding: 0 1rem;
+      text-align: center;
+      font-family: Source Sans Pro, Arial, sans-serif;
+
+      svg {
+        margin-top: -2rem; //placerar en ikon med størrelsen 64x64 i mitten
+      }
+
+      .modal__innehold {
+        padding: 2rem 3rem;
+
+        .knapper {
+          margin-top: 1rem;
+          display: flex;
+          justify-content: space-evenly;
+        }
+      }
+
+      .modal__innehold > * {
+        margin-bottom: 0.5rem;
+
+      }
+    }
+  }
+}

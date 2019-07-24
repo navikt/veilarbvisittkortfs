@@ -37,21 +37,17 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
             moment(props.arbeidsliste.frist).format('YYYY-MM-DD') : ''
     };
 
-    const initalValues = (props.visFjernArbeidslisteToast || !props.arbeidsliste.endringstidspunkt) ?
+    const initalValues = !props.arbeidsliste.endringstidspunkt ?
         arbeidslisteEmptyValues : arbeidslisteValues;
 
     const onRequestClose = (formikProps: FormikProps<ArbeidslisteformValues>) => {
         const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
-        if (!formikProps.dirty || confirm(dialogTekst)) {
+        if (!formikProps.dirty || window.confirm(dialogTekst)) {
             props.lukkModal();
             formikProps.resetForm();
         }
     };
 
-    const slettArbeidsliste = () => {
-        props.lukkModal();
-        props.onDelete();
-    };
     return (
         <Formik
             key={props.arbeidsliste.frist ? props.arbeidsliste.frist.toString() : Date.now().toString()}
@@ -88,7 +84,7 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
                                 <ArbeidslisteFooter
                                     onRequestClose={() => onRequestClose(formikProps)}
                                     spinner={props.arbeidslisteStatus}
-                                    slettArbeidsliste={slettArbeidsliste}
+                                    slettArbeidsliste={props.onDelete}
                                     kanFjerneArbeidsliste={props.kanFjerneArbeidsliste && !props.visFjernArbeidslisteToast}
                                 />
                             </Form>

@@ -6,13 +6,14 @@ import { Appstate } from '../../../types/appstate';
 import PersonaliaSelectors from '../../../store/personalia/selectors';
 import ArbeidslisteModal from './arbeidsliste-modal';
 import { Dispatch } from 'redux';
-import { oppdaterArbeidsliste, redigerArbeidsliste } from '../../../store/arbeidsliste/actions';
+import { oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste } from '../../../store/arbeidsliste/actions';
 import ArbeidslisteSelector from '../../../store/arbeidsliste/selector';
 import moment from 'moment';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { hentArbeidsliste } from '../../../store/arbeidsliste/actions';
-import { ToastActionType, visFjernArbeidslisteToast } from '../../../store/toast/actions';
 import ArbeidslisteKnapp from './arbeidsliste-knapp';
+import FjernArbeidslisteModal from './fjern-arbeidsliste-modal';
+import { ToastActionType, visFjernArbeidslisteToast } from '../../../store/toast/actions';
 
 interface StateProps {
     arbeidsliste: Arbeidsliste;
@@ -30,10 +31,11 @@ interface DispatchProps {
     doSlettArbeidsliste: () => void;
     lagreArbeidsliste: (values: ArbeidslisteformValues) => void;
     redigerArbeidsliste: (values: ArbeidslisteformValues) => void;
-    hentArbeidsliste: (fnr: string) => void;
+    doHentArbeidsliste: (fnr: string) => void;
+    doVisFjernArbeidslisteToast: () => void;
 }
 
-type ArbeidslisteStateProps = StateProps & DispatchProps;
+type ArbeidslisteStateProps = StateProps & DispatchProps & {fjernToastFeature: boolean};
 
 export const dateToISODate = (dato: string) => {
     const parsetDato = moment(dato);
@@ -42,11 +44,33 @@ export const dateToISODate = (dato: string) => {
 
 function ArbeidslisteController (props: ArbeidslisteStateProps) {
     const [visArbeidsliste, setVisArbeidsliste] = useState( false);
+    const [slettArbeidslisteModal, setSlettArbeidslisteModal] = useState( false);
+    const {fnr, doHentArbeidsliste} =  props;
 
-    useEffect(() => {props.hentArbeidsliste(props.fnr); }, []);
+    const skalViseArbeidslisteToast = props.visFjernArbeidslisteToast && !props.fjernToastFeature;
+
+    useEffect(() => {
+            doHentArbeidsliste(fnr);
+        },
+        [fnr, doHentArbeidsliste]);
 
     if (props.isLoading) {
         return <NavFrontendSpinner type="XL"/>;
+    }
+
+    function deleteArbeidsliste() {
+        if (props.fjernToastFeature) {
+            setSlettArbeidslisteModal(true);
+        } else {
+            setVisArbeidsliste(false);
+            props.doVisFjernArbeidslisteToast();
+        }
+    }
+
+    function slettArbeidslisteOgLukkModaler() {
+        setSlettArbeidslisteModal(false);
+        setVisArbeidsliste(false);
+        props.doSlettArbeidsliste();
     }
 
     return (
@@ -55,7 +79,7 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
                 hidden={!(props.kanLeggeIArbeidsliste || props.kanRedigereArbeidsliste)}
                 onClick={() => setVisArbeidsliste(true)}
                 kanRedigereArbeidsliste={props.kanRedigereArbeidsliste}
-                ifylldIkon={props.kanRedigereArbeidsliste && !props.visFjernArbeidslisteToast}
+                ifylldIkon={props.kanRedigereArbeidsliste}
             />
             <ArbeidslisteModal
                 isOpen={visArbeidsliste}
@@ -65,9 +89,17 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
                 navn={props.navn}
                 arbeidslisteStatus={props.arbeidslisteStatus}
                 onSubmit={props.arbeidsliste.endringstidspunkt ? props.redigerArbeidsliste : props.lagreArbeidsliste}
-                onDelete={props.doSlettArbeidsliste}
+                onDelete={deleteArbeidsliste}
                 kanFjerneArbeidsliste={props.kanFjerneArbeidsliste}
-                visFjernArbeidslisteToast={props.visFjernArbeidslisteToast}
+                visFjernArbeidslisteToast={skalViseArbeidslisteToast}
+            />
+            <FjernArbeidslisteModal
+                isOpen={slettArbeidslisteModal}
+                onRequestClose={() => setSlettArbeidslisteModal(false)}
+                onSubmit={slettArbeidslisteOgLukkModaler}
+                fnr={props.fnr}
+                navn={props.navn}
+                hidden={!props.fjernToastFeature}
             />
         </>
     );
@@ -86,7 +118,8 @@ const mapStateToProps = (state: Appstate): StateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    doSlettArbeidsliste : () => dispatch(visFjernArbeidslisteToast()),
+    doSlettArbeidsliste : () => dispatch(slettArbeidsliste()),
+    doVisFjernArbeidslisteToast : () => dispatch(visFjernArbeidslisteToast()),
     lagreArbeidsliste: (values: ArbeidslisteformValues) => dispatch(
         oppdaterArbeidsliste({
             kommentar: values.kommentar,
@@ -100,7 +133,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
             frist: values.frist ? dateToISODate(values.frist) : null
         })
     ),
-    hentArbeidsliste: (fnr: string) => dispatch(hentArbeidsliste(fnr))
+    doHentArbeidsliste: (fnr: string) => dispatch(hentArbeidsliste(fnr))
 
 });
 

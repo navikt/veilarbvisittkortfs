@@ -62,7 +62,7 @@ export function dispatchOppfolgingAvslutet() {
 }
 
 export function hentEnhetsIdFraUrl(): string {
-  const enhetId = queryString.parse(location.search).enhet;
+  const enhetId = queryString.parse(window.location.search).enhet;
   if (Array.isArray(enhetId)) {
         return enhetId[0];
     }

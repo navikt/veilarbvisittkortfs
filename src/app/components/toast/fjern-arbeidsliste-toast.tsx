@@ -25,7 +25,7 @@ function FjernArbeidslisteToast (props: ToastProps) {
 
     useEffect(() => {
         (toastRef.current as HTMLSpanElement).focus();
-    }, []);
+    }, [toastRef]);
 
     const logTidIgjen = () => {
         logEvent (
@@ -57,7 +57,6 @@ function FjernArbeidslisteToast (props: ToastProps) {
                 <button
                     className="toast--button"
                     onClick={handleClick}
-                    role="button"
                     aria-describedby="Knapp for angre sletting"
                 >
                     Angre

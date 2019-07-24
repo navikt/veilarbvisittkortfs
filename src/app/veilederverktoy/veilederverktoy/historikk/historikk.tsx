@@ -17,23 +17,23 @@ interface StateProps {
 
 type HistorikkProps = StateProps;
 
-function Historikk (props: HistorikkProps) {
+function Historikk ({fnr}: HistorikkProps) {
     const [innstillingsHistorikk, setInnstillingsHistorikk] = useState([] as InnstillingsHistorikk []);
     const [oppgaveHistorikk, setOppgaveHistorikk] = useState([] as OppgaveHistorikk[]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
 
-        OppfolgingApi.hentInnstillingsHistorikk(props.fnr)
+        OppfolgingApi.hentInnstillingsHistorikk(fnr)
             .then((innstillingsHistorikkData: InnstillingsHistorikk[]) => setInnstillingsHistorikk(innstillingsHistorikkData));
 
-        OppgaveApi.hentOppgaveHistorikk(props.fnr).
-        then((oppgaveHistorikkData: OppgaveHistorikk[]) => {
-            setOppgaveHistorikk(oppgaveHistorikkData);
-            setIsLoading(false);
-        });
+        OppgaveApi.hentOppgaveHistorikk(fnr)
+            .then((oppgaveHistorikkData: OppgaveHistorikk[]) => {
+                setOppgaveHistorikk(oppgaveHistorikkData);
+                setIsLoading(false);
+            });
 
-    }, []);
+    }, [fnr]);
 
     if (isLoading) {
         return <NavFrontendSpinner type="XL"/>;
