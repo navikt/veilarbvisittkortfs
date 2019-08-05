@@ -2,6 +2,5 @@
 true {Brukere som er sykemeldt med arbeidsgivere og som har behov for mer
         veiledning. Brukere som har vært sykemeldt i
          39 uker eller mer kan selv gjøre dette på <a href="https://nav.no/DittSykefravær">nav.no/DittSykefravær</a>}
-false {Brukere som ikke har eller kan skaffe seg elektronisk ID med sikkerhetsnivå 4 (bankID, bankID på mobil, Commfides, Buypass)
-    eller av andre årsaker ikke kan registrere seg selv.}
+false {Brukere som ikke kan skaffe seg elektronisk ID med sikkerhetsnivå 4 (BankID, BankID på mobil, Buypass eller Commfides) eller av andre årsaker ikke kan registrere seg selv.}
 }
