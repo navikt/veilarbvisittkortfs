@@ -49,4 +49,5 @@ export interface Oppfolging {
     underKvp: boolean;
     underOppfolging: boolean;
     veilederId: StringOrNothing;
+    kanVarsles: boolean
 }

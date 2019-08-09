@@ -29,6 +29,7 @@ const initialState: OppfogingState = {
         underKvp: false,
         underOppfolging: false,
         veilederId: null,
+        kanVarsles: false
     }
 };
 
