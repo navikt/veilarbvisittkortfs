@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import hiddenIf from '../../components/hidden-if/hidden-if';
 import EtikettBase, { EtikettInfo, EtikettAdvarsel, EtikettFokus } from 'nav-frontend-etiketter';
 import { OppfolgingStatus } from '../../../types/oppfolging-status';
 import { Personalia } from '../../../types/personalia';
 import './etiketter.less';
 import { Oppfolging } from '../../../types/oppfolging';
+import FeatureApi from "../../../api/feature-api";
+import NavFrontendSpinner from "nav-frontend-spinner";
 
 const Advarsel = hiddenIf(EtikettAdvarsel);
 const Info = hiddenIf(EtikettInfo);
@@ -23,6 +25,22 @@ export function trengerAEV(oppfolging: OppfolgingStatus): boolean {
 }
 
 function Etiketter(props: {personalia: Personalia, oppfolgingstatus: OppfolgingStatus, oppfolging: Oppfolging}) {
+    const[ kanVarslesFeature, setKanVarslesFeature] = useState(false);
+    const[ laster, setLaster] = useState(true);
+
+    useEffect(() => {
+        FeatureApi.hentFeatures('veilarbvisittkortfs.kanVarsles')
+            .then(resp => {
+                setKanVarslesFeature(resp['veilarbvisittkortfs.kanVarsles']);
+                setLaster(false);
+            });
+    }, [kanVarslesFeature]);
+
+
+    if(laster) {
+        return <NavFrontendSpinner type="S"/>
+    }
+
     const { diskresjonskode, sikkerhetstiltak, egenAnsatt, dodsdato } = props.personalia;
     const {underKvp, reservasjonKRR, manuell, underOppfolging, inaktivIArena, gjeldendeEskaleringsvarsel, kanVarsles} = props.oppfolging;
     return(
@@ -37,7 +55,7 @@ function Etiketter(props: {personalia: Personalia, oppfolgingstatus: OppfolgingS
             <Fokus hidden={!inaktivIArena}>Inaktivert</Fokus>
             <Fokus hidden={underOppfolging}>Ikke under oppfølging</Fokus>
             <Fokus hidden={!gjeldendeEskaleringsvarsel}>Varsel</Fokus>
-            <Fokus hidden={reservasjonKRR || manuell || kanVarsles}>Kan ikke varsles</Fokus>
+            <Fokus hidden={reservasjonKRR || manuell || kanVarsles || !kanVarslesFeature}>Kan ikke varsles</Fokus>
 
             <Info hidden={!(trengerVurdering(props.oppfolgingstatus))}>Trenger vurdering</Info>
             <Info hidden={!(trengerAEV(props.oppfolgingstatus))}>Behov for AEV</Info>
