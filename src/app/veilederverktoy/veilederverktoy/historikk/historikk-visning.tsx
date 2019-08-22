@@ -15,10 +15,10 @@ interface OwnProps {
 
 function HistorikkVisning ({historikkInnslag}: OwnProps) {
 
-    const mapTilOppgaveEllerInnstillinger = (historikkElem: HistorikkInnslagType) =>
-        historikkElem.type === 'OPPRETTET_OPPGAVE' ?
-            <OppgaveHistorikkKomponent oppgaveHistorikk={historikkElem} key={historikkElem.dato}/>
-            : <InnstillingsHistorikkKomponent instillingsHistorikk={historikkElem} key={historikkElem.dato}/>;
+    const mapTilOppgaveEllerInnstillinger = (historikkElem: HistorikkInnslagType, idx: number) =>
+        historikkElem.type === 'OPPRETTET_OPPGAVE'
+            ? <OppgaveHistorikkKomponent oppgaveHistorikk={historikkElem} key={idx}/>
+            : <InnstillingsHistorikkKomponent instillingsHistorikk={historikkElem} key={idx}/> ;
 
     if (historikkInnslag.length === 0) {
         return <Normaltekst> Ingen historikk</Normaltekst>;
@@ -26,15 +26,15 @@ function HistorikkVisning ({historikkInnslag}: OwnProps) {
 
     if (historikkInnslag.length === 1) {
         return (
-            mapTilOppgaveEllerInnstillinger(historikkInnslag[0])
+            mapTilOppgaveEllerInnstillinger(historikkInnslag[0], 0)
         );
     }
     const sortertEtterDatoHistorikkInnslag = historikkInnslag.sort((a, b) => moment(b.dato).diff(a.dato));
 
     const historikkKomponenter =
         sortertEtterDatoHistorikkInnslag
-            .map((elem: HistorikkInnslagType) =>
-                mapTilOppgaveEllerInnstillinger(elem));
+            .map((elem: HistorikkInnslagType, idx) =>
+                mapTilOppgaveEllerInnstillinger(elem, idx));
 
     const [head, ...rest] = historikkKomponenter;
 

@@ -5,21 +5,31 @@ const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [{
     'type': 'AVSLUTTET_OPPFOLGINGSPERIODE',
     'dato': '2018-08-14T13:56:53.813+02:00',
     'begrunnelse': 'Oppfølging avsluttet automatisk pga. inaktiv bruker som ikke kan reaktiveres',
+    'opprettetAv': 'SYSTEM',
+    'opprettetAvBrukerId': null,
+    'dialogId': null,
+},
+    {
+    'type': 'VEILEDER_TILORDNET',
+    'dato': '2019-08-14T13:56:53.813+02:00',
+    'begrunnelse': null,
     'opprettetAv': 'NAV',
     'opprettetAvBrukerId': null,
-    'dialogId': null
-}, {
+    'dialogId': null,
+    'veileder': 'Z007',
+},
+    {
     'type': 'AVSLUTTET_OPPFOLGINGSPERIODE',
     'dato': '2018-10-30T12:23:48.116+01:00',
     'begrunnelse': 'Oppfølging avsluttet automatisk pga. inaktiv bruker som ikke kan reaktiveres',
-    'opprettetAv': 'NAV',
+    'opprettetAv': 'SYSTEM',
     'opprettetAvBrukerId': null,
     'dialogId': null
 }, {
     'type': 'AVSLUTTET_OPPFOLGINGSPERIODE',
     'dato': '2018-09-03T13:17:41.325+02:00',
     'begrunnelse': 'Oppfølging avsluttet automatisk pga. inaktiv bruker som ikke kan reaktiveres',
-    'opprettetAv': 'NAV',
+    'opprettetAv': 'SYSTEM',
     'opprettetAvBrukerId': null,
     'dialogId': null
 }, {
@@ -34,14 +44,14 @@ const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [{
     'dato': '2019-03-07T12:45:09.571+01:00',
     'begrunnelse': 'TEST AV OPPGAVE (TONE)',
     'opprettetAv': 'NAV',
-    'opprettetAvBrukerId': 'z990279',
+    'opprettetAvBrukerId': 'Z990279',
     'dialogId': 1412
 }, {
     'type': 'ESKALERING_STOPPET',
     'dato': '2019-03-07T15:11:41.997+01:00',
     'begrunnelse': 'Du har gjennomført møtet eller aktiviteten som vi ba deg om å gjøre.',
     'opprettetAv': 'NAV',
-    'opprettetAvBrukerId': 'z990279',
+    'opprettetAvBrukerId': 'Z990279',
     'dialogId': 1412
 }, {
     'type': 'ESKALERING_STARTET',

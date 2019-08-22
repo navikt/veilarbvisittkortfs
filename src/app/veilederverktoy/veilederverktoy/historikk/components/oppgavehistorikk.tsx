@@ -23,7 +23,7 @@ function OppgaveHistorikkKomponent({oppgaveHistorikk}: OwnProps) {
                 />
             </Normaltekst>
             <Undertekst>
-                {`for ${moment(oppgaveHistorikk.dato).fromNow()} ${opprettetAvTekst(oppgaveHistorikk.opprettetAv, oppgaveHistorikk.opprettetAvBrukerId)}`}
+                {`${moment(oppgaveHistorikk.dato).format('DD.MM.YYYY')} ${opprettetAvTekst(oppgaveHistorikk.opprettetAv, oppgaveHistorikk.opprettetAvBrukerId)}`}
             </Undertekst>
         </div>
     );
