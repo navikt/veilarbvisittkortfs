@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import StartProsess from './../prosess/start-prosess';
@@ -6,8 +6,8 @@ import visibleIf from '../../../components/visible-if';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { connect } from 'react-redux';
 import { Appstate } from '../../../../types/appstate';
-import FeatureApi from "../../../../api/feature-api";
-import NavFrontendSpinner from "nav-frontend-spinner";
+import FeatureApi from '../../../../api/feature-api';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 
 interface StartEskaleringProsessProps {
     navigerTilStartEsklaring: () => void;
@@ -26,9 +26,8 @@ function StartEskaleringProsess({navigerTilStartEsklaring, kanIkkeVarsles }: Sta
             });
     }, [kanVarslesFeature]);
 
-
-    if(laster) {
-        return <NavFrontendSpinner type="L"/>
+    if (laster) {
+        return <NavFrontendSpinner type="L"/>;
     }
 
     if (kanIkkeVarsles && kanVarslesFeature) {
@@ -37,7 +36,7 @@ function StartEskaleringProsess({navigerTilStartEsklaring, kanIkkeVarsles }: Sta
                 <Undertittel className="prosess_overskrift">
                     <FormattedMessage id="innstillinger.prosess.start-eskalering.tittel"/>
                 </Undertittel>
-                <AlertStripe type="advarsel" className={"blokk-xs"}>
+                <AlertStripe type="advarsel" className={'blokk-xs'}>
                     Brukeren har ikke bekreftet telefonnummer og e-postadresse i Kontakt- og reservasjonsregisteret de siste 18 månedene, og du kan derfor ikke sende varsel.
                 </AlertStripe>
 
