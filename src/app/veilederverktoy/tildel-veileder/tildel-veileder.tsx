@@ -86,7 +86,7 @@ function TildelVeileder({ fnr }: OwnProps) {
                     <SokFilter
                         data={veiledere}
                         label=""
-                        placeholder="Søk etter navn eller ident"
+                        placeholder="Søk navn eller NAV-ident"
                         query={query}
                         changeQuery={changeQuery}
                     >
