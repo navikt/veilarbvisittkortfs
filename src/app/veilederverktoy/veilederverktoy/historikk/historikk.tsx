@@ -25,13 +25,12 @@ function Historikk ({fnr}: HistorikkProps) {
     useEffect(() => {
 
         OppfolgingApi.hentInnstillingsHistorikk(fnr)
-            .then((innstillingsHistorikkData: InnstillingsHistorikk[]) => setInnstillingsHistorikk(innstillingsHistorikkData));
-
-        OppgaveApi.hentOppgaveHistorikk(fnr)
-            .then((oppgaveHistorikkData: OppgaveHistorikk[]) => {
-                setOppgaveHistorikk(oppgaveHistorikkData);
-                setIsLoading(false);
-            });
+            .then((innstillingsHistorikkData: InnstillingsHistorikk[]) => setInnstillingsHistorikk(innstillingsHistorikkData))
+            .then( () => OppgaveApi.hentOppgaveHistorikk(fnr)
+                .then((oppgaveHistorikkData: OppgaveHistorikk[]) => {
+                    setOppgaveHistorikk(oppgaveHistorikkData);
+                    setIsLoading(false);
+                }));
 
     }, [fnr]);
 

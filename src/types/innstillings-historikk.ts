@@ -8,7 +8,8 @@ export type InnstillingsHistorikkType =
     'ESKALERING_STARTET' |
     'ESKALERING_STOPPET'|
     'KVP_STARTET'|
-    'KVP_STOPPET';
+    'KVP_STOPPET' |
+    'VEILEDER_TILORDNET';
 
 export type InnstillingsHistorikkOpprettetAvType = 'NAV' | 'SYSTEM' | 'EKSTERN';
 
@@ -19,4 +20,5 @@ export interface InnstillingsHistorikk {
     opprettetAv: InnstillingsHistorikkOpprettetAvType;
     opprettetAvBrukerId: StringOrNothing;
     dialogId: OrNothing<number>;
+    veileder?: StringOrNothing;
 }
