@@ -1,9 +1,9 @@
 import React from 'react';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { Innholdstittel, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Element, Innholdstittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { AdvarselModal } from '../../components/advarselmodal/advarsel-modal';
-import hiddenIf from "../../components/hidden-if/hidden-if";
+import hiddenIf from '../../components/hidden-if/hidden-if';
 
 interface FjernArbeidslisteModal {
     isOpen: boolean;
@@ -21,18 +21,15 @@ function FjernArbeidslisteModal(props: FjernArbeidslisteModal) {
             onRequestClose={props.onRequestClose}
         >
             <div className="modal-info-tekst blokk-s">
-                <Innholdstittel className="modal-info-tekst__overskrift">
+                <Innholdstittel className="modal-info-tekst__overskrift blokk-s">
                     <FormattedMessage id="arbeidsliste.modal.fjern.overskrift" />
                 </Innholdstittel>
-                <Normaltekst className="modal-info-tekst__undertekst">
-                    <FormattedMessage id="arbeidsliste.modal.fjern.infotekst" />
-                </Normaltekst>
-                <Undertittel>
+                <Element className="blokk-m">
                     <FormattedMessage
                         id="arbeidsliste.modal.personalia"
                         values={{ navn: props.navn, fnr: props.fnr }}
                     />
-                </Undertittel>
+                </Element>
             </div>
             <div className="knapper">
                 <Hovedknapp

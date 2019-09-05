@@ -37,7 +37,7 @@ function StartEskaleringProsess({navigerTilStartEsklaring, kanIkkeVarsles }: Sta
                     <FormattedMessage id="innstillinger.prosess.start-eskalering.tittel"/>
                 </Undertittel>
                 <AlertStripe type="advarsel" className={'blokk-xs'}>
-                    Brukeren har ikke bekreftet telefonnummer og e-postadresse i Kontakt- og reservasjonsregisteret de siste 18 månedene, og du kan derfor ikke sende varsel.
+                    Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret, og du kan derfor ikke sende varsel.
                 </AlertStripe>
 
             </article>
