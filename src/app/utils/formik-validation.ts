@@ -38,8 +38,8 @@ export const validerArbeidslisteTittelFeldt = (input: string): string | undefine
     let error;
     if (!input) {
         error = 'Du må fylle ut en tittel';
-    } else if (input.length > 12) {
-        error = 'Du må korte ned teksten til 12 tegn';
+    } else if (input.length > 30) {
+        error = 'Du må korte ned teksten til 30 tegn';
     }
     return error;
 };
