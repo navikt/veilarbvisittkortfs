@@ -31,7 +31,7 @@ function ArbeidslisteForm (props: ArbeidslisteFormProps & InjectedIntlProps) {
                     name="overskrift"
                     label={labelInputArea}
                     validate={validerArbeidslisteTittelFeldt}
-                    bredde="M"
+                    bredde="L"
                 />
                 <FormikTekstArea
                     name="kommentar"
