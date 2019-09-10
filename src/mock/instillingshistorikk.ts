@@ -12,11 +12,10 @@ const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [{
     {
     'type': 'VEILEDER_TILORDNET',
     'dato': '2019-08-14T13:56:53.813+02:00',
-    'begrunnelse': null,
+    'begrunnelse': 'Brukeren er tildelt veileder Z0002',
     'opprettetAv': 'NAV',
     'opprettetAvBrukerId': null,
     'dialogId': null,
-    'veileder': 'Z007',
 },
     {
     'type': 'AVSLUTTET_OPPFOLGINGSPERIODE',
