@@ -26,6 +26,9 @@
     "not ie < 11",
     "not op_mini all"
   ],
+  "resolutions": {
+    "**/fsevents": "^1.2.9"
+  },
   "dependencies": {
     "@craco/craco": "^5.2.4",
     "@types/react-collapse": "^4.0.2",
@@ -75,7 +78,7 @@
     "react-modal": "^3.8.1",
     "react-motion": "^0.5.2",
     "react-redux": "^7.1.0",
-    "react-scripts": "^3.0.1",
+    "react-scripts": "^3.1.1",
     "redux": "^4.0.4",
     "redux-saga": "^1.0.5",
     "whatwg-fetch": "^3.0.0",
