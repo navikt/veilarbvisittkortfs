@@ -12,9 +12,9 @@ spec:
   port: 80
   liveness:
     initialDelay: 20
-      path: veilarbvisittkortfs/internal/isAlive
+      path: isAlive
   readiness:
-    path: veilarbvisittkortfs/internal/selftest
+    path: isReady
     initialDelay: 20
   replicas:
     min: 2
