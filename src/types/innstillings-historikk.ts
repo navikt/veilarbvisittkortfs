@@ -20,4 +20,5 @@ export interface InnstillingsHistorikk {
     opprettetAv: InnstillingsHistorikkOpprettetAvType;
     opprettetAvBrukerId: StringOrNothing;
     dialogId: OrNothing<number>;
+    veileder?: string;
 }
