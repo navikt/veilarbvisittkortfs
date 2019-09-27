@@ -11,10 +11,10 @@ spec:
   image: docker.pkg.github.com/navikt/veilarbvisittkortfs/veilarbvisittkortfs:{{version}}
   port: 80
   liveness:
-    path: /
+    path: /veilarbvisittkortfs/internal/isAlive
     initialDelay: 10
   readiness:
-    path: /
+    path: /veilarbvisittkortfs/internal/isReady
     initialDelay: 10
   replicas:
     min: 2
