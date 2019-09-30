@@ -1,13 +1,3 @@
-ARG BASE_IMAGE_PREFIX="docker.adeo.no:5000/pus/"
-FROM ${BASE_IMAGE_PREFIX}node as builder
+FROM docker.pkg.github.com/navikt/pus-nginx/pus-nginx
 
-ADD / /source
-ENV CI=true
-WORKDIR /source
-RUN npm ci
-ENV NODE_ENV=production
-RUN npm run build
-
-FROM ${BASE_IMAGE_PREFIX}nginx
-
-COPY --from=builder /source/build /usr/share/nginx/html/veilarbvisittkortfs
+COPY build /usr/share/nginx/html/veilarbvisittkortfs

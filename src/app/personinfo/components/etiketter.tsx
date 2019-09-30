@@ -49,7 +49,7 @@ function Etiketter(props: {personalia: Personalia, oppfolgingstatus: OppfolgingS
             <Advarsel hidden={!sikkerhetstiltak}>{sikkerhetstiltak}</Advarsel>
             <Advarsel hidden={!egenAnsatt}>Egen ansatt</Advarsel>
             <Fokus hidden={!underKvp}>KVP</Fokus>
-            <Fokus hidden={reservasjonKRR || !manuell}>Manuell bruker</Fokus>
+            <Fokus hidden={reservasjonKRR || !manuell}>Manuell oppfølging</Fokus>
             <Fokus hidden={!reservasjonKRR}>KRR</Fokus>
             <Fokus hidden={!inaktivIArena}>Inaktivert</Fokus>
             <Fokus hidden={underOppfolging}>Ikke under oppfølging</Fokus>
