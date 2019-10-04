@@ -5,6 +5,7 @@ import KnappFss from '../../components/knapp-fss/knapp-fss';
 function VeilederVerktoyKnapp (props: {onClick: () => void}) {
     return (
         <KnappFss
+            type="standard"
             metricName="veileder-verktoy-trykket"
             onClick={props.onClick}
         >

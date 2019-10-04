@@ -7,30 +7,61 @@ import moment from 'moment';
 import Lenke from 'nav-frontend-lenker';
 import { Appstate } from '../../../../../types/appstate';
 import OppfolgingSelector from '../../../../../store/oppfolging/selector';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { hentEnhetNavn } from '../../../../../store/tildel-veileder/actions';
+import { useEffect } from 'react';
+import VeilederSelector from '../../../../../store/tildel-veileder/selector';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 
 interface OwnProps {
     instillingsHistorikk: InnstillingsHistorikk;
 }
 
-interface StateProps {
-    fnr: string;
-}
-
 const ESKALERING_MAX_LENGTH = 120;
 
-type InnstillingHistorikkKomponentProps = StateProps & OwnProps;
+type InnstillingHistorikkKomponentProps = OwnProps;
 
-function InnstillingHistorikkKomponent({instillingsHistorikk, fnr}: InnstillingHistorikkKomponentProps) {
-    const {type, begrunnelse, dialogId} = instillingsHistorikk;
+function erEnhetEndret(type: string): boolean {
+    return 'OPPFOLGINGSENHET_ENDRET' === type;
+}
 
-    const begrunnelseTekst =
+function InnstillingHistorikkKomponent({ instillingsHistorikk }: InnstillingHistorikkKomponentProps) {
+    const {type, begrunnelse, dialogId, enhet} = instillingsHistorikk;
+
+    const dispatch = useDispatch();
+
+    const laster = useSelector((state: Appstate) =>
+        VeilederSelector.selectVeilederStatus(state));
+    const fnr = useSelector((state: Appstate) => {
+        OppfolgingSelector.selectFnr(state);
+    });
+    const enhetNavn = useSelector((state: Appstate) => {
+        return VeilederSelector.selectEnhetNavn(state);
+    });
+
+    const typeErEnhetsEndring = erEnhetEndret(type);
+
+    let begrunnelseTekst =
         begrunnelse && begrunnelse.length > ESKALERING_MAX_LENGTH
             ? `${begrunnelse.substring(
             0,
             ESKALERING_MAX_LENGTH
             )}... `
             : `${begrunnelse} `;
+
+    if (typeErEnhetsEndring) {
+        begrunnelseTekst = `${begrunnelseTekst} ${enhetNavn}`;
+    }
+
+    useEffect(() => {
+        if (typeErEnhetsEndring && !!enhet) {
+            dispatch(hentEnhetNavn(enhet));
+        }
+    }, [dispatch]);
+
+    if (laster || (typeErEnhetsEndring && enhetNavn === '')) {
+        return <NavFrontendSpinner type="XL"/>;
+    }
 
     return (
         <div className="historikk__elem blokk-xs">
@@ -48,8 +79,4 @@ function InnstillingHistorikkKomponent({instillingsHistorikk, fnr}: InnstillingH
     );
 }
 
-const mapStateToProps = (state: Appstate): StateProps => ({
-   fnr: OppfolgingSelector.selectFnr(state)
-});
-
-export default connect<StateProps, {}, OwnProps>(mapStateToProps)(InnstillingHistorikkKomponent);
+export default InnstillingHistorikkKomponent;

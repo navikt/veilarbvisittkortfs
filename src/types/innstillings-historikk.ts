@@ -22,4 +22,5 @@ export interface InnstillingsHistorikk {
     opprettetAvBrukerId: StringOrNothing;
     dialogId: OrNothing<number>;
     veileder?: string;
+    enhet?: StringOrNothing;
 }

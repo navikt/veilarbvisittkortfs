@@ -1,6 +1,7 @@
 import { Appstate } from '../../types/appstate';
 import { StringOrNothing } from '../../types/utils/stringornothings';
 import OppfolgingSelector from '../oppfolging/selector';
+import { EnhetData } from '../../types/enhet';
 
 export interface VeilederSelector {
     selectVeilederStatus: (state: Appstate) => boolean;
@@ -8,6 +9,8 @@ export interface VeilederSelector {
     selectErOppfolgingsVeileder: (state: Appstate) => boolean;
     selectErTildeltVeilder: (state: Appstate) => boolean;
     selectTildeltVeilder: (state: Appstate) => StringOrNothing;
+    selectEnhet: (state: Appstate) => EnhetData;
+    selectEnhetNavn: (state: Appstate) => string;
 }
 
 function selectVeilederStatus(state: Appstate): boolean {
@@ -17,6 +20,15 @@ function selectVeilederStatus(state: Appstate): boolean {
 
 function selectIdentPaloggetVeileder (state: Appstate): string {
     return state.tildelVeileder.paloggetVeileder.data.ident;
+}
+
+function selectEnhet(state: Appstate): EnhetData {
+    return state.tildelVeileder.enhet.data;
+}
+
+function selectEnhetNavn(state: Appstate): string {
+    const enhetData = selectEnhet(state);
+    return enhetData && enhetData.navn;
 }
 
 function selectTildeltVeilder (state: Appstate): StringOrNothing {
@@ -42,5 +54,7 @@ export default {
     selectIdentPaloggetVeileder,
     selectErOppfolgingsVeileder,
     selectErTildeltVeilder,
-    selectTildeltVeilder
-}as VeilederSelector;
+    selectTildeltVeilder,
+    selectEnhet,
+    selectEnhetNavn,
+} as VeilederSelector;

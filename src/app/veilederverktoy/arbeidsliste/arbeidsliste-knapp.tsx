@@ -13,6 +13,7 @@ export interface ArbeidslisteKnappProps {
 function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
     return (
         <KnappFss
+            type="standard"
             metricName={props.kanRedigereArbeidsliste ? 'rediger-arbeidsliste-trykket' : 'legg-i-arbeidsliste-trykket'} //TODO KANSKE FJERN?
             onClick={props.onClick}
             hidden={props.hidden}

@@ -12,6 +12,7 @@ import VeilederData from './veiledere';
 import InnstillingsHistorikk from './instillingshistorikk';
 import Oppgavehistorikk from './oppgave-historikk';
 import Henvendelse from './henvedelse';
+import { enhetData } from './veiledere';
 
 const mock = FetchMock.configure({
     enableFallback: true,
@@ -29,6 +30,7 @@ mock.get('/veilarbperson/api/person/:fnr', Personalia);
 mock.get('/veilarbvedtaksstotte/api/:fnr/harutkast', true);
 
 mock.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', Veilederliste);
+mock.get('/veilarbveileder/api/enhet/:enhetId/navn', enhetData);
 mock.get('/veilarbveileder/api/veileder/me', VeilederData);
 
 /*--OPPFOLGING--*/

@@ -25,6 +25,22 @@ const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [{
     'opprettetAvBrukerId': null,
     'dialogId': null
 }, {
+    'type': 'OPPFOLGINGSENHET_ENDRET',
+    'dato': '2019-09-30T12:23:48.116+01:00',
+    'begrunnelse': 'Ny oppfølgingsenhet 1337',
+    'opprettetAv': 'SYSTEM',
+    'opprettetAvBrukerId': null,
+    'dialogId': null,
+    'enhet': '1337',
+}, {
+    'type': 'OPPFOLGINGSENHET_ENDRET',
+    'dato': '2018-09-30T12:23:48.116+01:00',
+    'begrunnelse': 'Ny oppfølgingsenhet 1234',
+    'opprettetAv': 'SYSTEM',
+    'opprettetAvBrukerId': null,
+    'dialogId': null,
+    'enhet': '1234',
+}, {
     'type': 'AVSLUTTET_OPPFOLGINGSPERIODE',
     'dato': '2018-09-03T13:17:41.325+02:00',
     'begrunnelse': 'Oppfølging avsluttet automatisk pga. inaktiv bruker som ikke kan reaktiveres',
