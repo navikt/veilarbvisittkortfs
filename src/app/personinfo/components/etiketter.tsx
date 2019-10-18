@@ -50,17 +50,20 @@ function Etiketter(props: { personalia: Personalia, oppfolgingstatus: Oppfolging
             <Advarsel hidden={!sikkerhetstiltak}>{sikkerhetstiltak}</Advarsel>
             <Advarsel hidden={!egenAnsatt}>Egen ansatt</Advarsel>
             <Fokus hidden={!underKvp}>KVP</Fokus>
-            <Fokus hidden={reservasjonKRR || !manuell}
-                   title={"Brukeren er vurdert til å ikke kunne benytte seg av aktivitetsplanen og dialogen. Du kan endre til digital oppfølging i Veilederverktøy."}> Manuell
-                oppfølging</Fokus>
-            <Fokus hidden={!reservasjonKRR}
-                   title={"Brukeren har reservert seg mot digital kommunikasjon i Kontakt- og reservasjonsregisteret, og kan derfor ikke benytte seg av aktivitetsplanen og dialogen."}>KRR</Fokus>
+            {/*<Fokus hidden={reservasjonKRR || !manuell}*/}
+            {/*       title={"Brukeren er vurdert til å ikke kunne benytte seg av aktivitetsplanen og dialogen. Du kan endre til digital oppfølging i Veilederverktøy."}> Manuell*/}
+            {/*    oppfølging</Fokus>*/}
+            <Fokus hidden={reservasjonKRR || !manuell}>Manuell oppfølging</Fokus>
+            {/*<Fokus hidden={!reservasjonKRR}*/}
+            {/*       title={"Brukeren har reservert seg mot digital kommunikasjon i Kontakt- og reservasjonsregisteret, og kan derfor ikke benytte seg av aktivitetsplanen og dialogen."}>KRR</Fokus>*/}
+            <Fokus hidden={!reservasjonKRR}>KRR</Fokus>
             <Fokus hidden={!inaktivIArena}>Inaktivert</Fokus>
             <Fokus hidden={underOppfolging}>Ikke under oppfølging</Fokus>
             <Fokus hidden={!gjeldendeEskaleringsvarsel}>Varsel</Fokus>
-            <Fokus hidden={reservasjonKRR || manuell || kanVarsles || !kanVarslesFeature}
-                   title={"Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret og kan ikke varsles. Du kan derfor ikke samhandle digitalt med brukeren. "}>Kan
-                ikke varsles</Fokus>
+            {/*<Fokus hidden={reservasjonKRR || manuell || kanVarsles || !kanVarslesFeature}*/}
+            {/*       title={"Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret og kan ikke varsles. Du kan derfor ikke samhandle digitalt med brukeren. "}>Kan*/}
+            {/*    ikke varsles</Fokus>*/}
+            <Fokus hidden={reservasjonKRR || manuell || kanVarsles || !kanVarslesFeature}>Kan ikke varsles</Fokus>
             <Info hidden={!(trengerVurdering(props.oppfolgingstatus))}>Trenger vurdering</Info>
             <Info hidden={!(trengerAEV(props.oppfolgingstatus))}>Behov for AEV</Info>
             <Info hidden={!erBrukerSykmeldt(props.oppfolgingstatus)}>Sykmeldt</Info>
