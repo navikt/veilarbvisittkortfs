@@ -82,6 +82,7 @@
     "react-scripts": "^3.1.1",
     "redux": "^4.0.4",
     "redux-saga": "^1.0.5",
+    "watch": "^1.0.2",
     "whatwg-fetch": "^3.0.0",
     "yup": "^0.26.10"
   },
@@ -107,7 +108,6 @@
     "tslint": "^5.12.1",
     "tslint-react": "^3.6.0",
     "typescript": "3.3.1",
-    "watch": "^1.0.2",
     "yet-another-fetch-mock": "3.2.0"
   },
   "husky": {
