@@ -10,14 +10,16 @@ workflows:
           context: pus
           filters:
             branches:
-              ignore: master
+              ignore:
+                - master
+                - dev
       - pus/bygg-og-deploy-frontend:
           context: pus
           cluster: dev-fss
           filepath: ./nais-q.yaml
           filters:
             branches:
-              only: master
+              only: dev
       - prodsett:
           requires:
             - pus/bygg-og-deploy-frontend
