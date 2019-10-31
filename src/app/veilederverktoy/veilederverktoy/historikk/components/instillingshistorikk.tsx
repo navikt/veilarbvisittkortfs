@@ -57,7 +57,7 @@ function InnstillingHistorikkKomponent({ instillingsHistorikk }: InnstillingHist
         if (typeErEnhetsEndring && !!enhet) {
             dispatch(hentEnhetNavn(enhet));
         }
-    }, [dispatch]);
+    }, );
 
     if (laster || (typeErEnhetsEndring && enhetNavn === '')) {
         return <NavFrontendSpinner type="XL"/>;

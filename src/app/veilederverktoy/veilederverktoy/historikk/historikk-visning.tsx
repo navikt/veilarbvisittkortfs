@@ -6,6 +6,7 @@ import InnstillingsHistorikkKomponent from './components/instillingshistorikk';
 import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Lesmerpanel from 'nav-frontend-lesmerpanel';
+import { ForsteEnhetsEndringKomponent } from './components/forsteEnhetHistorikk';
 
 type HistorikkInnslagType = InnstillingsHistorikk | OppgaveHistorikk;
 
@@ -35,6 +36,23 @@ function HistorikkVisning ({historikkInnslag}: OwnProps) {
         sortertEtterDatoHistorikkInnslag
             .map((elem: HistorikkInnslagType, idx) =>
                 mapTilOppgaveEllerInnstillinger(elem, idx));
+
+    const endretHistorikk: HistorikkInnslagType[] = sortertEtterDatoHistorikkInnslag
+        .filter(innstilling => 'OPPFOLGINGSENHET_ENDRET' === innstilling.type);
+
+    if (endretHistorikk.length >= 1) {
+        const indexForReversertListe = sortertEtterDatoHistorikkInnslag
+            .slice()
+            .reverse()
+            .findIndex(historikk  => historikk.type === 'OPPFOLGINGSENHET_ENDRET');
+        const listeLengde = sortertEtterDatoHistorikkInnslag.length - 1;
+
+        let indexForEldsteEnhetEndring = indexForReversertListe >= 0 ? listeLengde - indexForReversertListe : indexForReversertListe;
+
+        const eldsteInnslag = endretHistorikk[endretHistorikk.length - 1];
+        const forsteEnhetEndring = ForsteEnhetsEndringKomponent(eldsteInnslag as InnstillingsHistorikk);
+        historikkKomponenter.splice(indexForEldsteEnhetEndring, 1, forsteEnhetEndring);
+    }
 
     const [head, ...rest] = historikkKomponenter;
 
