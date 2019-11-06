@@ -12,7 +12,7 @@ import VeilederData from './veiledere';
 import InnstillingsHistorikk from './instillingshistorikk';
 import Oppgavehistorikk from './oppgave-historikk';
 import Henvendelse from './henvedelse';
-import feilResultat from "./resultat";
+// import feilResultat from './resultat';
 
 const mock = FetchMock.configure({
     enableFallback: true,
@@ -23,7 +23,11 @@ const mock = FetchMock.configure({
 });
 
 mock.get('/veilarboppfolging/api/person/:fnr/oppfolgingsstatus', Oppfolgingsstatus);
-mock.get('/veilarbpersonflatefs/api/feature', {'veilarbvedtaksstottefs.prelansering': true, 'veilarbvisittkortfs.fjerntoast': true, 'veilarbvisittkortfs.kanVarsles': true});
+mock.get('/veilarbpersonflatefs/api/feature', {
+    'veilarbvedtaksstottefs.prelansering': true,
+    'veilarbvisittkortfs.fjerntoast': true,
+    'veilarbvisittkortfs.kanVarsles': true
+});
 mock.get('/veilarboppfolging/api/oppfolging', Oppfolging);
 
 mock.get('/veilarbperson/api/person/:fnr', Personalia);
@@ -32,8 +36,8 @@ mock.get('/veilarbvedtaksstotte/api/:fnr/harutkast', true);
 mock.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', Veilederliste);
 mock.get('/veilarbveileder/api/veileder/me', VeilederData);
 
-//mock.post('/veilarboppfolging/api/tilordneveileder', {feilendeTilordninger: []});
-mock.post('/veilarboppfolging/api/tilordneveileder', feilResultat)
+mock.post('/veilarboppfolging/api/tilordneveileder', {feilendeTilordninger: []});
+// mock.post('/veilarboppfolging/api/tilordneveileder', feilResultat);
 
 /*--OPPFOLGING--*/
 mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', {tilgangTilBrukersKontor: true});
@@ -44,7 +48,7 @@ mock.post('/veilarboppfolging/api/oppfolging/avsluttOppfolging', (args: HandlerA
 });
 
 mock.post('/veilarboppfolging/api/oppfolging/settManuell',
-    Object.assign({}, Oppfolging, { manuell: true}));
+    Object.assign({}, Oppfolging, {manuell: true}));
 
 mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
     avslutningStatus: {
@@ -90,7 +94,7 @@ mock.post('/veilarboppgave/api/oppgave', (args: HandlerArgument) => {
         ID: 123,
         aktoerid: '00000012345',
         gsakID: '1234',
-        opprettetAv : 'Z007',
+        opprettetAv: 'Z007',
         tema: args.body.tema,
         type: args.body.type
     });
@@ -114,7 +118,7 @@ mock.post(`/veilarbportefolje/api/arbeidsliste/:fnr?`, (args: HandlerArgument) =
         kommentar: args.body.kommentar,
         overskrift: args.body.overskrift,
         sistEndretAv: 'Z007'
-        });
+    });
 });
 
 mock.put(`/veilarbportefolje/api/arbeidsliste/:fnr?`, (args: HandlerArgument) => {
