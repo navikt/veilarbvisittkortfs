@@ -1,5 +1,4 @@
-const feilResultat =
-    {
+const feilResultat = {
         'resultat': 'WARNING: Noen brukere kunne ikke tilordnes en veileder',
         'feilendeTilordninger':
             [{
