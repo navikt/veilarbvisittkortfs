@@ -14,7 +14,7 @@ function Toasts({toasts}: StateProps) {
         <>
             {toasts.map((toast, index) => {
                 switch (toast) {
-                    case ToastActionType.VIS_ARBEIDSLISTE_TOAST:
+                    case ToastActionType.VIS_TILDELT_VEILEDER_TOAST:
                         // @ts-ignore
                         return <FjernArbeidslisteToast key={index}/>;
                     default:

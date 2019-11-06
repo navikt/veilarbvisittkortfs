@@ -12,6 +12,7 @@ import VeilederData from './veiledere';
 import InnstillingsHistorikk from './instillingshistorikk';
 import Oppgavehistorikk from './oppgave-historikk';
 import Henvendelse from './henvedelse';
+import feilResultat from "./resultat";
 
 const mock = FetchMock.configure({
     enableFallback: true,
@@ -30,6 +31,9 @@ mock.get('/veilarbvedtaksstotte/api/:fnr/harutkast', true);
 
 mock.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', Veilederliste);
 mock.get('/veilarbveileder/api/veileder/me', VeilederData);
+
+//mock.post('/veilarboppfolging/api/tilordneveileder', {feilendeTilordninger: []});
+mock.post('/veilarboppfolging/api/tilordneveileder', feilResultat)
 
 /*--OPPFOLGING--*/
 mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', {tilgangTilBrukersKontor: true});
