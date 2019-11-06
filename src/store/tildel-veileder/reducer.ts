@@ -123,7 +123,6 @@ function* hentPaloggetVeileder() {
 function* tildelVeileder(action: TildelVeilederAction) {
     try {
         const response = yield call(() => TildelVeilederApi.tildelTilVeileder(action.data));
-        console.log("funka det?")
         if (response.feilendeTilordninger.length > 0) {
             yield put(tildelVeilederError(new Error("Noen brukere kunne ikke tilordnes en veileder")));
 
@@ -133,7 +132,6 @@ function* tildelVeileder(action: TildelVeilederAction) {
             triggerReRenderingAvMao();
         }
     } catch (e) {
-        console.log("fikk error-melding")
         yield put(tildelVeilederError(e));
     }
 }
