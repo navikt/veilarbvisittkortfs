@@ -1,6 +1,6 @@
 export enum ToastActionType {
-    VIS_ARBEIDSLISTE_TOAST = 'VIS_ARBEIDSLISTE_TOAST',
-    FJERN_ARBEIDSLISTE_TOAST = 'FJERN_ARBEIDSLISTE_TOAST'
+    VIS_TILDELT_VEILEDER_TOAST = 'VIS_TILDELT_VEILEDER_TOAST',
+    FJERN_TILDET_VEILEDER_TOAST = 'FJERN_TILDELT_VEILEDER_TOAST'
 }
 
 export interface ToastAction {
@@ -11,8 +11,8 @@ export const toastAction = (type: ToastActionType): ToastAction => ({
     type
 });
 
-export const visFjernArbeidslisteToast = (): ToastAction =>
-    toastAction(ToastActionType.VIS_ARBEIDSLISTE_TOAST);
+export const visFjernTildeltVeilederToast = (): ToastAction =>
+    toastAction(ToastActionType.VIS_TILDELT_VEILEDER_TOAST);
 
-export const fjernArbeidslisteToast = (): ToastAction =>
-    toastAction(ToastActionType.FJERN_ARBEIDSLISTE_TOAST);
+export const fjernTildeltVeilederToast = (): ToastAction =>
+    toastAction(ToastActionType.FJERN_TILDET_VEILEDER_TOAST);
