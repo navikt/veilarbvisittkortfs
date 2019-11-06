@@ -1,7 +1,7 @@
 import React from 'react';
 import { Appstate } from '../../../types/appstate';
 import { connect } from 'react-redux';
-import FjernArbeidslisteToast from './fjern-arbeidsliste-toast';
+import FjernArbeidslisteToast from './fjern-tildel-veileder-toast';
 import { ToastActionType } from '../../../store/toast/actions';
 import hiddenIf from '../hidden-if/hidden-if';
 
