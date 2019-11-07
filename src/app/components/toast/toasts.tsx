@@ -1,13 +1,15 @@
 import React from 'react';
-import { Appstate } from '../../../types/appstate';
-import { connect } from 'react-redux';
-import FjernArbeidslisteToast from './fjern-tildel-veileder-toast';
-import { ToastActionType } from '../../../store/toast/actions';
+import {Appstate} from '../../../types/appstate';
+import {connect} from 'react-redux';
+import {ToastActionType} from '../../../store/toast/actions';
 import hiddenIf from '../hidden-if/hidden-if';
+import FjernTildelVeilederToast from "./fjern-tildel-veileder-toast";
 
 interface StateProps {
     toasts: ToastActionType[];
 }
+
+
 
 function Toasts({toasts}: StateProps) {
     return (
@@ -16,7 +18,7 @@ function Toasts({toasts}: StateProps) {
                 switch (toast) {
                     case ToastActionType.VIS_TILDELT_VEILEDER_TOAST:
                         // @ts-ignore
-                        return <FjernArbeidslisteToast key={index}/>;
+                        return <FjernTildelVeilederToast key={index}/>;
                     default:
                         return null;
                 }
