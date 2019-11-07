@@ -11,6 +11,7 @@ import FeatureApi from '../../api/feature-api';
 import Toasts from '../components/toast/toasts';
 import {Appstate} from "../../types/appstate";
 import {FeilModal} from "../components/feilmodal/feil-modal";
+import {Innholdstittel, Normaltekst} from 'nav-frontend-typografi';
 
 interface OwnProps {
     fnr: string;
@@ -32,15 +33,25 @@ function Veilederverktoyslinje({harFeilendeTildelinger, fnr, visVeilederVerktoy,
 
     const [visTildelingFeiletModal, setVisTildelingFeiletModal] = useState(harFeilendeTildelinger);
 
+    const lukkModal = () => {
+        setVisTildelingFeiletModal(false);
+    }
 
     const FeilTildelingModal = () => {
+
         return (
             <FeilModal
                 isOpen={visTildelingFeiletModal}
                 contentLabel="Tildeling av veileder feilet"
+                closeButton={false}
                 onRequestClose={() => setVisTildelingFeiletModal(false)}
             >
-                <div> Handlingen kan ikke utføres</div>
+                <Innholdstittel>Handlingen kan ikke utføres</Innholdstittel>
+                <Normaltekst>Tildeling av veileder feilet</Normaltekst>
+                <br/>
+                <button className="knapp knapp--hoved" onClick={lukkModal}>
+                    Ok
+                </button>
             </FeilModal>
         );
     }
