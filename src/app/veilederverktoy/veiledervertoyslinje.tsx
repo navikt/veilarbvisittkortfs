@@ -11,7 +11,7 @@ import FeatureApi from '../../api/feature-api';
 import Toasts from '../components/toast/toasts';
 import {Appstate} from "../../types/appstate";
 import {FeilModal} from "../components/feilmodal/feil-modal";
-import {Innholdstittel, Normaltekst} from 'nav-frontend-typografi';
+import {Normaltekst, Systemtittel} from 'nav-frontend-typografi';
 
 interface OwnProps {
     fnr: string;
@@ -46,10 +46,9 @@ function Veilederverktoyslinje({harFeilendeTildelinger, fnr, visVeilederVerktoy,
                 closeButton={false}
                 onRequestClose={() => setVisTildelingFeiletModal(false)}
             >
-                <Innholdstittel>Handlingen kan ikke utføres</Innholdstittel>
+                <Systemtittel>Handlingen kan ikke utføres</Systemtittel>
                 <Normaltekst>Tildeling av veileder feilet</Normaltekst>
-                <br/>
-                <button className="knapp knapp--hoved" onClick={lukkModal}>
+                <button className="knapp knapp--hoved feil-modal-knapp" onClick={lukkModal}>
                     Ok
                 </button>
             </FeilModal>

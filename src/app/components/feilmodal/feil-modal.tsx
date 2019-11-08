@@ -1,6 +1,6 @@
 import React from 'react';
 import ModalWrapper from 'nav-frontend-modal';
-import './../advarselmodal/advarsel-modal.less';
+import './../feilmodal/feil-modal.less';
 import { ReactComponent as FeilSirkelIkon } from './feil-sirkel.svg';
 import classNames from 'classnames';
 
@@ -22,11 +22,12 @@ export function FeilModal({contentLabel, isOpen, onRequestClose, children, close
             onRequestClose={onRequestClose}
             closeTimeoutMS={closeTimeoutMS}
             closeButton={closeButton}
-            portalClassName="advarsel-modal"
+            portalClassName="feil-modal"
             shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
+            className="feil-modal-wrapper"
         >
             <FeilSirkelIkon/>
-            <div className={classNames('modal__innehold', className)}>
+            <div className={classNames('feil-modal-innhold', className)}>
                 {children}
             </div>
         </ModalWrapper>

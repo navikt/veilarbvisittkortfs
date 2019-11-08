@@ -33,8 +33,7 @@ function FjernTildelVeilederToast(props: ToastProps) {
 
 
     // const fjernToastMedAnimasjon = () => {
-    //     //legg til animasjon her
-    //     //denne fjerner faktisk toasten, må kjøres etter animasjon
+    //  legg til animasjon her
     //     handleClick();
     // }
 
