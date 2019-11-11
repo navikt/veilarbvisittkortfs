@@ -45,7 +45,7 @@ function FjernTildelVeilederToast(props: ToastProps) {
             handleClick();
         }, 10000);
         return () => clearTimeout(timer);
-    }, []);
+    });
 
     useEffect(() => {
         startTimer();
