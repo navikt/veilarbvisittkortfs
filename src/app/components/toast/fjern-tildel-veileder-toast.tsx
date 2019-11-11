@@ -4,6 +4,8 @@ import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
 import {fjernTildeltVeilederToast} from "../../../store/toast/actions";
 import AlertStripeSuksess from "nav-frontend-alertstriper/lib/suksess-alertstripe";
+import {logEvent} from "../../utils/frontend-logger";
+import useTimer from "../../../hooks/use-timer";
 
 export interface ToastType {
     tekst: string;
@@ -19,7 +21,7 @@ type ToastProps = { toast: ToastType } & DispatchProps;
 
 function FjernTildelVeilederToast(props: ToastProps) {
     const toastRef = useRef<HTMLSpanElement>(null);
-
+    const {startTimer, stoppTimer} = useTimer();
     useEffect(() => {
         (toastRef.current as HTMLSpanElement).focus();
     }, [toastRef]);
@@ -31,6 +33,9 @@ function FjernTildelVeilederToast(props: ToastProps) {
         return () => clearTimeout(timer);
     }, []);
 
+    useEffect(() => {
+        startTimer();
+    })
 
     // const fjernToastMedAnimasjon = () => {
     //  legg til animasjon her
@@ -38,9 +43,14 @@ function FjernTildelVeilederToast(props: ToastProps) {
     // }
 
     const handleClick = () => {
+        const tidBrukt = stoppTimer();
+        logEvent('veilarbvisittkortfs.metrikker.lukk-toast-tildel-veileder', {
+                feature: 'toast-tildel-veileder',
+                tidBrukt,
+            }
+        )
         props.doFjernToast(props.toast);
     };
-
 
     return (
         <div className="toast-wrapper" key={new Date().getTime()}>
