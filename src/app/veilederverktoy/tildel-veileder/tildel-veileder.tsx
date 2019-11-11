@@ -14,6 +14,7 @@ import Dropdown from '../../components/dropdown/dropdown';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
 import TilgangTilKontorSelector from '../../../store/tilgang-til-brukerskontor/selector';
 import VeilederSelector from '../../../store/tildel-veileder/selector';
+import {fjernTildeltVeilederToast} from "../../../store/toast/actions";
 
 function settSammenNavn(veileder: VeilederData) {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
@@ -79,6 +80,7 @@ function TildelVeileder({ fnr }: OwnProps) {
             render={(lukkDropdown) =>
                 <form
                     onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
+                        dispatch(fjernTildeltVeilederToast());
                         setValgtVeileder(event);
                         lukkDropdown();
                     }}

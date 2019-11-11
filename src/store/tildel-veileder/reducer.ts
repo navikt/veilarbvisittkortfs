@@ -1,5 +1,5 @@
-import { VeilederData } from '../../types/veilederdata';
-import { Reducer } from 'redux';
+import {VeilederData} from '../../types/veilederdata';
+import {Reducer} from 'redux';
 import {
     hentAlleVeiledereForEnhetenError,
     hentAlleVeiledereForEnhetenSuccess,
@@ -9,13 +9,14 @@ import {
     TildelVeilederActions,
     TildelVeilederActionType, tildelVeilederError, tildelVeilederSuccess
 } from './actions';
-import { OrNothing } from '../../types/utils/ornothing';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import {OrNothing} from '../../types/utils/ornothing';
+import {call, put, takeLatest} from 'redux-saga/effects';
 import TildelVeilederApi from '../../api/tildel-veileder-api';
-import { TildelVeilederResponse } from '../../types/tildel-veileder';
-import { VeilederListe } from '../../mock/veiledereliste';
-import { FETCH_STATUS } from '../../types/fetch-status';
-import { triggerReRenderingAvMao } from '../../app/utils/utils';
+import {TildelVeilederResponse} from '../../types/tildel-veileder';
+import {VeilederListe} from '../../mock/veiledereliste';
+import {FETCH_STATUS} from '../../types/fetch-status';
+import {triggerReRenderingAvMao} from '../../app/utils/utils';
+import {visFjernTildeltVeilederToast} from "../toast/actions";
 
 export interface TildelVeilederState {
     status: FETCH_STATUS;
@@ -56,15 +57,15 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
         case TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN:
         case TildelVeilederActionType.TILDEL_VEILEDER:
             return {
+                ...state,
                 status: 'LOADING',
-                ...state
             };
         case TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN_SUCCESS: {
             return {
                 ...state,
                 status: 'DONE',
                 veilederPaEnheten: {
-                    data : action.data
+                    data: action.data
                 },
             };
         }
@@ -103,7 +104,7 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
 
 function* hentAlleVeileder(action: HentVeilederPaEnhetenAction) {
     try {
-        const response = yield call( () => TildelVeilederApi.hentVeiledereForEnhet(action.enhetId));
+        const response = yield call(() => TildelVeilederApi.hentVeiledereForEnhet(action.enhetId));
         yield put(hentAlleVeiledereForEnhetenSuccess(response));
     } catch (e) {
         yield put(hentAlleVeiledereForEnhetenError(e));
@@ -112,7 +113,7 @@ function* hentAlleVeileder(action: HentVeilederPaEnhetenAction) {
 
 function* hentPaloggetVeileder() {
     try {
-        const response = yield call( () => TildelVeilederApi.hentVeieldere());
+        const response = yield call(() => TildelVeilederApi.hentVeieldere());
         yield put(hentPaloggetVeilederSuccess(response));
     } catch (e) {
         yield put(hentPaloggetVeilederError(e));
@@ -121,9 +122,13 @@ function* hentPaloggetVeileder() {
 
 function* tildelVeileder(action: TildelVeilederAction) {
     try {
-        const response = yield call( () => TildelVeilederApi.tildelTilVeileder(action.data));
-        if (response.feilendeTilordninger.length === 0 ) {
-            yield put(tildelVeilederSuccess(Object.assign(response, {tilVeilederId : action.data[0].tilVeilederId})));
+        const response = yield call(() => TildelVeilederApi.tildelTilVeileder(action.data));
+        if (response.feilendeTilordninger.length > 0) {
+            yield put(tildelVeilederError(new Error("Noen brukere kunne ikke tilordnes en veileder")));
+
+        } else {
+            yield put(tildelVeilederSuccess(Object.assign(response, {tilVeilederId: action.data[0].tilVeilederId})));
+            yield put(visFjernTildeltVeilederToast());
             triggerReRenderingAvMao();
         }
     } catch (e) {
