@@ -37,11 +37,6 @@ function FjernTildelVeilederToast(props: ToastProps) {
         startTimer();
     })
 
-    // const fjernToastMedAnimasjon = () => {
-    //  legg til animasjon her
-    //     handleClick();
-    // }
-
     const handleClick = () => {
         const tidBrukt = stoppTimer();
         logEvent('veilarbvisittkortfs.metrikker.lukk-toast-tildel-veileder', {
