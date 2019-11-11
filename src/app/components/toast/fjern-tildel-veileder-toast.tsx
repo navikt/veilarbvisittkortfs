@@ -26,6 +26,16 @@ function FjernTildelVeilederToast(props: ToastProps) {
     const dispatch = useDispatch();
     const veiledernavn = useSelector(VeilederSelector.selectTildeltVeiledernavn);
 
+    const handleClick = () => {
+        const tidBrukt = stoppTimer();
+        logEvent('veilarbvisittkortfs.metrikker.lukk-toast-tildel-veileder', {
+                feature: 'toast-tildel-veileder',
+                tidBrukt,
+            }
+        );
+        dispatch(fjernTildeltVeilederToast());
+    };
+
     useEffect(() => {
         (toastRef.current as HTMLSpanElement).focus();
     }, [toastRef]);
@@ -40,16 +50,6 @@ function FjernTildelVeilederToast(props: ToastProps) {
     useEffect(() => {
         startTimer();
     });
-
-    const handleClick = () => {
-        const tidBrukt = stoppTimer();
-        logEvent('veilarbvisittkortfs.metrikker.lukk-toast-tildel-veileder', {
-                feature: 'toast-tildel-veileder',
-                tidBrukt,
-            }
-        );
-        dispatch(fjernTildeltVeilederToast());
-    };
 
     return (
         <div className="toast-wrapper" key={new Date().getTime()}>
