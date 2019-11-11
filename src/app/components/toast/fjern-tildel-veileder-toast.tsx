@@ -5,7 +5,7 @@ import {logEvent} from "../../utils/frontend-logger";
 import useTimer from "../../../hooks/use-timer";
 import {useDispatch, useSelector} from 'react-redux';
 import {fjernTildeltVeilederToast} from "../../../store/toast/actions";
-import {Appstate} from "../../../types/appstate";
+import VeilederSelector from "../../../store/tildel-veileder/selector";
 
 export interface ToastType {
     tekst: string;
@@ -24,17 +24,7 @@ function FjernTildelVeilederToast(props: ToastProps) {
     const toastRef = useRef<HTMLSpanElement>(null);
     const {startTimer, stoppTimer} = useTimer();
     const dispatch = useDispatch();
-
-    const tingFraRedux = useSelector((state: Appstate) => ({
-        veilederPaEnheten: state.tildelVeileder.veilederPaEnheten.data.veilederListe,
-        tildeltVeileder: state.tildelVeileder.tildeltVeileder.data
-
-    }));
-
-    const veilederObjekt = tingFraRedux.tildeltVeileder && tingFraRedux.tildeltVeileder.tilVeilederId
-        ? tingFraRedux.veilederPaEnheten.find(v => v.ident === tingFraRedux.tildeltVeileder!.tilVeilederId)
-        : null;
-    const veiledernavn = veilederObjekt ? `${veilederObjekt.etternavn}, ${veilederObjekt!.fornavn}` : "";
+    const veiledernavn = useSelector(VeilederSelector.selectTildeltVeiledernavn);
 
     useEffect(() => {
         (toastRef.current as HTMLSpanElement).focus();
