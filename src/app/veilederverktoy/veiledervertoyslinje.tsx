@@ -71,6 +71,7 @@ function Veilederverktoyslinje({harFeilendeTildelinger, fnr, visVeilederVerktoy,
     }
 
     return (
+        <div className="veilederverktoylinje-wrapper">
         <div className="veilederverktoyslinje">
             <div className="veilederverktoyslinje__container">
                 <FeilTildelingModal/>
@@ -81,8 +82,9 @@ function Veilederverktoyslinje({harFeilendeTildelinger, fnr, visVeilederVerktoy,
                 />
                 <VeilederVerktoyNavigation/>
             </div>
-            <Toasts/>
         </div>
+            <Toasts/>
+         </div>
     );
 }
 
