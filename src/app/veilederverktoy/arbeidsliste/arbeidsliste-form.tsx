@@ -17,7 +17,6 @@ import { injectIntl, InjectedIntlProps }  from 'react-intl';
 interface ArbeidslisteFormProps {
     sistEndretAv?: OrNothing<{veilederId: string}>;
     endringstidspunkt?: OrNothing<Date>;
-    visFjernArbeidslisteToast: boolean;
 
 }
 
@@ -40,7 +39,7 @@ function ArbeidslisteForm (props: ArbeidslisteFormProps & InjectedIntlProps) {
                     validate={validerArbeidslisteKommentarFeldt}
                 />
             </div>
-            {!props.visFjernArbeidslisteToast && props.sistEndretAv && props.endringstidspunkt && <Undertekst className="arbeidsliste--modal-redigering">
+            {props.sistEndretAv && props.endringstidspunkt && <Undertekst className="arbeidsliste--modal-redigering">
                 <FormattedMessage
                     id="arbeidsliste.endringsinfo"
                     values={{

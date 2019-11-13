@@ -1,5 +1,5 @@
-import { Appstate } from '../../types/appstate';
-import { StringOrNothing } from '../../types/utils/stringornothings';
+import {Appstate} from '../../types/appstate';
+import {StringOrNothing} from '../../types/utils/stringornothings';
 import OppfolgingSelector from '../oppfolging/selector';
 
 export interface VeilederSelector {
@@ -8,6 +8,7 @@ export interface VeilederSelector {
     selectErOppfolgingsVeileder: (state: Appstate) => boolean;
     selectErTildeltVeilder: (state: Appstate) => boolean;
     selectTildeltVeilder: (state: Appstate) => StringOrNothing;
+    selectTildeltVeiledernavn: (state: Appstate) => string;
 }
 
 function selectVeilederStatus(state: Appstate): boolean {
@@ -15,23 +16,33 @@ function selectVeilederStatus(state: Appstate): boolean {
     return veilederStatus === 'NOT_STARTED' || veilederStatus === 'LOADING';
 }
 
-function selectIdentPaloggetVeileder (state: Appstate): string {
+function selectIdentPaloggetVeileder(state: Appstate): string {
     return state.tildelVeileder.paloggetVeileder.data.ident;
 }
 
-function selectTildeltVeilder (state: Appstate): StringOrNothing {
+function selectTildeltVeilder(state: Appstate): StringOrNothing {
     const tildeltVeilderData = state.tildelVeileder.tildeltVeileder.data;
     return tildeltVeilderData && tildeltVeilderData.tilVeilederId;
+}
+
+function selectVeilederPaEnheten(state: Appstate) {
+    return state.tildelVeileder.veilederPaEnheten.data.veilederListe;
+}
+
+function selectTildeltVeiledernavn(state: Appstate) {
+    const tildeltVeileder = selectTildeltVeilder(state);
+    const enhetsVeileder = selectVeilederPaEnheten(state);
+    const veilederObjekt = enhetsVeileder.find(v => v.ident === tildeltVeileder);
+    return veilederObjekt ? `${veilederObjekt.etternavn}, ${veilederObjekt!.fornavn}` : "";
 }
 
 function selectErOppfolgingsVeileder(state: Appstate): boolean {
     const oppfolgingVeileder = OppfolgingSelector.selectVeilederId(state);
     const inloggedVeileder = selectIdentPaloggetVeileder(state);
-    return  oppfolgingVeileder ? (oppfolgingVeileder === inloggedVeileder) : false;
-
+    return oppfolgingVeileder ? (oppfolgingVeileder === inloggedVeileder) : false;
 }
 
-function selectErTildeltVeilder (state: Appstate): boolean {
+function selectErTildeltVeilder(state: Appstate): boolean {
     const tildeltVeileder = selectTildeltVeilder(state);
     const paloggetVeileder = selectIdentPaloggetVeileder(state);
     return tildeltVeileder ? tildeltVeileder === paloggetVeileder : selectErOppfolgingsVeileder(state);
@@ -42,5 +53,6 @@ export default {
     selectIdentPaloggetVeileder,
     selectErOppfolgingsVeileder,
     selectErTildeltVeilder,
-    selectTildeltVeilder
-}as VeilederSelector;
+    selectTildeltVeilder,
+    selectTildeltVeiledernavn,
+} as VeilederSelector;

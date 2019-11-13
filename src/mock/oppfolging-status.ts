@@ -7,7 +7,7 @@ const oppfolgingsstatus: OppfolgingStatus & JSONValue = {
         navn: 'NAV TestHeim',
         enhetId: '007'
     },
-    veilederId: 'Z007',
+    veilederId: '',
     formidlingsgruppe: 'ARBS',
     servicegruppe: 'BKART',
     hovedmaalkode: 'BEHOLDEA'
