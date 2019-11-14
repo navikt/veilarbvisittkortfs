@@ -24,7 +24,7 @@ function FjernTildelVeilederToast(props: ToastProps) {
     const toastRef = useRef<HTMLSpanElement>(null);
     const {startTimer, stoppTimer} = useTimer();
     const dispatch = useDispatch();
-    const veiledernavn = useSelector(VeilederSelector.selectTildeltVeiledernavn);
+    const veiledernavn = " " + useSelector(VeilederSelector.selectTildeltVeiledernavn);
 
     const handleClick = () => {
         const tidBrukt = stoppTimer();
@@ -55,7 +55,7 @@ function FjernTildelVeilederToast(props: ToastProps) {
         <div className="toast-wrapper" key={new Date().getTime()}>
             <AlertStripeSuksess className="toast-alertstripe">
                 <span ref={toastRef} tabIndex={0} className="toast">
-                    Du har tildelt veileder {veiledernavn}. Det kan ta noe tid før brukeren er i Min oversikt.
+                    Du har tildelt veileder{veiledernavn}. Det kan ta noe tid før brukeren er i Min oversikt.
                     <button onClick={handleClick} className="lukknapp lukknapp--svart">&times;</button>
                 </span>
             </AlertStripeSuksess>
