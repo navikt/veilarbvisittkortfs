@@ -10,13 +10,13 @@ const initialState: ToastState = {
 
 export const toastReducer = (state: ToastState = initialState, action: ToastAction): ToastState => {
     switch (action.type) {
-        case ToastActionType.VIS_ARBEIDSLISTE_TOAST:
+        case ToastActionType.VIS_TILDELT_VEILEDER_TOAST:
             return {
                 toasts: [...state.toasts, action.type]
             };
-        case ToastActionType.FJERN_ARBEIDSLISTE_TOAST:
+        case ToastActionType.FJERN_TILDET_VEILEDER_TOAST:
             return {
-                toasts: state.toasts.filter(toast => toast !== ToastActionType.VIS_ARBEIDSLISTE_TOAST)
+                toasts: state.toasts.filter(toast => toast !== ToastActionType.VIS_TILDELT_VEILEDER_TOAST)
             };
         default:
             return state;

@@ -1,31 +1,29 @@
+@import (reference) '~nav-frontend-core/less/_variabler';
+
 .visittkortfs {
 
   .toast-wrapper {
-    z-index: 1000;
     top: 1rem;
     display: flex;
     justify-content: flex-end;
-    -webkit-animation: slide 0.5s forwards;
-    animation: slide 0.5s forwards;
     position: relative;
+    width: 30rem;
+    margin-left: auto;
   }
 
   .toast:focus {
     outline: none;
-    box-shadow: 0 0 0 3px #FFBD66;
   }
+
   .toast {
-    background-color: #3E3832;
-    color: white;
-    font-family:'Source Sans Pro', Arial, sans-serif;
+    color: black;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 1rem;
     border-radius: 0.2rem;
-    height: 3rem;
 
-    .toast--button {
+    .--button {
       color: #66CBEC;
       cursor: pointer;
       padding: 0.9rem 2rem;
@@ -33,12 +31,24 @@
       border: none;
       background-color: #3E3832;
     }
-    .toast--button:focus {
+
+    .--button:focus {
       outline: none;
       box-shadow: 0 0 0 3px #FFBD66;
     }
-    .toast--button:hover {
+
+    .--button:hover {
       text-decoration: underline;
     }
+  }
+
+  .toast-alertstripe {
+    padding: 0.5rem !important;
+  }
+
+  .lukknapp {
+    color: @navGronnDarken20;
+    margin-left: 0.5rem;
+    width: 2.5rem;
   }
 }

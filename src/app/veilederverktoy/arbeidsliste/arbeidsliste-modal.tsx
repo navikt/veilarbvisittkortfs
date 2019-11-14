@@ -19,7 +19,6 @@ interface ArbeidslisteProps {
     onSubmit: (values: any) => void;
     onDelete: () => void;
     kanFjerneArbeidsliste: boolean;
-    visFjernArbeidslisteToast: boolean;
 }
 
 function ArbeidslisteModal(props: ArbeidslisteProps) {
@@ -67,7 +66,7 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
                     <div className="modal-innhold">
                         <div className="modal-info-tekst">
                             <Innholdstittel className="modal-info-tekst__overskrift">
-                                {!props.arbeidsliste.endringstidspunkt || props.visFjernArbeidslisteToast ? 'Legg til i arbeidsliste' : 'Rediger arbeidsliste'}
+                                {!props.arbeidsliste.endringstidspunkt ? 'Legg til i arbeidsliste' : 'Rediger arbeidsliste'}
                             </Innholdstittel>
                             <Undertittel>
                                 <FormattedMessage
@@ -79,13 +78,12 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
                                 <ArbeidslisteForm
                                     endringstidspunkt={props.arbeidsliste.endringstidspunkt}
                                     sistEndretAv={props.arbeidsliste.sistEndretAv}
-                                    visFjernArbeidslisteToast={props.visFjernArbeidslisteToast}
                                 />
                                 <ArbeidslisteFooter
                                     onRequestClose={() => onRequestClose(formikProps)}
                                     spinner={props.arbeidslisteStatus}
                                     slettArbeidsliste={props.onDelete}
-                                    kanFjerneArbeidsliste={props.kanFjerneArbeidsliste && !props.visFjernArbeidslisteToast}
+                                    kanFjerneArbeidsliste={props.kanFjerneArbeidsliste}
                                 />
                             </Form>
                         </div>

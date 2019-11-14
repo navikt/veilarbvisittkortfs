@@ -6,6 +6,7 @@ import InnstillingsHistorikkKomponent from './components/instillingshistorikk';
 import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Lesmerpanel from 'nav-frontend-lesmerpanel';
+import { logEvent } from '../../../utils/frontend-logger';
 
 type HistorikkInnslagType = InnstillingsHistorikk | OppgaveHistorikk;
 
@@ -21,7 +22,7 @@ function HistorikkVisning ({historikkInnslag}: OwnProps) {
             : <InnstillingsHistorikkKomponent instillingsHistorikk={historikkElem} key={idx}/> ;
 
     if (historikkInnslag.length === 0) {
-        return <Normaltekst> Ingen historikk</Normaltekst>;
+        return <Normaltekst> Ingen historikk </Normaltekst>;
     }
 
     if (historikkInnslag.length === 1) {
@@ -44,6 +45,8 @@ function HistorikkVisning ({historikkInnslag}: OwnProps) {
             apneTekst="Vis mer"
             className=""
             lukkTekst="Vis mindre"
+            onOpen={() => logEvent('veilarbvisittkortfs.metrikker.vis-historikk-trykket')}
+            onClose={() => logEvent('veilarbvisittkortfs.metrikker.lukk-historikk-trykket')}
         >
             {rest}
         </Lesmerpanel>

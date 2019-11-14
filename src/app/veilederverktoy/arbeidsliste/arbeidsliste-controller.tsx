@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Arbeidsliste, ArbeidslisteformValues } from '../../../types/arbeidsliste';
-
-import { connect } from 'react-redux';
-import { Appstate } from '../../../types/appstate';
+import React, {useEffect, useState} from 'react';
+import {Arbeidsliste, ArbeidslisteformValues} from '../../../types/arbeidsliste';
+import {connect} from 'react-redux';
+import {Appstate} from '../../../types/appstate';
 import PersonaliaSelectors from '../../../store/personalia/selectors';
 import ArbeidslisteModal from './arbeidsliste-modal';
-import { Dispatch } from 'redux';
-import { oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste } from '../../../store/arbeidsliste/actions';
+import {Dispatch} from 'redux';
+import {oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste} from '../../../store/arbeidsliste/actions';
 import ArbeidslisteSelector from '../../../store/arbeidsliste/selector';
 import moment from 'moment';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { hentArbeidsliste } from '../../../store/arbeidsliste/actions';
+import {hentArbeidsliste} from '../../../store/arbeidsliste/actions';
 import ArbeidslisteKnapp from './arbeidsliste-knapp';
 import FjernArbeidslisteModal from './fjern-arbeidsliste-modal';
-import { ToastActionType, visFjernArbeidslisteToast } from '../../../store/toast/actions';
 
 interface StateProps {
     arbeidsliste: Arbeidsliste;
@@ -24,7 +22,6 @@ interface StateProps {
     kanFjerneArbeidsliste: boolean;
     kanRedigereArbeidsliste: boolean;
     isLoading: boolean;
-    visFjernArbeidslisteToast: boolean;
 }
 
 interface DispatchProps {
@@ -32,22 +29,20 @@ interface DispatchProps {
     lagreArbeidsliste: (values: ArbeidslisteformValues) => void;
     redigerArbeidsliste: (values: ArbeidslisteformValues) => void;
     doHentArbeidsliste: (fnr: string) => void;
-    doVisFjernArbeidslisteToast: () => void;
 }
 
-type ArbeidslisteStateProps = StateProps & DispatchProps & {fjernToastFeature: boolean};
+type ArbeidslisteStateProps = StateProps & DispatchProps & { fjernToastFeature: boolean };
 
 export const dateToISODate = (dato: string) => {
     const parsetDato = moment(dato);
     return dato && parsetDato.isValid() ? parsetDato.toISOString() : null;
 };
 
-function ArbeidslisteController (props: ArbeidslisteStateProps) {
-    const [visArbeidsliste, setVisArbeidsliste] = useState( false);
-    const [slettArbeidslisteModal, setSlettArbeidslisteModal] = useState( false);
-    const {fnr, doHentArbeidsliste} =  props;
+function ArbeidslisteController(props: ArbeidslisteStateProps) {
+    const [visArbeidsliste, setVisArbeidsliste] = useState(false);
+    const [slettArbeidslisteModal, setSlettArbeidslisteModal] = useState(false);
+    const {fnr, doHentArbeidsliste} = props;
 
-    const skalViseArbeidslisteToast = props.visFjernArbeidslisteToast && !props.fjernToastFeature;
 
     useEffect(() => {
             doHentArbeidsliste(fnr);
@@ -63,7 +58,6 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
             setSlettArbeidslisteModal(true);
         } else {
             setVisArbeidsliste(false);
-            props.doVisFjernArbeidslisteToast();
         }
     }
 
@@ -91,7 +85,6 @@ function ArbeidslisteController (props: ArbeidslisteStateProps) {
                 onSubmit={props.arbeidsliste.endringstidspunkt ? props.redigerArbeidsliste : props.lagreArbeidsliste}
                 onDelete={deleteArbeidsliste}
                 kanFjerneArbeidsliste={props.kanFjerneArbeidsliste}
-                visFjernArbeidslisteToast={skalViseArbeidslisteToast}
             />
             <FjernArbeidslisteModal
                 isOpen={slettArbeidslisteModal}
@@ -114,17 +107,16 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     kanFjerneArbeidsliste: ArbeidslisteSelector.selectKanFjerneArbeidsliste(state),
     kanRedigereArbeidsliste: ArbeidslisteSelector.selectKanRedigereArbeidsliste(state),
     isLoading: ArbeidslisteSelector.selectArbeidslisteStatus(state),
-    visFjernArbeidslisteToast: !!state.ui.toasts.toasts.find(toast => toast === ToastActionType.VIS_ARBEIDSLISTE_TOAST)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    doSlettArbeidsliste : () => dispatch(slettArbeidsliste()),
-    doVisFjernArbeidslisteToast : () => dispatch(visFjernArbeidslisteToast()),
+    doSlettArbeidsliste: () => dispatch(slettArbeidsliste()),
     lagreArbeidsliste: (values: ArbeidslisteformValues) => dispatch(
         oppdaterArbeidsliste({
             kommentar: values.kommentar,
             overskrift: values.overskrift,
-            frist: values.frist ? dateToISODate(values.frist) : null})
+            frist: values.frist ? dateToISODate(values.frist) : null
+        })
     ),
     redigerArbeidsliste: (values: ArbeidslisteformValues) => dispatch(
         redigerArbeidsliste({
