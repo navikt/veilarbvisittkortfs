@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './veilederverktoy.less';
 import Arbeidslistekomponent from './arbeidsliste/arbeidsliste-controller';
 import TildelVeileder from './tildel-veileder/tildel-veileder';
-import {Dispatch} from 'redux';
-import {connect} from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import VeilederVerktoyNavigation from './veilederverktoy/veilederverktoy-navigation';
 import VeilederVerktoyKnapp from './veilederverktoy/veileder-verktoy-knapp';
-import {navigerTilProcesser} from '../../store/navigation/actions';
+import { navigerTilProcesser } from '../../store/navigation/actions';
 import FeatureApi from '../../api/feature-api';
 import Toasts from '../components/toast/toasts';
-import {Appstate} from "../../types/appstate";
-import {FeilModal} from "../components/feilmodal/feil-modal";
-import {Normaltekst, Systemtittel} from 'nav-frontend-typografi';
-import {logEvent} from "../utils/frontend-logger";
+import { Appstate } from '../../types/appstate';
+import { FeilModal } from '../components/feilmodal/feil-modal';
+import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import { logEvent } from '../utils/frontend-logger';
 
 interface OwnProps {
     fnr: string;
@@ -24,7 +24,7 @@ interface DispatchProps {
 }
 
 interface StateProps {
-    harFeilendeTildelinger: boolean
+    harFeilendeTildelinger: boolean;
 }
 
 type VeilederverktoyslinjeProps = StateProps & OwnProps & DispatchProps;
@@ -48,14 +48,18 @@ function Veilederverktoyslinje({harFeilendeTildelinger, fnr, visVeilederVerktoy,
                 onRequestClose={() => lukkModal()}
             >
                 <Systemtittel>Handlingen kan ikke utføres</Systemtittel>
-                <Normaltekst className="feil-modal-normaltekst">Tildeling av veileder feilet</Normaltekst>
-                <button className="knapp knapp--hoved feil-modal-knapp" onClick={lukkModal}
+                <Normaltekst className="feil-modal-normaltekst">
+                    Tildeling av veileder feilet. Det kan skyldes manglende tilgang på brukere, eller at veilederen allerede er tildelt brukeren.
+                </Normaltekst>
+                <button
+                    className="knapp knapp--hoved feil-modal-knapp"
+                    onClick={lukkModal}
                 >
                     Ok
                 </button>
             </FeilModal>
         );
-    }
+    };
 
     useEffect(() => {
         FeatureApi.hentFeatures('veilarbvisittkortfs.fjerntoast')
@@ -63,7 +67,7 @@ function Veilederverktoyslinje({harFeilendeTildelinger, fnr, visVeilederVerktoy,
     }, []);
 
     useEffect(() => {
-        setVisTildelingFeiletModal(harFeilendeTildelinger)
+        setVisTildelingFeiletModal(harFeilendeTildelinger);
     }, [harFeilendeTildelinger]);
 
     if (!visVeilederVerktoy) {
@@ -91,7 +95,6 @@ function Veilederverktoyslinje({harFeilendeTildelinger, fnr, visVeilederVerktoy,
 const mapStateToProps = (state: Appstate) => ({
     harFeilendeTildelinger: state.tildelVeileder.status === 'ERROR'
 });
-
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     navigerTilProsesser: () => dispatch(navigerTilProcesser())
