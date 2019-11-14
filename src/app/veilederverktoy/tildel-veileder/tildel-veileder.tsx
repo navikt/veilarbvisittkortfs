@@ -14,7 +14,7 @@ import Dropdown from '../../components/dropdown/dropdown';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
 import TilgangTilKontorSelector from '../../../store/tilgang-til-brukerskontor/selector';
 import VeilederSelector from '../../../store/tildel-veileder/selector';
-import {fjernTildeltVeilederToast} from "../../../store/toast/actions";
+import { fjernTildeltVeilederToast } from '../../../store/toast/actions';
 
 function settSammenNavn(veileder: VeilederData) {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
@@ -77,7 +77,7 @@ function TildelVeileder({ fnr }: OwnProps) {
             className="input-m tildel-veileder-dropdown background-color-white"
             name="tildel veileder"
             btnClassnames="knapp knapp--standard knapp-fss"
-            render={(lukkDropdown) =>
+            render={(lukkDropdown, settRef) =>
                 <form
                     onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
                         dispatch(fjernTildeltVeilederToast());
@@ -86,6 +86,7 @@ function TildelVeileder({ fnr }: OwnProps) {
                     }}
                 >
                     <SokFilter
+                        settRef={settRef}
                         data={veiledere}
                         label=""
                         placeholder="Søk navn eller NAV-ident"

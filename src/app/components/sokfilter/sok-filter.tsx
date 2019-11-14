@@ -1,6 +1,6 @@
 import React from 'react';
-import { Input } from 'nav-frontend-skjema';
 import './sok-filter.less';
+import { Input } from 'nav-frontend-skjema';
 
 interface SokFilterProps<T> {
     data: T[];
@@ -10,6 +10,7 @@ interface SokFilterProps<T> {
     limitSize?: number;
     query?: string;
     changeQuery?: (val: string) => void;
+    settRef?: any;
 }
 
 function limit<T>(liste: T[], antall: number) {
@@ -30,6 +31,7 @@ function SokFilter<T> (props: SokFilterProps<T>) {
         <>
             <div className="sokfilter">
                 <Input
+                    inputRef={props.settRef}
                     label={props.label}
                     placeholder={props.placeholder}
                     value={props.query}
