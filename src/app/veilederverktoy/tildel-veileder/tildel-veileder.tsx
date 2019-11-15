@@ -78,13 +78,14 @@ function TildelVeileder({ fnr }: OwnProps) {
             className="input-m tildel-veileder-dropdown background-color-white"
             name="tildel veileder"
             btnClassnames="knapp knapp--standard knapp-fss"
-            onLukk={() => changeSelected('')}
+            onClickOutSide={() => changeSelected('')}
             render={(lukkDropdown, settRef) =>
                 <form
                     onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
                         dispatch(fjernTildeltVeilederToast());
                         setValgtVeileder(event);
                         lukkDropdown();
+                        changeSelected('');
                     }}
                 >
                     <SokFilter
