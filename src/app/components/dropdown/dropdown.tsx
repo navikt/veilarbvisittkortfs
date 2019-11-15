@@ -30,10 +30,12 @@ function Dropdown(props: DropdownProps) {
     const {onLukk, onClickOutSide} = props;
 
     const lukkDropdown = useCallback(() => {
-        setApen (false);
-        btnRef.current && btnRef.current.focus();
-        onLukk && onLukk();
-    },[onLukk]);
+        if(apen) {
+            setApen(false);
+            btnRef.current && btnRef.current.focus();
+            onLukk && onLukk();
+        }
+    },[onLukk, apen]);
 
     const eventHandler = useCallback((e: any) => {
         if (e.code === 'Escape' || (loggNode.current && !loggNode.current.contains(e.target))) {
