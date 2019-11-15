@@ -49,7 +49,7 @@ function Veilederverktoyslinje({harFeilendeTildelinger, fnr, visVeilederVerktoy,
             >
                 <Systemtittel>Handlingen kan ikke utføres</Systemtittel>
                 <Normaltekst className="feil-modal-normaltekst">
-                    Tildeling av veileder feilet. Det kan skyldes manglende tilgang på brukere, eller at veilederen allerede er tildelt brukeren.
+                    Tildeling av veileder feilet. Det kan skyldes manglende tilgang på brukeren, eller at veilederen allerede er tildelt brukeren.
                 </Normaltekst>
                 <button
                     className="knapp knapp--hoved feil-modal-knapp"
