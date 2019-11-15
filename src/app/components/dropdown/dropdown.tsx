@@ -18,6 +18,7 @@ interface DropdownProps {
     className?: string;
     onLukk?: () => void;
     onClick?: () => void;
+    onClickOutSide?: () => void;
     btnClassnames?: string;
 }
 
@@ -36,6 +37,7 @@ function Dropdown(props: DropdownProps) {
 
     const eventHandler = useCallback((e: any) => {
         if (e.code === 'Escape' || (loggNode.current && !loggNode.current.contains(e.target))) {
+            props.onClickOutSide && props.onClickOutSide();
             lukkDropdown();
         }
     },[lukkDropdown]);
