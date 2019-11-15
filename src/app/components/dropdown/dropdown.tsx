@@ -27,7 +27,7 @@ function Dropdown(props: DropdownProps) {
     const btnRef = useRef<HTMLButtonElement>(null);
     const loggNode = useRef<HTMLDivElement>(null);
     const childNode = useRef(null);
-    const {onLukk} = props;
+    const {onLukk, onClickOutSide} = props;
 
     const lukkDropdown = useCallback(() => {
         setApen (false);
@@ -37,10 +37,10 @@ function Dropdown(props: DropdownProps) {
 
     const eventHandler = useCallback((e: any) => {
         if (e.code === 'Escape' || (loggNode.current && !loggNode.current.contains(e.target))) {
-            props.onClickOutSide && props.onClickOutSide();
+            onClickOutSide && onClickOutSide();
             lukkDropdown();
         }
-    },[lukkDropdown]);
+    },[lukkDropdown, onClickOutSide]);
 
     useEffect(()=> {
         document.body.addEventListener('click', eventHandler);
