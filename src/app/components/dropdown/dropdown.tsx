@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { RefObject, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import './dropdown.less';
 import withClickMetric from '../click-metric/click-metric';
@@ -14,14 +14,14 @@ interface DropdownProps {
     apen?: boolean;
     name: string;
     knappeTekst: string;
-    render: (lukkDropdown:()=>void, childNode: any) => React.ReactNode;
+    render: (lukkDropdown:()=>void, childNode: RefObject<HTMLElement>) => React.ReactNode;
     className?: string;
     onLukk?: () => void;
     onClick?: () => void;
     btnClassnames?: string;
 }
 
-function Dropdown (props: DropdownProps) {
+function Dropdown(props: DropdownProps) {
     const [apen, setApen] = useState(props.apen || false);
     const btnRef = useRef<HTMLButtonElement>(null);
     const loggNode = useRef<HTMLDivElement>(null);
@@ -51,11 +51,13 @@ function Dropdown (props: DropdownProps) {
 
 
     useLayoutEffect(()=> {
-        if(childNode && childNode.current) {
-            // @ts-ignore
-            childNode.current.focus();
+        if(apen) {
+            if (childNode && childNode.current) {
+                // @ts-ignore
+                childNode.current.focus();
+            }
         }
-    });
+    },[apen]);
 
     function apneDropdown() {
         setApen(true);

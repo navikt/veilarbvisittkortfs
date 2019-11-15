@@ -26,6 +26,7 @@ interface OwnProps {
 
 function TildelVeileder({ fnr }: OwnProps) {
     const [selected, changeSelected] = useState('');
+
     const [query, changeQuery] = useState('');
     const oppfolgingsenhetId: StringOrNothing = useSelector((state: Appstate) =>
         OppfolgingsstatusSelector.selectOppfolgingsenhetsId(state));
@@ -77,6 +78,7 @@ function TildelVeileder({ fnr }: OwnProps) {
             className="input-m tildel-veileder-dropdown background-color-white"
             name="tildel veileder"
             btnClassnames="knapp knapp--standard knapp-fss"
+            onLukk={() => changeSelected('')}
             render={(lukkDropdown, settRef) =>
                 <form
                     onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
