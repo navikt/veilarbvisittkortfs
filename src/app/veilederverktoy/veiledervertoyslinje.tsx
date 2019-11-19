@@ -93,7 +93,7 @@ function Veilederverktoyslinje({harFeilendeTildelinger, fnr, visVeilederVerktoy,
 }
 
 const mapStateToProps = (state: Appstate) => ({
-    harFeilendeTildelinger: state.tildelVeileder.status === 'ERROR'
+    harFeilendeTildelinger: !!state.tildelVeileder.tildeltVeileder.error
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
