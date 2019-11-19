@@ -1,5 +1,5 @@
-import {VeilederData} from '../../types/veilederdata';
-import {Reducer} from 'redux';
+import { VeilederData } from '../../types/veilederdata';
+import { Reducer } from 'redux';
 import {
     hentAlleVeiledereForEnhetenError,
     hentAlleVeiledereForEnhetenSuccess,
@@ -9,14 +9,14 @@ import {
     TildelVeilederActions,
     TildelVeilederActionType, tildelVeilederError, tildelVeilederSuccess
 } from './actions';
-import {OrNothing} from '../../types/utils/ornothing';
-import {call, put, takeLatest} from 'redux-saga/effects';
+import { OrNothing } from '../../types/utils/ornothing';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import TildelVeilederApi from '../../api/tildel-veileder-api';
-import {TildelVeilederResponse} from '../../types/tildel-veileder';
-import {VeilederListe} from '../../mock/veiledereliste';
-import {FETCH_STATUS} from '../../types/fetch-status';
-import {triggerReRenderingAvMao} from '../../app/utils/utils';
-import {visFjernTildeltVeilederToast} from "../toast/actions";
+import { TildelVeilederResponse } from '../../types/tildel-veileder';
+import { VeilederListe } from '../../mock/veiledereliste';
+import { FETCH_STATUS } from '../../types/fetch-status';
+import { triggerReRenderingAvMao } from '../../app/utils/utils';
+import { visFjernTildeltVeilederToast } from '../toast/actions';
 
 export interface TildelVeilederState {
     status: FETCH_STATUS;
@@ -28,7 +28,8 @@ export interface TildelVeilederState {
         data: VeilederListe;
     };
     tildeltVeileder: {
-        data: OrNothing<TildelVeilederResponse>
+        data: OrNothing<TildelVeilederResponse>,
+        error: OrNothing<Error>;
     };
 }
 
@@ -48,6 +49,7 @@ const initialState: TildelVeilederState = {
     },
     tildeltVeileder: {
         data: null,
+        error: null
     }
 };
 
@@ -83,17 +85,27 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
                 ...state,
                 status: 'DONE',
                 tildeltVeileder: {
+                    ...state.tildeltVeileder,
                     data: action.data
                 },
             };
         }
         case TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN_ERROR:
-        case TildelVeilederActionType.HENT_PALOGGET_VEILEDER_ERROR:
-        case TildelVeilederActionType.TILDEL_VEILEDER_ERROR: {
+        case TildelVeilederActionType.HENT_PALOGGET_VEILEDER_ERROR: {
             return {
                 ...state,
                 status: 'ERROR',
                 error: action.error,
+
+            };
+        }
+        case TildelVeilederActionType.TILDEL_VEILEDER_ERROR: {
+            return {
+                ...state,
+                tildeltVeileder : {
+                    ...state.tildeltVeileder,
+                    error: action.error
+                }
 
             };
         }
@@ -124,7 +136,7 @@ function* tildelVeileder(action: TildelVeilederAction) {
     try {
         const response = yield call(() => TildelVeilederApi.tildelTilVeileder(action.data));
         if (response.feilendeTilordninger.length > 0) {
-            yield put(tildelVeilederError(new Error("Noen brukere kunne ikke tilordnes en veileder")));
+            yield put(tildelVeilederError(new Error('Noen brukere kunne ikke tilordnes en veileder')));
 
         } else {
             yield put(tildelVeilederSuccess(Object.assign(response, {tilVeilederId: action.data[0].tilVeilederId})));
