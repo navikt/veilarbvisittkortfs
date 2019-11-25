@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './sok-filter.less';
 import { Input } from 'nav-frontend-skjema';
+import {useFocus} from "../../../hooks/use-focus";
 
 interface SokFilterProps<T> {
     data: T[];
@@ -8,9 +9,6 @@ interface SokFilterProps<T> {
     label: string;
     placeholder: string;
     limitSize?: number;
-    query?: string;
-    changeQuery?: (val: string) => void;
-    settRef?: any;
 }
 
 function limit<T>(liste: T[], antall: number) {
@@ -18,8 +16,9 @@ function limit<T>(liste: T[], antall: number) {
 }
 
 function SokFilter<T> (props: SokFilterProps<T>) {
-
-    const { data, limitSize, children, query} = props;
+    const { focusRef } = useFocus();
+    const [query, changeQuery] = useState('');
+    const { data, limitSize, children} = props;
     const rawfilteredData = data.filter(elem => !query || JSON.stringify(elem).toLowerCase().includes(query.toLowerCase()));
 
     const filteredData =
@@ -31,12 +30,12 @@ function SokFilter<T> (props: SokFilterProps<T>) {
         <>
             <div className="sokfilter">
                 <Input
-                    inputRef={props.settRef}
+                    inputRef={ (inputRef) => focusRef.current = inputRef}
                     label={props.label}
                     placeholder={props.placeholder}
-                    value={props.query}
+                    value={query}
                     inputClassName="sokfilter__input"
-                    onChange={e => props.changeQuery && props.changeQuery(e.target.value)}
+                    onChange={e => changeQuery(e.target.value)}
                 />
             </div>
             {children(filteredData)}
