@@ -12,8 +12,6 @@
     "build:tekster": "react-intl-bundler tekster/ src/tekster-built",
     "test:coverage": "echo \"her testar vi ingenting\"",
     "eject": "react-scripts eject",
-    "lint": "tslint ./src/**/*.ts*",
-    "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
     "heroku-serve": "serve -s build -l 5000",
     "heroku-postbuild": "npm run build"
   },
@@ -101,8 +99,10 @@
     "@types/react-redux": "^7.1.1",
     "@types/yup": "^0.26.9",
     "cross-spawn": "^6.0.5",
-    "husky": "^1.3.1",
+    "husky": "^3.1.0",
     "less-plugin-npm-import": "^2.1.0",
+    "lint-staged": "^9.2.5",
+    "prettier": "^1.18.2",
     "redux-devtools-extension": "^2.13.8",
     "serve": "^10.1.2",
     "tree-kill": "^1.2.1",
@@ -113,8 +113,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint:fix",
-      "pre-push": "npm run lint"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,json,less,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
