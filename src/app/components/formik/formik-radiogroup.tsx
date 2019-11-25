@@ -12,7 +12,7 @@ interface FormikRadioFilterProps<T> {
     defaultValue?: string;
 }
 
-function FormikRadioGroup<T> ({name, data, radioName, createLabel, createValue, closeDropdown, defaultValue}: FormikRadioFilterProps<T>) {
+function FormikRadioGroup<T> ({name, data, radioName, createLabel, createValue, defaultValue}: FormikRadioFilterProps<T>) {
     return (
         <Field name={name}>
             {({ field, form}: FieldProps)  => {
@@ -22,17 +22,19 @@ function FormikRadioGroup<T> ({name, data, radioName, createLabel, createValue, 
                 return(
                     <div className="visittkortfs-radio-filterform">
                         <div className="radio-filterform__valg scrollbar">
-                            {data.map(o =>
-                                <Radio
-                                    name={radioName}
-                                    label={createLabel(o)}
-                                    value={createValue(o)}
-                                    id={`${createValue(o)}-${radioName}`}
-                                    key={`${createValue(o)}-${radioName}`}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                        form.setFieldValue(field.name, e.target.value);
-                                    }}
-                                />
+                            {data.map(o => {
+                                const value = createValue(o);
+                                return (
+                                    <Radio
+                                        name={radioName}
+                                        label={createLabel(o)}
+                                        value={value}
+                                        id={`${value}-${radioName}`}
+                                        key={`${value}-${radioName}`}
+                                        checked={field.value === value}
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => form.setFieldValue(field.name, e.target.value)}
+                                    />
+                                )}
                             )}
                         </div>
                     </div>

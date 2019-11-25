@@ -11,9 +11,8 @@
     "build:ts": "craco build",
     "build:tekster": "react-intl-bundler tekster/ src/tekster-built",
     "test:coverage": "echo \"her testar vi ingenting\"",
+    "lint": "echo \"her lintas det ikke\"",
     "eject": "react-scripts eject",
-    "lint": "tslint ./src/**/*.ts*",
-    "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
     "heroku-serve": "serve -s build -l 5000",
     "heroku-postbuild": "npm run build"
   },
@@ -50,7 +49,7 @@
     "nav-frontend-etiketter": "^1.0.27",
     "nav-frontend-etiketter-style": "^0.3.17",
     "nav-frontend-ikoner-assets": "^1.0.3",
-    "nav-frontend-js-utils": "^1.0.7",
+    "nav-frontend-js-utils": "^1.0.8",
     "nav-frontend-knapper": "^1.0.30",
     "nav-frontend-knapper-style": "^0.3.26",
     "nav-frontend-lenker": "^1.0.27",
@@ -62,8 +61,8 @@
     "nav-frontend-modal": "^1.0.28",
     "nav-frontend-modal-style": "^0.3.29",
     "nav-frontend-paneler-style": "^0.3.17",
-    "nav-frontend-skjema": "^1.0.67",
-    "nav-frontend-skjema-style": "^1.0.40",
+    "nav-frontend-skjema": "^1.0.78",
+    "nav-frontend-skjema-style": "^1.0.48",
     "nav-frontend-spinner": "^1.0.18",
     "nav-frontend-spinner-style": "^0.2.5",
     "nav-frontend-typografi": "^2.0.15",
@@ -101,8 +100,10 @@
     "@types/react-redux": "^7.1.1",
     "@types/yup": "^0.26.9",
     "cross-spawn": "^6.0.5",
-    "husky": "^1.3.1",
+    "husky": "^3.1.0",
     "less-plugin-npm-import": "^2.1.0",
+    "lint-staged": "^9.2.5",
+    "prettier": "^1.18.2",
     "redux-devtools-extension": "^2.13.8",
     "serve": "^10.1.2",
     "tree-kill": "^1.2.1",
@@ -113,8 +114,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint:fix",
-      "pre-push": "npm run lint"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,json,less,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

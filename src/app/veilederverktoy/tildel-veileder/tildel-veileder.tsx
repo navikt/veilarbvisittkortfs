@@ -14,7 +14,6 @@ import Dropdown from '../../components/dropdown/dropdown';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
 import TilgangTilKontorSelector from '../../../store/tilgang-til-brukerskontor/selector';
 import VeilederSelector from '../../../store/tildel-veileder/selector';
-import { fjernTildeltVeilederToast } from '../../../store/toast/actions';
 
 function settSammenNavn(veileder: VeilederData) {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
@@ -27,7 +26,6 @@ interface OwnProps {
 function TildelVeileder({ fnr }: OwnProps) {
     const [selected, changeSelected] = useState('');
 
-    const [query, changeQuery] = useState('');
     const oppfolgingsenhetId: StringOrNothing = useSelector((state: Appstate) =>
         OppfolgingsstatusSelector.selectOppfolgingsenhetsId(state));
 
@@ -55,10 +53,13 @@ function TildelVeileder({ fnr }: OwnProps) {
         return null;
     }
 
+    const settTilInitalState = () => {
+        changeSelected('');
+    };
+
     const setValgtVeileder = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        changeQuery('');
         document
             .querySelectorAll('input[type=radio]:checked')
             .forEach(elem => (elem as HTMLInputElement).checked = false);
@@ -78,23 +79,18 @@ function TildelVeileder({ fnr }: OwnProps) {
             className="input-m tildel-veileder-dropdown background-color-white"
             name="tildel veileder"
             btnClassnames="knapp knapp--standard knapp-fss"
-            onClickOutSide={() => changeSelected('')}
-            render={(lukkDropdown, settRef) =>
+            onLukk={settTilInitalState}
+            render={(lukkDropdown) =>
                 <form
                     onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
-                        dispatch(fjernTildeltVeilederToast());
                         setValgtVeileder(event);
                         lukkDropdown();
-                        changeSelected('');
                     }}
                 >
                     <SokFilter
-                        settRef={settRef}
                         data={veiledere}
                         label=""
                         placeholder="Søk navn eller NAV-ident"
-                        query={query}
-                        changeQuery={changeQuery}
                     >
                         {(data) =>
                             <RadioFilterForm
