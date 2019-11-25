@@ -11,6 +11,7 @@
     "build:ts": "craco build",
     "build:tekster": "react-intl-bundler tekster/ src/tekster-built",
     "test:coverage": "echo \"her testar vi ingenting\"",
+    "lint": "echo \"her lintas det ikke\"",
     "eject": "react-scripts eject",
     "heroku-serve": "serve -s build -l 5000",
     "heroku-postbuild": "npm run build"
