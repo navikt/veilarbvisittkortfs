@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import hiddenIf from '../../components/hidden-if/hidden-if';
 import EtikettBase, { EtikettInfo, EtikettAdvarsel, EtikettFokus } from 'nav-frontend-etiketter';
 import { OppfolgingStatus } from '../../../types/oppfolging-status';
 import { Personalia } from '../../../types/personalia';
 import './etiketter.less';
 import { Oppfolging } from '../../../types/oppfolging';
-import FeatureApi from '../../../api/feature-api';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 
 const Advarsel = hiddenIf(EtikettAdvarsel);
 const Info = hiddenIf(EtikettInfo);
@@ -26,20 +24,6 @@ export function trengerAEV(oppfolging: OppfolgingStatus): boolean {
 }
 
 function Etiketter(props: { personalia: Personalia; oppfolgingstatus: OppfolgingStatus; oppfolging: Oppfolging }) {
-    const [kanVarslesFeature, setKanVarslesFeature] = useState(false);
-    const [laster, setLaster] = useState(true);
-
-    useEffect(() => {
-        FeatureApi.hentFeatures('veilarbvisittkortfs.kanVarsles').then(resp => {
-            setKanVarslesFeature(resp['veilarbvisittkortfs.kanVarsles']);
-            setLaster(false);
-        });
-    }, [kanVarslesFeature]);
-
-    if (laster) {
-        return <NavFrontendSpinner type="S" />;
-    }
-
     const { diskresjonskode, sikkerhetstiltak, egenAnsatt, dodsdato } = props.personalia;
     const {
         underKvp,
@@ -75,7 +59,7 @@ function Etiketter(props: { personalia: Personalia; oppfolgingstatus: Oppfolging
             <Fokus hidden={underOppfolging}>Ikke under oppfølging</Fokus>
             <Fokus hidden={!gjeldendeEskaleringsvarsel}>Varsel</Fokus>
             <Fokus
-                hidden={reservasjonKRR || manuell || kanVarsles || !kanVarslesFeature}
+                hidden={reservasjonKRR || manuell || kanVarsles}
                 title="Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret og kan ikke varsles. Du kan derfor ikke samhandle digitalt med brukeren. "
             >
                 Ikke registrert KRR

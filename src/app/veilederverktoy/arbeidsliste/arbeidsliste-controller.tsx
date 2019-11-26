@@ -31,7 +31,7 @@ interface DispatchProps {
     doHentArbeidsliste: (fnr: string) => void;
 }
 
-type ArbeidslisteStateProps = StateProps & DispatchProps & { fjernToastFeature: boolean };
+type ArbeidslisteStateProps = StateProps & DispatchProps;
 
 export const dateToISODate = (dato: string) => {
     const parsetDato = moment(dato);
@@ -52,11 +52,7 @@ function ArbeidslisteController(props: ArbeidslisteStateProps) {
     }
 
     function deleteArbeidsliste() {
-        if (props.fjernToastFeature) {
-            setSlettArbeidslisteModal(true);
-        } else {
-            setVisArbeidsliste(false);
-        }
+        setSlettArbeidslisteModal(true);
     }
 
     function slettArbeidslisteOgLukkModaler() {
@@ -90,7 +86,6 @@ function ArbeidslisteController(props: ArbeidslisteStateProps) {
                 onSubmit={slettArbeidslisteOgLukkModaler}
                 fnr={props.fnr}
                 navn={props.navn}
-                hidden={!props.fjernToastFeature}
             />
         </>
     );
