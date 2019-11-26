@@ -5,7 +5,9 @@ import { TildelVeilederData } from '../types/tildel-veileder';
 interface TildelVeilederApi {
     hentVeiledereForEnhet: (enhetId: string) => Promise<VeilederData[]>;
     hentVeieldere: () => Promise<VeilederData>;
-    tildelTilVeileder: (tilordninger: TildelVeilederData[]) => Promise<{resultat: string, feilendeTilordninger: TildelVeilederData[]}>;
+    tildelTilVeileder: (
+        tilordninger: TildelVeilederData[]
+    ) => Promise<{ resultat: string; feilendeTilordninger: TildelVeilederData[] }>;
 }
 
 function hentVeiledereForEnhet(enhetId: string) {
@@ -23,5 +25,5 @@ function tildelTilVeileder(tilordninger: TildelVeilederData[]) {
 export default {
     hentVeiledereForEnhet,
     hentVeieldere,
-    tildelTilVeileder,
+    tildelTilVeileder
 } as TildelVeilederApi;

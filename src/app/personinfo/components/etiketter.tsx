@@ -25,27 +25,36 @@ export function trengerAEV(oppfolging: OppfolgingStatus): boolean {
     return oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'BKART';
 }
 
-function Etiketter(props: { personalia: Personalia, oppfolgingstatus: OppfolgingStatus, oppfolging: Oppfolging }, ) {
+function Etiketter(props: { personalia: Personalia; oppfolgingstatus: OppfolgingStatus; oppfolging: Oppfolging }) {
     const [kanVarslesFeature, setKanVarslesFeature] = useState(false);
     const [laster, setLaster] = useState(true);
 
     useEffect(() => {
-        FeatureApi.hentFeatures('veilarbvisittkortfs.kanVarsles')
-            .then(resp => {
-                setKanVarslesFeature(resp['veilarbvisittkortfs.kanVarsles']);
-                setLaster(false);
-            });
+        FeatureApi.hentFeatures('veilarbvisittkortfs.kanVarsles').then(resp => {
+            setKanVarslesFeature(resp['veilarbvisittkortfs.kanVarsles']);
+            setLaster(false);
+        });
     }, [kanVarslesFeature]);
 
     if (laster) {
-        return <NavFrontendSpinner type="S"/>;
+        return <NavFrontendSpinner type="S" />;
     }
 
-    const {diskresjonskode, sikkerhetstiltak, egenAnsatt, dodsdato} = props.personalia;
-    const {underKvp, reservasjonKRR, manuell, underOppfolging, inaktivIArena, gjeldendeEskaleringsvarsel, kanVarsles} = props.oppfolging;
+    const { diskresjonskode, sikkerhetstiltak, egenAnsatt, dodsdato } = props.personalia;
+    const {
+        underKvp,
+        reservasjonKRR,
+        manuell,
+        underOppfolging,
+        inaktivIArena,
+        gjeldendeEskaleringsvarsel,
+        kanVarsles
+    } = props.oppfolging;
     return (
         <div className="etikett-container">
-            <Bas hidden={!dodsdato} type="info" className="etikett--mork">Død</Bas>
+            <Bas hidden={!dodsdato} type="info" className="etikett--mork">
+                Død
+            </Bas>
             <Advarsel hidden={!diskresjonskode}>Kode {diskresjonskode}</Advarsel>
             <Advarsel hidden={!sikkerhetstiltak}>{sikkerhetstiltak}</Advarsel>
             <Advarsel hidden={!egenAnsatt}>Egen ansatt</Advarsel>
@@ -71,8 +80,8 @@ function Etiketter(props: { personalia: Personalia, oppfolgingstatus: Oppfolging
             >
                 Ikke registrert KRR
             </Fokus>
-            <Info hidden={!(trengerVurdering(props.oppfolgingstatus))}>Trenger vurdering</Info>
-            <Info hidden={!(trengerAEV(props.oppfolgingstatus))}>Behov for AEV</Info>
+            <Info hidden={!trengerVurdering(props.oppfolgingstatus)}>Trenger vurdering</Info>
+            <Info hidden={!trengerAEV(props.oppfolgingstatus)}>Behov for AEV</Info>
             <Info hidden={!erBrukerSykmeldt(props.oppfolgingstatus)}>Sykmeldt</Info>
         </div>
     );

@@ -1,7 +1,6 @@
-import {useEffect, useRef} from "react";
+import { useEffect, useRef } from 'react';
 
-
-export function useFocus<T extends HTMLElement> () {
+export function useFocus<T extends HTMLElement>() {
     const focusRef = useRef<T | null>(null);
 
     useEffect(() => {
@@ -9,9 +8,7 @@ export function useFocus<T extends HTMLElement> () {
         if (elem) {
             elem.focus();
         }
+    }, []);
 
-    },[]);
-
-    return {focusRef};
-
+    return { focusRef };
 }

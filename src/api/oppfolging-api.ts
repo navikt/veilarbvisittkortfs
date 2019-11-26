@@ -25,7 +25,7 @@ function hentOppfolgingData(fnr?: string) {
 function startEskalering(dialogId: string, begrunnelse: string, fnr: string) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/startEskalering/?fnr=${fnr}`, {
         dialogId,
-        begrunnelse,
+        begrunnelse
     });
 }
 
@@ -36,26 +36,26 @@ function hentVeilederTilgang(fnr: string) {
 function settDigital(begrunnelse: string, veilederId: string, fnr: string) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/settDigital?fnr=${fnr}`, {
         begrunnelse,
-        veilederId,
+        veilederId
     });
 }
 
 function settManuellOppfolging(begrunnelse: string, veilederId: string, fnr: string) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/settManuell?fnr=${fnr}`, {
         begrunnelse,
-        veilederId,
+        veilederId
     });
 }
 
 function startKvpOppfolging(begrunnelse: string, fnr: string) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/startKvp?fnr=${fnr}`, {
-        begrunnelse,
+        begrunnelse
     });
 }
 
 function stoppKvpOppfolging(begrunnelse: string, fnr: string) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/stoppKvp?fnr=${fnr}`, {
-        begrunnelse,
+        begrunnelse
     });
 }
 
@@ -67,12 +67,12 @@ function kanAvslutte(fnr: string) {
     return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/avslutningStatus?fnr=${fnr}`);
 }
 
-function avsluttOppfolging(begrunnelse: string, veilederId: string, fnr: string ) {
-    return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/avsluttOppfolging?fnr=${fnr}`, {begrunnelse, veilederId});
+function avsluttOppfolging(begrunnelse: string, veilederId: string, fnr: string) {
+    return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/avsluttOppfolging?fnr=${fnr}`, { begrunnelse, veilederId });
 }
 
 function stoppEskalering(fnr: string, begrunnelse?: string) {
-    return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/stoppEskalering/?fnr=${fnr}`, {begrunnelse});
+    return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/stoppEskalering/?fnr=${fnr}`, { begrunnelse });
 }
 
 export default {

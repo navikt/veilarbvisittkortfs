@@ -20,11 +20,10 @@ interface FormikModalProps<Values> {
     isOpen?: boolean;
 }
 
-function FormikModal<Values> ({visConfirmDialog= true, ...props}: FormikModalProps<Values>) {
-    const[isOpen, setIsOpen] = useState(true);
+function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalProps<Values>) {
+    const [isOpen, setIsOpen] = useState(true);
 
     const tilbake = (formikProps: FormikProps<Values>) => {
-
         const confirmTekst = 'Er du sikker på at du vil lukke siden? Ulagrede endringer vil da gå tapt.';
 
         if (formikProps.dirty) {
@@ -43,8 +42,8 @@ function FormikModal<Values> ({visConfirmDialog= true, ...props}: FormikModalPro
         <Formik
             initialValues={props.initialValues}
             validationSchema={props.validationSchema}
-            onSubmit={(values) => props.handleSubmit(values)}
-            render={formikProps =>
+            onSubmit={values => props.handleSubmit(values)}
+            render={formikProps => (
                 <NavFrontendModal
                     className={cls(props.className)}
                     contentLabel={props.contentLabel}
@@ -53,13 +52,10 @@ function FormikModal<Values> ({visConfirmDialog= true, ...props}: FormikModalPro
                     closeButton={true}
                     portalClassName="visittkortfs-modal"
                 >
-                   <ModalHeader
-                       tilbake={props.tilbake}
-                       tilbakeTekstId={props.tilbakeTekstId}
-                   />
+                    <ModalHeader tilbake={props.tilbake} tilbakeTekstId={props.tilbakeTekstId} />
                     {props.render(formikProps)}
                 </NavFrontendModal>
-            }
+            )}
         />
     );
 }

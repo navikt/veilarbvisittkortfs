@@ -9,16 +9,17 @@ interface OwnProps {
     tilbake?: () => void;
 }
 
-function ModalHeader({className, tilbakeTekstId, visConfirmDialog, tilbake}: OwnProps) {
+function ModalHeader({ className, tilbakeTekstId, visConfirmDialog, tilbake }: OwnProps) {
     return (
         <div className={classNames('modal-header-wrapper', className)}>
             <header className="modal-header">
-                {tilbake &&
+                {tilbake && (
                     <Tilbakeknapp
                         tekstId={tilbakeTekstId || 'Tilbake'}
                         visConfirmDialog={visConfirmDialog}
                         tilbake={tilbake}
-                    />}
+                    />
+                )}
             </header>
         </div>
     );

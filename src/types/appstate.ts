@@ -26,6 +26,6 @@ export interface Appstate {
     avsluttOppfolgingStatus: AvsluttOppfolgingState;
     ui: {
         navigation: NavigationState;
-        toasts: {toasts: ToastActionType[]},
+        toasts: { toasts: ToastActionType[] };
     };
 }

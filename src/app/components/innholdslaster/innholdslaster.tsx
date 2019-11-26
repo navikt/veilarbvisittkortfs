@@ -14,12 +14,7 @@ function Innholdslaster(props: InnholdlasterProps) {
         return props.children;
     }
 
-    return (
-        <Spinner
-            className={props.className || ''}
-            type="XL"
-        />
-    );
+    return <Spinner className={props.className || ''} type="XL" />;
 }
 
 export default Innholdslaster;

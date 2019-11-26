@@ -9,7 +9,7 @@ export interface Arbeidsliste {
     isOppfolgendeVeileder: boolean;
     kommentar: StringOrNothing;
     overskrift: StringOrNothing;
-    sistEndretAv: OrNothing<{veilederId: string}>;
+    sistEndretAv: OrNothing<{ veilederId: string }>;
 }
 
 export interface ArbeidslisteformValues {

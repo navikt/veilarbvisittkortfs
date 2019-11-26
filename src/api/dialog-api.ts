@@ -16,15 +16,11 @@ function nyHenvendelse(henvendelse: HenvendelseData, fnr: string) {
 }
 
 function oppdaterFerdigbehandlet(dialogId: string, erFerdigbehandlet: boolean, fnr: string) {
-    return putAsJson(
-        `${DIALOG_BASE_URL}/${dialogId}/ferdigbehandlet/${erFerdigbehandlet}?fnr=${fnr}`
-    );
+    return putAsJson(`${DIALOG_BASE_URL}/${dialogId}/ferdigbehandlet/${erFerdigbehandlet}?fnr=${fnr}`);
 }
 
 function oppdaterVenterPaSvar(dialogId: string, venterPaSvar: boolean, fnr: string) {
-    return putAsJson(
-        `${DIALOG_BASE_URL}/${dialogId}/venter_pa_svar/${venterPaSvar}?fnr=${fnr}`
-    );
+    return putAsJson(`${DIALOG_BASE_URL}/${dialogId}/venter_pa_svar/${venterPaSvar}?fnr=${fnr}`);
 }
 
 function hentDialoger(fnr: string) {
@@ -35,5 +31,5 @@ export default {
     nyHenvendelse,
     oppdaterFerdigbehandlet,
     oppdaterVenterPaSvar,
-    hentDialoger,
+    hentDialoger
 } as DialogApi;

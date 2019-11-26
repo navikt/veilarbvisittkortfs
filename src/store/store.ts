@@ -19,9 +19,9 @@ import avsluttOppfolgingStatusReducer, { avsluttOppfolgingStatusSaga } from './a
 
 const sagaMiddleware = createReduxSaga();
 
-const uiReducers = combineReducers( {
+const uiReducers = combineReducers({
     navigation: navigationReducer,
-    toasts: toastsReducer,
+    toasts: toastsReducer
 });
 
 const store = createStore(
@@ -32,7 +32,7 @@ const store = createStore(
         arbeidsliste: arbeidslisteReducer,
         dialoger: dialogReducer,
         tildelVeileder: tildelVelederReducer,
-        tilgangTilBrukersKontor : tilgangTilBrukersKontorReducer,
+        tilgangTilBrukersKontor: tilgangTilBrukersKontorReducer,
         instillingshistorikk: instillingshistorikkReducer,
         oppgavehistorikk: oppgavehistorikkReducer,
         enhetId: enhetIdReducer,

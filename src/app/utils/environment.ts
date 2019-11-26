@@ -1,6 +1,4 @@
-
 class Environment {
-
     get nodeEnv() {
         return process.env.NODE_ENV;
     }
@@ -12,7 +10,6 @@ class Environment {
     get isDevelopment() {
         return this.nodeEnv === 'development';
     }
-
 }
 
 export default new Environment();
