@@ -8,7 +8,6 @@ export interface VedtaksstotteApi {
 
 function fetchHarUtkast(fnr: string) {
     return fetchToJson(`${VEDTAKS_URL}/${fnr}/harUtkast`);
-
 }
 
 export default {

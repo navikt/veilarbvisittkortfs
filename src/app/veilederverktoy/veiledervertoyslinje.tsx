@@ -15,95 +15,95 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { logEvent } from '../utils/frontend-logger';
 
 interface OwnProps {
-  fnr: string;
-  visVeilederVerktoy?: boolean;
+    fnr: string;
+    visVeilederVerktoy?: boolean;
 }
 
 interface DispatchProps {
-  navigerTilProsesser: () => void;
+    navigerTilProsesser: () => void;
 }
 
 interface StateProps {
-  harFeilendeTildelinger: boolean;
+    harFeilendeTildelinger: boolean;
 }
 
 type VeilederverktoyslinjeProps = StateProps & OwnProps & DispatchProps;
 
 function Veilederverktoyslinje({
-  harFeilendeTildelinger,
-  fnr,
-  visVeilederVerktoy,
-  navigerTilProsesser
+    harFeilendeTildelinger,
+    fnr,
+    visVeilederVerktoy,
+    navigerTilProsesser
 }: VeilederverktoyslinjeProps) {
-  const [fjernToastFeature, setFjernToastFeature] = useState(false);
+    const [fjernToastFeature, setFjernToastFeature] = useState(false);
 
-  const [visTildelingFeiletModal, setVisTildelingFeiletModal] = useState(harFeilendeTildelinger);
+    const [visTildelingFeiletModal, setVisTildelingFeiletModal] = useState(harFeilendeTildelinger);
 
-  useEffect(() => {
-    setVisTildelingFeiletModal(harFeilendeTildelinger);
-  }, [harFeilendeTildelinger]);
+    useEffect(() => {
+        setVisTildelingFeiletModal(harFeilendeTildelinger);
+    }, [harFeilendeTildelinger]);
 
-  const lukkModal = () => {
-    logEvent('veilarbvisittkortfs.metrikker.lukk-modal-tildel-veileder');
-    setVisTildelingFeiletModal(false);
-  };
+    const lukkModal = () => {
+        logEvent('veilarbvisittkortfs.metrikker.lukk-modal-tildel-veileder');
+        setVisTildelingFeiletModal(false);
+    };
 
-  const FeilTildelingModal = () => {
+    const FeilTildelingModal = () => {
+        return (
+            <FeilModal
+                isOpen={visTildelingFeiletModal}
+                contentLabel="Tildeling av veileder feilet"
+                closeButton={false}
+                onRequestClose={() => lukkModal()}
+            >
+                <Systemtittel>Handlingen kan ikke utføres</Systemtittel>
+                <Normaltekst className="feil-modal-normaltekst">
+                    Tildeling av veileder feilet. Det kan skyldes manglende tilgang på brukeren, eller at veilederen
+                    allerede er tildelt brukeren.
+                </Normaltekst>
+                <button className="knapp knapp--hoved feil-modal-knapp" onClick={lukkModal}>
+                    Ok
+                </button>
+            </FeilModal>
+        );
+    };
+
+    useEffect(() => {
+        FeatureApi.hentFeatures('veilarbvisittkortfs.fjerntoast').then(resp =>
+            setFjernToastFeature(resp['veilarbvisittkortfs.fjerntoast'])
+        );
+    }, []);
+
+    useEffect(() => {
+        setVisTildelingFeiletModal(harFeilendeTildelinger);
+    }, [harFeilendeTildelinger]);
+
+    if (!visVeilederVerktoy) {
+        return null;
+    }
+
     return (
-      <FeilModal
-        isOpen={visTildelingFeiletModal}
-        contentLabel="Tildeling av veileder feilet"
-        closeButton={false}
-        onRequestClose={() => lukkModal()}
-      >
-        <Systemtittel>Handlingen kan ikke utføres</Systemtittel>
-        <Normaltekst className="feil-modal-normaltekst">
-          Tildeling av veileder feilet. Det kan skyldes manglende tilgang på brukeren, eller at veilederen allerede er
-          tildelt brukeren.
-        </Normaltekst>
-        <button className="knapp knapp--hoved feil-modal-knapp" onClick={lukkModal}>
-          Ok
-        </button>
-      </FeilModal>
-    );
-  };
-
-  useEffect(() => {
-    FeatureApi.hentFeatures('veilarbvisittkortfs.fjerntoast').then(resp =>
-      setFjernToastFeature(resp['veilarbvisittkortfs.fjerntoast'])
-    );
-  }, []);
-
-  useEffect(() => {
-    setVisTildelingFeiletModal(harFeilendeTildelinger);
-  }, [harFeilendeTildelinger]);
-
-  if (!visVeilederVerktoy) {
-    return null;
-  }
-
-  return (
-    <div className="veilederverktoylinje-wrapper">
-      <div className="veilederverktoyslinje">
-        <div className="veilederverktoyslinje__container">
-          <FeilTildelingModal />
-          <Arbeidslistekomponent fjernToastFeature={fjernToastFeature} />
-          <TildelVeileder fnr={fnr} />
-          <VeilederVerktoyKnapp onClick={navigerTilProsesser} />
-          <VeilederVerktoyNavigation />
+        <div className="veilederverktoylinje-wrapper">
+            <div className="veilederverktoyslinje">
+                <div className="veilederverktoyslinje__container">
+                    <FeilTildelingModal />
+                    <Arbeidslistekomponent fjernToastFeature={fjernToastFeature} />
+                    <TildelVeileder fnr={fnr} />
+                    <VeilederVerktoyKnapp onClick={navigerTilProsesser} />
+                    <VeilederVerktoyNavigation />
+                </div>
+            </div>
+            <Toasts />
         </div>
-      </div>
-      <Toasts />
-    </div>
-  );
+    );
 }
 
 const mapStateToProps = (state: Appstate) => ({
-  harFeilendeTildelinger: !!state.tildelVeileder.tildeltVeileder.error
+    harFeilendeTildelinger: !!state.tildelVeileder.tildeltVeileder.error
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  navigerTilProsesser: () => dispatch(navigerTilProcesser())
+    navigerTilProsesser: () => dispatch(navigerTilProcesser())
 });
 
 export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(Veilederverktoyslinje);

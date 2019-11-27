@@ -14,17 +14,13 @@ interface FormikDatepickerProps {
     className?: string;
 }
 
-function FormikDatoVelger({name, validate, label, ariaLabel, className}: FormikDatepickerProps) {
+function FormikDatoVelger({ name, validate, label, ariaLabel, className }: FormikDatepickerProps) {
     return (
-        <Field
-            validate={validate}
-            name={name}
-            id={name}
-        >
-            {({ field, form: {errors, setFieldValue}}: FieldProps) => {
+        <Field validate={validate} name={name} id={name}>
+            {({ field, form: { errors, setFieldValue } }: FieldProps) => {
                 const error = getIn(errors, name);
-                const datePickerClassName = classNames( 'skjemaelement', className, { 'datovelger--harFeil': error });
-                return(
+                const datePickerClassName = classNames('skjemaelement', className, { 'datovelger--harFeil': error });
+                return (
                     <div className={datePickerClassName}>
                         <span className="skjemaelement__label">{label}</span>
                         <Datovelger
@@ -42,11 +38,11 @@ function FormikDatoVelger({name, validate, label, ariaLabel, className}: FormikD
                                 if (!field.value && !moment(date).isValid()) {
                                     return;
                                 }
-                                setFieldValue(field.name, date); }
-                            }
+                                setFieldValue(field.name, date);
+                            }}
                             valgtDato={field.value}
                         />
-                        <SkjemaelementFeilmelding feil={error ? {feilmelding: error} : undefined}/>
+                        <SkjemaelementFeilmelding feil={error ? { feilmelding: error } : undefined} />
                     </div>
                 );
             }}

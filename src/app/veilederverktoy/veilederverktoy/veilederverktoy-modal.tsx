@@ -41,17 +41,11 @@ function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
             closeButton={true}
             portalClassName="visittkortfs-modal"
         >
-            <ModalHeader
-                tilbakeTekstId={props.tilbakeTekstId}
-                tilbake={props.tilbakeFunksjon}
-            />
+            <ModalHeader tilbakeTekstId={props.tilbakeTekstId} tilbake={props.tilbakeFunksjon} />
             <div className="modal-innhold">
                 <div className="modal-info-tekst">
                     <Innholdstittel className="modal-info-tekst__overskrift">
-                        <FormattedMessage
-                            id="innstillinger.modal.overskrift"
-                            values={{ navn: props.navnPaMotpart }}
-                        />
+                        <FormattedMessage id="innstillinger.modal.overskrift" values={{ navn: props.navnPaMotpart }} />
                     </Innholdstittel>
                 </div>
                 {props.children}
@@ -61,11 +55,14 @@ function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
 }
 
 const mapStateToProps = (state: Appstate) => ({
-    navnPaMotpart: PersonaliaSelector.selectSammensattNavn(state),
+    navnPaMotpart: PersonaliaSelector.selectSammensattNavn(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    tilbake: () => dispatch(navigerAction(null)),
+    tilbake: () => dispatch(navigerAction(null))
 });
 
-export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(injectIntl(VeilederVerktoyModal));
+export default connect<StateProps, DispatchProps, OwnProps>(
+    mapStateToProps,
+    mapDispatchToProps
+)(injectIntl(VeilederVerktoyModal));

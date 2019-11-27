@@ -11,13 +11,13 @@ function lagVeileder() {
         ident: id,
         navn: fornavn + ' ' + etternavn,
         fornavn: fornavn,
-        etternavn: etternavn,
+        etternavn: etternavn
     };
 }
 export interface VeilederListe {
-     veilederListe: VeilederData[];
- }
+    veilederListe: VeilederData[];
+}
 
-const veiledare: VeilederListe & JSONValue = {veilederListe: new Array(40).fill(0).map(() => lagVeileder())};
+const veiledare: VeilederListe & JSONValue = { veilederListe: new Array(40).fill(0).map(() => lagVeileder()) };
 
 export default veiledare;

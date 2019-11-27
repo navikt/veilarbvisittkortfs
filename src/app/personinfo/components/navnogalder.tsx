@@ -15,14 +15,12 @@ export function lagAlderTekst(personalia: Personalia): string {
     return `(${alder} år)`;
 }
 
-function NavnOgAlder(props: { personalia: Personalia, navn: string }) {
+function NavnOgAlder(props: { personalia: Personalia; navn: string }) {
     const alderTekst = lagAlderTekst(props.personalia);
 
     return (
         <>
-            <Systemtittel className="personinfo__navn_og_alder">
-                {`${props.navn} ${alderTekst}`}
-            </Systemtittel>
+            <Systemtittel className="personinfo__navn_og_alder">{`${props.navn} ${alderTekst}`}</Systemtittel>
         </>
     );
 }
