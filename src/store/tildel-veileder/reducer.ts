@@ -112,6 +112,7 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
         case TildelVeilederActionType.TILDEL_VEILEDER_ERROR: {
             return {
                 ...state,
+                status: 'ERROR',
                 tildeltVeileder: {
                     ...state.tildeltVeileder,
                     error: action.error
