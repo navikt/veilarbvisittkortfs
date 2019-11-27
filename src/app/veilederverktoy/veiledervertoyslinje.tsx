@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import VeilederVerktoyNavigation from './veilederverktoy/veilederverktoy-navigation';
 import VeilederVerktoyKnapp from './veilederverktoy/veileder-verktoy-knapp';
 import { navigerTilProcesser } from '../../store/navigation/actions';
-import FeatureApi from '../../api/feature-api';
 import Toasts from '../components/toast/toasts';
 import { Appstate } from '../../types/appstate';
 import { FeilModal } from '../components/feilmodal/feil-modal';
@@ -35,8 +34,6 @@ function Veilederverktoyslinje({
     visVeilederVerktoy,
     navigerTilProsesser
 }: VeilederverktoyslinjeProps) {
-    const [fjernToastFeature, setFjernToastFeature] = useState(false);
-
     const [visTildelingFeiletModal, setVisTildelingFeiletModal] = useState(harFeilendeTildelinger);
 
     useEffect(() => {
@@ -69,12 +66,6 @@ function Veilederverktoyslinje({
     };
 
     useEffect(() => {
-        FeatureApi.hentFeatures('veilarbvisittkortfs.fjerntoast').then(resp =>
-            setFjernToastFeature(resp['veilarbvisittkortfs.fjerntoast'])
-        );
-    }, []);
-
-    useEffect(() => {
         setVisTildelingFeiletModal(harFeilendeTildelinger);
     }, [harFeilendeTildelinger]);
 
@@ -87,7 +78,7 @@ function Veilederverktoyslinje({
             <div className="veilederverktoyslinje">
                 <div className="veilederverktoyslinje__container">
                     <FeilTildelingModal />
-                    <Arbeidslistekomponent fjernToastFeature={fjernToastFeature} />
+                    <Arbeidslistekomponent />
                     <TildelVeileder fnr={fnr} />
                     <VeilederVerktoyKnapp onClick={navigerTilProsesser} />
                     <VeilederVerktoyNavigation />

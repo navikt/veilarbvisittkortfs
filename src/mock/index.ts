@@ -15,11 +15,7 @@ const mock = FetchMock.configure({
 });
 
 mock.get('/veilarboppfolging/api/person/:fnr/oppfolgingsstatus', Oppfolgingsstatus);
-mock.get('/veilarbpersonflatefs/api/feature', {
-    'veilarbvedtaksstottefs.prelansering': true,
-    'veilarbvisittkortfs.fjerntoast': true,
-    'veilarbvisittkortfs.kanVarsles': true
-});
+mock.get('/veilarbpersonflatefs/api/feature', { 'veilarbvedtaksstottefs.prelansering': true });
 mock.get('/veilarboppfolging/api/oppfolging', Oppfolging);
 
 mock.get('/veilarbperson/api/person/:fnr', Personalia);
