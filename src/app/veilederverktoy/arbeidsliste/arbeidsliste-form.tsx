@@ -12,17 +12,15 @@ import {
     validerArbeidslisteKommentarFeldt,
     validerArbeidslisteTittelFeldt
 } from '../../utils/formik-validation';
-import { injectIntl, InjectedIntlProps }  from 'react-intl';
+import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 interface ArbeidslisteFormProps {
-    sistEndretAv?: OrNothing<{veilederId: string}>;
+    sistEndretAv?: OrNothing<{ veilederId: string }>;
     endringstidspunkt?: OrNothing<Date>;
-    visFjernArbeidslisteToast: boolean;
-
 }
 
-function ArbeidslisteForm (props: ArbeidslisteFormProps & InjectedIntlProps) {
-    const labelInputArea = props.intl.formatMessage({id: 'arbeidsliste.modal.tittel'});
+function ArbeidslisteForm(props: ArbeidslisteFormProps & InjectedIntlProps) {
+    const labelInputArea = props.intl.formatMessage({ id: 'arbeidsliste.modal.tittel' });
 
     return (
         <>
@@ -40,15 +38,17 @@ function ArbeidslisteForm (props: ArbeidslisteFormProps & InjectedIntlProps) {
                     validate={validerArbeidslisteKommentarFeldt}
                 />
             </div>
-            {!props.visFjernArbeidslisteToast && props.sistEndretAv && props.endringstidspunkt && <Undertekst className="arbeidsliste--modal-redigering">
-                <FormattedMessage
-                    id="arbeidsliste.endringsinfo"
-                    values={{
-                        dato: moment(props.endringstidspunkt).format('DD.MM.YYYY'),
-                        veileder: props.sistEndretAv.veilederId
-                    }}
-                />
-            </Undertekst>}
+            {props.sistEndretAv && props.endringstidspunkt && (
+                <Undertekst className="arbeidsliste--modal-redigering">
+                    <FormattedMessage
+                        id="arbeidsliste.endringsinfo"
+                        values={{
+                            dato: moment(props.endringstidspunkt).format('DD.MM.YYYY'),
+                            veileder: props.sistEndretAv.veilederId
+                        }}
+                    />
+                </Undertekst>
+            )}
             <FormikDatoVelger
                 name="frist"
                 validate={validerArbeidslisteDatoFeldt}

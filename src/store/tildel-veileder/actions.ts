@@ -2,7 +2,6 @@ import { VeilederData } from '../../types/veilederdata';
 import { TildelVeilederData } from '../../types/tildel-veileder';
 import { VeilederListe } from '../../mock/veiledereliste';
 import { StringOrNothing } from '../../types/utils/stringornothings';
-import { EnhetData } from '../../types/enhet';
 
 export enum TildelVeilederActionType {
     HENT_VEILEDER_PA_ENHETEN = 'HENT_VEILEDER_PA_ENHETEN',
@@ -13,10 +12,7 @@ export enum TildelVeilederActionType {
     HENT_PALOGGET_VEILEDER_ERROR = 'HENT_PALOGGET_VEILEDER_ERROR',
     TILDEL_VEILEDER = 'TILDEL_VEILEDER',
     TILDEL_VEILEDER_SUCCESS= 'TILDEL_VEILEDER_SUCCESS',
-    TILDEL_VEILEDER_ERROR = 'TILDEL_VEILEDER_ERROR',
-    HENT_ENHET_NAVN = 'HENT_ENHET_NAVN',
-    HENT_ENHET_NAVN_SUCCESS = 'HENT_ENHET_NAVN_SUCCESS',
-    HENT_ENHET_NAVN_ERROR = 'HENT_ENHET_NAVN_ERROR',
+    TILDEL_VEILEDER_ERROR = 'TILDEL_VEILEDER_ERROR'
 }
 
 export interface TildelVeilederAction {
@@ -67,21 +63,6 @@ interface HentPaloggetVeilederActionError {
     error: Error;
 }
 
-export interface HentEnhetNavnAction {
-    type: TildelVeilederActionType.HENT_ENHET_NAVN;
-    enhetId: string;
-}
-
-interface HentEnhetNavnActionSuccess {
-    type: TildelVeilederActionType.HENT_ENHET_NAVN_SUCCESS;
-    data: EnhetData;
-}
-
-interface HentEnhetNavnActionError {
-    type: TildelVeilederActionType.HENT_ENHET_NAVN_ERROR;
-    error: Error;
-}
-
 export const tildelTilVeileder = (data: TildelVeilederData[]): TildelVeilederAction => ({
     type: TildelVeilederActionType.TILDEL_VEILEDER,
     data
@@ -128,21 +109,6 @@ export const hentAlleVeiledereForEnheten = (enhetId: string): HentVeilederPaEnhe
 
 });
 
-export const hentEnhetNavn = (enhetId: string): HentEnhetNavnAction => ({
-    type: TildelVeilederActionType.HENT_ENHET_NAVN,
-    enhetId,
-});
-
-export const hentEnhetNavnSuccess = (data: EnhetData): HentEnhetNavnActionSuccess => ({
-    type: TildelVeilederActionType.HENT_ENHET_NAVN_SUCCESS,
-    data,
-});
-
-export const hentEnhetNavnError = (error: Error): HentEnhetNavnActionError => ({
-    type: TildelVeilederActionType.HENT_ENHET_NAVN_ERROR,
-    error,
-});
-
 export type TildelVeilederActions = HentVeilederPaEnhetenAction |
     HentVeilederPaEnhetenActionSuccess |
     HentVeilederPaEnhetenActionError |
@@ -151,7 +117,4 @@ export type TildelVeilederActions = HentVeilederPaEnhetenAction |
     HentPaloggetVeilederActionError |
     TildelVeilederAction |
     TildelVeilederActionSuccess |
-    TildelVeilederActionError |
-    HentEnhetNavnAction |
-    HentEnhetNavnActionSuccess |
-    HentEnhetNavnActionError;
+    TildelVeilederActionError;

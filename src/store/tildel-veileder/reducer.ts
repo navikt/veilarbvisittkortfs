@@ -3,11 +3,14 @@ import { Reducer } from 'redux';
 import {
     hentAlleVeiledereForEnhetenError,
     hentAlleVeiledereForEnhetenSuccess,
-    HentEnhetNavnAction, hentEnhetNavnError, hentEnhetNavnSuccess,
-    hentPaloggetVeilederError, hentPaloggetVeilederSuccess,
-    HentVeilederPaEnhetenAction, TildelVeilederAction,
+    hentPaloggetVeilederError,
+    hentPaloggetVeilederSuccess,
+    HentVeilederPaEnhetenAction,
+    TildelVeilederAction,
     TildelVeilederActions,
-    TildelVeilederActionType, tildelVeilederError, tildelVeilederSuccess
+    TildelVeilederActionType,
+    tildelVeilederError,
+    tildelVeilederSuccess
 } from './actions';
 import { OrNothing } from '../../types/utils/ornothing';
 import { call, put, takeLatest } from 'redux-saga/effects';
@@ -16,7 +19,7 @@ import { TildelVeilederResponse } from '../../types/tildel-veileder';
 import { VeilederListe } from '../../mock/veiledereliste';
 import { FETCH_STATUS } from '../../types/fetch-status';
 import { triggerReRenderingAvMao } from '../../app/utils/utils';
-import { EnhetData } from '../../types/enhet';
+import { visFjernTildeltVeilederToast } from '../toast/actions';
 
 export interface TildelVeilederState {
     status: FETCH_STATUS;
@@ -28,10 +31,8 @@ export interface TildelVeilederState {
         data: VeilederListe;
     };
     tildeltVeileder: {
-        data: OrNothing<TildelVeilederResponse>
-    };
-    enhet: {
-        data: EnhetData;
+        data: OrNothing<TildelVeilederResponse>;
+        error: OrNothing<Error>;
     };
 }
 
@@ -43,40 +44,42 @@ const initialState: TildelVeilederState = {
             ident: '',
             navn: '',
             fornavn: '',
-            etternavn: '',
-        },
+            etternavn: ''
+        }
     },
     veilederPaEnheten: {
-        data: {veilederListe: []},
+        data: { veilederListe: [] }
     },
     tildeltVeileder: {
         data: null,
-    },
-    enhet: {
-        data: {
-            enhetId: '',
-            navn: '',
-        },
-    },
+        error: null
+    }
 };
 
 const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> = (state = initialState, action) => {
     switch (action.type) {
         case TildelVeilederActionType.HENT_PALOGGET_VEILEDER:
         case TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN:
-        case TildelVeilederActionType.TILDEL_VEILEDER:
-        case TildelVeilederActionType.HENT_ENHET_NAVN:
             return {
+                ...state,
+                status: 'LOADING'
+            };
+        case TildelVeilederActionType.TILDEL_VEILEDER:
+            return {
+                ...state,
                 status: 'LOADING',
-                ...state
+                tildeltVeileder: {
+                    ...state.tildeltVeileder,
+                    error: null
+                }
             };
         case TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN_SUCCESS: {
             return {
                 ...state,
                 status: 'DONE',
                 veilederPaEnheten: {
-                    data : action.data
-                },
+                    data: action.data
+                }
             };
         }
         case TildelVeilederActionType.HENT_PALOGGET_VEILEDER_SUCCESS: {
@@ -93,28 +96,27 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
                 ...state,
                 status: 'DONE',
                 tildeltVeileder: {
-                    data: action.data
-                },
-            };
-        }
-        case TildelVeilederActionType.HENT_ENHET_NAVN_SUCCESS: {
-            return {
-                ...state,
-                status: 'DONE',
-                enhet: {
+                    error: null,
                     data: action.data
                 }
             };
         }
         case TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN_ERROR:
-        case TildelVeilederActionType.HENT_PALOGGET_VEILEDER_ERROR:
-        case TildelVeilederActionType.TILDEL_VEILEDER_ERROR:
-        case TildelVeilederActionType.HENT_ENHET_NAVN_ERROR: {
+        case TildelVeilederActionType.HENT_PALOGGET_VEILEDER_ERROR: {
             return {
                 ...state,
                 status: 'ERROR',
-                error: action.error,
-
+                error: action.error
+            };
+        }
+        case TildelVeilederActionType.TILDEL_VEILEDER_ERROR: {
+            return {
+                ...state,
+                status: 'ERROR',
+                tildeltVeileder: {
+                    ...state.tildeltVeileder,
+                    error: action.error
+                }
             };
         }
         default:
@@ -124,7 +126,7 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
 
 function* hentAlleVeiledere(action: HentVeilederPaEnhetenAction) {
     try {
-        const response = yield call( () => VeilederApi.hentVeiledereForEnhet(action.enhetId));
+        const response = yield call(() => VeilederApi.hentVeiledereForEnhet(action.enhetId));
         yield put(hentAlleVeiledereForEnhetenSuccess(response));
     } catch (e) {
         yield put(hentAlleVeiledereForEnhetenError(e));
@@ -133,7 +135,7 @@ function* hentAlleVeiledere(action: HentVeilederPaEnhetenAction) {
 
 function* hentPaloggetVeileder() {
     try {
-        const response = yield call( () => VeilederApi.hentVeieldere());
+        const response = yield call(() => VeilederApi.hentVeieldere());
         yield put(hentPaloggetVeilederSuccess(response));
     } catch (e) {
         yield put(hentPaloggetVeilederError(e));
@@ -142,21 +144,16 @@ function* hentPaloggetVeileder() {
 
 function* tildelVeileder(action: TildelVeilederAction) {
     try {
-        const response = yield call( () => VeilederApi.tildelTilVeileder(action.data));
-        if (response.feilendeTilordninger.length === 0 ) {
-            yield put(tildelVeilederSuccess(Object.assign(response, {tilVeilederId : action.data[0].tilVeilederId})));
+        const response = yield call(() => VeilederApi.tildelTilVeileder(action.data));
+        if (response.feilendeTilordninger.length > 0 ) {
+            yield put(tildelVeilederError(new Error('Noen brukere kunne ikke tilordnes en veileder')));
+        } else {
+            yield put(tildelVeilederSuccess(Object.assign(response, { tilVeilederId: action.data[0].tilVeilederId })));
+            yield put(visFjernTildeltVeilederToast());
             triggerReRenderingAvMao();
         }
     } catch (e) {
         yield put(tildelVeilederError(e));
-    }
-}
-function* hentEnhetNavn(action: HentEnhetNavnAction) {
-    try {
-        const response = yield call(() => VeilederApi.hentEnhetNavn(action.enhetId));
-        yield put(hentEnhetNavnSuccess(response));
-    } catch (e) {
-        yield put(hentEnhetNavnError(e));
     }
 }
 
@@ -164,7 +161,6 @@ export function* tildelVeilederSaga() {
     yield takeLatest(TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN, hentAlleVeiledere);
     yield takeLatest(TildelVeilederActionType.HENT_PALOGGET_VEILEDER, hentPaloggetVeileder);
     yield takeLatest(TildelVeilederActionType.TILDEL_VEILEDER, tildelVeileder);
-    yield takeLatest(TildelVeilederActionType.HENT_ENHET_NAVN, hentEnhetNavn);
 }
 
 export default tildelVelederReducer;

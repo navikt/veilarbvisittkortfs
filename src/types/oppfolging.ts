@@ -8,9 +8,8 @@ export interface EskaleringsVarsel {
     oppretterAv: string;
     opprettetDato: string;
     avsluttetDato: StringOrNothing;
-    tilhorendeDialogId:string;
+    tilhorendeDialogId: string;
 }
-
 
 export interface AvslutningStatus {
     harTiltak: boolean;
@@ -30,7 +29,6 @@ export interface OppfolgingsPerioder {
     kvpPerioder: any[];
 }
 
-
 export interface Oppfolging {
     avslutningStatus: OrNothing<AvslutningStatus>;
     erIkkeArbeidssokerUtenOppfolging: boolean;
@@ -49,5 +47,5 @@ export interface Oppfolging {
     underKvp: boolean;
     underOppfolging: boolean;
     veilederId: StringOrNothing;
-    kanVarsles: boolean
+    kanVarsles: boolean;
 }

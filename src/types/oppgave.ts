@@ -1,12 +1,12 @@
 import { StringOrNothing } from './utils/stringornothings';
 
 export type OppgaveTema =
-    'DAGPENGER' |
-    'OPPFOLGING' |
-    'ARBEIDSAVKLARING' |
-    'INDIVIDSTONAD' |
-    'ENSLIG_FORSORGER'|
-    'TILLEGGSTONAD';
+    | 'DAGPENGER'
+    | 'OPPFOLGING'
+    | 'ARBEIDSAVKLARING'
+    | 'INDIVIDSTONAD'
+    | 'ENSLIG_FORSORGER'
+    | 'TILLEGGSTONAD';
 
 export type OppgaveType = 'VURDER_HENVENDELSE' | 'VURDER_KONSEKVENS_FOR_YTELSE';
 export type PrioritetType = 'NORM' | 'LAV' | 'HOY';

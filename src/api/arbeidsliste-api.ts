@@ -9,7 +9,7 @@ export interface ArbeidslisteApi {
     redigerArbeidsliste: (fnr: string, arbeidsliste: ArbeidslisteformValues) => Promise<Arbeidsliste>;
 }
 
-function lagreArbeidsliste (fnr: string, arbeidsliste: ArbeidslisteformValues) {
+function lagreArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformValues) {
     return postAsJson(`/veilarbportefolje/api/arbeidsliste/${fnr}/`, arbeidsliste);
 }
 

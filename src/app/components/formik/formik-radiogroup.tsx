@@ -6,37 +6,49 @@ interface FormikRadioFilterProps<T> {
     name: string;
     data: T[];
     radioName: string;
-    createLabel: (object: T) =>  string;
-    createValue: (object: T) =>  string;
+    createLabel: (object: T) => string;
+    createValue: (object: T) => string;
     closeDropdown: () => void;
     defaultValue?: string;
 }
 
-function FormikRadioGroup<T> ({name, data, radioName, createLabel, createValue, closeDropdown, defaultValue}: FormikRadioFilterProps<T>) {
+function FormikRadioGroup<T>({
+    name,
+    data,
+    radioName,
+    createLabel,
+    createValue,
+    defaultValue
+}: FormikRadioFilterProps<T>) {
     return (
         <Field name={name}>
-            {({ field, form}: FieldProps)  => {
+            {({ field, form }: FieldProps) => {
                 if (!field.value && defaultValue) {
                     form.setFieldValue(field.name, defaultValue);
                 }
-                return(
+                return (
                     <div className="visittkortfs-radio-filterform">
                         <div className="radio-filterform__valg scrollbar">
-                            {data.map(o =>
-                                <Radio
-                                    name={radioName}
-                                    label={createLabel(o)}
-                                    value={createValue(o)}
-                                    id={`${createValue(o)}-${radioName}`}
-                                    key={`${createValue(o)}-${radioName}`}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                        form.setFieldValue(field.name, e.target.value);
-                                    }}
-                                />
-                            )}
+                            {data.map(o => {
+                                const value = createValue(o);
+                                return (
+                                    <Radio
+                                        name={radioName}
+                                        label={createLabel(o)}
+                                        value={value}
+                                        id={`${value}-${radioName}`}
+                                        key={`${value}-${radioName}`}
+                                        checked={field.value === value}
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                            form.setFieldValue(field.name, e.target.value)
+                                        }
+                                    />
+                                );
+                            })}
                         </div>
                     </div>
-                ); }}
+                );
+            }}
         </Field>
     );
 }

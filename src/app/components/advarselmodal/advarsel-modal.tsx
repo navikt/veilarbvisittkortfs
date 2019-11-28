@@ -14,7 +14,16 @@ interface VarselModalProps {
     className?: string;
 }
 
-export function AdvarselModal({contentLabel, isOpen, onRequestClose, children, closeTimeoutMS, closeButton, shouldCloseOnOverlayClick, className}: React.PropsWithChildren<VarselModalProps>) {
+export function AdvarselModal({
+    contentLabel,
+    isOpen,
+    onRequestClose,
+    children,
+    closeTimeoutMS,
+    closeButton,
+    shouldCloseOnOverlayClick,
+    className
+}: React.PropsWithChildren<VarselModalProps>) {
     return (
         <ModalWrapper
             isOpen={isOpen}
@@ -25,10 +34,8 @@ export function AdvarselModal({contentLabel, isOpen, onRequestClose, children, c
             portalClassName="advarsel-modal"
             shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
         >
-            <AdvarselSirkelIkon/>
-            <div className={classNames('modal__innehold', className)}>
-                {children}
-            </div>
+            <AdvarselSirkelIkon />
+            <div className={classNames('modal__innehold', className)}>{children}</div>
         </ModalWrapper>
     );
 }

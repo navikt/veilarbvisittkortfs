@@ -5,10 +5,11 @@ export function storeForbokstaver(tekster: string[]): string {
 
     return tekst
         .split(' ')
-        .map(ord => ord
-            .split('-')
-            .map(navn => navn.charAt(0).toUpperCase() + navn.slice(1).toLowerCase())
-            .join('-')
+        .map(ord =>
+            ord
+                .split('-')
+                .map(navn => navn.charAt(0).toUpperCase() + navn.slice(1).toLowerCase())
+                .join('-')
         )
         .join(' ');
 }
@@ -62,9 +63,9 @@ export function dispatchOppfolgingAvslutet() {
 }
 
 export function hentEnhetsIdFraUrl(): string {
-  const enhetId = queryString.parse(window.location.search).enhet;
-  if (Array.isArray(enhetId)) {
+    const enhetId = queryString.parse(window.location.search).enhet;
+    if (Array.isArray(enhetId)) {
         return enhetId[0];
     }
-  return enhetId || '';
+    return enhetId || '';
 }

@@ -1,143 +1,98 @@
-import React, { Component } from 'react';
+import React, { useRef, useState } from 'react';
 import classNames from 'classnames';
 import './dropdown.less';
 import withClickMetric from '../click-metric/click-metric';
 import hiddenIf from '../hidden-if/hidden-if';
+import { useDocumentEventListner } from '../../../hooks/use-event-listner';
 
 /* tslint:disable */
-const btnCls = (erApen: boolean, className: string|undefined) =>
+const btnCls = (erApen: boolean, className: string | undefined) =>
     classNames('dropdown', className, {
-        'dropdown--apen': erApen,
+        'dropdown--apen': erApen
     });
 
-function isChildOf(parent: any, element: any): boolean {
-    if (element === document) {
-
-        return false;
-    }
-
-    if (element === parent) {
-        return true;
-    }
-    return isChildOf(parent, element.parentNode);
-}
-function settFokus(element: any) {
-    if (element !== null) {
-        const elementer = element.querySelector('button, a, input, select');
-        if (elementer) {
-            elementer.focus();
-        }
-    }
-}
 interface DropdownProps {
     apen?: boolean;
     name: string;
     knappeTekst: string;
-    render: (lukkDropdown:()=>void) => React.ReactNode;
+    render: (lukkDropdown: () => void) => React.ReactNode;
     className?: string;
     onLukk?: () => void;
     onClick?: () => void;
     btnClassnames?: string;
 }
 
-interface DropdownState {
-    apen: boolean;
+function harTrykktPaEsc(e: React.KeyboardEvent) {
+    return e.keyCode === 27;
 }
 
-class Dropdown extends Component<DropdownProps, DropdownState> {
-    // @ts-ignore
-    private btn: HTMLButtonElement;
-    // @ts-ignore
-    private component: React.ReactNode;
+function Dropdown(props: DropdownProps) {
+    const [apen, setApen] = useState(props.apen || false);
+    const btnRef = useRef<HTMLButtonElement>(null);
+    const loggNode = useRef<HTMLDivElement>(null);
+    const { onLukk } = props;
 
-    constructor(props: DropdownProps) {
-        super(props);
-
-        this.state = { apen: this.props.apen || false };
-
-        this.eventHandler = this.eventHandler.bind(this);
-        this.apneDropdown = this.apneDropdown.bind(this);
-        this.lukkDropdown = this.lukkDropdown.bind(this);
-        this.toggleDropdown = this.toggleDropdown.bind(this);
-        this.bindComponent = this.bindComponent.bind(this);
-        this.bindBtn = this.bindBtn.bind(this);
-    }
-
-    eventHandler(e: any) {
-        if (e.code === 'Escape' || !isChildOf(this.component, e.target)) {
-            this.lukkDropdown();
+    const lukkDropdown = () => {
+        if (apen) {
+            setApen(false);
+            btnRef.current && btnRef.current.focus();
+            onLukk && onLukk();
         }
-    }
+    };
 
-    apneDropdown() {
-        document.body.addEventListener('click', this.eventHandler); // eslint-disable-line no-undef
-        document.body.addEventListener('keyup', this.eventHandler); // eslint-disable-line no-undef
-        this.setState({ apen: true });
-    }
-
-    lukkDropdown() {
-        document.body.removeEventListener('click', this.eventHandler); // eslint-disable-line no-undef
-        document.body.removeEventListener('keyup', this.eventHandler); // eslint-disable-line no-undef
-        this.setState({ apen: false });
-        this.btn.focus();
-        if(this.props.onLukk) {
-            this.props.onLukk();
+    const eventHandler = (e: any) => {
+        if (loggNode.current && !loggNode.current.contains(e.target)) {
+            lukkDropdown();
         }
+    };
+
+    useDocumentEventListner('click', eventHandler);
+
+    function apneDropdown() {
+        setApen(true);
     }
 
-    toggleDropdown() {
-
-        if (this.state.apen) {
-            this.lukkDropdown();
+    function toggleDropdown() {
+        if (apen) {
+            lukkDropdown();
         } else {
-            const { onClick } = this.props;
-
-            if (onClick) {
-                onClick();
-            }
-
-            this.apneDropdown();
+            props.onClick && props.onClick();
+            apneDropdown();
         }
     }
 
-    bindComponent(component: React.ReactNode) {
-        this.component = component;
-    }
-
-    bindBtn(btn: HTMLButtonElement) {
-        this.btn = btn;
-    }
-
-    render() {
-        const { name, className, knappeTekst } = this.props;
-        const { apen } = this.state;
-
-        return (
-          <div className="dropdown">
-            <div className={btnCls(apen, className)} ref={this.bindComponent}>
-                    <button
-                        ref={this.bindBtn}
-                        type="button"
-                        className={classNames("dropdown__btn", this.props.btnClassnames)}
-                        onClick={this.toggleDropdown}
-                        aria-expanded={apen}
-                        aria-controls={`${name}-dropdown__innhold`}
-                    >
-                        {knappeTekst}
-                    </button>
-                <div
-                    hidden={!apen}
-                    className={`${name}-dropdown__innhold dropdown__innhold`}
-                    id={`${name}-dropdown__innhold`}
-                    ref={settFokus}
+    const { name, className, knappeTekst } = props;
+    return (
+        <div className="dropdown">
+            <div className={btnCls(apen, className)} ref={loggNode}>
+                <button
+                    ref={btnRef}
+                    type="button"
+                    className={classNames('dropdown__btn', props.btnClassnames)}
+                    onClick={toggleDropdown}
+                    aria-expanded={apen}
+                    aria-controls={`${name}-dropdown__innhold`}
                 >
-
-                    {this.props.render(this.lukkDropdown)}
-                </div>
+                    {knappeTekst}
+                </button>
+                {apen && (
+                    <div
+                        className={`${name}-dropdown__innhold dropdown__innhold`}
+                        id={`${name}-dropdown__innhold`}
+                        onKeyDown={e => {
+                            if (harTrykktPaEsc(e)) {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                lukkDropdown();
+                            }
+                        }}
+                    >
+                        {props.render(lukkDropdown)}
+                    </div>
+                )}
             </div>
-          </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default withClickMetric(hiddenIf(Dropdown));

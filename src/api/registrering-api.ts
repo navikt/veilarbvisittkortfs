@@ -5,7 +5,7 @@ export type RegistreringType = 'ORDINAER' | 'SYKMELDT';
 export interface RegistreringData {
     type: RegistreringType;
     registrering: {
-        manueltRegistrertAv: {} | null
+        manueltRegistrertAv: {} | null;
     };
 }
 

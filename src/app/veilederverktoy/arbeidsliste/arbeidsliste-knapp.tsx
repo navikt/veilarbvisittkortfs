@@ -18,7 +18,7 @@ function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
             onClick={props.onClick}
             hidden={props.hidden}
         >
-            <ArbeidslisteIkon className={classNames('knapp-fss__icon', {'icon--filled': props.ifylldIkon})}/>
+            <ArbeidslisteIkon className={classNames('knapp-fss__icon', { 'icon--filled': props.ifylldIkon })} />
             <span>Arbeidsliste</span>
         </KnappFss>
     );
