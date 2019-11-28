@@ -117,4 +117,4 @@ export type TildelVeilederActions = HentVeilederPaEnhetenAction |
     HentPaloggetVeilederActionError |
     TildelVeilederAction |
     TildelVeilederActionSuccess |
-    TildelVeilederActionError ;
+    TildelVeilederActionError;
