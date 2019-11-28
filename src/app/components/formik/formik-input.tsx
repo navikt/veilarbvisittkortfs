@@ -9,11 +9,14 @@ interface InputProps {
     label: string;
 }
 
-function FormikInput<P>({name, validate, ...inputProps}: InputProps & NavFrontendInputProps)
-    : React.ReactElement<FieldProps & NavFrontendInputProps> {
+function FormikInput<P>({
+    name,
+    validate,
+    ...inputProps
+}: InputProps & NavFrontendInputProps): React.ReactElement<FieldProps & NavFrontendInputProps> {
     return (
         <Field validate={validate} name={name}>
-            {({ field, form}: FieldProps)  => {
+            {({ field, form }: FieldProps) => {
                 const feil = getErrors(form.errors, form.touched, name);
                 return (
                     <Input

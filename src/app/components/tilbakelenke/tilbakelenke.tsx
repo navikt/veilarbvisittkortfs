@@ -10,16 +10,15 @@ interface Props {
 
 function Tilbakelenke(props: Props) {
     const tilbakeLenke =
-        props.tilbakeTilFlate === 'veilarbportefoljeflatefs' ? `/${props.tilbakeTilFlate}/tilbake?enhet=${props.enhet}` :
-        `/${props.tilbakeTilFlate}/${props.fnr}?enhet=${props.enhet}`;
+        props.tilbakeTilFlate === 'veilarbportefoljeflatefs'
+            ? `/${props.tilbakeTilFlate}/tilbake?enhet=${props.enhet}`
+            : `/${props.tilbakeTilFlate}/${props.fnr}?enhet=${props.enhet}`;
 
-    const tilbakeTekst =  props.tilbakeTilFlate === 'veilarbportefoljeflatefs' ? 'Oversikten' : 'Aktivitetsplan';
+    const tilbakeTekst = props.tilbakeTilFlate === 'veilarbportefoljeflatefs' ? 'Oversikten' : 'Aktivitetsplan';
 
     return (
         <a className="visittkortfs__tilbakelenke" href={tilbakeLenke}>
-            <VenstreChevron
-                className="visittkortfs__tilbakelenke--chevron"
-            />
+            <VenstreChevron className="visittkortfs__tilbakelenke--chevron" />
             <span className="visittkortfs__tilbakelenke--tekst">{`Til ${tilbakeTekst}`}</span>
         </a>
     );

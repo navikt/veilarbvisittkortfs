@@ -5,9 +5,12 @@ import {
     hentAlleVeiledereForEnhetenSuccess,
     hentPaloggetVeilederError,
     hentPaloggetVeilederSuccess,
-    HentVeilederPaEnhetenAction, TildelVeilederAction,
+    HentVeilederPaEnhetenAction,
+    TildelVeilederAction,
     TildelVeilederActions,
-    TildelVeilederActionType, tildelVeilederError, tildelVeilederSuccess
+    TildelVeilederActionType,
+    tildelVeilederError,
+    tildelVeilederSuccess
 } from './actions';
 import { OrNothing } from '../../types/utils/ornothing';
 import { call, put, takeLatest } from 'redux-saga/effects';
@@ -28,7 +31,7 @@ export interface TildelVeilederState {
         data: VeilederListe;
     };
     tildeltVeileder: {
-        data: OrNothing<TildelVeilederResponse>,
+        data: OrNothing<TildelVeilederResponse>;
         error: OrNothing<Error>;
     };
 }
@@ -41,11 +44,11 @@ const initialState: TildelVeilederState = {
             ident: '',
             navn: '',
             fornavn: '',
-            etternavn: '',
-        },
+            etternavn: ''
+        }
     },
     veilederPaEnheten: {
-        data: {veilederListe: []},
+        data: { veilederListe: [] }
     },
     tildeltVeileder: {
         data: null,
@@ -57,10 +60,18 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
     switch (action.type) {
         case TildelVeilederActionType.HENT_PALOGGET_VEILEDER:
         case TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN:
+            return {
+                ...state,
+                status: 'LOADING'
+            };
         case TildelVeilederActionType.TILDEL_VEILEDER:
             return {
                 ...state,
                 status: 'LOADING',
+                tildeltVeileder: {
+                    ...state.tildeltVeileder,
+                    error: null
+                }
             };
         case TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN_SUCCESS: {
             return {
@@ -68,7 +79,7 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
                 status: 'DONE',
                 veilederPaEnheten: {
                     data: action.data
-                },
+                }
             };
         }
         case TildelVeilederActionType.HENT_PALOGGET_VEILEDER_SUCCESS: {
@@ -85,9 +96,9 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
                 ...state,
                 status: 'DONE',
                 tildeltVeileder: {
-                    ...state.tildeltVeileder,
+                    error: null,
                     data: action.data
-                },
+                }
             };
         }
         case TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN_ERROR:
@@ -95,18 +106,17 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
             return {
                 ...state,
                 status: 'ERROR',
-                error: action.error,
-
+                error: action.error
             };
         }
         case TildelVeilederActionType.TILDEL_VEILEDER_ERROR: {
             return {
                 ...state,
-                tildeltVeileder : {
+                status: 'ERROR',
+                tildeltVeileder: {
                     ...state.tildeltVeileder,
                     error: action.error
                 }
-
             };
         }
         default:
@@ -137,9 +147,8 @@ function* tildelVeileder(action: TildelVeilederAction) {
         const response = yield call(() => TildelVeilederApi.tildelTilVeileder(action.data));
         if (response.feilendeTilordninger.length > 0) {
             yield put(tildelVeilederError(new Error('Noen brukere kunne ikke tilordnes en veileder')));
-
         } else {
-            yield put(tildelVeilederSuccess(Object.assign(response, {tilVeilederId: action.data[0].tilVeilederId})));
+            yield put(tildelVeilederSuccess(Object.assign(response, { tilVeilederId: action.data[0].tilVeilederId })));
             yield put(visFjernTildeltVeilederToast());
             triggerReRenderingAvMao();
         }

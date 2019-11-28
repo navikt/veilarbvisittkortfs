@@ -22,22 +22,19 @@ interface ArbeidslisteProps {
 }
 
 function ArbeidslisteModal(props: ArbeidslisteProps) {
-
     const arbeidslisteEmptyValues = {
         overskrift: '',
         kommentar: '',
-        frist: '',
-    } ;
-
-    const arbeidslisteValues =   {
-        overskrift: props.arbeidsliste.overskrift ,
-        kommentar: props.arbeidsliste.kommentar,
-        frist:   props.arbeidsliste.frist ?
-            moment(props.arbeidsliste.frist).format('YYYY-MM-DD') : ''
+        frist: ''
     };
 
-    const initalValues = !props.arbeidsliste.endringstidspunkt ?
-        arbeidslisteEmptyValues : arbeidslisteValues;
+    const arbeidslisteValues = {
+        overskrift: props.arbeidsliste.overskrift,
+        kommentar: props.arbeidsliste.kommentar,
+        frist: props.arbeidsliste.frist ? moment(props.arbeidsliste.frist).format('YYYY-MM-DD') : ''
+    };
+
+    const initalValues = !props.arbeidsliste.endringstidspunkt ? arbeidslisteEmptyValues : arbeidslisteValues;
 
     const onRequestClose = (formikProps: FormikProps<ArbeidslisteformValues>) => {
         const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
@@ -51,27 +48,29 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
         <Formik
             key={props.arbeidsliste.frist ? props.arbeidsliste.frist.toString() : Date.now().toString()}
             initialValues={initalValues}
-            onSubmit={(values) => {
+            onSubmit={values => {
                 props.onSubmit(values);
                 props.lukkModal();
             }}
-            render={ formikProps =>
+            render={formikProps => (
                 <Modal
                     contentLabel="Arbeidsliste"
                     isOpen={props.isOpen}
                     className="arbeidsliste-modal"
                     onRequestClose={() => onRequestClose(formikProps)}
                 >
-                    <ModalHeader/>
+                    <ModalHeader />
                     <div className="modal-innhold">
                         <div className="modal-info-tekst">
                             <Innholdstittel className="modal-info-tekst__overskrift">
-                                {!props.arbeidsliste.endringstidspunkt ? 'Legg til i arbeidsliste' : 'Rediger arbeidsliste'}
+                                {!props.arbeidsliste.endringstidspunkt
+                                    ? 'Legg til i arbeidsliste'
+                                    : 'Rediger arbeidsliste'}
                             </Innholdstittel>
                             <Undertittel>
                                 <FormattedMessage
                                     id="arbeidsliste.modal.personalia"
-                                    values={{navn: props.navn, fnr: props.fnr}}
+                                    values={{ navn: props.navn, fnr: props.fnr }}
                                 />
                             </Undertittel>
                             <Form>
@@ -89,9 +88,8 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
                         </div>
                     </div>
                 </Modal>
-            }
+            )}
         />
-
     );
 }
 

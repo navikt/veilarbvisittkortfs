@@ -1,10 +1,6 @@
 import Oppfolgingsstatus from './oppfolging-status';
 import Oppfolging from './oppfolging';
-import FetchMock, {
-    HandlerArgument,
-    MiddlewareUtils,
-    ResponseUtils
-} from 'yet-another-fetch-mock';
+import FetchMock, { HandlerArgument, MiddlewareUtils, ResponseUtils } from 'yet-another-fetch-mock';
 import Personalia from './personalia';
 import Arbeidsliste from './arbeidsliste';
 import Veilederliste from './veiledereliste';
@@ -12,22 +8,14 @@ import VeilederData from './veiledere';
 import InnstillingsHistorikk from './instillingshistorikk';
 import Oppgavehistorikk from './oppgave-historikk';
 import Henvendelse from './henvedelse';
-import feilResultat from './resultat';
 
 const mock = FetchMock.configure({
     enableFallback: true,
-    middleware: MiddlewareUtils.combine(
-        MiddlewareUtils.delayMiddleware(500),
-        MiddlewareUtils.loggingMiddleware()
-    )
+    middleware: MiddlewareUtils.combine(MiddlewareUtils.delayMiddleware(500), MiddlewareUtils.loggingMiddleware())
 });
 
 mock.get('/veilarboppfolging/api/person/:fnr/oppfolgingsstatus', Oppfolgingsstatus);
-mock.get('/veilarbpersonflatefs/api/feature', {
-    'veilarbvedtaksstottefs.prelansering': true,
-    'veilarbvisittkortfs.fjerntoast': true,
-    'veilarbvisittkortfs.kanVarsles': true
-});
+mock.get('/veilarbpersonflatefs/api/feature', { 'veilarbvedtaksstottefs.prelansering': true });
 mock.get('/veilarboppfolging/api/oppfolging', Oppfolging);
 
 mock.get('/veilarbperson/api/person/:fnr', Personalia);
@@ -36,19 +24,18 @@ mock.get('/veilarbvedtaksstotte/api/:fnr/harutkast', true);
 mock.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', Veilederliste);
 mock.get('/veilarbveileder/api/veileder/me', VeilederData);
 
-// mock.post('/veilarboppfolging/api/tilordneveileder', {feilendeTilordninger: []});
-mock.post('/veilarboppfolging/api/tilordneveileder', feilResultat);
+mock.post('/veilarboppfolging/api/tilordneveileder', { feilendeTilordninger: [] });
+//mock.post('/veilarboppfolging/api/tilordneveileder', feilResultat);
 
 /*--OPPFOLGING--*/
-mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', {tilgangTilBrukersKontor: true});
+mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', { tilgangTilBrukersKontor: true });
 mock.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', InnstillingsHistorikk);
 mock.post('/veilarboppfolging/api/oppfolging/startEskalering/', ResponseUtils.statusCode(204));
 mock.post('/veilarboppfolging/api/oppfolging/avsluttOppfolging', (args: HandlerArgument) => {
     return ResponseUtils.jsonPromise(args.body);
 });
 
-mock.post('/veilarboppfolging/api/oppfolging/settManuell',
-    Object.assign({}, Oppfolging, {manuell: true}));
+mock.post('/veilarboppfolging/api/oppfolging/settManuell', Object.assign({}, Oppfolging, { manuell: true }));
 
 mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
     avslutningStatus: {
@@ -75,17 +62,16 @@ mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
     underKvp: false,
     underOppfolging: true,
     veilederId: null,
-    vilkarMaBesvarel: false,
+    vilkarMaBesvarel: false
 });
 mock.post('/veilarboppfolging/api/oppfolging/startKvp', {});
 
 /*--OPPGAVE--*/
 mock.get('/veilarboppgave/api/enheter', [
-    {enhetId: '0000', navn: 'NAV Ost'},
-    {enhetId: '0001', navn: 'NAV Kjeks'},
-    {enhetId: '0002', navn: 'NAV Med jætte lang navn'},
-    {enhetId: '1234', navn: 'NAV jepps'},
-
+    { enhetId: '0000', navn: 'NAV Ost' },
+    { enhetId: '0001', navn: 'NAV Kjeks' },
+    { enhetId: '0002', navn: 'NAV Med jætte lang navn' },
+    { enhetId: '1234', navn: 'NAV jepps' }
 ]);
 
 mock.get('/veilarboppgave/api/enhet/:enhetsId/veiledere', Veilederliste);
@@ -134,6 +120,6 @@ mock.put(`/veilarbportefolje/api/arbeidsliste/:fnr?`, (args: HandlerArgument) =>
     });
 });
 
-mock.delete(`/veilarbportefolje/api/arbeidsliste/:fnr`, (args: HandlerArgument) => {
-    return ResponseUtils.jsonPromise({Arbeidsliste});
-});
+mock.delete(`/veilarbportefolje/api/arbeidsliste/:fnr`, (_: HandlerArgument) =>
+    ResponseUtils.jsonPromise({ Arbeidsliste })
+);

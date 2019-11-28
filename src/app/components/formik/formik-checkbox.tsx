@@ -8,10 +8,10 @@ interface FormikCheckboxProps {
     label: React.ReactNode;
 }
 
-function FormikCheckBox<P>({name, validate, label}: FormikCheckboxProps) {
+function FormikCheckBox<P>({ name, label }: FormikCheckboxProps) {
     return (
         <Field name={name}>
-            {({ field, form }: FieldProps)  => {
+            {({ field, form }: FieldProps) => {
                 return (
                     <Checkbox
                         onChange={form.handleChange}

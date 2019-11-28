@@ -3,7 +3,7 @@ import { Textarea, TextareaProps } from 'nav-frontend-skjema';
 import { Field, FieldProps } from 'formik';
 import { getErrors } from './formik-utils';
 import { Omit } from '../../../types/omit-type';
-import { injectIntl, InjectedIntlProps }  from 'react-intl';
+import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 interface TekstAreaProps {
     name: string;
@@ -13,12 +13,18 @@ interface TekstAreaProps {
 
 type OmitProps = 'onChange' | 'value' | 'feil' | 'onBlur' | 'label';
 
-function FormikTekstArea({name, validate, labelId, intl, ...textAreaProps}: TekstAreaProps & InjectedIntlProps & Omit<TextareaProps, OmitProps>) {
+function FormikTekstArea({
+    name,
+    validate,
+    labelId,
+    intl,
+    ...textAreaProps
+}: TekstAreaProps & InjectedIntlProps & Omit<TextareaProps, OmitProps>) {
     return (
         <Field validate={validate} name={name}>
-            {({field, form}: FieldProps) => {
+            {({ field, form }: FieldProps) => {
                 const feil = getErrors(form.errors, form.touched, name);
-                const labelTekstArea = intl.formatMessage({id: labelId});
+                const labelTekstArea = intl.formatMessage({ id: labelId });
                 return (
                     <Textarea
                         id={name}
@@ -28,7 +34,8 @@ function FormikTekstArea({name, validate, labelId, intl, ...textAreaProps}: Teks
                         feil={feil}
                         label={labelTekstArea}
                         {...textAreaProps}
-                    />);
+                    />
+                );
             }}
         </Field>
     );

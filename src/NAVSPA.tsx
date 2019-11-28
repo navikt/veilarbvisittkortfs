@@ -14,7 +14,8 @@ export default class NAVSPA {
     }
 
     public static importer<PROPS>(name: string): React.ComponentType<PROPS> {
-        class NAVSPAImporter extends React.Component<PROPS> { // tslint:disable-line
+        class NAVSPAImporter extends React.Component<PROPS> {
+            // tslint:disable-line
             // @ts-ignore
             private el: HTMLElement;
 
@@ -27,12 +28,12 @@ export default class NAVSPA {
             }
 
             public render() {
-                return <div ref={this.saveRef}/>;
+                return <div ref={this.saveRef} />;
             }
 
             private saveRef = (el: HTMLDivElement) => {
                 this.el = el;
-            }
+            };
         }
 
         return NAVSPAImporter;
@@ -42,5 +43,5 @@ export default class NAVSPA {
         NAVSPA.scope[name](element, props);
     }
 
-    private static scope: NAVSPAScopeProps = (global as any)['NAVSPA'] = (global as any)['NAVSPA'] || {}; // tslint:disable-line
+    private static scope: NAVSPAScopeProps = ((global as any)['NAVSPA'] = (global as any)['NAVSPA'] || {}); // tslint:disable-line
 }

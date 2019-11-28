@@ -9,9 +9,7 @@ import OppfolgingSelector from '../../store/oppfolging/selector';
 import { hentPaloggetVeileder } from '../../store/tildel-veileder/actions';
 import { hentPersonalia } from '../../store/personalia/actions';
 import PersonaliaSelector from '../../store/personalia/selectors';
-import {
-    hentTilgangTilBrukersKontor,
-} from '../../store/tilgang-til-brukerskontor/actions';
+import { hentTilgangTilBrukersKontor } from '../../store/tilgang-til-brukerskontor/actions';
 
 interface InitialDataProviderProps {
     fnr: string;
@@ -19,31 +17,29 @@ interface InitialDataProviderProps {
     children: React.ReactNode;
 }
 
-function InitialDataProvider({fnr, enhet, children}: InitialDataProviderProps) {
+function InitialDataProvider({ fnr, enhet, children }: InitialDataProviderProps) {
     const dispatch = useDispatch();
 
-    const isLoading = useSelector((state: Appstate) =>
-        OppfolgingsstatusSelector.selectOppfolgingStatusStatus(state) ||
-        OppfolgingSelector.selectOppfolgingStatus(state) ||
-        PersonaliaSelector.selectPersonaliaIsLoading(state));
+    const isLoading = useSelector(
+        (state: Appstate) =>
+            OppfolgingsstatusSelector.selectOppfolgingStatusStatus(state) ||
+            OppfolgingSelector.selectOppfolgingStatus(state) ||
+            PersonaliaSelector.selectPersonaliaIsLoading(state)
+    );
 
-    useEffect( () => {
+    useEffect(() => {
         dispatch(hentOppfolgingsstatus(fnr));
         dispatch(hentOppfolging(fnr));
         dispatch(hentPaloggetVeileder());
         dispatch(hentPersonalia(fnr));
         dispatch(hentTilgangTilBrukersKontor(fnr));
-        dispatch({type: 'SETT_ENHET_FRA_PERSONFLATEFS', enhet});
+        dispatch({ type: 'SETT_ENHET_FRA_PERSONFLATEFS', enhet });
     }, [fnr, dispatch, enhet]);
 
     if (isLoading) {
-        return <NavFrontendSpinner type="XL"/>;
+        return <NavFrontendSpinner type="XL" />;
     }
-    return (
-        <>
-            {children}
-        </>
-    );
+    return <>{children}</>;
 }
 
 export default InitialDataProvider;

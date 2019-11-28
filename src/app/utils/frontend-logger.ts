@@ -1,5 +1,4 @@
-
-const frontendlogger =  (window as any).frontendlogger;
+const frontendlogger = (window as any).frontendlogger;
 
 export const logEvent = (logTag: string, fields?: {}, tags?: {}): void => {
     if (frontendlogger && frontendlogger.event) {

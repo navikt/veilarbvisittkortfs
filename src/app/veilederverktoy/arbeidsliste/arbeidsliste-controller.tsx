@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {Arbeidsliste, ArbeidslisteformValues} from '../../../types/arbeidsliste';
-import {connect} from 'react-redux';
-import {Appstate} from '../../../types/appstate';
+import React, { useEffect, useState } from 'react';
+import { Arbeidsliste, ArbeidslisteformValues } from '../../../types/arbeidsliste';
+import { connect } from 'react-redux';
+import { Appstate } from '../../../types/appstate';
 import PersonaliaSelectors from '../../../store/personalia/selectors';
 import ArbeidslisteModal from './arbeidsliste-modal';
-import {Dispatch} from 'redux';
-import {oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste} from '../../../store/arbeidsliste/actions';
+import { Dispatch } from 'redux';
+import { oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste } from '../../../store/arbeidsliste/actions';
 import ArbeidslisteSelector from '../../../store/arbeidsliste/selector';
 import moment from 'moment';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import {hentArbeidsliste} from '../../../store/arbeidsliste/actions';
+import { hentArbeidsliste } from '../../../store/arbeidsliste/actions';
 import ArbeidslisteKnapp from './arbeidsliste-knapp';
 import FjernArbeidslisteModal from './fjern-arbeidsliste-modal';
 
@@ -31,7 +31,7 @@ interface DispatchProps {
     doHentArbeidsliste: (fnr: string) => void;
 }
 
-type ArbeidslisteStateProps = StateProps & DispatchProps & { fjernToastFeature: boolean };
+type ArbeidslisteStateProps = StateProps & DispatchProps;
 
 export const dateToISODate = (dato: string) => {
     const parsetDato = moment(dato);
@@ -41,24 +41,18 @@ export const dateToISODate = (dato: string) => {
 function ArbeidslisteController(props: ArbeidslisteStateProps) {
     const [visArbeidsliste, setVisArbeidsliste] = useState(false);
     const [slettArbeidslisteModal, setSlettArbeidslisteModal] = useState(false);
-    const {fnr, doHentArbeidsliste} = props;
-
+    const { fnr, doHentArbeidsliste } = props;
 
     useEffect(() => {
-            doHentArbeidsliste(fnr);
-        },
-        [fnr, doHentArbeidsliste]);
+        doHentArbeidsliste(fnr);
+    }, [fnr, doHentArbeidsliste]);
 
     if (props.isLoading) {
-        return <NavFrontendSpinner type="XL"/>;
+        return <NavFrontendSpinner type="XL" />;
     }
 
     function deleteArbeidsliste() {
-        if (props.fjernToastFeature) {
-            setSlettArbeidslisteModal(true);
-        } else {
-            setVisArbeidsliste(false);
-        }
+        setSlettArbeidslisteModal(true);
     }
 
     function slettArbeidslisteOgLukkModaler() {
@@ -92,7 +86,6 @@ function ArbeidslisteController(props: ArbeidslisteStateProps) {
                 onSubmit={slettArbeidslisteOgLukkModaler}
                 fnr={props.fnr}
                 navn={props.navn}
-                hidden={!props.fjernToastFeature}
             />
         </>
     );
@@ -103,30 +96,32 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     fnr: PersonaliaSelectors.selectFodselsnummer(state),
     navn: PersonaliaSelectors.selectSammensattNavn(state),
     arbeidslisteStatus: ArbeidslisteSelector.selectArbeidslisteStatus(state),
-    kanLeggeIArbeidsliste: ArbeidslisteSelector.selectKanLeggeIArbeidsListe(state),
+    kanLeggeIArbeidsliste:
+        state.tildelVeileder.status !== 'LOADING' && ArbeidslisteSelector.selectKanLeggeIArbeidsListe(state),
     kanFjerneArbeidsliste: ArbeidslisteSelector.selectKanFjerneArbeidsliste(state),
     kanRedigereArbeidsliste: ArbeidslisteSelector.selectKanRedigereArbeidsliste(state),
-    isLoading: ArbeidslisteSelector.selectArbeidslisteStatus(state),
+    isLoading: ArbeidslisteSelector.selectArbeidslisteStatus(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     doSlettArbeidsliste: () => dispatch(slettArbeidsliste()),
-    lagreArbeidsliste: (values: ArbeidslisteformValues) => dispatch(
-        oppdaterArbeidsliste({
-            kommentar: values.kommentar,
-            overskrift: values.overskrift,
-            frist: values.frist ? dateToISODate(values.frist) : null
-        })
-    ),
-    redigerArbeidsliste: (values: ArbeidslisteformValues) => dispatch(
-        redigerArbeidsliste({
-            kommentar: values.kommentar,
-            overskrift: values.overskrift,
-            frist: values.frist ? dateToISODate(values.frist) : null
-        })
-    ),
+    lagreArbeidsliste: (values: ArbeidslisteformValues) =>
+        dispatch(
+            oppdaterArbeidsliste({
+                kommentar: values.kommentar,
+                overskrift: values.overskrift,
+                frist: values.frist ? dateToISODate(values.frist) : null
+            })
+        ),
+    redigerArbeidsliste: (values: ArbeidslisteformValues) =>
+        dispatch(
+            redigerArbeidsliste({
+                kommentar: values.kommentar,
+                overskrift: values.overskrift,
+                frist: values.frist ? dateToISODate(values.frist) : null
+            })
+        ),
     doHentArbeidsliste: (fnr: string) => dispatch(hentArbeidsliste(fnr))
-
 });
 
 export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(ArbeidslisteController);

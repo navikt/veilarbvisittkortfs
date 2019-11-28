@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import VeilederVerktoyNavigation from './veilederverktoy/veilederverktoy-navigation';
 import VeilederVerktoyKnapp from './veilederverktoy/veileder-verktoy-knapp';
 import { navigerTilProcesser } from '../../store/navigation/actions';
-import FeatureApi from '../../api/feature-api';
 import Toasts from '../components/toast/toasts';
 import { Appstate } from '../../types/appstate';
 import { FeilModal } from '../components/feilmodal/feil-modal';
@@ -29,10 +28,17 @@ interface StateProps {
 
 type VeilederverktoyslinjeProps = StateProps & OwnProps & DispatchProps;
 
-function Veilederverktoyslinje({harFeilendeTildelinger, fnr, visVeilederVerktoy, navigerTilProsesser}: VeilederverktoyslinjeProps) {
-    const [fjernToastFeature, setFjernToastFeature] = useState(false);
-
+function Veilederverktoyslinje({
+    harFeilendeTildelinger,
+    fnr,
+    visVeilederVerktoy,
+    navigerTilProsesser
+}: VeilederverktoyslinjeProps) {
     const [visTildelingFeiletModal, setVisTildelingFeiletModal] = useState(harFeilendeTildelinger);
+
+    useEffect(() => {
+        setVisTildelingFeiletModal(harFeilendeTildelinger);
+    }, [harFeilendeTildelinger]);
 
     const lukkModal = () => {
         logEvent('veilarbvisittkortfs.metrikker.lukk-modal-tildel-veileder');
@@ -49,22 +55,15 @@ function Veilederverktoyslinje({harFeilendeTildelinger, fnr, visVeilederVerktoy,
             >
                 <Systemtittel>Handlingen kan ikke utføres</Systemtittel>
                 <Normaltekst className="feil-modal-normaltekst">
-                    Tildeling av veileder feilet. Det kan skyldes manglende tilgang på brukeren, eller at veilederen allerede er tildelt brukeren.
+                    Tildeling av veileder feilet. Det kan skyldes manglende tilgang på brukeren, eller at veilederen
+                    allerede er tildelt brukeren.
                 </Normaltekst>
-                <button
-                    className="knapp knapp--hoved feil-modal-knapp"
-                    onClick={lukkModal}
-                >
+                <button className="knapp knapp--hoved feil-modal-knapp" onClick={lukkModal}>
                     Ok
                 </button>
             </FeilModal>
         );
     };
-
-    useEffect(() => {
-        FeatureApi.hentFeatures('veilarbvisittkortfs.fjerntoast')
-            .then(resp => setFjernToastFeature(resp['veilarbvisittkortfs.fjerntoast']));
-    }, []);
 
     useEffect(() => {
         setVisTildelingFeiletModal(harFeilendeTildelinger);
@@ -76,19 +75,17 @@ function Veilederverktoyslinje({harFeilendeTildelinger, fnr, visVeilederVerktoy,
 
     return (
         <div className="veilederverktoylinje-wrapper">
-        <div className="veilederverktoyslinje">
-            <div className="veilederverktoyslinje__container">
-                <FeilTildelingModal/>
-                <Arbeidslistekomponent fjernToastFeature={fjernToastFeature}/>
-                <TildelVeileder fnr={fnr}/>
-                <VeilederVerktoyKnapp
-                    onClick={navigerTilProsesser}
-                />
-                <VeilederVerktoyNavigation/>
+            <div className="veilederverktoyslinje">
+                <div className="veilederverktoyslinje__container">
+                    <FeilTildelingModal />
+                    <Arbeidslistekomponent />
+                    <TildelVeileder fnr={fnr} />
+                    <VeilederVerktoyKnapp onClick={navigerTilProsesser} />
+                    <VeilederVerktoyNavigation />
+                </div>
             </div>
+            <Toasts />
         </div>
-            <Toasts/>
-         </div>
     );
 }
 

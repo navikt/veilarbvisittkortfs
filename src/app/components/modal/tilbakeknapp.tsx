@@ -14,7 +14,7 @@ function Tilbakeknapp(props: TilbakeknappProps & InjectedIntlProps) {
     function tilbake(e: React.SyntheticEvent) {
         e.preventDefault();
         const dialogTekst = props.intl.formatMessage({
-            id: 'modal-skjema.lukk-advarsel',
+            id: 'modal-skjema.lukk-advarsel'
         });
         // eslint-disable-next-line no-alert
         if (!props.visConfirmDialog || confirm(dialogTekst)) {
@@ -29,8 +29,8 @@ function Tilbakeknapp(props: TilbakeknappProps & InjectedIntlProps) {
         <button onClick={tilbake} className="tilbakeknapp">
             <VenstreChevron />
             <span className="tilbakeknapp-innhold__tekst">
-                    <FormattedMessage id={props.tekstId}/>
-                </span>
+                <FormattedMessage id={props.tekstId} />
+            </span>
         </button>
     );
 }

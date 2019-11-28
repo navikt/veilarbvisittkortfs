@@ -27,13 +27,12 @@ interface OwnProps {
 type PersonInfoProps = StateProps & OwnProps;
 
 function PersonInfo(props: PersonInfoProps) {
-
     return (
         <div className="personinfo">
-            <Icon kjonn={props.personalia.kjonn}/>
+            <Icon kjonn={props.personalia.kjonn} />
             <div className="personinfo__container">
-                <Fodelsnummer fnr={props.fnr}/>
-                <NavnOgAlder navn={props.navn} personalia={props.personalia}/>
+                <Fodelsnummer fnr={props.fnr} />
+                <NavnOgAlder navn={props.navn} personalia={props.personalia} />
                 <Etiketter
                     personalia={props.personalia}
                     oppfolgingstatus={props.oppfolgingstatus}
@@ -48,7 +47,7 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     personalia: state.personalia.data,
     navn: PersonaliaSelector.selectSammensattNavn(state),
     oppfolgingstatus: OppfolgingsstatusSelector.selectOppfolgingStatusData(state),
-    oppfolging: OppfolgingSelector.selectOppfolgingData(state),
+    oppfolging: OppfolgingSelector.selectOppfolgingData(state)
 });
 
 export default connect<StateProps, OwnProps>(mapStateToProps)(PersonInfo);

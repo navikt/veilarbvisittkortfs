@@ -11,10 +11,9 @@ interface ModalProps {
     contentLabel: string;
     isOpen?: boolean;
     onRequestClose: () => void;
-
 }
 
-function Modal({children, className, contentLabel, isOpen= true, onRequestClose}: ModalProps) {
+function Modal({ children, className, contentLabel, isOpen = true, onRequestClose }: ModalProps) {
     return (
         <NavFrontendModal
             className={cls(className)}

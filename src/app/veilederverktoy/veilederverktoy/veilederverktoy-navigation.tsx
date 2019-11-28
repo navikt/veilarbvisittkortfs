@@ -25,8 +25,8 @@ import { FeilModal } from './prosess/feil-modal';
 
 interface StateProps {
     navigation: {
-        location: StringOrNothing,
-        begrunnelse?: string
+        location: StringOrNothing;
+        begrunnelse?: string;
     };
 }
 
@@ -35,50 +35,50 @@ type VeilederVerktoyNavigationProps = StateProps;
 function VeilederVerktoyNavigation(props: VeilederVerktoyNavigationProps) {
     switch (props.navigation.location) {
         case 'prosesser':
-            return <Prosesser/>;
+            return <Prosesser />;
         case 'start_eskalering':
-            return <StartEskalering/>;
+            return <StartEskalering />;
         case 'start_eskalering_kvittering':
-            return <StartEskaleringKvittering/>;
+            return <StartEskaleringKvittering />;
         case 'manuell_oppfolging':
-            return <StarManuellOppfolging/>;
+            return <StarManuellOppfolging />;
         case 'sett_manuell_kvittering':
-            return <StartManuellOppfolgingKvittering begrunnelse={props.navigation.begrunnelse}/>;
+            return <StartManuellOppfolgingKvittering begrunnelse={props.navigation.begrunnelse} />;
         case 'start_digital_oppfolging':
-            return <StartDigitalOppfolging/>;
+            return <StartDigitalOppfolging />;
         case 'start_digital_oppfoling_kvitterig':
-            return <StartDigitalOppfolgingKvittering begrunnelse={props.navigation.begrunnelse}/>;
+            return <StartDigitalOppfolgingKvittering begrunnelse={props.navigation.begrunnelse} />;
         case 'start_kvp_periode':
-            return <StarKvpPeriode/>;
+            return <StarKvpPeriode />;
         case 'start_kvp_periode_kvittering':
-            return <StartKVPKvittering/>;
+            return <StartKVPKvittering />;
         case 'stopp_kvp_periode':
-            return <StoppKvpPeriode/>;
+            return <StoppKvpPeriode />;
         case 'stopp_kvp_periode_kvittering':
-            return <StoppKVPKvittering/>;
+            return <StoppKVPKvittering />;
         case 'opprett_oppgave':
-            return <OpprettOppgave/>;
+            return <OpprettOppgave />;
         case 'oppgave_kvittering':
-            return <OpprettOppgaveKvittering/>;
+            return <OpprettOppgaveKvittering />;
         case 'avslutt_oppfolging':
-            return <AvsluttOppfolging/>;
+            return <AvsluttOppfolging />;
         case 'avlutt_oppfolging_bekreft':
-            return <AvsluttOppfolgingBekreft/>;
+            return <AvsluttOppfolgingBekreft />;
         case 'avslutt_oppfolging_kvittering':
-            return <AvsluttOppfolgingKvittering/>;
+            return <AvsluttOppfolgingKvittering />;
         case 'stopp_eskalering':
-            return <StoppEskalering/>;
+            return <StoppEskalering />;
         case 'stopp_eskalering_kvittering':
-            return <StopEskaleringKvittering/>;
+            return <StopEskaleringKvittering />;
         case 'feil_i_veilederverktoy':
-            return <FeilModal/>;
+            return <FeilModal />;
         default:
             return null;
     }
 }
 
 const mapStateToProps = (state: Appstate): StateProps => ({
-    navigation: state.ui.navigation,
+    navigation: state.ui.navigation
 });
 
 export default connect<StateProps>(mapStateToProps)(hiddenIf(VeilederVerktoyNavigation));

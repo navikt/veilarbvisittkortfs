@@ -33,5 +33,4 @@ export default {
     hentOppgaveHistorikk,
     hentOppgaveVeileder,
     lagreOppgave
-
 } as OppgaveApi;

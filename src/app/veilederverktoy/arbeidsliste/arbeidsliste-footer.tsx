@@ -26,7 +26,7 @@ function ArbeidslisteFooter(props: ArbeidslisteFooterProps) {
                 onClick={props.slettArbeidsliste}
                 className="fjern--knapp"
             >
-                <SlettIcon/>
+                <SlettIcon />
                 <span>Fjern</span>
             </HiddenIfFlatKnapp>
         </div>

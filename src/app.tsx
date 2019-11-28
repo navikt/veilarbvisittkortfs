@@ -19,12 +19,12 @@ export interface AppProps {
     visVeilederVerktoy?: boolean;
 }
 
-function App (props: AppProps) {
+function App(props: AppProps) {
     return (
         <AppProvider fnr={props.fnr} enhet={props.enhet}>
             <VisittkortWrapper {...props}>
-                <PersonInfo fnr={props.fnr}/>
-                <Veilederverktoyslinje fnr={props.fnr} visVeilederVerktoy={props.visVeilederVerktoy}/>
+                <PersonInfo fnr={props.fnr} />
+                <Veilederverktoyslinje fnr={props.fnr} visVeilederVerktoy={props.visVeilederVerktoy} />
             </VisittkortWrapper>
         </AppProvider>
     );

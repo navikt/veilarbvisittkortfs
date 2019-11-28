@@ -14,7 +14,16 @@ interface VarselModalProps {
     className?: string;
 }
 
-export function FeilModal({contentLabel, isOpen, onRequestClose, children, closeTimeoutMS, closeButton, shouldCloseOnOverlayClick, className}: React.PropsWithChildren<VarselModalProps>) {
+export function FeilModal({
+    contentLabel,
+    isOpen,
+    onRequestClose,
+    children,
+    closeTimeoutMS,
+    closeButton,
+    shouldCloseOnOverlayClick,
+    className
+}: React.PropsWithChildren<VarselModalProps>) {
     return (
         <ModalWrapper
             isOpen={isOpen}
@@ -26,10 +35,8 @@ export function FeilModal({contentLabel, isOpen, onRequestClose, children, close
             shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
             className="feil-modal-wrapper"
         >
-            <FeilSirkelIkon/>
-            <div className={classNames('feil-modal-innhold', className)}>
-                {children}
-            </div>
+            <FeilSirkelIkon />
+            <div className={classNames('feil-modal-innhold', className)}>{children}</div>
         </ModalWrapper>
     );
 }
