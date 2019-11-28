@@ -7,30 +7,30 @@ import moment from 'moment';
 import Lenke from 'nav-frontend-lenker';
 import { Appstate } from '../../../../../types/appstate';
 import OppfolgingSelector from '../../../../../store/oppfolging/selector';
-import { connect } from 'react-redux';
-
+import { useSelector } from 'react-redux';
 interface OwnProps {
     instillingsHistorikk: InnstillingsHistorikk;
 }
 
-interface StateProps {
-    fnr: string;
-}
-
 const ESKALERING_MAX_LENGTH = 120;
 
-type InnstillingHistorikkKomponentProps = StateProps & OwnProps;
+type InnstillingHistorikkKomponentProps = OwnProps;
 
-function InnstillingHistorikkKomponent({instillingsHistorikk, fnr}: InnstillingHistorikkKomponentProps) {
+function InnstillingHistorikkKomponent({ instillingsHistorikk }: InnstillingHistorikkKomponentProps) {
     const {type, begrunnelse, dialogId} = instillingsHistorikk;
 
-    const begrunnelseTekst =
+    const fnr = useSelector((state: Appstate) => {
+        OppfolgingSelector.selectFnr(state);
+    });
+
+    let begrunnelseTekst =
         begrunnelse && begrunnelse.length > ESKALERING_MAX_LENGTH
             ? `${begrunnelse.substring(
             0,
             ESKALERING_MAX_LENGTH
             )}... `
             : `${begrunnelse} `;
+
 
     return (
         <div className="historikk__elem blokk-xs">
@@ -48,8 +48,4 @@ function InnstillingHistorikkKomponent({instillingsHistorikk, fnr}: InnstillingH
     );
 }
 
-const mapStateToProps = (state: Appstate): StateProps => ({
-   fnr: OppfolgingSelector.selectFnr(state)
-});
-
-export default connect<StateProps, {}, OwnProps>(mapStateToProps)(InnstillingHistorikkKomponent);
+export default InnstillingHistorikkKomponent;

@@ -1,13 +1,15 @@
 import { fetchToJson, postAsJson } from './api-utils';
 import { VeilederData } from '../types/veilederdata';
 import { TildelVeilederData } from '../types/tildel-veileder';
+import { EnhetData } from '../types/enhet';
 
-interface TildelVeilederApi {
+interface VeilederApi {
     hentVeiledereForEnhet: (enhetId: string) => Promise<VeilederData[]>;
     hentVeieldere: () => Promise<VeilederData>;
     tildelTilVeileder: (
         tilordninger: TildelVeilederData[]
     ) => Promise<{ resultat: string; feilendeTilordninger: TildelVeilederData[] }>;
+    hentEnhetNavn: (enhetId: string) => Promise<EnhetData>;
 }
 
 function hentVeiledereForEnhet(enhetId: string) {
@@ -22,8 +24,13 @@ function tildelTilVeileder(tilordninger: TildelVeilederData[]) {
     return postAsJson(`/veilarboppfolging/api/tilordneveileder/`, tilordninger);
 }
 
+function hentEnhetNavn(enhetId: string): Promise<EnhetData> {
+    return fetchToJson(`/veilarbveileder/api/enhet/${enhetId}/navn`);
+}
+
 export default {
     hentVeiledereForEnhet,
     hentVeieldere,
-    tildelTilVeileder
-} as TildelVeilederApi;
+    tildelTilVeileder,
+    hentEnhetNavn
+} as VeilederApi;

@@ -54,5 +54,5 @@ export default {
     selectErOppfolgingsVeileder,
     selectErTildeltVeilder,
     selectTildeltVeilder,
-    selectTildeltVeiledernavn,
+    selectTildeltVeiledernavn
 } as VeilederSelector;
