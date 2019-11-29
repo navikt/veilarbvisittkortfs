@@ -98,8 +98,7 @@ function* opprettHenvendelseStoppEskalering(action: OpprettHenvendelseAction) {
 
 function* startEskaleringMedDialog(action: OpprettHenvendelseActionSuccess) {
     try {
-        // @ts-ignore
-        const [dialogData1, dialogData2, oppfolgingStatus] = yield all([
+        const [dialogData1, dialogData2] = yield all([
             DialogApi.oppdaterFerdigbehandlet(action.data.id, true, action.fnr),
             DialogApi.oppdaterVenterPaSvar(action.data.id, true, action.fnr),
             OppfolgingApi.startEskalering(action.data.id, action.data.henvendelser[0].tekst, action.fnr)
