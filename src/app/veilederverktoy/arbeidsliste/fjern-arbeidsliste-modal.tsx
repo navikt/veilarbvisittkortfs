@@ -2,7 +2,7 @@ import React from 'react';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element, Innholdstittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { AdvarselModal } from '../../components/advarselmodal/advarsel-modal';
+import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import hiddenIf from '../../components/hidden-if/hidden-if';
 
 interface FjernArbeidslisteModal {
@@ -15,10 +15,11 @@ interface FjernArbeidslisteModal {
 
 function FjernArbeidslisteModal(props: FjernArbeidslisteModal) {
     return (
-        <AdvarselModal
+        <VarselModal
             contentLabel="Fjern fra arbeidslisten"
             isOpen={props.isOpen}
             onRequestClose={props.onRequestClose}
+            type="ADVARSEL"
         >
             <div className="modal-info-tekst blokk-s">
                 <Innholdstittel className="modal-info-tekst__overskrift blokk-s">
@@ -46,7 +47,7 @@ function FjernArbeidslisteModal(props: FjernArbeidslisteModal) {
                     <FormattedMessage id="modal.knapp.avbryt" />
                 </Knapp>
             </div>
-        </AdvarselModal>
+        </VarselModal>
     );
 }
 

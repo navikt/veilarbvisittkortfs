@@ -24,40 +24,35 @@ interface OppgaveInnerForm {
     tilbake: () => void;
 }
 
-function OppgaveInnerForm({fnr, tema, enhetId, veilederId, avsenderenhetId, formikProps, tilbake}: OppgaveInnerForm) {
+function OppgaveInnerForm({ fnr, tema, enhetId, veilederId, avsenderenhetId, formikProps, tilbake }: OppgaveInnerForm) {
     if (!tema) {
         return null;
     }
 
     return (
         <>
-        <OpprettOppgaveTypeSelector oppgaveTema={tema}/>
-        <OpprettOppgavePrioritetSelector/>
-        <OpprettOppgaveVelgDatoer/>
-        <div className="oppgave-enhet-container">
-            <OpprettOppgaveVelgEnhet
-                value={enhetId}
-                tema={tema}
-                fnr={fnr}
-                formikProps={formikProps}
-            />
-            <OpprettOppgaveVelgVeileder
-                avsenderenhetId={avsenderenhetId}
-                enhetId={enhetId}
-                tema={tema}
-                veilederId={veilederId}
-                formikProps={formikProps}
-            />
-        </div>
-        <OpprettOppgaveBeskrivelseTekstArea/>
-        <HiddenIfDiv className="modal-footer" hidden={!tema}>
-            <Hovedknapp className="btn--mr1" htmlType="submit" spinner={false}>
-                Bekreft
-            </Hovedknapp>
-            <button type="button" className="knapp" onClick={tilbake}>
-                <FormattedMessage id="modal.knapp.avbryt" />
-            </button>
-        </HiddenIfDiv>
+            <OpprettOppgaveTypeSelector oppgaveTema={tema} />
+            <OpprettOppgavePrioritetSelector />
+            <OpprettOppgaveVelgDatoer />
+            <div className="oppgave-enhet-container">
+                <OpprettOppgaveVelgEnhet value={enhetId} tema={tema} fnr={fnr} formikProps={formikProps} />
+                <OpprettOppgaveVelgVeileder
+                    avsenderenhetId={avsenderenhetId}
+                    enhetId={enhetId}
+                    tema={tema}
+                    veilederId={veilederId}
+                    formikProps={formikProps}
+                />
+            </div>
+            <OpprettOppgaveBeskrivelseTekstArea />
+            <HiddenIfDiv className="modal-footer" hidden={!tema}>
+                <Hovedknapp className="btn--mr1" htmlType="submit" spinner={false}>
+                    Bekreft
+                </Hovedknapp>
+                <button type="button" className="knapp" onClick={tilbake}>
+                    <FormattedMessage id="modal.knapp.avbryt" />
+                </button>
+            </HiddenIfDiv>
         </>
     );
 }
