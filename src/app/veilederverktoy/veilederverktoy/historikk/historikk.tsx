@@ -1,55 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { Appstate } from '../../../../types/appstate';
+import React from 'react';
 import OppfolgingSelector from '../../../../store/oppfolging/selector';
 import OppfolgingApi from '../../../../api/oppfolging-api';
 import { InnstillingsHistorikk } from '../../../../types/innstillings-historikk';
-import { connect } from 'react-redux';
 import OppgaveApi from '../../../../api/oppgave-api';
 import { OppgaveHistorikk } from '../../../../types/oppgave-historikk';
 import HistorikkVisning from './historikk-visning';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import './historikk.less';
 import { Undertittel } from 'nav-frontend-typografi';
+import useFetch, { isPending, hasData, hasError } from '@nutgaard/use-fetch';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { useSelector } from 'react-redux';
 
-interface StateProps {
-    fnr: string;
-}
+function Historikk() {
+    const fnr = useSelector(OppfolgingSelector.selectFnr);
 
-type HistorikkProps = StateProps;
+    const innstillingsHistorikk = useFetch<InnstillingsHistorikk[]>(OppfolgingApi.hentInnstillingsHistorikk(fnr));
+    const oppgaveHistorikk = useFetch<OppgaveHistorikk[]>(OppgaveApi.hentOppgaveHistorikk(fnr));
 
-function Historikk ({fnr}: HistorikkProps) {
-    const [innstillingsHistorikk, setInnstillingsHistorikk] = useState([] as InnstillingsHistorikk []);
-    const [oppgaveHistorikk, setOppgaveHistorikk] = useState([] as OppgaveHistorikk[]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-
-        OppfolgingApi.hentInnstillingsHistorikk(fnr)
-            .then((innstillingsHistorikkData: InnstillingsHistorikk[]) => setInnstillingsHistorikk(innstillingsHistorikkData))
-            .then( () => OppgaveApi.hentOppgaveHistorikk(fnr)
-                .then((oppgaveHistorikkData: OppgaveHistorikk[]) => {
-                    setOppgaveHistorikk(oppgaveHistorikkData);
-                    setIsLoading(false);
-                }));
-
-    }, [fnr]);
-
-    if (isLoading) {
-        return <NavFrontendSpinner type="XL"/>;
+    if (isPending(innstillingsHistorikk) || isPending(oppgaveHistorikk)) {
+        return <NavFrontendSpinner />;
+    } else if (hasError(oppgaveHistorikk) || hasError(innstillingsHistorikk)) {
+        return <AlertStripeFeil>Noe gikk galt</AlertStripeFeil>;
+    } else if (!hasData(oppgaveHistorikk) || !hasData(innstillingsHistorikk)) {
+        return null;
     }
 
     return (
         <article className="prosess">
             <Undertittel>Historikk</Undertittel>
-            <HistorikkVisning historikkInnslag={[...innstillingsHistorikk, ...oppgaveHistorikk]}/>
+            <HistorikkVisning historikkInnslag={[...innstillingsHistorikk.data, ...oppgaveHistorikk.data]} />
         </article>
-
     );
-
 }
 
-const mapStateToProps = (state: Appstate): StateProps => ({
-    fnr: OppfolgingSelector.selectFnr(state),
-});
-
-export default connect<StateProps>(mapStateToProps)(Historikk);
+export default Historikk;

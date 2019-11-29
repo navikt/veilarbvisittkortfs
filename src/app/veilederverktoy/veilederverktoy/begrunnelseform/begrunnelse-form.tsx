@@ -43,8 +43,8 @@ function BegrunnelseForm<T extends BegrunnelseValues>(props: BegrunnelseFormProp
             contentLabel=""
             visConfirmDialog={true}
             tilbake={props.tilbakeTilProcesser}
-            tilbakeTekstId="Tilbake"
-            render={formikProps =>
+            tilbakeTekstId="innstillinger.modal.tilbake"
+            render={formikProps => (
                 <div className="modal-innhold">
                     <BergrunnelseOverskrift
                         overskriftTekstId={props.overskriftTekstId}
@@ -52,22 +52,17 @@ function BegrunnelseForm<T extends BegrunnelseValues>(props: BegrunnelseFormProp
                         navnPaMotpart={props.navnPaMotpart}
                     />
                     <Form>
-                        <BegrunnelseTextArea
-                            tekstariaLabel={props.tekstariaLabel}
-                            maxLength={props.maxLength}
-                        />
-                        <BegrunnelseFooter
-                            spinner={props.isLoading}
-                        />
+                        <BegrunnelseTextArea tekstariaLabel={props.tekstariaLabel} maxLength={props.maxLength} />
+                        <BegrunnelseFooter spinner={props.isLoading} />
                     </Form>
                 </div>
-            }
+            )}
         />
     );
 }
 
 const mapStateToProps = (state: Appstate) => ({
-    navnPaMotpart: PersonaliaSelector.selectSammensattNavn(state),
+    navnPaMotpart: PersonaliaSelector.selectSammensattNavn(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({

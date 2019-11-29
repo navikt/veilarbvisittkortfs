@@ -31,12 +31,11 @@ function StartEskalering(props: StartEskaleringProps) {
     );
 
     const initialValues = {
-        begrunnelse:  props.intl.formatMessage({id: 'innstillinger.modal.start-eskalering.automatisk-tekst'}),
-        overskrift:  props.intl.formatMessage({id: 'dialog.eskalering.overskrift'}),
-        tekst: props.intl.formatMessage({id: 'innstillinger.modal.start-eskalering.automatisk-tekst'})
+        begrunnelse: props.intl.formatMessage({ id: 'innstillinger.modal.start-eskalering.automatisk-tekst' }),
+        overskrift: props.intl.formatMessage({ id: 'dialog.eskalering.overskrift' }),
+        tekst: props.intl.formatMessage({ id: 'innstillinger.modal.start-eskalering.automatisk-tekst' })
     };
     return (
-
         <BegrunnelseForm
             handleSubmit={props.handleSubmit}
             initialValues={initialValues}
@@ -46,7 +45,6 @@ function StartEskalering(props: StartEskaleringProps) {
             infoTekst={infoTekst}
             isLoading={props.isLoading}
         />
-
     );
 }
 
@@ -55,8 +53,15 @@ const mapStateToProps = (state: Appstate) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    handleSubmit: (values: StartEskaleringValues) => dispatch(opprettHenvendelse (
-                {begrunnelse: values.begrunnelse, overskrift: values.overskrift, egenskaper: ['ESKALERINGSVARSEL'], tekst: values.begrunnelse})),
+    handleSubmit: (values: StartEskaleringValues) =>
+        dispatch(
+            opprettHenvendelse({
+                begrunnelse: values.begrunnelse,
+                overskrift: values.overskrift,
+                egenskaper: ['ESKALERINGSVARSEL'],
+                tekst: values.begrunnelse
+            })
+        )
 });
 
 export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(injectIntl(StartEskalering));

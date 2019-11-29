@@ -22,6 +22,7 @@ import StoppEskalering from './stopp-eskalering/stopp-eskalering';
 import AvsluttOppfolgingBekreft from './avsluttoppfolging/avslutt-oppfolging-bekreft';
 import StopEskaleringKvittering from './stopp-eskalering/stopp-esklaring-kvittering';
 import { FeilModal } from './prosess/feil-modal';
+import { LasterModal } from '../../components/lastermodal/laster-modal';
 
 interface StateProps {
     navigation: {
@@ -72,6 +73,8 @@ function VeilederVerktoyNavigation(props: VeilederVerktoyNavigationProps) {
             return <StopEskaleringKvittering />;
         case 'feil_i_veilederverktoy':
             return <FeilModal />;
+        case 'pending':
+            return <LasterModal />;
         default:
             return null;
     }
