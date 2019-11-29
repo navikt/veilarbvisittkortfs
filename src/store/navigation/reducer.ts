@@ -8,11 +8,6 @@ export interface NavigationState {
 }
 const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = { location: null }, action) => {
     switch (action.type) {
-        case 'START_KVP':
-        case 'STOPP_ESKALERING':
-        case 'AVSLUTT_OPPFOLGING':
-        case 'STOPP_KVP':
-        case 'SETT_MANUELL':
         case 'OPPRETTET_HENVENDELSE_START_ESKALERING':
         case 'LAGRE_OPPGAVE':
             return {
