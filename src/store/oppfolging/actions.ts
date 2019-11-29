@@ -22,9 +22,8 @@ export const hentOppfolgingError = (error: Error): HentOppfolgingActionError => 
     };
 };
 
-export const startEskaleringSuccess = (data: Oppfolging): StartEskaleringActionSuccess => ({
-    type: OppfolgingActionType.START_ESKALERING_SUCCESS,
-    data
+export const startEskaleringSuccess = (): StartEskaleringActionSuccess => ({
+    type: OppfolgingActionType.START_ESKALERING_SUCCESS
 });
 
 export const startEskaleringError = (error: Error): StartEskaleringActionError => ({
@@ -43,7 +42,6 @@ export interface StartEskaleringAction {
 
 export interface StartEskaleringActionSuccess {
     type: OppfolgingActionType.START_ESKALERING_SUCCESS;
-    data: Oppfolging;
 }
 
 export interface StartEskaleringActionError {
@@ -104,7 +102,7 @@ export const settManuell = (begrunnelse: string, fnr: string, veilederId: string
     veilederId
 });
 
-export const settManuellSuccess = ( begrunnelse: string, data: Oppfolging): SettManuellActionSuccess => ({
+export const settManuellSuccess = (begrunnelse: string, data: Oppfolging): SettManuellActionSuccess => ({
     type: OppfolgingActionType.SETT_MANUELL_SUCCESS,
     begrunnelse,
     data
@@ -125,7 +123,7 @@ export const settDigital = (begrunnelse: string, fnr: string, veilederId: string
 export const settDigitalSuccess = (begrunnelse: string, data: Oppfolging): SettDigitalActionSuccess => ({
     type: OppfolgingActionType.SETT_DIGITAL_SUCCESS,
     data,
-    begrunnelse,
+    begrunnelse
 });
 
 export const setDigitalError = (error: Error): SettDigitalActionError => ({
@@ -167,7 +165,7 @@ export const startKVP = (begrunnelse: string): StartKVPAction => ({
 });
 
 export const startKVPSuccess = (): StartKVPActionSuccess => ({
-    type: OppfolgingActionType.START_KVP_SUCCESS,
+    type: OppfolgingActionType.START_KVP_SUCCESS
 });
 
 export const startKVPError = (error: Error): StartKVPActionError => ({
@@ -204,12 +202,12 @@ export interface AvsluttOppfolgingActionError {
 }
 
 export const avsluttOppfolging = (): AvsluttOppfolgingAction => ({
-    type: OppfolgingActionType.AVSLUTT_OPPFOLGING,
+    type: OppfolgingActionType.AVSLUTT_OPPFOLGING
 });
 
 export const avsluttOppfolgingSuccess = (data: Oppfolging): AvsluttOppfolgingActionSuccess => ({
     type: OppfolgingActionType.AVSLUTT_OPPFOLGING_SUCCESS,
-    data,
+    data
 });
 
 export const avsluttOppfolgingError = (error: Error): AvsluttOppfolgingActionError => ({
@@ -234,11 +232,15 @@ export interface StoppEskaleringActionError {
     error: Error;
 }
 
-export const stoppEskalering = (dialogId: string, skallSendeHenvdelse: boolean, begrunnelse?: string): StoppEskaleringAction => ({
+export const stoppEskalering = (
+    dialogId: string,
+    skallSendeHenvdelse: boolean,
+    begrunnelse?: string
+): StoppEskaleringAction => ({
     type: OppfolgingActionType.STOPP_ESKALERING,
     dialogId,
     begrunnelse,
-    skallSendeHenvdelse,
+    skallSendeHenvdelse
 });
 
 export const stoppEskaleringSuccess = (data: Oppfolging): StoppEskaleringActionSuccess => ({
@@ -252,27 +254,27 @@ export const stoppEskaleringError = (error: Error): StoppEskaleringActionError =
 });
 
 export type OppfolgingActions =
-    HentOppfolgingAction |
-    HentOppfolgingActionSuccess |
-    HentOppfolgingActionError |
-    StartEskaleringAction |
-    StartEskaleringActionSuccess |
-    StartEskaleringActionError |
-    SettManuellAction |
-    SettManuellActionSuccess |
-    SettManuellActionError |
-    SettDigitalAction |
-    SettDigitalActionSuccess|
-    SettDigitalActionError |
-    StartKVPAction |
-    StartKVPActionSuccess |
-    StartKVPActionError |
-    StoppKVPAction |
-    StoppKVPActionSuccess |
-    StoppKVPActionError |
-    AvsluttOppfolgingAction |
-    AvsluttOppfolgingActionSuccess |
-    AvsluttOppfolgingActionError |
-    StoppEskaleringAction |
-    StoppEskaleringActionSuccess |
-    StoppEskaleringActionError ;
+    | HentOppfolgingAction
+    | HentOppfolgingActionSuccess
+    | HentOppfolgingActionError
+    | StartEskaleringAction
+    | StartEskaleringActionSuccess
+    | StartEskaleringActionError
+    | SettManuellAction
+    | SettManuellActionSuccess
+    | SettManuellActionError
+    | SettDigitalAction
+    | SettDigitalActionSuccess
+    | SettDigitalActionError
+    | StartKVPAction
+    | StartKVPActionSuccess
+    | StartKVPActionError
+    | StoppKVPAction
+    | StoppKVPActionSuccess
+    | StoppKVPActionError
+    | AvsluttOppfolgingAction
+    | AvsluttOppfolgingActionSuccess
+    | AvsluttOppfolgingActionError
+    | StoppEskaleringAction
+    | StoppEskaleringActionSuccess
+    | StoppEskaleringActionError;

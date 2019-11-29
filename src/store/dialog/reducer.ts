@@ -4,7 +4,9 @@ import { Reducer } from 'redux';
 import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 import {
     DialogActions,
-    DialogActionType, hentDialogerError, hentDialogerSuccess,
+    DialogActionType,
+    hentDialogerError,
+    hentDialogerSuccess,
     HenvendelseActionType,
     oppdaterDialogSuccess,
     OpprettHenvendelseAction,
@@ -22,12 +24,12 @@ import OppfolgingSelector from '../oppfolging/selector';
 import { replaceAt, triggerReRenderingAvAktivitesplan } from '../../app/utils/utils';
 import { navigerAction } from '../navigation/actions';
 
-export type DialogState = {data: Dialog[]} & {status: FETCH_STATUS; error: OrNothing<Error>};
+export type DialogState = { data: Dialog[] } & { status: FETCH_STATUS; error: OrNothing<Error> };
 
 const initialState: DialogState = {
     status: 'NOT_STARTED',
     error: null,
-    data: [],
+    data: []
 };
 
 const dialogReducer: Reducer<DialogState, DialogActions> = (state = initialState, action) => {
@@ -44,8 +46,8 @@ const dialogReducer: Reducer<DialogState, DialogActions> = (state = initialState
         case HenvendelseActionType.OPPRETTET_HENVENDELSE_STOPP_ESKALERING_SUCCESS:
         case DialogActionType.OPPDATER_DIALOG_SUCCESS: {
             const dialogIndex = state.data.findIndex(dialog => dialog.id === action.data.id);
-            const dialogData = dialogIndex === -1 ?
-                [...state.data, action.data] : replaceAt(state.data, dialogIndex, action.data);
+            const dialogData =
+                dialogIndex === -1 ? [...state.data, action.data] : replaceAt(state.data, dialogIndex, action.data);
             return {
                 ...state,
                 status: 'DONE',
@@ -61,7 +63,7 @@ const dialogReducer: Reducer<DialogState, DialogActions> = (state = initialState
                 error: action.error
             };
         }
-        case HenvendelseActionType.HENT_DIALOGER_SUCCESS : {
+        case HenvendelseActionType.HENT_DIALOGER_SUCCESS: {
             return {
                 ...state,
                 data: action.data,
@@ -76,7 +78,7 @@ const dialogReducer: Reducer<DialogState, DialogActions> = (state = initialState
 function* opprettHenvendelse(action: OpprettHenvendelseAction) {
     try {
         const fnr = yield select(OppfolgingSelector.selectFnr);
-        const response = yield call( () => DialogApi.nyHenvendelse(action.data, fnr));
+        const response = yield call(() => DialogApi.nyHenvendelse(action.data, fnr));
         yield put(opprettHenvendelseSuccess(response, fnr));
     } catch (e) {
         yield put(opprettHenvendelseError(e));
@@ -87,7 +89,7 @@ function* opprettHenvendelse(action: OpprettHenvendelseAction) {
 function* opprettHenvendelseStoppEskalering(action: OpprettHenvendelseAction) {
     try {
         const fnr = yield select(OppfolgingSelector.selectFnr);
-        const response = yield call( () => DialogApi.nyHenvendelse(action.data, fnr));
+        const response = yield call(() => DialogApi.nyHenvendelse(action.data, fnr));
         yield put(opprettHenvendelseStoppEskaleringSuccess(response, fnr));
     } catch (e) {
         yield put(opprettHenvendelseStoppEskaleringError(e));
@@ -96,7 +98,7 @@ function* opprettHenvendelseStoppEskalering(action: OpprettHenvendelseAction) {
 
 function* startEskaleringMedDialog(action: OpprettHenvendelseActionSuccess) {
     try {
-
+        // @ts-ignore
         const [dialogData1, dialogData2, oppfolgingStatus] = yield all([
             DialogApi.oppdaterFerdigbehandlet(action.data.id, true, action.fnr),
             DialogApi.oppdaterVenterPaSvar(action.data.id, true, action.fnr),
@@ -105,13 +107,12 @@ function* startEskaleringMedDialog(action: OpprettHenvendelseActionSuccess) {
 
         yield put(oppdaterDialogSuccess(dialogData1));
         yield put(oppdaterDialogSuccess(dialogData2));
-        yield put(startEskaleringSuccess(oppfolgingStatus));
+        yield put(startEskaleringSuccess());
 
-        const response = yield call (() => OppfolgingApi.hentOppfolgingData(action.fnr));
+        const response = yield call(() => OppfolgingApi.hentOppfolgingData(action.fnr));
 
         yield put(hentOppfolgingSuccess(response));
         triggerReRenderingAvAktivitesplan();
-
     } catch (e) {
         yield put(startEskaleringError(e));
         yield put(navigerAction('feil_i_veilederverktoy'));
@@ -121,7 +122,7 @@ function* startEskaleringMedDialog(action: OpprettHenvendelseActionSuccess) {
 function* hentDialoger() {
     try {
         const fnr = yield select(OppfolgingSelector.selectFnr);
-        const response = yield call( () => DialogApi.hentDialoger(fnr));
+        const response = yield call(() => DialogApi.hentDialoger(fnr));
         yield put(hentDialogerSuccess(response));
     } catch (e) {
         yield put(hentDialogerError(e));

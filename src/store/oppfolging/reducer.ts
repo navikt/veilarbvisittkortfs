@@ -1,12 +1,11 @@
 import { Reducer } from 'redux';
-import { OppfolgingActions
-} from './actions';
+import { OppfolgingActions } from './actions';
 import { Oppfolging } from '../../types/oppfolging';
 import { OrNothing } from '../../types/utils/ornothing';
 import { OppfolgingActionType } from './action-type';
 import { FETCH_STATUS } from '../../types/fetch-status';
 
-export type OppfogingState = {data: Oppfolging} & {status: FETCH_STATUS; error: OrNothing<Error>};
+export type OppfogingState = { data: Oppfolging } & { status: FETCH_STATUS; error: OrNothing<Error> };
 
 const initialState: OppfogingState = {
     status: 'NOT_STARTED',
@@ -49,7 +48,6 @@ const oppfolgingReducer: Reducer<OppfogingState, OppfolgingActions> = (state = i
             };
         }
         case OppfolgingActionType.HENT_OPPFOLGING_SUCCESS:
-        case OppfolgingActionType.START_ESKALERING_SUCCESS:
         case OppfolgingActionType.SETT_MANUELL_SUCCESS:
         case OppfolgingActionType.SETT_DIGITAL_SUCCESS:
         case OppfolgingActionType.AVSLUTT_OPPFOLGING_SUCCESS:
@@ -57,6 +55,12 @@ const oppfolgingReducer: Reducer<OppfogingState, OppfolgingActions> = (state = i
             return {
                 ...state,
                 data: action.data,
+                status: 'DONE'
+            };
+        }
+        case OppfolgingActionType.START_ESKALERING_SUCCESS: {
+            return {
+                ...state,
                 status: 'DONE'
             };
         }
