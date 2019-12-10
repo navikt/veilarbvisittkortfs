@@ -8,11 +8,11 @@ interface StoppEskaleringsProsessProps {
     navigerTilStoppEskalering: () => void;
 }
 
-function StoppEskaleringsProsess({navigerTilStoppEskalering }: StoppEskaleringsProsessProps) {
+function StoppEskaleringsProsess({ navigerTilStoppEskalering }: StoppEskaleringsProsessProps) {
     return (
         <StartProsess
             tittelId="innstillinger.prosess.stopp-eskalering.tittel"
-            knappetekstId="innstillinger.modal.prosess.start.knapp"
+            knappetekstId="innstillinger.prosess.stopp-eskalering.knapp-tekst"
             onClick={navigerTilStoppEskalering}
         >
             <div className="blokk-xs">

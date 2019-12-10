@@ -32,24 +32,21 @@ interface DispatchProps {
     navigerTil: (til: string) => void;
 }
 
-function Prosesser (props: StateProps & DispatchProps) {
+function Prosesser(props: StateProps & DispatchProps) {
     return (
-        <VeilederVerktoyModal
-            visConfirmDialog={false}
-            className="vis-overflow"
-        >
+        <VeilederVerktoyModal visConfirmDialog={false} className="vis-overflow">
             <StartEskaleringProsess
                 visible={props.kanStarteEskalering}
                 navigerTilStartEsklaring={() => props.navigerTil('start_eskalering')}
             />
             <StoppEskaleringsProsess
-                visible={props.kanStoppeEskalering}
+                visible={true}
                 navigerTilStoppEskalering={() => props.navigerTil('stopp_eskalering')}
             />
             <AvsluttOppfolgingProsess
                 visible={props.kanAvslutteOppfolging} //ROUTINGEN SKJER I AVSLUTTOPPFOLGINGSAGAN HVIS KAN AVSLUTTE
             />
-            <StartRegistreringProsess visible={props.kanRegistrere}/>
+            <StartRegistreringProsess visible={props.kanRegistrere} />
             <StartManuellOppfolging
                 visible={props.kanStarteManuellOppfolging}
                 navigerTilStartManuellOppfolging={() => props.navigerTil('manuell_oppfolging')}
@@ -66,10 +63,8 @@ function Prosesser (props: StateProps & DispatchProps) {
                 visible={props.kanStarteDigitalOppfolging}
                 navigerTilStartDigitalOppfolging={() => props.navigerTil('start_digital_oppfolging')}
             />
-            <OpprettOppgaveProsess
-                navigerTilOpprettOppgave={() => props.navigerTil('opprett_oppgave')}
-            />
-            <Historikk/>
+            <OpprettOppgaveProsess navigerTilOpprettOppgave={() => props.navigerTil('opprett_oppgave')} />
+            <Historikk />
         </VeilederVerktoyModal>
     );
 }
@@ -82,7 +77,7 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     kanStarteDigitalOppfolging: OppfolgingSelector.selectKanStarteDigitalOppfolging(state),
     kanStarteKVP: OppfolgingSelector.selectKanStarteKVP(state),
     kanStoppeKVP: OppfolgingSelector.selectKanStoppeKVP(state),
-    kanRegistrere: OppfolgingSelector.kanRegistreresEllerReaktiveres(state),
+    kanRegistrere: OppfolgingSelector.kanRegistreresEllerReaktiveres(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

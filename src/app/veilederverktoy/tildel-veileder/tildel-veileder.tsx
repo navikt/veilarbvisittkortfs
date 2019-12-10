@@ -47,6 +47,8 @@ function TildelVeileder({ fnr }: OwnProps) {
         (state: Appstate) => state.tildelVeileder.veilederPaEnheten.data.veilederListe
     );
 
+    const sorterVeiledere = veiledere.sort((a, b) => a.etternavn.localeCompare(b.etternavn));
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -96,7 +98,7 @@ function TildelVeileder({ fnr }: OwnProps) {
                         lukkDropdown();
                     }}
                 >
-                    <SokFilter data={veiledere} label="" placeholder="Søk navn eller NAV-ident">
+                    <SokFilter data={sorterVeiledere} label="" placeholder="Søk navn eller NAV-ident">
                         {data => (
                             <RadioFilterForm
                                 data={data}

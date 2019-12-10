@@ -25,17 +25,25 @@ interface StateProps {
 
 type OpprettOppgaveVelgVeilederProps = OwnProps & StateProps;
 
-function OpprettOppgaveVelgVeileder ({veilederListe, veilederId, tema, enhetId, avsenderenhetId, formikProps}: OpprettOppgaveVelgVeilederProps) {
-
+function OpprettOppgaveVelgVeileder({
+    veilederListe,
+    veilederId,
+    tema,
+    enhetId,
+    avsenderenhetId,
+    formikProps
+}: OpprettOppgaveVelgVeilederProps) {
     if (tema !== 'OPPFOLGING' && formikProps.values.veilederId) {
         formikProps.setFieldValue('veilederId', null);
     }
 
-    if ( !(avsenderenhetId === enhetId && tema === 'OPPFOLGING')) {
+    if (!(avsenderenhetId === enhetId && tema === 'OPPFOLGING')) {
         return null;
     }
 
-    const valgtVeileder: OrNothing<VeilederData>  = veilederListe.find(veileder => veileder.ident === veilederId);
+    const valgtVeileder: OrNothing<VeilederData> = veilederListe.find(veileder => veileder.ident === veilederId);
+
+    const sorterteVeiledere = veilederListe.sort((a, b) => a.etternavn.localeCompare(b.etternavn));
 
     return (
         <div className="skjemaelement">
@@ -45,13 +53,9 @@ function OpprettOppgaveVelgVeileder ({veilederListe, veilederId, tema, enhetId, 
                 knappeTekst={(valgtVeileder && valgtVeileder.navn) || ''}
                 className="skjemaelement velg-enhet-dropdown"
                 btnClassnames="velg-enhet-dropdown__button"
-                render={(lukkDropdown) =>
-                    <SokFilter
-                        data={veilederListe}
-                        label=""
-                        placeholder="Søk etter veileder"
-                    >
-                        {(data) =>
+                render={lukkDropdown => (
+                    <SokFilter data={sorterteVeiledere} label="" placeholder="Søk etter veileder">
+                        {data => (
                             <FormikRadioGroup
                                 data={data}
                                 createLabel={(veileder: VeilederData) => veileder.navn}
@@ -59,8 +63,10 @@ function OpprettOppgaveVelgVeileder ({veilederListe, veilederId, tema, enhetId, 
                                 radioName="Velg veileder"
                                 closeDropdown={lukkDropdown}
                                 name="veilederId"
-                            />}
-                    </SokFilter>}
+                            />
+                        )}
+                    </SokFilter>
+                )}
             />
         </div>
     );
