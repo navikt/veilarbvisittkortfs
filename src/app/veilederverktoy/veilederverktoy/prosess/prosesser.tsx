@@ -40,7 +40,7 @@ function Prosesser(props: StateProps & DispatchProps) {
                 navigerTilStartEsklaring={() => props.navigerTil('start_eskalering')}
             />
             <StoppEskaleringsProsess
-                visible={true}
+                visible={props.kanStoppeEskalering}
                 navigerTilStoppEskalering={() => props.navigerTil('stopp_eskalering')}
             />
             <AvsluttOppfolgingProsess
