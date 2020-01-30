@@ -63,9 +63,7 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
                     <div className="modal-innhold">
                         <div className="modal-info-tekst">
                             <Innholdstittel className="modal-info-tekst__overskrift">
-                                {!props.arbeidsliste.endringstidspunkt
-                                    ? 'Legg til i arbeidsliste'
-                                    : 'Rediger arbeidsliste'}
+                                {!props.arbeidsliste.endringstidspunkt ? 'Legg i arbeidsliste' : 'Rediger arbeidsliste'}
                             </Innholdstittel>
                             <Undertittel>
                                 <FormattedMessage
