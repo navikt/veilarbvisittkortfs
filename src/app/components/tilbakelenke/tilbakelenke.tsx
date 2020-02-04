@@ -11,7 +11,7 @@ interface Props {
 function Tilbakelenke(props: Props) {
     const tilbakeLenke =
         props.tilbakeTilFlate === 'veilarbportefoljeflatefs'
-            ? `/${props.tilbakeTilFlate}/tilbake?enhet=${props.enhet}`
+            ? `/${props.tilbakeTilFlate}/tilbake`
             : `/${props.tilbakeTilFlate}/${props.fnr}?enhet=${props.enhet}`;
 
     const tilbakeTekst = props.tilbakeTilFlate === 'veilarbportefoljeflatefs' ? 'Oversikten' : 'Aktivitetsplan';
