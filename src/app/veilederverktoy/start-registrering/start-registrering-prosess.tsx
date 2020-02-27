@@ -54,7 +54,7 @@ function StartRegistreringProsess(props: StartRegistreringProsessProps) {
     return (
         <a
             href={erITestMiljo() ? veilarbLoginUrl(registreringUrl) : registreringUrl}
-            className="knapp btn--mb1"
+            className="knapp meny-knapp btn--mb1"
             onClick={() => logEvent('veilarbvisittkortfs.metrikker.registrering', {}, { brukerType: brukerType })}
         >
             {brukerTekst()}
