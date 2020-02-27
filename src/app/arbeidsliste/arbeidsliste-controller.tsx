@@ -87,7 +87,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
             oppdaterArbeidsliste({
                 kommentar: values.kommentar,
                 overskrift: values.overskrift,
-                frist: values.frist ? dateToISODate(values.frist) : null
+                frist: values.frist ? dateToISODate(values.frist) : null,
+                kategori: values.kategori
             })
         ),
     redigerArbeidsliste: (values: ArbeidslisteformValues) =>
@@ -95,7 +96,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
             redigerArbeidsliste({
                 kommentar: values.kommentar,
                 overskrift: values.overskrift,
-                frist: values.frist ? dateToISODate(values.frist) : null
+                frist: values.frist ? dateToISODate(values.frist) : null,
+                kategori: values.kategori
             })
         )
 });

@@ -22,27 +22,17 @@
         fill: none;
     }
 
-    .icon--filled:first-child {
-        stroke: @navBla;
-        fill: @navBla;
-    }
-
-    svg {
-        width: 1.7rem;
-        height: 2rem;
-        padding-left: 8px;
-    }
-}
-
-.arbeidsliste-knapp:hover {
-    background-color: @navMorkGra!important;
-
-    svg:first-child {
-        stroke: white;
+    &:hover {
+        background-color: @navMorkGra !important;
         fill: none;
-    }
-}
 
-.arbeidsliste-knapp:active {
-    border: none !important;
+        svg:first-child {
+            stroke: white;
+            fill: none;
+        }
+
+        &:active {
+            border: none !important;
+        }
+    }
 }

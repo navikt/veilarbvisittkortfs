@@ -21,6 +21,7 @@ function PersonInfo(props: PersonInfoProps) {
         (state: Appstate) =>
             state.tildelVeileder.status !== 'LOADING' && ArbeidslisteSelector.selectKanLeggeIArbeidsListe(state)
     );
+
     const kanRedigereArbeidsliste = useSelector(ArbeidslisteSelector.selectKanRedigereArbeidsliste);
 
     const dispatch = useDispatch();
@@ -35,7 +36,6 @@ function PersonInfo(props: PersonInfoProps) {
                     hidden={!(kanLeggeIArbeidsliste || kanRedigereArbeidsliste)}
                     onClick={apneArbeidslisteModal}
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
-                    ifylldIkon={kanRedigereArbeidsliste}
                     metricName="visittkort.arbeidsliste-ikon"
                 />
                 <KopierKnappTekst kopierTekst={props.fnr} />

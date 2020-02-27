@@ -1,6 +1,6 @@
 import React from 'react';
 import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
-import { Arbeidsliste, ArbeidslisteformValues } from '../../types/arbeidsliste';
+import { Arbeidsliste, ArbeidslisteformValues, KategoriModell } from '../../types/arbeidsliste';
 import { FormattedMessage } from 'react-intl';
 import { Form, Formik, FormikProps } from 'formik';
 import ArbeidslisteForm from './arbeidsliste-form';
@@ -25,13 +25,15 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
     const arbeidslisteEmptyValues = {
         overskrift: '',
         kommentar: '',
-        frist: ''
+        frist: '',
+        kategori: KategoriModell.BLA
     };
 
     const arbeidslisteValues = {
         overskrift: props.arbeidsliste.overskrift,
         kommentar: props.arbeidsliste.kommentar,
-        frist: props.arbeidsliste.frist ? moment(props.arbeidsliste.frist).format('YYYY-MM-DD') : ''
+        frist: props.arbeidsliste.frist ? moment(props.arbeidsliste.frist).format('YYYY-MM-DD') : '',
+        kategori: props.arbeidsliste.kategori
     };
 
     const initalValues = !props.arbeidsliste.endringstidspunkt ? arbeidslisteEmptyValues : arbeidslisteValues;
