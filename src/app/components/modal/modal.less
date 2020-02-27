@@ -1,8 +1,10 @@
-@import (reference) '~nav-frontend-core/less/_variabler';
+@import '~nav-frontend-core/less/_variabler';
 
 .visittkortfs-modal {
     //SCOPE
-    .blokk-xs,
+    .blokk-xs {
+        margin-bottom: 1rem;
+    }
     .modal-innhold {
         .alertstripe--advarsel {
             background-color: #ffe9cc;
@@ -28,8 +30,9 @@
             background-color: #efefef;
             outline: none;
             max-width: 40rem;
-            max-height: none;
+            max-height: 55rem;
             padding: 0;
+            overflow-y: auto;
             width: 100%;
 
             .modal-header {

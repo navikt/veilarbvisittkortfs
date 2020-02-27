@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import { Formik, FormikProps } from 'formik';
 import ModalHeader from '../modal/modal-header';
+import { useDispatch } from 'react-redux';
+import { navigerAction } from '../../../store/navigation/actions';
 
 const cls = (className?: string) => classNames('modal', className);
 
@@ -22,6 +24,7 @@ interface FormikModalProps<Values> {
 
 function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalProps<Values>) {
     const [isOpen, setIsOpen] = useState(true);
+    const dispatch = useDispatch();
 
     const tilbake = (formikProps: FormikProps<Values>) => {
         const confirmTekst = 'Er du sikker på at du vil lukke siden? Ulagrede endringer vil da gå tapt.';
@@ -29,12 +32,15 @@ function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalP
         if (formikProps.dirty) {
             if (visConfirmDialog && window.confirm(confirmTekst)) {
                 setIsOpen(false);
+                dispatch(navigerAction(null));
             }
             if (!visConfirmDialog) {
                 setIsOpen(false);
+                dispatch(navigerAction(null));
             }
         } else {
             setIsOpen(false);
+            dispatch(navigerAction(null));
         }
     };
 
@@ -52,7 +58,7 @@ function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalP
                     closeButton={true}
                     portalClassName="visittkortfs-modal"
                 >
-                    <ModalHeader tilbake={props.tilbake} tilbakeTekstId={props.tilbakeTekstId} />
+                    <ModalHeader />
                     {props.render(formikProps)}
                 </NavFrontendModal>
             )}

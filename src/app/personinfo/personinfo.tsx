@@ -1,53 +1,44 @@
 import * as React from 'react';
 import NavnOgAlder from './components/navnogalder';
-import Etiketter from './components/etiketter';
-import Fodelsnummer from './components/fodelsnummer';
 import './personinfo.less';
 import Icon from './components/icon';
-import { connect } from 'react-redux';
-import { Personalia } from '../../types/personalia';
-import { OppfolgingStatus } from '../../types/oppfolging-status';
+import { useDispatch, useSelector } from 'react-redux';
 import { Appstate } from '../../types/appstate';
 import PersonaliaSelector from '../../store/personalia/selectors';
-import OppfolgingsstatusSelector from '../../store/oppfolging-status/selectors';
-import OppfolgingSelector from '../../store/oppfolging/selector';
-import { Oppfolging } from '../../types/oppfolging';
+import ArbeidslisteKnapp from '../arbeidsliste/arbeidsliste-knapp';
+import ArbeidslisteSelector from '../../store/arbeidsliste/selector';
+import { navigerAction } from '../../store/navigation/actions';
+import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
 
-interface StateProps {
-    personalia: Personalia;
-    oppfolgingstatus: OppfolgingStatus;
-    navn: string;
-    oppfolging: Oppfolging;
-}
-
-interface OwnProps {
+interface PersonInfoProps {
     fnr: string;
 }
 
-type PersonInfoProps = StateProps & OwnProps;
-
 function PersonInfo(props: PersonInfoProps) {
+    const personalia = useSelector((state: Appstate) => state.personalia.data);
+    const navn = useSelector(PersonaliaSelector.selectSammensattNavn);
+    const kanLeggeIArbeidsliste = useSelector(
+        (state: Appstate) =>
+            state.tildelVeileder.status !== 'LOADING' && ArbeidslisteSelector.selectKanLeggeIArbeidsListe(state)
+    );
+    const kanRedigereArbeidsliste = useSelector(ArbeidslisteSelector.selectKanRedigereArbeidsliste);
+
+    const dispatch = useDispatch();
+    const apneArbeidslisteModal = () => dispatch(navigerAction('vis_arbeidsliste'));
+
     return (
         <div className="personinfo">
-            <Icon kjonn={props.personalia.kjonn} />
-            <div className="personinfo__container">
-                <Fodelsnummer fnr={props.fnr} />
-                <NavnOgAlder navn={props.navn} personalia={props.personalia} />
-                <Etiketter
-                    personalia={props.personalia}
-                    oppfolgingstatus={props.oppfolgingstatus}
-                    oppfolging={props.oppfolging}
-                />
-            </div>
+            <Icon kjonn={personalia.kjonn} />
+            <NavnOgAlder navn={navn} personalia={personalia} />
+            <ArbeidslisteKnapp
+                hidden={!(kanLeggeIArbeidsliste || kanRedigereArbeidsliste)}
+                onClick={apneArbeidslisteModal}
+                kanRedigereArbeidsliste={kanRedigereArbeidsliste}
+                ifylldIkon={kanRedigereArbeidsliste}
+            />
+            <KopierKnappTekst kopierTekst={props.fnr} />
         </div>
     );
 }
 
-const mapStateToProps = (state: Appstate): StateProps => ({
-    personalia: state.personalia.data,
-    navn: PersonaliaSelector.selectSammensattNavn(state),
-    oppfolgingstatus: OppfolgingsstatusSelector.selectOppfolgingStatusData(state),
-    oppfolging: OppfolgingSelector.selectOppfolgingData(state)
-});
-
-export default connect<StateProps, OwnProps>(mapStateToProps)(PersonInfo);
+export default PersonInfo;

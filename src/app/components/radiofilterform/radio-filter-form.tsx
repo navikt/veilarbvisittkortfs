@@ -7,7 +7,6 @@ export interface RadioFilterFormProps<T> {
     createLabel: (foo: T) => string;
     createValue: (foo: T) => string;
     radioName: string;
-    closeDropdown: () => void;
     fjernNullstill?: boolean;
     selected: string;
     changeSelected: (e: React.ChangeEvent<HTMLInputElement>) => void;

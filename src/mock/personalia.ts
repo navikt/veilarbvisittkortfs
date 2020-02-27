@@ -3,8 +3,8 @@ import { JSONValue } from 'yet-another-fetch-mock/dist/types/types';
 import { Personalia } from '../types/personalia';
 
 const personalia: Personalia & JSONValue = {
-    fornavn: 'BRUCE',
-    mellomnavn: 'BATTY',
+    fornavn: 'BRUCE BRUCE',
+    mellomnavn: 'BATTY BATTY',
     etternavn: 'WAYNE',
     sammensattNavn: 'Bruce Batty Wayne',
     fodselsnummer: '10108000398',
@@ -45,7 +45,7 @@ const personalia: Personalia & JSONValue = {
             kjonn: 'K'
         }
     ],
-    diskresjonskode: '6',
+    diskresjonskode: null,
     kontonummer: '12345678910',
     geografiskTilknytning: '0106',
     geografiskEnhet: {
@@ -88,7 +88,7 @@ const personalia: Personalia & JSONValue = {
             landkode: 'NORGE'
         }
     },
-    egenAnsatt: true,
+    egenAnsatt: false,
     kjonn: 'K'
 };
 
