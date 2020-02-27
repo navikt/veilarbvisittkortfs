@@ -1,25 +1,21 @@
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Appstate } from '../../../types/appstate';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { logEvent } from '../../utils/frontend-logger';
+import { navigerAction } from '../../../store/navigation/actions';
 
 export function FeilTildelingModal() {
-    const harFeilendeTildelinger = useSelector((state: Appstate) => !!state.tildelVeileder.tildeltVeileder.error);
-    const [visTildelingFeiletModal, setVisTildelingFeiletModal] = useState(harFeilendeTildelinger);
+    const dispatch = useDispatch();
 
     const lukkModal = () => {
         logEvent('veilarbvisittkortfs.metrikker.lukk-modal-tildel-veileder');
-        setVisTildelingFeiletModal(false);
+        dispatch(navigerAction(null));
     };
-    useEffect(() => {
-        setVisTildelingFeiletModal(harFeilendeTildelinger);
-    }, [harFeilendeTildelinger]);
 
     return (
         <VarselModal
-            isOpen={visTildelingFeiletModal}
+            isOpen={true}
             contentLabel="Tildeling av veileder feilet"
             closeButton={false}
             type="FEIL"

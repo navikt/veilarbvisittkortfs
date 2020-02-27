@@ -6,7 +6,7 @@ export function ArbeidslisteProcess(props: { navigerTilArbeidsliste: () => void;
         <StartProsess
             knappeTekst={props.knappeTekst}
             onClick={props.navigerTilArbeidsliste}
-            metricName="visittkort-arbeidsliste"
+            metricName="veilarbvisittkortfs.metrikker.veilederverktoy.arbeidsliste"
         />
     );
 }

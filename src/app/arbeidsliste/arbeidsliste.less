@@ -14,9 +14,8 @@
 
 .arbeidsliste-knapp {
     padding: 0;
-    margin-top: 0.35rem;
     margin-left: 0.5rem;
-    border: none;
+    border: none !important;
 
     .arbeidsliste-knapp__icon:first-child {
         stroke: @navMorkGra;
@@ -24,8 +23,8 @@
     }
 
     .icon--filled:first-child {
-        stroke: @navMorkGra;
-        fill: @navMorkGra;
+        stroke: @navBla;
+        fill: @navBla;
     }
 
     svg {
@@ -36,11 +35,14 @@
 }
 
 .arbeidsliste-knapp:hover {
-    border: 1px solid @navMorkGra!important;
     background-color: @navMorkGra!important;
 
     svg:first-child {
         stroke: white;
         fill: none;
     }
+}
+
+.arbeidsliste-knapp:active {
+    border: none !important;
 }

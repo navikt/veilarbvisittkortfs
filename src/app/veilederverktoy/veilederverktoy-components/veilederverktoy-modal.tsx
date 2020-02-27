@@ -3,11 +3,8 @@ import { connect } from 'react-redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../store/navigation/actions';
-import NavFrontendModal from 'nav-frontend-modal';
-import classNames from 'classnames';
 import ModalHeader from '../../components/modal/modal-header';
-
-const cls = (className?: string) => classNames('modal', className);
+import Modal from '../../components/modal/modal';
 
 interface OwnProps {
     children: React.ReactNode;
@@ -26,17 +23,15 @@ type VeilederVerktoyModalProps = OwnProps & DispatchProps & InjectedIntlProps;
 
 function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
     return (
-        <NavFrontendModal
-            className={cls(props.className)}
-            contentLabel="veilederverktoy"
+        <Modal
+            className={props.className}
             isOpen={true}
             onRequestClose={props.lukkModal}
-            closeButton={true}
-            portalClassName="visittkortfs-modal"
+            contentLabel="veilederverktoy"
         >
             <ModalHeader />
             <div className="modal-innhold">{props.children}</div>
-        </NavFrontendModal>
+        </Modal>
     );
 }
 

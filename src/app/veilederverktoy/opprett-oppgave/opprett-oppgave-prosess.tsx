@@ -6,7 +6,13 @@ interface OwnProps {
 }
 
 function OpprettOppgaveProsess({ navigerTilOpprettOppgave }: OwnProps) {
-    return <StartProsess knappeTekst="Opprett Gosys-oppgave" onClick={navigerTilOpprettOppgave} />;
+    return (
+        <StartProsess
+            knappeTekst="Opprett Gosys-oppgave"
+            onClick={navigerTilOpprettOppgave}
+            metricName="veilarbvisittkortfs.metrikker.gosys"
+        />
+    );
 }
 
 export default OpprettOppgaveProsess;

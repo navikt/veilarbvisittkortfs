@@ -6,7 +6,13 @@ interface OwnProps {
 }
 
 function StartKvpPeriodeProsess({ navigerTilStartKvpPeriode }: OwnProps) {
-    return <StartProsess knappeTekst="Start KVP-periode" onClick={navigerTilStartKvpPeriode} />;
+    return (
+        <StartProsess
+            knappeTekst="Start KVP-periode"
+            onClick={navigerTilStartKvpPeriode}
+            metricName="veilarbvisittkortfs.metrikker.start_kvp"
+        />
+    );
 }
 
 export default StartKvpPeriodeProsess;

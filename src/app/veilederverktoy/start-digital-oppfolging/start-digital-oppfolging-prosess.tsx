@@ -6,7 +6,13 @@ interface StartDigitalOppfolgingProsessProps {
 }
 
 function StartDigitalOppfolgingProsess({ navigerTilStartDigitalOppfolging }: StartDigitalOppfolgingProsessProps) {
-    return <StartProsess knappeTekst="Endre til digital oppfølging" onClick={navigerTilStartDigitalOppfolging} />;
+    return (
+        <StartProsess
+            knappeTekst="Endre til digital oppfølging"
+            onClick={navigerTilStartDigitalOppfolging}
+            metricName="veilarbvisittkortfs.metrikker.digital"
+        />
+    );
 }
 
 export default StartDigitalOppfolgingProsess;

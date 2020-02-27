@@ -6,7 +6,13 @@ interface StartEskaleringProsessProps {
 }
 
 function StartEskaleringProsess({ navigerTilStartEsklaring }: StartEskaleringProsessProps) {
-    return <StartProsess knappeTekst="Send varsel" onClick={navigerTilStartEsklaring} />;
+    return (
+        <StartProsess
+            knappeTekst="Send varsel"
+            onClick={navigerTilStartEsklaring}
+            metricName="veilarbvisittkortfs.metrikker.send_eskalering"
+        />
+    );
 }
 
 export default StartEskaleringProsess;

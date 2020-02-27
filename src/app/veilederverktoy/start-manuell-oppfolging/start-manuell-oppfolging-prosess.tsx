@@ -6,7 +6,13 @@ interface OwnProps {
 }
 
 function StarManuellOppfolging({ navigerTilStartManuellOppfolging }: OwnProps) {
-    return <StartProsess knappeTekst="Endre til manuell oppfølging" onClick={navigerTilStartManuellOppfolging} />;
+    return (
+        <StartProsess
+            knappeTekst="Endre til manuell oppfølging"
+            onClick={navigerTilStartManuellOppfolging}
+            metricName="veilarbvisittkortfs.metrikker.manuell"
+        />
+    );
 }
 
 export default StarManuellOppfolging;

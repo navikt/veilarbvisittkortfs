@@ -19,6 +19,7 @@ import { Appstate } from '../../types/appstate';
 import ArbeidslisteSelector from '../../store/arbeidsliste/selector';
 import { ArbeidslisteProcess } from './arbeidsliste-process/arbeidsliste-prosess';
 import TilgangTilKontorSelector from '../../store/tilgang-til-brukerskontor/selector';
+import StartProcess from './prosess/start-prosess';
 
 interface VeilederverktoyslinjeProps {
     visVeilederVerktoy?: boolean;
@@ -68,65 +69,6 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                 btnClassnames="knapp knapp--standard knapp-fss"
                 render={lukkDropdown => (
                     <>
-                        {kanStarteEskalering && (
-                            <li>
-                                <StartEskaleringProsess
-                                    navigerTilStartEsklaring={() => naviger('start_eskalering')(lukkDropdown)}
-                                />
-                            </li>
-                        )}
-                        {kanStoppeEskalering && (
-                            <li>
-                                <StoppEskaleringsProsess
-                                    navigerTilStoppEskalering={() => naviger('stopp_eskalering')(lukkDropdown)}
-                                />
-                            </li>
-                        )}
-                        {kanAvslutteOppfolging && (
-                            <li>
-                                <AvsluttOppfolgingProsess
-                                    navigerTilAvsluttOppfolging={() => {
-                                        dispatch(navigerTilAvsluttOppfolging());
-                                        lukkDropdown();
-                                    }}
-                                />
-                            </li>
-                        )}
-                        {kanRegistrere && (
-                            <li>
-                                <StartRegistreringProsess />
-                            </li>
-                        )}
-                        {kanStarteManuellOppfolging && (
-                            <li>
-                                <StartManuellOppfolging
-                                    navigerTilStartManuellOppfolging={() => naviger('manuell_oppfolging')(lukkDropdown)}
-                                />
-                            </li>
-                        )}
-                        {kanStarteKVP && (
-                            <li>
-                                <StartKvpPeriodeProsess
-                                    navigerTilStartKvpPeriode={() => naviger('start_kvp_periode')(lukkDropdown)}
-                                />
-                            </li>
-                        )}
-                        {kanStoppeKVP && (
-                            <li>
-                                <StoppKvpPeriodeProsess
-                                    navigerTilStopKvpPeriode={() => naviger('stopp_kvp_periode')(lukkDropdown)}
-                                />
-                            </li>
-                        )}
-                        {kanStarteDigitalOppfolging && (
-                            <li>
-                                <StartDigitalOppfolgingProsess
-                                    navigerTilStartDigitalOppfolging={() =>
-                                        naviger('start_digital_oppfolging')(lukkDropdown)
-                                    }
-                                />
-                            </li>
-                        )}
                         {kanEndreArbeidsliste && (
                             <li>
                                 <ArbeidslisteProcess
@@ -145,10 +87,60 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                         )}
                         {kanTildeleVeileder && (
                             <li>
-                                <ArbeidslisteProcess
+                                <StartProcess
+                                    metricName="veilarbvisittkortfs.metrikker.tildel_veileder"
                                     knappeTekst="Tildel veileder"
-                                    navigerTilArbeidsliste={() => naviger('tildel_veileder')(lukkDropdown)}
+                                    onClick={() => naviger('tildel_veileder')(lukkDropdown)}
                                 />{' '}
+                            </li>
+                        )}
+                        {kanStarteEskalering && (
+                            <li>
+                                <StartEskaleringProsess
+                                    navigerTilStartEsklaring={() => naviger('start_eskalering')(lukkDropdown)}
+                                />
+                            </li>
+                        )}
+                        {kanStoppeEskalering && (
+                            <li>
+                                <StoppEskaleringsProsess
+                                    navigerTilStoppEskalering={() => naviger('stopp_eskalering')(lukkDropdown)}
+                                />
+                            </li>
+                        )}
+                        {kanRegistrere && (
+                            <li>
+                                <StartRegistreringProsess />
+                            </li>
+                        )}
+                        {kanStarteManuellOppfolging && (
+                            <li>
+                                <StartManuellOppfolging
+                                    navigerTilStartManuellOppfolging={() => naviger('manuell_oppfolging')(lukkDropdown)}
+                                />
+                            </li>
+                        )}
+                        {kanStarteDigitalOppfolging && (
+                            <li>
+                                <StartDigitalOppfolgingProsess
+                                    navigerTilStartDigitalOppfolging={() =>
+                                        naviger('start_digital_oppfolging')(lukkDropdown)
+                                    }
+                                />
+                            </li>
+                        )}
+                        {kanStarteKVP && (
+                            <li>
+                                <StartKvpPeriodeProsess
+                                    navigerTilStartKvpPeriode={() => naviger('start_kvp_periode')(lukkDropdown)}
+                                />
+                            </li>
+                        )}
+                        {kanStoppeKVP && (
+                            <li>
+                                <StoppKvpPeriodeProsess
+                                    navigerTilStopKvpPeriode={() => naviger('stopp_kvp_periode')(lukkDropdown)}
+                                />
                             </li>
                         )}
                         <li>
@@ -156,6 +148,16 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                                 navigerTilOpprettOppgave={() => naviger('opprett_oppgave')(lukkDropdown)}
                             />
                         </li>
+                        {kanAvslutteOppfolging && (
+                            <li>
+                                <AvsluttOppfolgingProsess
+                                    navigerTilAvsluttOppfolging={() => {
+                                        dispatch(navigerTilAvsluttOppfolging());
+                                        lukkDropdown();
+                                    }}
+                                />
+                            </li>
+                        )}
                         <li>
                             <HistorikKnapp navigerTilHistorikk={() => naviger('vis_historikk')(lukkDropdown)} />
                         </li>

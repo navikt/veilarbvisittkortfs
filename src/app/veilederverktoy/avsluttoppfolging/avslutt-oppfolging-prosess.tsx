@@ -10,7 +10,7 @@ function AvsluttOppfolgingProsess(props: AvsluttOppfolgingProsessProps) {
         <StartProsess
             knappeTekst="Avslutt oppfølging"
             onClick={props.navigerTilAvsluttOppfolging}
-            metricName="avslutt_oppfolging"
+            metricName="veilarbvisittkortfs.metrikker.avslutt_oppfolging"
         />
     );
 }

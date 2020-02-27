@@ -35,6 +35,7 @@ function PersonInfo(props: PersonInfoProps) {
                 onClick={apneArbeidslisteModal}
                 kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 ifylldIkon={kanRedigereArbeidsliste}
+                metricName="visittkort.arbeidsliste-ikon"
             />
             <KopierKnappTekst kopierTekst={props.fnr} />
         </div>

@@ -26,6 +26,8 @@ import Historikk from '../historikk/historikk';
 import { PropsWithChildren } from 'react';
 import ArbeidslisteController from '../../arbeidsliste/arbeidsliste-controller';
 import TildelVeileder from '../tildel-veileder/tildel-veileder';
+import { TildelVeilederKvittering } from '../tildel-veileder/tildel-veileder-kvittering';
+import { FeilTildelingModal } from '../tildel-veileder/tildel-veileder-feil-modal';
 
 interface StateProps {
     navigation: {
@@ -45,6 +47,10 @@ function VeilederVerktoyNavigation(props: PropsWithChildren<VeilederVerktoyNavig
                 return <ArbeidslisteController />;
             case 'tildel_veileder':
                 return <TildelVeileder />;
+            case 'tildel_veileder_feilet':
+                return <FeilTildelingModal />;
+            case 'tildel_veileder_kvittering':
+                return <TildelVeilederKvittering />;
             case 'start_eskalering_kvittering':
                 return <StartEskaleringKvittering />;
             case 'manuell_oppfolging':

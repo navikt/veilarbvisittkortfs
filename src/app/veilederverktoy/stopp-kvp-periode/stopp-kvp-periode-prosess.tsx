@@ -6,7 +6,13 @@ interface OwnProps {
 }
 
 function StoppKvpPeriodeProsess({ navigerTilStopKvpPeriode }: OwnProps) {
-    return <StartProsess knappeTekst="Avslutt KVP-periode" onClick={navigerTilStopKvpPeriode} />;
+    return (
+        <StartProsess
+            knappeTekst="Avslutt KVP-periode"
+            onClick={navigerTilStopKvpPeriode}
+            metricName="veilarbvisittkortfs.metrikker.stopp_kvp"
+        />
+    );
 }
 
 export default StoppKvpPeriodeProsess;

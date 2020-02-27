@@ -2,6 +2,7 @@ import React from 'react';
 import { ReactComponent as ArbeidslisteIkon } from './arbeidsliste.svg';
 import classNames from 'classnames';
 import { Flatknapp } from 'nav-frontend-knapper';
+import withClickMetric from '../components/click-metric/click-metric';
 
 export interface ArbeidslisteKnappProps {
     hidden: boolean;
@@ -20,4 +21,4 @@ function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
     );
 }
 
-export default ArbeidslisteKnapp;
+export default withClickMetric(ArbeidslisteKnapp);
