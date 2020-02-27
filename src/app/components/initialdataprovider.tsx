@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { PropsWithChildren, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { hentOppfolgingsstatus } from '../../store/oppfolging-status/actions';
 import { Appstate } from '../../types/appstate';
@@ -6,19 +6,26 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import { hentOppfolging } from '../../store/oppfolging/actions';
 import OppfolgingsstatusSelector from '../../store/oppfolging-status/selectors';
 import OppfolgingSelector from '../../store/oppfolging/selector';
-import { hentPaloggetVeileder } from '../../store/tildel-veileder/actions';
+import { hentAlleVeiledereForEnheten, hentPaloggetVeileder } from '../../store/tildel-veileder/actions';
 import { hentPersonalia } from '../../store/personalia/actions';
 import PersonaliaSelector from '../../store/personalia/selectors';
 import { hentTilgangTilBrukersKontor } from '../../store/tilgang-til-brukerskontor/actions';
+import { hentArbeidsliste } from '../../store/arbeidsliste/actions';
 
 interface InitialDataProviderProps {
     fnr: string;
     enhet?: string;
-    children: React.ReactNode;
 }
 
-function InitialDataProvider({ fnr, enhet, children }: InitialDataProviderProps) {
+function InitialDataProvider({ fnr, enhet, children }: PropsWithChildren<InitialDataProviderProps>) {
     const dispatch = useDispatch();
+    const harTilgangTilBrukersKontor = useSelector(
+        (state: Appstate) => state.tilgangTilBrukersKontor.data.tilgangTilBrukersKontor
+    );
+    const underOppfolging = useSelector(OppfolgingSelector.selectErUnderOppfolging);
+    const oppfolgingsenhetId = useSelector((state: Appstate) =>
+        OppfolgingsstatusSelector.selectOppfolgingsenhetsId(state)
+    );
 
     const isLoading = useSelector(
         (state: Appstate) =>
@@ -35,6 +42,18 @@ function InitialDataProvider({ fnr, enhet, children }: InitialDataProviderProps)
         dispatch(hentTilgangTilBrukersKontor(fnr));
         dispatch({ type: 'SETT_ENHET_FRA_PERSONFLATEFS', enhet });
     }, [fnr, dispatch, enhet]);
+
+    useEffect(() => {
+        if (harTilgangTilBrukersKontor && underOppfolging) {
+            dispatch(hentArbeidsliste(fnr));
+        }
+    }, [fnr, dispatch, harTilgangTilBrukersKontor, underOppfolging]);
+
+    useEffect(() => {
+        if (oppfolgingsenhetId) {
+            dispatch(hentAlleVeiledereForEnheten(oppfolgingsenhetId));
+        }
+    }, [oppfolgingsenhetId, dispatch]);
 
     if (isLoading) {
         return <NavFrontendSpinner type="XL" />;

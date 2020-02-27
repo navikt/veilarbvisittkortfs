@@ -13,6 +13,7 @@ export type NavigerActionType =
     | 'AVSLUTT_OPPFOLGING_SUCCESS'
     | 'STOPP_ESKALERING_SUCCESS'
     | 'OPPRETTET_HENVENDELSE_START_ESKALERING'
+    | 'NAVIGER_TIL_AVSLUTT_OPPFOLGING'
     | 'LAGRE_OPPGAVE';
 
 export interface NavigerAction {
@@ -20,6 +21,10 @@ export interface NavigerAction {
     location?: StringOrNothing;
     begrunnelse?: string;
 }
+
+export const navigerTilAvsluttOppfolging = (): NavigerAction => ({
+    type: 'NAVIGER_TIL_AVSLUTT_OPPFOLGING'
+});
 
 export const navigerTilProcesser = (): NavigerAction => ({
     type: 'NAVIGER_TIL_PROSSER'

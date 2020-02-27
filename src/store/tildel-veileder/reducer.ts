@@ -19,7 +19,7 @@ import { TildelVeilederResponse } from '../../types/tildel-veileder';
 import { VeilederListe } from '../../mock/veiledereliste';
 import { FETCH_STATUS } from '../../types/fetch-status';
 import { triggerReRenderingAvMao } from '../../app/utils/utils';
-import { visFjernTildeltVeilederToast } from '../toast/actions';
+import { navigerAction } from '../navigation/actions';
 
 export interface TildelVeilederState {
     status: FETCH_STATUS;
@@ -145,11 +145,11 @@ function* hentPaloggetVeileder() {
 function* tildelVeileder(action: TildelVeilederAction) {
     try {
         const response = yield call(() => VeilederApi.tildelTilVeileder(action.data));
-        if (response.feilendeTilordninger.length > 0 ) {
-            yield put(tildelVeilederError(new Error('Noen brukere kunne ikke tilordnes en veileder')));
+        if (response.feilendeTilordninger.length > 0) {
+            yield put(navigerAction('tildel_veileder_feilet'));
         } else {
             yield put(tildelVeilederSuccess(Object.assign(response, { tilVeilederId: action.data[0].tilVeilederId })));
-            yield put(visFjernTildeltVeilederToast());
+            yield put(navigerAction('tildel_veileder_kvittering'));
             triggerReRenderingAvMao();
         }
     } catch (e) {

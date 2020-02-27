@@ -1,5 +1,6 @@
 @import (reference) '~nav-frontend-core/less/_variabler';
 @import (reference) '~nav-frontend-core/less/core';
+@import '~nav-frontend-core/less/_variabler';
 
 .visittkortfs,
 .visittkortfs-modal {
@@ -10,7 +11,7 @@
         height: 2px;
         width: 10px;
         border-radius: 10px;
-        right: 0.7rem;
+        right: 0.9rem;
         top: 15px;
         position: absolute;
     }
@@ -19,9 +20,13 @@
         position: relative;
 
         &__btn {
-            padding: 0.5rem 2rem 0.5rem 1rem;
+            padding: 0.5rem 2rem 0.5rem 0.2rem;
             height: 2rem;
             line-height: 1rem;
+
+            #veilederverkoy_span {
+                display: none;
+            }
 
             &:before {
                 .chevronline-mixin();
@@ -57,11 +62,12 @@
         &__innhold {
             position: absolute;
             z-index: 110;
-            border: 1px solid @navGra40;
+            border: 1px solid @navMorkGra;
             top: ~'calc(100% + 5px)';
             background-color: @white;
-            border-radius: 0 0 @border-radius-small @border-radius-small;
-            width: 250px;
+            width: 15rem;
+            border-radius: 4px;
+            right: 0;
         }
 
         &--apen {
@@ -75,6 +81,17 @@
                     transform: translateX(-3px) rotate(-45deg);
                     transition: transform 0.3s;
                 }
+            }
+        }
+    }
+
+    @media (min-width: 1300px) {
+        .dropdown__btn {
+            width: 15rem;
+
+            #veilederverkoy_span {
+                margin-right: 3rem;
+                display: inline-block;
             }
         }
     }

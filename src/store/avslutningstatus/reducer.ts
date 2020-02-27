@@ -11,10 +11,12 @@ import {
 import OppfolgingSelector from '../oppfolging/selector';
 import OppfolgingApi from '../../api/oppfolging-api';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { navigerAction } from '../navigation/actions';
 import { StringOrNothing } from '../../types/utils/stringornothings';
 
-export type AvsluttOppfolgingState = {data: OrNothing<AvslutningStatus>, begrunnelse: StringOrNothing} & {status: FETCH_STATUS; error: OrNothing<Error>};
+export type AvsluttOppfolgingState = { data: OrNothing<AvslutningStatus>; begrunnelse: StringOrNothing } & {
+    status: FETCH_STATUS;
+    error: OrNothing<Error>;
+};
 
 const initialState: AvsluttOppfolgingState = {
     data: null,
@@ -23,7 +25,10 @@ const initialState: AvsluttOppfolgingState = {
     begrunnelse: null
 };
 
-const avsluttOppfolgingStatusReducer: Reducer<AvsluttOppfolgingState, AvsluttOppfolgingActions> = (state = initialState, action) => {
+const avsluttOppfolgingStatusReducer: Reducer<AvsluttOppfolgingState, AvsluttOppfolgingActions> = (
+    state = initialState,
+    action
+) => {
     switch (action.type) {
         case AvsluttOppfolgingType.HENT_AVSLUTT_OPPFOLGING_STATUS: {
             return {
@@ -62,11 +67,8 @@ const avsluttOppfolgingStatusReducer: Reducer<AvsluttOppfolgingState, AvsluttOpp
 function* hentAvsluttOppfolgingStatus() {
     try {
         const fnr = yield select(OppfolgingSelector.selectFnr);
-        const data = yield call (() => OppfolgingApi.kanAvslutte(fnr));
+        const data = yield call(() => OppfolgingApi.kanAvslutte(fnr));
         yield put(hentAvsluttningStatusSuccess(data.avslutningStatus));
-        if (data.avslutningStatus.kanAvslutte) {
-            yield put(navigerAction('avslutt_oppfolging'));
-        }
     } catch (e) {
         yield put(hentAvsluttningStatusError(e));
     }

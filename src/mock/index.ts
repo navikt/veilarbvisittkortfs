@@ -41,7 +41,7 @@ mock.post('/veilarboppfolging/api/oppfolging/settManuell', Object.assign({}, Opp
 
 mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
     avslutningStatus: {
-        kanAvslutte: true,
+        kanAvslutte: false,
         harTiltak: false,
         harYtelser: false,
         underOppfolging: true,
@@ -57,7 +57,7 @@ mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
     inaktiveringsdato: null,
     kanReaktiveras: false,
     kanStarteOppfolging: false,
-    manuell: true,
+    manuell: false,
     oppfolgingUtgang: null,
     oppfolgingsPerioder: [],
     reservarsjonKRR: true,

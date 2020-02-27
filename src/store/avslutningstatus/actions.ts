@@ -1,11 +1,11 @@
 import { AvslutningStatus } from '../../types/oppfolging';
 
 export enum AvsluttOppfolgingType {
-    HENT_AVSLUTT_OPPFOLGING_STATUS = 'HENT_AVSLUTT_OPPFOLGING_STATUS',
+    HENT_AVSLUTT_OPPFOLGING_STATUS = 'NAVIGER_TIL_AVSLUTT_OPPFOLGING',
     HENT_AVSLUTT_OPPFOLGING_STATUS_SUCCESS = 'HENT_AVSLUTT_OPPFOLGING_STATUS_SUCCESS',
     HENT_AVSLUTT_OPPFOLGING_STATUS_ERROR = 'HENT_AVSLUTT_OPPFOLGING_STATUS_ERROR',
     HENT_AVSLUTT_OPPFOLGING_RESET = 'NAVIGER_TIL_PROSSER',
-    LAGRE_AVSLUTT_OPPFOLGING_BEGRUNNELSE = 'LAGRE_AVSLUTT_OPPFOLGING_BEGRUNNELSE',
+    LAGRE_AVSLUTT_OPPFOLGING_BEGRUNNELSE = 'LAGRE_AVSLUTT_OPPFOLGING_BEGRUNNELSE'
 }
 
 export interface HentAvsluttOppfolgingStatusAction {
@@ -26,7 +26,7 @@ export interface HentAvsluttOppfolgingStatusActionError {
     error: Error;
 }
 
-export const hentAvsluttningStatus = (): HentAvsluttOppfolgingStatusAction  => ({
+export const hentAvsluttningStatus = (): HentAvsluttOppfolgingStatusAction => ({
     type: AvsluttOppfolgingType.HENT_AVSLUTT_OPPFOLGING_STATUS
 });
 
@@ -51,8 +51,8 @@ export const lagreBegrunnelse = (begrunnelse: string): LagreBegrunnelse => ({
 });
 
 export type AvsluttOppfolgingActions =
-    HentAvsluttOppfolgingStatusAction |
-    HentAvsluttOppfolgingStatusActionSuccess |
-    HentAvsluttOppfolgingStatusActionError |
-    HentAvsluttOppfolgingStatusActionReset |
-    LagreBegrunnelse;
+    | HentAvsluttOppfolgingStatusAction
+    | HentAvsluttOppfolgingStatusActionSuccess
+    | HentAvsluttOppfolgingStatusActionError
+    | HentAvsluttOppfolgingStatusActionReset
+    | LagreBegrunnelse;

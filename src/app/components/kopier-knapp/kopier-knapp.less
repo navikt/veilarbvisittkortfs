@@ -1,0 +1,43 @@
+@import '~nav-frontend-core/less/_variabler';
+
+.visittkortfs {
+    .kopier-knapp {
+        padding: 0 0.5rem;
+        margin: 0.25rem;
+        height: 2rem;
+        font-size: 1rem;
+        border: none;
+
+        &__tooltip {
+            position: absolute;
+            top: 60px;
+            font-size: 12px;
+            padding: 0.5rem;
+            border-radius: 4px;
+            background: white;
+            color: @navMorkGra;
+            opacity: 0;
+            display: none;
+            border: transparent;
+        }
+
+        &__tooltip:after {
+            top: -27%;
+            left: 50%;
+            border: 5px solid rgba(51, 51, 51, 0);
+            content: ' ';
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-bottom-color: @navMorkGra;
+            margin-left: -5px;
+        }
+
+        .tooltip--visible {
+            display: block;
+            opacity: 9;
+            border: 1px solid @navMorkGra;
+        }
+    }
+}
