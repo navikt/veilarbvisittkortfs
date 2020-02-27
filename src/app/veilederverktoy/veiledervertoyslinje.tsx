@@ -61,7 +61,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                 knappeTekst={
                     <>
                         <TannHjulIkon className="knapp-fss__icon" />{' '}
-                        <span id="veilederverkoy_span">Veilederverktoy</span>
+                        <span id="veilederverkoy_span">Veilederverktøy</span>
                     </>
                 }
                 name="tildel veileder"
