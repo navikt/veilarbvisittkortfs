@@ -17,7 +17,6 @@ import AvsluttOppfolgingProsess from './avsluttoppfolging/avslutt-oppfolging-pro
 import { navigerAction, navigerTilAvsluttOppfolging } from '../../store/navigation/actions';
 import { Appstate } from '../../types/appstate';
 import ArbeidslisteSelector from '../../store/arbeidsliste/selector';
-import { ArbeidslisteProcess } from './arbeidsliste-process/arbeidsliste-prosess';
 import TilgangTilKontorSelector from '../../store/tilgang-til-brukerskontor/selector';
 import StartProcess from './prosess/start-prosess';
 
@@ -71,18 +70,20 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                     <>
                         {kanEndreArbeidsliste && (
                             <li>
-                                <ArbeidslisteProcess
+                                <StartProcess
                                     knappeTekst="Rediger arbeidsliste"
-                                    navigerTilArbeidsliste={() => naviger('vis_arbeidsliste')(lukkDropdown)}
+                                    onClick={() => naviger('vis_arbeidsliste')(lukkDropdown)}
+                                    metricName="veilarbvisittkortfs.metrikker.veilederverktoy.arbeidsliste"
                                 />
                             </li>
                         )}
                         {kanLagreArbeidsliste && (
                             <li>
-                                <ArbeidslisteProcess
+                                <StartProcess
                                     knappeTekst="Legg til arbeidsliste"
-                                    navigerTilArbeidsliste={() => naviger('vis_arbeidsliste')(lukkDropdown)}
-                                />{' '}
+                                    onClick={() => naviger('vis_arbeidsliste')(lukkDropdown)}
+                                    metricName="veilarbvisittkortfs.metrikker.veilederverktoy.arbeidsliste"
+                                />
                             </li>
                         )}
                         {kanTildeleVeileder && (
