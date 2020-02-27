@@ -30,14 +30,16 @@ function PersonInfo(props: PersonInfoProps) {
         <div className="personinfo">
             <Icon kjonn={personalia.kjonn} />
             <NavnOgAlder navn={navn} personalia={personalia} />
-            <ArbeidslisteKnapp
-                hidden={!(kanLeggeIArbeidsliste || kanRedigereArbeidsliste)}
-                onClick={apneArbeidslisteModal}
-                kanRedigereArbeidsliste={kanRedigereArbeidsliste}
-                ifylldIkon={kanRedigereArbeidsliste}
-                metricName="visittkort.arbeidsliste-ikon"
-            />
-            <KopierKnappTekst kopierTekst={props.fnr} />
+            <div>
+                <ArbeidslisteKnapp
+                    hidden={!(kanLeggeIArbeidsliste || kanRedigereArbeidsliste)}
+                    onClick={apneArbeidslisteModal}
+                    kanRedigereArbeidsliste={kanRedigereArbeidsliste}
+                    ifylldIkon={kanRedigereArbeidsliste}
+                    metricName="visittkort.arbeidsliste-ikon"
+                />
+                <KopierKnappTekst kopierTekst={props.fnr} />
+            </div>
         </div>
     );
 }

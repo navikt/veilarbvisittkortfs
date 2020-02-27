@@ -22,6 +22,7 @@ function InitialDataProvider({ fnr, enhet, children }: PropsWithChildren<Initial
     const harTilgangTilBrukersKontor = useSelector(
         (state: Appstate) => state.tilgangTilBrukersKontor.data.tilgangTilBrukersKontor
     );
+    const underOppfolging = useSelector(OppfolgingSelector.selectErUnderOppfolging);
     const oppfolgingsenhetId = useSelector((state: Appstate) =>
         OppfolgingsstatusSelector.selectOppfolgingsenhetsId(state)
     );
@@ -43,10 +44,10 @@ function InitialDataProvider({ fnr, enhet, children }: PropsWithChildren<Initial
     }, [fnr, dispatch, enhet]);
 
     useEffect(() => {
-        if (harTilgangTilBrukersKontor) {
+        if (harTilgangTilBrukersKontor && underOppfolging) {
             dispatch(hentArbeidsliste(fnr));
         }
-    }, [fnr, dispatch, harTilgangTilBrukersKontor]);
+    }, [fnr, dispatch, harTilgangTilBrukersKontor, underOppfolging]);
 
     useEffect(() => {
         if (oppfolgingsenhetId) {
