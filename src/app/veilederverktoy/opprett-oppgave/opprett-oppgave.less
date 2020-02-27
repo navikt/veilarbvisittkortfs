@@ -1,0 +1,71 @@
+@import '../../../../node_modules/nav-frontend-core/less/_variabler';
+
+.oppgave-dato-container,
+.oppgave-enhet-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.velg-enhet-dropdown {
+    width: 11rem;
+    height: 2.385rem;
+
+    .sokfilter {
+        padding: 0.5rem;
+
+        &__input {
+            height: 2rem;
+        }
+    }
+
+    &__button {
+        border-radius: 4px;
+        text-align: left;
+        border: 1px solid #78706a;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    &__button:hover {
+        border: 1px solid #0067c5;
+        color: #3e3832;
+    }
+
+    &__button:focus {
+        outline: 0;
+        box-shadow: 0 0 0 3px @fokusFarge;
+    }
+
+    .dropdown {
+        &__innhold {
+            position: absolute;
+            z-index: 110;
+            border: 1px solid @navGra40;
+            top: ~'calc(100% - 14px)';
+            background-color: @white;
+            border-radius: 0 0 @border-radius-small @border-radius-small;
+            width: 250px;
+            padding: 0 0.5rem;
+            right: auto;
+        }
+        &__btn {
+            width: inherit;
+            height: inherit;
+            padding: 0.45rem;
+            background-color: white;
+        }
+
+        &__btn:hover {
+            color: #3e3832;
+        }
+
+        &__btn:hover:after {
+            background: #3e3832;
+        }
+
+        &__btn:hover:before {
+            background: #3e3832;
+        }
+    }
+}

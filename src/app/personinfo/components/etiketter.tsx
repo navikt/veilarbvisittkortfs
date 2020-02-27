@@ -2,9 +2,11 @@ import React from 'react';
 import hiddenIf from '../../components/hidden-if/hidden-if';
 import EtikettBase, { EtikettInfo, EtikettAdvarsel, EtikettFokus } from 'nav-frontend-etiketter';
 import { OppfolgingStatus } from '../../../types/oppfolging-status';
-import { Personalia } from '../../../types/personalia';
 import './etiketter.less';
-import { Oppfolging } from '../../../types/oppfolging';
+import { useSelector } from 'react-redux';
+import { Appstate } from '../../../types/appstate';
+import OppfolgingSelector from '../../../store/oppfolging/selector';
+import OppfolgingsstatusSelector from '../../../store/oppfolging-status/selectors';
 
 const Advarsel = hiddenIf(EtikettAdvarsel);
 const Info = hiddenIf(EtikettInfo);
@@ -23,8 +25,10 @@ export function trengerAEV(oppfolging: OppfolgingStatus): boolean {
     return oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'BKART';
 }
 
-function Etiketter(props: { personalia: Personalia; oppfolgingstatus: OppfolgingStatus; oppfolging: Oppfolging }) {
-    const { diskresjonskode, sikkerhetstiltak, egenAnsatt, dodsdato } = props.personalia;
+function Etiketter() {
+    const { diskresjonskode, sikkerhetstiltak, egenAnsatt, dodsdato } = useSelector(
+        (state: Appstate) => state.personalia.data
+    );
     const {
         underKvp,
         reservasjonKRR,
@@ -33,7 +37,9 @@ function Etiketter(props: { personalia: Personalia; oppfolgingstatus: Oppfolging
         inaktivIArena,
         gjeldendeEskaleringsvarsel,
         kanVarsles
-    } = props.oppfolging;
+    } = useSelector(OppfolgingSelector.selectOppfolgingData);
+
+    const oppfolgingstatus = useSelector(OppfolgingsstatusSelector.selectOppfolgingStatusData);
     return (
         <div className="etikett-container">
             <Bas hidden={!dodsdato} type="info" className="etikett--mork">
@@ -64,9 +70,9 @@ function Etiketter(props: { personalia: Personalia; oppfolgingstatus: Oppfolging
             >
                 Ikke registrert KRR
             </Fokus>
-            <Info hidden={!trengerVurdering(props.oppfolgingstatus)}>Trenger vurdering</Info>
-            <Info hidden={!trengerAEV(props.oppfolgingstatus)}>Behov for AEV</Info>
-            <Info hidden={!erBrukerSykmeldt(props.oppfolgingstatus)}>Sykmeldt</Info>
+            <Info hidden={!trengerVurdering(oppfolgingstatus)}>Trenger vurdering</Info>
+            <Info hidden={!trengerAEV(oppfolgingstatus)}>Behov for AEV</Info>
+            <Info hidden={!erBrukerSykmeldt(oppfolgingstatus)}>Sykmeldt</Info>
         </div>
     );
 }

@@ -14,7 +14,7 @@ const btnCls = (erApen: boolean, className: string | undefined) =>
 interface DropdownProps {
     apen?: boolean;
     name: string;
-    knappeTekst: string;
+    knappeTekst: React.ReactNode;
     render: (lukkDropdown: () => void) => React.ReactNode;
     className?: string;
     onLukk?: () => void;
@@ -76,8 +76,8 @@ function Dropdown(props: DropdownProps) {
                     {knappeTekst}
                 </button>
                 {apen && (
-                    <div
-                        className={`${name}-dropdown__innhold dropdown__innhold`}
+                    <ul
+                        className={'dropdown__innhold dropdown__innhold'}
                         id={`${name}-dropdown__innhold`}
                         onKeyDown={e => {
                             if (harTrykktPaEsc(e)) {
@@ -88,7 +88,7 @@ function Dropdown(props: DropdownProps) {
                         }}
                     >
                         {props.render(lukkDropdown)}
-                    </div>
+                    </ul>
                 )}
             </div>
         </div>

@@ -57,6 +57,11 @@ const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = { lo
                 location: 'avlutt_oppfolging_bekreft'
             };
         }
+        case 'NAVIGER_TIL_AVSLUTT_OPPFOLGING': {
+            return {
+                location: 'avslutt_oppfolging'
+            };
+        }
         case 'AVSLUTT_OPPFOLGING_SUCCESS': {
             return {
                 location: 'avslutt_oppfolging_kvittering'

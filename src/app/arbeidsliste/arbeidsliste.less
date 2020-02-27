@@ -1,0 +1,48 @@
+@import '~nav-frontend-core/less/_variabler';
+@import '~nav-datovelger/dist/datovelger/styles/datovelger.css';
+
+.visittkortfs-modal {
+    .fjern--knapp {
+        margin-left: auto;
+
+        svg {
+            margin-right: 0.3rem;
+            margin-bottom: -0.1rem;
+        }
+    }
+}
+
+.arbeidsliste-knapp {
+    padding: 0;
+    margin-left: 0.5rem;
+    border: none !important;
+
+    .arbeidsliste-knapp__icon:first-child {
+        stroke: @navMorkGra;
+        fill: none;
+    }
+
+    .icon--filled:first-child {
+        stroke: @navBla;
+        fill: @navBla;
+    }
+
+    svg {
+        width: 1.7rem;
+        height: 2rem;
+        padding-left: 8px;
+    }
+}
+
+.arbeidsliste-knapp:hover {
+    background-color: @navMorkGra!important;
+
+    svg:first-child {
+        stroke: white;
+        fill: none;
+    }
+}
+
+.arbeidsliste-knapp:active {
+    border: none !important;
+}
