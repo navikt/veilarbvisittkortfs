@@ -11,38 +11,55 @@
         }
     }
 }
+.visittkortfs {
+    .arbeidsliste-knapp {
+        padding: 0;
+        margin-left: 0.5rem;
+        border: none;
 
-.arbeidsliste-knapp {
-    padding: 0;
-    margin-left: 0.5rem;
-    border: none !important;
+        .arbeidsliste-knapp__icon:first-child {
+            stroke: @navMorkGra;
+            fill: none;
+        }
 
-    .arbeidsliste-knapp__icon:first-child {
-        stroke: @navMorkGra;
-        fill: none;
+        .icon--filled:first-child {
+            stroke: @navBla;
+            fill: @navBla;
+        }
+
+        svg {
+            width: 1.7rem;
+            height: 2rem;
+            padding-left: 8px;
+        }
     }
 
-    .icon--filled:first-child {
-        stroke: @navBla;
-        fill: @navBla;
+    .arbeidsliste-knapp:hover {
+        background-color: @navMorkGra;
+        border: none;
+
+        svg:first-child {
+            stroke: white;
+            fill: none;
+        }
     }
 
-    svg {
-        width: 1.7rem;
-        height: 2rem;
-        padding-left: 8px;
+    .arbeidsliste-knapp:focus {
+        background-color: white;
+        border: none;
+
+        .icon--filled:first-child {
+            stroke: @navBla;
+            fill: @navBla;
+        }
+
+        svg:first-child {
+            stroke: @navMorkGra;
+            fill: none;
+        }
     }
-}
 
-.arbeidsliste-knapp:hover {
-    background-color: @navMorkGra!important;
-
-    svg:first-child {
-        stroke: white;
-        fill: none;
+    .arbeidsliste-knapp:active {
+        border: none;
     }
-}
-
-.arbeidsliste-knapp:active {
-    border: none !important;
 }
