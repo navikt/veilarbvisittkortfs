@@ -1,8 +1,8 @@
 import React from 'react';
 import { ReactComponent as ArbeidslisteIkon } from './arbeidsliste.svg';
 import classNames from 'classnames';
-import { Flatknapp } from 'nav-frontend-knapper';
 import withClickMetric from '../components/click-metric/click-metric';
+import KnappFss from '../components/knapp-fss/knapp-fss';
 
 export interface ArbeidslisteKnappProps {
     hidden: boolean;
@@ -13,11 +13,9 @@ export interface ArbeidslisteKnappProps {
 
 function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
     return (
-        <Flatknapp className="arbeidsliste-knapp" onClick={props.onClick} hidden={props.hidden}>
-            <ArbeidslisteIkon
-                className={classNames('arbeidsliste-knapp__icon', { 'icon--filled': props.ifylldIkon })}
-            />
-        </Flatknapp>
+        <KnappFss className="arbeidsliste-knapp" onClick={props.onClick} hidden={props.hidden}>
+            <ArbeidslisteIkon className={classNames('knapp-fss__icon', { 'icon--filled': props.ifylldIkon })} />
+        </KnappFss>
     );
 }
 
