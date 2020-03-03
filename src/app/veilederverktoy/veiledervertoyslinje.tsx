@@ -64,7 +64,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                                 <StartProsess
                                     knappeTekst="Rediger arbeidsliste"
                                     onClick={() => naviger('vis_arbeidsliste')(lukkDropdown)}
-                                    metricName="veilarbvisittkortfs.metrikker.veilederverktoy.arbeidsliste"
+                                    metricName="veilederverktoy.arbeidsliste"
                                 />
                             </li>
                         )}
@@ -73,14 +73,14 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                                 <StartProsess
                                     knappeTekst="Legg til arbeidsliste"
                                     onClick={() => naviger('vis_arbeidsliste')(lukkDropdown)}
-                                    metricName="veilarbvisittkortfs.metrikker.veilederverktoy.arbeidsliste"
+                                    metricName="veilederverktoy.arbeidsliste"
                                 />
                             </li>
                         )}
                         {kanTildeleVeileder && (
                             <li>
                                 <StartProsess
-                                    metricName="veilarbvisittkortfs.metrikker.tildel_veileder"
+                                    metricName="tildel_veileder"
                                     knappeTekst="Tildel veileder"
                                     onClick={() => naviger('tildel_veileder')(lukkDropdown)}
                                 />
@@ -91,7 +91,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                                 <StartProsess
                                     knappeTekst="Send varsel"
                                     onClick={() => naviger('start_eskalering')(lukkDropdown)}
-                                    metricName="veilarbvisittkortfs.metrikker.send_eskalering"
+                                    metricName="send_eskalering"
                                 />
                             </li>
                         )}
@@ -100,7 +100,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                                 <StartProsess
                                     knappeTekst="Deaktiver varsel"
                                     onClick={() => naviger('stopp_eskalering')(lukkDropdown)}
-                                    metricName="veilarbvisittkortfs.metrikker.deaktiver_esklaring"
+                                    metricName="deaktiver_esklaring"
                                 />
                             </li>
                         )}
@@ -114,7 +114,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                                 <StartProsess
                                     knappeTekst="Endre til manuell oppfølging"
                                     onClick={() => naviger('manuell_oppfolging')(lukkDropdown)}
-                                    metricName="veilarbvisittkortfs.metrikker.manuell"
+                                    metricName="manuell"
                                 />
                             </li>
                         )}
@@ -123,7 +123,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                                 <StartProsess
                                     knappeTekst="Endre til digital oppfølging"
                                     onClick={() => naviger('start_digital_oppfolging')(lukkDropdown)}
-                                    metricName="veilarbvisittkortfs.metrikker.digital"
+                                    metricName="digital"
                                 />
                             </li>
                         )}
@@ -132,7 +132,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                                 <StartProsess
                                     knappeTekst="Start KVP-periode"
                                     onClick={() => naviger('start_kvp_periode')(lukkDropdown)}
-                                    metricName="veilarbvisittkortfs.metrikker.start_kvp"
+                                    metricName="start_kvp"
                                 />
                             </li>
                         )}
@@ -141,7 +141,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                                 <StartProsess
                                     knappeTekst="Avslutt KVP-periode"
                                     onClick={() => naviger('stopp_kvp_periode')(lukkDropdown)}
-                                    metricName="veilarbvisittkortfs.metrikker.stopp_kvp"
+                                    metricName="stopp_kvp"
                                 />
                             </li>
                         )}
@@ -149,7 +149,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                             <StartProsess
                                 knappeTekst="Opprett Gosys-oppgave"
                                 onClick={() => naviger('opprett_oppgave')(lukkDropdown)}
-                                metricName="veilarbvisittkortfs.metrikker.gosys"
+                                metricName="gosys"
                             />
                         </li>
                         {kanAvslutteOppfolging && (
@@ -160,7 +160,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                                         dispatch(navigerTilAvsluttOppfolging());
                                         lukkDropdown();
                                     }}
-                                    metricName="veilarbvisittkortfs.metrikker.avslutt_oppfolging"
+                                    metricName="avslutt_oppfolging"
                                 />
                             </li>
                         )}
@@ -168,7 +168,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                             <StartProsess
                                 knappeTekst="Vis historikk"
                                 onClick={() => naviger('vis_historikk')(lukkDropdown)}
-                                metricName="veilarbvisittkortfs.metrikker.historikk"
+                                metricName="historikk"
                             />
                         </li>
                     </>
