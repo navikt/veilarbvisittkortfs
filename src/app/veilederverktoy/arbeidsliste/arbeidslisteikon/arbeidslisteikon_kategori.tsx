@@ -1,7 +1,7 @@
 import * as React from 'react';
 import '../arbeidsliste.less';
 import { ReactComponent as ArbeidslisteikonBla } from '../arbeidslisteikon/arbeidslisteikon_bla.svg';
-import { ReactComponent as ArbeidslisteikonRod } from '../arbeidslisteikon/arbeidslisteikon_rod.svg';
+import { ReactComponent as ArbeidslisteikonLilla } from './arbeidslisteikon_lilla.svg';
 import { ReactComponent as ArbeidslisteikonGronn } from '../arbeidslisteikon/arbeidslisteikon_gronn.svg';
 import { ReactComponent as ArbeidslisteikonGul } from '../arbeidslisteikon/arbeidslisteikon_gul.svg';
 import { Field } from 'formik';
@@ -22,13 +22,15 @@ function ArbeidslisteKategori(props: { name: string }) {
                             name={props.name}
                             onChange={() => form.setFieldValue(field.name, KategoriModell.BLA)}
                             checked={field.value === KategoriModell.BLA}
+                            title="Arbeidslisteikon blå"
                         />
                         <ArbeidslisteIkon
-                            value={KategoriModell.ROD}
-                            arbeidslisteikon={<ArbeidslisteikonRod />}
+                            value={KategoriModell.LILLA}
+                            arbeidslisteikon={<ArbeidslisteikonLilla />}
                             name={props.name}
-                            onChange={() => form.setFieldValue(props.name, KategoriModell.ROD)}
-                            checked={field.value === KategoriModell.ROD}
+                            onChange={() => form.setFieldValue(props.name, KategoriModell.LILLA)}
+                            checked={field.value === KategoriModell.LILLA}
+                            title="Arbeidslisteikon lilla"
                         />
                         <ArbeidslisteIkon
                             value={KategoriModell.GRONN}
@@ -36,6 +38,7 @@ function ArbeidslisteKategori(props: { name: string }) {
                             name={props.name}
                             onChange={() => form.setFieldValue(props.name, KategoriModell.GRONN)}
                             checked={field.value === KategoriModell.GRONN}
+                            title="Arbeidslisteikon grønn"
                         />
                         <ArbeidslisteIkon
                             value={KategoriModell.GUL}
@@ -43,6 +46,7 @@ function ArbeidslisteKategori(props: { name: string }) {
                             name={props.name}
                             onChange={() => form.setFieldValue(props.name, KategoriModell.GUL)}
                             checked={field.value === KategoriModell.GUL}
+                            title="Arbeidslisteikon gul"
                         />
                     </div>
                 );

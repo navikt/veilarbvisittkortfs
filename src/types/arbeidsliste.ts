@@ -22,7 +22,7 @@ export interface ArbeidslisteformValues {
 
 export enum KategoriModell {
     BLA = 'BLA',
-    ROD = 'ROD',
+    LILLA = 'LILLA',
     GRONN = 'GRONN',
     GUL = 'GUL',
     TOM = 'TOM'
