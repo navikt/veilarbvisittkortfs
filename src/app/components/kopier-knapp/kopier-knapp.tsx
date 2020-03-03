@@ -29,7 +29,9 @@ export function KopierKnappTekst(props: { kopierTekst: string }) {
     return (
         <KnappFss className="kopier-knapp" onClick={copyToClipboard}>
             {props.kopierTekst}
-            <span className={classNames('kopier-knapp__tooltip', { 'tooltip--visible': copySuccess })}>Kopiert</span>
+            <span className={classNames('kopier-knapp__tooltip', { 'tooltip--visible': copySuccess })}>
+                Kopiert fødselsnummer
+            </span>
         </KnappFss>
     );
 }
