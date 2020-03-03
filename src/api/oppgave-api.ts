@@ -1,11 +1,10 @@
 import { fetchToJson, postAsJson } from './api-utils';
 import { BehandlandeEnhet, OppgaveFormData, OppgaveFormResponse, OppgaveTema } from '../types/oppgave';
-import { OppgaveHistorikk } from '../types/oppgave-historikk';
 import { VeilederListe } from '../types/veilederdata';
 
 export interface OppgaveApi {
     hentBehandlandeEnheter: (tema: OppgaveTema, fnr: string) => Promise<BehandlandeEnhet[]>;
-    hentOppgaveHistorikk: (fnr: string) => Promise<OppgaveHistorikk[]>;
+    hentOppgaveHistorikk: (fnr: string) => string;
     lagreOppgave: (fnr: string, oppgaveFormData: OppgaveFormData) => Promise<OppgaveFormResponse>;
     hentOppgaveVeileder: (fnr: string, enhetsId: string) => Promise<VeilederListe>;
 }
@@ -17,7 +16,7 @@ function hentBehandlandeEnheter(tema: OppgaveTema, fnr: string) {
 }
 
 function hentOppgaveHistorikk(fnr: string) {
-    return fetchToJson(`${OPPGAVE_BASE_URL}/oppgavehistorikk?fnr=${fnr}`);
+    return `${OPPGAVE_BASE_URL}/oppgavehistorikk?fnr=${fnr}`;
 }
 
 function hentOppgaveVeileder(fnr: string, enhetsId: string) {

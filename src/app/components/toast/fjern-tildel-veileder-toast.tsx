@@ -30,7 +30,7 @@ function FjernTildelVeilederToast() {
     };
 
     useEffect(() => {
-        const timer = setTimeout(() => handleClick(), 10000);
+        const timer = setTimeout(() => handleClick(), 100000000);
         return () => clearTimeout(timer);
     });
 

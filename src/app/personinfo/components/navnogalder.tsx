@@ -1,6 +1,6 @@
 import React from 'react';
 import { Personalia } from '../../../types/personalia';
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 
 export function kalkulerAlder(fodselsdato: Date): number {
     const diff = Date.now() - fodselsdato.getTime();
@@ -20,7 +20,7 @@ function NavnOgAlder(props: { personalia: Personalia; navn: string }) {
 
     return (
         <>
-            <Systemtittel className="personinfo__navn_og_alder">{`${props.navn} ${alderTekst}`}</Systemtittel>
+            <Undertittel>{`${props.navn} ${alderTekst}`}</Undertittel>
         </>
     );
 }

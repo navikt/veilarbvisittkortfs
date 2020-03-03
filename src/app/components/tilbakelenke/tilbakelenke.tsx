@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { VenstreChevron } from 'nav-frontend-chevron';
 import './tilbakelenke.less';
+import Chevron from 'nav-frontend-chevron';
 
 interface Props {
     enhet?: string;
@@ -14,12 +14,9 @@ function Tilbakelenke(props: Props) {
             ? `/${props.tilbakeTilFlate}/tilbake?enhet=${props.enhet}`
             : `/${props.tilbakeTilFlate}/${props.fnr}?enhet=${props.enhet}`;
 
-    const tilbakeTekst = props.tilbakeTilFlate === 'veilarbportefoljeflatefs' ? 'Oversikten' : 'Aktivitetsplan';
-
     return (
         <a className="visittkortfs__tilbakelenke" href={tilbakeLenke}>
-            <VenstreChevron className="visittkortfs__tilbakelenke--chevron" />
-            <span className="visittkortfs__tilbakelenke--tekst">{`Til ${tilbakeTekst}`}</span>
+            <Chevron stor={true} type="venstre" />
         </a>
     );
 }

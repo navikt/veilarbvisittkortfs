@@ -3,11 +3,11 @@ import React from 'react';
 import classNames from 'classnames';
 import './modal.less';
 
-const cls = (className: string) => classNames('modal', className);
+const cls = (className: string | undefined) => classNames('modal', className);
 
 interface ModalProps {
     children: React.ReactNode;
-    className: string;
+    className?: string;
     contentLabel: string;
     isOpen?: boolean;
     onRequestClose: () => void;

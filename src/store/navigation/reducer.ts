@@ -6,19 +6,24 @@ export interface NavigationState {
     location: StringOrNothing;
     begrunnelse?: string;
 }
-const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = {location: null}, action) => {
+const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = { location: null }, action) => {
     switch (action.type) {
+        case 'OPPRETTET_HENVENDELSE_START_ESKALERING':
+        case 'LAGRE_OPPGAVE':
+            return {
+                location: 'pending'
+            };
         case 'NAVIGER_TIL_PROSSER':
             return {
                 location: 'prosesser'
             };
         case 'NAVIGER':
             return {
-                location : action.location
+                location: action.location
             };
         case 'START_ESKALERING_SUCCESS':
             return {
-                location : 'start_eskalering_kvittering'
+                location: 'start_eskalering_kvittering'
             };
         case 'STOPP_ESKALERING_SUCCESS': {
             return {
@@ -30,27 +35,31 @@ const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = {loc
                 location: 'sett_manuell_kvittering',
                 begrunnelse: action.begrunnelse
             };
-        case 'SETT_DIGITAL_SUCCESS' :
-            return{
+        case 'SETT_DIGITAL_SUCCESS':
+            return {
                 location: 'start_digital_oppfoling_kvitterig',
                 begrunnelse: action.begrunnelse
-
             };
         case 'STOPP_KVP_SUCCESS':
             return {
-                location: 'stopp_kvp_periode_kvittering',
+                location: 'stopp_kvp_periode_kvittering'
             };
         case 'START_KVP_SUCCESS':
-            return{
-                location: 'start_kvp_periode_kvittering',
+            return {
+                location: 'start_kvp_periode_kvittering'
             };
         case 'LAGRE_OPPGAVE_SUCCESS':
             return {
-                location: 'oppgave_kvittering',
+                location: 'oppgave_kvittering'
             };
         case 'LAGRE_AVSLUTT_OPPFOLGING_BEGRUNNELSE': {
             return {
                 location: 'avlutt_oppfolging_bekreft'
+            };
+        }
+        case 'NAVIGER_TIL_AVSLUTT_OPPFOLGING': {
+            return {
+                location: 'avslutt_oppfolging'
             };
         }
         case 'AVSLUTT_OPPFOLGING_SUCCESS': {
@@ -58,7 +67,7 @@ const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = {loc
                 location: 'avslutt_oppfolging_kvittering'
             };
         }
-        default :
+        default:
             return state;
     }
 };

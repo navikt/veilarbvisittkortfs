@@ -10,7 +10,14 @@ const oppfolging: Oppfolging & JSONValue = {
     underOppfolging: true,
     underKvp: false,
     oppfolgingUtgang: '2019-03-28T11:12:40.973+01:00',
-    gjeldendeEskaleringsvarsel: null,
+    gjeldendeEskaleringsvarsel: {
+        varselId: '1',
+        aktorId: '112345',
+        oppretterAv: 'Z9091',
+        opprettetDato: '2019-03-28T11:12:40.973+01:00',
+        avsluttetDato: null,
+        tilhorendeDialogId: '1'
+    },
     kanStarteOppfolging: false,
     avslutningStatus: null,
     oppfolgingsPerioder: [
@@ -29,6 +36,6 @@ const oppfolging: Oppfolging & JSONValue = {
     inaktiveringsdato: '2019-02-22T00:00:00+01:00',
     erSykmeldtMedArbeidsgiver: false,
     erIkkeArbeidssokerUtenOppfolging: false,
-    kanVarsles: false
+    kanVarsles: true
 };
 export default oppfolging;
