@@ -29,7 +29,7 @@ function Historikk() {
 
     return (
         <VeilederVerktoyModal visConfirmDialog={false} className="historikk__modal">
-            <article className="prosess">
+            <article className="prosess blokk-s">
                 <div className="modal-info-tekst">
                     <Innholdstittel className="modal-info-tekst__overskrift">Historikk</Innholdstittel>
                 </div>
