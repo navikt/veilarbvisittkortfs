@@ -48,7 +48,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
     return (
         <div className="veiledervektoy-dropdown">
             <Dropdown
-                metricName="tildel-veileder-trykket"
+                metricName="dropdown-trykket"
                 knappeTekst={
                     <>
                         <TannHjulIkon className="knapp-fss__icon" />{' '}
