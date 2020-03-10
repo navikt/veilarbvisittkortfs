@@ -4,6 +4,7 @@ import { Element, Innholdstittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { VarselModal } from '../components/varselmodal/varsel-modal';
 import hiddenIf from '../components/hidden-if/hidden-if';
+import { logEvent } from '../utils/frontend-logger';
 
 interface FjernArbeidslisteModal {
     isOpen: boolean;
@@ -37,6 +38,7 @@ function FjernArbeidslisteModal(props: FjernArbeidslisteModal) {
                     htmlType="submit"
                     className="btn--mr1"
                     onClick={() => {
+                        logEvent('visittkort.metrikker.fjern_arbeidsliste');
                         props.onSubmit(props.fnr);
                         props.onRequestClose();
                     }}
