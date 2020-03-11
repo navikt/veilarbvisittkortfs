@@ -1,7 +1,5 @@
 import React from 'react';
 import ArbeidslisteIkonVisning from './arbeidslisteikon-visning';
-import { ReactComponent as ArbeidslisteIkon } from './arbeidsliste.svg';
-import classNames from 'classnames';
 import withClickMetric from '../components/click-metric/click-metric';
 import { useSelector } from 'react-redux';
 import { Appstate } from '../../types/appstate';
