@@ -1,10 +1,22 @@
-@import (reference) '~nav-frontend-core/less/_variabler';
+@import '~nav-frontend-core/less/_variabler';
 
 .visittkortfs__tilbakelenke {
-    margin-top: 0.8rem;
     color: @navMorkGra;
-    padding: 0 0.5rem;
+    padding: 0.5rem 0;
+    margin-right: 0.5rem;
+    outline: none;
+
+    .chevron--venstre {
+        top: 6px;
+    }
 }
+
 .visittkortfs__tilbakelenke:hover {
     color: @navBla;
+}
+
+.visittkortfs__tilbakelenke:focus {
+    box-shadow: 0 0 0 3px @fokusFarge;
+    color: @fokusFarge;
+    border-radius: 4px;
 }

@@ -1,10 +1,12 @@
 import React from 'react';
-import { Flatknapp } from 'nav-frontend-knapper';
 import ArbeidslisteIkonVisning from './arbeidslisteikon-visning';
+import { ReactComponent as ArbeidslisteIkon } from './arbeidsliste.svg';
+import classNames from 'classnames';
 import withClickMetric from '../components/click-metric/click-metric';
 import { useSelector } from 'react-redux';
 import { Appstate } from '../../types/appstate';
 import { KategoriModell } from '../../types/arbeidsliste';
+import KnappFss from '../components/knapp-fss/knapp-fss';
 
 export interface ArbeidslisteKnappProps {
     hidden: boolean;
@@ -15,9 +17,9 @@ export interface ArbeidslisteKnappProps {
 function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
     const kategori = useSelector((state: Appstate) => state.arbeidsliste.data.kategori || KategoriModell.TOM);
     return (
-        <Flatknapp className="arbeidsliste-knapp" onClick={props.onClick} hidden={props.hidden}>
+        <KnappFss className="arbeidsliste-knapp" onClick={props.onClick} hidden={props.hidden}>
             <ArbeidslisteIkonVisning kategori={kategori} />
-        </Flatknapp>
+        </KnappFss>
     );
 }
 

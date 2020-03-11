@@ -3,22 +3,13 @@ import './veilederverktoy.less';
 import Dropdown from '../components/dropdown/dropdown';
 import { ReactComponent as TannHjulIkon } from './tannhjul.svg';
 import StartRegistreringProsess from './start-registrering/start-registrering-prosess';
-import StartManuellOppfolging from './start-manuell-oppfolging/start-manuell-oppfolging-prosess';
-import StartKvpPeriodeProsess from './start-kvp-periode/start-kvp-periode-prosess';
-import StoppKvpPeriodeProsess from './stopp-kvp-periode/stopp-kvp-periode-prosess';
-import StartDigitalOppfolgingProsess from './start-digital-oppfolging/start-digital-oppfolging-prosess';
-import OpprettOppgaveProsess from './opprett-oppgave/opprett-oppgave-prosess';
-import StartEskaleringProsess from './start-eskalering/start-eskalering-prosess';
-import StoppEskaleringsProsess from './stopp-eskalering/stopp-eskalering-prosess';
-import { HistorikKnapp } from './historikk/vis-historik-knapp';
 import { useDispatch, useSelector } from 'react-redux';
 import OppfolgingSelector from '../../store/oppfolging/selector';
-import AvsluttOppfolgingProsess from './avsluttoppfolging/avslutt-oppfolging-prosess';
 import { navigerAction, navigerTilAvsluttOppfolging } from '../../store/navigation/actions';
 import { Appstate } from '../../types/appstate';
 import ArbeidslisteSelector from '../../store/arbeidsliste/selector';
 import TilgangTilKontorSelector from '../../store/tilgang-til-brukerskontor/selector';
-import StartProcess from './prosess/start-prosess';
+import StartProsess from './prosess/start-prosess';
 import { logEvent } from '../utils/frontend-logger';
 
 interface VeilederverktoyslinjeProps {
@@ -65,7 +56,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
     return (
         <div className="veiledervektoy-dropdown">
             <Dropdown
-                metricName="tildel-veileder-trykket"
+                metricName="dropdown-trykket"
                 knappeTekst={
                     <>
                         <TannHjulIkon className="knapp-fss__icon" />{' '}
@@ -78,7 +69,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                     <>
                         {kanEndreArbeidsliste && (
                             <li>
-                                <StartProcess
+                                <StartProsess
                                     knappeTekst="Rediger arbeidsliste"
                                     onClick={() => arbeidslisteKlikk(lukkDropdown)}
                                 />
@@ -86,7 +77,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                         )}
                         {kanLagreArbeidsliste && (
                             <li>
-                                <StartProcess
+                                <StartProsess
                                     knappeTekst="Legg til arbeidsliste"
                                     onClick={() => arbeidslisteKlikk(lukkDropdown)}
                                 />
@@ -94,24 +85,28 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                         )}
                         {kanTildeleVeileder && (
                             <li>
-                                <StartProcess
-                                    metricName="veilarbvisittkortfs.metrikker.tildel_veileder"
+                                <StartProsess
+                                    metricName="tildel_veileder"
                                     knappeTekst="Tildel veileder"
                                     onClick={() => naviger('tildel_veileder')(lukkDropdown)}
-                                />{' '}
+                                />
                             </li>
                         )}
                         {kanStarteEskalering && (
                             <li>
-                                <StartEskaleringProsess
-                                    navigerTilStartEsklaring={() => naviger('start_eskalering')(lukkDropdown)}
+                                <StartProsess
+                                    knappeTekst="Send varsel"
+                                    onClick={() => naviger('start_eskalering')(lukkDropdown)}
+                                    metricName="send_eskalering"
                                 />
                             </li>
                         )}
                         {kanStoppeEskalering && (
                             <li>
-                                <StoppEskaleringsProsess
-                                    navigerTilStoppEskalering={() => naviger('stopp_eskalering')(lukkDropdown)}
+                                <StartProsess
+                                    knappeTekst="Deaktiver varsel"
+                                    onClick={() => naviger('stopp_eskalering')(lukkDropdown)}
+                                    metricName="deaktiver_esklaring"
                                 />
                             </li>
                         )}
@@ -122,51 +117,65 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                         )}
                         {kanStarteManuellOppfolging && (
                             <li>
-                                <StartManuellOppfolging
-                                    navigerTilStartManuellOppfolging={() => naviger('manuell_oppfolging')(lukkDropdown)}
+                                <StartProsess
+                                    knappeTekst="Endre til manuell oppfølging"
+                                    onClick={() => naviger('manuell_oppfolging')(lukkDropdown)}
+                                    metricName="manuell"
                                 />
                             </li>
                         )}
                         {kanStarteDigitalOppfolging && (
                             <li>
-                                <StartDigitalOppfolgingProsess
-                                    navigerTilStartDigitalOppfolging={() =>
-                                        naviger('start_digital_oppfolging')(lukkDropdown)
-                                    }
+                                <StartProsess
+                                    knappeTekst="Endre til digital oppfølging"
+                                    onClick={() => naviger('start_digital_oppfolging')(lukkDropdown)}
+                                    metricName="digital"
                                 />
                             </li>
                         )}
                         {kanStarteKVP && (
                             <li>
-                                <StartKvpPeriodeProsess
-                                    navigerTilStartKvpPeriode={() => naviger('start_kvp_periode')(lukkDropdown)}
+                                <StartProsess
+                                    knappeTekst="Start KVP-periode"
+                                    onClick={() => naviger('start_kvp_periode')(lukkDropdown)}
+                                    metricName="start_kvp"
                                 />
                             </li>
                         )}
                         {kanStoppeKVP && (
                             <li>
-                                <StoppKvpPeriodeProsess
-                                    navigerTilStopKvpPeriode={() => naviger('stopp_kvp_periode')(lukkDropdown)}
+                                <StartProsess
+                                    knappeTekst="Avslutt KVP-periode"
+                                    onClick={() => naviger('stopp_kvp_periode')(lukkDropdown)}
+                                    metricName="stopp_kvp"
                                 />
                             </li>
                         )}
                         <li>
-                            <OpprettOppgaveProsess
-                                navigerTilOpprettOppgave={() => naviger('opprett_oppgave')(lukkDropdown)}
+                            <StartProsess
+                                knappeTekst="Opprett Gosys-oppgave"
+                                onClick={() => naviger('opprett_oppgave')(lukkDropdown)}
+                                metricName="gosys"
                             />
                         </li>
                         {kanAvslutteOppfolging && (
                             <li>
-                                <AvsluttOppfolgingProsess
-                                    navigerTilAvsluttOppfolging={() => {
+                                <StartProsess
+                                    knappeTekst="Avslutt oppfølging"
+                                    onClick={() => {
                                         dispatch(navigerTilAvsluttOppfolging());
                                         lukkDropdown();
                                     }}
+                                    metricName="avslutt_oppfolging"
                                 />
                             </li>
                         )}
                         <li>
-                            <HistorikKnapp navigerTilHistorikk={() => naviger('vis_historikk')(lukkDropdown)} />
+                            <StartProsess
+                                knappeTekst="Vis historikk"
+                                onClick={() => naviger('vis_historikk')(lukkDropdown)}
+                                metricName="historikk"
+                            />
                         </li>
                     </>
                 )}

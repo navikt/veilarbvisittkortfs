@@ -4,11 +4,13 @@ import './kopier-knapp.less';
 import { useState } from 'react';
 import classNames from 'classnames';
 import { useEffect } from 'react';
+import { logEvent } from '../../utils/frontend-logger';
 
 export function KopierKnappTekst(props: { kopierTekst: string }) {
     const [copySuccess, setCopySuccess] = useState(false);
 
     function copyToClipboard() {
+        logEvent('veilarbvisittkortfs.metrikker.kopier.fnr');
         const textField = window.document.createElement('textarea');
         textField.innerText = props.kopierTekst;
         window.document.body.appendChild(textField);
@@ -29,7 +31,9 @@ export function KopierKnappTekst(props: { kopierTekst: string }) {
     return (
         <KnappFss className="kopier-knapp" onClick={copyToClipboard}>
             {props.kopierTekst}
-            <span className={classNames('kopier-knapp__tooltip', { 'tooltip--visible': copySuccess })}>Kopiert</span>
+            <span className={classNames('kopier-knapp__tooltip', { 'tooltip--visible': copySuccess })}>
+                Kopiert fødselsnummer
+            </span>
         </KnappFss>
     );
 }
