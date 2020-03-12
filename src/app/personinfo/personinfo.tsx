@@ -9,6 +9,7 @@ import ArbeidslisteKnapp from '../arbeidsliste/arbeidsliste-knapp';
 import ArbeidslisteSelector from '../../store/arbeidsliste/selector';
 import { navigerAction } from '../../store/navigation/actions';
 import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
+import { logEvent } from '../utils/frontend-logger';
 
 interface PersonInfoProps {
     fnr: string;
@@ -21,10 +22,17 @@ function PersonInfo(props: PersonInfoProps) {
         (state: Appstate) =>
             state.tildelVeileder.status !== 'LOADING' && ArbeidslisteSelector.selectKanLeggeIArbeidsListe(state)
     );
+
     const kanRedigereArbeidsliste = useSelector(ArbeidslisteSelector.selectKanRedigereArbeidsliste);
 
     const dispatch = useDispatch();
-    const apneArbeidslisteModal = () => dispatch(navigerAction('vis_arbeidsliste'));
+
+    const arbeidslisteikon = useSelector((state: Appstate) => state.arbeidsliste.data.kategori);
+
+    const klikk = () => {
+        logEvent('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
+        dispatch(navigerAction('vis_arbeidsliste'));
+    };
 
     return (
         <div className="personinfo">
@@ -33,10 +41,8 @@ function PersonInfo(props: PersonInfoProps) {
             <div>
                 <ArbeidslisteKnapp
                     hidden={!(kanLeggeIArbeidsliste || kanRedigereArbeidsliste)}
-                    onClick={apneArbeidslisteModal}
+                    onClick={klikk}
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
-                    ifylldIkon={kanRedigereArbeidsliste}
-                    metricName="visittkort.arbeidsliste-ikon"
                 />
                 <KopierKnappTekst kopierTekst={props.fnr} />
             </div>

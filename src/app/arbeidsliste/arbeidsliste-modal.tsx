@@ -1,6 +1,6 @@
 import React from 'react';
 import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
-import { Arbeidsliste, ArbeidslisteformValues } from '../../types/arbeidsliste';
+import { Arbeidsliste, ArbeidslisteformValues, KategoriModell } from '../../types/arbeidsliste';
 import { FormattedMessage } from 'react-intl';
 import { Form, Formik, FormikProps } from 'formik';
 import ArbeidslisteForm from './arbeidsliste-form';
@@ -8,6 +8,7 @@ import Modal from '../components/modal/modal';
 import ModalHeader from '../components/modal/modal-header';
 import moment from 'moment';
 import ArbeidslisteFooter from './arbeidsliste-footer';
+import { logEvent } from '../utils/frontend-logger';
 
 interface ArbeidslisteProps {
     navn: string;
@@ -25,13 +26,15 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
     const arbeidslisteEmptyValues = {
         overskrift: '',
         kommentar: '',
-        frist: ''
+        frist: '',
+        kategori: KategoriModell.BLA
     };
 
     const arbeidslisteValues = {
         overskrift: props.arbeidsliste.overskrift,
         kommentar: props.arbeidsliste.kommentar,
-        frist: props.arbeidsliste.frist ? moment(props.arbeidsliste.frist).format('YYYY-MM-DD') : ''
+        frist: props.arbeidsliste.frist ? moment(props.arbeidsliste.frist).format('YYYY-MM-DD') : '',
+        kategori: props.arbeidsliste.kategori
     };
 
     const initalValues = !props.arbeidsliste.endringstidspunkt ? arbeidslisteEmptyValues : arbeidslisteValues;
@@ -40,6 +43,7 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
         const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
         if (!formikProps.dirty || window.confirm(dialogTekst)) {
             props.lukkModal();
+            logEvent('veilarbvisittkortfs.metrikker.arbeidslistekategori.avbryt');
             formikProps.resetForm();
         }
     };
@@ -50,6 +54,11 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
             initialValues={initalValues}
             onSubmit={values => {
                 props.onSubmit(values);
+                logEvent('teamvoff.metrikker.arbeidslistekategori', {
+                    kategori: values.kategori,
+                    leggtil: !props.arbeidsliste.endringstidspunkt,
+                    applikasjon: 'visittkort'
+                });
                 props.lukkModal();
             }}
             render={formikProps => (
@@ -63,9 +72,7 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
                     <div className="modal-innhold">
                         <div className="modal-info-tekst">
                             <Innholdstittel className="modal-info-tekst__overskrift">
-                                {!props.arbeidsliste.endringstidspunkt
-                                    ? 'Legg til i arbeidsliste'
-                                    : 'Rediger arbeidsliste'}
+                                {!props.arbeidsliste.endringstidspunkt ? 'Legg i arbeidsliste' : 'Rediger arbeidsliste'}
                             </Innholdstittel>
                             <Undertittel>
                                 <FormattedMessage

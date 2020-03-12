@@ -12,6 +12,7 @@ import {
     validerArbeidslisteTittelFeldt
 } from '../utils/formik-validation';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
+import ArbeidslistekategoriVisning from '../veilederverktoy/arbeidsliste/arbeidslistekategori/arbeidslistekategori_visning';
 
 interface ArbeidslisteFormProps {
     sistEndretAv?: OrNothing<{ veilederId: string }>;
@@ -48,12 +49,15 @@ function ArbeidslisteForm(props: ArbeidslisteFormProps & InjectedIntlProps) {
                     />
                 </Undertekst>
             )}
-            <FormikDatoVelger
-                name="frist"
-                validate={validerArbeidslisteDatoFeldt}
-                label="Frist"
-                ariaLabel="Frist før arbeidslisten"
-            />
+            <div className="dato-kategori-wrapper">
+                <FormikDatoVelger
+                    name="frist"
+                    validate={validerArbeidslisteDatoFeldt}
+                    label="Frist"
+                    ariaLabel="Frist før arbeidslisten"
+                />
+                <ArbeidslistekategoriVisning name="kategori" />
+            </div>
         </>
     );
 }

@@ -10,6 +10,7 @@ import { Appstate } from '../../types/appstate';
 import ArbeidslisteSelector from '../../store/arbeidsliste/selector';
 import TilgangTilKontorSelector from '../../store/tilgang-til-brukerskontor/selector';
 import StartProsess from './prosess/start-prosess';
+import { logEvent } from '../utils/frontend-logger';
 
 interface VeilederverktoyslinjeProps {
     visVeilederVerktoy?: boolean;
@@ -45,6 +46,13 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
         return null;
     }
 
+    const arbeidslisteKlikk = (lukkDropdown: any) => {
+        logEvent('veilarbvisittkortfs.metrikker.veilederverktoy.arbeidsliste', {
+            leggtil: !kanEndreArbeidsliste && kanLagreArbeidsliste
+        });
+        naviger('vis_arbeidsliste')(lukkDropdown);
+    };
+
     return (
         <div className="veiledervektoy-dropdown">
             <Dropdown
@@ -63,8 +71,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                             <li>
                                 <StartProsess
                                     knappeTekst="Rediger arbeidsliste"
-                                    onClick={() => naviger('vis_arbeidsliste')(lukkDropdown)}
-                                    metricName="veilederverktoy.arbeidsliste"
+                                    onClick={() => arbeidslisteKlikk(lukkDropdown)}
                                 />
                             </li>
                         )}
@@ -72,8 +79,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                             <li>
                                 <StartProsess
                                     knappeTekst="Legg til arbeidsliste"
-                                    onClick={() => naviger('vis_arbeidsliste')(lukkDropdown)}
-                                    metricName="veilederverktoy.arbeidsliste"
+                                    onClick={() => arbeidslisteKlikk(lukkDropdown)}
                                 />
                             </li>
                         )}

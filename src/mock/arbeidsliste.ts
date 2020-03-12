@@ -9,7 +9,8 @@ const arbeidsliste: Arbeidsliste & JSONValue = {
     isOppfolgendeVeileder: true,
     kommentar: null,
     overskrift: null,
-    sistEndretAv: null
+    sistEndretAv: null,
+    kategori: null
 };
 
 export default arbeidsliste;
