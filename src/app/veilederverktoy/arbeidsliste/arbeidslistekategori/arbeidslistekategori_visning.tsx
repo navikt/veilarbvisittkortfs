@@ -1,22 +1,22 @@
 import * as React from 'react';
 import '../arbeidsliste.less';
-import { ReactComponent as ArbeidslisteikonBla } from '../arbeidslisteikon/arbeidslisteikon_bla.svg';
+import { ReactComponent as ArbeidslisteikonBla } from './/arbeidslisteikon_bla.svg';
 import { ReactComponent as ArbeidslisteikonLilla } from './arbeidslisteikon_lilla.svg';
-import { ReactComponent as ArbeidslisteikonGronn } from '../arbeidslisteikon/arbeidslisteikon_gronn.svg';
-import { ReactComponent as ArbeidslisteikonGul } from '../arbeidslisteikon/arbeidslisteikon_gul.svg';
+import { ReactComponent as ArbeidslisteikonGronn } from './/arbeidslisteikon_gronn.svg';
+import { ReactComponent as ArbeidslisteikonGul } from './/arbeidslisteikon_gul.svg';
 import { Field } from 'formik';
-import ArbeidslisteIkon from './arbeidslisteikon';
+import Arbeidslistekategori from './arbeidslistekategori';
 import { FieldProps } from 'formik/dist/Field';
 import { KategoriModell } from '../../../../types/arbeidsliste';
 
-function ArbeidslisteKategori(props: { name: string }) {
+function ArbeidslistekategoriVisning(props: { name: string }) {
     return (
         <Field name={props.name}>
             {({ field, form }: FieldProps<KategoriModell>) => {
                 return (
-                    <div className="arbeidslisteikon">
+                    <div className="arbeidslistekategori">
                         <span className="skjemaelement__label">Kategori</span>
-                        <ArbeidslisteIkon
+                        <Arbeidslistekategori
                             value={KategoriModell.BLA}
                             arbeidslisteikon={<ArbeidslisteikonBla />}
                             name={props.name}
@@ -24,7 +24,7 @@ function ArbeidslisteKategori(props: { name: string }) {
                             checked={field.value === KategoriModell.BLA}
                             title="Arbeidslisteikon blå"
                         />
-                        <ArbeidslisteIkon
+                        <Arbeidslistekategori
                             value={KategoriModell.LILLA}
                             arbeidslisteikon={<ArbeidslisteikonLilla />}
                             name={props.name}
@@ -32,7 +32,7 @@ function ArbeidslisteKategori(props: { name: string }) {
                             checked={field.value === KategoriModell.LILLA}
                             title="Arbeidslisteikon lilla"
                         />
-                        <ArbeidslisteIkon
+                        <Arbeidslistekategori
                             value={KategoriModell.GRONN}
                             arbeidslisteikon={<ArbeidslisteikonGronn />}
                             name={props.name}
@@ -40,7 +40,7 @@ function ArbeidslisteKategori(props: { name: string }) {
                             checked={field.value === KategoriModell.GRONN}
                             title="Arbeidslisteikon grønn"
                         />
-                        <ArbeidslisteIkon
+                        <Arbeidslistekategori
                             value={KategoriModell.GUL}
                             arbeidslisteikon={<ArbeidslisteikonGul />}
                             name={props.name}
@@ -55,4 +55,4 @@ function ArbeidslisteKategori(props: { name: string }) {
     );
 }
 
-export default ArbeidslisteKategori;
+export default ArbeidslistekategoriVisning;

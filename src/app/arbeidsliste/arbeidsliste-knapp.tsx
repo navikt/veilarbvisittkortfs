@@ -1,5 +1,5 @@
 import React from 'react';
-import ArbeidslisteIkonVisning from './arbeidslisteikon-visning';
+import ArbeidslistekategoriVisning from './arbeidslistekategori-visning';
 import withClickMetric from '../components/click-metric/click-metric';
 import { useSelector } from 'react-redux';
 import { Appstate } from '../../types/appstate';
@@ -16,7 +16,7 @@ function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
     const kategori = useSelector((state: Appstate) => state.arbeidsliste.data.kategori || KategoriModell.TOM);
     return (
         <KnappFss className="arbeidsliste-knapp" onClick={props.onClick} hidden={props.hidden}>
-            <ArbeidslisteIkonVisning kategori={kategori} />
+            <ArbeidslistekategoriVisning kategori={kategori} />
         </KnappFss>
     );
 }
