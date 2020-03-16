@@ -20,7 +20,7 @@ import { FETCH_STATUS } from '../../types/fetch-status';
 import { TildelVeilederActionType } from '../tildel-veileder/actions';
 import OppfolgingSelector from '../oppfolging/selector';
 
-export type ArbeidslisteState = {data: Arbeidsliste} & {status: FETCH_STATUS; error: OrNothing<Error>};
+export type ArbeidslisteState = { data: Arbeidsliste } & { status: FETCH_STATUS; error: OrNothing<Error> };
 
 const initialState: ArbeidslisteState = {
     data: {
@@ -33,6 +33,7 @@ const initialState: ArbeidslisteState = {
         overskrift: null,
         sistEndretAv: null,
         veilederId: null,
+        kategori: null
     },
     status: 'NOT_STARTED',
     error: null
@@ -79,7 +80,8 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
                     veilederId: null,
                     arbeidslisteAktiv: null,
                     endringstidspunkt: null,
-                    frist: null
+                    frist: null,
+                    kategori: null
                 },
                 status: 'DONE'
             };
@@ -92,7 +94,7 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
 function* hentArbeidsliste(action: HentArbeidslisteAction) {
     try {
         const fodselsnummer = yield select(OppfolgingSelector.selectFnr);
-        const response = yield call( () => ArbeidslisteApi.fetchArbeidslisteData(action.fnr || fodselsnummer));
+        const response = yield call(() => ArbeidslisteApi.fetchArbeidslisteData(action.fnr || fodselsnummer));
         yield put(hentArbeidslisteSuccess(response));
     } catch (e) {
         yield put(hentArbeidslisteError(e));
@@ -102,8 +104,8 @@ function* hentArbeidsliste(action: HentArbeidslisteAction) {
 function* lagreArbeidsliste(action: OppdaterArbeidslisteAction) {
     try {
         const fnr = yield select(OppfolgingSelector.selectFnr);
-        const arbeidslisteForm = Object.assign({fnr}, action.arbeidsliste);
-        const response = yield call( () => ArbeidslisteApi.lagreArbeidsliste(fnr, arbeidslisteForm));
+        const arbeidslisteForm = Object.assign({ fnr }, action.arbeidsliste);
+        const response = yield call(() => ArbeidslisteApi.lagreArbeidsliste(fnr, arbeidslisteForm));
         yield put(oppdaterArbeidslisteSuccess(response));
     } catch (e) {
         yield put(oppdaterArbeidslisteError(e));
@@ -113,7 +115,7 @@ function* lagreArbeidsliste(action: OppdaterArbeidslisteAction) {
 function* redigerArbeidsliste(action: RedigerArbeidslisteAction) {
     try {
         const fnr = yield select(OppfolgingSelector.selectFnr);
-        const response = yield call( () => ArbeidslisteApi.redigerArbeidsliste(fnr, action.arbeidsliste));
+        const response = yield call(() => ArbeidslisteApi.redigerArbeidsliste(fnr, action.arbeidsliste));
         yield put(oppdaterArbeidslisteSuccess(response));
     } catch (e) {
         yield put(oppdaterArbeidslisteError(e));
@@ -123,7 +125,7 @@ function* redigerArbeidsliste(action: RedigerArbeidslisteAction) {
 function* slettArbeidsliste() {
     try {
         const fnr = yield select(OppfolgingSelector.selectFnr);
-        const response = yield call( () => ArbeidslisteApi.slettArbeidsliste(fnr));
+        const response = yield call(() => ArbeidslisteApi.slettArbeidsliste(fnr));
         yield put(slettArbeidslisteActionSuccess(response));
     } catch (e) {
         yield put(slettArbeidslisteActionError(e));

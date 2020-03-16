@@ -17,15 +17,39 @@
         margin-left: 0.5rem;
         border: none;
 
+        &__icon {
+            width: 1.2rem;
+            height: 1.3rem;
+        }
+
+        .arbeidsliste-knapp__icon:first-child {
+            stroke: @navMorkGra;
+            fill: none;
+        }
+    }
+
+    .arbeidsliste-knapp:hover {
+        background-color: @navMorkGra;
+        border: none;
+
+        svg {
+            #Arbeidslistekategori_tom {
+                stroke: white;
+            }
+        }
+    }
+
+    .arbeidsliste-knapp:focus {
+        border: none;
+
         .icon--filled:first-child {
             stroke: @navBla;
             fill: @navBla;
         }
 
-        .knapp-fss__icon {
-            width: 1.7rem;
-            height: 2rem;
-            padding-left: 8px;
+        svg:first-child {
+            stroke: @navMorkGra;
+            fill: none;
         }
     }
 

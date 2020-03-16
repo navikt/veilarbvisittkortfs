@@ -105,7 +105,8 @@ mock.post(`/veilarbportefolje/api/arbeidsliste/:fnr?`, (args: HandlerArgument) =
         isOppfolgendeVeileder: true,
         kommentar: args.body.kommentar,
         overskrift: args.body.overskrift,
-        sistEndretAv: 'Z007'
+        sistEndretAv: 'Z007',
+        kategori: args.body.kategori
     });
 });
 
@@ -118,7 +119,8 @@ mock.put(`/veilarbportefolje/api/arbeidsliste/:fnr?`, (args: HandlerArgument) =>
         isOppfolgendeVeileder: true,
         kommentar: args.body.kommentar,
         overskrift: args.body.overskrift,
-        sistEndretAv: 'Z007'
+        sistEndretAv: 'Z007',
+        kategori: args.body.kategori
     });
 });
 
