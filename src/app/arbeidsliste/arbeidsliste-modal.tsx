@@ -54,7 +54,7 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
             initialValues={initalValues}
             onSubmit={values => {
                 props.onSubmit(values);
-                logEvent('visittkort.metrikker.arbeidslistekategori', {
+                logEvent('teamvoff.metrikker.arbeidslistekategori', {
                     kategori: values.kategori,
                     leggtil: !props.arbeidsliste.endringstidspunkt,
                     applikasjon: 'visittkort'
