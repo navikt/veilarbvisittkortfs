@@ -1,7 +1,5 @@
 import React from 'react';
-import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
 import { Arbeidsliste, ArbeidslisteformValues, KategoriModell } from '../../types/arbeidsliste';
-import { FormattedMessage } from 'react-intl';
 import { Form, Formik, FormikProps } from 'formik';
 import ArbeidslisteForm from './arbeidsliste-form';
 import Modal from '../components/modal/modal';
@@ -68,20 +66,17 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
                     className="arbeidsliste-modal"
                     onRequestClose={() => onRequestClose(formikProps)}
                 >
-                    <ModalHeader />
                     <div className="modal-innhold">
+                        <ModalHeader
+                            tittel={
+                                !props.arbeidsliste.endringstidspunkt ? 'Legg i arbeidsliste' : 'Rediger arbeidsliste'
+                            }
+                        />
                         <div className="modal-info-tekst">
-                            <Innholdstittel className="modal-info-tekst__overskrift">
-                                {!props.arbeidsliste.endringstidspunkt ? 'Legg i arbeidsliste' : 'Rediger arbeidsliste'}
-                            </Innholdstittel>
-                            <Undertittel>
-                                <FormattedMessage
-                                    id="arbeidsliste.modal.personalia"
-                                    values={{ navn: props.navn, fnr: props.fnr }}
-                                />
-                            </Undertittel>
                             <Form>
                                 <ArbeidslisteForm
+                                    navn={props.navn}
+                                    fnr={props.fnr}
                                     endringstidspunkt={props.arbeidsliste.endringstidspunkt}
                                     sistEndretAv={props.arbeidsliste.sistEndretAv}
                                 />

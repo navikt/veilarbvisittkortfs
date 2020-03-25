@@ -2,8 +2,7 @@ import React from 'react';
 import FormikInput from '../components/formik/formik-input';
 import FormikTekstArea from '../components/formik/formik-textarea';
 import FormikDatoVelger from '../components/formik/formik-datepicker';
-import { FormattedMessage } from 'react-intl';
-import { Undertekst } from 'nav-frontend-typografi';
+import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { OrNothing } from '../../types/utils/ornothing';
 import moment from 'moment';
 import {
@@ -17,14 +16,17 @@ import ArbeidslistekategoriVisning from './arbeidslistekategori/arbeidslisteikon
 interface ArbeidslisteFormProps {
     sistEndretAv?: OrNothing<{ veilederId: string }>;
     endringstidspunkt?: OrNothing<Date>;
+    navn: string;
+    fnr: string;
 }
 
 function ArbeidslisteForm(props: ArbeidslisteFormProps & InjectedIntlProps) {
     const labelInputArea = props.intl.formatMessage({ id: 'arbeidsliste.modal.tittel' });
 
     return (
-        <>
+        <div className="arbeidsliste__bruker">
             <div className="blokk-s">
+                <Undertittel>{`${props.navn}, ${props.fnr}`}</Undertittel>
                 <FormikInput
                     name="overskrift"
                     label={labelInputArea}
@@ -37,18 +39,14 @@ function ArbeidslisteForm(props: ArbeidslisteFormProps & InjectedIntlProps) {
                     maxLength={500}
                     validate={validerArbeidslisteKommentarFeldt}
                 />
+                {props.sistEndretAv && props.endringstidspunkt && (
+                    <Undertekst className="arbeidsliste--modal-redigering">
+                        {`Oppdatert ${moment(props.endringstidspunkt).format('DD.MM.YYYY')} av ${
+                            props.sistEndretAv.veilederId
+                        }`}
+                    </Undertekst>
+                )}
             </div>
-            {props.sistEndretAv && props.endringstidspunkt && (
-                <Undertekst className="arbeidsliste--modal-redigering">
-                    <FormattedMessage
-                        id="arbeidsliste.endringsinfo"
-                        values={{
-                            dato: moment(props.endringstidspunkt).format('DD.MM.YYYY'),
-                            veileder: props.sistEndretAv.veilederId
-                        }}
-                    />
-                </Undertekst>
-            )}
             <div className="dato-kategori-wrapper">
                 <FormikDatoVelger
                     name="frist"
@@ -58,7 +56,7 @@ function ArbeidslisteForm(props: ArbeidslisteFormProps & InjectedIntlProps) {
                 />
                 <ArbeidslistekategoriVisning name="kategori" />
             </div>
-        </>
+        </div>
     );
 }
 
