@@ -63,7 +63,7 @@ function Etiketter() {
 
     useEffect(() => {
         FeatureApi.hentFeatures('veilarbvisittkort.permittering.etikett').then(features => {
-            if (!features['veilarbvisittkort.permittering.etikett'] && harStartetOppfolgingEtter9mars2020) {
+            if (features['veilarbvisittkort.permittering.etikett'] && harStartetOppfolgingEtter9mars2020) {
                 fetchToJson('/registrering?fnr=' + fnr).then((resp: any) => {
                     if (resp.type === 'ORDINAER') {
                         const besvarelse = resp.registrering.besvarelse;
