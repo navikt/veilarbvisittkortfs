@@ -83,7 +83,7 @@ function Etiketter() {
                 Død
             </Bas>
             <Bas hidden={!erPermitterEtter9mars} type="info" className="etikett--lilla">
-                Permittert etter 9/3-20
+                Permittert etter 9. mars
             </Bas>
             <Advarsel hidden={!diskresjonskode}>Kode {diskresjonskode}</Advarsel>
             <Advarsel hidden={!sikkerhetstiltak}>{sikkerhetstiltak}</Advarsel>
