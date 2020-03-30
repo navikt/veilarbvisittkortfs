@@ -21,21 +21,14 @@ interface ArbeidslisteFormProps {
 }
 
 function ArbeidslisteForm(props: ArbeidslisteFormProps & InjectedIntlProps) {
-    const labelInputArea = props.intl.formatMessage({ id: 'arbeidsliste.modal.tittel' });
-
     return (
         <div className="arbeidsliste__bruker">
             <div className="blokk-s">
                 <Undertittel>{`${props.navn}, ${props.fnr}`}</Undertittel>
-                <FormikInput
-                    name="overskrift"
-                    label={labelInputArea}
-                    validate={validerArbeidslisteTittelFeldt}
-                    bredde="L"
-                />
+                <FormikInput name="overskrift" label="Tittel" validate={validerArbeidslisteTittelFeldt} bredde="L" />
                 <FormikTekstArea
                     name="kommentar"
-                    labelId="arbeidsliste.modal.kommentar"
+                    labelId="Kommentar"
                     maxLength={500}
                     validate={validerArbeidslisteKommentarFeldt}
                 />

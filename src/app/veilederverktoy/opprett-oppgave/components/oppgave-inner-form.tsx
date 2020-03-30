@@ -9,7 +9,6 @@ import { StringOrNothing } from '../../../../types/utils/stringornothings';
 import OpprettOppgaveBeskrivelseTekstArea from './opprett-oppgave-beskrivelse-textarea';
 import HiddenIfDiv from '../../../components/hidden-if/hidden-if-div';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { FormattedMessage } from 'react-intl';
 import { OrNothing } from '../../../../types/utils/ornothing';
 import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
@@ -50,7 +49,7 @@ function OppgaveInnerForm({ fnr, tema, enhetId, veilederId, avsenderenhetId, for
                     Bekreft
                 </Hovedknapp>
                 <button type="button" className="knapp" onClick={tilbake}>
-                    <FormattedMessage id="modal.knapp.avbryt" />
+                    Avbryt
                 </button>
             </HiddenIfDiv>
         </>
