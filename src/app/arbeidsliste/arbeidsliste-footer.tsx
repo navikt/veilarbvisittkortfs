@@ -5,7 +5,6 @@ import React from 'react';
 
 interface ArbeidslisteFooterProps {
     onRequestClose: () => void;
-    spinner: boolean;
     slettArbeidsliste: () => void;
     kanFjerneArbeidsliste: boolean;
 }
@@ -13,7 +12,7 @@ interface ArbeidslisteFooterProps {
 function ArbeidslisteFooter(props: ArbeidslisteFooterProps) {
     return (
         <div className="modal-footer">
-            <Hovedknapp htmlType="submit" className="btn--mr1" spinner={props.spinner}>
+            <Hovedknapp htmlType="submit" className="btn--mr1">
                 Lagre
             </Hovedknapp>
             <Knapp htmlType="button" onClick={props.onRequestClose}>
