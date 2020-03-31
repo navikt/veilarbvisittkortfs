@@ -4,7 +4,6 @@ import { Form, Formik, FormikProps } from 'formik';
 import Modal from '../components/modal/modal';
 import moment from 'moment';
 import { logEvent } from '../utils/frontend-logger';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import ArbeidslisteForm from './arbeidsliste-form';
 import ArbeidslisteFooter from './arbeidsliste-footer';
 
@@ -69,30 +68,22 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
                     <div className="modal-innhold">
                         <div className="modal-info-tekst">
                             <Form>
-                                {props.arbeidslisteStatus ? (
-                                    <div className="arbeidsliste-modal__spinner-wrapper">
-                                        <NavFrontendSpinner transparent type="XXL" />
-                                    </div>
-                                ) : (
-                                    <>
-                                        <ArbeidslisteForm
-                                            navn={props.navn}
-                                            fnr={props.fnr}
-                                            endringstidspunkt={props.arbeidsliste.endringstidspunkt}
-                                            sistEndretAv={props.arbeidsliste.sistEndretAv}
-                                            tittel={
-                                                !props.arbeidsliste.endringstidspunkt
-                                                    ? 'Legg i arbeidsliste'
-                                                    : 'Rediger arbeidsliste'
-                                            }
-                                        />
-                                        <ArbeidslisteFooter
-                                            onRequestClose={() => onRequestClose(formikProps)}
-                                            slettArbeidsliste={props.onDelete}
-                                            kanFjerneArbeidsliste={props.kanFjerneArbeidsliste}
-                                        />
-                                    </>
-                                )}
+                                <ArbeidslisteForm
+                                    navn={props.navn}
+                                    fnr={props.fnr}
+                                    endringstidspunkt={props.arbeidsliste.endringstidspunkt}
+                                    sistEndretAv={props.arbeidsliste.sistEndretAv}
+                                    tittel={
+                                        !props.arbeidsliste.endringstidspunkt
+                                            ? 'Legg i arbeidsliste'
+                                            : 'Rediger arbeidsliste'
+                                    }
+                                />
+                                <ArbeidslisteFooter
+                                    onRequestClose={() => onRequestClose(formikProps)}
+                                    slettArbeidsliste={props.onDelete}
+                                    kanFjerneArbeidsliste={props.kanFjerneArbeidsliste}
+                                />
                             </Form>
                         </div>
                     </div>

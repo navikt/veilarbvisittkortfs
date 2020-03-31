@@ -7,17 +7,17 @@ import { stoppEskalering } from '../../../store/oppfolging/actions';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
 import FormikModal from '../../components/formik/formik-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
 import { Form } from 'formik';
 import FormikCheckBox from '../../components/formik/formik-checkbox';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import BegrunnelseFooter from '../begrunnelseform/begrunnelse-form-footer';
 import { BegrunnelseTextArea } from '../begrunnelseform/begrunnelse-textarea';
-import BergrunnelseOverskrift from '../begrunnelseform/begrunnelse-overskrift';
+import BegrunnelseOverskrift from '../begrunnelseform/begrunnelse-overskrift';
 
 interface DispatchProps {
     handleSubmit: (dialogId: string, skallSendeHenvdelse: boolean, beskrivelse?: string) => void;
 }
+
 interface StateProps {
     navn: string;
     isLoading: boolean;
@@ -41,21 +41,14 @@ function StoppEskalering(props: StoppEskaleringProps) {
             render={formikProps => {
                 return (
                     <div className="modal-innhold">
-                        <BergrunnelseOverskrift overskriftTekstId="innstillinger.modal.stopp-eskalering.overskrift" />
+                        <BegrunnelseOverskrift overskriftTekst="Fjern markering av varsel" />
                         <Form>
-                            <FormikCheckBox
-                                name="skallSendeHenvdelse"
-                                label={
-                                    <FormattedMessage id="innstillinger.modal.stop-eskalering.henvendelse.checkbox.tittel" />
-                                }
-                            />
+                            <FormikCheckBox name="skallSendeHenvdelse" label={'Send bruker en henvendelse'} />
                             {formikProps.values.skallSendeHenvdelse && (
                                 <>
-                                    <Normaltekst>
-                                        <FormattedMessage id="innstillinger.modal.stopp-eskalering.beskrivelse" />
-                                    </Normaltekst>
+                                    <Normaltekst>Legg inn eller rediger tekst som du sender til brukeren.</Normaltekst>
                                     <BegrunnelseTextArea
-                                        tekstariaLabel="innstillinger.modal.stopp-eskalering.begrunnelse"
+                                        tekstariaLabel="Se eksempel på tekst til brukeren under"
                                         maxLength={500}
                                     />
                                 </>

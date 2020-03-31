@@ -40,7 +40,7 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
         behandladeEnheter.find(enhet => enhet.enhetId === value) || behandladeEnheter[0];
     return (
         <div className="skjemaelement">
-            <label className="skjemaelement__label">Enhet*</label>
+            <label className="skjemaelement__label">Enhet *</label>
             <Dropdown
                 name="Velg enhet dropdown"
                 knappeTekst={`${valgtEnhet.enhetId} ${valgtEnhet.navn}`}

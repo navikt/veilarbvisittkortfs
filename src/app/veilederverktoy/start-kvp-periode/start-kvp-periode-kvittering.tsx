@@ -13,9 +13,8 @@ type StartOppfolgingKvittering = StateProps;
 function StartKVPKvittering({ navn }: StartOppfolgingKvittering) {
     return (
         <Kvittering
-            tittelId="innstillinger.prosess.start-kvp.tittel"
-            alertStripeTekstId="innstillinger.modal.start-kvp.kvittering.ok"
-            alertStripeTekstValues={{ navn }}
+            tittel="Start periode i Kvalifiseringsprogrammet (KVP)"
+            alertStripeTekst="Du har startet en KVP-periode for brukeren. Bare veiledere i din enhet har nå tilgang til dialoger, aktiviteter og mål som blir opprettet i KVP-perioden."
         />
     );
 }

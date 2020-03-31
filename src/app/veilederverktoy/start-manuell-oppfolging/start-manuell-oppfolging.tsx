@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Appstate } from '../../../types/appstate';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { FormattedMessage } from 'react-intl';
 import PersonaliaSelectors from '../../../store/personalia/selectors';
 import { settManuell } from '../../../store/oppfolging/actions';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
@@ -24,7 +23,8 @@ type StartEskaleringProps = StateProps & DispatchProps;
 function StartManuellOppfolging(props: StartEskaleringProps) {
     const infoTekst = (
         <AlertStripeAdvarsel className="blokk-xxs">
-            <FormattedMessage id="innstillinger.modal.manuell.infotekst" />
+            Når du endrer til manuell oppfølging, har du ikke lenger mulighet til å ha dialog med brukeren i
+            aktivitetsplanen.
         </AlertStripeAdvarsel>
     );
 
@@ -33,7 +33,7 @@ function StartManuellOppfolging(props: StartEskaleringProps) {
             initialValues={{ begrunnelse: '' }}
             handleSubmit={props.handleSubmit(props.fnr, props.veilederId)}
             tekstariaLabel="Skriv en begrunnelse for hvorfor brukeren trenger manuell oppfølging"
-            overskriftTekstId="innstillinger.modal.manuell.overskrift"
+            overskriftTekst="Endre til manuell oppfølging"
             infoTekst={infoTekst}
             isLoading={props.isLoading}
         />

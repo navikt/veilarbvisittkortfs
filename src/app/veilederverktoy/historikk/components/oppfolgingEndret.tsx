@@ -23,9 +23,7 @@ export function OppfolgingEnhetEndret(props: { historikkElement: InnstillingsHis
         return null;
     }
 
-    const tittelTekst = props.erGjeldendeEnhet
-        ? 'innstillinger.modal.historikk-gjeldende_oppfolgingsenhet'
-        : 'innstillinger.modal.historikk-oppfolgingsenhet_endret';
+    const tittelTekst = props.erGjeldendeEnhet ? 'Gjeldende oppfølgingsenhet' : 'Oppfølgingsenhet endret';
 
     const begrunnelseTekst = props.erGjeldendeEnhet
         ? `Oppfølgingsenhet ${enhet} ${enhetNavn.data.navn}`

@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../store/navigation/actions';
-import ModalHeader from '../../components/modal/modal-header';
 import Modal from '../../components/modal/modal';
+import ModalHeader from '../../components/modal/modal-header';
 
 interface OwnProps {
     children: React.ReactNode;
@@ -13,6 +13,7 @@ interface OwnProps {
     className?: string;
     tilbakeTekstId?: string;
     tilbakeFunksjon?: () => void;
+    tittel?: string;
 }
 
 interface DispatchProps {
@@ -29,7 +30,7 @@ function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
             onRequestClose={props.lukkModal}
             contentLabel="veilederverktoy"
         >
-            <ModalHeader />
+            <ModalHeader tittel={props.tittel} />
             <div className="modal-innhold">{props.children}</div>
         </Modal>
     );

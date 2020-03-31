@@ -32,7 +32,7 @@ function StarKvpPeriode(props: StartKvpPeriodeProsessProps) {
             initialValues={initialValues}
             handleSubmit={props.handleSubmit}
             tekstariaLabel="Begrunnelse:"
-            overskriftTekstId="innstillinger.prosess.start-kvp.tittel"
+            overskriftTekst="Start periode i Kvalifiseringsprogrammet (KVP)"
             infoTekst={infoTekst}
             isLoading={props.isLoading}
             maxLength={250}

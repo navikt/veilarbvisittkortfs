@@ -7,13 +7,13 @@ import { useDispatch } from 'react-redux';
 import { navigerAction } from '../../../store/navigation/actions';
 
 interface KvitteringProps {
-    tittelId: string;
-    alertStripeTekstId: string;
+    tittel: string;
+    alertStripeTekst: string;
     alertStripeTekstValues?: OrNothing<{ [key: string]: any }>;
     footer?: React.ReactNode;
 }
 
-function Kvittering({ tittelId, alertStripeTekstId, alertStripeTekstValues, footer }: KvitteringProps) {
+function Kvittering({ tittel, alertStripeTekst, alertStripeTekstValues, footer }: KvitteringProps) {
     const dispatch = useDispatch();
 
     return (
@@ -24,12 +24,10 @@ function Kvittering({ tittelId, alertStripeTekstId, alertStripeTekstValues, foot
             type="SUCCESS"
         >
             <div className="blokk-xs">
-                <Systemtittel className="modal-info-tekst__undertekst blokk-xs">
-                    <FormattedMessage id={tittelId} />
-                </Systemtittel>
+                <Systemtittel className="modal-info-tekst__undertekst blokk-xs">{tittel}</Systemtittel>
                 <Normaltekst className="blokk-xs">
                     <FormattedMessage
-                        id={alertStripeTekstId}
+                        id={alertStripeTekst}
                         values={alertStripeTekstValues ? alertStripeTekstValues : {}}
                     />
                 </Normaltekst>

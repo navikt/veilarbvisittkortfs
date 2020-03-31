@@ -12,6 +12,7 @@ import {
 } from '../utils/formik-validation';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 import ArbeidslistekategoriVisning from './arbeidslistekategori/arbeidslisteikon-visning';
+import BegrunnelseOverskrift from '../veilederverktoy/begrunnelseform/begrunnelse-overskrift';
 import ModalHeader from '../components/modal/modal-header';
 
 interface ArbeidslisteFormProps {
@@ -25,7 +26,8 @@ interface ArbeidslisteFormProps {
 function ArbeidslisteForm(props: ArbeidslisteFormProps & InjectedIntlProps) {
     return (
         <>
-            <ModalHeader tittel={props.tittel} />
+            <ModalHeader />
+            <BegrunnelseOverskrift overskriftTekst={props.tittel} />
             <div className="arbeidsliste__bruker">
                 <div className="blokk-s">
                     <Undertittel>{`${props.navn}, ${props.fnr}`}</Undertittel>

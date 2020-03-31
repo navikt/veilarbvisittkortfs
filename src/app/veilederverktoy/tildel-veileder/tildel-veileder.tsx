@@ -13,7 +13,7 @@ import VeilederSelector from '../../../store/tildel-veileder/selector';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import VeilederVerktoyModal from '../veilederverktoy-components/veilederverktoy-modal';
 import { navigerAction } from '../../../store/navigation/actions';
-import BergrunnelseOverskrift from '../begrunnelseform/begrunnelse-overskrift';
+import BegrunnelseOverskrift from '../begrunnelseform/begrunnelse-overskrift';
 
 function settSammenNavn(veileder: VeilederData) {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
@@ -58,7 +58,7 @@ function TildelVeileder() {
 
     return (
         <VeilederVerktoyModal>
-            <BergrunnelseOverskrift overskriftTekstId="innstillinger.modal.tildel-veileder.overskrift" />
+            <BegrunnelseOverskrift overskriftTekst="Tildel veileder" />
             <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => setValgtVeileder(event)}>
                 <SokFilter data={sorterVeiledere} label="" placeholder="Søk navn eller NAV-ident">
                     {data => (

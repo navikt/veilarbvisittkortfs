@@ -5,7 +5,6 @@ import OppfolgingSelector from '../../../store/oppfolging/selector';
 import { connect } from 'react-redux';
 import { fetchRegistreringData } from '../../../api/registrering-api';
 import { logEvent } from '../../utils/frontend-logger';
-import { FormattedMessage } from 'react-intl';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 
 interface OwnProps {
@@ -37,14 +36,13 @@ function StartManuellOppfolgingKvittering(props: StartOppfolgingKvittering) {
     useEffect(() => loggMetrikk(props), [props]);
     const kvitteringFooter = (
         <AlertStripeAdvarsel>
-            <FormattedMessage id="innstillinger.prosess.manuell.kvittering.footer" />
+            Brukere som ikke kan legge inn CV og jobbprofil selv skal få hjelp til dette.
         </AlertStripeAdvarsel>
     );
     return (
         <Kvittering
-            tittelId="innstillinger.modal.manuell.overskrift"
-            alertStripeTekstId="innstillinger.prosess.manuell.kvittering"
-            alertStripeTekstValues={{ begrunnelse: props.begrunnelse }}
+            tittel="Endre til manuell oppfølging"
+            alertStripeTekst={`Endring til manuell oppfølging er gjennomført. Begrunnelse: ${props.begrunnelse}`}
             footer={kvitteringFooter}
         />
     );

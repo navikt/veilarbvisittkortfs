@@ -44,7 +44,7 @@ function StartDigitalOppfolging(props: StartEskaleringProps) {
 
     const infoTekst = (
         <AlertStripeAdvarsel className="blokk-xxs">
-            <FormattedMessage id="innstillinger.modal.digital.infotekst" />
+            Når du endrer til digital oppfølging, kan du ha dialog med brukeren i aktivitetsplanen.
         </AlertStripeAdvarsel>
     );
 
@@ -53,7 +53,7 @@ function StartDigitalOppfolging(props: StartEskaleringProps) {
             initialValues={{ begrunnelse: '' }}
             handleSubmit={props.handleSubmit(props.fnr, props.veilederId)}
             tekstariaLabel="Skriv en begrunnelse for hvorfor brukeren nå kan få digital oppfølging"
-            overskriftTekstId="innstillinger.modal.digital.overskrift"
+            overskriftTekst="Endre til digital oppfølging"
             infoTekst={infoTekst}
             isLoading={props.isLoading}
         />

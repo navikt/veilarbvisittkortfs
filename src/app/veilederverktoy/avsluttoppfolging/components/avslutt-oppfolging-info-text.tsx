@@ -36,8 +36,8 @@ export function AvsluttOppfolgingInfoText(props: {
         return <NavFrontendSpinner type="XL" />;
     }
     const aktivMindreEnn28Dager = props.datoErInnenFor28DagerSiden
-        ? 'innstillinger.modal.avslutt.oppfolging.beskrivelse.innenfor-28-dager'
-        : 'innstillinger.modal.avslutt.oppfolging.beskrivelse';
+        ? 'Brukeren har vært inaktiv i mindre enn 28 dager. Vil du likevel avslutte brukerens oppfølgingsperiode?'
+        : 'Her avslutter du brukerens oppfølgingsperioden og legger inn en kort begrunnelse om hvorfor.';
     const { harTiltak, harYtelser } = props.avslutningStatus;
     return (
         <>

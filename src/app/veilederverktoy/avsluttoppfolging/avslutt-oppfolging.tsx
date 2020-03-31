@@ -61,7 +61,7 @@ function AvsluttOppfolging(props: AvsluttOppfolgingProps) {
             initialValues={{ begrunnelse: props.begrunnelse }}
             handleSubmit={props.handleSubmit}
             tekstariaLabel="Begrunnelse"
-            overskriftTekstId="innstillinger.modal.avlutt.oppfolging.overskrift"
+            overskriftTekst="Avslutt oppfølgingsperioden"
             isLoading={false}
             infoTekst={
                 <>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Form } from 'formik';
 import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
 import { Appstate } from '../../../types/appstate';
 import PersonaliaSelector from '../../../store/personalia/selectors';
 import { connect } from 'react-redux';
@@ -75,11 +74,9 @@ function OpprettOppgave({ navn, fnr, handleSubmit, tilbakeTilProcesser, tilbake 
                 <div className="modal-innhold">
                     <div className="blokk-xs">
                         <Innholdstittel className="modal-info-tekst__overskrift">
-                            <FormattedMessage id="innstillinger.modal.overskrift" values={{ navn }} />
+                            {`Oppfølging av ${navn}`}
                         </Innholdstittel>
-                        <Undertittel>
-                            <FormattedMessage id="innstillinger.modal.oppgave-overskrift" />
-                        </Undertittel>
+                        <Undertittel>Opprett en Gosys-oppgave</Undertittel>
                     </div>
                     <Form>
                         <OpprettOppgaveTemaSelector />

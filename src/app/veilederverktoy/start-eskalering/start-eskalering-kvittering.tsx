@@ -30,10 +30,12 @@ function StartEskaleringKvittering() {
 
     return (
         <Kvittering
-            tittelId="innstillinger.modal.start-eskalering.overskrift"
-            alertStripeTekstId="innstillinger.modal.start-eskalering.kvittering"
-            alertStripeTekstValues={{ dato: formaterDatoKortManed(dato) }}
+            tittel="Send varsel til brukeren"
+            alertStripeTekst={`Varselet er sendt til brukeren ${formaterDatoKortManed(
+                dato
+            )} på sms med lenke til aktivitetsplanen`}
         />
     );
 }
+
 export default StartEskaleringKvittering;

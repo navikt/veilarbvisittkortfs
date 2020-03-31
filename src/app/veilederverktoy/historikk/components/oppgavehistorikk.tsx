@@ -13,9 +13,7 @@ function OppgaveHistorikkKomponent({ oppgaveHistorikk }: OwnProps) {
     const { oppgaveTema, oppgaveType } = oppgaveHistorikk;
     return (
         <div className="historikk__elem blokk-xs">
-            <Element>
-                <FormattedMessage id="innstillinger.modal.historikk-gosys-oppgave" />
-            </Element>
+            <Element>Gosys-oppgave opprettet</Element>
             <Normaltekst>
                 <FormattedMessage
                     id="innstillinger.modal.historikk-gosys-oppgave-tekst"
