@@ -24,7 +24,7 @@ export interface OppfolgingsPerioder {
     aktorId: string;
     veileder: StringOrNothing;
     startDato: string;
-    sluttDato: string;
+    sluttDato?: string;
     begrunnelse: string;
     kvpPerioder: any[];
 }
