@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
+import { injectIntl, InjectedIntlProps } from 'react-intl';
 import { Dispatch } from 'redux';
 import { opprettHenvendelse } from '../../../store/dialog/actions';
 import { connect } from 'react-redux';
@@ -44,14 +44,15 @@ function StartEskalering(props: StartEskaleringProps) {
 
     const infoTekst = (
         <Normaltekst className="blokk-xs">
-            <FormattedMessage id="innstillinger.modal.start-eskalering.beskrivelse" />
+            Husk å være tydelig på hvilken oppgave brukeren skal gjennomføre og hva som er fristen. Hvis du varsler om
+            at en ytelse kan bli stanset eller en annen reaksjon fra NAV, må du vise til lovhjemler.
         </Normaltekst>
     );
 
     const initialValues = {
         begrunnelse: props.intl.formatMessage({ id: 'innstillinger.modal.start-eskalering.automatisk-tekst' }),
         overskrift: props.intl.formatMessage({ id: 'dialog.eskalering.overskrift' }),
-        tekst: props.intl.formatMessage({ id: 'innstillinger.modal.start-eskalering.automatisk-tekst' })
+        tekst: props.intl.formatMessage({ id: 'innstillinger.modal.start-eskalering.automatisk-tekst' }),
     };
     return (
         <BegrunnelseForm
@@ -68,7 +69,7 @@ function StartEskalering(props: StartEskaleringProps) {
 
 const mapStateToProps = (state: Appstate) => ({
     isLoading: OppfolgingSelector.selectOppfolgingStatus(state) || state.dialoger.status === 'LOADING',
-    kanIkkeVarsles: !state.oppfolging.data.kanVarsles
+    kanIkkeVarsles: !state.oppfolging.data.kanVarsles,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -79,9 +80,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
                 begrunnelse: values.begrunnelse,
                 overskrift: values.overskrift,
                 egenskaper: ['ESKALERINGSVARSEL'],
-                tekst: values.begrunnelse
+                tekst: values.begrunnelse,
             })
-        )
+        ),
 });
 
 export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(injectIntl(StartEskalering));

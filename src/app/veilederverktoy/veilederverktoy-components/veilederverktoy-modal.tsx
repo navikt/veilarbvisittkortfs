@@ -11,7 +11,7 @@ interface OwnProps {
     visConfirmDialog?: boolean;
     touched?: boolean;
     className?: string;
-    tilbakeTekstId?: string;
+    tilbakeTekst?: string;
     tilbakeFunksjon?: () => void;
     tittel?: string;
 }
@@ -37,7 +37,7 @@ function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    lukkModal: () => dispatch(navigerAction(null))
+    lukkModal: () => dispatch(navigerAction(null)),
 });
 
 export default connect<{}, DispatchProps, OwnProps>(null, mapDispatchToProps)(injectIntl(VeilederVerktoyModal));

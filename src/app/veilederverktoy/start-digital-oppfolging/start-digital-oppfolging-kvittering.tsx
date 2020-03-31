@@ -11,8 +11,7 @@ function StartDigitalOppfolgingKvittering({ begrunnelse }: StartOppfolgingKvitte
     return (
         <Kvittering
             tittel="Endre til digital oppfølging"
-            alertStripeTekst="innstillinger.prosess.digital.kvittering"
-            alertStripeTekstValues={{ begrunnelse }}
+            alertStripeTekst={`Digital oppfølging er aktivert. Begrunnelse: ${begrunnelse}`}
         />
     );
 }

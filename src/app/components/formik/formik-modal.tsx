@@ -16,7 +16,7 @@ interface FormikModalProps<Values> {
     contentLabel: string;
     render: (formikProps: FormikProps<Values>) => React.ReactNode;
 
-    tilbakeTekstId?: string;
+    tilbakeTekst?: string;
     visConfirmDialog?: boolean;
     tilbake?: () => void;
     isOpen?: boolean;
@@ -48,8 +48,8 @@ function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalP
         <Formik
             initialValues={props.initialValues}
             validationSchema={props.validationSchema}
-            onSubmit={values => props.handleSubmit(values)}
-            render={formikProps => (
+            onSubmit={(values) => props.handleSubmit(values)}
+            render={(formikProps) => (
                 <NavFrontendModal
                     className={cls(props.className)}
                     contentLabel={props.contentLabel}

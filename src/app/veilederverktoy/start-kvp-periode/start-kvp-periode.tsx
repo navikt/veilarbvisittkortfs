@@ -3,7 +3,6 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Appstate } from '../../../types/appstate';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
-import { FormattedMessage } from 'react-intl';
 import { startKVP } from '../../../store/oppfolging/actions';
 import { Normaltekst } from 'nav-frontend-typografi';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
@@ -21,7 +20,8 @@ type StartKvpPeriodeProsessProps = StateProps & DispatchProps;
 function StarKvpPeriode(props: StartKvpPeriodeProsessProps) {
     const infoTekst = (
         <Normaltekst className="blokk-xs">
-            <FormattedMessage id="innstillinger.modal.start-kvp.infotekst" />
+            Når du klikker «Bekreft» vil bare veiledere i din enhet ha tilgang på dialoger, aktiviteter og mål som blir
+            opprettet i KVP-perioden. Du må skrive en kommentar før du bekrefter.
         </Normaltekst>
     );
 
@@ -41,11 +41,11 @@ function StarKvpPeriode(props: StartKvpPeriodeProsessProps) {
 }
 
 const mapStateToProps = (state: Appstate) => ({
-    isLoading: OppfolgingSelector.selectOppfolgingStatus(state)
+    isLoading: OppfolgingSelector.selectOppfolgingStatus(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    handleSubmit: (values: BegrunnelseValues) => dispatch(startKVP(values.begrunnelse))
+    handleSubmit: (values: BegrunnelseValues) => dispatch(startKVP(values.begrunnelse)),
 });
 
 export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(StarKvpPeriode);

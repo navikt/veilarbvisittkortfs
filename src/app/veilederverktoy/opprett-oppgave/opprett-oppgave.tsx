@@ -50,17 +50,13 @@ function OpprettOppgave({ navn, fnr, handleSubmit, tilbakeTilProcesser, tilbake 
         beskrivelse: '',
         enhetId: '',
         fnr,
-        fraDato: moment()
-            .format('YYYY-MM-DD')
-            .toString(),
-        tilDato: moment()
-            .format('YYYY-MM-DD')
-            .toString(),
+        fraDato: moment().format('YYYY-MM-DD').toString(),
+        tilDato: moment().format('YYYY-MM-DD').toString(),
         prioritet: 'NORM',
         tema: undefined,
         type: 'VURDER_HENVENDELSE',
         veilederId: null,
-        avsenderenhetId
+        avsenderenhetId,
     };
 
     return (
@@ -69,8 +65,8 @@ function OpprettOppgave({ navn, fnr, handleSubmit, tilbakeTilProcesser, tilbake 
             handleSubmit={handleSubmit}
             contentLabel="Opprett gosys oppgave"
             tilbake={tilbakeTilProcesser}
-            tilbakeTekstId="Tilbake"
-            render={formikProps => (
+            tilbakeTekst="Tilbake"
+            render={(formikProps) => (
                 <div className="modal-innhold">
                     <div className="blokk-xs">
                         <Innholdstittel className="modal-info-tekst__overskrift">
@@ -98,13 +94,13 @@ function OpprettOppgave({ navn, fnr, handleSubmit, tilbakeTilProcesser, tilbake 
 
 const mapStateToProps = (state: Appstate) => ({
     fnr: PersonaliaSelector.selectFodselsnummer(state),
-    navn: PersonaliaSelector.selectSammensattNavn(state)
+    navn: PersonaliaSelector.selectSammensattNavn(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     handleSubmit: (formdata: OppgaveFormData) => dispatch(lagreOppgave(formdata)),
     tilbakeTilProcesser: () => dispatch(navigerTilProcesser()),
-    tilbake: () => dispatch(navigerAction(null))
+    tilbake: () => dispatch(navigerAction(null)),
 });
 
 export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(OpprettOppgave);
