@@ -37,7 +37,7 @@ function ArbeidslisteForm(props: ArbeidslisteFormProps & InjectedIntlProps) {
                     />
                     <FormikTekstArea
                         name="kommentar"
-                        labelId="Kommentar"
+                        label="Kommentar"
                         maxLength={500}
                         validate={validerArbeidslisteKommentarFeldt}
                     />

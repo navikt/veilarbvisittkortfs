@@ -5,7 +5,7 @@ import { validerBeskrivelse, validerBeskrivelse500TegnFeldt } from '../../utils/
 export function BegrunnelseTextArea(props: { tekstariaLabel: string; maxLength?: number }) {
     return (
         <FormikTekstArea
-            labelId={props.tekstariaLabel}
+            label={props.tekstariaLabel}
             name="begrunnelse"
             maxLength={props.maxLength || 500}
             validate={props.maxLength ? validerBeskrivelse(props.maxLength) : validerBeskrivelse500TegnFeldt}
