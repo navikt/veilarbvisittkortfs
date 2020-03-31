@@ -32,6 +32,7 @@ function FormikTekstArea({
                         value={field.value}
                         feil={feil}
                         label={label}
+
                         {...textAreaProps}
                     />
                 );
