@@ -31,7 +31,7 @@ function FormikTekstArea({
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
                         value={field.value}
-                        feil={feil}
+                        feil={feil && feil.feilmelding}
                         label={labelTekstArea}
                         {...textAreaProps}
                     />

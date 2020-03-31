@@ -1,9 +1,9 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
-import { Input, NavFrontendInputProps } from 'nav-frontend-skjema';
+import { Input, InputProps } from 'nav-frontend-skjema';
 import { getErrors } from './formik-utils';
 
-interface InputProps {
+interface FormikInputProps {
     name: string;
     validate: (value: string) => string | undefined;
     label: string;
@@ -13,7 +13,7 @@ function FormikInput<P>({
     name,
     validate,
     ...inputProps
-}: InputProps & NavFrontendInputProps): React.ReactElement<FieldProps & NavFrontendInputProps> {
+}: FormikInputProps & InputProps): React.ReactElement<FieldProps & InputProps> {
     return (
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
@@ -23,7 +23,7 @@ function FormikInput<P>({
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
                         name={name}
-                        feil={feil}
+                        feil={feil && feil.feilmelding}
                         value={field.value}
                         {...inputProps}
                     />
