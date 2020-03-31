@@ -4,11 +4,10 @@ import FetchMock, { HandlerArgument, MiddlewareUtils, ResponseUtils } from 'yet-
 import Personalia from './personalia';
 import Arbeidsliste from './arbeidsliste';
 import Veilederliste from './veiledereliste';
-import VeilederData from './veiledere';
+import VeilederData, { enhetData } from './veiledere';
 import InnstillingsHistorikk from './instillingshistorikk';
 import Oppgavehistorikk from './oppgave-historikk';
 import Henvendelse from './henvedelse';
-import { enhetData } from './veiledere';
 
 const mock = FetchMock.configure({
     enableFallback: true,
@@ -96,19 +95,22 @@ mock.get('/veilarboppgave/api/oppgavehistorikk', Oppgavehistorikk);
 
 /*--ARBEIDSLISTE--*/
 mock.get('/veilarbportefolje/api/arbeidsliste/:fnr', Arbeidsliste);
-mock.post(`/veilarbportefolje/api/arbeidsliste/:fnr?`, (args: HandlerArgument) => {
-    return ResponseUtils.jsonPromise({
-        arbeidslisteAktiv: null,
-        endringstidspunkt: new Date().toISOString(),
-        frist: args.body.frist,
-        harVeilederTilgang: true,
-        isOppfolgendeVeileder: true,
-        kommentar: args.body.kommentar,
-        overskrift: args.body.overskrift,
-        sistEndretAv: 'Z007',
-        kategori: args.body.kategori
-    });
-});
+mock.post(
+    `/veilarbportefolje/api/arbeidsliste/:fnr?`,
+    ResponseUtils.delayed(450, (args: HandlerArgument) =>
+        ResponseUtils.jsonPromise({
+            arbeidslisteAktiv: null,
+            endringstidspunkt: new Date().toISOString(),
+            frist: args.body.frist,
+            harVeilederTilgang: true,
+            isOppfolgendeVeileder: true,
+            kommentar: args.body.kommentar,
+            overskrift: args.body.overskrift,
+            sistEndretAv: 'Z007',
+            kategori: args.body.kategori
+        })
+    )
+);
 
 mock.put(`/veilarbportefolje/api/arbeidsliste/:fnr?`, (args: HandlerArgument) => {
     return ResponseUtils.jsonPromise({

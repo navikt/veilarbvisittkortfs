@@ -14,7 +14,10 @@ export type NavigerActionType =
     | 'STOPP_ESKALERING_SUCCESS'
     | 'OPPRETTET_HENVENDELSE_START_ESKALERING'
     | 'NAVIGER_TIL_AVSLUTT_OPPFOLGING'
-    | 'LAGRE_OPPGAVE';
+    | 'LAGRE_OPPGAVE'
+    | 'LAGRE_ARBEIDSLISTE'
+    | 'REDIGER_ARBEIDSLISTE'
+    | 'SLETT_ARBEIDSLISTE';
 
 export interface NavigerAction {
     type: NavigerActionType;

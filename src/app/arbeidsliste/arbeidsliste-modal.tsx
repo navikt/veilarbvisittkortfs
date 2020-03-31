@@ -51,13 +51,13 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
             key={props.arbeidsliste.frist ? props.arbeidsliste.frist.toString() : Date.now().toString()}
             initialValues={initalValues}
             onSubmit={values => {
+                props.lukkModal();
                 props.onSubmit(values);
                 logEvent('teamvoff.metrikker.arbeidslistekategori', {
                     kategori: values.kategori,
                     leggtil: !props.arbeidsliste.endringstidspunkt,
                     applikasjon: 'visittkort'
                 });
-                props.lukkModal();
             }}
             render={formikProps => (
                 <Modal
