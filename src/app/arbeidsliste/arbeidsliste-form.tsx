@@ -12,7 +12,7 @@ import {
     validerArbeidslisteTittelFeldt
 } from '../utils/formik-validation';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
-import ArbeidslistekategoriVisning from '../veilederverktoy/arbeidsliste/arbeidslistekategori/arbeidslistekategori_visning';
+import ArbeidslistekategoriVisning from './arbeidslistekategori/arbeidslisteikon-visning';
 
 interface ArbeidslisteFormProps {
     sistEndretAv?: OrNothing<{ veilederId: string }>;
