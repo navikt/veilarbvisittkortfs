@@ -9,7 +9,7 @@ import './historikk.less';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import useFetch, { isPending, hasData, hasError } from '@nutgaard/use-fetch';
 import { useSelector } from 'react-redux';
-import VeilederVerktoyModal from '../veilederverktoy-components/veilederverktoy-modal';
+import VeilederVerktoyModal from '../veilederverktoy-modal/veilederverktoy-modal';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 

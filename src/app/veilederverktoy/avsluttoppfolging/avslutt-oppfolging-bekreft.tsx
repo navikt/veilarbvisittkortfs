@@ -7,7 +7,7 @@ import OppfolgingSelector from '../../../store/oppfolging/selector';
 import { Dispatch } from 'redux';
 import { avsluttOppfolging } from '../../../store/oppfolging/actions';
 import { connect } from 'react-redux';
-import VeilederVerktoyModal from '../veilederverktoy-components/veilederverktoy-modal';
+import VeilederVerktoyModal from '../veilederverktoy-modal/veilederverktoy-modal';
 import { navigerAction } from '../../../store/navigation/actions';
 
 interface StateProps {
@@ -28,7 +28,7 @@ function AvsluttOppfolgingBekreft({
     handleSubmit,
     isLoading,
     tilbake,
-    avbryt
+    avbryt,
 }: AvsluttOppfolgingBekreftelseModalProps) {
     return (
         <VeilederVerktoyModal tilbakeFunksjon={tilbake}>
@@ -49,13 +49,13 @@ function AvsluttOppfolgingBekreft({
 
 const mapStateToProps = (state: Appstate): StateProps => ({
     navn: PersonaliaSelector.selectSammensattNavn(state),
-    isLoading: OppfolgingSelector.selectOppfolgingStatus(state)
+    isLoading: OppfolgingSelector.selectOppfolgingStatus(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     handleSubmit: () => dispatch(avsluttOppfolging()),
     tilbake: () => dispatch(navigerAction('avslutt_oppfolging')),
-    avbryt: () => dispatch(navigerAction(null))
+    avbryt: () => dispatch(navigerAction(null)),
 });
 
 export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(AvsluttOppfolgingBekreft);
