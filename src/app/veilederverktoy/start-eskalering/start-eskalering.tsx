@@ -60,7 +60,7 @@ function StartEskalering(props: StartEskaleringProps) {
             initialValues={initialValues}
             tekstariaLabel="Rediger teksten under slik at den passer."
             maxLength={5000}
-            overskriftTekst="Send varsel til brukeren"
+            tittel="Send varsel til brukeren"
             infoTekst={infoTekst}
             isLoading={props.isLoading}
         />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form } from 'formik';
-import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 import { Appstate } from '../../../types/appstate';
 import PersonaliaSelector from '../../../store/personalia/selectors';
 import { connect } from 'react-redux';
@@ -66,14 +66,11 @@ function OpprettOppgave({ navn, fnr, handleSubmit, tilbakeTilProcesser, tilbake 
             contentLabel="Opprett gosys oppgave"
             tilbake={tilbakeTilProcesser}
             tilbakeTekst="Tilbake"
+            tittel="Opprett en Gosys-oppgave"
+            className="opprett-oppgave"
             render={(formikProps) => (
                 <div className="modal-innhold">
-                    <div className="blokk-xs">
-                        <Innholdstittel className="modal-info-tekst__overskrift">
-                            {`Oppfølging av ${navn}`}
-                        </Innholdstittel>
-                        <Undertittel>Opprett en Gosys-oppgave</Undertittel>
-                    </div>
+                    <Undertittel className="opprett-oppgave__undertittel">{`Oppfølging av ${navn}`}</Undertittel>
                     <Form>
                         <OpprettOppgaveTemaSelector />
                         <OppgaveInnerForm

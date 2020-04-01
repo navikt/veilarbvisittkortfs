@@ -7,7 +7,7 @@ import OppfolgingSelector from '../../../store/oppfolging/selector';
 import { Dispatch } from 'redux';
 import { avsluttOppfolging } from '../../../store/oppfolging/actions';
 import { connect } from 'react-redux';
-import VeilederVerktoyModal from '../veilederverktoy-modal/veilederverktoy-modal';
+import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { navigerAction } from '../../../store/navigation/actions';
 
 interface StateProps {

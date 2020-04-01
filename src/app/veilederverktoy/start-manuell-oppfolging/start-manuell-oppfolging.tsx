@@ -33,9 +33,9 @@ function StartManuellOppfolging(props: StartEskaleringProps) {
             initialValues={{ begrunnelse: '' }}
             handleSubmit={props.handleSubmit(props.fnr, props.veilederId)}
             tekstariaLabel="Skriv en begrunnelse for hvorfor brukeren trenger manuell oppfølging"
-            overskriftTekst="Endre til manuell oppfølging"
-            infoTekst={infoTekst}
             isLoading={props.isLoading}
+            infoTekst={infoTekst}
+            tittel="Endre til manuell oppfølging"
         />
     );
 }
@@ -43,14 +43,14 @@ function StartManuellOppfolging(props: StartEskaleringProps) {
 const mapStateToProps = (state: Appstate) => ({
     isLoading: OppfolgingSelector.selectOppfolgingStatus(state),
     fnr: PersonaliaSelectors.selectFodselsnummer(state), //TODO LAGE MIDDLEWEAR SOM HENTER UT FNR???
-    veilederId: state.tildelVeileder.paloggetVeileder.data.ident
+    veilederId: state.tildelVeileder.paloggetVeileder.data.ident,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         handleSubmit(fnr: string, veilederId: string) {
             return (values: BegrunnelseValues) => dispatch(settManuell(values.begrunnelse, fnr, veilederId));
-        }
+        },
     };
 };
 

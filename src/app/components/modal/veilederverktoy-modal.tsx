@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../store/navigation/actions';
-import Modal from '../../components/modal/modal';
-import ModalHeader from '../../components/modal/modal-header';
+import Modal from './modal';
+import ModalHeader from './modal-header';
 import classNames from 'classnames';
 
 interface OwnProps {

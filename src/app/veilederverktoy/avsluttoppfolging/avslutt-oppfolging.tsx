@@ -48,8 +48,8 @@ function AvsluttOppfolging(props: AvsluttOppfolgingProps) {
                 type="ADVARSEL"
             >
                 Du kan ikke avslutte oppfølgingsperioden fordi:
-                <ul className="margin--0">
-                    {underOppfolging && <li>Brukeren har aktiv status i Arena</li>}
+                <ul className="avslutt-oppfolging__ul">
+                    {underOppfolging && <li>Brukeren har aktiv status i Arena.</li>}
                     {underKvp && <li>Brukeren deltar i på KVP. KVP må avsluttes først.</li>}
                 </ul>
             </VarselModal>
@@ -61,7 +61,7 @@ function AvsluttOppfolging(props: AvsluttOppfolgingProps) {
             initialValues={{ begrunnelse: props.begrunnelse }}
             handleSubmit={props.handleSubmit}
             tekstariaLabel="Begrunnelse"
-            overskriftTekst="Avslutt oppfølgingsperioden"
+            tittel="Avslutt oppfølgingsperioden"
             isLoading={false}
             infoTekst={
                 <>
@@ -81,9 +81,7 @@ function AvsluttOppfolging(props: AvsluttOppfolgingProps) {
 
 const mapStateToProps = (state: Appstate): StateProps => {
     const avslutningStatus = AvsluttOppfolgingStatusSelector.selectAvsluttOppfolgingData(state);
-    const for28dagerSide = moment()
-        .subtract(28, 'day')
-        .toISOString();
+    const for28dagerSide = moment().subtract(28, 'day').toISOString();
     const datoErInnenFor28DagerSiden = ((avslutningStatus && avslutningStatus.inaktiveringsDato) || 0) > for28dagerSide;
 
     return {
@@ -92,13 +90,13 @@ const mapStateToProps = (state: Appstate): StateProps => {
         avslutningStatus,
         datoErInnenFor28DagerSiden,
         fnr: PersonaliaSelector.selectFodselsnummer(state),
-        isLoading: AvsluttOppfolgingStatusSelector.selectAvsluttOppfolgingIsLoading(state)
+        isLoading: AvsluttOppfolgingStatusSelector.selectAvsluttOppfolgingIsLoading(state),
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     handleSubmit: (values: BegrunnelseValues) => dispatch(lagreBegrunnelse(values.begrunnelse)),
-    lukkModal: () => dispatch(navigerAction(null))
+    lukkModal: () => dispatch(navigerAction(null)),
 });
 
 export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(AvsluttOppfolging);

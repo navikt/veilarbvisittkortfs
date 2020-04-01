@@ -6,10 +6,9 @@ import OppgaveApi from '../../../api/oppgave-api';
 import { OppgaveHistorikk } from '../../../types/oppgave-historikk';
 import HistorikkVisning from './historikk-visning';
 import './historikk.less';
-import { Innholdstittel } from 'nav-frontend-typografi';
 import useFetch, { isPending, hasData, hasError } from '@nutgaard/use-fetch';
 import { useSelector } from 'react-redux';
-import VeilederVerktoyModal from '../veilederverktoy-modal/veilederverktoy-modal';
+import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 
@@ -28,11 +27,8 @@ function Historikk() {
     }
 
     return (
-        <VeilederVerktoyModal visConfirmDialog={false} className="historikk__modal">
+        <VeilederVerktoyModal visConfirmDialog={false} className="historikk__modal" tittel="Historikk">
             <article className="prosess blokk-s">
-                <div className="modal-info-tekst">
-                    <Innholdstittel className="modal-info-tekst__overskrift">Historikk</Innholdstittel>
-                </div>
                 <HistorikkVisning historikkInnslag={[...innstillingsHistorikk.data, ...oppgaveHistorikk.data]} />
             </article>
         </VeilederVerktoyModal>

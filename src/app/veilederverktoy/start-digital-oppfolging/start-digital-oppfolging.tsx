@@ -53,7 +53,7 @@ function StartDigitalOppfolging(props: StartEskaleringProps) {
             initialValues={{ begrunnelse: '' }}
             handleSubmit={props.handleSubmit(props.fnr, props.veilederId)}
             tekstariaLabel="Skriv en begrunnelse for hvorfor brukeren nå kan få digital oppfølging"
-            overskriftTekst="Endre til digital oppfølging"
+            tittel="Endre til digital oppfølging"
             infoTekst={infoTekst}
             isLoading={props.isLoading}
         />

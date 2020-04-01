@@ -8,26 +8,21 @@ import moment from 'moment';
 import {
     validerArbeidslisteDatoFeldt,
     validerArbeidslisteKommentarFeldt,
-    validerArbeidslisteTittelFeldt
+    validerArbeidslisteTittelFeldt,
 } from '../utils/formik-validation';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 import ArbeidslistekategoriVisning from './arbeidslistekategori/arbeidslisteikon-visning';
-import BegrunnelseOverskrift from '../veilederverktoy/begrunnelseform/begrunnelse-overskrift';
-import ModalHeader from '../components/modal/modal-header';
 
 interface ArbeidslisteFormProps {
     sistEndretAv?: OrNothing<{ veilederId: string }>;
     endringstidspunkt?: OrNothing<Date>;
     navn: string;
     fnr: string;
-    tittel: string;
 }
 
 function ArbeidslisteForm(props: ArbeidslisteFormProps & InjectedIntlProps) {
     return (
         <>
-            <ModalHeader />
-            <BegrunnelseOverskrift overskriftTekst={props.tittel} />
             <div className="arbeidsliste__bruker">
                 <div className="blokk-s">
                     <Undertittel>{`${props.navn}, ${props.fnr}`}</Undertittel>

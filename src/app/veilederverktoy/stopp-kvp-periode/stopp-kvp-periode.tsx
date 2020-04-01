@@ -32,7 +32,7 @@ function StoppKvpPeriode(props: StartKvpPeriodeProsessProps) {
             initialValues={initialValues}
             handleSubmit={props.handleSubmit}
             tekstariaLabel="Begrunnelse:"
-            overskriftTekst="Avslutt periode i Kvalifiseringsprogrammet (KVP)"
+            tittel="Avslutt periode i Kvalifiseringsprogrammet (KVP)"
             infoTekst={infoTekst}
             isLoading={props.isLoading}
             maxLength={250}
