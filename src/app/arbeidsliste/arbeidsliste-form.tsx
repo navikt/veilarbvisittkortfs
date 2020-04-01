@@ -22,41 +22,34 @@ interface ArbeidslisteFormProps {
 
 function ArbeidslisteForm(props: ArbeidslisteFormProps & InjectedIntlProps) {
     return (
-        <>
-            <div className="arbeidsliste__bruker">
-                <div className="blokk-s">
-                    <Undertittel>{`${props.navn}, ${props.fnr}`}</Undertittel>
-                    <FormikInput
-                        name="overskrift"
-                        label="Tittel"
-                        validate={validerArbeidslisteTittelFeldt}
-                        bredde="L"
-                    />
-                    <FormikTekstArea
-                        name="kommentar"
-                        label="Kommentar"
-                        maxLength={500}
-                        validate={validerArbeidslisteKommentarFeldt}
-                    />
-                    {props.sistEndretAv && props.endringstidspunkt && (
-                        <Undertekst className="arbeidsliste--modal-redigering">
-                            {`Oppdatert ${moment(props.endringstidspunkt).format('DD.MM.YYYY')} av ${
-                                props.sistEndretAv.veilederId
-                            }`}
-                        </Undertekst>
-                    )}
-                </div>
-                <div className="dato-kategori-wrapper">
-                    <FormikDatoVelger
-                        name="frist"
-                        validate={validerArbeidslisteDatoFeldt}
-                        label="Frist"
-                        ariaLabel="Frist før arbeidslisten"
-                    />
-                    <ArbeidslistekategoriVisning name="kategori" />
-                </div>
+        <div className="arbeidsliste__bruker">
+            <div className="blokk-s">
+                <Undertittel>{`${props.navn}, ${props.fnr}`}</Undertittel>
+                <FormikInput name="overskrift" label="Tittel" validate={validerArbeidslisteTittelFeldt} bredde="L" />
+                <FormikTekstArea
+                    name="kommentar"
+                    label="Kommentar"
+                    maxLength={500}
+                    validate={validerArbeidslisteKommentarFeldt}
+                />
+                {props.sistEndretAv && props.endringstidspunkt && (
+                    <Undertekst className="arbeidsliste--modal-redigering">
+                        {`Oppdatert ${moment(props.endringstidspunkt).format('DD.MM.YYYY')} av ${
+                            props.sistEndretAv.veilederId
+                        }`}
+                    </Undertekst>
+                )}
             </div>
-        </>
+            <div className="dato-kategori-wrapper">
+                <FormikDatoVelger
+                    name="frist"
+                    validate={validerArbeidslisteDatoFeldt}
+                    label="Frist"
+                    ariaLabel="Frist før arbeidslisten"
+                />
+                <ArbeidslistekategoriVisning name="kategori" />
+            </div>
+        </div>
     );
 }
 
