@@ -5,6 +5,7 @@ import { Dispatch } from 'redux';
 import { navigerAction } from '../../../store/navigation/actions';
 import Modal from '../../components/modal/modal';
 import ModalHeader from '../../components/modal/modal-header';
+import classNames from 'classnames';
 
 interface OwnProps {
     children: React.ReactNode;
@@ -25,7 +26,7 @@ type VeilederVerktoyModalProps = OwnProps & DispatchProps & InjectedIntlProps;
 function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
     return (
         <Modal
-            className={props.className}
+            className={classNames('veilederverktoy-modal', props.className)}
             isOpen={true}
             onRequestClose={props.lukkModal}
             contentLabel="veilederverktoy"
