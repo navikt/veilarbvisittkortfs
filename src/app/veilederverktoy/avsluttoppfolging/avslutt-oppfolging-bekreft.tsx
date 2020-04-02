@@ -17,21 +17,14 @@ interface StateProps {
 
 interface DispatchProps {
     handleSubmit: () => void;
-    tilbake: () => void;
     avbryt: () => void;
 }
 
 type AvsluttOppfolgingBekreftelseModalProps = StateProps & DispatchProps;
 
-function AvsluttOppfolgingBekreft({
-    navn,
-    handleSubmit,
-    isLoading,
-    tilbake,
-    avbryt,
-}: AvsluttOppfolgingBekreftelseModalProps) {
+function AvsluttOppfolgingBekreft({ navn, handleSubmit, isLoading, avbryt }: AvsluttOppfolgingBekreftelseModalProps) {
     return (
-        <VeilederVerktoyModal tilbakeFunksjon={tilbake}>
+        <VeilederVerktoyModal>
             <div className="prosess">
                 <AlertStripeAdvarsel className="blokk-s">
                     Er du sikker på at du vil avslutte oppfølgingsperioden til {navn}?
@@ -54,7 +47,6 @@ const mapStateToProps = (state: Appstate): StateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     handleSubmit: () => dispatch(avsluttOppfolging()),
-    tilbake: () => dispatch(navigerAction('avslutt_oppfolging')),
     avbryt: () => dispatch(navigerAction(null)),
 });
 

@@ -9,11 +9,7 @@ import classNames from 'classnames';
 
 interface OwnProps {
     children: React.ReactNode;
-    visConfirmDialog?: boolean;
-    touched?: boolean;
     className?: string;
-    tilbakeTekst?: string;
-    tilbakeFunksjon?: () => void;
     tittel?: string;
 }
 

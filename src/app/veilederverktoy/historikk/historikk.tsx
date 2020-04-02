@@ -27,7 +27,7 @@ function Historikk() {
     }
 
     return (
-        <VeilederVerktoyModal visConfirmDialog={false} className="historikk__modal" tittel="Historikk">
+        <VeilederVerktoyModal className="historikk__modal" tittel="Historikk">
             <article className="prosess blokk-s">
                 <HistorikkVisning historikkInnslag={[...innstillingsHistorikk.data, ...oppgaveHistorikk.data]} />
             </article>
