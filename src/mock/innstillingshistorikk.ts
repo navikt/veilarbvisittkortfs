@@ -8,7 +8,7 @@ const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [
         begrunnelse: 'Oppfølging avsluttet automatisk pga. inaktiv bruker som ikke kan reaktiveres',
         opprettetAv: 'SYSTEM',
         opprettetAvBrukerId: null,
-        dialogId: null
+        dialogId: null,
     },
     {
         type: 'VEILEDER_TILORDNET',
@@ -16,7 +16,7 @@ const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [
         begrunnelse: 'Brukeren er tildelt veileder Z0002',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: null,
-        dialogId: null
+        dialogId: null,
     },
     {
         type: 'OPPFOLGINGSENHET_ENDRET',
@@ -42,7 +42,7 @@ const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [
         begrunnelse: 'Oppfølging avsluttet automatisk pga. inaktiv bruker som ikke kan reaktiveres',
         opprettetAv: 'SYSTEM',
         opprettetAvBrukerId: null,
-        dialogId: null
+        dialogId: null,
     },
     {
         type: 'AVSLUTTET_OPPFOLGINGSPERIODE',
@@ -50,7 +50,7 @@ const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [
         begrunnelse: 'Oppfølging avsluttet automatisk pga. inaktiv bruker som ikke kan reaktiveres',
         opprettetAv: 'SYSTEM',
         opprettetAvBrukerId: null,
-        dialogId: null
+        dialogId: null,
     },
     {
         type: 'AVSLUTTET_OPPFOLGINGSPERIODE',
@@ -58,7 +58,7 @@ const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [
         begrunnelse: 'Oppfølging avsluttet automatisk pga. inaktiv bruker som ikke kan reaktiveres',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: null,
-        dialogId: null
+        dialogId: null,
     },
     {
         type: 'ESKALERING_STARTET',
@@ -66,7 +66,7 @@ const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [
         begrunnelse: 'TEST AV OPPGAVE (TONE)',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'Z990279',
-        dialogId: 1412
+        dialogId: 1412,
     },
     {
         type: 'ESKALERING_STOPPET',
@@ -74,7 +74,7 @@ const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [
         begrunnelse: 'Du har gjennomført møtet eller aktiviteten som vi ba deg om å gjøre.',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'Z990279',
-        dialogId: 1412
+        dialogId: 1412,
     },
     {
         type: 'ESKALERING_STARTET',
@@ -82,7 +82,7 @@ const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [
         begrunnelse: 'Test varsel om oppgave i aktivitetsplan 7/3 kl 1804',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'z990279',
-        dialogId: 1415
+        dialogId: 1415,
     },
     {
         type: 'ESKALERING_STOPPET',
@@ -90,7 +90,7 @@ const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [
         begrunnelse: 'Du har gjennomført møtet eller aktiviteten som vi ba deg om å gjøre.\nasdfasdfasdfasdfsadfasdf',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'Z990781',
-        dialogId: 1415
+        dialogId: 1415,
     },
     {
         type: 'ESKALERING_STARTET',
@@ -98,7 +98,7 @@ const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [
         begrunnelse: 'TEst ',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'z990279',
-        dialogId: 1413
+        dialogId: 1413,
     },
     {
         type: 'ESKALERING_STOPPET',
@@ -106,8 +106,8 @@ const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [
         begrunnelse: null,
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'z990279',
-        dialogId: 1413
-    }
+        dialogId: 1413,
+    },
 ];
 
 export default innstillingsHistorikk;

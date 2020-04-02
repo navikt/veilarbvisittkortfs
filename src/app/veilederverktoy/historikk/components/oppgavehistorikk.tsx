@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { OppgaveHistorikk } from '../../../../types/oppgave-historikk';
 import { opprettetAvTekst } from './opprettet-av';
 import moment from 'moment';
+import { FormattedMessage } from 'react-intl';
 
 interface OwnProps {
     oppgaveHistorikk: OppgaveHistorikk;

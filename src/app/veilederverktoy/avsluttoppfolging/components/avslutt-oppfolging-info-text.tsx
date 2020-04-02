@@ -2,7 +2,6 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect, useState } from 'react';
 import { AvslutningStatus } from '../../../../types/oppfolging';
 import { OrNothing } from '../../../../types/utils/ornothing';
-import { FormattedMessage } from 'react-intl';
 import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
 import VedtaksstotteApi from '../../../../api/vedtaksstotte-api';
 import NavFrontendSpinner from 'nav-frontend-spinner';
@@ -18,9 +17,9 @@ export function AvsluttOppfolgingInfoText(props: {
     const [lasterData, setLasterData] = useState(true);
 
     useEffect(() => {
-        FeatureApi.hentFeatures('veilarbvedtaksstottefs.prelansering').then(resp => {
+        FeatureApi.hentFeatures('veilarbvedtaksstottefs.prelansering').then((resp) => {
             if (!resp['veilarbvedtaksstottefs.prelansering']) {
-                VedtaksstotteApi.fetchHarUtkast(props.fnr).then(harUtkastResp => {
+                VedtaksstotteApi.fetchHarUtkast(props.fnr).then((harUtkastResp) => {
                     oppdaterHarUtkast(() => harUtkastResp);
                 });
             }
@@ -41,9 +40,7 @@ export function AvsluttOppfolgingInfoText(props: {
     const { harTiltak, harYtelser } = props.avslutningStatus;
     return (
         <>
-            <Normaltekst>
-                <FormattedMessage id={aktivMindreEnn28Dager} />
-            </Normaltekst>
+            <Normaltekst>{aktivMindreEnn28Dager}</Normaltekst>
             <HiddenIfAlertStripeAdvarselSolid hidden={!props.harUbehandledeDialoger && !harTiltak && !harYtelser}>
                 Du kan avslutte oppfølgingsperioden selv om:
                 <ul className="margin--0">

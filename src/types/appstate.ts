@@ -20,7 +20,7 @@ export interface Appstate {
     dialoger: DialogState;
     tildelVeileder: TildelVeilederState;
     tilgangTilBrukersKontor: TilgangTilBrukersKontorState;
-    instillingshistorikk: InnstillingsHistorikkState;
+    innstillingshistorikk: InnstillingsHistorikkState;
     oppgavehistorikk: OppgaveHistorikkState;
     enhetId: EnhetState;
     avsluttOppfolgingStatus: AvsluttOppfolgingState;
