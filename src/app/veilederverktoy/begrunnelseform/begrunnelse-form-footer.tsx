@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../store/navigation/actions';
@@ -13,6 +12,7 @@ interface OwnProps {
 interface DispatchProps {
     tilbake: () => void;
 }
+
 type BegrunnelseFooterProps = OwnProps & DispatchProps;
 
 function BegrunnelseFooter(props: BegrunnelseFooterProps) {
@@ -25,17 +25,15 @@ function BegrunnelseFooter(props: BegrunnelseFooterProps) {
                 className="btn--mr1"
                 disabled={props.disabled}
             >
-                <FormattedMessage id="innstillinger.modal.start-eskalering.knapp.bekreft" />
+                Bekreft
             </Hovedknapp>
-            <Knapp onClick={props.tilbake}>
-                <FormattedMessage id="innstillinger.modal.start-eskalering.knapp.avbryt" />
-            </Knapp>
+            <Knapp onClick={props.tilbake}>Avbryt</Knapp>
         </div>
     );
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    tilbake: () => dispatch(navigerAction(null))
+    tilbake: () => dispatch(navigerAction(null)),
 });
 
 export default connect<{}, DispatchProps, OwnProps>(null, mapDispatchToProps)(BegrunnelseFooter);

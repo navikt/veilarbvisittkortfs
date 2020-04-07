@@ -2,9 +2,9 @@ import NavFrontendModal from 'nav-frontend-modal';
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import { Formik, FormikProps } from 'formik';
-import ModalHeader from '../modal/modal-header';
 import { useDispatch } from 'react-redux';
 import { navigerAction } from '../../../store/navigation/actions';
+import ModalHeader from '../modal/modal-header';
 
 const cls = (className?: string) => classNames('modal', className);
 
@@ -15,11 +15,11 @@ interface FormikModalProps<Values> {
     className?: string;
     contentLabel: string;
     render: (formikProps: FormikProps<Values>) => React.ReactNode;
-
-    tilbakeTekstId?: string;
+    tilbakeTekst?: string;
     visConfirmDialog?: boolean;
     tilbake?: () => void;
     isOpen?: boolean;
+    tittel?: string;
 }
 
 function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalProps<Values>) {
@@ -48,8 +48,8 @@ function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalP
         <Formik
             initialValues={props.initialValues}
             validationSchema={props.validationSchema}
-            onSubmit={values => props.handleSubmit(values)}
-            render={formikProps => (
+            onSubmit={(values) => props.handleSubmit(values)}
+            render={(formikProps) => (
                 <NavFrontendModal
                     className={cls(props.className)}
                     contentLabel={props.contentLabel}
@@ -58,7 +58,7 @@ function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalP
                     closeButton={true}
                     portalClassName="visittkortfs-modal"
                 >
-                    <ModalHeader />
+                    <ModalHeader tittel={props.tittel} />
                     {props.render(formikProps)}
                 </NavFrontendModal>
             )}

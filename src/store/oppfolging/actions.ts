@@ -4,31 +4,31 @@ import { OppfolgingActionType } from './action-type';
 export const hentOppfolging = (fnr: string): HentOppfolgingAction => {
     return {
         type: OppfolgingActionType.HENT_OPPFOLGING,
-        fnr
+        fnr,
     };
 };
 
 export const hentOppfolgingSuccess = (data: Oppfolging): HentOppfolgingActionSuccess => {
     return {
         type: OppfolgingActionType.HENT_OPPFOLGING_SUCCESS,
-        data
+        data,
     };
 };
 
 export const hentOppfolgingError = (error: Error): HentOppfolgingActionError => {
     return {
         type: OppfolgingActionType.HENT_OPPFOLGING_ERROR,
-        error
+        error,
     };
 };
 
 export const startEskaleringSuccess = (): StartEskaleringActionSuccess => ({
-    type: OppfolgingActionType.START_ESKALERING_SUCCESS
+    type: OppfolgingActionType.START_ESKALERING_SUCCESS,
 });
 
 export const startEskaleringError = (error: Error): StartEskaleringActionError => ({
     type: OppfolgingActionType.START_ESKALERING_ERROR,
-    error
+    error,
 });
 
 export interface HentOppfolgingAction {
@@ -99,36 +99,36 @@ export const settManuell = (begrunnelse: string, fnr: string, veilederId: string
     type: OppfolgingActionType.SETT_MANUELL,
     begrunnelse,
     fnr,
-    veilederId
+    veilederId,
 });
 
 export const settManuellSuccess = (begrunnelse: string, data: Oppfolging): SettManuellActionSuccess => ({
     type: OppfolgingActionType.SETT_MANUELL_SUCCESS,
     begrunnelse,
-    data
+    data,
 });
 
 export const settManuellError = (error: Error): SettManuellActionError => ({
     type: OppfolgingActionType.SETT_MANUELL_ERROR,
-    error
+    error,
 });
 
 export const settDigital = (begrunnelse: string, fnr: string, veilederId: string): SettDigitalAction => ({
     type: OppfolgingActionType.SETT_DIGITAL,
     begrunnelse,
     fnr,
-    veilederId
+    veilederId,
 });
 
 export const settDigitalSuccess = (begrunnelse: string, data: Oppfolging): SettDigitalActionSuccess => ({
     type: OppfolgingActionType.SETT_DIGITAL_SUCCESS,
     data,
-    begrunnelse
+    begrunnelse,
 });
 
 export const setDigitalError = (error: Error): SettDigitalActionError => ({
     type: OppfolgingActionType.SETT_DIGITAL_ERROR,
-    error
+    error,
 });
 
 export interface StartKVPAction {
@@ -161,30 +161,30 @@ export interface StoppKVPActionError {
 
 export const startKVP = (begrunnelse: string): StartKVPAction => ({
     type: OppfolgingActionType.START_KVP,
-    begrunnelse
+    begrunnelse,
 });
 
 export const startKVPSuccess = (): StartKVPActionSuccess => ({
-    type: OppfolgingActionType.START_KVP_SUCCESS
+    type: OppfolgingActionType.START_KVP_SUCCESS,
 });
 
 export const startKVPError = (error: Error): StartKVPActionError => ({
     type: OppfolgingActionType.START_KVP_ERROR,
-    error
+    error,
 });
 
 export const stoppKVP = (begrunnelse: string): StoppKVPAction => ({
     type: OppfolgingActionType.STOPP_KVP,
-    begrunnelse
+    begrunnelse,
 });
 
 export const stoppKVPSuccess = (): StoppKVPActionSuccess => ({
-    type: OppfolgingActionType.STOPP_KVP_SUCCESS
+    type: OppfolgingActionType.STOPP_KVP_SUCCESS,
 });
 
 export const stoppKVPError = (error: Error): StoppKVPActionError => ({
     type: OppfolgingActionType.STOPP_KVP_ERROR,
-    error
+    error,
 });
 
 export interface AvsluttOppfolgingAction {
@@ -202,24 +202,24 @@ export interface AvsluttOppfolgingActionError {
 }
 
 export const avsluttOppfolging = (): AvsluttOppfolgingAction => ({
-    type: OppfolgingActionType.AVSLUTT_OPPFOLGING
+    type: OppfolgingActionType.AVSLUTT_OPPFOLGING,
 });
 
 export const avsluttOppfolgingSuccess = (data: Oppfolging): AvsluttOppfolgingActionSuccess => ({
     type: OppfolgingActionType.AVSLUTT_OPPFOLGING_SUCCESS,
-    data
+    data,
 });
 
 export const avsluttOppfolgingError = (error: Error): AvsluttOppfolgingActionError => ({
     type: OppfolgingActionType.AVSLUTT_OPPFOLGING_ERROR,
-    error
+    error,
 });
 
 export interface StoppEskaleringAction {
     type: OppfolgingActionType.STOPP_ESKALERING;
     dialogId: string;
     begrunnelse?: string;
-    skallSendeHenvdelse: boolean;
+    skalSendeHendelse: boolean;
 }
 
 export interface StoppEskaleringActionSuccess {
@@ -234,23 +234,23 @@ export interface StoppEskaleringActionError {
 
 export const stoppEskalering = (
     dialogId: string,
-    skallSendeHenvdelse: boolean,
+    skalSendeHendelse: boolean,
     begrunnelse?: string
 ): StoppEskaleringAction => ({
     type: OppfolgingActionType.STOPP_ESKALERING,
     dialogId,
     begrunnelse,
-    skallSendeHenvdelse
+    skalSendeHendelse: skalSendeHendelse,
 });
 
 export const stoppEskaleringSuccess = (data: Oppfolging): StoppEskaleringActionSuccess => ({
     type: OppfolgingActionType.STOPP_ESKALERING_SUCCESS,
-    data
+    data,
 });
 
 export const stoppEskaleringError = (error: Error): StoppEskaleringActionError => ({
     type: OppfolgingActionType.STOPP_ESKALERING_ERROR,
-    error
+    error,
 });
 
 export type OppfolgingActions =

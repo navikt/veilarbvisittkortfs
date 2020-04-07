@@ -8,13 +8,13 @@ function OpprettOppgaveVelgDatoer() {
             <FormikDatoVelger
                 name="fraDato"
                 validate={validerOppgaveDatoFeldt}
-                label="Aktiv fra*"
+                label="Aktiv fra *"
                 ariaLabel="Datoen oppgaven er aktiv fra"
             />
             <FormikDatoVelger
                 name="tilDato"
                 validate={validerOppgaveDatoFeldt}
-                label="Frist* "
+                label="Frist *"
                 ariaLabel="Datoen ppgaven er aktiv til"
             />
         </div>
