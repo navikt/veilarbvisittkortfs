@@ -9,15 +9,15 @@ import { Appstate } from '../../../../types/appstate';
 import OppfolgingSelector from '../../../../store/oppfolging/selector';
 import { useSelector } from 'react-redux';
 interface OwnProps {
-    instillingsHistorikk: InnstillingsHistorikk;
+    innstillingsHistorikk: InnstillingsHistorikk;
 }
 
 const ESKALERING_MAX_LENGTH = 120;
 
 type InnstillingHistorikkKomponentProps = OwnProps;
 
-function InnstillingHistorikkKomponent({ instillingsHistorikk }: InnstillingHistorikkKomponentProps) {
-    const { type, begrunnelse, dialogId } = instillingsHistorikk;
+function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHistorikkKomponentProps) {
+    const { type, begrunnelse, dialogId } = innstillingsHistorikk;
 
     const fnr = useSelector((state: Appstate) => {
         OppfolgingSelector.selectFnr(state);
@@ -38,9 +38,9 @@ function InnstillingHistorikkKomponent({ instillingsHistorikk }: InnstillingHist
                 {dialogId && <Lenke href={`/veilarbpersonflatefs/${fnr}/dialog/${dialogId}`}>Les mer i dialog</Lenke>}
             </Normaltekst>
             <Undertekst>
-                {`${moment(instillingsHistorikk.dato).format('DD.MM.YYYY')} ${opprettetAvTekst(
-                    instillingsHistorikk.opprettetAv,
-                    instillingsHistorikk.opprettetAvBrukerId || ''
+                {`${moment(innstillingsHistorikk.dato).format('DD.MM.YYYY')} ${opprettetAvTekst(
+                    innstillingsHistorikk.opprettetAv,
+                    innstillingsHistorikk.opprettetAvBrukerId || ''
                 )}`}
             </Undertekst>
         </div>

@@ -2,7 +2,7 @@ import { InnstillingsHistorikk } from '../../../types/innstillings-historikk';
 import { OppgaveHistorikk } from '../../../types/oppgave-historikk';
 import moment from 'moment';
 import OppgaveHistorikkKomponent from './components/oppgavehistorikk';
-import InnstillingsHistorikkKomponent from './components/instillingshistorikk';
+import InnstillingsHistorikkKomponent from './components/innstillingshistorikk';
 import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { OppfolgingEnhetEndret } from './components/oppfolgingEndret';
@@ -31,7 +31,7 @@ function HistorikkVisning({ historikkInnslag }: OwnProps) {
                     />
                 );
             default:
-                return <InnstillingsHistorikkKomponent instillingsHistorikk={historikkElem} key={idx} />;
+                return <InnstillingsHistorikkKomponent innstillingsHistorikk={historikkElem} key={idx} />;
         }
     };
 
@@ -45,7 +45,7 @@ function HistorikkVisning({ historikkInnslag }: OwnProps) {
     const sortertEtterDatoHistorikkInnslag = historikkInnslag.sort((a, b) => moment(b.dato).diff(a.dato));
 
     const indexForNyesteEnhetEndring = sortertEtterDatoHistorikkInnslag.findIndex(
-        innslag => innslag.type === 'OPPFOLGINGSENHET_ENDRET'
+        (innslag) => innslag.type === 'OPPFOLGINGSENHET_ENDRET'
     );
 
     const historikkKomponenter = sortertEtterDatoHistorikkInnslag.map((elem: HistorikkInnslagType, idx) =>

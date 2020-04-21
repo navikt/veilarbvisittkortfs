@@ -4,12 +4,7 @@ import React from 'react';
 
 function OpprettOppgaveBeskrivelseTekstArea() {
     return (
-        <FormikTekstArea
-            name="beskrivelse"
-            labelId="innstillinger.modal.oppgave-beskrivelse"
-            validate={validerBeskrivelse(250)}
-            maxLength={250}
-        />
+        <FormikTekstArea name="beskrivelse" label="Beskrivelse *" validate={validerBeskrivelse(250)} maxLength={250} />
     );
 }
 

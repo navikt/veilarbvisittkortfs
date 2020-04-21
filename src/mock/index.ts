@@ -4,15 +4,14 @@ import FetchMock, { HandlerArgument, MiddlewareUtils, ResponseUtils } from 'yet-
 import Personalia from './personalia';
 import Arbeidsliste from './arbeidsliste';
 import Veilederliste from './veiledereliste';
-import VeilederData from './veiledere';
-import InnstillingsHistorikk from './instillingshistorikk';
+import VeilederData, { enhetData } from './veiledere';
+import InnstillingsHistorikk from './innstillingshistorikk';
 import Oppgavehistorikk from './oppgave-historikk';
 import Henvendelse from './henvedelse';
-import { enhetData } from './veiledere';
 
 const mock = FetchMock.configure({
     enableFallback: true,
-    middleware: MiddlewareUtils.combine(MiddlewareUtils.delayMiddleware(500), MiddlewareUtils.loggingMiddleware())
+    middleware: MiddlewareUtils.combine(MiddlewareUtils.delayMiddleware(500), MiddlewareUtils.loggingMiddleware()),
 });
 
 mock.get('/veilarboppfolging/api/person/:fnr/oppfolgingsstatus', Oppfolgingsstatus);
@@ -46,7 +45,7 @@ mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
         harYtelser: false,
         underOppfolging: true,
         inaktiveringsDato: null,
-        underKvp: false
+        underKvp: false,
     },
     erIkkeArbeidssokerUtenOppfolging: false,
     erSykmeldtMedArbeidsgiver: false,
@@ -64,7 +63,7 @@ mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
     underKvp: false,
     underOppfolging: true,
     veilederId: null,
-    vilkarMaBesvarel: false
+    vilkarMaBesvarel: false,
 });
 mock.post('/veilarboppfolging/api/oppfolging/startKvp', {});
 
@@ -73,7 +72,7 @@ mock.get('/veilarboppgave/api/enheter', [
     { enhetId: '0000', navn: 'NAV Ost' },
     { enhetId: '0001', navn: 'NAV Kjeks' },
     { enhetId: '0002', navn: 'NAV Med jætte lang navn' },
-    { enhetId: '1234', navn: 'NAV jepps' }
+    { enhetId: '1234', navn: 'NAV jepps' },
 ]);
 
 mock.get('/veilarboppgave/api/enhet/:enhetsId/veiledere', Veilederliste);
@@ -84,7 +83,7 @@ mock.post('/veilarboppgave/api/oppgave', (args: HandlerArgument) => {
         gsakID: '1234',
         opprettetAv: 'Z007',
         tema: args.body.tema,
-        type: args.body.type
+        type: args.body.type,
     });
 });
 
@@ -96,19 +95,22 @@ mock.get('/veilarboppgave/api/oppgavehistorikk', Oppgavehistorikk);
 
 /*--ARBEIDSLISTE--*/
 mock.get('/veilarbportefolje/api/arbeidsliste/:fnr', Arbeidsliste);
-mock.post(`/veilarbportefolje/api/arbeidsliste/:fnr?`, (args: HandlerArgument) => {
-    return ResponseUtils.jsonPromise({
-        arbeidslisteAktiv: null,
-        endringstidspunkt: new Date().toISOString(),
-        frist: args.body.frist,
-        harVeilederTilgang: true,
-        isOppfolgendeVeileder: true,
-        kommentar: args.body.kommentar,
-        overskrift: args.body.overskrift,
-        sistEndretAv: 'Z007',
-        kategori: args.body.kategori
-    });
-});
+mock.post(
+    `/veilarbportefolje/api/arbeidsliste/:fnr?`,
+    ResponseUtils.delayed(450, (args: HandlerArgument) =>
+        ResponseUtils.jsonPromise({
+            arbeidslisteAktiv: null,
+            endringstidspunkt: new Date().toISOString(),
+            frist: args.body.frist,
+            harVeilederTilgang: true,
+            isOppfolgendeVeileder: true,
+            kommentar: args.body.kommentar,
+            overskrift: args.body.overskrift,
+            sistEndretAv: 'Z007',
+            kategori: args.body.kategori,
+        })
+    )
+);
 
 mock.put(`/veilarbportefolje/api/arbeidsliste/:fnr?`, (args: HandlerArgument) => {
     return ResponseUtils.jsonPromise({
@@ -120,7 +122,7 @@ mock.put(`/veilarbportefolje/api/arbeidsliste/:fnr?`, (args: HandlerArgument) =>
         kommentar: args.body.kommentar,
         overskrift: args.body.overskrift,
         sistEndretAv: 'Z007',
-        kategori: args.body.kategori
+        kategori: args.body.kategori,
     });
 });
 

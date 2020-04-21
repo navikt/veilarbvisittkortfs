@@ -1,7 +1,6 @@
 import React from 'react';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element, Innholdstittel } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
 import { VarselModal } from '../components/varselmodal/varsel-modal';
 import hiddenIf from '../components/hidden-if/hidden-if';
 import { logEvent } from '../utils/frontend-logger';
@@ -23,15 +22,8 @@ function FjernArbeidslisteModal(props: FjernArbeidslisteModal) {
             type="ADVARSEL"
         >
             <div className="modal-info-tekst blokk-s">
-                <Innholdstittel className="modal-info-tekst__overskrift blokk-s">
-                    <FormattedMessage id="arbeidsliste.modal.fjern.overskrift" />
-                </Innholdstittel>
-                <Element className="blokk-m">
-                    <FormattedMessage
-                        id="arbeidsliste.modal.personalia"
-                        values={{ navn: props.navn, fnr: props.fnr }}
-                    />
-                </Element>
+                <Innholdstittel className="modal-info-tekst__overskrift blokk-s">Fjern fra arbeidsliste</Innholdstittel>
+                <Element className="blokk-m">{`${props.navn}, ${props.fnr}`}</Element>
             </div>
             <div className="knapper">
                 <Hovedknapp
@@ -43,10 +35,10 @@ function FjernArbeidslisteModal(props: FjernArbeidslisteModal) {
                         props.onRequestClose();
                     }}
                 >
-                    <FormattedMessage id="modal.knapp.fjern" />
+                    Bekreft
                 </Hovedknapp>
                 <Knapp htmlType="button" onClick={props.onRequestClose}>
-                    <FormattedMessage id="modal.knapp.avbryt" />
+                    Avbryt
                 </Knapp>
             </div>
         </VarselModal>

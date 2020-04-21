@@ -11,9 +11,8 @@ import OppfolgingSelector from '../../../store/oppfolging/selector';
 import VeilederSelector from '../../../store/tildel-veileder/selector';
 
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import VeilederVerktoyModal from '../veilederverktoy-components/veilederverktoy-modal';
+import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { navigerAction } from '../../../store/navigation/actions';
-import BergrunnelseOverskrift from '../begrunnelseform/begrunnelse-overskrift';
 
 function settSammenNavn(veileder: VeilederData) {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
@@ -42,26 +41,28 @@ function TildelVeileder() {
 
         document
             .querySelectorAll('input[type=radio]:checked')
-            .forEach(elem => ((elem as HTMLInputElement).checked = false));
+            .forEach((elem) => ((elem as HTMLInputElement).checked = false));
 
         dispatch(
             tildelTilVeileder([
                 {
                     fraVeilederId: fraVeileder,
                     tilVeilederId: selected,
-                    brukerFnr: fnr
-                }
+                    brukerFnr: fnr,
+                },
             ])
         );
         dispatch(navigerAction(null));
     };
 
     return (
-        <VeilederVerktoyModal>
-            <BergrunnelseOverskrift overskriftTekstId="innstillinger.modal.tildel-veileder.overskrift" />
-            <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => setValgtVeileder(event)}>
+        <VeilederVerktoyModal tittel="Tildel veileder">
+            <form
+                onSubmit={(event: React.FormEvent<HTMLFormElement>) => setValgtVeileder(event)}
+                className="tildel-veileder__form"
+            >
                 <SokFilter data={sorterVeiledere} label="" placeholder="Søk navn eller NAV-ident">
-                    {data => (
+                    {(data) => (
                         <RadioFilterForm
                             data={data}
                             createLabel={settSammenNavn}

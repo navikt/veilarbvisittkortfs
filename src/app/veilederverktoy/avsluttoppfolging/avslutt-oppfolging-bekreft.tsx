@@ -7,7 +7,7 @@ import OppfolgingSelector from '../../../store/oppfolging/selector';
 import { Dispatch } from 'redux';
 import { avsluttOppfolging } from '../../../store/oppfolging/actions';
 import { connect } from 'react-redux';
-import VeilederVerktoyModal from '../veilederverktoy-components/veilederverktoy-modal';
+import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { navigerAction } from '../../../store/navigation/actions';
 
 interface StateProps {
@@ -17,21 +17,14 @@ interface StateProps {
 
 interface DispatchProps {
     handleSubmit: () => void;
-    tilbake: () => void;
     avbryt: () => void;
 }
 
 type AvsluttOppfolgingBekreftelseModalProps = StateProps & DispatchProps;
 
-function AvsluttOppfolgingBekreft({
-    navn,
-    handleSubmit,
-    isLoading,
-    tilbake,
-    avbryt
-}: AvsluttOppfolgingBekreftelseModalProps) {
+function AvsluttOppfolgingBekreft({ navn, handleSubmit, isLoading, avbryt }: AvsluttOppfolgingBekreftelseModalProps) {
     return (
-        <VeilederVerktoyModal tilbakeFunksjon={tilbake}>
+        <VeilederVerktoyModal>
             <div className="prosess">
                 <AlertStripeAdvarsel className="blokk-s">
                     Er du sikker på at du vil avslutte oppfølgingsperioden til {navn}?
@@ -49,13 +42,12 @@ function AvsluttOppfolgingBekreft({
 
 const mapStateToProps = (state: Appstate): StateProps => ({
     navn: PersonaliaSelector.selectSammensattNavn(state),
-    isLoading: OppfolgingSelector.selectOppfolgingStatus(state)
+    isLoading: OppfolgingSelector.selectOppfolgingStatus(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     handleSubmit: () => dispatch(avsluttOppfolging()),
-    tilbake: () => dispatch(navigerAction('avslutt_oppfolging')),
-    avbryt: () => dispatch(navigerAction(null))
+    avbryt: () => dispatch(navigerAction(null)),
 });
 
 export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(AvsluttOppfolgingBekreft);

@@ -8,7 +8,7 @@ import { Partial } from '../../../types/partial-type';
 interface FormikInputProps {
     name: string;
     validate?: (value: string) => string | undefined;
-    labelId: string;
+    label: string;
     options: { value: string; label: string }[];
 }
 
@@ -16,7 +16,7 @@ function FormikSelect({
     name,
     validate,
     intl,
-    labelId,
+    label,
     options,
     ...selectProps
 }: FormikInputProps & InjectedIntlProps & Partial<SelectProps>) {
@@ -24,14 +24,14 @@ function FormikSelect({
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
                 const feil = getErrors(form.errors, form.touched, name);
-                const label = intl.formatMessage({ id: labelId });
+                const labelText = intl.formatMessage({ id: label });
                 return (
                     <Select
                         id={name}
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
                         name={name}
-                        label={label}
+                        label={labelText}
                         feil={feil}
                         {...selectProps}
                         value={field.value}

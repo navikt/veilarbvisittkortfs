@@ -15,9 +15,8 @@ type StartOppfolgingKvittering = StateProps;
 function OpprettOppgaveKvittering({ tema, type }: StartOppfolgingKvittering) {
     return (
         <Kvittering
-            tittelId="innstillinger.modal.oppgave-overskrift"
-            alertStripeTekstId="innstillinger.modal.oppgave-kvittering"
-            alertStripeTekstValues={{ tema, type }}
+            tittel="Opprett en Gosys-oppgave"
+            alertStripeTekst={`Oppgave med tema ${tema} av type ${type} er opprettet.`}
         />
     );
 }

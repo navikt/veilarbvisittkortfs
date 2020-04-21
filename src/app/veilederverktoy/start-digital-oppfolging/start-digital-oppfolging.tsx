@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Appstate } from '../../../types/appstate';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { FormattedMessage } from 'react-intl';
 import PersonaliaSelectors from '../../../store/personalia/selectors';
 import { settDigital } from '../../../store/oppfolging/actions';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
@@ -36,7 +35,8 @@ function StartDigitalOppfolging(props: StartEskaleringProps) {
                 onRequestClose={props.lukkModal}
             >
                 <Normaltekst>
-                    <FormattedMessage id="instillinger.proses.manuell.reservasjon-krr" />
+                    Brukeren er reservert i Kontakt- og reservasjonsregisteret og må selv fjerne reservasjonen for å få
+                    digital oppfølging.
                 </Normaltekst>
             </VarselModal>
         );
@@ -44,7 +44,7 @@ function StartDigitalOppfolging(props: StartEskaleringProps) {
 
     const infoTekst = (
         <AlertStripeAdvarsel className="blokk-xxs">
-            <FormattedMessage id="innstillinger.modal.digital.infotekst" />
+            Når du endrer til digital oppfølging, kan du ha dialog med brukeren i aktivitetsplanen.
         </AlertStripeAdvarsel>
     );
 
@@ -53,7 +53,7 @@ function StartDigitalOppfolging(props: StartEskaleringProps) {
             initialValues={{ begrunnelse: '' }}
             handleSubmit={props.handleSubmit(props.fnr, props.veilederId)}
             tekstariaLabel="Skriv en begrunnelse for hvorfor brukeren nå kan få digital oppfølging"
-            overskriftTekstId="innstillinger.modal.digital.overskrift"
+            tittel="Endre til digital oppfølging"
             infoTekst={infoTekst}
             isLoading={props.isLoading}
         />
@@ -64,7 +64,7 @@ const mapStateToProps = (state: Appstate) => ({
     isLoading: OppfolgingSelector.selectOppfolgingStatus(state),
     fnr: PersonaliaSelectors.selectFodselsnummer(state),
     veilederId: state.tildelVeileder.paloggetVeileder.data.ident,
-    reservasjonKRR: state.oppfolging.data.reservasjonKRR
+    reservasjonKRR: state.oppfolging.data.reservasjonKRR,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
@@ -72,7 +72,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         handleSubmit(fnr: string, veilederId: string) {
             return (values: BegrunnelseValues) => dispatch(settDigital(values.begrunnelse, fnr, veilederId));
         },
-        lukkModal: () => dispatch(navigerAction(null))
+        lukkModal: () => dispatch(navigerAction(null)),
     };
 };
 

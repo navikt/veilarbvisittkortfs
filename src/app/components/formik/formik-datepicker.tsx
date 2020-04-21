@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, FieldProps, getIn } from 'formik';
-import Datovelger from 'nav-datovelger/dist/datovelger/Datovelger';
+import { Datovelger } from 'nav-datovelger';
 import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 import './datovelger.less';
 import classNames from 'classnames';
@@ -20,7 +20,7 @@ function FormikDatoVelger({ name, validate, label, ariaLabel, className }: Formi
             {({ field, form: { errors, setFieldValue } }: FieldProps) => {
                 const error = getIn(errors, name);
                 const datePickerClassName = classNames('skjemaelement datovelger', className, {
-                    'datovelger--harFeil': error
+                    'datovelger--harFeil': error,
                 });
                 return (
                     <div className={datePickerClassName}>
@@ -33,7 +33,7 @@ function FormikDatoVelger({ name, validate, label, ariaLabel, className }: Formi
                                 ariaLabel,
                                 onChange: (value: string) => {
                                     setFieldValue(field.name, value);
-                                }
+                                },
                             }}
                             id="fristDatovelger"
                             onChange={(date: string) => {
@@ -44,7 +44,7 @@ function FormikDatoVelger({ name, validate, label, ariaLabel, className }: Formi
                             }}
                             valgtDato={field.value}
                         />
-                        <SkjemaelementFeilmelding feil={error ? { feilmelding: error } : undefined} />
+                        {error && <SkjemaelementFeilmelding>{error}</SkjemaelementFeilmelding>}
                     </div>
                 );
             }}

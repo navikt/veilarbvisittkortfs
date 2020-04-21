@@ -5,12 +5,6 @@
     .blokk-xs {
         margin-bottom: 1rem;
     }
-    .modal-innhold {
-        .alertstripe--advarsel {
-            background-color: #ffe9cc;
-            color: @navMorkGra;
-        }
-    }
 
     .ReactModal__Overlay {
         overflow-y: auto;
@@ -22,15 +16,24 @@
     }
 
     .modal__overlay {
-        display: block;
-        padding: 0;
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(61, 56, 49, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
 
         .modal {
             position: relative;
             border: 1px solid @navGra40;
-            background-color: #efefef;
+            background-color: #f4f4f4;
             outline: none;
-            max-width: 45rem;
+            max-width: 50rem;
             max-height: none;
             padding: 0;
             width: 100%;
@@ -38,11 +41,21 @@
             .modal-header {
                 height: 4rem;
                 border-bottom: 1px solid @navGra40;
-                padding: 1.13rem 1rem;
+                padding: 1.13rem 0;
+                margin: 0 2rem 1rem;
             }
 
             .modal-innhold {
-                padding: 1rem 2rem;
+                padding: 0 2rem;
+
+                .alertstripe--advarsel {
+                    background-color: #ffe9cc;
+                    color: @navMorkGra;
+                }
+
+                .arbeidsliste--modal-redigering {
+                    margin-bottom: 0.625rem;
+                }
             }
 
             .modal-info-tekst {
@@ -52,13 +65,8 @@
                 }
             }
 
-            .modal__overlay {
-                display: block;
-            }
-
             .modal-footer {
                 display: flex;
-                border-top: 1px solid @navGra40;
                 padding: 1.5rem 0;
             }
 
@@ -86,10 +94,6 @@
 
     .btn--ml10 {
         margin-left: 10rem;
-    }
-
-    .margin--0 {
-        margin: 0;
     }
 
     .gra-border {

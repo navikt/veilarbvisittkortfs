@@ -60,6 +60,7 @@ function ArbeidslisteController(props: ArbeidslisteStateProps) {
                 onSubmit={props.arbeidsliste.endringstidspunkt ? props.redigerArbeidsliste : props.lagreArbeidsliste}
                 onDelete={deleteArbeidsliste}
                 kanFjerneArbeidsliste={props.kanFjerneArbeidsliste}
+                tittel={props.arbeidsliste.endringstidspunkt ? 'Rediger arbeidsliste' : 'Legg i arbeidsliste'}
             />
             <FjernArbeidslisteModal
                 isOpen={slettArbeidslisteModal}
@@ -77,7 +78,7 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     fnr: PersonaliaSelectors.selectFodselsnummer(state),
     navn: PersonaliaSelectors.selectSammensattNavn(state),
     arbeidslisteStatus: ArbeidslisteSelector.selectArbeidslisteStatus(state),
-    kanFjerneArbeidsliste: ArbeidslisteSelector.selectKanFjerneArbeidsliste(state)
+    kanFjerneArbeidsliste: ArbeidslisteSelector.selectKanFjerneArbeidsliste(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -88,7 +89,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
                 kommentar: values.kommentar,
                 overskrift: values.overskrift,
                 frist: values.frist ? dateToISODate(values.frist) : null,
-                kategori: values.kategori
+                kategori: values.kategori,
             })
         ),
     redigerArbeidsliste: (values: ArbeidslisteformValues) =>
@@ -97,9 +98,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
                 kommentar: values.kommentar,
                 overskrift: values.overskrift,
                 frist: values.frist ? dateToISODate(values.frist) : null,
-                kategori: values.kategori
+                kategori: values.kategori,
             })
-        )
+        ),
 });
 
 export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(ArbeidslisteController);

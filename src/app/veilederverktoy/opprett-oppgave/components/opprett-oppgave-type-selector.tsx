@@ -19,7 +19,7 @@ function OpprettOppgaveTypeSelector({ oppgaveTema }: OpprettOppgaveTypeSelectorP
         typeOptions.push({ value: 'VURDER_KONSEKVENS_FOR_YTELSE', label: 'Vurder konsekvens for ytelse' });
     }
 
-    return <FormikSelect labelId="innstillinger.modal.oppgave-type-label" name="type" options={typeOptions} />;
+    return <FormikSelect label="Oppgavetype *" name="type" options={typeOptions} />;
 }
 
 export default OpprettOppgaveTypeSelector;

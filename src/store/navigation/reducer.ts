@@ -10,6 +10,9 @@ const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = { lo
     switch (action.type) {
         case 'OPPRETTET_HENVENDELSE_START_ESKALERING':
         case 'LAGRE_OPPGAVE':
+        case 'LAGRE_ARBEIDSLISTE':
+        case 'REDIGER_ARBEIDSLISTE':
+        case 'SLETT_ARBEIDSLISTE':
             return {
                 location: 'pending'
             };

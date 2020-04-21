@@ -1,7 +1,6 @@
 import React from 'react';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { opprettetAvTekst } from './opprettet-av';
 import { InnstillingsHistorikk } from '../../../../types/innstillings-historikk';
@@ -23,9 +22,9 @@ export function OppfolgingEnhetEndret(props: { historikkElement: InnstillingsHis
         return null;
     }
 
-    const tittelTekst = props.erGjeldendeEnhet
-        ? 'innstillinger.modal.historikk-gjeldende_oppfolgingsenhet'
-        : 'innstillinger.modal.historikk-oppfolgingsenhet_endret';
+    if (!enhetNavn || !enhetNavn.data || !enhetNavn.data.navn) {
+        return null;
+    }
 
     const begrunnelseTekst = props.erGjeldendeEnhet
         ? `Oppfølgingsenhet ${enhet} ${enhetNavn.data.navn}`
@@ -33,9 +32,7 @@ export function OppfolgingEnhetEndret(props: { historikkElement: InnstillingsHis
 
     return (
         <div className="historikk__elem blokk-xs" key={dato}>
-            <Element>
-                <FormattedMessage id={`${tittelTekst}`} />
-            </Element>
+            <Element>{props.erGjeldendeEnhet ? 'Gjeldende oppfølgingsenhet' : 'Oppfølgingsenhet endret'}</Element>
             <Normaltekst>{begrunnelseTekst}</Normaltekst>
             <Undertekst>
                 {`${moment(dato).format('DD.MM.YYYY')} ${opprettetAvTekst(opprettetAv, opprettetAvBrukerId || '')}`}

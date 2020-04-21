@@ -14,9 +14,7 @@ function OpprettOppgavePrioritetSelector() {
         { value: 'HOY', label: 'Høy' }
     ];
 
-    return (
-        <FormikSelect labelId="innstillinger.modal.oppgave-prioritet-label" name="prioritet" options={typeOptions} />
-    );
+    return <FormikSelect label="Prioritet *" name="prioritet" options={typeOptions} />;
 }
 
 export default OpprettOppgavePrioritetSelector;

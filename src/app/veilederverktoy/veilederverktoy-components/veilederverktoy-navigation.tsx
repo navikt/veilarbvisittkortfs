@@ -14,7 +14,7 @@ import StartDigitalOppfolging from '../start-digital-oppfolging/start-digital-op
 import hiddenIf from '../../components/hidden-if/hidden-if';
 import { StringOrNothing } from '../../../types/utils/stringornothings';
 import OpprettOppgave from '../opprett-oppgave/opprett-oppgave';
-import OpprettOppgaveKvittering from '../opprett-oppgave/oprett-oppgave-kvittering';
+import OpprettOppgaveKvittering from '../opprett-oppgave/opprett-oppgave-kvittering';
 import AvsluttOppfolging from '../avsluttoppfolging/avslutt-oppfolging';
 import AvsluttOppfolgingKvittering from '../avsluttoppfolging/avslutt-oppfolging-kvittering';
 import StoppEskalering from '../stopp-eskalering/stopp-eskalering';

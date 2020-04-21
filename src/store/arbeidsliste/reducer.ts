@@ -12,6 +12,7 @@ import {
     oppdaterArbeidslisteError,
     oppdaterArbeidslisteSuccess,
     RedigerArbeidslisteAction,
+    redigerArbeidslisteSuccess,
     slettArbeidslisteActionError,
     slettArbeidslisteActionSuccess
 } from './actions';
@@ -19,6 +20,7 @@ import ArbeidslisteApi from '../../api/arbeidsliste-api';
 import { FETCH_STATUS } from '../../types/fetch-status';
 import { TildelVeilederActionType } from '../tildel-veileder/actions';
 import OppfolgingSelector from '../oppfolging/selector';
+import { navigerAction } from '../navigation/actions';
 
 export type ArbeidslisteState = { data: Arbeidsliste } & { status: FETCH_STATUS; error: OrNothing<Error> };
 
@@ -107,8 +109,10 @@ function* lagreArbeidsliste(action: OppdaterArbeidslisteAction) {
         const arbeidslisteForm = Object.assign({ fnr }, action.arbeidsliste);
         const response = yield call(() => ArbeidslisteApi.lagreArbeidsliste(fnr, arbeidslisteForm));
         yield put(oppdaterArbeidslisteSuccess(response));
+        yield put(navigerAction(null));
     } catch (e) {
         yield put(oppdaterArbeidslisteError(e));
+        yield put(navigerAction(null));
     }
 }
 
@@ -116,9 +120,11 @@ function* redigerArbeidsliste(action: RedigerArbeidslisteAction) {
     try {
         const fnr = yield select(OppfolgingSelector.selectFnr);
         const response = yield call(() => ArbeidslisteApi.redigerArbeidsliste(fnr, action.arbeidsliste));
-        yield put(oppdaterArbeidslisteSuccess(response));
+        yield put(redigerArbeidslisteSuccess(response));
+        yield put(navigerAction(null));
     } catch (e) {
         yield put(oppdaterArbeidslisteError(e));
+        yield put(navigerAction(null));
     }
 }
 
@@ -127,8 +133,10 @@ function* slettArbeidsliste() {
         const fnr = yield select(OppfolgingSelector.selectFnr);
         const response = yield call(() => ArbeidslisteApi.slettArbeidsliste(fnr));
         yield put(slettArbeidslisteActionSuccess(response));
+        yield put(navigerAction(null));
     } catch (e) {
         yield put(slettArbeidslisteActionError(e));
+        yield put(navigerAction(null));
     }
 }
 

@@ -8,7 +8,7 @@ import { injectIntl, InjectedIntlProps } from 'react-intl';
 interface TekstAreaProps {
     name: string;
     validate?: (value: string) => string | undefined;
-    labelId: string;
+    label: string;
 }
 
 type OmitProps = 'onChange' | 'value' | 'feil' | 'onBlur' | 'label';
@@ -16,7 +16,7 @@ type OmitProps = 'onChange' | 'value' | 'feil' | 'onBlur' | 'label';
 function FormikTekstArea({
     name,
     validate,
-    labelId,
+    label,
     intl,
     ...textAreaProps
 }: TekstAreaProps & InjectedIntlProps & Omit<TextareaProps, OmitProps>) {
@@ -24,7 +24,6 @@ function FormikTekstArea({
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
                 const feil = getErrors(form.errors, form.touched, name);
-                const labelTekstArea = intl.formatMessage({ id: labelId });
                 return (
                     <Textarea
                         id={name}
@@ -32,7 +31,8 @@ function FormikTekstArea({
                         onBlur={form.handleBlur}
                         value={field.value}
                         feil={feil}
-                        label={labelTekstArea}
+                        label={label}
+
                         {...textAreaProps}
                     />
                 );
