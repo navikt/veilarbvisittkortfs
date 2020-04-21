@@ -28,7 +28,7 @@ interface StartEskaleringValues extends BegrunnelseValues {
 type StartEskaleringProps = StateProps & DispatchProps & InjectedIntlProps;
 
 function StartEskalering(props: StartEskaleringProps) {
-    if (props.kanIkkeVarsles && false) {
+    if (props.kanIkkeVarsles) {
         return (
             <VarselModal
                 className=""
