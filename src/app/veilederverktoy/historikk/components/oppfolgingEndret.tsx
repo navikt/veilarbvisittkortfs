@@ -22,6 +22,10 @@ export function OppfolgingEnhetEndret(props: { historikkElement: InnstillingsHis
         return null;
     }
 
+    if (!enhetNavn || !enhetNavn.data || !enhetNavn.data.navn) {
+        return null;
+    }
+
     const begrunnelseTekst = props.erGjeldendeEnhet
         ? `Oppfølgingsenhet ${enhet} ${enhetNavn.data.navn}`
         : `Ny oppfølgingsenhet ${enhet} ${enhetNavn.data.navn}`;
