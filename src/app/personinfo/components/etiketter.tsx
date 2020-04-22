@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import hiddenIf from '../../components/hidden-if/hidden-if';
 import EtikettBase, { EtikettInfo, EtikettAdvarsel, EtikettFokus } from 'nav-frontend-etiketter';
 import { OppfolgingStatus } from '../../../types/oppfolging-status';
@@ -44,16 +44,12 @@ function Etiketter() {
         gjeldendeEskaleringsvarsel,
         kanVarsles,
         oppfolgingsPerioder,
-        fnr
+        fnr,
     } = useSelector(OppfolgingSelector.selectOppfolgingData);
 
-    const gjeldeneOppfolgingsPeriode = useMemo(
-        () =>
-            oppfolgingsPerioder.find(
-                (oppfolgingsPeriode: OppfolgingsPerioder) => oppfolgingsPeriode.sluttDato === null
-            ),
-        [oppfolgingsPerioder]
-    );
+    const gjeldeneOppfolgingsPeriode = oppfolgingsPerioder
+        ? oppfolgingsPerioder.find((oppfolgingsPeriode: OppfolgingsPerioder) => oppfolgingsPeriode.sluttDato === null)
+        : false;
 
     // '2020-03-09' is day D
     const harStartetOppfolgingEtter9mars2020 = gjeldeneOppfolgingsPeriode
@@ -62,7 +58,7 @@ function Etiketter() {
     // TODO SLETT ASP!!!!
 
     useEffect(() => {
-        FeatureApi.hentFeatures('veilarbvisittkort.permittering.etikett').then(features => {
+        FeatureApi.hentFeatures('veilarbvisittkort.permittering.etikett').then((features) => {
             if (features['veilarbvisittkort.permittering.etikett'] && harStartetOppfolgingEtter9mars2020) {
                 fetchToJson('/veilarbregistrering/api/registrering?fnr=' + fnr).then((resp: any) => {
                     if (resp.type === 'ORDINAER') {
