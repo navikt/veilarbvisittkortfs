@@ -1,6 +1,6 @@
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { HiddenIfFlatKnapp } from '../components/hidden-if/hidden-if-knapp';
-import { ReactComponent as SlettIcon } from './slett.svg';
+import { ReactComponent as SlettIcon } from '../components/ikoner/slett.svg';
 import React from 'react';
 
 interface ArbeidslisteFooterProps {

@@ -48,7 +48,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
 
     const arbeidslisteKlikk = (lukkDropdown: any) => {
         logEvent('veilarbvisittkortfs.metrikker.veilederverktoy.arbeidsliste', {
-            leggtil: !kanEndreArbeidsliste && kanLagreArbeidsliste
+            leggtil: !kanEndreArbeidsliste && kanLagreArbeidsliste,
         });
         naviger('vis_arbeidsliste')(lukkDropdown);
     };
@@ -65,7 +65,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                 }
                 name="tildel veileder"
                 btnClassnames="knapp knapp--standard knapp-fss"
-                render={lukkDropdown => (
+                render={(lukkDropdown) => (
                     <>
                         {kanEndreArbeidsliste && (
                             <li>
@@ -78,7 +78,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
                         {kanLagreArbeidsliste && (
                             <li>
                                 <StartProsess
-                                    knappeTekst="Legg til arbeidsliste"
+                                    knappeTekst="Legg i arbeidsliste"
                                     onClick={() => arbeidslisteKlikk(lukkDropdown)}
                                 />
                             </li>

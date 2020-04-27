@@ -1,14 +1,14 @@
 import queryString from 'query-string';
 
 export function storeForbokstaver(tekster: string[]): string {
-    const tekst = tekster.filter(s => s).join(' ');
+    const tekst = tekster.filter((s) => s).join(' ');
 
     return tekst
         .split(' ')
-        .map(ord =>
+        .map((ord) =>
             ord
                 .split('-')
-                .map(navn => navn.charAt(0).toUpperCase() + navn.slice(1).toLowerCase())
+                .map((navn) => navn.charAt(0).toUpperCase() + navn.slice(1).toLowerCase())
                 .join('-')
         )
         .join(' ');
@@ -50,8 +50,8 @@ export function erITestMiljo() {
     return window.location.hostname.indexOf('-q') >= 0;
 }
 
-export function triggerReRenderingAvAktivitesplan() {
-    window.dispatchEvent(new Event('rerenderAktivitetsplan'));
+export function eskaleringVarselSendtEvent() {
+    window.dispatchEvent(new Event('eskaleringsVarselSendt'));
 }
 
 export function triggerReRenderingAvMao() {

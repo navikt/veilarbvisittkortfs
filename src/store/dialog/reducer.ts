@@ -14,14 +14,14 @@ import {
     opprettHenvendelseError,
     opprettHenvendelseStoppEskaleringSuccess,
     opprettHenvendelseStoppEskaleringError,
-    opprettHenvendelseSuccess
+    opprettHenvendelseSuccess,
 } from './actions';
 import DialogApi from '../../api/dialog-api';
 import OppfolgingApi from '../../api/oppfolging-api';
 import { hentOppfolgingSuccess, startEskaleringError, startEskaleringSuccess } from '../oppfolging/actions';
 import { FETCH_STATUS } from '../../types/fetch-status';
 import OppfolgingSelector from '../oppfolging/selector';
-import { replaceAt, triggerReRenderingAvAktivitesplan } from '../../app/utils/utils';
+import { replaceAt, eskaleringVarselSendtEvent } from '../../app/utils/utils';
 import { navigerAction } from '../navigation/actions';
 
 export type DialogState = { data: Dialog[] } & { status: FETCH_STATUS; error: OrNothing<Error> };
@@ -29,7 +29,7 @@ export type DialogState = { data: Dialog[] } & { status: FETCH_STATUS; error: Or
 const initialState: DialogState = {
     status: 'NOT_STARTED',
     error: null,
-    data: []
+    data: [],
 };
 
 const dialogReducer: Reducer<DialogState, DialogActions> = (state = initialState, action) => {
@@ -39,19 +39,19 @@ const dialogReducer: Reducer<DialogState, DialogActions> = (state = initialState
         case HenvendelseActionType.HENT_DIALOGER: {
             return {
                 ...state,
-                status: 'LOADING'
+                status: 'LOADING',
             };
         }
         case HenvendelseActionType.OPPRETTET_HENVENDELSE_START_ESKALERING_SUCCESS:
         case HenvendelseActionType.OPPRETTET_HENVENDELSE_STOPP_ESKALERING_SUCCESS:
         case DialogActionType.OPPDATER_DIALOG_SUCCESS: {
-            const dialogIndex = state.data.findIndex(dialog => dialog.id === action.data.id);
+            const dialogIndex = state.data.findIndex((dialog) => dialog.id === action.data.id);
             const dialogData =
                 dialogIndex === -1 ? [...state.data, action.data] : replaceAt(state.data, dialogIndex, action.data);
             return {
                 ...state,
                 status: 'DONE',
-                data: dialogData
+                data: dialogData,
             };
         }
         case HenvendelseActionType.OPPRETTET_HENVENDELSE_START_ESKALERING_ERROR:
@@ -60,14 +60,14 @@ const dialogReducer: Reducer<DialogState, DialogActions> = (state = initialState
             return {
                 ...state,
                 status: 'ERROR',
-                error: action.error
+                error: action.error,
             };
         }
         case HenvendelseActionType.HENT_DIALOGER_SUCCESS: {
             return {
                 ...state,
                 data: action.data,
-                status: 'DONE'
+                status: 'DONE',
             };
         }
         default:
@@ -101,7 +101,7 @@ function* startEskaleringMedDialog(action: OpprettHenvendelseActionSuccess) {
         const [dialogData1, dialogData2] = yield all([
             DialogApi.oppdaterFerdigbehandlet(action.data.id, true, action.fnr),
             DialogApi.oppdaterVenterPaSvar(action.data.id, true, action.fnr),
-            OppfolgingApi.startEskalering(action.data.id, action.data.henvendelser[0].tekst, action.fnr)
+            OppfolgingApi.startEskalering(action.data.id, action.data.henvendelser[0].tekst, action.fnr),
         ]);
 
         yield put(oppdaterDialogSuccess(dialogData1));
@@ -111,7 +111,7 @@ function* startEskaleringMedDialog(action: OpprettHenvendelseActionSuccess) {
         const response = yield call(() => OppfolgingApi.hentOppfolgingData(action.fnr));
 
         yield put(hentOppfolgingSuccess(response));
-        triggerReRenderingAvAktivitesplan();
+        eskaleringVarselSendtEvent();
     } catch (e) {
         yield put(startEskaleringError(e));
         yield put(navigerAction('feil_i_veilederverktoy'));
