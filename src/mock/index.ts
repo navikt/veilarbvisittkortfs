@@ -25,6 +25,11 @@ mock.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', Veilederliste);
 mock.get('/veilarbveileder/api/enhet/:enhetId/navn', enhetData);
 mock.get('/veilarbveileder/api/veileder/me', VeilederData);
 
+mock.post('/veilarboppfolging/api/oppfolging/stoppEskalering/', (args: HandlerArgument) => {
+    Oppfolging.gjeldendeEskaleringsvarsel = null;
+    return {};
+});
+
 mock.post('/veilarboppfolging/api/tilordneveileder', { feilendeTilordninger: [] });
 //mock.post('/veilarboppfolging/api/tilordneveileder', feilResultat);
 
