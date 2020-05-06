@@ -9,6 +9,7 @@ interface TekstAreaProps {
     name: string;
     validate?: (value: string) => string | undefined;
     label: string;
+    content?: string;
 }
 
 type OmitProps = 'onChange' | 'value' | 'feil' | 'onBlur' | 'label';
@@ -17,19 +18,21 @@ function FormikTekstArea({
     name,
     validate,
     label,
+    content,
     intl,
     ...textAreaProps
 }: TekstAreaProps & InjectedIntlProps & Omit<TextareaProps, OmitProps>) {
+
     return (
         <Field validate={validate} name={name}>
-            {({ field, form }: FieldProps) => {
+            {({ form }: FieldProps) => {
                 const feil = getErrors(form.errors, form.touched, name);
                 return (
                     <Textarea
                         id={name}
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
-                        value={field.value}
+                        value={content || ''}
                         feil={feil && feil.feilmelding}
                         label={label}
                         {...textAreaProps}

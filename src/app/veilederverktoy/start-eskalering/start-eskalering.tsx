@@ -63,6 +63,7 @@ function StartEskalering(props: StartEskaleringProps) {
             tittel="Send varsel til brukeren"
             infoTekst={infoTekst}
             isLoading={props.isLoading}
+            intl={props.intl}
         />
     );
 }

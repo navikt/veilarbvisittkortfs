@@ -28,6 +28,7 @@ import ArbeidslisteController from '../../arbeidsliste/arbeidsliste-controller';
 import TildelVeileder from '../tildel-veileder/tildel-veileder';
 import { TildelVeilederKvittering } from '../tildel-veileder/tildel-veileder-kvittering';
 import { FeilTildelingModal } from '../tildel-veileder/tildel-veileder-feil-modal';
+import { InjectedIntlProps } from 'react-intl';
 
 interface StateProps {
     navigation: {
@@ -36,7 +37,7 @@ interface StateProps {
     };
 }
 
-type VeilederVerktoyNavigationProps = StateProps;
+type VeilederVerktoyNavigationProps = StateProps & InjectedIntlProps;
 
 function VeilederVerktoyNavigation(props: PropsWithChildren<VeilederVerktoyNavigationProps>) {
     const renderLocation = () => {
@@ -54,19 +55,19 @@ function VeilederVerktoyNavigation(props: PropsWithChildren<VeilederVerktoyNavig
             case 'start_eskalering_kvittering':
                 return <StartEskaleringKvittering />;
             case 'manuell_oppfolging':
-                return <StarManuellOppfolging />;
+                return <StarManuellOppfolging intl={props.intl}/>;
             case 'sett_manuell_kvittering':
                 return <StartManuellOppfolgingKvittering begrunnelse={props.navigation.begrunnelse} />;
             case 'start_digital_oppfolging':
-                return <StartDigitalOppfolging />;
+                return <StartDigitalOppfolging intl={props.intl}/>;
             case 'start_digital_oppfoling_kvitterig':
                 return <StartDigitalOppfolgingKvittering begrunnelse={props.navigation.begrunnelse} />;
             case 'start_kvp_periode':
-                return <StarKvpPeriode />;
+                return <StarKvpPeriode intl={props.intl}/>;
             case 'start_kvp_periode_kvittering':
                 return <StartKVPKvittering />;
             case 'stopp_kvp_periode':
-                return <StoppKvpPeriode />;
+                return <StoppKvpPeriode intl={props.intl}/>;
             case 'stopp_kvp_periode_kvittering':
                 return <StoppKVPKvittering />;
             case 'opprett_oppgave':
@@ -74,7 +75,7 @@ function VeilederVerktoyNavigation(props: PropsWithChildren<VeilederVerktoyNavig
             case 'oppgave_kvittering':
                 return <OpprettOppgaveKvittering />;
             case 'avslutt_oppfolging':
-                return <AvsluttOppfolging />;
+                return <AvsluttOppfolging intl={props.intl}/>;
             case 'avlutt_oppfolging_bekreft':
                 return <AvsluttOppfolgingBekreft />;
             case 'avslutt_oppfolging_kvittering':
