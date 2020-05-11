@@ -10,7 +10,6 @@ import OppfolgingSelector from '../../../store/oppfolging/selector';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { navigerAction } from '../../../store/navigation/actions';
-import { InjectedIntlProps } from 'react-intl';
 
 interface DispatchProps {
     handleSubmit: (fnr: string, veilederId: string) => (values: BegrunnelseValues) => void;
@@ -24,7 +23,7 @@ interface StateProps {
     reservasjonKRR: boolean;
 }
 
-type StartEskaleringProps = StateProps & DispatchProps & InjectedIntlProps;
+type StartEskaleringProps = StateProps & DispatchProps;
 
 function StartDigitalOppfolging(props: StartEskaleringProps) {
     if (props.reservasjonKRR) {
@@ -57,7 +56,6 @@ function StartDigitalOppfolging(props: StartEskaleringProps) {
             tittel="Endre til digital oppfølging"
             infoTekst={infoTekst}
             isLoading={props.isLoading}
-            intl={props.intl}
         />
     );
 }

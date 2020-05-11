@@ -50,9 +50,9 @@ function StartEskalering(props: StartEskaleringProps) {
     );
 
     const initialValues = {
-        begrunnelse: props.intl.formatMessage({ id: 'innstillinger.modal.start-eskalering.automatisk-tekst' }),
+        begrunnelse: '',
         overskrift: props.intl.formatMessage({ id: 'dialog.eskalering.overskrift' }),
-        tekst: props.intl.formatMessage({ id: 'innstillinger.modal.start-eskalering.automatisk-tekst' }),
+        tekst: '',
     };
     return (
         <BegrunnelseForm
@@ -63,7 +63,6 @@ function StartEskalering(props: StartEskaleringProps) {
             tittel="Send varsel til brukeren"
             infoTekst={infoTekst}
             isLoading={props.isLoading}
-            intl={props.intl}
         />
     );
 }

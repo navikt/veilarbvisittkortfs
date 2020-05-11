@@ -14,7 +14,6 @@ import DialogSelector from '../../../store/dialog/selector';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { navigerAction } from '../../../store/navigation/actions';
-import { InjectedIntlProps } from 'react-intl';
 
 interface StateProps {
     begrunnelse: string;
@@ -30,7 +29,7 @@ interface DispatchProps {
     lukkModal: () => void;
 }
 
-type AvsluttOppfolgingProps = StateProps & DispatchProps & InjectedIntlProps;
+type AvsluttOppfolgingProps = StateProps & DispatchProps;
 
 function AvsluttOppfolging(props: AvsluttOppfolgingProps) {
     if (props.isLoading) {
@@ -74,7 +73,6 @@ function AvsluttOppfolging(props: AvsluttOppfolgingProps) {
                     />
                 </>
             }
-            intl={props.intl}
         />
     );
 }

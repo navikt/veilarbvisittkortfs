@@ -6,7 +6,6 @@ import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnel
 import { stoppKVP } from '../../../store/oppfolging/actions';
 import { Normaltekst } from 'nav-frontend-typografi';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
-import { InjectedIntlProps } from 'react-intl';
 
 interface DispatchProps {
     handleSubmit: (values: BegrunnelseValues) => void;
@@ -16,7 +15,7 @@ interface StateProps {
     isLoading: boolean;
 }
 
-type StartKvpPeriodeProsessProps = StateProps & DispatchProps & InjectedIntlProps;
+type StartKvpPeriodeProsessProps = StateProps & DispatchProps;
 
 function StoppKvpPeriode(props: StartKvpPeriodeProsessProps) {
     const infoTekst = (
@@ -37,7 +36,6 @@ function StoppKvpPeriode(props: StartKvpPeriodeProsessProps) {
             infoTekst={infoTekst}
             isLoading={props.isLoading}
             maxLength={250}
-            intl={props.intl}
         />
     );
 }

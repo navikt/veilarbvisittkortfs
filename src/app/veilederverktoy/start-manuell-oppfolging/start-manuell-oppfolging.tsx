@@ -7,7 +7,6 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import PersonaliaSelectors from '../../../store/personalia/selectors';
 import { settManuell } from '../../../store/oppfolging/actions';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
-import { InjectedIntlProps } from 'react-intl';
 
 interface DispatchProps {
     handleSubmit: (fnr: string, veilederId: string) => (values: BegrunnelseValues) => void;
@@ -19,7 +18,7 @@ interface StateProps {
     veilederId: string;
 }
 
-type StartEskaleringProps = StateProps & DispatchProps & InjectedIntlProps;
+type StartEskaleringProps = StateProps & DispatchProps;
 
 function StartManuellOppfolging(props: StartEskaleringProps) {
     const infoTekst = (
@@ -37,7 +36,6 @@ function StartManuellOppfolging(props: StartEskaleringProps) {
             isLoading={props.isLoading}
             infoTekst={infoTekst}
             tittel="Endre til manuell oppfølging"
-            intl={props.intl}
         />
     );
 }

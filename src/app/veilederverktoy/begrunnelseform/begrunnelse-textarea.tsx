@@ -9,7 +9,6 @@ export function BegrunnelseTextArea(props: { tekstariaLabel: string; maxLength?:
             name="begrunnelse"
             maxLength={props.maxLength || 500}
             validate={props.maxLength ? validerBeskrivelse(props.maxLength) : validerBeskrivelse500TegnFeldt}
-            content={props.content}
         />
     );
 }

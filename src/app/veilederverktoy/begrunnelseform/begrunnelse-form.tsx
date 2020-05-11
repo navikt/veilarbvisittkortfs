@@ -1,5 +1,4 @@
 import React from 'react';
-import { InjectedIntlProps } from 'react-intl';
 import FormikModal from '../../components/formik/formik-modal';
 import { FormikProps } from 'formik';
 import MalteksterForm from './maltekster-form';
@@ -19,7 +18,7 @@ interface OwnProps<T extends BegrunnelseValues> {
     maxLength?: number;
 }
 
-type BegrunnelseFormProps<T extends BegrunnelseValues> = OwnProps<T> & InjectedIntlProps;
+type BegrunnelseFormProps<T extends BegrunnelseValues> = OwnProps<T>;
 
 function BegrunnelseForm<T extends BegrunnelseValues>(props: BegrunnelseFormProps<T>) {
     return (
@@ -32,7 +31,7 @@ function BegrunnelseForm<T extends BegrunnelseValues>(props: BegrunnelseFormProp
             render={() => (
                 <div className="modal-innhold">
                     {props.infoTekst}
-                    <MalteksterForm isLoading={props.isLoading} maxLength={props.maxLength} tekstariaLabel={props.tekstariaLabel} intl={props.intl}/>
+                    <MalteksterForm initialValues={props.initialValues} isLoading={props.isLoading} maxLength={props.maxLength} tekstariaLabel={props.tekstariaLabel}/>
                 </div>
             )}
         />
