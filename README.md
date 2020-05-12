@@ -1,10 +1,8 @@
-[![CircleCI](https://circleci.com/gh/navikt/veilarbvisittkortfs.svg?style=svg)](https://circleci.com/gh/navikt/veilarbvisittkortfs)
-
-#Veilarbvisittkortfs
+# Veilarbvisittkortfs
 
 Personinfo om bruker og veilederverktøy
 
-# Henvendelser
+## Henvendelser
 
 Spørsmål knyttet til koden eller prosjektet kan stilles ved å opprette en issue.
 
