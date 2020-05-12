@@ -20,6 +20,7 @@ function FormikTekstArea({
     intl,
     ...textAreaProps
 }: TekstAreaProps & InjectedIntlProps & Omit<TextareaProps, OmitProps>) {
+
     return (
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {

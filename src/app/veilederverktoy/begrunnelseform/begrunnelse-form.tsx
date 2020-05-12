@@ -1,8 +1,7 @@
 import React from 'react';
-import BegrunnelseFooter from './begrunnelse-form-footer';
 import FormikModal from '../../components/formik/formik-modal';
-import { Form, FormikProps } from 'formik';
-import { BegrunnelseTextArea } from './begrunnelse-textarea';
+import { FormikProps } from 'formik';
+import MalteksterForm from './maltekster-form';
 
 export interface BegrunnelseValues {
     begrunnelse: string;
@@ -29,13 +28,10 @@ function BegrunnelseForm<T extends BegrunnelseValues>(props: BegrunnelseFormProp
             contentLabel=""
             visConfirmDialog={true}
             tittel={props.tittel}
-            render={(formikProps) => (
+            render={() => (
                 <div className="modal-innhold">
                     {props.infoTekst}
-                    <Form>
-                        <BegrunnelseTextArea tekstariaLabel={props.tekstariaLabel} maxLength={props.maxLength} />
-                        <BegrunnelseFooter spinner={props.isLoading} />
-                    </Form>
+                    <MalteksterForm initialValues={props.initialValues} isLoading={props.isLoading} maxLength={props.maxLength} tekstariaLabel={props.tekstariaLabel}/>
                 </div>
             )}
         />
