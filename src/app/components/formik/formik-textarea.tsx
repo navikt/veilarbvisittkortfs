@@ -17,7 +17,6 @@ function FormikTekstArea({
     name,
     validate,
     label,
-    defaultValue,
     intl,
     ...textAreaProps
 }: TekstAreaProps & InjectedIntlProps & Omit<TextareaProps, OmitProps>) {
