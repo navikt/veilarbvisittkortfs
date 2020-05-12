@@ -21,12 +21,9 @@ function MalteksterForm(props: MalteksterFormProps<any>) {
     function onChange(e: ChangeEvent<HTMLSelectElement>) {
         if (e.target.value) {
             const message = props.intl.formatMessage({ id: 'innstillinger.modal.start-eskalering-' + e.target.value});
-            props.initialValues.begrunnelse = message;
-            props.initialValues.tekst = message;
-            context.resetForm();
+            context.setFieldValue('begrunnelse', message);
+            context.setFieldValue('tekst', message);
         } else {
-            props.initialValues.begrunnelse = '';
-            props.initialValues.tekst = '';
             context.resetForm();
         }
     }
