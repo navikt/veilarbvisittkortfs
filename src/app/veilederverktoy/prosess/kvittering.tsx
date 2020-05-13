@@ -8,16 +8,22 @@ interface KvitteringProps {
     tittel: string;
     alertStripeTekst: string;
     footer?: React.ReactNode;
+    onRequestClose?: () => void;
 }
 
-function Kvittering({ tittel, alertStripeTekst, footer }: KvitteringProps) {
+function Kvittering({ tittel, alertStripeTekst, footer, onRequestClose }: KvitteringProps) {
     const dispatch = useDispatch();
 
     return (
         <VarselModal
             isOpen={true}
             contentLabel="Vedlykkad operation"
-            onRequestClose={() => dispatch(navigerAction(null))}
+            onRequestClose={() => {
+                dispatch(navigerAction(null));
+                if (onRequestClose) {
+                    onRequestClose();
+                }
+            }}
             type="SUCCESS"
         >
             <div className="blokk-xs">
