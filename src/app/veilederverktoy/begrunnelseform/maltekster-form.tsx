@@ -18,29 +18,44 @@ type MalteksterFormProps<T extends BegrunnelseValues> = OwnProps<T> & InjectedIn
 
 function MalteksterForm(props: MalteksterFormProps<any>) {
 
-    function onChange(e: ChangeEvent<HTMLSelectElement>) {
-        if (e.target.value) {
-            const message = props.intl.formatMessage({ id: 'innstillinger.modal.start-eskalering-' + e.target.value});
-            context.setFieldValue('begrunnelse', message);
-            context.setFieldValue('tekst', message);
-        } else {
-            context.resetForm();
-        }
-    }
+    function Maltekstvelger(maltekstvelgerProps: any) {
 
-    const context = useFormikContext();
-    return (
-        <div>
-            <Form>
+        function onChange(e: ChangeEvent<HTMLSelectElement>) {
+            if (e.target.value) {
+                const message = props.intl.formatMessage({ id: 'innstillinger.modal.start-eskalering-' + e.target.value});
+                context.setFieldValue('begrunnelse', message);
+                context.setFieldValue('tekst', message);
+            } else {
+                context.resetForm();
+            }
+        }
+
+        const context = useFormikContext();
+        if (maltekstvelgerProps.visible) {
+            return (
                 <Select className="malvelger" onChange={onChange}>
                     <option value="">Velg en mal</option>
                     <option value="dagpenger">Dagpenger</option>
                     <option value="ikke-møtt-møte">Arbeidsavklaringspenger: Ikke møtt til møte</option>
-                    <option value="ikke-deltatt-aktivitet">Arbeidsavklaringspenger: Ikke deltatt på planlagt aktivitet eller bidrar ikke for å komme i arbeid</option>
-                    <option value="ikke-deltatt-tiltak">Arbeidsavklaringspenger: Ikke deltatt på tiltak</option>
+                    <option value="ikke-deltatt-aktivitet">Arbeidsavklaringspenger: Ikke deltatt på planlagt
+                        aktivitet eller bidrar ikke for å komme i arbeid
+                    </option>
+                    <option value="ikke-deltatt-tiltak">Arbeidsavklaringspenger: Ikke deltatt på tiltak
+                    </option>
                     <option value="overgangsstønad">Overgangsstønad</option>
                     <option value="sykepenger">Sykepenger</option>
                 </Select>
+            );
+        } else {
+            return null;
+        }
+    }
+
+    const { initialValues } = useFormikContext();
+    return (
+        <div>
+            <Form>
+                <Maltekstvelger visible={initialValues.brukMalvelger} />
                 <BegrunnelseTextArea tekstariaLabel={props.tekstariaLabel} maxLength={props.maxLength} />
                 <BegrunnelseFooter spinner={props.isLoading} />
             </Form>

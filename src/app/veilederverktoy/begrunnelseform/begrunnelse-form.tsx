@@ -5,6 +5,7 @@ import MalteksterForm from './maltekster-form';
 
 export interface BegrunnelseValues {
     begrunnelse: string;
+    brukMalvelger?: boolean;
 }
 
 interface OwnProps<T extends BegrunnelseValues> {

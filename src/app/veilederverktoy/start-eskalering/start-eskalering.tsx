@@ -51,6 +51,7 @@ function StartEskalering(props: StartEskaleringProps) {
 
     const initialValues = {
         begrunnelse: '',
+        brukMalvelger: true,
         overskrift: props.intl.formatMessage({ id: 'dialog.eskalering.overskrift' }),
         tekst: '',
     };
