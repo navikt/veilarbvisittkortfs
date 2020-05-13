@@ -6,7 +6,7 @@ function AvsluttOppfolgingKvittering() {
         <Kvittering
             tittel="Avslutt oppfølging fra NAV"
             alertStripeTekst="Oppfølgingsperioden er nå avsluttet."
-            onRequestClose={window.location.reload}
+            onRequestClose={window.location.reload.bind(window.location)}
         />
     );
 }
