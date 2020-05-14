@@ -1,17 +1,17 @@
 import React from 'react';
-import { injectIntl, InjectedIntlProps } from 'react-intl';
+import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { Dispatch } from 'redux';
 import { opprettHenvendelse } from '../../../store/dialog/actions';
 import { connect } from 'react-redux';
 import { Appstate } from '../../../types/appstate';
-import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { navigerAction } from '../../../store/navigation/actions';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
+import StartEskaleringForm, { StartEskaleringValues } from './start-eskalering-form';
 
 interface DispatchProps {
-    handleSubmit: (values: StartEskaleringValues) => void;
+    handleSubmit: (values: OwnValues) => void;
     lukkModal: () => void;
 }
 
@@ -20,7 +20,7 @@ interface StateProps {
     kanIkkeVarsles: boolean;
 }
 
-interface StartEskaleringValues extends BegrunnelseValues {
+interface OwnValues extends StartEskaleringValues {
     overskrift: string;
     tekst: string;
 }
@@ -50,12 +50,13 @@ function StartEskalering(props: StartEskaleringProps) {
     );
 
     const initialValues = {
-        begrunnelse: props.intl.formatMessage({ id: 'innstillinger.modal.start-eskalering.automatisk-tekst' }),
+        begrunnelse: '',
+        brukMalvelger: true,
         overskrift: props.intl.formatMessage({ id: 'dialog.eskalering.overskrift' }),
-        tekst: props.intl.formatMessage({ id: 'innstillinger.modal.start-eskalering.automatisk-tekst' }),
+        tekst: '',
     };
     return (
-        <BegrunnelseForm
+        <StartEskaleringForm
             handleSubmit={props.handleSubmit}
             initialValues={initialValues}
             tekstariaLabel="Rediger teksten under slik at den passer."
@@ -74,7 +75,7 @@ const mapStateToProps = (state: Appstate) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     lukkModal: () => dispatch(navigerAction(null)),
-    handleSubmit: (values: StartEskaleringValues) =>
+    handleSubmit: (values: OwnValues) =>
         dispatch(
             opprettHenvendelse({
                 begrunnelse: values.begrunnelse,

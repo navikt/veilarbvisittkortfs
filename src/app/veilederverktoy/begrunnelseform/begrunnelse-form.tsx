@@ -29,7 +29,7 @@ function BegrunnelseForm<T extends BegrunnelseValues>(props: BegrunnelseFormProp
             contentLabel=""
             visConfirmDialog={true}
             tittel={props.tittel}
-            render={(formikProps) => (
+            render={() => (
                 <div className="modal-innhold">
                     {props.infoTekst}
                     <Form>
