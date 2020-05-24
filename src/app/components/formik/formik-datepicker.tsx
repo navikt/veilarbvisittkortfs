@@ -4,7 +4,6 @@ import { Datovelger } from 'nav-datovelger';
 import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 import './datovelger.less';
 import classNames from 'classnames';
-import moment from 'moment';
 
 interface FormikDatepickerProps {
     name: string;
@@ -31,17 +30,9 @@ function FormikDatoVelger({ name, validate, label, ariaLabel, className }: Formi
                                 name,
                                 placeholder: 'dd.mm.åååå',
                                 ariaLabel,
-                                onChange: (value: string) => {
-                                    setFieldValue(field.name, value);
-                                },
                             }}
                             id="fristDatovelger"
-                            onChange={(date: string) => {
-                                if (!field.value && !moment(date).isValid()) {
-                                    return;
-                                }
-                                setFieldValue(field.name, date);
-                            }}
+                            onChange={(date: string) => setFieldValue(field.name, date)}
                             valgtDato={field.value}
                         />
                         {error && <SkjemaelementFeilmelding>{error}</SkjemaelementFeilmelding>}
