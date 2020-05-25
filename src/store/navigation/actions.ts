@@ -17,7 +17,8 @@ export type NavigerActionType =
     | 'LAGRE_OPPGAVE'
     | 'LAGRE_ARBEIDSLISTE'
     | 'REDIGER_ARBEIDSLISTE'
-    | 'SLETT_ARBEIDSLISTE';
+    | 'SLETT_ARBEIDSLISTE'
+    | 'AVSLUTT_OPPFOLGING';
 
 export interface NavigerAction {
     type: NavigerActionType;
@@ -26,16 +27,16 @@ export interface NavigerAction {
 }
 
 export const navigerTilAvsluttOppfolging = (): NavigerAction => ({
-    type: 'NAVIGER_TIL_AVSLUTT_OPPFOLGING'
+    type: 'NAVIGER_TIL_AVSLUTT_OPPFOLGING',
 });
 
 export const navigerTilProcesser = (): NavigerAction => ({
-    type: 'NAVIGER_TIL_PROSSER'
+    type: 'NAVIGER_TIL_PROSSER',
 });
 
 export const navigerAction = (location: StringOrNothing): NavigerAction => ({
     type: 'NAVIGER',
-    location
+    location,
 });
 
 export const navigerActionMedPayload = (
@@ -45,5 +46,5 @@ export const navigerActionMedPayload = (
 ): NavigerAction => ({
     type,
     location,
-    begrunnelse
+    begrunnelse,
 });
