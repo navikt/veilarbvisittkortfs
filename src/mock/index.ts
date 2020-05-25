@@ -45,7 +45,7 @@ mock.post('/veilarboppfolging/api/oppfolging/settManuell', Object.assign({}, Opp
 
 mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
     avslutningStatus: {
-        kanAvslutte: false,
+        kanAvslutte: true,
         harTiltak: false,
         harYtelser: false,
         underOppfolging: true,
