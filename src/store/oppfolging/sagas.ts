@@ -125,7 +125,6 @@ function* avsluttOppfolging() {
 
         const data = yield call(() => OppfolgingApi.avsluttOppfolging(begrunnelse, veilederId, fnr));
         yield put(avsluttOppfolgingSuccess(data));
-        yield put(navigerAction(null));
     } catch (e) {
         yield put(avsluttOppfolgingError(e));
         yield put(navigerAction('feil_i_veilederverktoy'));
