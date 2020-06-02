@@ -6,7 +6,7 @@ if (!(global as any)._babelPolyfill) {
     require('babel-polyfill');
 }
 
-if (env.isDevelopment) {
+if (env.isMock) {
     require('./mock');
 }
 
