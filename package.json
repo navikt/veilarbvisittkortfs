@@ -5,8 +5,7 @@
   "homepage": "/veilarbvisittkortfs",
   "scripts": {
     "start": "REACT_APP_MOCK=true craco start",
-    "build": "npm-run-all -s build:tekster build:ts",
-    "build:ts": "craco build",
+    "build": "npm run build:tekster && craco build",
     "build:tekster": "react-intl-bundler tekster/ src/tekster-built",
     "test:coverage": "echo \"her testar vi ingenting\"",
     "lint": "echo \"her lintas det ikke\"",
@@ -26,14 +25,12 @@
     "**/fsevents": "^1.2.9"
   },
   "dependencies": {
-    "@craco/craco": "^5.6.4",
     "@navikt/fnrvalidator": "^1.1.0",
     "@nutgaard/use-fetch": "^2.3.1",
     "@types/react-collapse": "^5.0.0",
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "classnames": "^2.2.6",
-    "craco-less": "1.17.0",
     "cross-env": "^7.0.2",
     "formik": "^2.1.4",
     "intl": "^1.2.5",
@@ -67,7 +64,6 @@
     "nav-frontend-spinner-style": "^0.2.5",
     "nav-frontend-typografi": "^2.0.19",
     "nav-frontend-typografi-style": "^1.0.20",
-    "npm-run-all": "^4.1.5",
     "prop-types": "^15.7.2",
     "query-string": "^6.4.2",
     "react": "^16.13.1",
@@ -89,6 +85,7 @@
     "yet-another-fetch-mock": "3.2.0"
   },
   "devDependencies": {
+    "@craco/craco": "^5.6.4",
     "@navikt/react-intl-bundler": "^1.0.4",
     "@types/classnames": "^2.2.7",
     "@types/intl": "^1.2.0",
@@ -100,6 +97,7 @@
     "@types/react-intl": "^2.3.17",
     "@types/react-modal": "^3.10.5",
     "@types/react-redux": "^7.1.1",
+    "craco-less": "1.16.0",
     "cross-spawn": "^7.0.1",
     "husky": "^4.2.1",
     "lint-staged": "^10.1.0",

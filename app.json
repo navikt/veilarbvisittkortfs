@@ -1,17 +1,13 @@
 {
+  "name": "veilarbvisittkortfs",
+  "description": "Visittkort",
+  "scripts": {},
+  "env": {},
+  "formation": {},
   "addons": [],
   "buildpacks": [
     {
       "url": "mars/create-react-app"
     }
-  ],
-  "env": {},
-  "formation": {
-    "web": {
-      "quantity": 1
-    }
-  },
-  "name": "veilarbvisittkortfs",
-  "scripts": {},
-  "stack": "heroku-18"
+  ]
 }
