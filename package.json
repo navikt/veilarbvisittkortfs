@@ -4,9 +4,7 @@
   "private": true,
   "homepage": "/veilarbvisittkortfs",
   "scripts": {
-    "start": "npm-run-all -p start:tekster start:ts",
-    "start:ts": "REACT_APP_MOCK=true craco start",
-    "start:tekster": "node ./scripts/watch-tekster.js",
+    "start": "REACT_APP_MOCK=true craco start",
     "build": "npm-run-all -s build:tekster build:ts",
     "build:ts": "craco build",
     "build:tekster": "react-intl-bundler tekster/ src/tekster-built",
