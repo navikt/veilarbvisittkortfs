@@ -1,18 +1,17 @@
 {
-  "name": "veilarbvisittkortfs",
-  "scripts": {},
-  "env": {
-    "NODE_ENV": {
-      "value": "development"
-    },
-    "NPM_CONFIG_PRODUCTION": {
-      "value": "false"
-    },
-    "YARN_PRODUCTION": {
-      "value": "false"
+  "addons": [],
+  "buildpacks": [
+    {
+      "url": "mars/create-react-app"
+    }
+  ],
+  "env": {},
+  "formation": {
+    "web": {
+      "quantity": 1
     }
   },
-  "formation": {},
-  "addons": [],
-  "buildpacks": []
+  "name": "veilarbvisittkortfs",
+  "scripts": {},
+  "stack": "heroku-18"
 }
