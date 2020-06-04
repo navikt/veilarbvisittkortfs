@@ -125,7 +125,7 @@ function Etiketter() {
             </Fokus>
             <Info hidden={!(trengerVurdering(oppfolgingstatus) && !profilering)}>Trenger vurdering</Info>
             <Info hidden={!(trengerAEV(oppfolgingstatus) && !profilering)}>Behov for AEV</Info>
-            <Info hidden={erBrukerSykmeldt(oppfolgingstatus)}>Sykmeldt</Info>
+            <Info hidden={!erBrukerSykmeldt(oppfolgingstatus)}>Sykmeldt</Info>
             <Info hidden={!(profilering === 'STANDARD_INNSATS' && maglerVedtak(oppfolgingstatus))}>
                 Antatt gode muligheter
             </Info>
