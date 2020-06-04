@@ -30,6 +30,13 @@ export function trengerAEV(oppfolging: OppfolgingStatus): boolean {
     return oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'BKART';
 }
 
+export function maglerVedtak(oppfolging: OppfolgingStatus): boolean {
+    return (
+        oppfolging.formidlingsgruppe !== 'ISERV' &&
+        (oppfolging.servicegruppe === 'BKART' || oppfolging.servicegruppe === 'IVURD')
+    );
+}
+
 function Etiketter() {
     const { diskresjonskode, sikkerhetstiltak, egenAnsatt, dodsdato } = useSelector(
         (state: Appstate) => state.personalia.data
@@ -116,12 +123,18 @@ function Etiketter() {
             >
                 Ikke registrert KRR
             </Fokus>
-            <Info hidden={!trengerVurdering(oppfolgingstatus) || !profilering}>Trenger vurdering</Info>
-            <Info hidden={!trengerAEV(oppfolgingstatus) || !profilering}>Behov for AEV</Info>
-            <Info hidden={!erBrukerSykmeldt(oppfolgingstatus)}>Sykmeldt</Info>
-            <Info hidden={profilering !== 'STANDARD_INNSATS'}>Antatt gode muligheter</Info>
-            <Info hidden={profilering !== 'SITUASJONSBESTEMT_INNSATS'}>Antatt behov for veiledning</Info>
-            <Info hidden={profilering !== 'BEHOV_FOR_ARBEIDSEVNEVURDERING'}>Oppgitt hindringer</Info>
+            <Info hidden={!(trengerVurdering(oppfolgingstatus) && !profilering)}>Trenger vurdering</Info>
+            <Info hidden={!(trengerAEV(oppfolgingstatus) && !profilering)}>Behov for AEV</Info>
+            <Info hidden={erBrukerSykmeldt(oppfolgingstatus)}>Sykmeldt</Info>
+            <Info hidden={!(profilering === 'STANDARD_INNSATS' && maglerVedtak(oppfolgingstatus))}>
+                Antatt gode muligheter
+            </Info>
+            <Info hidden={!(profilering === 'SITUASJONSBESTEMT_INNSATS' && maglerVedtak(oppfolgingstatus))}>
+                Antatt behov for veiledning
+            </Info>
+            <Info hidden={!(profilering === 'BEHOV_FOR_ARBEIDSEVNEVURDERING' && maglerVedtak(oppfolgingstatus))}>
+                Oppgitt hindringer
+            </Info>
         </div>
     );
 }
