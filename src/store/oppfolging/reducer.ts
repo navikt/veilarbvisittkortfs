@@ -28,8 +28,8 @@ const initialState: OppfogingState = {
         underKvp: false,
         underOppfolging: false,
         veilederId: null,
-        kanVarsles: false
-    }
+        kanVarsles: false,
+    },
 };
 
 const oppfolgingReducer: Reducer<OppfogingState, OppfolgingActions> = (state = initialState, action) => {
@@ -40,11 +40,10 @@ const oppfolgingReducer: Reducer<OppfogingState, OppfolgingActions> = (state = i
         case OppfolgingActionType.SETT_DIGITAL:
         case OppfolgingActionType.START_KVP:
         case OppfolgingActionType.STOPP_KVP:
-        case OppfolgingActionType.AVSLUTT_OPPFOLGING:
         case OppfolgingActionType.STOPP_ESKALERING: {
             return {
                 ...state,
-                status: 'LOADING'
+                status: 'LOADING',
             };
         }
         case OppfolgingActionType.HENT_OPPFOLGING_SUCCESS:
@@ -55,13 +54,13 @@ const oppfolgingReducer: Reducer<OppfogingState, OppfolgingActions> = (state = i
             return {
                 ...state,
                 data: action.data,
-                status: 'DONE'
+                status: 'DONE',
             };
         }
         case OppfolgingActionType.START_ESKALERING_SUCCESS: {
             return {
                 ...state,
-                status: 'DONE'
+                status: 'DONE',
             };
         }
         case OppfolgingActionType.HENT_OPPFOLGING_ERROR:
@@ -75,7 +74,7 @@ const oppfolgingReducer: Reducer<OppfogingState, OppfolgingActions> = (state = i
             return {
                 ...state,
                 status: 'ERROR',
-                error: action.error
+                error: action.error,
             };
         }
         default:

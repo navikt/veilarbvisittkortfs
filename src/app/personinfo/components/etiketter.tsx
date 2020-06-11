@@ -11,6 +11,7 @@ import { OppfolgingsPerioder } from '../../../types/oppfolging';
 import moment from 'moment';
 import { fetchToJson } from '../../../api/api-utils';
 import FeatureApi from '../../../api/feature-api';
+import { StringOrNothing } from '../../../types/utils/stringornothings';
 
 const Advarsel = hiddenIf(EtikettAdvarsel);
 const Info = hiddenIf(EtikettInfo);
@@ -29,11 +30,19 @@ export function trengerAEV(oppfolging: OppfolgingStatus): boolean {
     return oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'BKART';
 }
 
+export function maglerVedtak(oppfolging: OppfolgingStatus): boolean {
+    return (
+        oppfolging.formidlingsgruppe !== 'ISERV' &&
+        (oppfolging.servicegruppe === 'BKART' || oppfolging.servicegruppe === 'IVURD')
+    );
+}
+
 function Etiketter() {
     const { diskresjonskode, sikkerhetstiltak, egenAnsatt, dodsdato } = useSelector(
         (state: Appstate) => state.personalia.data
     );
     const [erPermitterEtter9mars, setErPermitterEtter9mars] = useState(false);
+    const [profilering, setProfilering] = useState<StringOrNothing>(null);
 
     const {
         underKvp,
@@ -55,20 +64,28 @@ function Etiketter() {
     const harStartetOppfolgingEtter9mars2020 = gjeldeneOppfolgingsPeriode
         ? moment(gjeldeneOppfolgingsPeriode.startDato).isAfter('2020-03-09', 'day')
         : false;
-    // TODO SLETT ASP!!!!
+    // TODO SLETT USE EFFECTEN ASP!!!!
 
     useEffect(() => {
-        FeatureApi.hentFeatures('veilarbvisittkort.permittering.etikett').then((features) => {
-            if (features['veilarbvisittkort.permittering.etikett'] && harStartetOppfolgingEtter9mars2020) {
-                fetchToJson('/veilarbregistrering/api/registrering?fnr=' + fnr).then((resp: any) => {
-                    if (resp.type === 'ORDINAER') {
-                        const besvarelse = resp.registrering.besvarelse;
-                        if (besvarelse && besvarelse.dinSituasjon === 'ER_PERMITTERT') {
-                            setErPermitterEtter9mars(true);
-                        }
+        fetchToJson('/veilarbregistrering/api/registrering?fnr=' + fnr).then((resp: any) => {
+            FeatureApi.hentFeatures('veilarbvisittkort.permittering.etikett').then((features) => {
+                if (
+                    features['veilarbvisittkort.permittering.etikett'] &&
+                    harStartetOppfolgingEtter9mars2020 &&
+                    resp.type === 'ORDINAER'
+                ) {
+                    const besvarelse = resp.registrering.besvarelse;
+                    if (besvarelse && besvarelse.dinSituasjon === 'ER_PERMITTERT') {
+                        setErPermitterEtter9mars(true);
                     }
-                });
-            }
+                }
+            });
+
+            FeatureApi.hentFeatures('pto.vedtaksstotte.pilot').then((features) => {
+                if (features['pto.vedtaksstotte.pilot'] && resp.type === 'ORDINAER') {
+                    setProfilering(resp.registrering.profilering.innsatsgruppe);
+                }
+            });
         });
     }, [harStartetOppfolgingEtter9mars2020, fnr]);
 
@@ -106,9 +123,18 @@ function Etiketter() {
             >
                 Ikke registrert KRR
             </Fokus>
-            <Info hidden={!trengerVurdering(oppfolgingstatus)}>Trenger vurdering</Info>
-            <Info hidden={!trengerAEV(oppfolgingstatus)}>Behov for AEV</Info>
+            <Info hidden={!(trengerVurdering(oppfolgingstatus) && !profilering)}>Trenger vurdering</Info>
+            <Info hidden={!(trengerAEV(oppfolgingstatus) && !profilering)}>Behov for AEV</Info>
             <Info hidden={!erBrukerSykmeldt(oppfolgingstatus)}>Sykmeldt</Info>
+            <Info hidden={!(profilering === 'STANDARD_INNSATS' && maglerVedtak(oppfolgingstatus))}>
+                Antatt gode muligheter
+            </Info>
+            <Info hidden={!(profilering === 'SITUASJONSBESTEMT_INNSATS' && maglerVedtak(oppfolgingstatus))}>
+                Antatt behov for veiledning
+            </Info>
+            <Info hidden={!(profilering === 'BEHOV_FOR_ARBEIDSEVNEVURDERING' && maglerVedtak(oppfolgingstatus))}>
+                Oppgitt hindringer
+            </Info>
         </div>
     );
 }

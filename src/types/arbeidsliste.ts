@@ -11,6 +11,7 @@ export interface Arbeidsliste {
     overskrift: StringOrNothing;
     sistEndretAv: OrNothing<{ veilederId: string }>;
     kategori: KategoriModell | null;
+    veilederId?: StringOrNothing;
 }
 
 export interface ArbeidslisteformValues {
@@ -25,5 +26,5 @@ export enum KategoriModell {
     LILLA = 'LILLA',
     GRONN = 'GRONN',
     GUL = 'GUL',
-    TOM = 'TOM'
+    TOM = 'TOM',
 }

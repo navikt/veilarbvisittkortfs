@@ -8,7 +8,7 @@ import AvsluttOppfolgingStatusSelector from '../../../store/avslutningstatus/sel
 import PersonaliaSelector from '../../../store/personalia/selectors';
 import { OrNothing } from '../../../types/utils/ornothing';
 import { AvslutningStatus } from '../../../types/oppfolging';
-import { lagreBegrunnelse } from '../../../store/avslutningstatus/actions';
+import { lagreBegrunnelse, resetBegrunnelse } from '../../../store/avslutningstatus/actions';
 import moment from 'moment';
 import DialogSelector from '../../../store/dialog/selector';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
@@ -96,7 +96,10 @@ const mapStateToProps = (state: Appstate): StateProps => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     handleSubmit: (values: BegrunnelseValues) => dispatch(lagreBegrunnelse(values.begrunnelse)),
-    lukkModal: () => dispatch(navigerAction(null)),
+    lukkModal: () => {
+        dispatch(navigerAction(null));
+        dispatch(resetBegrunnelse());
+    },
 });
 
 export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(AvsluttOppfolging);

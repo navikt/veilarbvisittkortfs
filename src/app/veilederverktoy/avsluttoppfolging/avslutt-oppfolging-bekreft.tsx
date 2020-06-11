@@ -1,5 +1,4 @@
 import React from 'react';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Appstate } from '../../../types/appstate';
 import PersonaliaSelector from '../../../store/personalia/selectors';
@@ -7,8 +6,10 @@ import OppfolgingSelector from '../../../store/oppfolging/selector';
 import { Dispatch } from 'redux';
 import { avsluttOppfolging } from '../../../store/oppfolging/actions';
 import { connect } from 'react-redux';
-import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { navigerAction } from '../../../store/navigation/actions';
+import { VarselModal } from '../../components/varselmodal/varsel-modal';
+import { Normaltekst } from 'nav-frontend-typografi';
+import { resetBegrunnelse } from '../../../store/avslutningstatus/actions';
 
 interface StateProps {
     navn: string;
@@ -24,19 +25,28 @@ type AvsluttOppfolgingBekreftelseModalProps = StateProps & DispatchProps;
 
 function AvsluttOppfolgingBekreft({ navn, handleSubmit, isLoading, avbryt }: AvsluttOppfolgingBekreftelseModalProps) {
     return (
-        <VeilederVerktoyModal>
-            <div className="prosess">
-                <AlertStripeAdvarsel className="blokk-s">
-                    Er du sikker på at du vil avslutte oppfølgingsperioden til {navn}?
-                </AlertStripeAdvarsel>
+        <VarselModal
+            className=""
+            contentLabel="Bruker kan ikke varsles"
+            onRequestClose={avbryt}
+            isOpen={true}
+            type="ADVARSEL"
+        >
+            <>
+                <Normaltekst>Er du sikker på at du vil avslutte oppfølgingsperioden til {navn}?</Normaltekst>
                 <div className="modal-footer">
-                    <Hovedknapp htmlType="submit" className="btn--mr1" onClick={handleSubmit} spinner={isLoading}>
+                    <Hovedknapp
+                        htmlType="submit"
+                        style={{ marginRight: '1rem' }}
+                        onClick={handleSubmit}
+                        spinner={isLoading}
+                    >
                         Bekreft
                     </Hovedknapp>
                     <Knapp onClick={avbryt}>Avbryt</Knapp>
                 </div>
-            </div>
-        </VeilederVerktoyModal>
+            </>
+        </VarselModal>
     );
 }
 
@@ -47,7 +57,10 @@ const mapStateToProps = (state: Appstate): StateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     handleSubmit: () => dispatch(avsluttOppfolging()),
-    avbryt: () => dispatch(navigerAction(null)),
+    avbryt: () => {
+        dispatch(navigerAction(null));
+        dispatch(resetBegrunnelse());
+    },
 });
 
 export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(AvsluttOppfolgingBekreft);

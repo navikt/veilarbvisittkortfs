@@ -10,6 +10,10 @@ class Environment {
     get isDevelopment() {
         return this.nodeEnv === 'development';
     }
+
+    get isMock() {
+        return process.env.REACT_APP_MOCK === 'true';
+    }
 }
 
 export default new Environment();

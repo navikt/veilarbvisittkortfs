@@ -1,18 +1,13 @@
 {
   "name": "veilarbvisittkortfs",
+  "description": "Visittkort",
   "scripts": {},
-  "env": {
-    "NODE_ENV": {
-      "value": "development"
-    },
-    "NPM_CONFIG_PRODUCTION": {
-      "value": "false"
-    },
-    "YARN_PRODUCTION": {
-      "value": "false"
-    }
-  },
+  "env": {},
   "formation": {},
   "addons": [],
-  "buildpacks": []
+  "buildpacks": [
+    {
+      "url": "mars/create-react-app"
+    }
+  ]
 }
