@@ -67,26 +67,28 @@ function Etiketter() {
     // TODO SLETT USE EFFECTEN ASP!!!!
 
     useEffect(() => {
-        fetchToJson('/veilarbregistrering/api/registrering?fnr=' + fnr).then((resp: any) => {
-            FeatureApi.hentFeatures('veilarbvisittkort.permittering.etikett').then((features) => {
-                if (
-                    features['veilarbvisittkort.permittering.etikett'] &&
-                    harStartetOppfolgingEtter9mars2020 &&
-                    resp.type === 'ORDINAER'
-                ) {
-                    const besvarelse = resp.registrering.besvarelse;
-                    if (besvarelse && besvarelse.dinSituasjon === 'ER_PERMITTERT') {
-                        setErPermitterEtter9mars(true);
+        if (fnr) {
+            fetchToJson('/veilarbregistrering/api/registrering?fnr=' + fnr).then((resp: any) => {
+                FeatureApi.hentFeatures('veilarbvisittkort.permittering.etikett').then((features) => {
+                    if (
+                        features['veilarbvisittkort.permittering.etikett'] &&
+                        harStartetOppfolgingEtter9mars2020 &&
+                        resp.type === 'ORDINAER'
+                    ) {
+                        const besvarelse = resp.registrering.besvarelse;
+                        if (besvarelse && besvarelse.dinSituasjon === 'ER_PERMITTERT') {
+                            setErPermitterEtter9mars(true);
+                        }
                     }
-                }
-            });
+                });
 
-            FeatureApi.hentFeatures('pto.vedtaksstotte.pilot').then((features) => {
-                if (features['pto.vedtaksstotte.pilot'] && resp.type === 'ORDINAER') {
-                    setProfilering(resp.registrering.profilering.innsatsgruppe);
-                }
+                FeatureApi.hentFeatures('pto.vedtaksstotte.pilot').then((features) => {
+                    if (features['pto.vedtaksstotte.pilot'] && resp.type === 'ORDINAER') {
+                        setProfilering(resp.registrering.profilering.innsatsgruppe);
+                    }
+                });
             });
-        });
+        }
     }, [harStartetOppfolgingEtter9mars2020, fnr]);
 
     const oppfolgingstatus = useSelector(OppfolgingsstatusSelector.selectOppfolgingStatusData);
