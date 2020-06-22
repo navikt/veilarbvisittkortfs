@@ -7,8 +7,6 @@ import { useSelector } from 'react-redux';
 import { Appstate } from '../../../types/appstate';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
 import OppfolgingsstatusSelector from '../../../store/oppfolging-status/selectors';
-import { OppfolgingsPerioder } from '../../../types/oppfolging';
-import moment from 'moment';
 import { fetchToJson } from '../../../api/api-utils';
 import FeatureApi from '../../../api/feature-api';
 import { StringOrNothing } from '../../../types/utils/stringornothings';
@@ -41,7 +39,7 @@ function Etiketter() {
     const { diskresjonskode, sikkerhetstiltak, egenAnsatt, dodsdato } = useSelector(
         (state: Appstate) => state.personalia.data
     );
-    const [erPermitterEtter9mars, setErPermitterEtter9mars] = useState(false);
+
     const [profilering, setProfilering] = useState<StringOrNothing>(null);
 
     const {
@@ -52,36 +50,12 @@ function Etiketter() {
         inaktivIArena,
         gjeldendeEskaleringsvarsel,
         kanVarsles,
-        oppfolgingsPerioder,
         fnr,
     } = useSelector(OppfolgingSelector.selectOppfolgingData);
-
-    const gjeldeneOppfolgingsPeriode = oppfolgingsPerioder
-        ? oppfolgingsPerioder.find((oppfolgingsPeriode: OppfolgingsPerioder) => oppfolgingsPeriode.sluttDato === null)
-        : false;
-
-    // '2020-03-09' is day D
-    const harStartetOppfolgingEtter9mars2020 = gjeldeneOppfolgingsPeriode
-        ? moment(gjeldeneOppfolgingsPeriode.startDato).isAfter('2020-03-09', 'day')
-        : false;
-    // TODO SLETT USE EFFECTEN ASP!!!!
 
     useEffect(() => {
         if (fnr) {
             fetchToJson('/veilarbregistrering/api/registrering?fnr=' + fnr).then((resp: any) => {
-                FeatureApi.hentFeatures('veilarbvisittkort.permittering.etikett').then((features) => {
-                    if (
-                        features['veilarbvisittkort.permittering.etikett'] &&
-                        harStartetOppfolgingEtter9mars2020 &&
-                        resp.type === 'ORDINAER'
-                    ) {
-                        const besvarelse = resp.registrering.besvarelse;
-                        if (besvarelse && besvarelse.dinSituasjon === 'ER_PERMITTERT') {
-                            setErPermitterEtter9mars(true);
-                        }
-                    }
-                });
-
                 FeatureApi.hentFeatures('pto.vedtaksstotte.pilot').then((features) => {
                     if (features['pto.vedtaksstotte.pilot'] && resp.type === 'ORDINAER') {
                         setProfilering(resp.registrering.profilering.innsatsgruppe);
@@ -89,16 +63,13 @@ function Etiketter() {
                 });
             });
         }
-    }, [harStartetOppfolgingEtter9mars2020, fnr]);
+    }, [fnr]);
 
     const oppfolgingstatus = useSelector(OppfolgingsstatusSelector.selectOppfolgingStatusData);
     return (
         <div className="etikett-container">
             <Bas hidden={!dodsdato} type="info" className="etikett--mork">
                 Død
-            </Bas>
-            <Bas hidden={!erPermitterEtter9mars} type="info" className="etikett--lilla">
-                Permittert etter 9. mars
             </Bas>
             <Advarsel hidden={!diskresjonskode}>Kode {diskresjonskode}</Advarsel>
             <Advarsel hidden={!sikkerhetstiltak}>{sikkerhetstiltak}</Advarsel>
