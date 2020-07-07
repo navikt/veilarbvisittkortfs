@@ -1,5 +1,3 @@
-import queryString from 'query-string';
-
 export function storeForbokstaver(tekster: string[]): string {
     const tekst = tekster.filter((s) => s).join(' ');
 
@@ -56,16 +54,4 @@ export function eskaleringVarselSendtEvent() {
 
 export function triggerReRenderingAvMao() {
     window.dispatchEvent(new Event('rerenderMao'));
-}
-
-export function dispatchOppfolgingAvslutet() {
-    window.dispatchEvent(new Event('oppfolgingAvslutet'));
-}
-
-export function hentEnhetsIdFraUrl(): string {
-    const enhetId = queryString.parse(window.location.search).enhet;
-    if (Array.isArray(enhetId)) {
-        return enhetId[0];
-    }
-    return enhetId || '';
 }
