@@ -1,11 +1,12 @@
 import React from 'react';
-import { erITestMiljo, finnMiljoStreng, finnNaisDomene, hentEnhetsIdFraUrl } from '../../utils/utils';
+import { erITestMiljo, finnMiljoStreng, finnNaisDomene } from '../../utils/utils';
 import { Appstate } from '../../../types/appstate';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
 import { connect } from 'react-redux';
 import { logEvent } from '../../utils/frontend-logger';
+import { StringOrNothing } from '../../../types/utils/stringornothings';
 
-function byggRegistreringUrl(fnr: string, enhet: string | string[]) {
+function byggRegistreringUrl(fnr: string, enhet: StringOrNothing) {
     return `https://arbeidssokerregistrering-fss${finnMiljoStreng()}${finnNaisDomene()}?fnr=${fnr}&enhetId=${enhet}`;
 }
 
@@ -21,6 +22,7 @@ interface StateProps {
     kanReaktiveres: boolean;
     erSykmeldtMedArbeidsgiver: boolean;
     kanRegistrere: boolean;
+    enhetId: StringOrNothing;
 }
 
 type StartRegistreringProsessProps = StateProps;
@@ -31,7 +33,7 @@ function StartRegistreringProsess(props: StartRegistreringProsessProps) {
     }
 
     const veilarbLoginUrl = byggVeilarbLoginUrl();
-    const registreringUrl = byggRegistreringUrl(props.fnr, hentEnhetsIdFraUrl());
+    const registreringUrl = byggRegistreringUrl(props.fnr, props.enhetId);
     const brukerType = props.erSykmeldtMedArbeidsgiver
         ? 'erSykemeldtMedArbeidsgiver'
         : props.kanReaktiveres
@@ -66,7 +68,8 @@ const mapStateToProps = (state: Appstate): StateProps => ({
     kanReaktiveres: OppfolgingSelector.selectKanReaktiveres(state),
     fnr: OppfolgingSelector.selectFnr(state),
     erSykmeldtMedArbeidsgiver: OppfolgingSelector.selectErSykmeldtMedArbeidsgiver(state),
-    kanRegistrere: OppfolgingSelector.kanRegistreresEllerReaktiveres(state)
+    kanRegistrere: OppfolgingSelector.kanRegistreresEllerReaktiveres(state),
+    enhetId: state.enhetId.enhet,
 });
 
 export default connect<StateProps>(mapStateToProps)(StartRegistreringProsess);
