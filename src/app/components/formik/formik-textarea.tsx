@@ -3,7 +3,6 @@ import { Textarea, TextareaProps } from 'nav-frontend-skjema';
 import { Field, FieldProps } from 'formik';
 import { getErrors } from './formik-utils';
 import { Omit } from '../../../types/omit-type';
-import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 interface TekstAreaProps {
     name: string;
@@ -13,14 +12,7 @@ interface TekstAreaProps {
 
 type OmitProps = 'onChange' | 'value' | 'feil' | 'onBlur' | 'label';
 
-function FormikTekstArea({
-    name,
-    validate,
-    label,
-    intl,
-    ...textAreaProps
-}: TekstAreaProps & InjectedIntlProps & Omit<TextareaProps, OmitProps>) {
-
+function FormikTekstArea({ name, validate, label, ...textAreaProps }: TekstAreaProps & Omit<TextareaProps, OmitProps>) {
     return (
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
@@ -41,4 +33,4 @@ function FormikTekstArea({
     );
 }
 
-export default injectIntl(FormikTekstArea);
+export default FormikTekstArea;

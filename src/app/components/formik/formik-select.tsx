@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { Select, SelectProps } from 'nav-frontend-skjema';
-import { injectIntl, InjectedIntlProps } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { getErrors } from './formik-utils';
 import { Partial } from '../../../types/partial-type';
 
@@ -12,14 +12,8 @@ interface FormikInputProps {
     options: { value: string; label: string }[];
 }
 
-function FormikSelect({
-    name,
-    validate,
-    intl,
-    label,
-    options,
-    ...selectProps
-}: FormikInputProps & InjectedIntlProps & Partial<SelectProps>) {
+function FormikSelect({ name, validate, label, options, ...selectProps }: FormikInputProps & Partial<SelectProps>) {
+    const intl = useIntl();
     return (
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
@@ -36,7 +30,7 @@ function FormikSelect({
                         {...selectProps}
                         value={field.value}
                     >
-                        {options.map(option => (
+                        {options.map((option) => (
                             <option key={option.value} value={option.value}>
                                 {option.label}
                             </option>
@@ -48,4 +42,4 @@ function FormikSelect({
     );
 }
 
-export default injectIntl(FormikSelect);
+export default FormikSelect;

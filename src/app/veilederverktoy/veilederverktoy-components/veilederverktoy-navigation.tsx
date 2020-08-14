@@ -11,7 +11,6 @@ import StoppKvpPeriode from '../stopp-kvp-periode/stopp-kvp-periode';
 import StoppKVPKvittering from '../stopp-kvp-periode/stopp-kvp-periode-kvittering';
 import StartDigitalOppfolgingKvittering from '../start-digital-oppfolging/start-digital-oppfolging-kvittering';
 import StartDigitalOppfolging from '../start-digital-oppfolging/start-digital-oppfolging';
-import hiddenIf from '../../components/hidden-if/hidden-if';
 import { StringOrNothing } from '../../../types/utils/stringornothings';
 import OpprettOppgave from '../opprett-oppgave/opprett-oppgave';
 import OpprettOppgaveKvittering from '../opprett-oppgave/opprett-oppgave-kvittering';
@@ -103,7 +102,7 @@ function VeilederVerktoyNavigation(props: PropsWithChildren<VeilederVerktoyNavig
 }
 
 const mapStateToProps = (state: Appstate): StateProps => ({
-    navigation: state.ui.navigation
+    navigation: state.ui.navigation,
 });
 
-export default connect<StateProps>(mapStateToProps)(hiddenIf(VeilederVerktoyNavigation));
+export default connect(mapStateToProps)(VeilederVerktoyNavigation);

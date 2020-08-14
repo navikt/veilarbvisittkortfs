@@ -1,5 +1,4 @@
 import React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { Dispatch } from 'redux';
 import { opprettHenvendelse } from '../../../store/dialog/actions';
 import { connect } from 'react-redux';
@@ -25,7 +24,7 @@ interface OwnValues extends StartEskaleringValues {
     tekst: string;
 }
 
-type StartEskaleringProps = StateProps & DispatchProps & InjectedIntlProps;
+type StartEskaleringProps = StateProps & DispatchProps;
 
 function StartEskalering(props: StartEskaleringProps) {
     if (props.kanIkkeVarsles) {
@@ -52,7 +51,7 @@ function StartEskalering(props: StartEskaleringProps) {
     const initialValues = {
         begrunnelse: '',
         brukMalvelger: true,
-        overskrift: props.intl.formatMessage({ id: 'dialog.eskalering.overskrift' }),
+        overskrift: 'Du har fått et varsel fra NAV',
         tekst: '',
     };
     return (
@@ -86,4 +85,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         ),
 });
 
-export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(injectIntl(StartEskalering));
+export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(StartEskalering);

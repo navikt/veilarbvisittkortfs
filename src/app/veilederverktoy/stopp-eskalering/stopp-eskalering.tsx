@@ -9,7 +9,6 @@ import FormikModal from '../../components/formik/formik-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { Form } from 'formik';
 import FormikCheckBox from '../../components/formik/formik-checkbox';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
 import BegrunnelseFooter from '../begrunnelseform/begrunnelse-form-footer';
 import { BegrunnelseTextArea } from '../begrunnelseform/begrunnelse-textarea';
 import './stopp-eskalering.less';
@@ -23,7 +22,7 @@ interface StateProps {
     tilhorendeDialogId: string;
 }
 
-type StoppEskaleringProps = StateProps & DispatchProps & InjectedIntlProps;
+type StoppEskaleringProps = StateProps & DispatchProps;
 
 function StoppEskalering(props: StoppEskaleringProps) {
     return (
@@ -31,7 +30,7 @@ function StoppEskalering(props: StoppEskaleringProps) {
             tittel="Fjern markering av varsel"
             className="stopp-eskalering"
             initialValues={{
-                begrunnelse: props.intl.formatMessage({ id: 'innstillinger.modal.stopp-eskalering.automatisk-tekst' }),
+                begrunnelse: 'Du har gjennomført møtet eller aktiviteten som vi ba deg om å gjøre.',
                 skalSendeHendelse: false,
             }}
             handleSubmit={(values) =>
@@ -78,4 +77,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         dispatch(stoppEskalering(dialogId, skalSendeHendelse, beskrivelse)),
 });
 
-export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(injectIntl(StoppEskalering));
+export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(StoppEskalering);

@@ -10,7 +10,6 @@ import {
     validerArbeidslisteKommentarFeldt,
     validerArbeidslisteTittelFeldt,
 } from '../utils/formik-validation';
-import { injectIntl, InjectedIntlProps } from 'react-intl';
 import ArbeidslistekategoriVisning from './arbeidslistekategori/arbeidslisteikon-visning';
 
 interface ArbeidslisteFormProps {
@@ -20,7 +19,7 @@ interface ArbeidslisteFormProps {
     fnr: string;
 }
 
-function ArbeidslisteForm(props: ArbeidslisteFormProps & InjectedIntlProps) {
+function ArbeidslisteForm(props: ArbeidslisteFormProps) {
     return (
         <div className="arbeidsliste__bruker">
             <div className="blokk-s">
@@ -53,4 +52,4 @@ function ArbeidslisteForm(props: ArbeidslisteFormProps & InjectedIntlProps) {
     );
 }
 
-export default injectIntl(ArbeidslisteForm);
+export default ArbeidslisteForm;
