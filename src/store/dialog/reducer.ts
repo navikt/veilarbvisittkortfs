@@ -96,7 +96,7 @@ function* opprettHenvendelseStoppEskalering(action: OpprettHenvendelseAction) {
     }
 }
 
-function* startEskaleringMedDialog(action: OpprettHenvendelseActionSuccess) {
+function* startEskaleringMedDialog(action: OpprettHenvendelseActionSuccess): any {
     try {
         const [dialogData1, dialogData2] = yield all([
             DialogApi.oppdaterFerdigbehandlet(action.data.id, true, action.fnr),

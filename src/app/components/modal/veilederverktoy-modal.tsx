@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { injectIntl, InjectedIntlProps } from 'react-intl';
 import { Dispatch } from 'redux';
 import { navigerAction } from '../../../store/navigation/actions';
 import Modal from './modal';
@@ -17,7 +16,7 @@ interface DispatchProps {
     lukkModal: () => void;
 }
 
-type VeilederVerktoyModalProps = OwnProps & DispatchProps & InjectedIntlProps;
+type VeilederVerktoyModalProps = OwnProps & DispatchProps;
 
 function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
     return (
@@ -37,4 +36,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     lukkModal: () => dispatch(navigerAction(null)),
 });
 
-export default connect<{}, DispatchProps, OwnProps>(null, mapDispatchToProps)(injectIntl(VeilederVerktoyModal));
+export default connect<{}, DispatchProps, OwnProps>(null, mapDispatchToProps)(VeilederVerktoyModal);
