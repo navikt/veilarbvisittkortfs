@@ -3,11 +3,24 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { OppgaveHistorikk } from '../../../../types/oppgave-historikk';
 import { opprettetAvTekst } from './opprettet-av';
 import moment from 'moment';
-import { FormattedMessage } from 'react-intl';
 
 interface OwnProps {
     oppgaveHistorikk: OppgaveHistorikk;
 }
+
+const oppgaveTemaTekst = {
+    INDIVIDSTONAD: 'Individstønad (Tiltakspenger)',
+    DAGPENGER: 'Dagpenger',
+    OPPFOLGING: 'Oppfølging',
+    ARBEIDSAVKLARING: 'Arbeidsavklaringspenger',
+    ENSLIG_FORSORGER: 'Enslig forsørger',
+    TILLEGGSTONAD: 'Tilleggsstønad',
+};
+
+const oppgaveTypetekst = {
+    VURDER_HENVENDELSE: 'Vurder henvendelse',
+    VURDER_KONSEKVENS_FOR_YTELSE: 'Vurder konsekvens for ytelse',
+};
 
 function OppgaveHistorikkKomponent({ oppgaveHistorikk }: OwnProps) {
     const { oppgaveTema, oppgaveType } = oppgaveHistorikk;
@@ -15,10 +28,7 @@ function OppgaveHistorikkKomponent({ oppgaveHistorikk }: OwnProps) {
         <div className="historikk__elem blokk-xs">
             <Element>Gosys-oppgave opprettet</Element>
             <Normaltekst>
-                <FormattedMessage
-                    id="innstillinger.modal.historikk-gosys-oppgave-tekst"
-                    values={{ oppgaveTema, oppgaveType }}
-                />
+                {`Oppgave med tema ${oppgaveTemaTekst[oppgaveTema]} og type ${oppgaveTypetekst[oppgaveType]} opprettet`}
             </Normaltekst>
             <Undertekst>
                 {`${moment(oppgaveHistorikk.dato).format('DD.MM.YYYY')} ${opprettetAvTekst(
