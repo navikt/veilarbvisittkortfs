@@ -9,7 +9,7 @@
     "test:coverage": "echo \"her testar vi ingenting\"",
     "lint": "echo \"her lintas det ikke\"",
     "eject": "react-scripts eject",
-    "heroku-postbuild": "cross-env REACT_APP_MOCK=true craco build"
+    "heroku-postbuild": "cross-env REACT_APP_MOCK=true PUBLIC_URL=/ craco build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@navikt/fnrvalidator": "^1.1.3",
+    "@navikt/navspa": "^1.0.3",
     "@nutgaard/use-fetch": "^2.3.1",
     "@types/react-collapse": "^5.0.0",
     "babel-polyfill": "^6.26.0",
