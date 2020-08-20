@@ -2,6 +2,7 @@
   "name": "veilarbvisittkortfs",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/veilarbvisittkortfs",
   "scripts": {
     "start": "REACT_APP_MOCK=true craco start",
     "build": "craco build",
