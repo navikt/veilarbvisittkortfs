@@ -2,14 +2,13 @@
   "name": "veilarbvisittkortfs",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/veilarbvisittkortfs",
   "scripts": {
     "start": "REACT_APP_MOCK=true craco start",
     "build": "craco build",
     "test:coverage": "echo \"her testar vi ingenting\"",
     "lint": "echo \"her lintas det ikke\"",
     "eject": "react-scripts eject",
-    "heroku-postbuild": "cross-env REACT_APP_MOCK=true craco build"
+    "heroku-postbuild": "cross-env REACT_APP_MOCK=true PUBLIC_URL=/ craco build"
   },
   "eslintConfig": {
     "extends": "react-app"
