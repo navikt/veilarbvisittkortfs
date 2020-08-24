@@ -1,6 +1,6 @@
 import App from './app';
-import NAVSPA from './NAVSPA';
 import env from './app/utils/environment';
+import NAVSPA from '@navikt/navspa';
 
 if (!(global as any)._babelPolyfill) {
     require('babel-polyfill');

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { Select, SelectProps } from 'nav-frontend-skjema';
-import { useIntl } from 'react-intl';
 import { getErrors } from './formik-utils';
 import { Partial } from '../../../types/partial-type';
 
@@ -13,19 +12,16 @@ interface FormikInputProps {
 }
 
 function FormikSelect({ name, validate, label, options, ...selectProps }: FormikInputProps & Partial<SelectProps>) {
-    const intl = useIntl();
     return (
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
                 const feil = getErrors(form.errors, form.touched, name);
-                const labelText = intl.formatMessage({ id: label });
                 return (
                     <Select
                         id={name}
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
                         name={name}
-                        label={labelText}
                         feil={feil}
                         {...selectProps}
                         value={field.value}
