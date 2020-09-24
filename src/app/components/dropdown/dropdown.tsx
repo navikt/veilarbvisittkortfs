@@ -8,7 +8,7 @@ import { useDocumentEventListner } from '../../../hooks/use-event-listner';
 /* tslint:disable */
 const btnCls = (erApen: boolean, className: string | undefined) =>
     classNames('dropdown', className, {
-        'dropdown--apen': erApen
+        'dropdown--apen': erApen,
     });
 
 interface DropdownProps {
@@ -20,6 +20,7 @@ interface DropdownProps {
     onLukk?: () => void;
     onClick?: () => void;
     btnClassnames?: string;
+    ariaLabelledBy?: string;
 }
 
 function harTrykktPaEsc(e: React.KeyboardEvent) {
@@ -72,6 +73,7 @@ function Dropdown(props: DropdownProps) {
                     onClick={toggleDropdown}
                     aria-expanded={apen}
                     aria-controls={`${name}-dropdown__innhold`}
+                    aria-labelledby={props.ariaLabelledBy}
                 >
                     {knappeTekst}
                 </button>
@@ -79,7 +81,7 @@ function Dropdown(props: DropdownProps) {
                     <ul
                         className={'dropdown__innhold dropdown__innhold'}
                         id={`${name}-dropdown__innhold`}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (harTrykktPaEsc(e)) {
                                 e.stopPropagation();
                                 e.preventDefault();
