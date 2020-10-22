@@ -9,6 +9,8 @@ import FeatureApi from '../../../../api/feature-api';
 
 export function AvsluttOppfolgingInfoText(props: {
     avslutningStatus: OrNothing<AvslutningStatus>;
+    harYtelser?: boolean;
+    harTiltak?: boolean;
     datoErInnenFor28DagerSiden: boolean;
     harUbehandledeDialoger: boolean;
     fnr: string;
@@ -26,7 +28,6 @@ export function AvsluttOppfolgingInfoText(props: {
             setLasterData(false);
         });
     });
-
     if (!props.avslutningStatus) {
         return null;
     }
@@ -37,16 +38,17 @@ export function AvsluttOppfolgingInfoText(props: {
     const aktivMindreEnn28Dager = props.datoErInnenFor28DagerSiden
         ? 'Brukeren har vært inaktiv i mindre enn 28 dager. Vil du likevel avslutte brukerens oppfølgingsperiode?'
         : 'Her avslutter du brukerens oppfølgingsperioden og legger inn en kort begrunnelse om hvorfor.';
-    const { harTiltak, harYtelser } = props.avslutningStatus;
     return (
         <>
             <Normaltekst>{aktivMindreEnn28Dager}</Normaltekst>
-            <HiddenIfAlertStripeAdvarselSolid hidden={!props.harUbehandledeDialoger && !harTiltak && !harYtelser}>
+            <HiddenIfAlertStripeAdvarselSolid
+                hidden={!props.harUbehandledeDialoger && !props.harTiltak && !props.harYtelser}
+            >
                 Du kan avslutte oppfølgingsperioden selv om:
                 <ul className="margin--0">
                     {props.harUbehandledeDialoger && <li>Brukeren har ubehandlede dialoger</li>}
-                    {harTiltak && <li>Brukeren har aktive saker i Arena</li>}
-                    {harYtelser && <li>Brukeren har aktive tiltak i Arena</li>}
+                    {props.harTiltak && <li>Brukeren har aktive tiltak i Arena</li>}
+                    {props.harYtelser && <li>Brukeren har aktive saker i Arena</li>}
                 </ul>
             </HiddenIfAlertStripeAdvarselSolid>
 

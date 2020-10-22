@@ -8,6 +8,7 @@ import VeilederData, { enhetData } from './veiledere';
 import InnstillingsHistorikk from './innstillingshistorikk';
 import Oppgavehistorikk from './oppgave-historikk';
 import Henvendelse from './henvedelse';
+import { avslutningsstatus } from './avslutningsstatus';
 
 const mock = FetchMock.configure({
     enableFallback: true,
@@ -43,33 +44,7 @@ mock.post('/veilarboppfolging/api/oppfolging/avsluttOppfolging', (args: HandlerA
 
 mock.post('/veilarboppfolging/api/oppfolging/settManuell', Object.assign({}, Oppfolging, { manuell: true }));
 
-mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', {
-    avslutningStatus: {
-        kanAvslutte: true,
-        harTiltak: false,
-        harYtelser: false,
-        underOppfolging: true,
-        inaktiveringsDato: null,
-        underKvp: false,
-    },
-    erIkkeArbeidssokerUtenOppfolging: false,
-    erSykmeldtMedArbeidsgiver: false,
-    fnr: '10108000398',
-    gjeldendeEskaleringsvarsel: null,
-    harSkriveTilgang: false,
-    inaktivtIArena: true,
-    inaktiveringsdato: null,
-    kanReaktiveras: false,
-    kanStarteOppfolging: false,
-    manuell: false,
-    oppfolgingUtgang: null,
-    oppfolgingsPerioder: [],
-    reservarsjonKRR: true,
-    underKvp: false,
-    underOppfolging: true,
-    veilederId: null,
-    vilkarMaBesvarel: false,
-});
+mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', avslutningsstatus);
 mock.post('/veilarboppfolging/api/oppfolging/startKvp', {});
 
 /*--OPPGAVE--*/
