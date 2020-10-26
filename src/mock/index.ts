@@ -47,6 +47,9 @@ mock.post('/veilarboppfolging/api/oppfolging/settManuell', Object.assign({}, Opp
 mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', avslutningsstatus);
 mock.post('/veilarboppfolging/api/oppfolging/startKvp', {});
 
+/*--AKTIVITET--*/
+mock.get('/veilarbaktivitet/api/aktivitet/harTiltak', true);
+
 /*--OPPGAVE--*/
 mock.get('/veilarboppgave/api/enheter', [
     { enhetId: '0000', navn: 'NAV Ost' },

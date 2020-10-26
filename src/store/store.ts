@@ -16,12 +16,13 @@ import oppgavehistorikkReducer, { oppgaveHistorikkSaga } from './oppgave/reducer
 import enhetIdReducer from './enhet/reducer';
 import toastsReducer from './toast/reducer';
 import avsluttOppfolgingStatusReducer, { avsluttOppfolgingStatusSaga } from './avslutningstatus/reducer';
+import aktivitetReducer, { hentHarTiltakSaga } from './aktivitet/reducer';
 
 const sagaMiddleware = createReduxSaga();
 
 const uiReducers = combineReducers({
     navigation: navigationReducer,
-    toasts: toastsReducer
+    toasts: toastsReducer,
 });
 
 const store = createStore(
@@ -37,7 +38,8 @@ const store = createStore(
         oppgavehistorikk: oppgavehistorikkReducer,
         enhetId: enhetIdReducer,
         avsluttOppfolgingStatus: avsluttOppfolgingStatusReducer,
-        ui: uiReducers
+        ui: uiReducers,
+        aktivitet: aktivitetReducer,
     }),
     composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
@@ -53,7 +55,8 @@ function* rootSaga() {
         fork(tilgangTilBrukersKontorSaga),
         fork(instillingshistorikkSaga),
         fork(oppgaveHistorikkSaga),
-        fork(avsluttOppfolgingStatusSaga)
+        fork(avsluttOppfolgingStatusSaga),
+        fork(hentHarTiltakSaga),
     ]);
 }
 

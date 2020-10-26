@@ -1,11 +1,13 @@
-import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect, useState } from 'react';
+import { Normaltekst } from 'nav-frontend-typografi';
+import NavFrontendSpinner from 'nav-frontend-spinner';
+import { useDispatch } from 'react-redux';
 import { AvslutningStatus } from '../../../../types/oppfolging';
 import { OrNothing } from '../../../../types/utils/ornothing';
 import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
 import VedtaksstotteApi from '../../../../api/vedtaksstotte-api';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import FeatureApi from '../../../../api/feature-api';
+import { hentHarTiltak } from '../../../../store/aktivitet/actions';
 
 export function AvsluttOppfolgingInfoText(props: {
     avslutningStatus: OrNothing<AvslutningStatus>;
@@ -18,6 +20,8 @@ export function AvsluttOppfolgingInfoText(props: {
     const [harUtkast, oppdaterHarUtkast] = useState(false);
     const [lasterData, setLasterData] = useState(true);
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         FeatureApi.hentFeatures('veilarbvedtaksstottefs.prelansering').then((resp) => {
             if (!resp['veilarbvedtaksstottefs.prelansering']) {
@@ -27,7 +31,9 @@ export function AvsluttOppfolgingInfoText(props: {
             }
             setLasterData(false);
         });
-    });
+
+        dispatch(hentHarTiltak());
+    }, [props.fnr, dispatch]);
     if (!props.avslutningStatus) {
         return null;
     }

@@ -5,7 +5,7 @@ export interface AktivitetApi {
 }
 
 function hentHarTiltak(fnr: string) {
-    return fetchToJson(`/api/aktivitet/harTiltak?fnr=${fnr}`);
+    return fetchToJson(`/veilarbaktivitet/api/aktivitet/harTiltak?fnr=${fnr}`);
 }
 
 export default { hentHarTiltak } as AktivitetApi;
