@@ -10,7 +10,7 @@ export interface HentHarTiltakAction {
 
 export interface HentHarTiltakActionSuccess {
     type: AktivitetType.HENT_HAR_TILTAK_SUCCESS;
-    data: boolean;
+    harTiltak: boolean;
 }
 
 export interface HentHarTiltakActionError {
@@ -22,9 +22,9 @@ export const hentHarTiltak = (): HentHarTiltakAction => ({
     type: AktivitetType.HENT_HAR_TILTAK,
 });
 
-export const hentHarTiltakSuccess = (data: boolean): HentHarTiltakActionSuccess => ({
+export const hentHarTiltakSuccess = (harTiltak: boolean): HentHarTiltakActionSuccess => ({
     type: AktivitetType.HENT_HAR_TILTAK_SUCCESS,
-    data,
+    harTiltak,
 });
 
 export const hentHarTiltakError = (error: Error): HentHarTiltakActionError => ({

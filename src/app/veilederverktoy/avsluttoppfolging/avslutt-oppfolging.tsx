@@ -68,7 +68,6 @@ function AvsluttOppfolging(props: AvsluttOppfolgingProps) {
                     <AvsluttOppfolgingInfoText
                         avslutningStatus={props.avslutningStatus}
                         harYtelser={props.avslutningStatus?.harYtelser}
-                        harTiltak={props.avslutningStatus?.harTiltak}
                         datoErInnenFor28DagerSiden={props.datoErInnenFor28DagerSiden}
                         harUbehandledeDialoger={props.harUbehandledeDialoger}
                         fnr={props.fnr}

@@ -1,12 +1,16 @@
+import { Reducer } from 'redux';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { FETCH_STATUS } from '../../types/fetch-status';
 import { OrNothing } from '../../types/utils/ornothing';
-import { Reducer } from 'redux';
 import OppfolgingSelector from '../oppfolging/selector';
-import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { AktivitetActions, AktivitetType, hentHarTiltakError, hentHarTiltakSuccess } from './actions';
 import AktivitetApi from '../../api/aktivitet-api';
 
-export type AktivitetState = { data: OrNothing<boolean> } & {
+export interface AktivitetData {
+    harTiltak: boolean;
+}
+
+export type AktivitetState = { data: OrNothing<AktivitetData> } & {
     status: FETCH_STATUS;
     error: OrNothing<Error>;
 };
@@ -29,7 +33,7 @@ const aktivitetReducer: Reducer<AktivitetState, AktivitetActions> = (state = ini
             return {
                 ...state,
                 status: 'DONE',
-                data: action.data,
+                data: { harTiltak: action.harTiltak },
             };
         }
         case AktivitetType.HENT_HAR_TILTAK_ERROR: {
@@ -47,8 +51,8 @@ const aktivitetReducer: Reducer<AktivitetState, AktivitetActions> = (state = ini
 function* hentHarTiltak() {
     try {
         const fnr = yield select(OppfolgingSelector.selectFnr);
-        const data = yield call(() => AktivitetApi.hentHarTiltak(fnr));
-        yield put(hentHarTiltakSuccess(data));
+        const harTiltak = yield call(() => AktivitetApi.hentHarTiltak(fnr));
+        yield put(hentHarTiltakSuccess(harTiltak));
     } catch (e) {
         yield put(hentHarTiltakError(e));
     }

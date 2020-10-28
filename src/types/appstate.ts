@@ -11,6 +11,7 @@ import { OppgaveHistorikkState } from '../store/oppgave/reducer';
 import { EnhetState } from '../store/enhet/reducer';
 import { AvsluttOppfolgingState } from '../store/avslutningstatus/reducer';
 import { ToastActionType } from '../store/toast/actions';
+import { AktivitetState } from '../store/aktivitet/reducer';
 
 export interface Appstate {
     oppfolging: OppfogingState;
@@ -28,4 +29,5 @@ export interface Appstate {
         navigation: NavigationState;
         toasts: { toasts: ToastActionType[] };
     };
+    aktvitet: AktivitetState;
 }
