@@ -8,6 +8,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { navigerAction } from '../../../store/navigation/actions';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import StartEskaleringForm, { StartEskaleringValues } from './start-eskalering-form';
+import PersonaliaSelectors from '../../../store/personalia/selectors';
 
 interface DispatchProps {
     handleSubmit: (values: OwnValues) => void;
@@ -16,7 +17,8 @@ interface DispatchProps {
 
 interface StateProps {
     isLoading: boolean;
-    kanIkkeVarsles: boolean;
+    registrertKRR: boolean;
+    harBruktNivaa4: boolean;
 }
 
 interface OwnValues extends StartEskaleringValues {
@@ -27,7 +29,11 @@ interface OwnValues extends StartEskaleringValues {
 type StartEskaleringProps = StateProps & DispatchProps;
 
 function StartEskalering(props: StartEskaleringProps) {
-    if (props.kanIkkeVarsles) {
+    if (!props.registrertKRR || !props.harBruktNivaa4) {
+        const varselTekst = !props.registrertKRR
+            ? 'Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret, og du kan derfor ikke sende varsel.'
+            : 'Du kan ikke sende varsel fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4 (for eksempel BankID).';
+
         return (
             <VarselModal
                 className=""
@@ -36,7 +42,7 @@ function StartEskalering(props: StartEskaleringProps) {
                 isOpen={true}
                 type="ADVARSEL"
             >
-                Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret, og du kan derfor ikke sende varsel.
+                {varselTekst}
             </VarselModal>
         );
     }
@@ -69,7 +75,8 @@ function StartEskalering(props: StartEskaleringProps) {
 
 const mapStateToProps = (state: Appstate) => ({
     isLoading: OppfolgingSelector.selectOppfolgingStatus(state) || state.dialoger.status === 'LOADING',
-    kanIkkeVarsles: !state.oppfolging.data.kanVarsles,
+    registrertKRR: state.oppfolging.data.kanVarsles,
+    harBruktNivaa4: PersonaliaSelectors.selectHarBruktNivaa4(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

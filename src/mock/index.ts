@@ -8,6 +8,7 @@ import VeilederData, { enhetData } from './veiledere';
 import InnstillingsHistorikk from './innstillingshistorikk';
 import Oppgavehistorikk from './oppgave-historikk';
 import Henvendelse from './henvedelse';
+import { harBruktNivaa4 } from './har-brukt-nivaa4';
 
 const mock = FetchMock.configure({
     enableFallback: true,
@@ -19,6 +20,7 @@ mock.get('/veilarbpersonflatefs/api/feature', { 'veilarbvedtaksstottefs.prelanse
 mock.get('/veilarboppfolging/api/oppfolging', Oppfolging);
 
 mock.get('/veilarbperson/api/person/:fnr', Personalia);
+mock.get('/veilarbperson/api/person/:fnr/harNivaa4', harBruktNivaa4);
 mock.get('/veilarbvedtaksstotte/api/:fnr/harutkast', true);
 
 mock.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', Veilederliste);
