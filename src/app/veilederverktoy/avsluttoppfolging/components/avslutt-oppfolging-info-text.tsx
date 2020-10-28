@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { useDispatch, useSelector } from 'react-redux';
 import { AvslutningStatus } from '../../../../types/oppfolging';
 import { OrNothing } from '../../../../types/utils/ornothing';
 import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
 import VedtaksstotteApi from '../../../../api/vedtaksstotte-api';
 import FeatureApi from '../../../../api/feature-api';
-import { hentHarTiltak } from '../../../../store/aktivitet/actions';
-import AktivitetSelector from '../../../../store/aktivitet/selector';
+import AktivitetApi from '../../../../api/aktivitet-api';
 
 export function AvsluttOppfolgingInfoText(props: {
     avslutningStatus: OrNothing<AvslutningStatus>;
@@ -19,8 +17,7 @@ export function AvsluttOppfolgingInfoText(props: {
 }) {
     const [harUtkast, oppdaterHarUtkast] = useState(false);
     const [lasterData, setLasterData] = useState(true);
-
-    const dispatch = useDispatch();
+    const [harTiltak, setHarTiltak] = useState(false);
 
     useEffect(() => {
         FeatureApi.hentFeatures('veilarbvedtaksstottefs.prelansering').then((resp) => {
@@ -32,10 +29,8 @@ export function AvsluttOppfolgingInfoText(props: {
             setLasterData(false);
         });
 
-        dispatch(hentHarTiltak());
-    }, [props.fnr, dispatch]);
-
-    const harTiltak = useSelector(AktivitetSelector.selectHarTiltak);
+        AktivitetApi.hentHarTiltak(props.fnr).then((response) => setHarTiltak(response));
+    }, [props.fnr]);
 
     if (!props.avslutningStatus) {
         return null;
