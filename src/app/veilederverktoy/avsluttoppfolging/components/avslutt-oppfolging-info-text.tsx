@@ -18,6 +18,7 @@ export function AvsluttOppfolgingInfoText(props: {
     const [harUtkast, oppdaterHarUtkast] = useState(false);
     const [lasterData, setLasterData] = useState(true);
     const [harTiltak, setHarTiltak] = useState(false);
+    const [tiltakFeiler, setTiltakFeiler] = useState(false);
 
     useEffect(() => {
         FeatureApi.hentFeatures('veilarbvedtaksstottefs.prelansering').then((resp) => {
@@ -29,7 +30,9 @@ export function AvsluttOppfolgingInfoText(props: {
             setLasterData(false);
         });
 
-        AktivitetApi.hentHarTiltak(props.fnr).then((response) => setHarTiltak(response));
+        AktivitetApi.hentHarTiltak(props.fnr)
+            .then((response) => setHarTiltak(response))
+            .catch(() => setTiltakFeiler(true));
     }, [props.fnr]);
 
     if (!props.avslutningStatus) {
@@ -50,7 +53,8 @@ export function AvsluttOppfolgingInfoText(props: {
                 Du kan avslutte oppfølgingsperioden selv om:
                 <ul className="margin--0">
                     {props.harUbehandledeDialoger && <li>Brukeren har ubehandlede dialoger</li>}
-                    {harTiltak && <li>Brukeren har aktive tiltak i Arena</li>}
+                    {tiltakFeiler && <li>Brukeren kan ha aktive tiltak i Arena</li>}
+                    {!tiltakFeiler && harTiltak && <li>Brukeren har aktive tiltak i Arena</li>}
                     {props.harYtelser && <li>Brukeren har aktive saker i Arena</li>}
                 </ul>
             </HiddenIfAlertStripeAdvarselSolid>
