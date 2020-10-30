@@ -1,7 +1,6 @@
-import { JSONValue } from 'yet-another-fetch-mock';
 import { Arbeidsliste } from '../types/arbeidsliste';
 
-const arbeidsliste: Arbeidsliste & JSONValue = {
+const arbeidsliste: Arbeidsliste = {
     arbeidslisteAktiv: null,
     endringstidspunkt: null,
     frist: null,
@@ -10,7 +9,7 @@ const arbeidsliste: Arbeidsliste & JSONValue = {
     kommentar: null,
     overskrift: null,
     sistEndretAv: null,
-    kategori: null
+    kategori: null,
 };
 
 export default arbeidsliste;

@@ -1,7 +1,6 @@
 import { InnstillingsHistorikk } from '../types/innstillings-historikk';
-import { JSONValue } from 'yet-another-fetch-mock';
 
-const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [
+const innstillingsHistorikk: InnstillingsHistorikk[] = [
     {
         type: 'AVSLUTTET_OPPFOLGINGSPERIODE',
         dato: '2018-08-14T13:56:53.813+02:00',
