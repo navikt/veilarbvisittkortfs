@@ -16,6 +16,7 @@ import InnstillingsHistorikk from './innstillingshistorikk';
 import Oppgavehistorikk from './oppgave-historikk';
 import Henvendelse from './henvedelse';
 import { avslutningsstatus } from './avslutningsstatus';
+import { harBruktNivaa4 } from './har-brukt-nivaa4';
 
 const mock = FetchMock.configure({
     enableFallback: true,
@@ -40,6 +41,7 @@ const jsonResponse = (response: any): MockHandler => (req: MockRequest, res: Moc
     res(ctx.json(response));
 
 mock.get('/veilarboppfolging/api/person/:fnr/oppfolgingsstatus', jsonResponse(Oppfolgingsstatus));
+mock.get('/veilarbperson/api/person/:fnr/harNivaa4', jsonResponse(harBruktNivaa4));
 
 mock.get('/veilarbpersonflatefs/api/feature', jsonResponse({ 'veilarbvedtaksstottefs.prelansering': true }));
 mock.get('/veilarboppfolging/api/oppfolging', jsonResponse(Oppfolging));

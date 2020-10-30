@@ -7,7 +7,7 @@ import { hentOppfolging } from '../../store/oppfolging/actions';
 import OppfolgingsstatusSelector from '../../store/oppfolging-status/selectors';
 import OppfolgingSelector from '../../store/oppfolging/selector';
 import { hentAlleVeiledereForEnheten, hentPaloggetVeileder } from '../../store/tildel-veileder/actions';
-import { hentPersonalia } from '../../store/personalia/actions';
+import { hentHarBruktNivaa4, hentPersonalia } from '../../store/personalia/actions';
 import PersonaliaSelector from '../../store/personalia/selectors';
 import { hentTilgangTilBrukersKontor } from '../../store/tilgang-til-brukerskontor/actions';
 import { hentArbeidsliste } from '../../store/arbeidsliste/actions';
@@ -41,6 +41,7 @@ function InitialDataProvider({ fnr, enhet, children }: PropsWithChildren<Initial
         dispatch(hentPersonalia(fnr));
         dispatch(hentTilgangTilBrukersKontor(fnr));
         dispatch({ type: 'SETT_ENHET_FRA_PERSONFLATEFS', enhet });
+        dispatch(hentHarBruktNivaa4(fnr));
     }, [fnr, dispatch, enhet]);
 
     useEffect(() => {
