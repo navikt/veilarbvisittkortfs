@@ -12,9 +12,10 @@ export interface PersonaliaSelector {
     selectFornavn: (state: Appstate) => string;
     selectEtternavn: (state: Appstate) => string;
     selectMellomnavn: (state: Appstate) => string;
+    selectHarBruktNivaa4: (state: Appstate) => boolean;
 }
 
-function selectPersonaliaSlice (state: Appstate): PersonaliaState {
+function selectPersonaliaSlice(state: Appstate): PersonaliaState {
     return state.personalia;
 }
 
@@ -28,26 +29,30 @@ function selectFodselsnummer(state: Appstate): string {
 
 function selectPersonaliaIsLoading(state: Appstate): boolean {
     const personaliaStatus = selectPersonaliaSlice(state).status;
-    return  personaliaStatus === 'NOT_STARTED' || personaliaStatus === 'LOADING';
+    return personaliaStatus === 'NOT_STARTED' || personaliaStatus === 'LOADING';
 }
 
-function selectSammensattNavn (state: Appstate): string {
+function selectSammensattNavn(state: Appstate): string {
     const fornavn = selectFornavn(state);
     const mellomnavn = selectMellomnavn(state) || '';
     const etternavn = selectEtternavn(state);
     return storeForbokstaver([fornavn, mellomnavn, etternavn]);
 }
 
-function selectFornavn (state: Appstate): string {
+function selectFornavn(state: Appstate): string {
     return selectPersonaliaData(state).fornavn;
 }
 
-function selectEtternavn (state: Appstate): string {
+function selectEtternavn(state: Appstate): string {
     return selectPersonaliaData(state).etternavn;
 }
 
-function selectMellomnavn (state: Appstate): StringOrNothing {
+function selectMellomnavn(state: Appstate): StringOrNothing {
     return selectPersonaliaData(state).mellomnavn;
+}
+
+function selectHarBruktNivaa4(state: Appstate): boolean {
+    return state.personalia.harbruktnivaa4.data.harbruktnivaa4;
 }
 
 export default {
@@ -58,4 +63,5 @@ export default {
     selectEtternavn,
     selectFornavn,
     selectMellomnavn,
+    selectHarBruktNivaa4,
 } as PersonaliaSelector;
