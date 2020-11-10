@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { AvslutningStatus } from '../../../../types/oppfolging';
-import { OrNothing } from '../../../../types/utils/ornothing';
 import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
 import VedtaksstotteApi from '../../../../api/vedtaksstotte-api';
 import FeatureApi from '../../../../api/feature-api';
 import AktivitetApi from '../../../../api/aktivitet-api';
 
 export function AvsluttOppfolgingInfoText(props: {
-    avslutningStatus: OrNothing<AvslutningStatus>;
     harYtelser?: boolean;
     datoErInnenFor28DagerSiden: boolean;
     harUbehandledeDialoger: boolean;
@@ -34,10 +31,6 @@ export function AvsluttOppfolgingInfoText(props: {
             .then((response) => setHarTiltak(response))
             .catch(() => setTiltakFeiler(true));
     }, [props.fnr]);
-
-    if (!props.avslutningStatus) {
-        return null;
-    }
 
     if (lasterData) {
         return <NavFrontendSpinner type="XL" />;
