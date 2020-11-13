@@ -1,11 +1,11 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect, useState } from 'react';
-import { AvslutningStatus } from '../../../../types/oppfolging';
 import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
 import VedtaksstotteApi from '../../../../api/vedtaksstotte-api';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import FeatureApi from '../../../../api/feature-api';
 import { OrNothing } from '../../../../util/type/ornothing';
+import { AvslutningStatus } from '../../../../api/data/oppfolging';
 
 export function AvsluttOppfolgingInfoText(props: {
     avslutningStatus: OrNothing<AvslutningStatus>;

@@ -1,5 +1,5 @@
-import { Oppfolging } from '../../types/oppfolging';
 import { OppfolgingActionType } from './action-type';
+import { Oppfolging } from '../../api/data/oppfolging';
 
 export const hentOppfolging = (fnr: string): HentOppfolgingAction => {
     return {

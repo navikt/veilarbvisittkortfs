@@ -1,29 +1,29 @@
-import { OppfolgingStatus } from '../../types/oppfolging-status';
+import { OppfolgingStatus } from '../../api/data/oppfolging-status';
 
 export enum OppfolgingstatusActionType {
     HENT_OPPFOLGINGSTATUS = 'HENT_OPPFOLGINGSTATUS',
     HENT_OPPFOLGINGSTATUS_SUCCESS = 'HENT_OPPFOLGINGSTATUS_SUCCESS',
-    HENT_OPPFOLGINGSTATUS_ERROR = 'HENT_OPPFOLGINGSTATUS_ERROR'
+    HENT_OPPFOLGINGSTATUS_ERROR = 'HENT_OPPFOLGINGSTATUS_ERROR',
 }
 
 export const hentOppfolgingsstatus = (fnr: string): HentOppfolgingstatusAction => {
     return {
         type: OppfolgingstatusActionType.HENT_OPPFOLGINGSTATUS,
-        fnr
+        fnr,
     };
 };
 
 export const hentOppfolgingstatusSuccess = (data: OppfolgingStatus): HentOppfolgingstatusActionSuccess => {
     return {
         type: OppfolgingstatusActionType.HENT_OPPFOLGINGSTATUS_SUCCESS,
-        data
+        data,
     };
 };
 
 export const hentOppfolgingstatusError = (error: Error): HentOppfolgingstatusActionError => {
     return {
         type: OppfolgingstatusActionType.HENT_OPPFOLGINGSTATUS_ERROR,
-        error
+        error,
     };
 };
 
@@ -42,4 +42,7 @@ export interface HentOppfolgingstatusActionError {
     error: Error;
 }
 
-export type OppfolgingStatusActions = HentOppfolgingstatusAction | HentOppfolgingstatusActionSuccess | HentOppfolgingstatusActionError;
+export type OppfolgingStatusActions =
+    | HentOppfolgingstatusAction
+    | HentOppfolgingstatusActionSuccess
+    | HentOppfolgingstatusActionError;

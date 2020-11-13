@@ -1,5 +1,5 @@
-import { Personalia } from '../../types/personalia';
-import { HarBruktNivaa4Type } from '../../types/har-brukt-nivaa4';
+import { Personalia } from '../../api/data/personalia';
+import { HarBruktNivaa4Type } from '../../api/data/har-brukt-nivaa4';
 
 export enum PersonaliaActionType {
     HENT_PERSONALIA = 'HENT_PERSONALIA',

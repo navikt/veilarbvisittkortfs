@@ -1,7 +1,5 @@
-import { FETCH_STATUS } from '../../types/fetch-status';
-import { InnstillingsHistorikk } from '../../types/innstillings-historikk';
-import { call, put, takeLatest } from 'redux-saga/effects';
 import { Reducer } from 'redux';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import {
     HentInnstillinghistorikAction,
     hentInstillingshistorikkError,
@@ -11,6 +9,8 @@ import {
 } from './actions';
 import OppfolgingApi from '../../api/oppfolging-api';
 import { OrNothing } from '../../util/type/ornothing';
+import { InnstillingsHistorikk } from '../../api/data/innstillings-historikk';
+import { FETCH_STATUS } from '../../api/data/fetch-status';
 
 export type InnstillingsHistorikkState = { data: InnstillingsHistorikk[] } & {
     status: FETCH_STATUS;

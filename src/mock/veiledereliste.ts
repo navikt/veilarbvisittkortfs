@@ -1,5 +1,5 @@
 import { JSONValue } from 'yet-another-fetch-mock';
-import { VeilederData } from '../types/veilederdata';
+import { VeilederData } from '../api/data/veilederdata';
 
 function lagVeileder() {
     const fornavn = 'Herpsderps';
@@ -11,7 +11,7 @@ function lagVeileder() {
         ident: id,
         navn: fornavn + ' ' + etternavn,
         fornavn: fornavn,
-        etternavn: etternavn
+        etternavn: etternavn,
     };
 }
 export interface VeilederListe {

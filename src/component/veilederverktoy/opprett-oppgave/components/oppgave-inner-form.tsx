@@ -1,4 +1,3 @@
-import { OppgaveTema } from '../../../../types/oppgave';
 import React from 'react';
 import OpprettOppgaveTypeSelector from './opprett-oppgave-type-selector';
 import OpprettOppgavePrioritetSelector from './opprett-oppgave-prioritet-selector';
@@ -12,6 +11,7 @@ import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import { StringOrNothing } from '../../../../util/type/stringornothings';
 import { OrNothing } from '../../../../util/type/ornothing';
+import { OppgaveTema } from '../../../../api/data/oppgave';
 
 interface OppgaveInnerForm {
     fnr: string;

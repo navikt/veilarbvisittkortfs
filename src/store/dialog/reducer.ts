@@ -1,4 +1,3 @@
-import Dialog from '../../types/dialog';
 import { Reducer } from 'redux';
 import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 import {
@@ -18,11 +17,12 @@ import {
 import DialogApi from '../../api/dialog-api';
 import OppfolgingApi from '../../api/oppfolging-api';
 import { hentOppfolgingSuccess, startEskaleringError, startEskaleringSuccess } from '../oppfolging/actions';
-import { FETCH_STATUS } from '../../types/fetch-status';
 import OppfolgingSelector from '../oppfolging/selector';
 import { replaceAt, eskaleringVarselSendtEvent } from '../../component/utils/utils';
 import { navigerAction } from '../navigation/actions';
 import { OrNothing } from '../../util/type/ornothing';
+import Dialog from '../../api/data/dialog';
+import { FETCH_STATUS } from '../../api/data/fetch-status';
 
 export type DialogState = { data: Dialog[] } & { status: FETCH_STATUS; error: OrNothing<Error> };
 

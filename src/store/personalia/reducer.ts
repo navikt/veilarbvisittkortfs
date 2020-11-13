@@ -1,6 +1,5 @@
 import { Reducer } from 'redux';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { Personalia } from '../../types/personalia';
 import {
     HentHarbruktNivaa4Action,
     hentHarBruktNivaa4Error,
@@ -13,9 +12,10 @@ import {
     PersonaliaActionType,
 } from './actions';
 import { fetchInnloggetNiva4Data, fetchPersonaliaData } from '../../api/api';
-import { FETCH_STATUS } from '../../types/fetch-status';
-import { HarBruktNivaa4Type } from '../../types/har-brukt-nivaa4';
 import { OrNothing } from '../../util/type/ornothing';
+import { HarBruktNivaa4Type } from '../../api/data/har-brukt-nivaa4';
+import { FETCH_STATUS } from '../../api/data/fetch-status';
+import { Personalia } from '../../api/data/personalia';
 
 export type PersonaliaState = {
     data: Personalia;

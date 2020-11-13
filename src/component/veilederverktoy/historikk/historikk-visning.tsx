@@ -1,11 +1,11 @@
-import { InnstillingsHistorikk } from '../../../types/innstillings-historikk';
-import { OppgaveHistorikk } from '../../../types/oppgave-historikk';
 import moment from 'moment';
 import OppgaveHistorikkKomponent from './components/oppgavehistorikk';
 import InnstillingsHistorikkKomponent from './components/innstillingshistorikk';
 import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { OppfolgingEnhetEndret } from './components/oppfolgingEndret';
+import { InnstillingsHistorikk } from '../../../api/data/innstillings-historikk';
+import { OppgaveHistorikk } from '../../../api/data/oppgave-historikk';
 
 type HistorikkInnslagType = InnstillingsHistorikk | OppgaveHistorikk;
 

@@ -4,7 +4,6 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { Appstate } from '../../../types/appstate';
 import PersonaliaSelector from '../../../store/personalia/selectors';
 import { connect } from 'react-redux';
-import { OppgaveFormData, OppgaveTema, OppgaveType, PrioritetType } from '../../../types/oppgave';
 import moment from 'moment';
 import OpprettOppgaveTemaSelector from './components/opprett-oppgave-tema-selector';
 import OppgaveInnerForm from './components/oppgave-inner-form';
@@ -15,6 +14,7 @@ import FormikModal from '../../components/formik/formik-modal';
 import { navigerAction, navigerTilProcesser } from '../../../store/navigation/actions';
 import { OrNothing } from '../../../util/type/ornothing';
 import { StringOrNothing } from '../../../util/type/stringornothings';
+import { OppgaveFormData, OppgaveTema, OppgaveType, PrioritetType } from '../../../api/data/oppgave';
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;

@@ -1,4 +1,3 @@
-import { Arbeidsliste } from '../../types/arbeidsliste';
 import { Reducer } from 'redux';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
@@ -16,11 +15,12 @@ import {
     slettArbeidslisteActionSuccess,
 } from './actions';
 import ArbeidslisteApi from '../../api/arbeidsliste-api';
-import { FETCH_STATUS } from '../../types/fetch-status';
 import { TildelVeilederActionType } from '../tildel-veileder/actions';
 import OppfolgingSelector from '../oppfolging/selector';
 import { navigerAction } from '../navigation/actions';
 import { OrNothing } from '../../util/type/ornothing';
+import { Arbeidsliste } from '../../api/data/arbeidsliste';
+import { FETCH_STATUS } from '../../api/data/fetch-status';
 
 export type ArbeidslisteState = { data: Arbeidsliste } & { status: FETCH_STATUS; error: OrNothing<Error> };
 

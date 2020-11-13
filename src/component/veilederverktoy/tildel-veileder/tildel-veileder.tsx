@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import SokFilter from '../../components/sokfilter/sok-filter';
 import RadioFilterForm from '../../components/radiofilterform/radio-filter-form';
-import { VeilederData } from '../../../types/veilederdata';
 import { Appstate } from '../../../types/appstate';
 import { useDispatch, useSelector } from 'react-redux';
 import { tildelTilVeileder } from '../../../store/tildel-veileder/actions';
@@ -13,6 +12,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { navigerAction } from '../../../store/navigation/actions';
 import { StringOrNothing } from '../../../util/type/stringornothings';
+import { VeilederData } from '../../../api/data/veilederdata';
 
 function settSammenNavn(veileder: VeilederData) {
     return `${veileder.etternavn}, ${veileder.fornavn}`;

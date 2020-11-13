@@ -1,4 +1,3 @@
-import { VeilederData } from '../../types/veilederdata';
 import { Reducer } from 'redux';
 import {
     hentAlleVeiledereForEnhetenError,
@@ -14,12 +13,13 @@ import {
 } from './actions';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import VeilederApi from '../../api/veileder-api';
-import { TildelVeilederResponse } from '../../types/tildel-veileder';
 import { VeilederListe } from '../../mock/veiledereliste';
-import { FETCH_STATUS } from '../../types/fetch-status';
 import { triggerReRenderingAvMao } from '../../component/utils/utils';
 import { navigerAction } from '../navigation/actions';
 import { OrNothing } from '../../util/type/ornothing';
+import { FETCH_STATUS } from '../../api/data/fetch-status';
+import { VeilederData } from '../../api/data/veilederdata';
+import { TildelVeilederResponse } from '../../api/data/tildel-veileder';
 
 export interface TildelVeilederState {
     status: FETCH_STATUS;

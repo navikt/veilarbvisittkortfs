@@ -1,5 +1,5 @@
-import { InnstillingsHistorikk } from '../types/innstillings-historikk';
 import { JSONValue } from 'yet-another-fetch-mock';
+import { InnstillingsHistorikk } from '../api/data/innstillings-historikk';
 
 const innstillingsHistorikk: InnstillingsHistorikk[] & JSONValue = [
     {

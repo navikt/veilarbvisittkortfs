@@ -6,7 +6,6 @@ import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnel
 import { AvsluttOppfolgingInfoText } from './components/avslutt-oppfolging-info-text';
 import AvsluttOppfolgingStatusSelector from '../../../store/avslutningstatus/selector';
 import PersonaliaSelector from '../../../store/personalia/selectors';
-import { AvslutningStatus } from '../../../types/oppfolging';
 import { lagreBegrunnelse, resetBegrunnelse } from '../../../store/avslutningstatus/actions';
 import moment from 'moment';
 import DialogSelector from '../../../store/dialog/selector';
@@ -14,6 +13,7 @@ import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { navigerAction } from '../../../store/navigation/actions';
 import { OrNothing } from '../../../util/type/ornothing';
+import { AvslutningStatus } from '../../../api/data/oppfolging';
 
 interface StateProps {
     begrunnelse: string;

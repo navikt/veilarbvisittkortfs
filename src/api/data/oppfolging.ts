@@ -1,7 +1,5 @@
-/* tslint:disable */
-
-import { StringOrNothing } from '../util/type/stringornothings';
-import { OrNothing } from '../util/type/ornothing';
+import { StringOrNothing } from '../../util/type/stringornothings';
+import { OrNothing } from '../../util/type/ornothing';
 
 export interface EskaleringsVarsel {
     varselId: string;

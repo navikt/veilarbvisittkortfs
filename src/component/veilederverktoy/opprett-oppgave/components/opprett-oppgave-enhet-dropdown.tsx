@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { BehandlandeEnhet, OppgaveTema } from '../../../../types/oppgave';
 import SokFilter from '../../../components/sokfilter/sok-filter';
 import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
 import OppgaveApi from '../../../../api/oppgave-api';
@@ -8,6 +7,7 @@ import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import Dropdown from '../../../components/dropdown/dropdown';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { StringOrNothing } from '../../../../util/type/stringornothings';
+import { BehandlandeEnhet, OppgaveTema } from '../../../../api/data/oppgave';
 
 interface OpprettOppgaveVelgEnhet {
     tema: OrNothing<OppgaveTema>;

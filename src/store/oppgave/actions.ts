@@ -1,9 +1,9 @@
-import { OppgaveFormData, OppgaveFormResponse, OppgaveTema, OppgaveType } from '../../types/oppgave';
+import { OppgaveFormData, OppgaveFormResponse, OppgaveTema, OppgaveType } from '../../api/data/oppgave';
 
 export enum OppgaveActionType {
     LAGRE_OPPGAVE = 'LAGRE_OPPGAVE',
     LAGRE_OPPGAVE_SUCCESS = 'LAGRE_OPPGAVE_SUCCESS',
-    LAGRE_OPPGAVE_ERROR = 'LAGRE_OPPGAVE_ERROR'
+    LAGRE_OPPGAVE_ERROR = 'LAGRE_OPPGAVE_ERROR',
 }
 
 export interface LagreOppgaveAction {
@@ -23,17 +23,17 @@ export interface LagreOppgaveActionError {
 
 export const lagreOppgave = (data: OppgaveFormData): LagreOppgaveAction => ({
     type: OppgaveActionType.LAGRE_OPPGAVE,
-    data
+    data,
 });
 
 export const lagreOppgaveSuccess = (response: OppgaveFormResponse): LagreOppgaveActionSuccess => ({
     type: OppgaveActionType.LAGRE_OPPGAVE_SUCCESS,
-    data: { tema: response.tema, type: response.type }
+    data: { tema: response.tema, type: response.type },
 });
 
 export const lagreOppgaveError = (error: Error): LagreOppgaveActionError => ({
     type: OppgaveActionType.LAGRE_OPPGAVE_ERROR,
-    error
+    error,
 });
 
 export type OppgaveHistorikkActions = LagreOppgaveAction | LagreOppgaveActionSuccess | LagreOppgaveActionError;

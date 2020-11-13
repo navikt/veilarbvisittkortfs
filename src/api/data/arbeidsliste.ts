@@ -1,5 +1,5 @@
-import { StringOrNothing } from '../util/type/stringornothings';
-import { OrNothing } from '../util/type/ornothing';
+import { StringOrNothing } from '../../util/type/stringornothings';
+import { OrNothing } from '../../util/type/ornothing';
 
 export interface Arbeidsliste {
     arbeidslisteAktiv: StringOrNothing; //TODO WHAT IS ZIS?

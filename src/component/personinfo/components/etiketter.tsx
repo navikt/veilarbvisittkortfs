@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import hiddenIf from '../../components/hidden-if/hidden-if';
 import EtikettBase, { EtikettInfo, EtikettAdvarsel, EtikettFokus } from 'nav-frontend-etiketter';
-import { OppfolgingStatus } from '../../../types/oppfolging-status';
 import './etiketter.less';
 import { useSelector } from 'react-redux';
 import { Appstate } from '../../../types/appstate';
@@ -10,6 +9,7 @@ import OppfolgingsstatusSelector from '../../../store/oppfolging-status/selector
 import { fetchToJson } from '../../../api/api-utils';
 import FeatureApi from '../../../api/feature-api';
 import { StringOrNothing } from '../../../util/type/stringornothings';
+import { OppfolgingStatus } from '../../../api/data/oppfolging-status';
 
 const Advarsel = hiddenIf(EtikettAdvarsel);
 const Info = hiddenIf(EtikettInfo);

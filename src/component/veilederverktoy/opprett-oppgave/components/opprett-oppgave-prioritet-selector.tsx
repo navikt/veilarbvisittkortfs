@@ -1,6 +1,6 @@
-import FormikSelect from '../../../components/formik/formik-select';
 import React from 'react';
-import { PrioritetType } from '../../../../types/oppgave';
+import FormikSelect from '../../../components/formik/formik-select';
+import { PrioritetType } from '../../../../api/data/oppgave';
 
 interface PrioritetOption {
     value: PrioritetType;

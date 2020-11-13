@@ -1,9 +1,7 @@
 import React from 'react';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
 import OppfolgingApi from '../../../api/oppfolging-api';
-import { InnstillingsHistorikk } from '../../../types/innstillings-historikk';
 import OppgaveApi from '../../../api/oppgave-api';
-import { OppgaveHistorikk } from '../../../types/oppgave-historikk';
 import HistorikkVisning from './historikk-visning';
 import './historikk.less';
 import useFetch, { isPending, hasData, hasError } from '@nutgaard/use-fetch';
@@ -11,6 +9,8 @@ import { useSelector } from 'react-redux';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { InnstillingsHistorikk } from '../../../api/data/innstillings-historikk';
+import { OppgaveHistorikk } from '../../../api/data/oppgave-historikk';
 
 function Historikk() {
     const fnr = useSelector(OppfolgingSelector.selectFnr);

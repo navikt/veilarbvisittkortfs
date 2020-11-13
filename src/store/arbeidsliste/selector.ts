@@ -1,7 +1,7 @@
 import { Appstate } from '../../types/appstate';
-import { Arbeidsliste } from '../../types/arbeidsliste';
 import VeilederSelector from '../tildel-veileder/selector';
 import { OrNothing } from '../../util/type/ornothing';
+import { Arbeidsliste } from '../../api/data/arbeidsliste';
 
 export interface ArbeidslisteSelector {
     selectArbeidslisteStatus: (state: Appstate) => boolean;

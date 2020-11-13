@@ -3,11 +3,11 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { opprettetAvTekst } from './opprettet-av';
-import { InnstillingsHistorikk } from '../../../../types/innstillings-historikk';
 import VeilederApi from '../../../../api/veileder-api';
 import useFetch, { isPending, hasData, hasError } from '@nutgaard/use-fetch';
-import { EnhetData } from '../../../../types/enhet';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { InnstillingsHistorikk } from '../../../../api/data/innstillings-historikk';
+import { EnhetData } from '../../../../api/data/enhet';
 
 export function OppfolgingEnhetEndret(props: { historikkElement: InnstillingsHistorikk; erGjeldendeEnhet: boolean }) {
     const { enhet, dato, opprettetAv, opprettetAvBrukerId } = props.historikkElement;

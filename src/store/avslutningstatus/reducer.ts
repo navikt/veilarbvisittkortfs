@@ -1,6 +1,4 @@
-import { FETCH_STATUS } from '../../types/fetch-status';
 import { Reducer } from 'redux';
-import { AvslutningStatus } from '../../types/oppfolging';
 import {
     AvsluttOppfolgingActions,
     AvsluttOppfolgingType,
@@ -12,6 +10,8 @@ import OppfolgingApi from '../../api/oppfolging-api';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { OrNothing } from '../../util/type/ornothing';
 import { StringOrNothing } from '../../util/type/stringornothings';
+import { FETCH_STATUS } from '../../api/data/fetch-status';
+import { AvslutningStatus } from '../../api/data/oppfolging';
 
 export type AvsluttOppfolgingState = { data: OrNothing<AvslutningStatus>; begrunnelse: StringOrNothing } & {
     status: FETCH_STATUS;

@@ -1,4 +1,4 @@
-import { Arbeidsliste, ArbeidslisteformValues } from '../../types/arbeidsliste';
+import { Arbeidsliste, ArbeidslisteformValues } from '../../api/data/arbeidsliste';
 
 export enum ArbeidslisteActionType {
     HENT_ARBEIDSLISTE = 'HENT_ARBEIDSLISTE',
@@ -24,14 +24,14 @@ export const slettArbeidsliste = (): SlettArbeidslisteAction => {
 export const slettArbeidslisteActionSuccess = (data: Arbeidsliste): SlettArbeidslisteActionSuccess => {
     return {
         type: ArbeidslisteActionType.SLETT_ARBEIDSLISTE_SUCCESS,
-        data
+        data,
     };
 };
 
 export const slettArbeidslisteActionError = (error: Error): SlettArbeidslisteActionError => {
     return {
         type: ArbeidslisteActionType.SLETT_ARBEIDSLISTE_ERROR,
-        error
+        error,
     };
 };
 
@@ -52,7 +52,7 @@ export const oppdaterArbeidslisteSuccess = (data: Arbeidsliste): OppdaterArbeids
 export const oppdaterArbeidslisteError = (error: Error): OppdaterArbeidslisteActionError => {
     return {
         type: ArbeidslisteActionType.LAGRE_ARBEIDSLISTE_ERROR,
-        error
+        error,
     };
 };
 
@@ -73,28 +73,28 @@ export const redigerArbeidslisteSuccess = (data: Arbeidsliste): RedigerArbeidsli
 export const redigerArbeidslisteError = (error: Error): RedigerArbeidslisteActionError => {
     return {
         type: ArbeidslisteActionType.REDIGER_ARBEIDSLISTE_ERROR,
-        error
+        error,
     };
 };
 
 export const hentArbeidsliste = (fnr: string): HentArbeidslisteAction => {
     return {
         type: ArbeidslisteActionType.HENT_ARBEIDSLISTE,
-        fnr
+        fnr,
     };
 };
 
 export const hentArbeidslisteSuccess = (data: Arbeidsliste): HentArbeidslisteActionSuccess => {
     return {
         type: ArbeidslisteActionType.HENT_ARBEIDSLISTE_SUCCESS,
-        data
+        data,
     };
 };
 
 export const hentArbeidslisteError = (error: Error): HentArbeidslisteActionError => {
     return {
         type: ArbeidslisteActionType.HENT_ARBEIDSLISTE_ERROR,
-        error
+        error,
     };
 };
 
@@ -158,15 +158,15 @@ export interface SlettArbeidslisteActionError {
 }
 
 export type ArbeidslisteActions =
-    HentArbeidslisteAction |
-    HentArbeidslisteActionSuccess |
-    HentArbeidslisteActionError |
-    OppdaterArbeidslisteAction |
-    OppdaterArbeidslisteActionSuccess |
-    OppdaterArbeidslisteActionError |
-    SlettArbeidslisteAction |
-    SlettArbeidslisteActionSuccess |
-    SlettArbeidslisteActionError |
-    RedigerArbeidslisteAction |
-    RedigerArbeidslisteActionSuccess |
-    RedigerArbeidslisteActionError;
+    | HentArbeidslisteAction
+    | HentArbeidslisteActionSuccess
+    | HentArbeidslisteActionError
+    | OppdaterArbeidslisteAction
+    | OppdaterArbeidslisteActionSuccess
+    | OppdaterArbeidslisteActionError
+    | SlettArbeidslisteAction
+    | SlettArbeidslisteActionSuccess
+    | SlettArbeidslisteActionError
+    | RedigerArbeidslisteAction
+    | RedigerArbeidslisteActionSuccess
+    | RedigerArbeidslisteActionError;

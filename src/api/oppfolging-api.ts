@@ -1,5 +1,5 @@
 import { fetchToJson, postAsJson } from './api-utils';
-import { Oppfolging } from '../types/oppfolging';
+import { Oppfolging } from './data/oppfolging';
 
 const OPPFOLGING_BASE_URL = '/veilarboppfolging/api';
 
@@ -24,7 +24,7 @@ function hentOppfolgingData(fnr?: string) {
 function startEskalering(dialogId: string, begrunnelse: string, fnr: string) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/startEskalering/?fnr=${fnr}`, {
         dialogId,
-        begrunnelse
+        begrunnelse,
     });
 }
 
@@ -35,26 +35,26 @@ function hentVeilederTilgang(fnr: string) {
 function settDigital(begrunnelse: string, veilederId: string, fnr: string) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/settDigital?fnr=${fnr}`, {
         begrunnelse,
-        veilederId
+        veilederId,
     });
 }
 
 function settManuellOppfolging(begrunnelse: string, veilederId: string, fnr: string) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/settManuell?fnr=${fnr}`, {
         begrunnelse,
-        veilederId
+        veilederId,
     });
 }
 
 function startKvpOppfolging(begrunnelse: string, fnr: string) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/startKvp?fnr=${fnr}`, {
-        begrunnelse
+        begrunnelse,
     });
 }
 
 function stoppKvpOppfolging(begrunnelse: string, fnr: string) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/stoppKvp?fnr=${fnr}`, {
-        begrunnelse
+        begrunnelse,
     });
 }
 
@@ -85,5 +85,5 @@ export default {
     hentInnstillingsHistorikk,
     kanAvslutte,
     avsluttOppfolging,
-    stoppEskalering
+    stoppEskalering,
 } as OppfolgingApi;

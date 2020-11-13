@@ -1,9 +1,9 @@
-import { InnstillingsHistorikk } from '../../types/innstillings-historikk';
+import { InnstillingsHistorikk } from '../../api/data/innstillings-historikk';
 
 export enum InnstillingshistorikActionType {
     HENT_INNSTILLINGSHISTORIKK = 'HENT_INNSTILLINGSHISTORIKK',
-    HENT_INNSTILLINGSHISTORIKK_ERROR =  'HENT_INNSTILLINGSHISTORIKK_ERROR',
-    HENT_INNSTILLINGSHISTORIKK_SUCCESS = 'HENT_INNSTILLINGSHISTORIKK_SUCCES'
+    HENT_INNSTILLINGSHISTORIKK_ERROR = 'HENT_INNSTILLINGSHISTORIKK_ERROR',
+    HENT_INNSTILLINGSHISTORIKK_SUCCESS = 'HENT_INNSTILLINGSHISTORIKK_SUCCES',
 }
 
 export interface HentInnstillinghistorikAction {
@@ -22,18 +22,23 @@ interface InstillinghistorikActionError {
 }
 
 export const hentInstillingshistorikk = (fnr: string): HentInnstillinghistorikAction => ({
-        type: InnstillingshistorikActionType.HENT_INNSTILLINGSHISTORIKK,
-        fnr
+    type: InnstillingshistorikActionType.HENT_INNSTILLINGSHISTORIKK,
+    fnr,
 });
 
-export const hentInstillingshistorikkSuccess = (data: InnstillingsHistorikk[]): HentInnstillingshistorikkActionSuccess => ({
+export const hentInstillingshistorikkSuccess = (
+    data: InnstillingsHistorikk[]
+): HentInnstillingshistorikkActionSuccess => ({
     type: InnstillingshistorikActionType.HENT_INNSTILLINGSHISTORIKK_SUCCESS,
     data,
 });
 
-export const hentInstillingshistorikkError = (error: Error): InstillinghistorikActionError  => ({
+export const hentInstillingshistorikkError = (error: Error): InstillinghistorikActionError => ({
     type: InnstillingshistorikActionType.HENT_INNSTILLINGSHISTORIKK_ERROR,
-    error
+    error,
 });
 
-export type InnstillingshistorikActions = HentInnstillinghistorikAction | HentInnstillingshistorikkActionSuccess | InstillinghistorikActionError;
+export type InnstillingshistorikActions =
+    | HentInnstillinghistorikAction
+    | HentInnstillingshistorikkActionSuccess
+    | InstillinghistorikActionError;

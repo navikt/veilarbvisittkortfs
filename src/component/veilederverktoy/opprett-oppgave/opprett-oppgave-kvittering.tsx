@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Appstate } from '../../../types/appstate';
-import { OppgaveTema, OppgaveType } from '../../../types/oppgave';
 import Kvittering from '../prosess/kvittering';
 import { OrNothing } from '../../../util/type/ornothing';
+import { OppgaveTema, OppgaveType } from '../../../api/data/oppgave';
 
 interface StateProps {
     tema: OrNothing<OppgaveTema>;

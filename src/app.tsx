@@ -6,7 +6,6 @@ import * as moment from 'moment';
 import 'moment/locale/nb';
 import './index.less';
 import NavFrontendModal from 'nav-frontend-modal';
-import VisittkortWrapper from './component/visittkort-wrapper';
 import Etiketter from './component/personinfo/components/etiketter';
 import Tilbakelenke from './component/components/tilbakelenke/tilbakelenke';
 import VeilederVerktoyNavigation from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-navigation';
@@ -32,14 +31,14 @@ function App(props: AppProps) {
             visVeilederVerktoy={props.visVeilederVerktoy || false}
         >
             <AppProvider fnr={props.fnr} enhet={props.enhet}>
-                <VisittkortWrapper>
+                <div className="visittkortfs">
                     <Tilbakelenke enhet={props.enhet} fnr={props.fnr} tilbakeTilFlate={props.tilbakeTilFlate} />
                     <VeilederVerktoyNavigation>
                         <PersonInfo {...props} />
                         <Etiketter />
                         <Veilederverktoyslinje visVeilederVerktoy={props.visVeilederVerktoy} />
                     </VeilederVerktoyNavigation>
-                </VisittkortWrapper>
+                </div>
             </AppProvider>
         </StoreProvider>
     );

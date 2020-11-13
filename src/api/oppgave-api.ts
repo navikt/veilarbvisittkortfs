@@ -1,6 +1,6 @@
 import { fetchToJson, postAsJson } from './api-utils';
-import { BehandlandeEnhet, OppgaveFormData, OppgaveFormResponse, OppgaveTema } from '../types/oppgave';
-import { VeilederListe } from '../types/veilederdata';
+import { VeilederListe } from './data/veilederdata';
+import { BehandlandeEnhet, OppgaveFormData, OppgaveFormResponse, OppgaveTema } from './data/oppgave';
 
 export interface OppgaveApi {
     hentBehandlandeEnheter: (tema: OppgaveTema, fnr: string) => Promise<BehandlandeEnhet[]>;
@@ -31,5 +31,5 @@ export default {
     hentBehandlandeEnheter,
     hentOppgaveHistorikk,
     hentOppgaveVeileder,
-    lagreOppgave
+    lagreOppgave,
 } as OppgaveApi;

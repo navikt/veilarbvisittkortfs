@@ -1,4 +1,3 @@
-import { TilgangTilBrukersKontor } from '../../types/tilgangtilbrukerskontor';
 import { Reducer } from 'redux';
 import {
     hentTilgangTilBrukersKontorError,
@@ -9,8 +8,9 @@ import {
 } from './actions';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import OppfolgingApi from '../../api/oppfolging-api';
-import { FETCH_STATUS } from '../../types/fetch-status';
 import { OrNothing } from '../../util/type/ornothing';
+import { TilgangTilBrukersKontor } from '../../api/data/tilgangtilbrukerskontor';
+import { FETCH_STATUS } from '../../api/data/fetch-status';
 
 export type TilgangTilBrukersKontorState = { data: TilgangTilBrukersKontor } & {
     status: FETCH_STATUS;

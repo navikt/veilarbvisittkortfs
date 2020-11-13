@@ -7,7 +7,7 @@ import { ReactComponent as ArbeidslisteikonGul } from './/arbeidslisteikon_gul.s
 import { Field } from 'formik';
 import Arbeidslistekategori from './arbeidslistekategori';
 import { FieldProps } from 'formik/dist/Field';
-import { KategoriModell } from '../../../types/arbeidsliste';
+import { KategoriModell } from '../../../api/data/arbeidsliste';
 
 function ArbeidslistekategoriVisning(props: { name: string }) {
     return (

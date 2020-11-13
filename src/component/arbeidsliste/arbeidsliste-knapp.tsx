@@ -3,8 +3,8 @@ import ArbeidslistekategoriVisning from './arbeidslistekategori-visning';
 import withClickMetric from '../components/click-metric/click-metric';
 import { useSelector } from 'react-redux';
 import { Appstate } from '../../types/appstate';
-import { KategoriModell } from '../../types/arbeidsliste';
 import KnappFss from '../components/knapp-fss/knapp-fss';
+import { KategoriModell } from '../../api/data/arbeidsliste';
 
 export interface ArbeidslisteKnappProps {
     hidden: boolean;

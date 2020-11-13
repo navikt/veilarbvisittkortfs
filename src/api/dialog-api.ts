@@ -1,6 +1,6 @@
 import { HenvendelseData } from '../store/dialog/actions';
 import { fetchToJson, postAsJson, putAsJson } from './api-utils';
-import Dialog from '../types/dialog';
+import Dialog from './data/dialog';
 
 const DIALOG_BASE_URL = '/veilarbdialog/api/dialog';
 
@@ -31,5 +31,5 @@ export default {
     nyHenvendelse,
     oppdaterFerdigbehandlet,
     oppdaterVenterPaSvar,
-    hentDialoger
+    hentDialoger,
 } as DialogApi;

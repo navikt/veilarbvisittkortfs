@@ -1,8 +1,8 @@
 import { Appstate } from '../../types/appstate';
 import TilgangTilKontorSelector from '../tilgang-til-brukerskontor/selector';
-import { EskaleringsVarsel, Oppfolging } from '../../types/oppfolging';
 import { StringOrNothing } from '../../util/type/stringornothings';
 import { OrNothing } from '../../util/type/ornothing';
+import { EskaleringsVarsel, Oppfolging } from '../../api/data/oppfolging';
 
 export interface OppfolgingSelector {
     selectOppfolgingStatus: (state: Appstate) => boolean;

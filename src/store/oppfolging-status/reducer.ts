@@ -1,6 +1,5 @@
 import { Reducer } from 'redux';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { OppfolgingStatus } from '../../types/oppfolging-status';
 import {
     HentOppfolgingstatusAction,
     hentOppfolgingstatusError,
@@ -9,8 +8,9 @@ import {
     OppfolgingstatusActionType,
 } from './actions';
 import { fetchOppfolgingsstatusData } from '../../api/api';
-import { FETCH_STATUS } from '../../types/fetch-status';
 import { OrNothing } from '../../util/type/ornothing';
+import { OppfolgingStatus } from '../../api/data/oppfolging-status';
+import { FETCH_STATUS } from '../../api/data/fetch-status';
 
 export type OppfolgingStatusState = { data: OppfolgingStatus } & { status: FETCH_STATUS; error: OrNothing<Error> };
 

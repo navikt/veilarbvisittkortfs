@@ -1,9 +1,9 @@
 import { Reducer } from 'redux';
 import { OppfolgingActions } from './actions';
-import { Oppfolging } from '../../types/oppfolging';
 import { OppfolgingActionType } from './action-type';
-import { FETCH_STATUS } from '../../types/fetch-status';
 import { OrNothing } from '../../util/type/ornothing';
+import { Oppfolging } from '../../api/data/oppfolging';
+import { FETCH_STATUS } from '../../api/data/fetch-status';
 
 export type OppfogingState = { data: Oppfolging } & { status: FETCH_STATUS; error: OrNothing<Error> };
 

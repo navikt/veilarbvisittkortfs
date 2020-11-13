@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Arbeidsliste, ArbeidslisteformValues } from '../../types/arbeidsliste';
 import { connect, useDispatch } from 'react-redux';
 import { Appstate } from '../../types/appstate';
 import PersonaliaSelectors from '../../store/personalia/selectors';
@@ -11,6 +10,7 @@ import moment from 'moment';
 import FjernArbeidslisteModal from './fjern-arbeidsliste-modal';
 import './arbeidsliste.less';
 import { navigerAction } from '../../store/navigation/actions';
+import { Arbeidsliste, ArbeidslisteformValues } from '../../api/data/arbeidsliste';
 
 interface StateProps {
     arbeidsliste: Arbeidsliste;

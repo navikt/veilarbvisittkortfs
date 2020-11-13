@@ -1,4 +1,4 @@
-import { AvslutningStatus } from '../../types/oppfolging';
+import { AvslutningStatus } from '../../api/data/oppfolging';
 
 export enum AvsluttOppfolgingType {
     HENT_AVSLUTT_OPPFOLGING_STATUS = 'NAVIGER_TIL_AVSLUTT_OPPFOLGING',

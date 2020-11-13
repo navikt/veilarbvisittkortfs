@@ -1,6 +1,6 @@
 import { Appstate } from '../../types/appstate';
-import { OppfolgingStatus } from '../../types/oppfolging-status';
 import { StringOrNothing } from '../../util/type/stringornothings';
+import { OppfolgingStatus } from '../../api/data/oppfolging-status';
 
 export interface OppfolgingsstatusSelector {
     selectOppfolgingStatusData: (state: Appstate) => OppfolgingStatus;

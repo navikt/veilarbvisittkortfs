@@ -1,6 +1,5 @@
-// tslint:disable object-literal-sort-keys
 import { JSONValue } from 'yet-another-fetch-mock/dist/types/types';
-import { Personalia } from '../types/personalia';
+import { Personalia } from '../api/data/personalia';
 
 const personalia: Personalia & JSONValue = {
     fornavn: 'BRUCE BRUCE',
@@ -20,7 +19,7 @@ const personalia: Personalia & JSONValue = {
             fodselsdato: '2016-04-17',
             dodsdato: null,
             harSammeBosted: true,
-            kjonn: 'M'
+            kjonn: 'M',
         },
         {
             fornavn: 'HARRY',
@@ -31,7 +30,7 @@ const personalia: Personalia & JSONValue = {
             fodselsdato: '2014-05-24',
             dodsdato: null,
             harSammeBosted: false,
-            kjonn: 'M'
+            kjonn: 'M',
         },
         {
             fornavn: 'SATOSHI',
@@ -42,15 +41,15 @@ const personalia: Personalia & JSONValue = {
             fodselsdato: '2005-10-04',
             dodsdato: '2010-10-04',
             harSammeBosted: true,
-            kjonn: 'K'
-        }
+            kjonn: 'K',
+        },
     ],
     diskresjonskode: null,
     kontonummer: '12345678910',
     geografiskTilknytning: '0106',
     geografiskEnhet: {
         enhetsnummer: '0106',
-        navn: 'NAV Fredrikstad'
+        navn: 'NAV Fredrikstad',
     },
     telefon: '+4799999999',
     epost: 'tester.scrambling-script@fellesregistre.no',
@@ -58,7 +57,7 @@ const personalia: Personalia & JSONValue = {
     sikkerhetstiltak: 'To ansatte i samtale',
     sivilstand: {
         sivilstand: 'Gift',
-        fraDato: '2016-08-04'
+        fraDato: '2016-08-04',
     },
     partner: null,
     bostedsadresse: {
@@ -73,9 +72,9 @@ const personalia: Personalia & JSONValue = {
                 kommunenummer: '0106',
                 gatenavn: 'GATEVEIEN',
                 bolignummer: null,
-                gatenummer: null
-            }
-        }
+                gatenummer: null,
+            },
+        },
     },
     midlertidigAdresseNorge: null,
     midlertidigAdresseUtland: null,
@@ -85,11 +84,11 @@ const personalia: Personalia & JSONValue = {
             adresselinje2: null,
             adresselinje3: null,
             adresselinje4: '4001 STAVANGER',
-            landkode: 'NORGE'
-        }
+            landkode: 'NORGE',
+        },
     },
     egenAnsatt: false,
-    kjonn: 'K'
+    kjonn: 'K',
 };
 
 export default personalia;

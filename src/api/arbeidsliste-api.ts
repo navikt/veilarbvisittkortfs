@@ -1,6 +1,5 @@
 import { deleteAsJson, fetchToJson, postAsJson, putAsJson } from './api-utils';
-import { ArbeidslisteformValues } from '../types/arbeidsliste';
-import { Arbeidsliste } from '../types/arbeidsliste';
+import { Arbeidsliste, ArbeidslisteformValues } from './data/arbeidsliste';
 
 export interface ArbeidslisteApi {
     lagreArbeidsliste: (fnr: string, arbeidsliste: ArbeidslisteformValues) => Promise<Arbeidsliste>;
@@ -29,5 +28,5 @@ export default {
     lagreArbeidsliste,
     fetchArbeidslisteData,
     slettArbeidsliste,
-    redigerArbeidsliste
+    redigerArbeidsliste,
 } as ArbeidslisteApi;

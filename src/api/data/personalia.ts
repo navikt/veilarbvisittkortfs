@@ -1,4 +1,4 @@
-import { StringOrNothing } from '../util/type/stringornothings';
+import { StringOrNothing } from '../../util/type/stringornothings';
 
 export interface Personalia {
     fornavn: string;

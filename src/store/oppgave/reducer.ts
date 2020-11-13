@@ -1,5 +1,3 @@
-import { FETCH_STATUS } from '../../types/fetch-status';
-import { OppgaveHistorikk } from '../../types/oppgave-historikk';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
 import { Reducer } from 'redux';
 import {
@@ -11,9 +9,11 @@ import {
 } from './actions';
 import OppfolgingSelector from '../oppfolging/selector';
 import OppgaveApi from '../../api/oppgave-api';
-import { OppgaveTema, OppgaveType } from '../../types/oppgave';
 import { navigerAction } from '../navigation/actions';
 import { OrNothing } from '../../util/type/ornothing';
+import { OppgaveTema, OppgaveType } from '../../api/data/oppgave';
+import { OppgaveHistorikk } from '../../api/data/oppgave-historikk';
+import { FETCH_STATUS } from '../../api/data/fetch-status';
 
 interface LagetOppgave {
     tema: OppgaveTema;

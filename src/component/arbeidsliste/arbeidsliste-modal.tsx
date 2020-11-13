@@ -1,5 +1,4 @@
 import React from 'react';
-import { Arbeidsliste, ArbeidslisteformValues, KategoriModell } from '../../types/arbeidsliste';
 import { Form, Formik, FormikProps } from 'formik';
 import Modal from '../components/modal/modal';
 import moment from 'moment';
@@ -7,6 +6,7 @@ import { logEvent } from '../utils/frontend-logger';
 import ArbeidslisteForm from './arbeidsliste-form';
 import ArbeidslisteFooter from './arbeidsliste-footer';
 import VeilederVerktoyModal from '../components/modal/veilederverktoy-modal';
+import { Arbeidsliste, ArbeidslisteformValues, KategoriModell } from '../../api/data/arbeidsliste';
 
 interface ArbeidslisteProps {
     navn: string;

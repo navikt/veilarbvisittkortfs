@@ -1,11 +1,11 @@
-import Dialog, { Egenskaper } from '../../types/dialog';
+import Dialog, { Egenskaper } from '../../api/data/dialog';
 
 export enum HenvendelseActionType {
     OPPRETTET_HENVENDELSE_START_ESKALERING = 'OPPRETTET_HENVENDELSE_START_ESKALERING',
-    OPPRETTET_HENVENDELSE_START_ESKALERING_ERROR =  'OPPRETTET_HENVENDELSE_START_ESKALERING_ERROR',
+    OPPRETTET_HENVENDELSE_START_ESKALERING_ERROR = 'OPPRETTET_HENVENDELSE_START_ESKALERING_ERROR',
     OPPRETTET_HENVENDELSE_START_ESKALERING_SUCCESS = 'OPPRETTET_HENVENDELSE_START_ESKALERING_SUCCESS',
     OPPRETTET_HENVENDELSE_STOPP_ESKALERING = 'OPPRETTET_HENVENDELSE_STOPP_ESKALERING',
-    OPPRETTET_HENVENDELSE_STOPP_ESKALERING_ERROR =  'OPPRETTET_HENVENDELSE_STOPP_ESKALERING_ERROR',
+    OPPRETTET_HENVENDELSE_STOPP_ESKALERING_ERROR = 'OPPRETTET_HENVENDELSE_STOPP_ESKALERING_ERROR',
     OPPRETTET_HENVENDELSE_STOPP_ESKALERING_SUCCESS = 'OPPRETTET_HENVENDELSE_STOPP_ESKALERING_SUCCESS',
     HENT_DIALOGER = 'NAVIGER_TIL_PROSSER',
     HENT_DIALOGER_SUCCESS = 'HENT_DIALOGER_SUCCESS',
@@ -45,23 +45,26 @@ export interface OpprettHenvendelseStoppEskaleringActionError {
 export function opprettHenvendelseStoppEskalering(data: HenvendelseData): OpprettHenvendelseStoppEskaleringAction {
     return {
         type: HenvendelseActionType.OPPRETTET_HENVENDELSE_STOPP_ESKALERING,
-        data
+        data,
     };
 }
 
-export function opprettHenvendelseStoppEskaleringSuccess(data: Dialog, fnr: string): OpprettHenvendelseStoppEskaleringActionSuccess {
+export function opprettHenvendelseStoppEskaleringSuccess(
+    data: Dialog,
+    fnr: string
+): OpprettHenvendelseStoppEskaleringActionSuccess {
     return {
         type: HenvendelseActionType.OPPRETTET_HENVENDELSE_STOPP_ESKALERING_SUCCESS,
         data,
-        fnr
+        fnr,
     };
 }
 
 export function opprettHenvendelseStoppEskaleringError(error: Error): OpprettHenvendelseStoppEskaleringActionError {
-   return {
-       type: HenvendelseActionType.OPPRETTET_HENVENDELSE_STOPP_ESKALERING_ERROR,
-       error
-   };
+    return {
+        type: HenvendelseActionType.OPPRETTET_HENVENDELSE_STOPP_ESKALERING_ERROR,
+        error,
+    };
 }
 
 export interface OpprettHenvendelseAction {
@@ -88,14 +91,14 @@ export interface OppdaterDialogSuccess {
 export function oppdaterDialogSuccess(data: Dialog): OppdaterDialogSuccess {
     return {
         type: DialogActionType.OPPDATER_DIALOG_SUCCESS,
-        data
+        data,
     };
 }
 
 export function opprettHenvendelse(data: HenvendelseData): OpprettHenvendelseAction {
     return {
         type: HenvendelseActionType.OPPRETTET_HENVENDELSE_START_ESKALERING,
-        data
+        data,
     };
 }
 
@@ -103,14 +106,14 @@ export function opprettHenvendelseSuccess(data: Dialog, fnr: string): OpprettHen
     return {
         type: HenvendelseActionType.OPPRETTET_HENVENDELSE_START_ESKALERING_SUCCESS,
         data,
-        fnr
+        fnr,
     };
 }
 
 export function opprettHenvendelseError(error: Error): OpprettHenvendelseActionError {
     return {
         type: HenvendelseActionType.OPPRETTET_HENVENDELSE_START_ESKALERING_ERROR,
-        error
+        error,
     };
 }
 
@@ -129,7 +132,7 @@ export interface HentDialogerActionError {
 }
 
 export const hentDialoger = (): HentDialogerAction => ({
-    type: HenvendelseActionType.HENT_DIALOGER
+    type: HenvendelseActionType.HENT_DIALOGER,
 });
 
 export const hentDialogerSuccess = (data: Dialog[]): HentDialogerActionSuccess => ({
@@ -138,18 +141,18 @@ export const hentDialogerSuccess = (data: Dialog[]): HentDialogerActionSuccess =
 });
 
 export const hentDialogerError = (error: Error): HentDialogerActionError => ({
-   type: HenvendelseActionType.HENT_DIALOGER_ERROR,
-   error
+    type: HenvendelseActionType.HENT_DIALOGER_ERROR,
+    error,
 });
 
 export type DialogActions =
-    OpprettHenvendelseAction |
-    OpprettHenvendelseActionSuccess |
-    OpprettHenvendelseActionError |
-    OppdaterDialogSuccess |
-    HentDialogerAction |
-    HentDialogerActionSuccess |
-    HentDialogerActionError|
-    OpprettHenvendelseStoppEskaleringAction |
-    OpprettHenvendelseStoppEskaleringActionSuccess |
-    OpprettHenvendelseStoppEskaleringActionError;
+    | OpprettHenvendelseAction
+    | OpprettHenvendelseActionSuccess
+    | OpprettHenvendelseActionError
+    | OppdaterDialogSuccess
+    | HentDialogerAction
+    | HentDialogerActionSuccess
+    | HentDialogerActionError
+    | OpprettHenvendelseStoppEskaleringAction
+    | OpprettHenvendelseStoppEskaleringActionSuccess
+    | OpprettHenvendelseStoppEskaleringActionError;

@@ -1,5 +1,4 @@
-import { InnstillingsHistorikk } from '../../../../types/innstillings-historikk';
-import * as React from 'react';
+import React from 'react';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { opprettetAvTekst } from './opprettet-av';
 import moment from 'moment';
@@ -7,6 +6,7 @@ import Lenke from 'nav-frontend-lenker';
 import { Appstate } from '../../../../types/appstate';
 import OppfolgingSelector from '../../../../store/oppfolging/selector';
 import { useSelector } from 'react-redux';
+import { InnstillingsHistorikk } from '../../../../api/data/innstillings-historikk';
 interface OwnProps {
     innstillingsHistorikk: InnstillingsHistorikk;
 }

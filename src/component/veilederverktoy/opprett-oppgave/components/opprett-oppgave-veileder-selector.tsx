@@ -1,15 +1,15 @@
 import React from 'react';
 import SokFilter from '../../../components/sokfilter/sok-filter';
 import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
-import { VeilederData } from '../../../../types/veilederdata';
 import { Appstate } from '../../../../types/appstate';
 import { connect } from 'react-redux';
 import Dropdown from '../../../components/dropdown/dropdown';
-import { OppgaveTema } from '../../../../types/oppgave';
 import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import { StringOrNothing } from '../../../../util/type/stringornothings';
 import { OrNothing } from '../../../../util/type/ornothing';
+import { OppgaveTema } from '../../../../api/data/oppgave';
+import { VeilederData } from '../../../../api/data/veilederdata';
 
 interface OwnProps {
     veilederId: StringOrNothing;

@@ -1,6 +1,6 @@
 import { fetchToJson, postAsJson } from './api-utils';
-import { VeilederData } from '../types/veilederdata';
-import { TildelVeilederData } from '../types/tildel-veileder';
+import { VeilederData } from './data/veilederdata';
+import { TildelVeilederData } from './data/tildel-veileder';
 
 interface VeilederApi {
     hentVeiledereForEnhet: (enhetId: string) => Promise<VeilederData[]>;
@@ -31,5 +31,5 @@ export default {
     hentVeiledereForEnhet,
     hentVeieldere,
     tildelTilVeileder,
-    hentEnhetNavn
+    hentEnhetNavn,
 } as VeilederApi;

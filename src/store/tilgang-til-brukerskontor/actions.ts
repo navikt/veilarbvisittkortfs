@@ -1,4 +1,4 @@
-import { TilgangTilBrukersKontor } from '../../types/tilgangtilbrukerskontor';
+import { TilgangTilBrukersKontor } from '../../api/data/tilgangtilbrukerskontor';
 
 export enum TilgangTilBrukersKontorActionType {
     HENT_TILGANG_TIL_BRUKERSKONTOR = 'HENT_TILGANG_TIL_BRUKERSKONTOR',
@@ -24,21 +24,23 @@ interface TilgangTilBrukersKontorActionError {
 export const hentTilgangTilBrukersKontor = (fnr: string): TilgangTilBrukersKontorAction => {
     return {
         type: TilgangTilBrukersKontorActionType.HENT_TILGANG_TIL_BRUKERSKONTOR,
-        fnr
+        fnr,
     };
 };
 
-export const hentTilgangTilBrukersKontorSuccess = (data: TilgangTilBrukersKontor): TilgangTilBrukersKontorActionSuccess => ({
+export const hentTilgangTilBrukersKontorSuccess = (
+    data: TilgangTilBrukersKontor
+): TilgangTilBrukersKontorActionSuccess => ({
     type: TilgangTilBrukersKontorActionType.HENT_TILGANG_TIL_BRUKERSKONTOR_SUCCESS,
     data,
 });
 
-export const hentTilgangTilBrukersKontorError = (error: Error): TilgangTilBrukersKontorActionError  => ({
-   type: TilgangTilBrukersKontorActionType.HENT_TILGANG_TIL_BRUKERSKONTOR_ERROR,
-   error
+export const hentTilgangTilBrukersKontorError = (error: Error): TilgangTilBrukersKontorActionError => ({
+    type: TilgangTilBrukersKontorActionType.HENT_TILGANG_TIL_BRUKERSKONTOR_ERROR,
+    error,
 });
 
 export type TilgangTilBrukersKontorActions =
-    TilgangTilBrukersKontorAction |
-    TilgangTilBrukersKontorActionSuccess |
-    TilgangTilBrukersKontorActionError;
+    | TilgangTilBrukersKontorAction
+    | TilgangTilBrukersKontorActionSuccess
+    | TilgangTilBrukersKontorActionError;

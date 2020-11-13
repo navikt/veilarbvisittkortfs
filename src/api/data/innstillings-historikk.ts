@@ -1,5 +1,5 @@
-import { StringOrNothing } from '../util/type/stringornothings';
-import { OrNothing } from '../util/type/ornothing';
+import { StringOrNothing } from '../../util/type/stringornothings';
+import { OrNothing } from '../../util/type/ornothing';
 
 export type InnstillingsHistorikkType =
     | 'SATT_TIL_DIGITAL'

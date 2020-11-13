@@ -1,8 +1,8 @@
 import { Appstate } from '../../types/appstate';
-import { FETCH_STATUS } from '../../types/fetch-status';
-import { AvslutningStatus } from '../../types/oppfolging';
 import { StringOrNothing } from '../../util/type/stringornothings';
 import { OrNothing } from '../../util/type/ornothing';
+import { AvslutningStatus } from '../../api/data/oppfolging';
+import { FETCH_STATUS } from '../../api/data/fetch-status';
 
 export interface AvsluttOppfolgingStatusSelector {
     selectAvsluttOppfolgingIsLoading: (state: Appstate) => boolean;
