@@ -9,13 +9,11 @@ import ArbeidslisteKnapp from '../arbeidsliste/arbeidsliste-knapp';
 import ArbeidslisteSelector from '../../store/arbeidsliste/selector';
 import { navigerAction } from '../../store/navigation/actions';
 import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
-import { logEvent } from '../utils/frontend-logger';
+import { useAppStore } from '../../store-midlertidig/app-store';
+import { logger } from '../../util/logger';
 
-interface PersonInfoProps {
-    fnr: string;
-}
-
-function PersonInfo(props: PersonInfoProps) {
+function PersonInfo() {
+    const { brukerFnr } = useAppStore();
     const personalia = useSelector((state: Appstate) => state.personalia.data);
     const navn = useSelector(PersonaliaSelector.selectSammensattNavn);
     const kanLeggeIArbeidsliste = useSelector(
@@ -30,7 +28,7 @@ function PersonInfo(props: PersonInfoProps) {
     const arbeidslisteikon = useSelector((state: Appstate) => state.arbeidsliste.data.kategori);
 
     const klikk = () => {
-        logEvent('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
+        logger.event('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
         dispatch(navigerAction('vis_arbeidsliste'));
     };
 
@@ -44,7 +42,7 @@ function PersonInfo(props: PersonInfoProps) {
                     onClick={klikk}
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
-                <KopierKnappTekst kopierTekst={props.fnr} />
+                <KopierKnappTekst kopierTekst={brukerFnr} />
             </div>
         </div>
     );

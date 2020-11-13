@@ -1,13 +1,16 @@
-import App from './app';
-import env from './component/utils/environment';
+import ReactDOM from 'react-dom';
 import NAVSPA from '@navikt/navspa';
-
-if (!(global as any)._babelPolyfill) {
-    require('babel-polyfill');
-}
-
-if (env.isMock) {
-    require('./mock/setup');
-}
+import App from './app';
+import React from 'react';
+import { isDevelopment } from './util/utils';
 
 NAVSPA.eksporter('veilarbvisittkortfs', App);
+
+if (isDevelopment()) {
+    require('./mock');
+
+    ReactDOM.render(
+        <App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />,
+        document.getElementById('veilarbvisittkortfs-root')
+    );
+}

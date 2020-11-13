@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "REACT_APP_MOCK=true craco start",
-    "build": "craco build"
+    "start": "cross-env REACT_APP_DEV=true craco start",
+    "build": "craco build",
+    "build:mock": "cross-env REACT_APP_DEV=true craco build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,13 +31,12 @@
   },
   "dependencies": {
     "@navikt/fnrvalidator": "^1.1.3",
+    "@navikt/frontendlogger": "^2.0.0",
     "@navikt/navspa": "^1.1.1",
     "@nutgaard/use-fetch": "^2.3.1",
     "@types/react-collapse": "^5.0.0",
     "axios": "^0.21.0",
     "axios-hooks": "^2.1.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-runtime": "^6.26.0",
     "classnames": "^2.2.6",
     "constate": "^3.1.0",
     "cross-env": "^7.0.2",

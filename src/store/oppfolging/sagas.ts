@@ -32,8 +32,8 @@ import OppfolgingSelector from './selector';
 import VeilederSelector from '../tildel-veileder/selector';
 import AvsluttOppfolgingStatusSelector from '../avslutningstatus/selector';
 import { navigerAction } from '../navigation/actions';
-import { eskaleringVarselSendtEvent, triggerReRenderingAvMao } from '../../component/utils/utils';
 import { opprettHenvendelseStoppEskalering } from '../dialog/actions';
+import { eskaleringVarselSendtEvent, triggerReRenderingAvMao } from '../../util/utils';
 
 function* hentOppfolging(action: HentOppfolgingAction) {
     try {

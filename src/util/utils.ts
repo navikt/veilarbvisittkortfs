@@ -1,3 +1,9 @@
+export const APP_NAME = 'veilarbvisittkortfs';
+
+export function isDevelopment(): boolean {
+    return process.env.REACT_APP_DEV === 'true';
+}
+
 export function storeForbokstaver(tekster: string[]): string {
     const tekst = tekster.filter((s) => s).join(' ');
 

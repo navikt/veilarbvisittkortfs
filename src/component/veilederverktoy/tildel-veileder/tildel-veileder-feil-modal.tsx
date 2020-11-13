@@ -2,14 +2,14 @@ import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { logEvent } from '../../utils/frontend-logger';
 import { navigerAction } from '../../../store/navigation/actions';
+import { logger } from '../../../util/logger';
 
 export function FeilTildelingModal() {
     const dispatch = useDispatch();
 
     const lukkModal = () => {
-        logEvent('veilarbvisittkortfs.metrikker.lukk-modal-tildel-veileder');
+        logger.event('veilarbvisittkortfs.metrikker.lukk-modal-tildel-veileder');
         dispatch(navigerAction(null));
     };
 

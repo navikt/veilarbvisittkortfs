@@ -18,11 +18,11 @@ import DialogApi from '../../api/dialog-api';
 import OppfolgingApi from '../../api/oppfolging-api';
 import { hentOppfolgingSuccess, startEskaleringError, startEskaleringSuccess } from '../oppfolging/actions';
 import OppfolgingSelector from '../oppfolging/selector';
-import { replaceAt, eskaleringVarselSendtEvent } from '../../component/utils/utils';
 import { navigerAction } from '../navigation/actions';
 import { OrNothing } from '../../util/type/ornothing';
 import Dialog from '../../api/data/dialog';
 import { FETCH_STATUS } from '../../api/data/fetch-status';
+import { eskaleringVarselSendtEvent, replaceAt } from '../../util/utils';
 
 export type DialogState = { data: Dialog[] } & { status: FETCH_STATUS; error: OrNothing<Error> };
 

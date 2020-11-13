@@ -1,10 +1,10 @@
 import React from 'react';
-import { erITestMiljo, finnMiljoStreng, finnNaisDomene } from '../../utils/utils';
 import { Appstate } from '../../../types/appstate';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
 import { connect } from 'react-redux';
-import { logEvent } from '../../utils/frontend-logger';
 import { StringOrNothing } from '../../../util/type/stringornothings';
+import { erITestMiljo, finnMiljoStreng, finnNaisDomene } from '../../../util/utils';
+import { logger } from '../../../util/logger';
 
 function byggRegistreringUrl(fnr: string, enhet: StringOrNothing) {
     return `https://arbeidssokerregistrering-fss${finnMiljoStreng()}${finnNaisDomene()}?fnr=${fnr}&enhetId=${enhet}`;
@@ -57,7 +57,7 @@ function StartRegistreringProsess(props: StartRegistreringProsessProps) {
         <a
             href={erITestMiljo() ? veilarbLoginUrl(registreringUrl) : registreringUrl}
             className="knapp meny-knapp btn--mb1"
-            onClick={() => logEvent('veilarbvisittkortfs.metrikker.registrering', {}, { brukerType: brukerType })}
+            onClick={() => logger.event('veilarbvisittkortfs.metrikker.registrering', {}, { brukerType: brukerType })}
         >
             {brukerTekst()}
         </a>

@@ -34,11 +34,11 @@ function App(props: AppProps) {
             <AppProvider fnr={props.fnr} enhet={props.enhet}>
                 <div className="visittkortfs">
                     <InitialDataFetcher>
-                        <Tilbakelenke enhet={props.enhet} fnr={props.fnr} tilbakeTilFlate={props.tilbakeTilFlate} />
+                        <Tilbakelenke />
                         <VeilederVerktoyNavigation>
-                            <PersonInfo {...props} />
+                            <PersonInfo />
                             <Etiketter />
-                            <Veilederverktoyslinje visVeilederVerktoy={props.visVeilederVerktoy} />
+                            <Veilederverktoyslinje />
                         </VeilederVerktoyNavigation>
                     </InitialDataFetcher>
                 </div>

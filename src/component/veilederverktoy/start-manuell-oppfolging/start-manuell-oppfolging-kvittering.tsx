@@ -4,8 +4,8 @@ import { Appstate } from '../../../types/appstate';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
 import { connect } from 'react-redux';
 import { fetchRegistreringData } from '../../../api/registrering-api';
-import { logEvent } from '../../utils/frontend-logger';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { logger } from '../../../util/logger';
 
 interface OwnProps {
     begrunnelse?: string;
@@ -27,7 +27,7 @@ function loggMetrikk(props: StartOppfolgingKvittering) {
                 erKRR: props.erKRR,
                 erManueltRegistrert,
             };
-            logEvent('veilarbvisittkortfs.metrikker.manuell_oppfolging', logFields);
+            logger.event('veilarbvisittkortfs.metrikker.manuell_oppfolging', logFields);
         })
         .catch(); // Squelch errors
 }

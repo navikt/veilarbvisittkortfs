@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { logEvent } from '../../utils/frontend-logger';
+import { logger } from '../../../util/logger';
 
 export interface ClickMetricProps {
     metricName?: string;
@@ -21,7 +21,7 @@ const handleClickMetricWrapperClicked = (
         console.log('Clicked'); // tslint:disable-line
 
         if (metricName) {
-            logEvent(`veilarbvisittkortfs.metrikker.${metricName}`, fields, tags);
+            logger.event(`veilarbvisittkortfs.metrikker.${metricName}`, fields, tags);
         }
 
         if (onClick) {

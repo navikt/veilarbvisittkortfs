@@ -10,13 +10,12 @@ import { Appstate } from '../../types/appstate';
 import ArbeidslisteSelector from '../../store/arbeidsliste/selector';
 import TilgangTilKontorSelector from '../../store/tilgang-til-brukerskontor/selector';
 import StartProsess from './prosess/start-prosess';
-import { logEvent } from '../utils/frontend-logger';
+import { useAppStore } from '../../store-midlertidig/app-store';
+import { logger } from '../../util/logger';
 
-interface VeilederverktoyslinjeProps {
-    visVeilederVerktoy?: boolean;
-}
+function Veilederverktoyslinje() {
+    const { visVeilederVerktoy } = useAppStore();
 
-function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProps) {
     const kanStarteEskalering = useSelector(OppfolgingSelector.selectKanSendeEskaleringsVarsel);
     const kanStoppeEskalering = useSelector(OppfolgingSelector.selectKanStoppeEskaleringsVarsel);
     const kanAvslutteOppfolging = useSelector(OppfolgingSelector.selectKanAvslutteOppfolging);
@@ -47,7 +46,7 @@ function Veilederverktoyslinje({ visVeilederVerktoy }: VeilederverktoyslinjeProp
     }
 
     const arbeidslisteKlikk = (lukkDropdown: any) => {
-        logEvent('veilarbvisittkortfs.metrikker.veilederverktoy.arbeidsliste', {
+        logger.event('veilarbvisittkortfs.metrikker.veilederverktoy.arbeidsliste', {
             leggtil: !kanEndreArbeidsliste && kanLagreArbeidsliste,
         });
         naviger('vis_arbeidsliste')(lukkDropdown);

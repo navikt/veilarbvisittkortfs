@@ -1,18 +1,14 @@
 import * as React from 'react';
 import './tilbakelenke.less';
 import Chevron from 'nav-frontend-chevron';
+import { useAppStore } from '../../../store-midlertidig/app-store';
 
-interface Props {
-    enhet?: string;
-    fnr: string;
-    tilbakeTilFlate: string;
-}
-
-function Tilbakelenke(props: Props) {
+function Tilbakelenke() {
+    const { brukerFnr, enhetId, tilbakeTilFlate } = useAppStore();
     const tilbakeLenke =
-        props.tilbakeTilFlate === 'veilarbportefoljeflatefs'
-            ? `/${props.tilbakeTilFlate}/tilbake?enhet=${props.enhet}`
-            : `/${props.tilbakeTilFlate}/${props.fnr}?enhet=${props.enhet}`;
+        tilbakeTilFlate === 'veilarbportefoljeflatefs'
+            ? `/${tilbakeTilFlate}/tilbake?enhet=${enhetId}`
+            : `/${tilbakeTilFlate}/${brukerFnr}?enhet=${enhetId}`;
 
     return (
         <a className="visittkortfs__tilbakelenke" href={tilbakeLenke}>

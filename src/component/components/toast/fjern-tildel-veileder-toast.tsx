@@ -1,18 +1,12 @@
 import React, { useEffect } from 'react';
 import './toast.less';
 import AlertStripeSuksess from 'nav-frontend-alertstriper/lib/suksess-alertstripe';
-import { logEvent } from '../../utils/frontend-logger';
 import { useDispatch, useSelector } from 'react-redux';
 import { fjernTildeltVeilederToast } from '../../../store/toast/actions';
 import VeilederSelector from '../../../store/tildel-veileder/selector';
 import { useFocus } from '../../../util/hook/use-focus';
 import useTimer from '../../../util/hook/use-timer';
-
-export interface ToastType {
-    tekst: string;
-    timestamp: number;
-    className?: string;
-}
+import { logger } from '../../../util/logger';
 
 function FjernTildelVeilederToast() {
     const { focusRef } = useFocus();
@@ -22,7 +16,7 @@ function FjernTildelVeilederToast() {
 
     const handleClick = () => {
         const tidBrukt = stoppTimer();
-        logEvent('veilarbvisittkortfs.metrikker.lukk-toast-tildel-veileder', {
+        logger.event('veilarbvisittkortfs.metrikker.lukk-toast-tildel-veileder', {
             feature: 'toast-tildel-veileder',
             tidBrukt,
         });

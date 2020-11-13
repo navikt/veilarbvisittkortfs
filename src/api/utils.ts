@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
 import useAxiosHook, { configure, Options, RefetchOptions, ResponseValues } from 'axios-hooks';
+import { APP_NAME } from '../util/utils';
 
 export type UseAxiosResponseValue<T> = ResponseValues<T> & {
     fetch: (config?: AxiosRequestConfig, options?: RefetchOptions) => AxiosPromise<T>;
@@ -8,7 +9,7 @@ export type UseAxiosResponseValue<T> = ResponseValues<T> & {
 
 export const axiosInstance = axios.create({
     withCredentials: true,
-    headers: { 'Nav-Consumer-Id': 'veilarbvisittkortfs' },
+    headers: { 'Nav-Consumer-Id': APP_NAME },
 });
 
 configure({ axios: axiosInstance });

@@ -2,11 +2,11 @@ import React from 'react';
 import { Form, Formik, FormikProps } from 'formik';
 import Modal from '../components/modal/modal';
 import moment from 'moment';
-import { logEvent } from '../utils/frontend-logger';
 import ArbeidslisteForm from './arbeidsliste-form';
 import ArbeidslisteFooter from './arbeidsliste-footer';
 import VeilederVerktoyModal from '../components/modal/veilederverktoy-modal';
 import { Arbeidsliste, ArbeidslisteformValues, KategoriModell } from '../../api/data/arbeidsliste';
+import { logger } from '../../util/logger';
 
 interface ArbeidslisteProps {
     navn: string;
@@ -42,7 +42,7 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
         const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
         if (!formikProps.dirty || window.confirm(dialogTekst)) {
             props.lukkModal();
-            logEvent('veilarbvisittkortfs.metrikker.arbeidslistekategori.avbryt');
+            logger.event('veilarbvisittkortfs.metrikker.arbeidslistekategori.avbryt');
             formikProps.resetForm();
         }
     };
@@ -54,7 +54,7 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
             onSubmit={(values) => {
                 props.lukkModal();
                 props.onSubmit(values);
-                logEvent('teamvoff.metrikker.arbeidslistekategori', {
+                logger.event('teamvoff.metrikker.arbeidslistekategori', {
                     kategori: values.kategori,
                     leggtil: !props.arbeidsliste.endringstidspunkt,
                     applikasjon: 'visittkort',
