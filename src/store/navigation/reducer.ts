@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { NavigerAction } from './actions';
-import { StringOrNothing } from '../../types/utils/stringornothings';
+import { StringOrNothing } from '../../util/type/stringornothings';
 
 export interface NavigationState {
     location: StringOrNothing;

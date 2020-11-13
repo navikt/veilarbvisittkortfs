@@ -1,17 +1,18 @@
 import { Reducer } from 'redux';
-import { OrNothing } from '../../types/utils/ornothing';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { OppfolgingStatus } from '../../types/oppfolging-status';
 import {
-    HentOppfolgingstatusAction, hentOppfolgingstatusError,
+    HentOppfolgingstatusAction,
+    hentOppfolgingstatusError,
     hentOppfolgingstatusSuccess,
     OppfolgingStatusActions,
-    OppfolgingstatusActionType
+    OppfolgingstatusActionType,
 } from './actions';
 import { fetchOppfolgingsstatusData } from '../../api/api';
 import { FETCH_STATUS } from '../../types/fetch-status';
+import { OrNothing } from '../../util/type/ornothing';
 
-export type OppfolgingStatusState = {data: OppfolgingStatus} & {status: FETCH_STATUS; error: OrNothing<Error>};
+export type OppfolgingStatusState = { data: OppfolgingStatus } & { status: FETCH_STATUS; error: OrNothing<Error> };
 
 const initialState: OppfolgingStatusState = {
     status: 'NOT_STARTED',
@@ -19,33 +20,37 @@ const initialState: OppfolgingStatusState = {
     data: {
         oppfolgingsenhet: {
             navn: '',
-            enhetId: ''},
+            enhetId: '',
+        },
         veilederId: null,
         formidlingsgruppe: null,
         servicegruppe: null,
-    }
+    },
 };
 
-const oppfolgingStatusReducer: Reducer<OppfolgingStatusState, OppfolgingStatusActions> = (state = initialState, action) => {
+const oppfolgingStatusReducer: Reducer<OppfolgingStatusState, OppfolgingStatusActions> = (
+    state = initialState,
+    action
+) => {
     switch (action.type) {
         case OppfolgingstatusActionType.HENT_OPPFOLGINGSTATUS: {
             return {
                 ...state,
-                status: 'LOADING'
+                status: 'LOADING',
             };
         }
         case OppfolgingstatusActionType.HENT_OPPFOLGINGSTATUS_SUCCESS: {
             return {
                 ...state,
                 data: action.data,
-                status: 'DONE'
+                status: 'DONE',
             };
         }
         case OppfolgingstatusActionType.HENT_OPPFOLGINGSTATUS_ERROR: {
             return {
                 ...state,
                 status: 'ERROR',
-                error: action.error
+                error: action.error,
             };
         }
         default:
@@ -55,7 +60,7 @@ const oppfolgingStatusReducer: Reducer<OppfolgingStatusState, OppfolgingStatusAc
 
 function* hentOppfolgingstatus(action: HentOppfolgingstatusAction) {
     try {
-        const response = yield call( () => fetchOppfolgingsstatusData(action.fnr));
+        const response = yield call(() => fetchOppfolgingsstatusData(action.fnr));
         yield put(hentOppfolgingstatusSuccess(response));
     } catch (e) {
         yield put(hentOppfolgingstatusError(e));

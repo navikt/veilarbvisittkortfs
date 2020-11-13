@@ -10,16 +10,16 @@ import {
     TildelVeilederActions,
     TildelVeilederActionType,
     tildelVeilederError,
-    tildelVeilederSuccess
+    tildelVeilederSuccess,
 } from './actions';
-import { OrNothing } from '../../types/utils/ornothing';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import VeilederApi from '../../api/veileder-api';
 import { TildelVeilederResponse } from '../../types/tildel-veileder';
 import { VeilederListe } from '../../mock/veiledereliste';
 import { FETCH_STATUS } from '../../types/fetch-status';
-import { triggerReRenderingAvMao } from '../../app/utils/utils';
+import { triggerReRenderingAvMao } from '../../component/utils/utils';
 import { navigerAction } from '../navigation/actions';
+import { OrNothing } from '../../util/type/ornothing';
 
 export interface TildelVeilederState {
     status: FETCH_STATUS;
@@ -44,16 +44,16 @@ const initialState: TildelVeilederState = {
             ident: '',
             navn: '',
             fornavn: '',
-            etternavn: ''
-        }
+            etternavn: '',
+        },
     },
     veilederPaEnheten: {
-        data: { veilederListe: [] }
+        data: { veilederListe: [] },
     },
     tildeltVeileder: {
         data: null,
-        error: null
-    }
+        error: null,
+    },
 };
 
 const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> = (state = initialState, action) => {
@@ -62,7 +62,7 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
         case TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN:
             return {
                 ...state,
-                status: 'LOADING'
+                status: 'LOADING',
             };
         case TildelVeilederActionType.TILDEL_VEILEDER:
             return {
@@ -70,16 +70,16 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
                 status: 'LOADING',
                 tildeltVeileder: {
                     ...state.tildeltVeileder,
-                    error: null
-                }
+                    error: null,
+                },
             };
         case TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN_SUCCESS: {
             return {
                 ...state,
                 status: 'DONE',
                 veilederPaEnheten: {
-                    data: action.data
-                }
+                    data: action.data,
+                },
             };
         }
         case TildelVeilederActionType.HENT_PALOGGET_VEILEDER_SUCCESS: {
@@ -87,8 +87,8 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
                 ...state,
                 status: 'DONE',
                 paloggetVeileder: {
-                    data: action.data
-                }
+                    data: action.data,
+                },
             };
         }
         case TildelVeilederActionType.TILDEL_VEILEDER_SUCCESS: {
@@ -97,8 +97,8 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
                 status: 'DONE',
                 tildeltVeileder: {
                     error: null,
-                    data: action.data
-                }
+                    data: action.data,
+                },
             };
         }
         case TildelVeilederActionType.HENT_VEILEDER_PA_ENHETEN_ERROR:
@@ -106,7 +106,7 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
             return {
                 ...state,
                 status: 'ERROR',
-                error: action.error
+                error: action.error,
             };
         }
         case TildelVeilederActionType.TILDEL_VEILEDER_ERROR: {
@@ -115,8 +115,8 @@ const tildelVelederReducer: Reducer<TildelVeilederState, TildelVeilederActions> 
                 status: 'ERROR',
                 tildeltVeileder: {
                     ...state.tildeltVeileder,
-                    error: action.error
-                }
+                    error: action.error,
+                },
             };
         }
         default:

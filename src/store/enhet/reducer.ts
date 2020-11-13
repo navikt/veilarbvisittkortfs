@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { StringOrNothing } from '../../types/utils/stringornothings';
+import { StringOrNothing } from '../../util/type/stringornothings';
 
 interface EnhetAction {
     type: 'SETT_ENHET_FRA_PERSONFLATEFS';
@@ -10,13 +10,13 @@ export interface EnhetState {
     enhet: StringOrNothing;
 }
 
-const enhetIdReducer: Reducer<EnhetState, EnhetAction> = (state = {enhet: null}, action) => {
+const enhetIdReducer: Reducer<EnhetState, EnhetAction> = (state = { enhet: null }, action) => {
     switch (action.type) {
         case 'SETT_ENHET_FRA_PERSONFLATEFS':
             return {
-                enhet: action.enhet
+                enhet: action.enhet,
             };
-        default :
+        default:
             return state;
     }
 };

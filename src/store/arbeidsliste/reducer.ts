@@ -1,6 +1,5 @@
 import { Arbeidsliste } from '../../types/arbeidsliste';
 import { Reducer } from 'redux';
-import { OrNothing } from '../../types/utils/ornothing';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
     ArbeidslisteActions,
@@ -14,13 +13,14 @@ import {
     RedigerArbeidslisteAction,
     redigerArbeidslisteSuccess,
     slettArbeidslisteActionError,
-    slettArbeidslisteActionSuccess
+    slettArbeidslisteActionSuccess,
 } from './actions';
 import ArbeidslisteApi from '../../api/arbeidsliste-api';
 import { FETCH_STATUS } from '../../types/fetch-status';
 import { TildelVeilederActionType } from '../tildel-veileder/actions';
 import OppfolgingSelector from '../oppfolging/selector';
 import { navigerAction } from '../navigation/actions';
+import { OrNothing } from '../../util/type/ornothing';
 
 export type ArbeidslisteState = { data: Arbeidsliste } & { status: FETCH_STATUS; error: OrNothing<Error> };
 
@@ -35,10 +35,10 @@ const initialState: ArbeidslisteState = {
         overskrift: null,
         sistEndretAv: null,
         veilederId: null,
-        kategori: null
+        kategori: null,
     },
     status: 'NOT_STARTED',
-    error: null
+    error: null,
 };
 
 const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (state = initialState, action) => {
@@ -48,7 +48,7 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
         case ArbeidslisteActionType.REDIGER_ARBEIDSLISTE: {
             return {
                 ...state,
-                status: 'LOADING'
+                status: 'LOADING',
             };
         }
         case ArbeidslisteActionType.HENT_ARBEIDSLISTE_SUCCESS:
@@ -57,7 +57,7 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
             return {
                 ...state,
                 data: action.data,
-                status: 'DONE'
+                status: 'DONE',
             };
         }
         case ArbeidslisteActionType.HENT_ARBEIDSLISTE_ERROR:
@@ -67,7 +67,7 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
             return {
                 ...state,
                 status: 'ERROR',
-                error: action.error
+                error: action.error,
             };
         }
         case ArbeidslisteActionType.SLETT_ARBEIDSLISTE: {
@@ -83,9 +83,9 @@ const arbeidslisteReducer: Reducer<ArbeidslisteState, ArbeidslisteActions> = (st
                     arbeidslisteAktiv: null,
                     endringstidspunkt: null,
                     frist: null,
-                    kategori: null
+                    kategori: null,
                 },
-                status: 'DONE'
+                status: 'DONE',
             };
         }
         default:

@@ -1,6 +1,7 @@
 import { Appstate } from '../../types/appstate';
 import { OppfolgingStatus } from '../../types/oppfolging-status';
-import { StringOrNothing } from '../../types/utils/stringornothings';
+import { StringOrNothing } from '../../util/type/stringornothings';
+
 export interface OppfolgingsstatusSelector {
     selectOppfolgingStatusData: (state: Appstate) => OppfolgingStatus;
     selectOppfolgingsenhetsId: (state: Appstate) => StringOrNothing;
@@ -21,12 +22,12 @@ function selectOppfolgingsenhetsId(state: Appstate): StringOrNothing {
     return selectOppfolgingStatusData(state).oppfolgingsenhet.enhetId;
 }
 
-function selectOppfolgingStatusStatus (state: Appstate): boolean {
+function selectOppfolgingStatusStatus(state: Appstate): boolean {
     const oppfolgingStatus = state.oppfolgingstatus.status;
     return oppfolgingStatus === 'NOT_STARTED' || oppfolgingStatus === 'LOADING';
 }
 
-function selectErSykemeldtMedArbeidsgiver (state: Appstate): boolean {
+function selectErSykemeldtMedArbeidsgiver(state: Appstate): boolean {
     const data = selectOppfolgingStatusData(state);
     return data.formidlingsgruppe === 'IARBS' && data.servicegruppe === 'VURDI';
 }
@@ -36,5 +37,5 @@ export default {
     selectOppfolgingsenhetsId,
     selectOppfolgingStatusStatus,
     selectOppfolgingsVeileder,
-    selectErSykemeldtMedArbeidsgiver
+    selectErSykemeldtMedArbeidsgiver,
 } as OppfolgingsstatusSelector;

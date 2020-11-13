@@ -1,5 +1,4 @@
 import { Reducer } from 'redux';
-import { OrNothing } from '../../types/utils/ornothing';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { Personalia } from '../../types/personalia';
 import {
@@ -16,6 +15,7 @@ import {
 import { fetchInnloggetNiva4Data, fetchPersonaliaData } from '../../api/api';
 import { FETCH_STATUS } from '../../types/fetch-status';
 import { HarBruktNivaa4Type } from '../../types/har-brukt-nivaa4';
+import { OrNothing } from '../../util/type/ornothing';
 
 export type PersonaliaState = {
     data: Personalia;

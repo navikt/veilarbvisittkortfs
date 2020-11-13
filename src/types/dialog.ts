@@ -1,4 +1,4 @@
-import { StringOrNothing } from './utils/stringornothings';
+import { StringOrNothing } from '../util/type/stringornothings';
 
 export type Egenskaper = 'ESKALERINGSVARSEL' | 'PARAGRAF8';
 type Avsender = 'VEILEDER' | 'BRUKER';

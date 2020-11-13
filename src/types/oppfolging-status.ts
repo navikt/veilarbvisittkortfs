@@ -1,5 +1,5 @@
-import { StringOrNothing } from './utils/stringornothings';
-import { OrNothing } from './utils/ornothing';
+import { StringOrNothing } from '../util/type/stringornothings';
+import { OrNothing } from '../util/type/ornothing';
 
 export type Formidlingsgruppe = 'ARBS' | 'IARBS' | 'ISERV' | 'PARBS' | 'RARBS';
 export type Servicegruppe = 'BKART' | 'IVURD' | 'OPPFI' | 'VARIG' | 'VURDI' | 'VURDU';

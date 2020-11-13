@@ -1,7 +1,7 @@
 import { Appstate } from '../../types/appstate';
 import { Arbeidsliste } from '../../types/arbeidsliste';
-import { OrNothing } from '../../types/utils/ornothing';
 import VeilederSelector from '../tildel-veileder/selector';
+import { OrNothing } from '../../util/type/ornothing';
 
 export interface ArbeidslisteSelector {
     selectArbeidslisteStatus: (state: Appstate) => boolean;
@@ -33,13 +33,13 @@ function selectKanLeggeIArbeidsListe(state: Appstate): boolean {
     return !endringstidspunkt && !!erOppfolgingsVeileder;
 }
 
-function selectKanFjerneArbeidsliste (state: Appstate): boolean {
+function selectKanFjerneArbeidsliste(state: Appstate): boolean {
     const endringstidspunkt = selectEndringsPunkt(state);
     const erOppfolgingsVeileder = VeilederSelector.selectErTildeltVeilder(state);
     return !!endringstidspunkt && !!erOppfolgingsVeileder;
 }
 
-function selectKanRedigereArbeidsliste (state: Appstate): boolean {
+function selectKanRedigereArbeidsliste(state: Appstate): boolean {
     const endringstidspunkt = selectEndringsPunkt(state);
     const harVeilederTilgang = selectHarVeilederTilgang(state);
     return !!endringstidspunkt && harVeilederTilgang;
@@ -49,5 +49,5 @@ export default {
     selectArbeidslisteStatus,
     selectKanLeggeIArbeidsListe,
     selectKanFjerneArbeidsliste,
-    selectKanRedigereArbeidsliste
-}as ArbeidslisteSelector;
+    selectKanRedigereArbeidsliste,
+} as ArbeidslisteSelector;

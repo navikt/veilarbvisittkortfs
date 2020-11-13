@@ -1,17 +1,17 @@
 import { FETCH_STATUS } from '../../types/fetch-status';
-import { OrNothing } from '../../types/utils/ornothing';
 import { Reducer } from 'redux';
 import { AvslutningStatus } from '../../types/oppfolging';
 import {
     AvsluttOppfolgingActions,
     AvsluttOppfolgingType,
     hentAvsluttningStatusError,
-    hentAvsluttningStatusSuccess
+    hentAvsluttningStatusSuccess,
 } from './actions';
 import OppfolgingSelector from '../oppfolging/selector';
 import OppfolgingApi from '../../api/oppfolging-api';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { StringOrNothing } from '../../types/utils/stringornothings';
+import { OrNothing } from '../../util/type/ornothing';
+import { StringOrNothing } from '../../util/type/stringornothings';
 
 export type AvsluttOppfolgingState = { data: OrNothing<AvslutningStatus>; begrunnelse: StringOrNothing } & {
     status: FETCH_STATUS;
@@ -22,7 +22,7 @@ const initialState: AvsluttOppfolgingState = {
     data: null,
     status: 'NOT_STARTED',
     error: null,
-    begrunnelse: null
+    begrunnelse: null,
 };
 
 const avsluttOppfolgingStatusReducer: Reducer<AvsluttOppfolgingState, AvsluttOppfolgingActions> = (
@@ -33,21 +33,21 @@ const avsluttOppfolgingStatusReducer: Reducer<AvsluttOppfolgingState, AvsluttOpp
         case AvsluttOppfolgingType.HENT_AVSLUTT_OPPFOLGING_STATUS: {
             return {
                 ...state,
-                status: 'LOADING'
+                status: 'LOADING',
             };
         }
         case AvsluttOppfolgingType.HENT_AVSLUTT_OPPFOLGING_STATUS_SUCCESS: {
             return {
                 ...state,
                 status: 'DONE',
-                data: action.data
+                data: action.data,
             };
         }
         case AvsluttOppfolgingType.HENT_AVSLUTT_OPPFOLGING_STATUS_ERROR: {
             return {
                 ...state,
                 status: 'ERROR',
-                error: action.error
+                error: action.error,
             };
         }
         case AvsluttOppfolgingType.HENT_AVSLUTT_OPPFOLGING_RESET: {
@@ -56,7 +56,7 @@ const avsluttOppfolgingStatusReducer: Reducer<AvsluttOppfolgingState, AvsluttOpp
         case AvsluttOppfolgingType.LAGRE_AVSLUTT_OPPFOLGING_BEGRUNNELSE: {
             return {
                 ...state,
-                begrunnelse: action.begrunnelse
+                begrunnelse: action.begrunnelse,
             };
         }
         default:

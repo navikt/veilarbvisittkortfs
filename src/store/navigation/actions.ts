@@ -1,4 +1,4 @@
-import { StringOrNothing } from '../../types/utils/stringornothings';
+import { StringOrNothing } from '../../util/type/stringornothings';
 
 export type NavigerActionType =
     | 'NAVIGER_TIL_PROSSER'

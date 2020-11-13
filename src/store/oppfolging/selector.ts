@@ -1,8 +1,8 @@
 import { Appstate } from '../../types/appstate';
 import TilgangTilKontorSelector from '../tilgang-til-brukerskontor/selector';
 import { EskaleringsVarsel, Oppfolging } from '../../types/oppfolging';
-import { OrNothing } from '../../types/utils/ornothing';
-import { StringOrNothing } from '../../types/utils/stringornothings';
+import { StringOrNothing } from '../../util/type/stringornothings';
+import { OrNothing } from '../../util/type/ornothing';
 
 export interface OppfolgingSelector {
     selectOppfolgingStatus: (state: Appstate) => boolean;
@@ -28,11 +28,11 @@ function selectOppfolgingData(state: Appstate): Oppfolging {
     return state.oppfolging.data;
 }
 
-function selectErUnderOppfolging (state: Appstate): boolean {
+function selectErUnderOppfolging(state: Appstate): boolean {
     return selectOppfolgingData(state).underOppfolging;
 }
 
-function selectKanReaktiveres (state: Appstate): boolean {
+function selectKanReaktiveres(state: Appstate): boolean {
     return !!selectOppfolgingData(state).kanReaktiveres;
 }
 
@@ -49,7 +49,7 @@ function selectErManuell(state: Appstate): boolean {
     return selectOppfolgingData(state).manuell;
 }
 
-function selectErKRR (state: Appstate): boolean {
+function selectErKRR(state: Appstate): boolean {
     return selectOppfolgingData(state).reservasjonKRR;
 }
 
@@ -77,8 +77,8 @@ function selectKanStarteDigitalOppfolging(state: Appstate): boolean {
     );
 }
 
-function selectKanSendeEskaleringsVarsel (state: Appstate): boolean {
-    return(
+function selectKanSendeEskaleringsVarsel(state: Appstate): boolean {
+    return (
         TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) &&
         selectErUnderOppfolging(state) &&
         !selectGjeldeneEskaleringsVarsel(state) &&
@@ -87,8 +87,8 @@ function selectKanSendeEskaleringsVarsel (state: Appstate): boolean {
     );
 }
 
-function selectKanStoppeEskaleringsVarsel (state: Appstate): boolean {
-    return(
+function selectKanStoppeEskaleringsVarsel(state: Appstate): boolean {
+    return (
         TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) &&
         selectErUnderOppfolging(state) &&
         !!selectGjeldeneEskaleringsVarsel(state) &&
@@ -98,22 +98,26 @@ function selectKanStoppeEskaleringsVarsel (state: Appstate): boolean {
 }
 
 function selectKanStarteKVP(state: Appstate): boolean {
-    return TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) &&
+    return (
+        TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) &&
         selectErUnderOppfolging(state) &&
-        !selectKVP(state);
+        !selectKVP(state)
+    );
 }
 
 function selectKanStoppeKVP(state: Appstate): boolean {
-    return TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) &&
+    return (
+        TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) &&
         selectErUnderOppfolging(state) &&
-        selectKVP(state);
+        selectKVP(state)
+    );
 }
 
 function selectKanAvslutteOppfolging(state: Appstate): boolean {
     return TilgangTilKontorSelector.selectHarTilgangTilKontoret(state) && selectErUnderOppfolging(state);
 }
 
-function selectErSykmeldtMedArbeidsgiver (state: Appstate): boolean {
+function selectErSykmeldtMedArbeidsgiver(state: Appstate): boolean {
     return !!selectOppfolgingData(state).erSykmeldtMedArbeidsgiver;
 }
 
@@ -121,7 +125,7 @@ function selectVeilederId(state: Appstate): StringOrNothing {
     return selectOppfolgingData(state).veilederId;
 }
 
-function kanRegistreresEllerReaktiveres (state: Appstate): boolean {
+function kanRegistreresEllerReaktiveres(state: Appstate): boolean {
     const underOppfolging = selectErUnderOppfolging(state);
     const kanReaktiveres = selectKanReaktiveres(state);
     return (underOppfolging && kanReaktiveres) || (!underOppfolging && !kanReaktiveres);
@@ -144,5 +148,5 @@ export default {
     selectOppfolgingData,
     kanRegistreresEllerReaktiveres,
     selectVeilederId,
-    selectGjeldeneEskaleringsVarsel
-}as OppfolgingSelector;
+    selectGjeldeneEskaleringsVarsel,
+} as OppfolgingSelector;

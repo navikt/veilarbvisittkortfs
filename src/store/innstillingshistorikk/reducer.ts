@@ -1,44 +1,51 @@
 import { FETCH_STATUS } from '../../types/fetch-status';
-import { OrNothing } from '../../types/utils/ornothing';
 import { InnstillingsHistorikk } from '../../types/innstillings-historikk';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { Reducer } from 'redux';
 import {
-    HentInnstillinghistorikAction, hentInstillingshistorikkError,
+    HentInnstillinghistorikAction,
+    hentInstillingshistorikkError,
     hentInstillingshistorikkSuccess,
     InnstillingshistorikActions,
-    InnstillingshistorikActionType
+    InnstillingshistorikActionType,
 } from './actions';
 import OppfolgingApi from '../../api/oppfolging-api';
+import { OrNothing } from '../../util/type/ornothing';
 
-export type InnstillingsHistorikkState = {data: InnstillingsHistorikk[]} & {status: FETCH_STATUS, error: OrNothing<Error>};
+export type InnstillingsHistorikkState = { data: InnstillingsHistorikk[] } & {
+    status: FETCH_STATUS;
+    error: OrNothing<Error>;
+};
 
 const initialState: InnstillingsHistorikkState = {
     status: 'NOT_STARTED',
-    data : [],
-    error: null
+    data: [],
+    error: null,
 };
 
-const instillingshistorikkReducer: Reducer<InnstillingsHistorikkState, InnstillingshistorikActions> = (state = initialState, action) => {
+const instillingshistorikkReducer: Reducer<InnstillingsHistorikkState, InnstillingshistorikActions> = (
+    state = initialState,
+    action
+) => {
     switch (action.type) {
         case InnstillingshistorikActionType.HENT_INNSTILLINGSHISTORIKK: {
-           return {
-               ...state,
-                status: 'LOADING'
-           };
+            return {
+                ...state,
+                status: 'LOADING',
+            };
         }
         case InnstillingshistorikActionType.HENT_INNSTILLINGSHISTORIKK_SUCCESS: {
             return {
                 ...state,
                 status: 'DONE',
-                data: action.data
+                data: action.data,
             };
         }
         case InnstillingshistorikActionType.HENT_INNSTILLINGSHISTORIKK_ERROR: {
             return {
                 ...state,
                 error: action.error,
-                status: 'ERROR'
+                status: 'ERROR',
             };
         }
         default:
@@ -48,7 +55,7 @@ const instillingshistorikkReducer: Reducer<InnstillingsHistorikkState, Innstilli
 
 function* hentInstillingshistorikk(action: HentInnstillinghistorikAction) {
     try {
-        const response = yield call( () => OppfolgingApi.hentInnstillingsHistorikk(action.fnr));
+        const response = yield call(() => OppfolgingApi.hentInnstillingsHistorikk(action.fnr));
         yield put(hentInstillingshistorikkSuccess(response));
     } catch (e) {
         yield put(hentInstillingshistorikkError(e));

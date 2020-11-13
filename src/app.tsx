@@ -1,15 +1,15 @@
 import React from 'react';
-import PersonInfo from './app/personinfo/personinfo';
-import Veilederverktoyslinje from './app/veilederverktoy/veiledervertoyslinje';
-import AppProvider from './app/app-provider';
+import PersonInfo from './component/personinfo/personinfo';
+import Veilederverktoyslinje from './component/veilederverktoy/veiledervertoyslinje';
+import AppProvider from './component/app-provider';
 import * as moment from 'moment';
 import 'moment/locale/nb';
 import './index.less';
 import NavFrontendModal from 'nav-frontend-modal';
-import VisittkortWrapper from './app/visittkort-wrapper';
-import Etiketter from './app/personinfo/components/etiketter';
-import Tilbakelenke from './app/components/tilbakelenke/tilbakelenke';
-import VeilederVerktoyNavigation from './app/veilederverktoy/veilederverktoy-components/veilederverktoy-navigation';
+import VisittkortWrapper from './component/visittkort-wrapper';
+import Etiketter from './component/personinfo/components/etiketter';
+import Tilbakelenke from './component/components/tilbakelenke/tilbakelenke';
+import VeilederVerktoyNavigation from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-navigation';
 
 moment.locale('nb');
 

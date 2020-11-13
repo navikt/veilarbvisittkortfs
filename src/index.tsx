@@ -1,5 +1,5 @@
 import App from './app';
-import env from './app/utils/environment';
+import env from './component/utils/environment';
 import NAVSPA from '@navikt/navspa';
 
 if (!(global as any)._babelPolyfill) {

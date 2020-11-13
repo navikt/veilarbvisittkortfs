@@ -1,5 +1,4 @@
 import { FETCH_STATUS } from '../../types/fetch-status';
-import { OrNothing } from '../../types/utils/ornothing';
 import { OppgaveHistorikk } from '../../types/oppgave-historikk';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
 import { Reducer } from 'redux';
@@ -8,12 +7,13 @@ import {
     lagreOppgaveError,
     lagreOppgaveSuccess,
     OppgaveActionType,
-    OppgaveHistorikkActions
+    OppgaveHistorikkActions,
 } from './actions';
 import OppfolgingSelector from '../oppfolging/selector';
 import OppgaveApi from '../../api/oppgave-api';
 import { OppgaveTema, OppgaveType } from '../../types/oppgave';
 import { navigerAction } from '../navigation/actions';
+import { OrNothing } from '../../util/type/ornothing';
 
 interface LagetOppgave {
     tema: OppgaveTema;
@@ -35,8 +35,8 @@ const initialState: OppgaveHistorikkState = {
     status: 'NOT_STARTED',
     error: null,
     data: {
-        oppgaveHistorikk: [] as OppgaveHistorikk[]
-    }
+        oppgaveHistorikk: [] as OppgaveHistorikk[],
+    },
 };
 
 const oppgavehistorikkReducer: Reducer<OppgaveHistorikkState, OppgaveHistorikkActions> = (
@@ -47,14 +47,14 @@ const oppgavehistorikkReducer: Reducer<OppgaveHistorikkState, OppgaveHistorikkAc
         case OppgaveActionType.LAGRE_OPPGAVE: {
             return {
                 ...state,
-                status: 'LOADING'
+                status: 'LOADING',
             };
         }
         case OppgaveActionType.LAGRE_OPPGAVE_ERROR: {
             return {
                 ...state,
                 error: action.error,
-                status: 'ERROR'
+                status: 'ERROR',
             };
         }
         case OppgaveActionType.LAGRE_OPPGAVE_SUCCESS: {
@@ -63,8 +63,8 @@ const oppgavehistorikkReducer: Reducer<OppgaveHistorikkState, OppgaveHistorikkAc
                 status: 'DONE',
                 data: {
                     ...state.data,
-                    lagetOppgave: { type: action.data.type, tema: action.data.tema }
-                }
+                    lagetOppgave: { type: action.data.type, tema: action.data.tema },
+                },
             };
         }
         default:

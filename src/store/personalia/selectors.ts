@@ -1,8 +1,8 @@
 import { Appstate } from '../../types/appstate';
 import { Personalia } from '../../types/personalia';
 import { PersonaliaState } from './reducer';
-import { StringOrNothing } from '../../types/utils/stringornothings';
-import { storeForbokstaver } from '../../app/utils/utils';
+import { storeForbokstaver } from '../../component/utils/utils';
+import { StringOrNothing } from '../../util/type/stringornothings';
 
 export interface PersonaliaSelector {
     selectPersonaliaData: (state: Appstate) => Personalia;

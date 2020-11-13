@@ -1,8 +1,8 @@
 import { Appstate } from '../../types/appstate';
 import { FETCH_STATUS } from '../../types/fetch-status';
 import { AvslutningStatus } from '../../types/oppfolging';
-import { OrNothing } from '../../types/utils/ornothing';
-import { StringOrNothing } from '../../types/utils/stringornothings';
+import { StringOrNothing } from '../../util/type/stringornothings';
+import { OrNothing } from '../../util/type/ornothing';
 
 export interface AvsluttOppfolgingStatusSelector {
     selectAvsluttOppfolgingIsLoading: (state: Appstate) => boolean;
@@ -11,11 +11,11 @@ export interface AvsluttOppfolgingStatusSelector {
     selectBegrunnelse: (state: Appstate) => StringOrNothing;
 }
 
-function selectAvsluttOppfolgingStatusStatus (state: Appstate): FETCH_STATUS {
+function selectAvsluttOppfolgingStatusStatus(state: Appstate): FETCH_STATUS {
     return state.avsluttOppfolgingStatus.status;
 }
 
-function selectAvsluttOppfolgingData (state: Appstate): OrNothing<AvslutningStatus> {
+function selectAvsluttOppfolgingData(state: Appstate): OrNothing<AvslutningStatus> {
     return state.avsluttOppfolgingStatus.data;
 }
 
@@ -37,5 +37,5 @@ export default {
     selectAvsluttOppfolgingIsLoading,
     selectKanAvslutte,
     selectAvsluttOppfolgingData,
-    selectBegrunnelse
+    selectBegrunnelse,
 } as AvsluttOppfolgingStatusSelector;
