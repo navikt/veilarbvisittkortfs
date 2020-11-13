@@ -13,12 +13,11 @@ import {
 } from './actions';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import VeilederApi from '../../api/veileder-api';
-import { VeilederListe } from '../../mock/veiledereliste';
 import { triggerReRenderingAvMao } from '../../component/utils/utils';
 import { navigerAction } from '../navigation/actions';
 import { OrNothing } from '../../util/type/ornothing';
 import { FETCH_STATUS } from '../../api/data/fetch-status';
-import { VeilederData } from '../../api/data/veilederdata';
+import { VeilederData, VeilederListe } from '../../api/data/veilederdata';
 import { TildelVeilederResponse } from '../../api/data/tildel-veileder';
 
 export interface TildelVeilederState {

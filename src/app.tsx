@@ -10,6 +10,7 @@ import Etiketter from './component/personinfo/components/etiketter';
 import Tilbakelenke from './component/components/tilbakelenke/tilbakelenke';
 import VeilederVerktoyNavigation from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-navigation';
 import StoreProvider from './store-midlertidig/store-provider';
+import { InitialDataFetcher } from './component/initial-data-fetcher';
 
 moment.locale('nb');
 
@@ -32,12 +33,14 @@ function App(props: AppProps) {
         >
             <AppProvider fnr={props.fnr} enhet={props.enhet}>
                 <div className="visittkortfs">
-                    <Tilbakelenke enhet={props.enhet} fnr={props.fnr} tilbakeTilFlate={props.tilbakeTilFlate} />
-                    <VeilederVerktoyNavigation>
-                        <PersonInfo {...props} />
-                        <Etiketter />
-                        <Veilederverktoyslinje visVeilederVerktoy={props.visVeilederVerktoy} />
-                    </VeilederVerktoyNavigation>
+                    <InitialDataFetcher>
+                        <Tilbakelenke enhet={props.enhet} fnr={props.fnr} tilbakeTilFlate={props.tilbakeTilFlate} />
+                        <VeilederVerktoyNavigation>
+                            <PersonInfo {...props} />
+                            <Etiketter />
+                            <Veilederverktoyslinje visVeilederVerktoy={props.visVeilederVerktoy} />
+                        </VeilederVerktoyNavigation>
+                    </InitialDataFetcher>
                 </div>
             </AppProvider>
         </StoreProvider>

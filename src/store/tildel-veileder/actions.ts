@@ -1,7 +1,6 @@
-import { VeilederListe } from '../../mock/veiledereliste';
 import { StringOrNothing } from '../../util/type/stringornothings';
 import { TildelVeilederData } from '../../api/data/tildel-veileder';
-import { VeilederData } from '../../api/data/veilederdata';
+import { VeilederData, VeilederListe } from '../../api/data/veilederdata';
 
 export enum TildelVeilederActionType {
     HENT_VEILEDER_PA_ENHETEN = 'HENT_VEILEDER_PA_ENHETEN',
