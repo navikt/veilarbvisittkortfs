@@ -10,6 +10,7 @@ import VisittkortWrapper from './component/visittkort-wrapper';
 import Etiketter from './component/personinfo/components/etiketter';
 import Tilbakelenke from './component/components/tilbakelenke/tilbakelenke';
 import VeilederVerktoyNavigation from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-navigation';
+import StoreProvider from './store-midlertidig/store-provider';
 
 moment.locale('nb');
 
@@ -24,16 +25,23 @@ export interface AppProps {
 
 function App(props: AppProps) {
     return (
-        <AppProvider fnr={props.fnr} enhet={props.enhet}>
-            <VisittkortWrapper>
-                <Tilbakelenke enhet={props.enhet} fnr={props.fnr} tilbakeTilFlate={props.tilbakeTilFlate} />
-                <VeilederVerktoyNavigation>
-                    <PersonInfo {...props} />
-                    <Etiketter />
-                    <Veilederverktoyslinje visVeilederVerktoy={props.visVeilederVerktoy} />
-                </VeilederVerktoyNavigation>
-            </VisittkortWrapper>
-        </AppProvider>
+        <StoreProvider
+            brukerFnr={props.fnr}
+            enhetId={props.enhet}
+            tilbakeTilFlate={props.tilbakeTilFlate}
+            visVeilederVerktoy={props.visVeilederVerktoy || false}
+        >
+            <AppProvider fnr={props.fnr} enhet={props.enhet}>
+                <VisittkortWrapper>
+                    <Tilbakelenke enhet={props.enhet} fnr={props.fnr} tilbakeTilFlate={props.tilbakeTilFlate} />
+                    <VeilederVerktoyNavigation>
+                        <PersonInfo {...props} />
+                        <Etiketter />
+                        <Veilederverktoyslinje visVeilederVerktoy={props.visVeilederVerktoy} />
+                    </VeilederVerktoyNavigation>
+                </VisittkortWrapper>
+            </AppProvider>
+        </StoreProvider>
     );
 }
 
