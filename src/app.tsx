@@ -12,6 +12,7 @@ import StoreProvider from './store-midlertidig/store-provider';
 import { InitialDataFetcher } from './component/initial-data-fetcher';
 import { VeilederverktoyModalController } from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-modal-controller';
 
+// TODO: Moment kan byttes ut med dayjs. Må bruke nyeste versjon av nav-datovelger
 moment.locale('nb');
 
 NavFrontendModal.setAppElement(document.getElementById('modal-a11y-wrapper'));

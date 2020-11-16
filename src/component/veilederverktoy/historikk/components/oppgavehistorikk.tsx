@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { opprettetAvTekst } from './opprettet-av';
 import moment from 'moment';

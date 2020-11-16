@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import cls from 'classnames';
 import { Knapp, KnappBaseProps } from 'nav-frontend-knapper';
 import './meny-knapp.less';

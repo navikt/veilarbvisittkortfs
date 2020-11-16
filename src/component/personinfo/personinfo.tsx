@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import NavnOgAlder from './components/navnogalder';
 import Icon from './components/icon';
 import ArbeidslisteKnapp from '../arbeidsliste/arbeidsliste-knapp';

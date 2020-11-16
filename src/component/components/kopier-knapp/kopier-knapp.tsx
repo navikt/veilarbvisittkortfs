@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import KnappFss from '../knapp-fss/knapp-fss';
 import './kopier-knapp.less';
 import { useState } from 'react';

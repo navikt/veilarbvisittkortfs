@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import hiddenIf from './hidden-if';
 
 function HiddenIfDiv(props: { children: React.ReactNode; className?: string }) {

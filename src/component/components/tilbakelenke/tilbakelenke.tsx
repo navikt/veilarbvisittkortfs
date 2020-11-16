@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import './tilbakelenke.less';
 import Chevron from 'nav-frontend-chevron';
 import { useAppStore } from '../../../store-midlertidig/app-store';

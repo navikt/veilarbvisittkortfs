@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import '../arbeidsliste.less';
 import { ReactComponent as ArbeidslisteikonBla } from './/arbeidslisteikon_bla.svg';
 import { ReactComponent as ArbeidslisteikonLilla } from './arbeidslisteikon_lilla.svg';
