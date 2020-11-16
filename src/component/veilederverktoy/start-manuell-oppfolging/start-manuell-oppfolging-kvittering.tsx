@@ -7,6 +7,10 @@ import { fetchRegistreringData } from '../../../api/registrering-api';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { logger } from '../../../util/logger';
 
+export interface StartManuellOppfolgingKvitteringProps {
+    begrunnelse: string;
+}
+
 interface OwnProps {
     begrunnelse?: string;
 }

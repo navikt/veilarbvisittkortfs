@@ -1,6 +1,10 @@
 import React from 'react';
 import Kvittering from '../prosess/kvittering';
 
+export interface StartDigitalOppfolgingKvitteringProps {
+    begrunnelse: string;
+}
+
 interface OwnProps {
     begrunnelse?: string;
 }

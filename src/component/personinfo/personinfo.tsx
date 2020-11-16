@@ -4,18 +4,21 @@ import './personinfo.less';
 import Icon from './components/icon';
 import { useDispatch, useSelector } from 'react-redux';
 import { Appstate } from '../../types/appstate';
-import PersonaliaSelector from '../../store/personalia/selectors';
 import ArbeidslisteKnapp from '../arbeidsliste/arbeidsliste-knapp';
 import ArbeidslisteSelector from '../../store/arbeidsliste/selector';
 import { navigerAction } from '../../store/navigation/actions';
 import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
 import { useAppStore } from '../../store-midlertidig/app-store';
 import { logger } from '../../util/logger';
+import { useDataStore } from '../../store-midlertidig/data-store';
+import { selectSammensattNavn } from '../../util/selectors';
 
 function PersonInfo() {
     const { brukerFnr } = useAppStore();
-    const personalia = useSelector((state: Appstate) => state.personalia.data);
-    const navn = useSelector(PersonaliaSelector.selectSammensattNavn);
+    const { personalia } = useDataStore();
+
+    const navn = selectSammensattNavn(personalia);
+
     const kanLeggeIArbeidsliste = useSelector(
         (state: Appstate) =>
             state.tildelVeileder.status !== 'LOADING' && ArbeidslisteSelector.selectKanLeggeIArbeidsListe(state)

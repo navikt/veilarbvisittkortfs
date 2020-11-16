@@ -1,5 +1,6 @@
 import React from 'react';
 import { DataStore } from './data-store';
+import { ModalStore } from './modal-store';
 import { AppStore, AppStoreInitialValues } from './app-store';
 
 interface StoreProviderProps extends AppStoreInitialValues {
@@ -14,7 +15,9 @@ const StoreProvider = (props: StoreProviderProps) => {
             tilbakeTilFlate={props.tilbakeTilFlate}
             visVeilederVerktoy={props.visVeilederVerktoy}
         >
-            <DataStore>{props.children}</DataStore>
+            <DataStore>
+                <ModalStore>{props.children}</ModalStore>
+            </DataStore>
         </AppStore>
     );
 };

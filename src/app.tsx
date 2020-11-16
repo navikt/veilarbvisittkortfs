@@ -8,9 +8,9 @@ import './index.less';
 import NavFrontendModal from 'nav-frontend-modal';
 import Etiketter from './component/personinfo/components/etiketter';
 import Tilbakelenke from './component/components/tilbakelenke/tilbakelenke';
-import VeilederVerktoyNavigation from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-navigation';
 import StoreProvider from './store-midlertidig/store-provider';
 import { InitialDataFetcher } from './component/initial-data-fetcher';
+import { VeilederverktoyModalController } from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-modal-controller';
 
 moment.locale('nb');
 
@@ -35,11 +35,12 @@ function App(props: AppProps) {
                 <div className="visittkortfs">
                     <InitialDataFetcher>
                         <Tilbakelenke />
-                        <VeilederVerktoyNavigation>
+                        <div className="visittkortfs__container">
                             <PersonInfo />
                             <Etiketter />
                             <Veilederverktoyslinje />
-                        </VeilederVerktoyNavigation>
+                        </div>
+                        <VeilederverktoyModalController />
                     </InitialDataFetcher>
                 </div>
             </AppProvider>
