@@ -1,38 +1,31 @@
 import * as React from 'react';
 import NavnOgAlder from './components/navnogalder';
-import './personinfo.less';
 import Icon from './components/icon';
-import { useDispatch, useSelector } from 'react-redux';
-import { Appstate } from '../../types/appstate';
 import ArbeidslisteKnapp from '../arbeidsliste/arbeidsliste-knapp';
-import ArbeidslisteSelector from '../../store/arbeidsliste/selector';
-import { navigerAction } from '../../store/navigation/actions';
 import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
 import { useAppStore } from '../../store-midlertidig/app-store';
 import { logger } from '../../util/logger';
 import { useDataStore } from '../../store-midlertidig/data-store';
-import { selectSammensattNavn } from '../../util/selectors';
+import { selectKanLeggeIArbeidsListe, selectKanRedigereArbeidsliste, selectSammensattNavn } from '../../util/selectors';
+import { ModalType, useModalStore } from '../../store-midlertidig/modal-store';
+import './personinfo.less';
 
 function PersonInfo() {
     const { brukerFnr } = useAppStore();
-    const { personalia } = useDataStore();
+    const { personalia, arbeidsliste, oppfolgingsstatus, innloggetVeileder } = useDataStore();
+    const { showModal } = useModalStore();
 
     const navn = selectSammensattNavn(personalia);
 
-    const kanLeggeIArbeidsliste = useSelector(
-        (state: Appstate) =>
-            state.tildelVeileder.status !== 'LOADING' && ArbeidslisteSelector.selectKanLeggeIArbeidsListe(state)
-    );
+    // TODO: Det var tidligere også en sjekk på state.tildelVeileder.status !== 'LOADING'
+    const kanLeggeIArbeidsliste = selectKanLeggeIArbeidsListe(innloggetVeileder, oppfolgingsstatus, arbeidsliste);
 
-    const kanRedigereArbeidsliste = useSelector(ArbeidslisteSelector.selectKanRedigereArbeidsliste);
-
-    const dispatch = useDispatch();
-
-    const arbeidslisteikon = useSelector((state: Appstate) => state.arbeidsliste.data.kategori);
+    const kanRedigereArbeidsliste = selectKanRedigereArbeidsliste(arbeidsliste);
+    const arbeidslisteikon = arbeidsliste?.kategori;
 
     const klikk = () => {
         logger.event('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
-        dispatch(navigerAction('vis_arbeidsliste'));
+        showModal(ModalType.VIS_ARBEIDSLISTE);
     };
 
     return (

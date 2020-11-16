@@ -6,6 +6,8 @@ import {
     useFetchOppfolging,
     useFetchOppfolgingsstatus,
     useFetchPersonalia,
+    useFetchArbeidsliste,
+    useFetchVeilederePaEnhet,
 } from '../api/api-midlertidig';
 import { useAppStore } from '../store-midlertidig/app-store';
 import { isAnyLoading } from '../api/utils';
@@ -19,6 +21,8 @@ export function InitialDataFetcher(props: { children: any }) {
         setInnloggetVeileder,
         setPersonalia,
         setTilgangTilBrukersKontor,
+        setArbeidsliste,
+        setVeilederePaEnhet,
     } = useDataStore();
 
     const fetchOppfolgingsstatus = useFetchOppfolgingsstatus(brukerFnr);
@@ -26,6 +30,11 @@ export function InitialDataFetcher(props: { children: any }) {
     const fetchInnloggetVeileder = useFetchInnloggetVeileder();
     const fetchPersonalia = useFetchPersonalia(brukerFnr);
     const fetchTilgangTilBrukersKontor = useFetchTilgangTilBrukersKontor(brukerFnr);
+
+    const oppfolgingsEnhet = fetchOppfolgingsstatus?.data?.oppfolgingsenhet.enhetId || '';
+
+    const fetchArbeidsliste = useFetchArbeidsliste(brukerFnr, { manual: true });
+    const fetchVeiledere = useFetchVeilederePaEnhet(oppfolgingsEnhet, { manual: true });
 
     useEffect(() => {
         if (fetchOppfolgingsstatus.data) {
@@ -61,6 +70,38 @@ export function InitialDataFetcher(props: { children: any }) {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchTilgangTilBrukersKontor]);
+
+    useEffect(() => {
+        if (fetchArbeidsliste.data) {
+            setArbeidsliste(fetchArbeidsliste.data);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fetchArbeidsliste]);
+
+    useEffect(() => {
+        if (fetchVeiledere.data) {
+            setVeilederePaEnhet(fetchVeiledere.data);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fetchVeiledere]);
+
+    useEffect(() => {
+        const harTilgang =
+            fetchTilgangTilBrukersKontor.data && fetchTilgangTilBrukersKontor.data.tilgangTilBrukersKontor;
+        const underOppfolging = fetchOppfolging.data && fetchOppfolging.data.underOppfolging;
+
+        if (harTilgang && underOppfolging) {
+            fetchArbeidsliste.fetch();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fetchTilgangTilBrukersKontor, fetchOppfolging]);
+
+    useEffect(() => {
+        if (oppfolgingsEnhet) {
+            fetchVeiledere.fetch();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fetchOppfolgingsstatus]);
 
     if (
         isAnyLoading(

@@ -2,10 +2,11 @@ import constate from 'constate';
 import { useState } from 'react';
 import { OppfolgingStatus } from '../api/data/oppfolging-status';
 import { Oppfolging } from '../api/data/oppfolging';
-import { VeilederData } from '../api/data/veilederdata';
+import { VeilederData, VeilederListe } from '../api/data/veilederdata';
 import { Personalia } from '../api/data/personalia';
 import { HarBruktNivaa4Type } from '../api/data/har-brukt-nivaa4';
 import { TilgangTilBrukersKontor } from '../api/data/tilgangtilbrukerskontor';
+import { Arbeidsliste } from '../api/data/arbeidsliste';
 
 const placeholder = {} as any;
 
@@ -16,6 +17,9 @@ export const [DataStore, useDataStore] = constate(() => {
     const [personalia, setPersonalia] = useState<Personalia>(placeholder);
     const [tilgangTilBrukersKontor, setTilgangTilBrukersKontor] = useState<TilgangTilBrukersKontor>(placeholder);
     const [harBruktNivaa4, setHarBruktNivaa4] = useState<HarBruktNivaa4Type>(placeholder);
+
+    const [arbeidsliste, setArbeidsliste] = useState<Arbeidsliste>();
+    const [veilederePaEnhet, setVeilederePaEnhet] = useState<VeilederListe>();
 
     return {
         oppfolgingsstatus,
@@ -30,5 +34,9 @@ export const [DataStore, useDataStore] = constate(() => {
         setTilgangTilBrukersKontor,
         harBruktNivaa4,
         setHarBruktNivaa4,
+        arbeidsliste,
+        setArbeidsliste,
+        veilederePaEnhet,
+        setVeilederePaEnhet,
     };
 });
