@@ -1,15 +1,13 @@
 // tslint:disable object-literal-sort-keys
-import { JSONValue } from 'yet-another-fetch-mock';
 import { OppfolgingStatus } from '../types/oppfolging-status';
 
-const oppfolgingsstatus: OppfolgingStatus & JSONValue = {
+const oppfolgingsstatus: OppfolgingStatus = {
     oppfolgingsenhet: {
         navn: 'NAV TestHeim',
-        enhetId: '007'
+        enhetId: '007',
     },
     veilederId: '',
     formidlingsgruppe: 'ARBS',
     servicegruppe: 'BKART',
-    hovedmaalkode: 'BEHOLDEA'
 };
 export default oppfolgingsstatus;
