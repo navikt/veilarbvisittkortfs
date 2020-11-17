@@ -8,6 +8,7 @@ import { TilgangTilBrukersKontor } from './data/tilgangtilbrukerskontor';
 import { Arbeidsliste } from './data/arbeidsliste';
 import { RegistreringData } from './registrering-api';
 import { Oppfolging } from './data/oppfolging';
+import { ALL_TOGGLES, Features } from './data/features';
 
 export function useFetchOppfolgingsstatus(fnr: string, options?: Options): UseAxiosResponseValue<OppfolgingStatus> {
     return useAxios<OppfolgingStatus>({ url: `/veilarboppfolging/api/person/${fnr}/oppfolgingsstatus` }, options);
@@ -49,4 +50,9 @@ export function useFetchArbeidsliste(fnr: string, options?: Options): UseAxiosRe
 
 export function useFetchRegistrering(fnr: string, options?: Options): UseAxiosResponseValue<RegistreringData> {
     return useAxios<RegistreringData>({ url: `/veilarbregistrering/api/registrering?fnr=${fnr}` }, options);
+}
+
+export function useFetchFeatures(options?: Options): UseAxiosResponseValue<Features> {
+    const features = ALL_TOGGLES.map((element) => 'feature=' + element).join('&');
+    return useAxios<Features>({ url: `/veilarbpersonflatefs/api/feature?feature=${features}` }, options);
 }

@@ -7,6 +7,7 @@ import { Personalia } from '../api/data/personalia';
 import { HarBruktNivaa4Type } from '../api/data/har-brukt-nivaa4';
 import { TilgangTilBrukersKontor } from '../api/data/tilgangtilbrukerskontor';
 import { Arbeidsliste } from '../api/data/arbeidsliste';
+import { Features } from '../api/data/features';
 
 const placeholder = {} as any;
 
@@ -17,6 +18,7 @@ export const [DataStore, useDataStore] = constate(() => {
     const [personalia, setPersonalia] = useState<Personalia>(placeholder);
     const [tilgangTilBrukersKontor, setTilgangTilBrukersKontor] = useState<TilgangTilBrukersKontor>(placeholder);
     const [harBruktNivaa4, setHarBruktNivaa4] = useState<HarBruktNivaa4Type>(placeholder);
+    const [features, setFeatures] = useState<Features>(placeholder);
 
     const [arbeidsliste, setArbeidsliste] = useState<Arbeidsliste>();
     const [veilederePaEnhet, setVeilederePaEnhet] = useState<VeilederListe>();
@@ -34,6 +36,8 @@ export const [DataStore, useDataStore] = constate(() => {
         setTilgangTilBrukersKontor,
         harBruktNivaa4,
         setHarBruktNivaa4,
+        features,
+        setFeatures,
         arbeidsliste,
         setArbeidsliste,
         veilederePaEnhet,

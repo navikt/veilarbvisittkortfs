@@ -8,6 +8,7 @@ import {
     useFetchPersonalia,
     useFetchArbeidsliste,
     useFetchVeilederePaEnhet,
+    useFetchFeatures,
 } from '../api/api-midlertidig';
 import { useAppStore } from '../store-midlertidig/app-store';
 import { isAnyLoading } from '../api/utils';
@@ -23,6 +24,7 @@ export function InitialDataFetcher(props: { children: any }) {
         setTilgangTilBrukersKontor,
         setArbeidsliste,
         setVeilederePaEnhet,
+        setFeatures,
     } = useDataStore();
 
     const fetchOppfolgingsstatus = useFetchOppfolgingsstatus(brukerFnr);
@@ -30,6 +32,7 @@ export function InitialDataFetcher(props: { children: any }) {
     const fetchInnloggetVeileder = useFetchInnloggetVeileder();
     const fetchPersonalia = useFetchPersonalia(brukerFnr);
     const fetchTilgangTilBrukersKontor = useFetchTilgangTilBrukersKontor(brukerFnr);
+    const fetchFeatures = useFetchFeatures();
 
     const oppfolgingsEnhet = fetchOppfolgingsstatus?.data?.oppfolgingsenhet.enhetId || '';
 
@@ -70,6 +73,13 @@ export function InitialDataFetcher(props: { children: any }) {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchTilgangTilBrukersKontor]);
+
+    useEffect(() => {
+        if (fetchFeatures.data) {
+            setFeatures(fetchFeatures.data);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fetchFeatures]);
 
     useEffect(() => {
         if (fetchArbeidsliste.data) {

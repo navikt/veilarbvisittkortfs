@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import hiddenIf from '../../components/hidden-if/hidden-if';
 import EtikettBase, { EtikettInfo, EtikettAdvarsel, EtikettFokus } from 'nav-frontend-etiketter';
-import './etiketter.less';
-import { useSelector } from 'react-redux';
-import { Appstate } from '../../../types/appstate';
-import OppfolgingSelector from '../../../store/oppfolging/selector';
-import OppfolgingsstatusSelector from '../../../store/oppfolging-status/selectors';
-import { fetchToJson } from '../../../api/api-utils';
-import FeatureApi from '../../../api/feature-api';
-import { StringOrNothing } from '../../../util/type/stringornothings';
 import { OppfolgingStatus } from '../../../api/data/oppfolging-status';
+import { useDataStore } from '../../../store-midlertidig/data-store';
+import { useAppStore } from '../../../store-midlertidig/app-store';
+import { useFetchRegistrering } from '../../../api/api-midlertidig';
+import { PILOT_TOGGLE } from '../../../api/data/features';
+import './etiketter.less';
+import { InnsatsgruppeType } from '../../../api/registrering-api';
+import { OrNothing } from '../../../util/type/ornothing';
 
 const Advarsel = hiddenIf(EtikettAdvarsel);
 const Info = hiddenIf(EtikettInfo);
 const Fokus = hiddenIf(EtikettFokus);
-const Bas = hiddenIf(EtikettBase);
+const Base = hiddenIf(EtikettBase);
 
 export function erBrukerSykmeldt(oppfolging: OppfolgingStatus): boolean {
     return oppfolging.formidlingsgruppe === 'IARBS' && oppfolging.servicegruppe === 'VURDI';
@@ -36,76 +35,67 @@ export function maglerVedtak(oppfolging: OppfolgingStatus): boolean {
 }
 
 function Etiketter() {
-    const { diskresjonskode, sikkerhetstiltak, egenAnsatt, dodsdato } = useSelector(
-        (state: Appstate) => state.personalia.data
-    );
+    const { brukerFnr } = useAppStore();
+    const { oppfolgingsstatus, oppfolging, personalia, features } = useDataStore();
 
-    const [profilering, setProfilering] = useState<StringOrNothing>(null);
+    const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>(null);
 
-    const {
-        underKvp,
-        reservasjonKRR,
-        manuell,
-        underOppfolging,
-        inaktivIArena,
-        gjeldendeEskaleringsvarsel,
-        kanVarsles,
-        fnr,
-    } = useSelector(OppfolgingSelector.selectOppfolgingData);
+    const fetchRegistrering = useFetchRegistrering(brukerFnr, { manual: true });
 
     useEffect(() => {
-        if (fnr) {
-            fetchToJson('/veilarbregistrering/api/registrering?fnr=' + fnr).then((resp: any) => {
-                FeatureApi.hentFeatures('pto.vedtaksstotte.pilot').then((features) => {
-                    if (features['pto.vedtaksstotte.pilot'] && resp.type === 'ORDINAER') {
-                        setProfilering(resp.registrering.profilering.innsatsgruppe);
-                    }
-                });
-            });
+        if (brukerFnr && features[PILOT_TOGGLE]) {
+            fetchRegistrering.fetch();
         }
-    }, [fnr]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [brukerFnr]);
 
-    const oppfolgingstatus = useSelector(OppfolgingsstatusSelector.selectOppfolgingStatusData);
+    useEffect(() => {
+        if (fetchRegistrering.data) {
+            setInnsatsgruppe(fetchRegistrering.data.registrering.profilering?.innsatsgruppe);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fetchRegistrering]);
+
     return (
         <div className="etikett-container">
-            <Bas hidden={!dodsdato} type="info" className="etikett--mork">
+            <Base hidden={!personalia.dodsdato} type="info" className="etikett--mork">
                 Død
-            </Bas>
-            <Advarsel hidden={!diskresjonskode}>Kode {diskresjonskode}</Advarsel>
-            <Advarsel hidden={!sikkerhetstiltak}>{sikkerhetstiltak}</Advarsel>
-            <Advarsel hidden={!egenAnsatt}>Egen ansatt</Advarsel>
-            <Fokus hidden={!underKvp}>KVP</Fokus>
+            </Base>
+            <Advarsel hidden={!personalia.diskresjonskode}>Kode {personalia.diskresjonskode}</Advarsel>
+            <Advarsel hidden={!personalia.sikkerhetstiltak}>{personalia.sikkerhetstiltak}</Advarsel>
+            <Advarsel hidden={!personalia.egenAnsatt}>Egen ansatt</Advarsel>
+            <Fokus hidden={!oppfolging.underKvp}>KVP</Fokus>
             <Fokus
-                hidden={reservasjonKRR || !manuell}
+                hidden={oppfolging.reservasjonKRR || !oppfolging.manuell}
                 title="Brukeren er vurdert til å ikke kunne benytte seg av aktivitetsplanen og dialogen. Du kan endre til digital oppfølging i Veilederverktøy."
             >
                 Manuell oppfølging
             </Fokus>
             <Fokus
-                hidden={!reservasjonKRR}
+                hidden={!oppfolging.reservasjonKRR}
                 title="Brukeren har reservert seg mot digital kommunikasjon i Kontakt- og reservasjonsregisteret, og kan derfor ikke benytte seg av aktivitetsplanen og dialogen."
             >
                 Reservert KRR
             </Fokus>
-            <Fokus hidden={!inaktivIArena}>Inaktivert</Fokus>
-            <Fokus hidden={underOppfolging}>Ikke under oppfølging</Fokus>
-            <Fokus hidden={!gjeldendeEskaleringsvarsel}>Varsel</Fokus>
+            <Fokus hidden={!oppfolging.inaktivIArena}>Inaktivert</Fokus>
+            <Fokus hidden={oppfolging.underOppfolging}>Ikke under oppfølging</Fokus>
+            <Fokus hidden={!oppfolging.gjeldendeEskaleringsvarsel}>Varsel</Fokus>
             <Fokus
-                hidden={reservasjonKRR || manuell || kanVarsles}
+                hidden={oppfolging.reservasjonKRR || oppfolging.manuell || oppfolging.kanVarsles}
                 title="Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret og kan ikke varsles. Du kan derfor ikke samhandle digitalt med brukeren. "
             >
                 Ikke registrert KRR
             </Fokus>
-            <Info hidden={!(trengerVurdering(oppfolgingstatus) && !profilering)}>Trenger vurdering</Info>
-            <Info hidden={!(trengerAEV(oppfolgingstatus) && !profilering)}>Behov for AEV</Info>
-            <Info hidden={!erBrukerSykmeldt(oppfolgingstatus)}>Sykmeldt</Info>
-            <Info hidden={!(profilering === 'STANDARD_INNSATS' && maglerVedtak(oppfolgingstatus))}>
+            <Info hidden={!(trengerVurdering(oppfolgingsstatus) && !innsatsgruppe)}>Trenger vurdering</Info>
+            <Info hidden={!(trengerAEV(oppfolgingsstatus) && !innsatsgruppe)}>Behov for AEV</Info>
+            <Info hidden={!erBrukerSykmeldt(oppfolgingsstatus)}>Sykmeldt</Info>
+            <Info hidden={!(innsatsgruppe === 'STANDARD_INNSATS' && maglerVedtak(oppfolgingsstatus))}>
                 Antatt gode muligheter
             </Info>
-            <Info hidden={!(profilering === 'SITUASJONSBESTEMT_INNSATS' && maglerVedtak(oppfolgingstatus))}>
+            <Info hidden={!(innsatsgruppe === 'SITUASJONSBESTEMT_INNSATS' && maglerVedtak(oppfolgingsstatus))}>
                 Antatt behov for veiledning
             </Info>
-            <Info hidden={!(profilering === 'BEHOV_FOR_ARBEIDSEVNEVURDERING' && maglerVedtak(oppfolgingstatus))}>
+            <Info hidden={!(innsatsgruppe === 'BEHOV_FOR_ARBEIDSEVNEVURDERING' && maglerVedtak(oppfolgingsstatus))}>
                 Oppgitt hindringer
             </Info>
         </div>
