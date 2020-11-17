@@ -1,5 +1,5 @@
 import { fetchToJson, postAsJson } from './api-utils';
-import { Oppfolging } from '../types/oppfolging';
+import { AvslutningStatus, Oppfolging } from '../types/oppfolging';
 
 const OPPFOLGING_BASE_URL = '/veilarboppfolging/api';
 
@@ -12,9 +12,10 @@ export interface OppfolgingApi {
     startKvpOppfolging: (begrunnelse: string, fnr: string) => Promise<void>; // TODO SJEKK HVA DET SKA VARA
     stoppKvpOppfolging: (begrunnelse: string, fnr: string) => Promise<void>; // TODO SJEKK HVA DET SKA VARA
     hentInnstillingsHistorikk: (fnr: string) => string; //
-    kanAvslutte: (fnr: string) => Promise<Oppfolging>; //
+    //TODO: Fjerne typen Oppfolging, midlertidig typesetting for bakoverkompabilitet før veilarboppfølging er oppdatert
+    kanAvslutte: (fnr: string) => Promise<Oppfolging | AvslutningStatus>; //
+    avsluttOppfolging: (begrunnelse: string, veilederId: string, fnr: string) => Promise<Oppfolging | AvslutningStatus>; //
     stoppEskalering: (fnr: string, begrunnelse?: string) => Promise<Oppfolging>; //
-    avsluttOppfolging: (begrunnelse: string, veilederId: string, fnr: string) => Promise<Oppfolging>; //
 }
 
 function hentOppfolgingData(fnr?: string) {
@@ -24,7 +25,7 @@ function hentOppfolgingData(fnr?: string) {
 function startEskalering(dialogId: string, begrunnelse: string, fnr: string) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/startEskalering/?fnr=${fnr}`, {
         dialogId,
-        begrunnelse
+        begrunnelse,
     });
 }
 
@@ -35,26 +36,26 @@ function hentVeilederTilgang(fnr: string) {
 function settDigital(begrunnelse: string, veilederId: string, fnr: string) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/settDigital?fnr=${fnr}`, {
         begrunnelse,
-        veilederId
+        veilederId,
     });
 }
 
 function settManuellOppfolging(begrunnelse: string, veilederId: string, fnr: string) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/settManuell?fnr=${fnr}`, {
         begrunnelse,
-        veilederId
+        veilederId,
     });
 }
 
 function startKvpOppfolging(begrunnelse: string, fnr: string) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/startKvp?fnr=${fnr}`, {
-        begrunnelse
+        begrunnelse,
     });
 }
 
 function stoppKvpOppfolging(begrunnelse: string, fnr: string) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/stoppKvp?fnr=${fnr}`, {
-        begrunnelse
+        begrunnelse,
     });
 }
 
@@ -85,5 +86,5 @@ export default {
     hentInnstillingsHistorikk,
     kanAvslutte,
     avsluttOppfolging,
-    stoppEskalering
+    stoppEskalering,
 } as OppfolgingApi;

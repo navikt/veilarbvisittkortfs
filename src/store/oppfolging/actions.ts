@@ -187,34 +187,6 @@ export const stoppKVPError = (error: Error): StoppKVPActionError => ({
     error,
 });
 
-export interface AvsluttOppfolgingAction {
-    type: OppfolgingActionType.AVSLUTT_OPPFOLGING;
-}
-
-export interface AvsluttOppfolgingActionSuccess {
-    type: OppfolgingActionType.AVSLUTT_OPPFOLGING_SUCCESS;
-    data: Oppfolging;
-}
-
-export interface AvsluttOppfolgingActionError {
-    type: OppfolgingActionType.AVSLUTT_OPPFOLGING_ERROR;
-    error: Error;
-}
-
-export const avsluttOppfolging = (): AvsluttOppfolgingAction => ({
-    type: OppfolgingActionType.AVSLUTT_OPPFOLGING,
-});
-
-export const avsluttOppfolgingSuccess = (data: Oppfolging): AvsluttOppfolgingActionSuccess => ({
-    type: OppfolgingActionType.AVSLUTT_OPPFOLGING_SUCCESS,
-    data,
-});
-
-export const avsluttOppfolgingError = (error: Error): AvsluttOppfolgingActionError => ({
-    type: OppfolgingActionType.AVSLUTT_OPPFOLGING_ERROR,
-    error,
-});
-
 export interface StoppEskaleringAction {
     type: OppfolgingActionType.STOPP_ESKALERING;
     dialogId: string;
@@ -272,9 +244,6 @@ export type OppfolgingActions =
     | StoppKVPAction
     | StoppKVPActionSuccess
     | StoppKVPActionError
-    | AvsluttOppfolgingAction
-    | AvsluttOppfolgingActionSuccess
-    | AvsluttOppfolgingActionError
     | StoppEskaleringAction
     | StoppEskaleringActionSuccess
     | StoppEskaleringActionError;

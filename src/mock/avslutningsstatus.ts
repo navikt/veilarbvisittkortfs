@@ -1,12 +1,15 @@
 export const avslutningsstatus = {
     avslutningStatus: {
+        //DEPRECATED
         kanAvslutte: true,
-        harTiltak: true,
         harYtelser: true,
         underOppfolging: true,
         inaktiveringsDato: null,
         underKvp: false,
     },
+    kanAvslutte: true,
+    harYtelser: false,
+    inaktiveringsDato: null,
     erIkkeArbeidssokerUtenOppfolging: false,
     erSykmeldtMedArbeidsgiver: false,
     fnr: '10108000398',

@@ -71,11 +71,14 @@ mock.post(
     '/veilarboppfolging/api/oppfolging/startEskalering/',
     (req: MockRequest, res: MockResponse, ctx: MockContext) => res(ctx.status(204))
 );
-mock.post('/veilarboppfolging/api/oppfolging/avsluttOppfolging', (req, res, ctx) => res(ctx.json(req.body)));
+mock.post(
+    '/veilarboppfolging/api/oppfolging/avsluttOppfolging',
+    jsonResponse({ ...avslutningsstatus, underOppfolging: false })
+);
+mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', jsonResponse(avslutningsstatus));
 
 mock.post('/veilarboppfolging/api/oppfolging/settManuell', jsonResponse({ ...Oppfolging, manuell: true }));
 
-mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', jsonResponse(avslutningsstatus));
 mock.post('/veilarboppfolging/api/oppfolging/startKvp', jsonResponse({}));
 
 /*--AKTIVITET--*/

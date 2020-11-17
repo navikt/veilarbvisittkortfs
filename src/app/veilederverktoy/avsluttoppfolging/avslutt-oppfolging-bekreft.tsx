@@ -4,12 +4,11 @@ import { Appstate } from '../../../types/appstate';
 import PersonaliaSelector from '../../../store/personalia/selectors';
 import OppfolgingSelector from '../../../store/oppfolging/selector';
 import { Dispatch } from 'redux';
-import { avsluttOppfolging } from '../../../store/oppfolging/actions';
 import { connect } from 'react-redux';
 import { navigerAction } from '../../../store/navigation/actions';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { resetBegrunnelse } from '../../../store/avslutningstatus/actions';
+import { avsluttOppfolging, resetBegrunnelse } from '../../../store/avslutningstatus/actions';
 
 interface StateProps {
     navn: string;
