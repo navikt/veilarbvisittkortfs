@@ -2,7 +2,7 @@ import moment from 'moment';
 
 export const erGyldigISODato = (isoDato: string) => isoDato && moment(isoDato, moment.ISO_8601).isValid();
 
-export const validerArbeidslisteDatoFeldt = (input: string): string | undefined => {
+export const validerArbeidslisteDatoFelt = (input: string): string | undefined => {
     let error;
     const inputDato = moment(input);
     const fraDato = moment();
@@ -14,7 +14,7 @@ export const validerArbeidslisteDatoFeldt = (input: string): string | undefined 
     return error;
 };
 
-export const validerOppgaveDatoFeldt = (input: string): string | undefined => {
+export const validerOppgaveDatoFelt = (input: string): string | undefined => {
     let error;
     if (!input) {
         error = 'Du må angi en dato';
@@ -24,17 +24,7 @@ export const validerOppgaveDatoFeldt = (input: string): string | undefined => {
     return error;
 };
 
-export const validerOppgaveDatoer = (fra: string, frist: string) => {
-    let errors;
-    const fraDato = moment(fra);
-    const fristDato = moment(frist);
-    if (fraDato.isAfter(fristDato, 'day')) {
-        errors = { tilDato: 'Fra dato kan ikke være etter frist dato' };
-    }
-    return errors;
-};
-
-export const validerArbeidslisteTittelFeldt = (input: string): string | undefined => {
+export const validerArbeidslisteTittelFelt = (input: string): string | undefined => {
     let error;
     if (!input) {
         error = 'Du må fylle ut en tittel';
@@ -44,7 +34,7 @@ export const validerArbeidslisteTittelFeldt = (input: string): string | undefine
     return error;
 };
 
-export const validerArbeidslisteKommentarFeldt = (kommentar: string): string | undefined => {
+export const validerArbeidslisteKommentarFelt = (kommentar: string): string | undefined => {
     let error;
     if (!kommentar) {
         error = 'Du må fylle ut en kommentar';
@@ -66,7 +56,7 @@ export function validerBeskrivelse(maxTegn: number) {
     };
 }
 
-export const validerBeskrivelse500TegnFeldt = (beskrivelse: string): string | undefined => {
+export const validerBeskrivelse500TegnFelt = (beskrivelse: string): string | undefined => {
     let error;
     if (!beskrivelse) {
         error = 'Du må fylle ut en beskrivelse';

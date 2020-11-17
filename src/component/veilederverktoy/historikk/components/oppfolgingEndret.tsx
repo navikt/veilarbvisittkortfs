@@ -3,32 +3,28 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { opprettetAvTekst } from './opprettet-av';
-import VeilederApi from '../../../../api/veileder-api';
-import useFetch, { isPending, hasData, hasError } from '@nutgaard/use-fetch';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { InnstillingsHistorikk } from '../../../../api/data/innstillings-historikk';
-import { EnhetData } from '../../../../api/data/enhet';
+import { useFetchEnhetNavn } from '../../../../api/api-midlertidig';
+import { hasAnyFailed, isAnyLoading } from '../../../../api/utils';
 
 export function OppfolgingEnhetEndret(props: { historikkElement: InnstillingsHistorikk; erGjeldendeEnhet: boolean }) {
     const { enhet, dato, opprettetAv, opprettetAvBrukerId } = props.historikkElement;
+    const fetchEnhetNavn = useFetchEnhetNavn(enhet!);
 
-    const enhetNavn = useFetch<EnhetData>(VeilederApi.hentEnhetNavn(enhet!));
+    const enhetNavn = fetchEnhetNavn.data?.navn;
 
-    if (isPending(enhetNavn)) {
+    if (isAnyLoading(fetchEnhetNavn)) {
         return <NavFrontendSpinner type="XL" />;
-    } else if (hasError(enhetNavn)) {
+    } else if (hasAnyFailed(fetchEnhetNavn)) {
         return <AlertStripeFeil>Noe gikk galt</AlertStripeFeil>;
-    } else if (!hasData(enhetNavn)) {
-        return null;
-    }
-
-    if (!enhetNavn || !enhetNavn.data || !enhetNavn.data.navn) {
+    } else if (!enhetNavn) {
         return null;
     }
 
     const begrunnelseTekst = props.erGjeldendeEnhet
-        ? `Oppfølgingsenhet ${enhet} ${enhetNavn.data.navn}`
-        : `Ny oppfølgingsenhet ${enhet} ${enhetNavn.data.navn}`;
+        ? `Oppfølgingsenhet ${enhet} ${enhetNavn}`
+        : `Ny oppfølgingsenhet ${enhet} ${enhetNavn}`;
 
     return (
         <div className="historikk__elem blokk-xs" key={dato}>

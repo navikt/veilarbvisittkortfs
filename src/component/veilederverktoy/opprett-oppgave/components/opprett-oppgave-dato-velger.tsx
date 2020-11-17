@@ -1,19 +1,19 @@
 import React from 'react';
+import { validerOppgaveDatoFelt } from '../../../../util/formik-validation';
 import FormikDatoVelger from '../../../components/formik/formik-datepicker';
-import { validerOppgaveDatoFeldt } from '../../../utils/formik-validation';
 
 function OpprettOppgaveVelgDatoer() {
     return (
         <div className="oppgave-dato-container">
             <FormikDatoVelger
                 name="fraDato"
-                validate={validerOppgaveDatoFeldt}
+                validate={validerOppgaveDatoFelt}
                 label="Aktiv fra *"
                 ariaLabel="Datoen oppgaven er aktiv fra"
             />
             <FormikDatoVelger
                 name="tilDato"
-                validate={validerOppgaveDatoFeldt}
+                validate={validerOppgaveDatoFelt}
                 label="Frist *"
                 ariaLabel="Datoen ppgaven er aktiv til"
             />

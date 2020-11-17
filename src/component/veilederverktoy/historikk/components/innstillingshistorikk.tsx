@@ -3,17 +3,14 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { opprettetAvTekst } from './opprettet-av';
 import moment from 'moment';
 import Lenke from 'nav-frontend-lenker';
-import { Appstate } from '../../../../types/appstate';
-import OppfolgingSelector from '../../../../store/oppfolging/selector';
-import { useSelector } from 'react-redux';
 import { InnstillingsHistorikk } from '../../../../api/data/innstillings-historikk';
-interface OwnProps {
+import { useAppStore } from '../../../../store-midlertidig/app-store';
+
+interface InnstillingHistorikkKomponentProps {
     innstillingsHistorikk: InnstillingsHistorikk;
 }
 
 const ESKALERING_MAX_LENGTH = 120;
-
-type InnstillingHistorikkKomponentProps = OwnProps;
 
 const typeTilTekst = {
     SATT_TIL_DIGITAL: 'Endret til digital oppfølging',
@@ -27,11 +24,8 @@ const typeTilTekst = {
 };
 
 function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHistorikkKomponentProps) {
+    const { brukerFnr } = useAppStore();
     const { type, begrunnelse, dialogId } = innstillingsHistorikk;
-
-    const fnr = useSelector((state: Appstate) => {
-        OppfolgingSelector.selectFnr(state);
-    });
 
     let begrunnelseTekst =
         begrunnelse && begrunnelse.length > ESKALERING_MAX_LENGTH
@@ -43,7 +37,9 @@ function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHis
             <Element>{typeTilTekst[type]}</Element>
             <Normaltekst>
                 {begrunnelseTekst}
-                {dialogId && <Lenke href={`/veilarbpersonflatefs/${fnr}/dialog/${dialogId}`}>Les mer i dialog</Lenke>}
+                {dialogId && (
+                    <Lenke href={`/veilarbpersonflatefs/${brukerFnr}/dialog/${dialogId}`}>Les mer i dialog</Lenke>
+                )}
             </Normaltekst>
             <Undertekst>
                 {`${moment(innstillingsHistorikk.dato).format('DD.MM.YYYY')} ${opprettetAvTekst(

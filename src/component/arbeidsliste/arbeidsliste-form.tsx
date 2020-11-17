@@ -1,16 +1,16 @@
 import React from 'react';
+import moment from 'moment';
 import FormikInput from '../components/formik/formik-input';
 import FormikTekstArea from '../components/formik/formik-textarea';
 import FormikDatoVelger from '../components/formik/formik-datepicker';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
-import moment from 'moment';
-import {
-    validerArbeidslisteDatoFeldt,
-    validerArbeidslisteKommentarFeldt,
-    validerArbeidslisteTittelFeldt,
-} from '../utils/formik-validation';
 import ArbeidslistekategoriVisning from './arbeidslistekategori/arbeidslisteikon-visning';
 import { OrNothing } from '../../util/type/ornothing';
+import {
+    validerArbeidslisteDatoFelt,
+    validerArbeidslisteKommentarFelt,
+    validerArbeidslisteTittelFelt,
+} from '../../util/formik-validation';
 
 interface ArbeidslisteFormProps {
     sistEndretAv?: OrNothing<{ veilederId: string }>;
@@ -24,12 +24,12 @@ function ArbeidslisteForm(props: ArbeidslisteFormProps) {
         <div className="arbeidsliste__bruker">
             <div className="blokk-s">
                 <Undertittel>{`${props.navn}, ${props.fnr}`}</Undertittel>
-                <FormikInput name="overskrift" label="Tittel" validate={validerArbeidslisteTittelFeldt} bredde="L" />
+                <FormikInput name="overskrift" label="Tittel" validate={validerArbeidslisteTittelFelt} bredde="L" />
                 <FormikTekstArea
                     name="kommentar"
                     label="Kommentar"
                     maxLength={500}
-                    validate={validerArbeidslisteKommentarFeldt}
+                    validate={validerArbeidslisteKommentarFelt}
                 />
                 {props.sistEndretAv && props.endringstidspunkt && (
                     <Undertekst className="arbeidsliste--modal-redigering">
@@ -42,7 +42,7 @@ function ArbeidslisteForm(props: ArbeidslisteFormProps) {
             <div className="dato-kategori-wrapper">
                 <FormikDatoVelger
                     name="frist"
-                    validate={validerArbeidslisteDatoFeldt}
+                    validate={validerArbeidslisteDatoFelt}
                     label="Frist"
                     ariaLabel="Frist før arbeidslisten"
                 />

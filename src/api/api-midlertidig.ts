@@ -9,6 +9,9 @@ import { Arbeidsliste } from './data/arbeidsliste';
 import { RegistreringData } from './registrering-api';
 import { Oppfolging } from './data/oppfolging';
 import { ALL_TOGGLES, Features } from './data/features';
+import { InnstillingsHistorikk } from './data/innstillings-historikk';
+import { OppgaveHistorikk } from './data/oppgave-historikk';
+import { EnhetData } from './data/enhet';
 
 export function useFetchOppfolgingsstatus(fnr: string, options?: Options): UseAxiosResponseValue<OppfolgingStatus> {
     return useAxios<OppfolgingStatus>({ url: `/veilarboppfolging/api/person/${fnr}/oppfolgingsstatus` }, options);
@@ -55,4 +58,22 @@ export function useFetchRegistrering(fnr: string, options?: Options): UseAxiosRe
 export function useFetchFeatures(options?: Options): UseAxiosResponseValue<Features> {
     const features = ALL_TOGGLES.map((element) => 'feature=' + element).join('&');
     return useAxios<Features>({ url: `/veilarbpersonflatefs/api/feature?feature=${features}` }, options);
+}
+
+export function useFetchInstillingsHistorikk(
+    fnr: string,
+    options?: Options
+): UseAxiosResponseValue<InnstillingsHistorikk[]> {
+    return useAxios<InnstillingsHistorikk[]>(
+        { url: `/veilarboppfolging/api/oppfolging/innstillingsHistorikk?fnr=${fnr}` },
+        options
+    );
+}
+
+export function useFetchOppgaveHistorikk(fnr: string, options?: Options): UseAxiosResponseValue<OppgaveHistorikk[]> {
+    return useAxios<OppgaveHistorikk[]>({ url: `/veilarboppgave/api/oppgavehistorikk?fnr=${fnr}` }, options);
+}
+
+export function useFetchEnhetNavn(enhetId: string, options?: Options): UseAxiosResponseValue<EnhetData> {
+    return useAxios<EnhetData>({ url: `/veilarbveileder/api/enhet/${enhetId}/navn` }, options);
 }

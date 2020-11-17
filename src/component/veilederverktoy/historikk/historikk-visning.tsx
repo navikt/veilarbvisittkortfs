@@ -9,11 +9,11 @@ import { OppgaveHistorikk } from '../../../api/data/oppgave-historikk';
 
 type HistorikkInnslagType = InnstillingsHistorikk | OppgaveHistorikk;
 
-interface OwnProps {
+interface HistorikkVisningProps {
     historikkInnslag: HistorikkInnslagType[];
 }
 
-function HistorikkVisning({ historikkInnslag }: OwnProps) {
+function HistorikkVisning({ historikkInnslag }: HistorikkVisningProps) {
     const mapTilOppgaveEllerInnstillinger = (
         historikkElem: HistorikkInnslagType,
         idx: number,

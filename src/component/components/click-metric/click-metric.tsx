@@ -18,8 +18,6 @@ const handleClickMetricWrapperClicked = (
     onClick?: (event?: any) => void
 ) => {
     return (event?: any) => {
-        console.log('Clicked'); // tslint:disable-line
-
         if (metricName) {
             logger.event(`veilarbvisittkortfs.metrikker.${metricName}`, fields, tags);
         }
