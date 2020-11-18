@@ -5,13 +5,7 @@ export interface StartDigitalOppfolgingKvitteringProps {
     begrunnelse: string;
 }
 
-interface OwnProps {
-    begrunnelse?: string;
-}
-
-type StartOppfolgingKvittering = OwnProps;
-
-function StartDigitalOppfolgingKvittering({ begrunnelse }: StartOppfolgingKvittering) {
+function StartDigitalOppfolgingKvittering({ begrunnelse }: StartDigitalOppfolgingKvitteringProps) {
     return (
         <Kvittering
             tittel="Endre til digital oppfølging"

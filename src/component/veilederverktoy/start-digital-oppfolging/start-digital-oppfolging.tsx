@@ -1,38 +1,35 @@
 import React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { Appstate } from '../../../types/appstate';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import PersonaliaSelectors from '../../../store/personalia/selectors';
-import { settDigital } from '../../../store/oppfolging/actions';
-import OppfolgingSelector from '../../../store/oppfolging/selector';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { navigerAction } from '../../../store/navigation/actions';
+import { useAppStore } from '../../../store-midlertidig/app-store';
+import { useDataStore } from '../../../store-midlertidig/data-store';
+import { useModalStore } from '../../../store-midlertidig/modal-store';
+import { settBrukerTilDigital } from '../../../api/api-midlertidig';
 
-interface DispatchProps {
-    handleSubmit: (fnr: string, veilederId: string) => (values: BegrunnelseValues) => void;
-    lukkModal: () => void;
-}
+function StartDigitalOppfolging() {
+    const { brukerFnr } = useAppStore();
+    const { innloggetVeileder, oppfolging } = useDataStore();
+    const { hideModal, showStartDigitalOppfolgingKvitteringModal, showSpinnerModal, showErrorModal } = useModalStore();
 
-interface StateProps {
-    isLoading: boolean;
-    fnr: string;
-    veilederId: string;
-    reservasjonKRR: boolean;
-}
+    function startDigitalOppgfolging(begrunnelseValues: BegrunnelseValues) {
+        showSpinnerModal();
+        settBrukerTilDigital(brukerFnr, innloggetVeileder.ident, begrunnelseValues.begrunnelse)
+            .then(() => {
+                // TODO: Oppdater status for oppfølging eller refetch
+                showStartDigitalOppfolgingKvitteringModal({ begrunnelse: begrunnelseValues.begrunnelse });
+            })
+            .catch(showErrorModal);
+    }
 
-type StartEskaleringProps = StateProps & DispatchProps;
-
-function StartDigitalOppfolging(props: StartEskaleringProps) {
-    if (props.reservasjonKRR) {
+    if (oppfolging.reservasjonKRR) {
         return (
             <VarselModal
                 type="ADVARSEL"
                 contentLabel="Brukeren er reservert i KRR"
                 isOpen={true}
-                onRequestClose={props.lukkModal}
+                onRequestClose={hideModal}
             >
                 <Normaltekst>
                     Brukeren er reservert i Kontakt- og reservasjonsregisteret og må selv fjerne reservasjonen for å få
@@ -51,29 +48,13 @@ function StartDigitalOppfolging(props: StartEskaleringProps) {
     return (
         <BegrunnelseForm
             initialValues={{ begrunnelse: '' }}
-            handleSubmit={props.handleSubmit(props.fnr, props.veilederId)}
+            handleSubmit={startDigitalOppgfolging}
             tekstariaLabel="Skriv en begrunnelse for hvorfor brukeren nå kan få digital oppfølging"
             tittel="Endre til digital oppfølging"
             infoTekst={infoTekst}
-            isLoading={props.isLoading}
+            isLoading={false}
         />
     );
 }
 
-const mapStateToProps = (state: Appstate) => ({
-    isLoading: OppfolgingSelector.selectOppfolgingStatus(state),
-    fnr: PersonaliaSelectors.selectFodselsnummer(state),
-    veilederId: state.tildelVeileder.paloggetVeileder.data.ident,
-    reservasjonKRR: state.oppfolging.data.reservasjonKRR,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        handleSubmit(fnr: string, veilederId: string) {
-            return (values: BegrunnelseValues) => dispatch(settDigital(values.begrunnelse, fnr, veilederId));
-        },
-        lukkModal: () => dispatch(navigerAction(null)),
-    };
-};
-
-export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(StartDigitalOppfolging);
+export default StartDigitalOppfolging;

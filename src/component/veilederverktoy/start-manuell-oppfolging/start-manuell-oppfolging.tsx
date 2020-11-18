@@ -1,57 +1,41 @@
 import React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { Appstate } from '../../../types/appstate';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import PersonaliaSelectors from '../../../store/personalia/selectors';
-import { settManuell } from '../../../store/oppfolging/actions';
-import OppfolgingSelector from '../../../store/oppfolging/selector';
+import { useAppStore } from '../../../store-midlertidig/app-store';
+import { useDataStore } from '../../../store-midlertidig/data-store';
+import { settBrukerTilManuell } from '../../../api/api-midlertidig';
+import { useModalStore } from '../../../store-midlertidig/modal-store';
 
-interface DispatchProps {
-    handleSubmit: (fnr: string, veilederId: string) => (values: BegrunnelseValues) => void;
-}
+function StartManuellOppfolging() {
+    const { brukerFnr } = useAppStore();
+    const { innloggetVeileder } = useDataStore();
+    const { showStartManuellOppfolgingKvitteringModal, showSpinnerModal, showErrorModal } = useModalStore();
 
-interface StateProps {
-    isLoading: boolean;
-    fnr: string;
-    veilederId: string;
-}
-
-type StartEskaleringProps = StateProps & DispatchProps;
-
-function StartManuellOppfolging(props: StartEskaleringProps) {
-    const infoTekst = (
-        <AlertStripeAdvarsel className="blokk-xxs">
-            Når du endrer til manuell oppfølging, har du ikke lenger mulighet til å ha dialog med brukeren i
-            aktivitetsplanen.
-        </AlertStripeAdvarsel>
-    );
+    function settBrukerTilManuellOppfolging(values: BegrunnelseValues) {
+        showSpinnerModal();
+        settBrukerTilManuell(brukerFnr, innloggetVeileder.ident, values.begrunnelse)
+            .then(() => {
+                // TODO: Oppdater status for oppfølging eller refetch
+                showStartManuellOppfolgingKvitteringModal({ begrunnelse: values.begrunnelse });
+            })
+            .catch(showErrorModal);
+    }
 
     return (
         <BegrunnelseForm
             initialValues={{ begrunnelse: '' }}
-            handleSubmit={props.handleSubmit(props.fnr, props.veilederId)}
+            handleSubmit={settBrukerTilManuellOppfolging}
             tekstariaLabel="Skriv en begrunnelse for hvorfor brukeren trenger manuell oppfølging"
-            isLoading={props.isLoading}
-            infoTekst={infoTekst}
+            isLoading={false}
             tittel="Endre til manuell oppfølging"
+            infoTekst={
+                <AlertStripeAdvarsel className="blokk-xxs">
+                    Når du endrer til manuell oppfølging, har du ikke lenger mulighet til å ha dialog med brukeren i
+                    aktivitetsplanen.
+                </AlertStripeAdvarsel>
+            }
         />
     );
 }
 
-const mapStateToProps = (state: Appstate) => ({
-    isLoading: OppfolgingSelector.selectOppfolgingStatus(state),
-    fnr: PersonaliaSelectors.selectFodselsnummer(state), //TODO LAGE MIDDLEWEAR SOM HENTER UT FNR???
-    veilederId: state.tildelVeileder.paloggetVeileder.data.ident,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        handleSubmit(fnr: string, veilederId: string) {
-            return (values: BegrunnelseValues) => dispatch(settManuell(values.begrunnelse, fnr, veilederId));
-        },
-    };
-};
-
-export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(StartManuellOppfolging);
+export default StartManuellOppfolging;

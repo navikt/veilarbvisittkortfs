@@ -86,3 +86,17 @@ export function opprettOppgave(
 ): Promise<AxiosResponse<OppgaveFormResponse>> {
     return axiosInstance.post(`/veilarboppgave/api/oppgave?fnr=${fnr}`, oppgaveFormData);
 }
+
+export function settBrukerTilDigital(fnr: string, veilederId: string, begrunnelse: string): Promise<AxiosResponse> {
+    return axiosInstance.post(`/veilarboppfolging/api/oppfolging/settDigital?fnr=${fnr}`, {
+        begrunnelse,
+        veilederId,
+    });
+}
+
+export function settBrukerTilManuell(fnr: string, veilederId: string, begrunnelse: string): Promise<AxiosResponse> {
+    return axiosInstance.post(`/veilarboppfolging/api/oppfolging/settManuell?fnr=${fnr}`, {
+        begrunnelse,
+        veilederId,
+    });
+}

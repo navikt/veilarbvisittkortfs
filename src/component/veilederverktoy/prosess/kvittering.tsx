@@ -16,7 +16,7 @@ function Kvittering({ tittel, alertStripeTekst, footer, onRequestClose }: Kvitte
     return (
         <VarselModal
             isOpen={true}
-            contentLabel="Vedlykkad operation"
+            contentLabel="Operasjon fullført"
             onRequestClose={() => {
                 hideModal();
                 if (onRequestClose) {

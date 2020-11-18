@@ -1,34 +1,22 @@
 import React, { useEffect } from 'react';
 import Kvittering from '../prosess/kvittering';
-import { Appstate } from '../../../types/appstate';
-import OppfolgingSelector from '../../../store/oppfolging/selector';
-import { connect } from 'react-redux';
 import { fetchRegistreringData } from '../../../api/registrering-api';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { logger } from '../../../util/logger';
+import { useAppStore } from '../../../store-midlertidig/app-store';
+import { useDataStore } from '../../../store-midlertidig/data-store';
 
 export interface StartManuellOppfolgingKvitteringProps {
     begrunnelse: string;
 }
 
-interface OwnProps {
-    begrunnelse?: string;
-}
-
-interface StateProps {
-    erKRR: boolean;
-    fnr: string;
-}
-
-type StartOppfolgingKvittering = OwnProps & StateProps;
-
-function loggMetrikk(props: StartOppfolgingKvittering) {
-    fetchRegistreringData(props.fnr)
+function loggMetrikk(fnr: string, erReservertIKRR: boolean) {
+    fetchRegistreringData(fnr)
         .then((registreringData) => {
             const erManueltRegistrert = !!registreringData.registrering.manueltRegistrertAv;
             const logFields = {
                 brukerType: registreringData.type,
-                erKRR: props.erKRR,
+                erKRR: erReservertIKRR,
                 erManueltRegistrert,
             };
             logger.event('veilarbvisittkortfs.metrikker.manuell_oppfolging', logFields);
@@ -36,25 +24,26 @@ function loggMetrikk(props: StartOppfolgingKvittering) {
         .catch(); // Squelch errors
 }
 
-function StartManuellOppfolgingKvittering(props: StartOppfolgingKvittering) {
-    useEffect(() => loggMetrikk(props), [props]);
-    const kvitteringFooter = (
-        <AlertStripeAdvarsel>
-            Brukere som ikke kan legge inn CV og jobbprofil selv skal få hjelp til dette.
-        </AlertStripeAdvarsel>
-    );
+function StartManuellOppfolgingKvittering(props: StartManuellOppfolgingKvitteringProps) {
+    const { brukerFnr } = useAppStore();
+    const { oppfolging } = useDataStore();
+
+    useEffect(() => {
+        loggMetrikk(brukerFnr, oppfolging.reservasjonKRR);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <Kvittering
             tittel="Endre til manuell oppfølging"
             alertStripeTekst={`Endring til manuell oppfølging er gjennomført. Begrunnelse: ${props.begrunnelse}`}
-            footer={kvitteringFooter}
+            footer={
+                <AlertStripeAdvarsel>
+                    Brukere som ikke kan legge inn CV og jobbprofil selv skal få hjelp til dette.
+                </AlertStripeAdvarsel>
+            }
         />
     );
 }
 
-const mapStateToProps = (state: Appstate): StateProps => ({
-    erKRR: OppfolgingSelector.selectErKRR(state),
-    fnr: OppfolgingSelector.selectFnr(state),
-});
-
-export default connect(mapStateToProps)(StartManuellOppfolgingKvittering);
+export default StartManuellOppfolgingKvittering;

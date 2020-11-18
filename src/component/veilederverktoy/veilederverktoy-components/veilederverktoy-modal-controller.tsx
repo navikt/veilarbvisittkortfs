@@ -2,12 +2,16 @@ import React from 'react';
 import StartEskalering from '../start-eskalering/start-eskalering';
 import StartEskaleringKvittering from '../start-eskalering/start-eskalering-kvittering';
 import StarManuellOppfolging from '../start-manuell-oppfolging/start-manuell-oppfolging';
-import StartManuellOppfolgingKvittering from '../start-manuell-oppfolging/start-manuell-oppfolging-kvittering';
+import StartManuellOppfolgingKvittering, {
+    StartManuellOppfolgingKvitteringProps,
+} from '../start-manuell-oppfolging/start-manuell-oppfolging-kvittering';
 import StarKvpPeriode from '../start-kvp-periode/start-kvp-periode';
 import StartKVPKvittering from '../start-kvp-periode/start-kvp-periode-kvittering';
 import StoppKvpPeriode from '../stopp-kvp-periode/stopp-kvp-periode';
 import StoppKVPKvittering from '../stopp-kvp-periode/stopp-kvp-periode-kvittering';
-import StartDigitalOppfolgingKvittering from '../start-digital-oppfolging/start-digital-oppfolging-kvittering';
+import StartDigitalOppfolgingKvittering, {
+    StartDigitalOppfolgingKvitteringProps,
+} from '../start-digital-oppfolging/start-digital-oppfolging-kvittering';
 import StartDigitalOppfolging from '../start-digital-oppfolging/start-digital-oppfolging';
 import OpprettOppgave from '../opprett-oppgave/opprett-oppgave';
 import OpprettOppgaveKvittering, { OpprettOppgaveKvitteringProps } from '../opprett-oppgave/opprett-oppgave-kvittering';
@@ -48,11 +52,19 @@ export function VeilederverktoyModalController() {
         case ModalType.MANUELL_OPPFOLGING:
             return <StarManuellOppfolging />;
         case ModalType.SETT_MANUELL_KVITTERING:
-            return <StartManuellOppfolgingKvittering {...activeModalState.props} />;
+            return (
+                <StartManuellOppfolgingKvittering
+                    {...(activeModalState.props as StartManuellOppfolgingKvitteringProps)}
+                />
+            );
         case ModalType.START_DIGITAL_OPPFOLGING:
             return <StartDigitalOppfolging />;
         case ModalType.START_DIGITAL_OPPFOLING_KVITTERIG:
-            return <StartDigitalOppfolgingKvittering {...activeModalState.props} />;
+            return (
+                <StartDigitalOppfolgingKvittering
+                    {...(activeModalState.props as StartDigitalOppfolgingKvitteringProps)}
+                />
+            );
         case ModalType.START_KVP_PERIODE:
             return <StarKvpPeriode />;
         case ModalType.START_KVP_PERIODE_KVITTERING:
