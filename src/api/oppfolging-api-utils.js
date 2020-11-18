@@ -2,10 +2,6 @@ import { fetchToJson, postAsJson } from './api-utils';
 
 export const OPPFOLGING_BASE_URL = '/veilarboppfolging/api';
 
-export function hentIdentitet() {
-    return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/me`);
-}
-
 export function settDigital() {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/settDigital`);
 }
@@ -21,13 +17,13 @@ export function startOppfolging() {
 export function startEskalering(dialogId, begrunnelse) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/startEskalering/`, {
         dialogId,
-        begrunnelse
+        begrunnelse,
     });
 }
 
 export function stoppEskalering(begrunnelse) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/stoppEskalering/`, {
-        begrunnelse
+        begrunnelse,
     });
 }
 
@@ -35,39 +31,28 @@ export function kanAvslutte() {
     return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/avslutningStatus`);
 }
 
-export function avsluttOppfolging(begrunnelse, veilederId) {
-    return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/avsluttOppfolging`, {
-        begrunnelse,
-        veilederId
-    });
-}
-
 export function settManuellOppfolging(begrunnelse, veilederId) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/settManuell`, {
         begrunnelse,
-        veilederId
+        veilederId,
     });
 }
 
 export function settDigitalOppfolging(begrunnelse, veilederId) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/settDigital`, {
         begrunnelse,
-        veilederId
+        veilederId,
     });
 }
 
 export function startKvpOppfolging(begrunnelse) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/startKvp`, {
-        begrunnelse
+        begrunnelse,
     });
 }
 
 export function stoppKvpOppfolging(begrunnelse) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/stoppKvp`, {
-        begrunnelse
+        begrunnelse,
     });
-}
-
-export function hentVeilederTilgang() {
-    return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/veilederTilgang`);
 }

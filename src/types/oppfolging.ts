@@ -12,7 +12,6 @@ export interface EskaleringsVarsel {
 }
 
 export interface AvslutningStatus {
-    harTiltak: boolean;
     harYtelser: boolean;
     inaktiveringsDato: StringOrNothing;
     kanAvslutte: boolean;
@@ -30,6 +29,7 @@ export interface OppfolgingsPerioder {
 }
 
 export interface Oppfolging {
+    //TODO: Denne skal fjernes, lar være midlertidig for bakoverkompabilitet før veilarboppfølging er oppdatert
     avslutningStatus: OrNothing<AvslutningStatus>;
     erIkkeArbeidssokerUtenOppfolging: boolean;
     erSykmeldtMedArbeidsgiver: OrNothing<boolean>;
