@@ -1,8 +1,12 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
 import NAVSPA from '@navikt/navspa';
-import App from './app';
-import React from 'react';
 import { isDevelopment } from './util/utils';
+import * as dayjs from 'dayjs';
+import 'dayjs/locale/nb';
+import App from './app';
+
+dayjs.locale('nb');
 
 NAVSPA.eksporter('veilarbvisittkortfs', App);
 

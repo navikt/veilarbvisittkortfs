@@ -1,12 +1,12 @@
 import React from 'react';
 import { Form, Formik, FormikProps } from 'formik';
 import Modal from '../components/modal/modal';
-import moment from 'moment';
 import ArbeidslisteForm from './arbeidsliste-form';
 import ArbeidslisteFooter from './arbeidsliste-footer';
 import VeilederVerktoyModal from '../components/modal/veilederverktoy-modal';
 import { Arbeidsliste, ArbeidslisteformValues, KategoriModell } from '../../api/data/arbeidsliste';
 import { logger } from '../../util/logger';
+import { toReversedDateStr } from '../../util/date-utils';
 
 interface ArbeidslisteProps {
     navn: string;
@@ -32,7 +32,7 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
     const arbeidslisteValues = {
         overskrift: props.arbeidsliste.overskrift,
         kommentar: props.arbeidsliste.kommentar,
-        frist: props.arbeidsliste.frist ? moment(props.arbeidsliste.frist).format('YYYY-MM-DD') : '',
+        frist: props.arbeidsliste.frist ? toReversedDateStr(props.arbeidsliste.frist) : '',
         kategori: props.arbeidsliste.kategori,
     };
 

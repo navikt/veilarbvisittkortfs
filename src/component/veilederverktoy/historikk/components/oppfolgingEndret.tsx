@@ -1,12 +1,12 @@
 import React from 'react';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import moment from 'moment';
 import { opprettetAvTekst } from './opprettet-av';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { InnstillingsHistorikk } from '../../../../api/data/innstillings-historikk';
 import { useFetchEnhetNavn } from '../../../../api/api-midlertidig';
 import { hasAnyFailed, isAnyLoading } from '../../../../api/utils';
+import { toSimpleDateStr } from '../../../../util/date-utils';
 
 export function OppfolgingEnhetEndret(props: { historikkElement: InnstillingsHistorikk; erGjeldendeEnhet: boolean }) {
     const { enhet, dato, opprettetAv, opprettetAvBrukerId } = props.historikkElement;
@@ -31,7 +31,7 @@ export function OppfolgingEnhetEndret(props: { historikkElement: InnstillingsHis
             <Element>{props.erGjeldendeEnhet ? 'Gjeldende oppfølgingsenhet' : 'Oppfølgingsenhet endret'}</Element>
             <Normaltekst>{begrunnelseTekst}</Normaltekst>
             <Undertekst>
-                {`${moment(dato).format('DD.MM.YYYY')} ${opprettetAvTekst(opprettetAv, opprettetAvBrukerId || '')}`}
+                {`${toSimpleDateStr(dato)} ${opprettetAvTekst(opprettetAv, opprettetAvBrukerId || '')}`}
             </Undertekst>
         </div>
     );

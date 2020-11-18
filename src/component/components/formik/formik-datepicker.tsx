@@ -1,9 +1,9 @@
 import React from 'react';
 import { Field, FieldProps, getIn } from 'formik';
-import { Datovelger } from 'nav-datovelger';
+import { Datepicker } from 'nav-datovelger';
 import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
-import './datovelger.less';
 import classNames from 'classnames';
+import './datovelger.less';
 
 interface FormikDatepickerProps {
     name: string;
@@ -24,16 +24,18 @@ function FormikDatoVelger({ name, validate, label, ariaLabel, className }: Formi
                 return (
                     <div className={datePickerClassName}>
                         <span className="skjemaelement__label">{label}</span>
-                        <Datovelger
-                            input={{
-                                id: name,
-                                name,
-                                placeholder: 'dd.mm.åååå',
-                                ariaLabel,
-                            }}
-                            id="fristDatovelger"
+                        <Datepicker
+                            inputProps={
+                                {
+                                    id: name,
+                                    name,
+                                    placeholder: 'dd.mm.åååå',
+                                    ariaLabel,
+                                } as any
+                            }
+                            inputId="fristDatovelger"
                             onChange={(date: string) => setFieldValue(field.name, date)}
-                            valgtDato={field.value}
+                            value={field.value}
                         />
                         {error && <SkjemaelementFeilmelding>{error}</SkjemaelementFeilmelding>}
                     </div>

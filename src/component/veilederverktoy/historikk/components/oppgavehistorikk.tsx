@@ -1,8 +1,8 @@
 import React from 'react';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { opprettetAvTekst } from './opprettet-av';
-import moment from 'moment';
 import { OppgaveHistorikk } from '../../../../api/data/oppgave-historikk';
+import { toSimpleDateStr } from '../../../../util/date-utils';
 
 interface OwnProps {
     oppgaveHistorikk: OppgaveHistorikk;
@@ -31,7 +31,7 @@ function OppgaveHistorikkKomponent({ oppgaveHistorikk }: OwnProps) {
                 {`Oppgave med tema ${oppgaveTemaTekst[oppgaveTema]} og type ${oppgaveTypetekst[oppgaveType]} opprettet`}
             </Normaltekst>
             <Undertekst>
-                {`${moment(oppgaveHistorikk.dato).format('DD.MM.YYYY')} ${opprettetAvTekst(
+                {`${toSimpleDateStr(oppgaveHistorikk.dato)} ${opprettetAvTekst(
                     oppgaveHistorikk.opprettetAv,
                     oppgaveHistorikk.opprettetAvBrukerId
                 )}`}

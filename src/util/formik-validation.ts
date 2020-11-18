@@ -1,11 +1,10 @@
-import moment from 'moment';
-
-export const erGyldigISODato = (isoDato: string) => isoDato && moment(isoDato, moment.ISO_8601).isValid();
+import dayjs from 'dayjs';
+import { erGyldigISODato } from './date-utils';
 
 export const validerArbeidslisteDatoFelt = (input: string): string | undefined => {
     let error;
-    const inputDato = moment(input);
-    const fraDato = moment();
+    const inputDato = dayjs(input);
+    const fraDato = dayjs();
     if (input && !erGyldigISODato(input)) {
         error = 'Ugyldig dato';
     } else if (inputDato && fraDato.isAfter(inputDato, 'day')) {

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Form } from 'formik';
 import { Undertittel } from 'nav-frontend-typografi';
-import moment from 'moment';
 import OpprettOppgaveTemaSelector from './components/opprett-oppgave-tema-selector';
 import OppgaveInnerForm from './components/oppgave-inner-form';
 import FormikModal from '../../components/formik/formik-modal';
@@ -14,6 +13,7 @@ import { useAppStore } from '../../../store-midlertidig/app-store';
 import { useDataStore } from '../../../store-midlertidig/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import './opprett-oppgave.less';
+import { todayReversedDateStr } from '../../../util/date-utils';
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
@@ -39,8 +39,8 @@ function OpprettOppgave() {
         beskrivelse: '',
         enhetId: '',
         fnr: brukerFnr,
-        fraDato: moment().format('YYYY-MM-DD').toString(),
-        tilDato: moment().format('YYYY-MM-DD').toString(),
+        fraDato: todayReversedDateStr(),
+        tilDato: todayReversedDateStr(),
         prioritet: 'NORM',
         tema: undefined,
         type: 'VURDER_HENVENDELSE',

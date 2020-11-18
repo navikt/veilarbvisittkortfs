@@ -7,13 +7,13 @@ import { AvsluttOppfolgingInfoText } from './components/avslutt-oppfolging-info-
 import AvsluttOppfolgingStatusSelector from '../../../store/avslutningstatus/selector';
 import PersonaliaSelector from '../../../store/personalia/selectors';
 import { lagreBegrunnelse, resetBegrunnelse } from '../../../store/avslutningstatus/actions';
-import moment from 'moment';
 import DialogSelector from '../../../store/dialog/selector';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { navigerAction } from '../../../store/navigation/actions';
 import { OrNothing } from '../../../util/type/ornothing';
 import { AvslutningStatus } from '../../../api/data/oppfolging';
+import dayjs from 'dayjs';
 
 interface StateProps {
     begrunnelse: string;
@@ -81,7 +81,7 @@ function AvsluttOppfolging(props: AvsluttOppfolgingProps) {
 
 const mapStateToProps = (state: Appstate): StateProps => {
     const avslutningStatus = AvsluttOppfolgingStatusSelector.selectAvsluttOppfolgingData(state);
-    const for28dagerSide = moment().subtract(28, 'day').toISOString();
+    const for28dagerSide = dayjs().subtract(28, 'day').toISOString();
     const datoErInnenFor28DagerSiden = ((avslutningStatus && avslutningStatus.inaktiveringsDato) || 0) > for28dagerSide;
 
     return {

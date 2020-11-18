@@ -1,4 +1,3 @@
-import moment from 'moment';
 import OppgaveHistorikkKomponent from './components/oppgavehistorikk';
 import InnstillingsHistorikkKomponent from './components/innstillingshistorikk';
 import React from 'react';
@@ -6,6 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { OppfolgingEnhetEndret } from './components/oppfolgingEndret';
 import { InnstillingsHistorikk } from '../../../api/data/innstillings-historikk';
 import { OppgaveHistorikk } from '../../../api/data/oppgave-historikk';
+import dayjs from 'dayjs';
 
 type HistorikkInnslagType = InnstillingsHistorikk | OppgaveHistorikk;
 
@@ -42,7 +42,7 @@ function HistorikkVisning({ historikkInnslag }: HistorikkVisningProps) {
     if (historikkInnslag.length === 1) {
         return mapTilOppgaveEllerInnstillinger(historikkInnslag[0], 0, 0);
     }
-    const sortertEtterDatoHistorikkInnslag = historikkInnslag.sort((a, b) => moment(b.dato).diff(a.dato));
+    const sortertEtterDatoHistorikkInnslag = historikkInnslag.sort((a, b) => dayjs(b.dato).diff(a.dato));
 
     const indexForNyesteEnhetEndring = sortertEtterDatoHistorikkInnslag.findIndex(
         (innslag) => innslag.type === 'OPPFOLGINGSENHET_ENDRET'

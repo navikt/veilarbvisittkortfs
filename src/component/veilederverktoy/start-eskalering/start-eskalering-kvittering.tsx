@@ -1,21 +1,8 @@
 import React from 'react';
 import Kvittering from '../prosess/kvittering';
-import moment from 'moment';
 import { Appstate } from '../../../types/appstate';
 import { useSelector } from 'react-redux';
-import { StringOrNothing } from '../../../util/type/stringornothings';
-
-function formatter(format: string, dato: string): string | undefined {
-    const datoVerdi = moment(dato);
-    return datoVerdi.isValid() ? datoVerdi.format(format) : undefined;
-}
-
-export function formaterDatoKortManed(dato: StringOrNothing) {
-    if (dato) {
-        return formatter('Do MMM YYYY', dato);
-    }
-    return undefined;
-}
+import { formaterDatoKortManed } from '../../../util/date-utils';
 
 function StartEskaleringKvittering() {
     const dato = useSelector(

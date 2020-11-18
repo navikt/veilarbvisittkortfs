@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import FormikInput from '../components/formik/formik-input';
 import FormikTekstArea from '../components/formik/formik-textarea';
 import FormikDatoVelger from '../components/formik/formik-datepicker';
@@ -11,6 +10,7 @@ import {
     validerArbeidslisteKommentarFelt,
     validerArbeidslisteTittelFelt,
 } from '../../util/formik-validation';
+import { toSimpleDateStr } from '../../util/date-utils';
 
 interface ArbeidslisteFormProps {
     sistEndretAv?: OrNothing<{ veilederId: string }>;
@@ -33,9 +33,7 @@ function ArbeidslisteForm(props: ArbeidslisteFormProps) {
                 />
                 {props.sistEndretAv && props.endringstidspunkt && (
                     <Undertekst className="arbeidsliste--modal-redigering">
-                        {`Oppdatert ${moment(props.endringstidspunkt).format('DD.MM.YYYY')} av ${
-                            props.sistEndretAv.veilederId
-                        }`}
+                        {`Oppdatert ${toSimpleDateStr(props.endringstidspunkt)} av ${props.sistEndretAv.veilederId}`}
                     </Undertekst>
                 )}
             </div>

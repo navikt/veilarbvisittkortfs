@@ -6,11 +6,11 @@ import ArbeidslisteModal from './arbeidsliste-modal';
 import { Dispatch } from 'redux';
 import { oppdaterArbeidsliste, redigerArbeidsliste, slettArbeidsliste } from '../../store/arbeidsliste/actions';
 import ArbeidslisteSelector from '../../store/arbeidsliste/selector';
-import moment from 'moment';
 import FjernArbeidslisteModal from './fjern-arbeidsliste-modal';
 import './arbeidsliste.less';
 import { navigerAction } from '../../store/navigation/actions';
 import { Arbeidsliste, ArbeidslisteformValues } from '../../api/data/arbeidsliste';
+import { dateToISODate } from '../../util/date-utils';
 
 interface StateProps {
     arbeidsliste: Arbeidsliste;
@@ -27,11 +27,6 @@ interface DispatchProps {
 }
 
 type ArbeidslisteStateProps = StateProps & DispatchProps;
-
-export const dateToISODate = (dato: string) => {
-    const parsetDato = moment(dato);
-    return dato && parsetDato.isValid() ? parsetDato.toISOString() : null;
-};
 
 function ArbeidslisteController(props: ArbeidslisteStateProps) {
     const [slettArbeidslisteModal, setSlettArbeidslisteModal] = useState(false);
