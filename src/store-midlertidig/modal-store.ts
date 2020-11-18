@@ -2,6 +2,7 @@ import { useState } from 'react';
 import constate from 'constate';
 import { StartManuellOppfolgingKvitteringProps } from '../component/veilederverktoy/start-manuell-oppfolging/start-manuell-oppfolging-kvittering';
 import { StartDigitalOppfolgingKvitteringProps } from '../component/veilederverktoy/start-digital-oppfolging/start-digital-oppfolging-kvittering';
+import { OpprettOppgaveKvitteringProps } from '../component/veilederverktoy/opprett-oppgave/opprett-oppgave-kvittering';
 
 export enum ModalType {
     START_ESKALERING,
@@ -50,6 +51,10 @@ export const [ModalStore, useModalStore] = constate(() => {
         setActiveModalState({ type: ModalType.START_DIGITAL_OPPFOLING_KVITTERIG, props });
     }
 
+    function showOpprettOppgaveKvitteringModal(props: OpprettOppgaveKvitteringProps) {
+        setActiveModalState({ type: ModalType.OPPGAVE_KVITTERING, props });
+    }
+
     function hideModal() {
         setActiveModalState(undefined);
     }
@@ -59,6 +64,7 @@ export const [ModalStore, useModalStore] = constate(() => {
         showModal,
         showStartManuellOppfolgingKvitteringModal,
         showStartDigitalOppfolgingKvitteringModal,
+        showOpprettOppgaveKvitteringModal,
         hideModal,
     };
 });

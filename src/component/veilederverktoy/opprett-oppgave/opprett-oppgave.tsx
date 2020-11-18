@@ -1,20 +1,19 @@
 import React from 'react';
 import { Form } from 'formik';
 import { Undertittel } from 'nav-frontend-typografi';
-import { Appstate } from '../../../types/appstate';
-import PersonaliaSelector from '../../../store/personalia/selectors';
-import { connect } from 'react-redux';
 import moment from 'moment';
 import OpprettOppgaveTemaSelector from './components/opprett-oppgave-tema-selector';
 import OppgaveInnerForm from './components/oppgave-inner-form';
-import './opprett-oppgave.less';
-import { Dispatch } from 'redux';
-import { lagreOppgave } from '../../../store/oppgave/actions';
 import FormikModal from '../../components/formik/formik-modal';
-import { navigerAction, navigerTilProcesser } from '../../../store/navigation/actions';
 import { OrNothing } from '../../../util/type/ornothing';
 import { StringOrNothing } from '../../../util/type/stringornothings';
 import { OppgaveFormData, OppgaveTema, OppgaveType, PrioritetType } from '../../../api/data/oppgave';
+import { useModalStore } from '../../../store-midlertidig/modal-store';
+import { opprettOppgave } from '../../../api/api-midlertidig';
+import { useAppStore } from '../../../store-midlertidig/app-store';
+import { useDataStore } from '../../../store-midlertidig/data-store';
+import { selectSammensattNavn } from '../../../util/selectors';
+import './opprett-oppgave.less';
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
@@ -29,47 +28,41 @@ export interface OpprettOppgaveFormValues {
     veilederId: StringOrNothing;
 }
 
-interface StateProps {
-    navn: string;
-    fnr: string;
-    avsenderenhetId: StringOrNothing;
-}
+function OpprettOppgave() {
+    const { brukerFnr, enhetId } = useAppStore();
+    const { personalia } = useDataStore();
+    const { hideModal, showOpprettOppgaveKvitteringModal } = useModalStore();
 
-interface DispatchProps {
-    handleSubmit: (formData: OppgaveFormData) => void;
-    tilbakeTilProcesser: () => void;
-    tilbake: () => void;
-}
+    const navn = selectSammensattNavn(personalia);
 
-type OpprettOppgaveProps = StateProps & DispatchProps;
-
-function OpprettOppgave({
-    navn,
-    fnr,
-    handleSubmit,
-    tilbakeTilProcesser,
-    tilbake,
-    avsenderenhetId,
-}: OpprettOppgaveProps) {
     const opprettOppgaveInitialValues: OpprettOppgaveFormValues = {
         beskrivelse: '',
         enhetId: '',
-        fnr,
+        fnr: brukerFnr,
         fraDato: moment().format('YYYY-MM-DD').toString(),
         tilDato: moment().format('YYYY-MM-DD').toString(),
         prioritet: 'NORM',
         tema: undefined,
         type: 'VURDER_HENVENDELSE',
         veilederId: null,
-        avsenderenhetId,
+        avsenderenhetId: enhetId,
     };
+
+    function lagreOppgave(formdata: OppgaveFormData) {
+        opprettOppgave(brukerFnr, formdata)
+            .then((res) => {
+                showOpprettOppgaveKvitteringModal({ type: res.data.type, tema: res.data.tema });
+            })
+            .catch((err) => {
+                // showModal(ModalType.OP);
+            });
+    }
 
     return (
         <FormikModal
             initialValues={opprettOppgaveInitialValues}
-            handleSubmit={handleSubmit}
+            handleSubmit={lagreOppgave}
             contentLabel="Opprett gosys oppgave"
-            tilbake={tilbakeTilProcesser}
             tilbakeTekst="Tilbake"
             tittel="Opprett en Gosys-oppgave"
             className="opprett-oppgave"
@@ -80,12 +73,12 @@ function OpprettOppgave({
                         <OpprettOppgaveTemaSelector />
                         <OppgaveInnerForm
                             tema={formikProps.values.tema}
-                            fnr={fnr}
+                            fnr={brukerFnr}
                             enhetId={formikProps.values.enhetId}
                             veilederId={formikProps.values.veilederId}
-                            avsenderenhetId={avsenderenhetId}
+                            avsenderenhetId={enhetId}
                             formikProps={formikProps}
-                            tilbake={tilbake}
+                            tilbake={hideModal}
                         />
                     </Form>
                 </div>
@@ -94,16 +87,4 @@ function OpprettOppgave({
     );
 }
 
-const mapStateToProps = (state: Appstate) => ({
-    fnr: PersonaliaSelector.selectFodselsnummer(state),
-    navn: PersonaliaSelector.selectSammensattNavn(state),
-    avsenderenhetId: state.enhetId.enhet,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-    handleSubmit: (formdata: OppgaveFormData) => dispatch(lagreOppgave(formdata)),
-    tilbakeTilProcesser: () => dispatch(navigerTilProcesser()),
-    tilbake: () => dispatch(navigerAction(null)),
-});
-
-export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(OpprettOppgave);
+export default OpprettOppgave;

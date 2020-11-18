@@ -1,18 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Appstate } from '../../../types/appstate';
 import Kvittering from '../prosess/kvittering';
 import { OrNothing } from '../../../util/type/ornothing';
 import { OppgaveTema, OppgaveType } from '../../../api/data/oppgave';
 
-interface StateProps {
+export interface OpprettOppgaveKvitteringProps {
     tema: OrNothing<OppgaveTema>;
     type: OrNothing<OppgaveType>;
 }
 
-type StartOppfolgingKvittering = StateProps;
-
-function OpprettOppgaveKvittering({ tema, type }: StartOppfolgingKvittering) {
+function OpprettOppgaveKvittering({ tema, type }: OpprettOppgaveKvitteringProps) {
     return (
         <Kvittering
             tittel="Opprett en Gosys-oppgave"
@@ -21,9 +17,4 @@ function OpprettOppgaveKvittering({ tema, type }: StartOppfolgingKvittering) {
     );
 }
 
-const mapStateToProps = (state: Appstate): StateProps => ({
-    tema: state.oppgavehistorikk.data.lagetOppgave && state.oppgavehistorikk.data.lagetOppgave.tema,
-    type: state.oppgavehistorikk.data.lagetOppgave && state.oppgavehistorikk.data.lagetOppgave.type,
-});
-
-export default connect<StateProps>(mapStateToProps)(OpprettOppgaveKvittering);
+export default OpprettOppgaveKvittering;

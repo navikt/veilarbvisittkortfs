@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SokFilter from '../../../components/sokfilter/sok-filter';
 import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
-import { Appstate } from '../../../../types/appstate';
-import { connect } from 'react-redux';
 import Dropdown from '../../../components/dropdown/dropdown';
 import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
@@ -10,29 +8,44 @@ import { StringOrNothing } from '../../../../util/type/stringornothings';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { OppgaveTema } from '../../../../api/data/oppgave';
 import { VeilederData } from '../../../../api/data/veilederdata';
+import { useDataStore } from '../../../../store-midlertidig/data-store';
+import { useFetchVeilederePaEnhet } from '../../../../api/api-midlertidig';
+import { useAppStore } from '../../../../store-midlertidig/app-store';
 
-interface OwnProps {
+interface OpprettOppgaveVelgVeilederProps {
     veilederId: StringOrNothing;
     avsenderenhetId: StringOrNothing;
-    enhetId: StringOrNothing;
     tema: OrNothing<OppgaveTema>;
     formikProps: FormikProps<OpprettOppgaveFormValues>;
 }
 
-interface StateProps {
-    veilederListe: VeilederData[];
-}
-
-type OpprettOppgaveVelgVeilederProps = OwnProps & StateProps;
-
 function OpprettOppgaveVelgVeileder({
-    veilederListe,
     veilederId,
     tema,
-    enhetId,
     avsenderenhetId,
     formikProps,
 }: OpprettOppgaveVelgVeilederProps) {
+    const { enhetId } = useAppStore();
+    const { veilederePaEnhet, setVeilederePaEnhet } = useDataStore();
+
+    const fetchVeilederePaEnhet = useFetchVeilederePaEnhet(enhetId || '', { manual: true });
+
+    const veilederListe = veilederePaEnhet?.veilederListe || [];
+
+    useEffect(() => {
+        if (enhetId && !veilederePaEnhet) {
+            fetchVeilederePaEnhet.fetch();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [enhetId, veilederePaEnhet]);
+
+    useEffect(() => {
+        if (fetchVeilederePaEnhet.data) {
+            setVeilederePaEnhet(fetchVeilederePaEnhet.data);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fetchVeilederePaEnhet]);
+
     if (tema !== 'OPPFOLGING' && formikProps.values.veilederId) {
         formikProps.setFieldValue('veilederId', null);
     }
@@ -72,8 +85,4 @@ function OpprettOppgaveVelgVeileder({
     );
 }
 
-const mapStateToProps = (state: Appstate): StateProps => ({
-    veilederListe: state.tildelVeileder.veilederPaEnheten.data.veilederListe,
-});
-
-export default connect<StateProps, {}, OwnProps>(mapStateToProps)(OpprettOppgaveVelgVeileder);
+export default OpprettOppgaveVelgVeileder;

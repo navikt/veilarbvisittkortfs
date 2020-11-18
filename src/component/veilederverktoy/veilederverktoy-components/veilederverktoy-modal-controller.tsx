@@ -10,7 +10,7 @@ import StoppKVPKvittering from '../stopp-kvp-periode/stopp-kvp-periode-kvitterin
 import StartDigitalOppfolgingKvittering from '../start-digital-oppfolging/start-digital-oppfolging-kvittering';
 import StartDigitalOppfolging from '../start-digital-oppfolging/start-digital-oppfolging';
 import OpprettOppgave from '../opprett-oppgave/opprett-oppgave';
-import OpprettOppgaveKvittering from '../opprett-oppgave/opprett-oppgave-kvittering';
+import OpprettOppgaveKvittering, { OpprettOppgaveKvitteringProps } from '../opprett-oppgave/opprett-oppgave-kvittering';
 import AvsluttOppfolging from '../avsluttoppfolging/avslutt-oppfolging';
 import AvsluttOppfolgingKvittering from '../avsluttoppfolging/avslutt-oppfolging-kvittering';
 import StoppEskalering from '../stopp-eskalering/stopp-eskalering';
@@ -64,7 +64,7 @@ export function VeilederverktoyModalController() {
         case ModalType.OPPRETT_OPPGAVE:
             return <OpprettOppgave />;
         case ModalType.OPPGAVE_KVITTERING:
-            return <OpprettOppgaveKvittering />;
+            return <OpprettOppgaveKvittering {...(activeModalState.props as OpprettOppgaveKvitteringProps)} />;
         case ModalType.AVSLUTT_OPPFOLGING:
             return <AvsluttOppfolging />;
         case ModalType.AVLUTT_OPPFOLGING_BEKREFT:

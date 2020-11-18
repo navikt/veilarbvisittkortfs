@@ -1,12 +1,9 @@
-import NavFrontendModal from 'nav-frontend-modal';
 import React, { useState } from 'react';
-import classNames from 'classnames';
+import NavFrontendModal from 'nav-frontend-modal';
+import cls from 'classnames';
 import { Formik, FormikProps } from 'formik';
-import { useDispatch } from 'react-redux';
-import { navigerAction } from '../../../store/navigation/actions';
 import ModalHeader from '../modal/modal-header';
-
-const cls = (className?: string) => classNames('modal', className);
+import { useModalStore } from '../../../store-midlertidig/modal-store';
 
 interface FormikModalProps<Values> {
     initialValues: Values;
@@ -17,14 +14,13 @@ interface FormikModalProps<Values> {
     render: (formikProps: FormikProps<Values>) => React.ReactNode;
     tilbakeTekst?: string;
     visConfirmDialog?: boolean;
-    tilbake?: () => void;
     isOpen?: boolean;
     tittel?: string;
 }
 
 function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalProps<Values>) {
+    const { hideModal } = useModalStore();
     const [isOpen, setIsOpen] = useState(true);
-    const dispatch = useDispatch();
 
     const tilbake = (formikProps: FormikProps<Values>) => {
         const confirmTekst = 'Er du sikker på at du vil lukke siden? Ulagrede endringer vil da gå tapt.';
@@ -32,15 +28,15 @@ function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalP
         if (formikProps.dirty) {
             if (visConfirmDialog && window.confirm(confirmTekst)) {
                 setIsOpen(false);
-                dispatch(navigerAction(null));
+                hideModal();
             }
             if (!visConfirmDialog) {
                 setIsOpen(false);
-                dispatch(navigerAction(null));
+                hideModal();
             }
         } else {
             setIsOpen(false);
-            dispatch(navigerAction(null));
+            hideModal();
         }
     };
 
@@ -51,9 +47,9 @@ function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalP
             onSubmit={(values) => props.handleSubmit(values)}
             render={(formikProps) => (
                 <NavFrontendModal
-                    className={cls(props.className)}
+                    className={cls('modal', props.className)}
                     contentLabel={props.contentLabel}
-                    isOpen={props.isOpen ? props.isOpen : isOpen}
+                    isOpen={props.isOpen || isOpen}
                     onRequestClose={() => tilbake(formikProps)}
                     closeButton={true}
                     portalClassName="visittkortfs-modal"

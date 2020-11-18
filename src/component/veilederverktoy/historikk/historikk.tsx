@@ -10,6 +10,7 @@ import './historikk.less';
 
 function Historikk() {
     const { brukerFnr } = useAppStore();
+
     const fetchInnstillingsHistorikk = useFetchInstillingsHistorikk(brukerFnr);
     const fetchOppgaveHistorikk = useFetchOppgaveHistorikk(brukerFnr);
 

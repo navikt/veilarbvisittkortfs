@@ -1,4 +1,4 @@
-import { useAxios, UseAxiosResponseValue } from './utils';
+import { axiosInstance, useAxios, UseAxiosResponseValue } from './utils';
 import { Options } from 'axios-hooks';
 import { OppfolgingStatus } from './data/oppfolging-status';
 import { VeilederData, VeilederListe } from './data/veilederdata';
@@ -12,6 +12,8 @@ import { ALL_TOGGLES, Features } from './data/features';
 import { InnstillingsHistorikk } from './data/innstillings-historikk';
 import { OppgaveHistorikk } from './data/oppgave-historikk';
 import { EnhetData } from './data/enhet';
+import { AxiosResponse } from 'axios';
+import { OppgaveFormData, OppgaveFormResponse } from './data/oppgave';
 
 export function useFetchOppfolgingsstatus(fnr: string, options?: Options): UseAxiosResponseValue<OppfolgingStatus> {
     return useAxios<OppfolgingStatus>({ url: `/veilarboppfolging/api/person/${fnr}/oppfolgingsstatus` }, options);
@@ -76,4 +78,11 @@ export function useFetchOppgaveHistorikk(fnr: string, options?: Options): UseAxi
 
 export function useFetchEnhetNavn(enhetId: string, options?: Options): UseAxiosResponseValue<EnhetData> {
     return useAxios<EnhetData>({ url: `/veilarbveileder/api/enhet/${enhetId}/navn` }, options);
+}
+
+export function opprettOppgave(
+    fnr: string,
+    oppgaveFormData: OppgaveFormData
+): Promise<AxiosResponse<OppgaveFormResponse>> {
+    return axiosInstance.post(`/veilarboppgave/api/oppgave?fnr=${fnr}`, oppgaveFormData);
 }

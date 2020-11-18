@@ -37,7 +37,6 @@ function OppgaveInnerForm({ fnr, tema, enhetId, veilederId, avsenderenhetId, for
                 <OpprettOppgaveVelgEnhet value={enhetId} tema={tema} fnr={fnr} formikProps={formikProps} />
                 <OpprettOppgaveVelgVeileder
                     avsenderenhetId={avsenderenhetId}
-                    enhetId={enhetId}
                     tema={tema}
                     veilederId={veilederId}
                     formikProps={formikProps}
