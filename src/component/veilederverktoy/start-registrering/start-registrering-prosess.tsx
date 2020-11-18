@@ -1,10 +1,10 @@
 import React from 'react';
-import { Appstate } from '../../../types/appstate';
-import OppfolgingSelector from '../../../store/oppfolging/selector';
-import { connect } from 'react-redux';
 import { StringOrNothing } from '../../../util/type/stringornothings';
 import { erITestMiljo, finnMiljoStreng, finnNaisDomene } from '../../../util/utils';
 import { logger } from '../../../util/logger';
+import { useAppStore } from '../../../store-midlertidig/app-store';
+import { useDataStore } from '../../../store-midlertidig/data-store';
+import { kanRegistreresEllerReaktiveres } from '../../../util/selectors';
 
 function byggRegistreringUrl(fnr: string, enhet: StringOrNothing) {
     return `https://arbeidssokerregistrering-fss${finnMiljoStreng()}${finnNaisDomene()}?fnr=${fnr}&enhetId=${enhet}`;
@@ -17,26 +17,21 @@ function byggVeilarbLoginUrl() {
         )}`;
 }
 
-interface StateProps {
-    fnr: string;
-    kanReaktiveres: boolean;
-    erSykmeldtMedArbeidsgiver: boolean;
-    kanRegistrere: boolean;
-    enhetId: StringOrNothing;
-}
+function StartRegistreringProsess() {
+    const { brukerFnr, enhetId } = useAppStore();
+    const { oppfolging } = useDataStore();
 
-type StartRegistreringProsessProps = StateProps;
+    const kanRegistreres = kanRegistreresEllerReaktiveres(oppfolging);
 
-function StartRegistreringProsess(props: StartRegistreringProsessProps) {
-    if (!props.kanRegistrere) {
+    if (!kanRegistreres) {
         return null;
     }
 
     const veilarbLoginUrl = byggVeilarbLoginUrl();
-    const registreringUrl = byggRegistreringUrl(props.fnr, props.enhetId);
-    const brukerType = props.erSykmeldtMedArbeidsgiver
+    const registreringUrl = byggRegistreringUrl(brukerFnr, enhetId);
+    const brukerType = oppfolging.erSykmeldtMedArbeidsgiver
         ? 'erSykemeldtMedArbeidsgiver'
-        : props.kanReaktiveres
+        : oppfolging.kanReaktiveres
         ? 'kanReaktiveres'
         : 'kanIkkeReaktiveres';
 
@@ -64,12 +59,4 @@ function StartRegistreringProsess(props: StartRegistreringProsessProps) {
     );
 }
 
-const mapStateToProps = (state: Appstate): StateProps => ({
-    kanReaktiveres: OppfolgingSelector.selectKanReaktiveres(state),
-    fnr: OppfolgingSelector.selectFnr(state),
-    erSykmeldtMedArbeidsgiver: OppfolgingSelector.selectErSykmeldtMedArbeidsgiver(state),
-    kanRegistrere: OppfolgingSelector.kanRegistreresEllerReaktiveres(state),
-    enhetId: state.enhetId.enhet,
-});
-
-export default connect<StateProps>(mapStateToProps)(StartRegistreringProsess);
+export default StartRegistreringProsess;

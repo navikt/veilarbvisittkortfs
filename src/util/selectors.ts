@@ -3,6 +3,7 @@ import { Personalia } from '../api/data/personalia';
 import { Arbeidsliste } from '../api/data/arbeidsliste';
 import { VeilederData } from '../api/data/veilederdata';
 import { OppfolgingStatus } from '../api/data/oppfolging-status';
+import { Oppfolging } from '../api/data/oppfolging';
 
 export function selectSammensattNavn(personalia: Personalia): string {
     const { fornavn, mellomnavn, etternavn } = personalia;
@@ -20,4 +21,10 @@ export function selectKanLeggeIArbeidsListe(
 
 export function selectKanRedigereArbeidsliste(arbeidsliste?: Arbeidsliste): boolean {
     return !!arbeidsliste?.endringstidspunkt && arbeidsliste?.harVeilederTilgang;
+}
+
+export function kanRegistreresEllerReaktiveres(oppfolging: Oppfolging): boolean {
+    const underOppfolging = oppfolging.underOppfolging;
+    const kanReaktiveres = !!oppfolging.kanReaktiveres;
+    return (underOppfolging && kanReaktiveres) || (!underOppfolging && !kanReaktiveres);
 }
