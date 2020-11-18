@@ -12,9 +12,8 @@ export interface OppfolgingApi {
     startKvpOppfolging: (begrunnelse: string, fnr: string) => Promise<void>; // TODO SJEKK HVA DET SKA VARA
     stoppKvpOppfolging: (begrunnelse: string, fnr: string) => Promise<void>; // TODO SJEKK HVA DET SKA VARA
     hentInnstillingsHistorikk: (fnr: string) => string; //
-    //TODO: Fjerne typen Oppfolging, midlertidig typesetting for bakoverkompabilitet før veilarboppfølging er oppdatert
-    kanAvslutte: (fnr: string) => Promise<Oppfolging | AvslutningStatus>; //
-    avsluttOppfolging: (begrunnelse: string, veilederId: string, fnr: string) => Promise<Oppfolging | AvslutningStatus>; //
+    kanAvslutte: (fnr: string) => Promise<AvslutningStatus>;
+    avsluttOppfolging: (begrunnelse: string, veilederId: string, fnr: string) => Promise<AvslutningStatus>;
     stoppEskalering: (fnr: string, begrunnelse?: string) => Promise<Oppfolging>; //
 }
 

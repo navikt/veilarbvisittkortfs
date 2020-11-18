@@ -1,4 +1,5 @@
 // tslint:disable object-literal-sort-keys
+
 import { Oppfolging } from '../types/oppfolging';
 
 const oppfolging: Oppfolging = {
@@ -19,7 +20,6 @@ const oppfolging: Oppfolging = {
         tilhorendeDialogId: '1'
     },*/
     kanStarteOppfolging: false,
-    avslutningStatus: null,
     oppfolgingsPerioder: [
         {
             aktorId: '00007',
