@@ -79,7 +79,7 @@ export function VeilederverktoyModalController() {
             return <Historikk />;
         case ModalType.FEIL_I_VEILEDERVERKTOY:
             return <FeilModal />;
-        case ModalType.LASTER:
+        case ModalType.SPINNER:
             return <LasterModal />;
         default:
             return null;

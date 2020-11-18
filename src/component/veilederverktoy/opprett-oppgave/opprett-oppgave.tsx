@@ -31,7 +31,7 @@ export interface OpprettOppgaveFormValues {
 function OpprettOppgave() {
     const { brukerFnr, enhetId } = useAppStore();
     const { personalia } = useDataStore();
-    const { hideModal, showOpprettOppgaveKvitteringModal } = useModalStore();
+    const { hideModal, showOpprettOppgaveKvitteringModal, showErrorModal, showSpinnerModal } = useModalStore();
 
     const navn = selectSammensattNavn(personalia);
 
@@ -49,13 +49,13 @@ function OpprettOppgave() {
     };
 
     function lagreOppgave(formdata: OppgaveFormData) {
+        showSpinnerModal();
+
         opprettOppgave(brukerFnr, formdata)
             .then((res) => {
                 showOpprettOppgaveKvitteringModal({ type: res.data.type, tema: res.data.tema });
             })
-            .catch((err) => {
-                // showModal(ModalType.OP);
-            });
+            .catch(showErrorModal);
     }
 
     return (

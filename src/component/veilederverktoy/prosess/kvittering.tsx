@@ -1,8 +1,7 @@
 import React from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
-import { useDispatch } from 'react-redux';
-import { navigerAction } from '../../../store/navigation/actions';
+import { useModalStore } from '../../../store-midlertidig/modal-store';
 
 interface KvitteringProps {
     tittel: string;
@@ -12,14 +11,14 @@ interface KvitteringProps {
 }
 
 function Kvittering({ tittel, alertStripeTekst, footer, onRequestClose }: KvitteringProps) {
-    const dispatch = useDispatch();
+    const { hideModal } = useModalStore();
 
     return (
         <VarselModal
             isOpen={true}
             contentLabel="Vedlykkad operation"
             onRequestClose={() => {
-                dispatch(navigerAction(null));
+                hideModal();
                 if (onRequestClose) {
                     onRequestClose();
                 }

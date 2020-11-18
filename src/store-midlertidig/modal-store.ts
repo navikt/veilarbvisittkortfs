@@ -28,7 +28,7 @@ export enum ModalType {
     STOPP_ESKALERING_KVITTERING,
     VIS_HISTORIKK,
     FEIL_I_VEILEDERVERKTOY,
-    LASTER,
+    SPINNER,
 }
 
 export interface ModalState {
@@ -41,6 +41,14 @@ export const [ModalStore, useModalStore] = constate(() => {
 
     function showModal(type: ModalType) {
         setActiveModalState({ type });
+    }
+
+    function showErrorModal() {
+        setActiveModalState({ type: ModalType.FEIL_I_VEILEDERVERKTOY });
+    }
+
+    function showSpinnerModal() {
+        setActiveModalState({ type: ModalType.SPINNER });
     }
 
     function showStartManuellOppfolgingKvitteringModal(props: StartManuellOppfolgingKvitteringProps) {
@@ -62,6 +70,8 @@ export const [ModalStore, useModalStore] = constate(() => {
     return {
         activeModalState,
         showModal,
+        showErrorModal,
+        showSpinnerModal,
         showStartManuellOppfolgingKvitteringModal,
         showStartDigitalOppfolgingKvitteringModal,
         showOpprettOppgaveKvitteringModal,
