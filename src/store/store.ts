@@ -21,7 +21,7 @@ const sagaMiddleware = createReduxSaga();
 
 const uiReducers = combineReducers({
     navigation: navigationReducer,
-    toasts: toastsReducer
+    toasts: toastsReducer,
 });
 
 const store = createStore(
@@ -37,7 +37,7 @@ const store = createStore(
         oppgavehistorikk: oppgavehistorikkReducer,
         enhetId: enhetIdReducer,
         avsluttOppfolgingStatus: avsluttOppfolgingStatusReducer,
-        ui: uiReducers
+        ui: uiReducers,
     }),
     composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
@@ -53,7 +53,7 @@ function* rootSaga() {
         fork(tilgangTilBrukersKontorSaga),
         fork(instillingshistorikkSaga),
         fork(oppgaveHistorikkSaga),
-        fork(avsluttOppfolgingStatusSaga)
+        fork(avsluttOppfolgingStatusSaga),
     ]);
 }
 

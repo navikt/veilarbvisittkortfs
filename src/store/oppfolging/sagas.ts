@@ -1,6 +1,4 @@
 import {
-    avsluttOppfolgingError,
-    avsluttOppfolgingSuccess,
     HentOppfolgingAction,
     hentOppfolgingError,
     hentOppfolgingSuccess,
@@ -29,8 +27,6 @@ import {
 } from './actions';
 import OppfolgingApi from '../../api/oppfolging-api';
 import OppfolgingSelector from './selector';
-import VeilederSelector from '../tildel-veileder/selector';
-import AvsluttOppfolgingStatusSelector from '../avslutningstatus/selector';
 import { navigerAction } from '../navigation/actions';
 import { eskaleringVarselSendtEvent, triggerReRenderingAvMao } from '../../app/utils/utils';
 import { opprettHenvendelseStoppEskalering } from '../dialog/actions';
@@ -117,26 +113,11 @@ function* stoppEskalering(action: StoppEskaleringAction) {
     }
 }
 
-function* avsluttOppfolging() {
-    try {
-        const fnr = yield select(OppfolgingSelector.selectFnr);
-        const begrunnelse = yield select(AvsluttOppfolgingStatusSelector.selectBegrunnelse);
-        const veilederId = yield select(VeilederSelector.selectIdentPaloggetVeileder);
-
-        const data = yield call(() => OppfolgingApi.avsluttOppfolging(begrunnelse, veilederId, fnr));
-        yield put(avsluttOppfolgingSuccess(data));
-    } catch (e) {
-        yield put(avsluttOppfolgingError(e));
-        yield put(navigerAction('feil_i_veilederverktoy'));
-    }
-}
-
 export function* oppfolgingSaga() {
     yield takeLatest(OppfolgingActionType.HENT_OPPFOLGING, hentOppfolging);
     yield takeLatest(OppfolgingActionType.SETT_MANUELL, settManuell);
     yield takeLatest(OppfolgingActionType.START_KVP, startKVP);
     yield takeLatest(OppfolgingActionType.STOPP_KVP, stopKVP);
     yield takeLatest(OppfolgingActionType.SETT_DIGITAL, settDigital);
-    yield takeLatest(OppfolgingActionType.AVSLUTT_OPPFOLGING, avsluttOppfolging);
     yield takeLatest(OppfolgingActionType.STOPP_ESKALERING, stoppEskalering);
 }
