@@ -38,7 +38,6 @@ const oppfolgingReducer: Reducer<OppfogingState, OppfolgingActions> = (state = i
         case OppfolgingActionType.START_ESKALERING:
         case OppfolgingActionType.SETT_MANUELL:
         case OppfolgingActionType.SETT_DIGITAL:
-        case OppfolgingActionType.START_KVP:
         case OppfolgingActionType.STOPP_KVP:
         case OppfolgingActionType.STOPP_ESKALERING: {
             return {
@@ -67,7 +66,6 @@ const oppfolgingReducer: Reducer<OppfogingState, OppfolgingActions> = (state = i
         case OppfolgingActionType.START_ESKALERING_ERROR:
         case OppfolgingActionType.SETT_MANUELL_ERROR:
         case OppfolgingActionType.SETT_DIGITAL_ERROR:
-        case OppfolgingActionType.START_KVP_ERROR:
         case OppfolgingActionType.AVSLUTT_OPPFOLGING_ERROR:
         case OppfolgingActionType.STOPP_KVP_ERROR:
         case OppfolgingActionType.STOPP_ESKALERING_ERROR: {

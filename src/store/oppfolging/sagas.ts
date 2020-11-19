@@ -19,14 +19,7 @@ import {
     settManuellSuccess,
 } from './actions';
 import { OppfolgingActionType } from './action-type';
-import {
-    StartKVPAction,
-    startKVPError,
-    startKVPSuccess,
-    StoppKVPAction,
-    stoppKVPError,
-    stoppKVPSuccess,
-} from './actions';
+import { StoppKVPAction, stoppKVPError, stoppKVPSuccess } from './actions';
 import OppfolgingApi from '../../api/oppfolging-api';
 import OppfolgingSelector from './selector';
 import VeilederSelector from '../tildel-veileder/selector';
@@ -66,18 +59,6 @@ function* settDigital(action: SettDigitalAction) {
         triggerReRenderingAvMao();
     } catch (e) {
         yield put(setDigitalError(e));
-        yield put(navigerAction('feil_i_veilederverktoy'));
-    }
-}
-
-function* startKVP(action: StartKVPAction) {
-    try {
-        const fnr = yield select(OppfolgingSelector.selectFnr);
-        yield call(() => OppfolgingApi.startKvpOppfolging(action.begrunnelse, fnr));
-        yield put(startKVPSuccess());
-        yield put({ type: OppfolgingActionType.HENT_OPPFOLGING, fnr });
-    } catch (e) {
-        yield put(startKVPError(e));
         yield put(navigerAction('feil_i_veilederverktoy'));
     }
 }
@@ -134,7 +115,6 @@ function* avsluttOppfolging() {
 export function* oppfolgingSaga() {
     yield takeLatest(OppfolgingActionType.HENT_OPPFOLGING, hentOppfolging);
     yield takeLatest(OppfolgingActionType.SETT_MANUELL, settManuell);
-    yield takeLatest(OppfolgingActionType.START_KVP, startKVP);
     yield takeLatest(OppfolgingActionType.STOPP_KVP, stopKVP);
     yield takeLatest(OppfolgingActionType.SETT_DIGITAL, settDigital);
     yield takeLatest(OppfolgingActionType.AVSLUTT_OPPFOLGING, avsluttOppfolging);
