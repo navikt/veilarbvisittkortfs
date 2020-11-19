@@ -63,10 +63,6 @@ export const [ModalStore, useModalStore] = constate(() => {
         setActiveModalState({ type: ModalType.OPPGAVE_KVITTERING, props });
     }
 
-    function showStartKvpPeriodeKvitteringModal() {
-        setActiveModalState({ type: ModalType.START_KVP_PERIODE_KVITTERING });
-    }
-
     function hideModal() {
         setActiveModalState(undefined);
     }
@@ -79,7 +75,6 @@ export const [ModalStore, useModalStore] = constate(() => {
         showStartManuellOppfolgingKvitteringModal,
         showStartDigitalOppfolgingKvitteringModal,
         showOpprettOppgaveKvitteringModal,
-        showStartKvpPeriodeKvitteringModal,
         hideModal,
     };
 });
