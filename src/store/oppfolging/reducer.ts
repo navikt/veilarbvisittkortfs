@@ -11,7 +11,6 @@ const initialState: OppfogingState = {
     status: 'NOT_STARTED',
     error: null,
     data: {
-        avslutningStatus: null,
         erIkkeArbeidssokerUtenOppfolging: false,
         erSykmeldtMedArbeidsgiver: false,
         fnr: '',

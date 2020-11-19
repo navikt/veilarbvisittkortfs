@@ -29,8 +29,6 @@ export interface OppfolgingsPerioder {
 }
 
 export interface Oppfolging {
-    //TODO: Denne skal fjernes, lar være midlertidig for bakoverkompabilitet før veilarboppfølging er oppdatert
-    avslutningStatus: OrNothing<AvslutningStatus>;
     erIkkeArbeidssokerUtenOppfolging: boolean;
     erSykmeldtMedArbeidsgiver: OrNothing<boolean>;
     fnr: string;
