@@ -9,7 +9,6 @@ export interface OppfolgingApi {
     hentVeilederTilgang: (fnr: string) => Promise<void>; //TODO ELLER NOE
     settManuellOppfolging: (begrunnelse: string, veilederId: string, fnr: string) => Promise<Oppfolging>; // TODO SJEKK HVA DET SKA VARA
     settDigital: (begrunnelse: string, veilederId: string, fnr: string) => Promise<Oppfolging>; // TODO SJEKK HVA DET SKA VARA
-    startKvpOppfolging: (begrunnelse: string, fnr: string) => Promise<void>; // TODO SJEKK HVA DET SKA VARA
     stoppKvpOppfolging: (begrunnelse: string, fnr: string) => Promise<void>; // TODO SJEKK HVA DET SKA VARA
     hentInnstillingsHistorikk: (fnr: string) => string; //
     kanAvslutte: (fnr: string) => Promise<Oppfolging>; //
@@ -46,12 +45,6 @@ function settManuellOppfolging(begrunnelse: string, veilederId: string, fnr: str
     });
 }
 
-function startKvpOppfolging(begrunnelse: string, fnr: string) {
-    return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/startKvp?fnr=${fnr}`, {
-        begrunnelse,
-    });
-}
-
 function stoppKvpOppfolging(begrunnelse: string, fnr: string) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/stoppKvp?fnr=${fnr}`, {
         begrunnelse,
@@ -79,7 +72,6 @@ export default {
     startEskalering,
     hentVeilederTilgang,
     settManuellOppfolging,
-    startKvpOppfolging,
     stoppKvpOppfolging,
     settDigital,
     hentInnstillingsHistorikk,

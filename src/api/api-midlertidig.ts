@@ -100,3 +100,9 @@ export function settBrukerTilManuell(fnr: string, veilederId: string, begrunnels
         veilederId,
     });
 }
+
+export function startKvpOppfolging(fnr: string, begrunnelse: string): Promise<AxiosResponse> {
+    return axiosInstance.post(`/veilarboppfolging/api/oppfolging/startKvp?fnr=${fnr}`, {
+        begrunnelse,
+    });
+}

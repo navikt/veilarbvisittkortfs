@@ -1,23 +1,24 @@
 import React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { Appstate } from '../../../types/appstate';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
-import { startKVP } from '../../../store/oppfolging/actions';
 import { Normaltekst } from 'nav-frontend-typografi';
-import OppfolgingSelector from '../../../store/oppfolging/selector';
+import { ModalType, useModalStore } from '../../../store-midlertidig/modal-store';
+import { startKvpOppfolging } from '../../../api/api-midlertidig';
+import { useAppStore } from '../../../store-midlertidig/app-store';
 
-interface DispatchProps {
-    handleSubmit: (values: BegrunnelseValues) => void;
-}
+function StarKvpPeriode() {
+    const { brukerFnr } = useAppStore();
+    const { showModal, showSpinnerModal, showErrorModal } = useModalStore();
 
-interface StateProps {
-    isLoading: boolean;
-}
+    function startKvp({ begrunnelse }: BegrunnelseValues) {
+        showSpinnerModal();
 
-type StartKvpPeriodeProsessProps = StateProps & DispatchProps;
+        startKvpOppfolging(brukerFnr, begrunnelse)
+            .then(() => {
+                showModal(ModalType.START_KVP_PERIODE_KVITTERING);
+            })
+            .catch(showErrorModal);
+    }
 
-function StarKvpPeriode(props: StartKvpPeriodeProsessProps) {
     const infoTekst = (
         <Normaltekst className="blokk-xs">
             Når du klikker «Bekreft» vil bare veiledere i din enhet ha tilgang på dialoger, aktiviteter og mål som blir
@@ -30,22 +31,14 @@ function StarKvpPeriode(props: StartKvpPeriodeProsessProps) {
     return (
         <BegrunnelseForm
             initialValues={initialValues}
-            handleSubmit={props.handleSubmit}
+            handleSubmit={startKvp}
             tekstariaLabel="Begrunnelse:"
             tittel="Start periode i Kvalifiseringsprogrammet (KVP)"
             infoTekst={infoTekst}
-            isLoading={props.isLoading}
+            isLoading={false} // TODO ta bort
             maxLength={250}
         />
     );
 }
 
-const mapStateToProps = (state: Appstate) => ({
-    isLoading: OppfolgingSelector.selectOppfolgingStatus(state),
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-    handleSubmit: (values: BegrunnelseValues) => dispatch(startKVP(values.begrunnelse)),
-});
-
-export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(StarKvpPeriode);
+export default StarKvpPeriode;

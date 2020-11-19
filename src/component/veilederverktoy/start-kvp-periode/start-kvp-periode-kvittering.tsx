@@ -1,16 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Appstate } from '../../../types/appstate';
-import PersonaliaSelectors from '../../../store/personalia/selectors';
 import Kvittering from '../prosess/kvittering';
 
-interface StateProps {
-    navn: string;
-}
-
-type StartOppfolgingKvittering = StateProps;
-
-function StartKVPKvittering({ navn }: StartOppfolgingKvittering) {
+function StartKVPKvittering() {
     return (
         <Kvittering
             tittel="Start periode i Kvalifiseringsprogrammet (KVP)"
@@ -19,8 +10,4 @@ function StartKVPKvittering({ navn }: StartOppfolgingKvittering) {
     );
 }
 
-const mapStateToProps = (state: Appstate): StateProps => ({
-    navn: PersonaliaSelectors.selectSammensattNavn(state),
-});
-
-export default connect<StateProps>(mapStateToProps)(StartKVPKvittering);
+export default StartKVPKvittering;

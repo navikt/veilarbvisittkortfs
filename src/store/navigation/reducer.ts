@@ -48,10 +48,6 @@ const navigationReducer: Reducer<NavigationState, NavigerAction> = (state = { lo
             return {
                 location: 'stopp_kvp_periode_kvittering',
             };
-        case 'START_KVP_SUCCESS':
-            return {
-                location: 'start_kvp_periode_kvittering',
-            };
         case 'LAGRE_OPPGAVE_SUCCESS':
             return {
                 location: 'oppgave_kvittering',
