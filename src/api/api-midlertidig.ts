@@ -106,3 +106,9 @@ export function startKvpOppfolging(fnr: string, begrunnelse: string): Promise<Ax
         begrunnelse,
     });
 }
+
+export function stoppKvpOppfolging(fnr: string, begrunnelse: string): Promise<AxiosResponse> {
+    return axiosInstance.post(`/veilarboppfolging/api/oppfolging/stoppKvp?fnr=${fnr}`, {
+        begrunnelse,
+    });
+}

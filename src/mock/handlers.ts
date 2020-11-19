@@ -78,6 +78,9 @@ export const handlers = [
     rest.post('/veilarboppfolging/api/oppfolging/startKvp', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.status(204));
     }),
+    rest.post('/veilarboppfolging/api/oppfolging/stoppKvp', (req, res, ctx) => {
+        return res(ctx.delay(500), ctx.status(204));
+    }),
     rest.get('/veilarboppgave/api/enheter', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(mockEnheter));
     }),
