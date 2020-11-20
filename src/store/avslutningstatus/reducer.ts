@@ -75,7 +75,7 @@ function* hentAvsluttOppfolgingStatus() {
     try {
         const fnr = yield select(OppfolgingSelector.selectFnr);
         const data = yield call(() => OppfolgingApi.kanAvslutte(fnr));
-        yield put(hentAvsluttningStatusSuccess(data.avslutningStatus ? data.avslutningStatus : data)); //TODO: Parameteret skal være data når apiet er fikset
+        yield put(hentAvsluttningStatusSuccess(data));
     } catch (e) {
         yield put(hentAvsluttningStatusError(e));
     }
@@ -87,7 +87,7 @@ function* avsluttOppfolging() {
         const begrunnelse = yield select(AvsluttOppfolgingStatusSelector.selectBegrunnelse);
         const veilederId = yield select(VeilederSelector.selectIdentPaloggetVeileder);
         const data = yield call(() => OppfolgingApi.avsluttOppfolging(begrunnelse, veilederId, fnr));
-        yield put(avsluttOppfolgingSuccess(data.avslutningStatus ? data.avslutningStatus : data));
+        yield put(avsluttOppfolgingSuccess(data));
     } catch (e) {
         yield put(avsluttOppfolgingError(e));
         yield put(navigerAction('feil_i_veilederverktoy'));
