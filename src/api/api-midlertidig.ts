@@ -14,6 +14,7 @@ import { OppgaveHistorikk } from './data/oppgave-historikk';
 import { EnhetData } from './data/enhet';
 import { AxiosResponse } from 'axios';
 import { OppgaveFormData, OppgaveFormResponse } from './data/oppgave';
+import { HenvendelseData } from '../store/dialog/actions';
 
 export function useFetchOppfolgingsstatus(fnr: string, options?: Options): UseAxiosResponseValue<OppfolgingStatus> {
     return useAxios<OppfolgingStatus>({ url: `/veilarboppfolging/api/person/${fnr}/oppfolgingsstatus` }, options);
@@ -111,4 +112,8 @@ export function stoppKvpOppfolging(fnr: string, begrunnelse: string): Promise<Ax
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/stoppKvp?fnr=${fnr}`, {
         begrunnelse,
     });
+}
+
+export function nyHenvendelse(fnr: string, henvendelse: HenvendelseData): Promise<AxiosResponse> {
+    return axiosInstance.post(`/veilarbdialog/api/dialog?fnr=${fnr}`, henvendelse);
 }
