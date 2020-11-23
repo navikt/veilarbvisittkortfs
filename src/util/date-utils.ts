@@ -10,7 +10,7 @@ export const dateToISODate = (datoStr: string): string | undefined => {
 };
 
 export function formaterDatoKortManed(dato: string | Date | undefined) {
-    return safeFormat(dayjs(dato), 'Do MMM YYYY');
+    return safeFormat(dayjs(dato), 'D MMM YYYY');
 }
 
 export function toSimpleDateStr(dato: string | Date | undefined): string | undefined {

@@ -8,7 +8,6 @@ import {
     stoppEskaleringError,
     stoppEskaleringSuccess,
 } from './actions';
-import { hentOppfolgingData } from '../../api/oppfolging-api-utils';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
     setDigitalError,
@@ -30,7 +29,7 @@ import { eskaleringVarselSendtEvent, triggerReRenderingAvMao } from '../../util/
 
 function* hentOppfolging(action: HentOppfolgingAction) {
     try {
-        const response = yield call(() => hentOppfolgingData(action.fnr));
+        const response = yield call(() => OppfolgingApi.hentOppfolgingData(action.fnr));
         yield put(hentOppfolgingSuccess(response));
     } catch (e) {
         yield put(hentOppfolgingError(e));

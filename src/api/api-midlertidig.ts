@@ -15,6 +15,7 @@ import { EnhetData } from './data/enhet';
 import { AxiosResponse } from 'axios';
 import { OppgaveFormData, OppgaveFormResponse } from './data/oppgave';
 import { HenvendelseData } from '../store/dialog/actions';
+import Dialog from './data/dialog';
 
 export function useFetchOppfolgingsstatus(fnr: string, options?: Options): UseAxiosResponseValue<OppfolgingStatus> {
     return useAxios<OppfolgingStatus>({ url: `/veilarboppfolging/api/person/${fnr}/oppfolgingsstatus` }, options);
@@ -114,6 +115,25 @@ export function stoppKvpOppfolging(fnr: string, begrunnelse: string): Promise<Ax
     });
 }
 
-export function nyHenvendelse(fnr: string, henvendelse: HenvendelseData): Promise<AxiosResponse> {
+export function nyHenvendelse(fnr: string, henvendelse: HenvendelseData): Promise<AxiosResponse<Dialog>> {
     return axiosInstance.post(`/veilarbdialog/api/dialog?fnr=${fnr}`, henvendelse);
+}
+
+export function oppdaterFerdigbehandlet(
+    dialogId: string,
+    erFerdigbehandlet: boolean,
+    fnr: string
+): Promise<AxiosResponse> {
+    return axiosInstance.put(`/veilarbdialog/api/dialog/${dialogId}/ferdigbehandlet/${erFerdigbehandlet}?fnr=${fnr}`);
+}
+
+export function oppdaterVenterPaSvar(dialogId: string, venterPaSvar: boolean, fnr: string): Promise<AxiosResponse> {
+    return axiosInstance.put(`/veilarbdialog/api/dialog/${dialogId}/venter_pa_svar/${venterPaSvar}?fnr=${fnr}`);
+}
+
+export function startEskalering(dialogId: string, begrunnelse: string, fnr: string): Promise<AxiosResponse> {
+    return axiosInstance.post(`/veilarboppfolging/api/oppfolging/startEskalering/?fnr=${fnr}`, {
+        dialogId,
+        begrunnelse,
+    });
 }

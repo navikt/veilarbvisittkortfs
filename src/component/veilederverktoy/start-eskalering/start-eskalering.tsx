@@ -5,18 +5,34 @@ import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import StartEskaleringForm, { StartEskaleringValues } from './start-eskalering-form';
 import { ModalType, useModalStore } from '../../../store-midlertidig/modal-store';
 import { useDataStore } from '../../../store-midlertidig/data-store';
-import { nyHenvendelse } from '../../../api/api-midlertidig';
+import {
+    nyHenvendelse,
+    oppdaterFerdigbehandlet,
+    oppdaterVenterPaSvar,
+    startEskalering,
+    useFetchOppfolging,
+} from '../../../api/api-midlertidig';
 import { useAppStore } from '../../../store-midlertidig/app-store';
+import { eskaleringVarselSendtEvent } from '../../../util/utils';
 
 interface OwnValues extends StartEskaleringValues {
     overskrift: string;
     tekst: string;
 }
 
+const initialValues = {
+    begrunnelse: '',
+    brukMalvelger: true,
+    overskrift: 'Du har fått et varsel fra NAV',
+    tekst: '',
+};
+
 function StartEskalering() {
     const { brukerFnr } = useAppStore();
-    const { oppfolging, harBruktNivaa4 } = useDataStore();
-    const { showModal, showSpinnerModal, hideModal } = useModalStore();
+    const { oppfolging, harBruktNivaa4, setOppfolging } = useDataStore();
+    const { showModal, showSpinnerModal, hideModal, showErrorModal } = useModalStore();
+
+    const fetchOppfolging = useFetchOppfolging(brukerFnr, { manual: true });
 
     function opprettHenvendelse(values: OwnValues) {
         showSpinnerModal();
@@ -28,9 +44,37 @@ function StartEskalering() {
             tekst: values.begrunnelse,
         };
 
+        // TODO: Dette er kanskje logikk som burde bli gjort i backend istedenfor
         nyHenvendelse(brukerFnr, hendvendelseData)
-            .then(() => showModal(ModalType.START_ESKALERING))
-            .catch(() => showModal(ModalType.FEIL_I_VEILEDERVERKTOY));
+            .then(async (res) => {
+                const dialogId = res.data.id;
+                const dialogHenvendelseTekst = res.data.henvendelser[0].tekst;
+
+                const oppdaterFerdigbehandletPromise = oppdaterFerdigbehandlet(dialogId, true, brukerFnr);
+                const oppdaterVenterPaSvarPromise = oppdaterVenterPaSvar(dialogId, true, brukerFnr);
+                const startEskaleringPromise = startEskalering(dialogId, dialogHenvendelseTekst, brukerFnr);
+
+                try {
+                    await Promise.all([
+                        oppdaterFerdigbehandletPromise,
+                        oppdaterVenterPaSvarPromise,
+                        startEskaleringPromise,
+                    ]);
+
+                    // Hent oppdatert data med ny eskaleringsvarsel
+                    await fetchOppfolging
+                        .fetch()
+                        .then((res) => setOppfolging(res.data))
+                        .catch(); // Selv om henting av oppfolging feiler så ønsker vi å vise kvittering på at eskaleringen gikk greit
+
+                    eskaleringVarselSendtEvent();
+
+                    showModal(ModalType.START_ESKALERING_KVITTERING);
+                } catch (e) {
+                    showErrorModal();
+                }
+            })
+            .catch(showErrorModal);
     }
 
     if (!oppfolging.reservasjonKRR || !harBruktNivaa4?.harbruktnivaa4) {
@@ -51,12 +95,6 @@ function StartEskalering() {
         );
     }
 
-    const initialValues = {
-        begrunnelse: '',
-        brukMalvelger: true,
-        overskrift: 'Du har fått et varsel fra NAV',
-        tekst: '',
-    };
     return (
         <StartEskaleringForm
             handleSubmit={opprettHenvendelse}
