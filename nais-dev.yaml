@@ -2,8 +2,7 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: veilarbvisittkortfs
-  namespace: default
-  cluster: prod-fss
+  namespace: pto
   labels:
     team: pto
 spec:
@@ -18,7 +17,9 @@ spec:
   replicas:
     min: 2
     max: 4
-    cpuThresholdPercentage: 50
+    cpuThresholdPercentage: 75
   ingresses:
-    - https://veilarbvisittkortfs.nais.adeo.no
-    - https://app.adeo.no/veilarbvisittkortfs
+    - https://veilarbvisittkortfs-q1.nais.preprod.local
+    - https://app.dev.adeo.no/veilarbvisittkortfs
+    - https://app-q1.dev.adeo.no/veilarbvisittkortfs
+    - https://app-q1.adeo.no/veilarbvisittkortfs
