@@ -1,6 +1,10 @@
 import { StringOrNothing } from '../../util/type/stringornothings';
 
-export type Egenskaper = 'ESKALERINGSVARSEL' | 'PARAGRAF8';
+export enum Egenskaper {
+    ESKALERINGSVARSEL,
+    PARAGRAF8,
+}
+
 type Avsender = 'VEILEDER' | 'BRUKER';
 
 interface Henvendelse {

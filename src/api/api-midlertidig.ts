@@ -137,3 +137,9 @@ export function startEskalering(dialogId: string, begrunnelse: string, fnr: stri
         begrunnelse,
     });
 }
+
+export function stoppEskalering(fnr: string, begrunnelse?: string): Promise<AxiosResponse> {
+    return axiosInstance.post(`/veilarboppfolging/api/oppfolging/stoppEskalering/?fnr=${fnr}`, {
+        begrunnelse,
+    });
+}

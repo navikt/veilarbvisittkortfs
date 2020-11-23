@@ -8,6 +8,7 @@ import { Personalia } from '../api/data/personalia';
 import { VeilederData, VeilederListe } from '../api/data/veilederdata';
 import { EnhetData } from '../api/data/enhet';
 import { RegistreringData } from '../api/registrering-api';
+import { Egenskaper } from '../api/data/dialog';
 
 export const mockArbeidsliste: Arbeidsliste = {
     arbeidslisteAktiv: null,
@@ -62,7 +63,7 @@ export const mockHarBruktNivaa4: HarBruktNivaa4Type = {
 
 export const mockHenvendelseData: any = {
     aktivitetId: null,
-    egenskaper: ['ESKALERINGSVARSEL'],
+    egenskaper: [Egenskaper.ESKALERINGSVARSEL],
     erLestAvBruker: false,
     ferdigBehandlet: true,
     henvendelser: [

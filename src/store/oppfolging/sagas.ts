@@ -4,21 +4,21 @@ import {
     HentOppfolgingAction,
     hentOppfolgingError,
     hentOppfolgingSuccess,
-    StoppEskaleringAction,
-    stoppEskaleringError,
-    stoppEskaleringSuccess,
-} from './actions';
-import { call, put, select, takeLatest } from 'redux-saga/effects';
-import {
     setDigitalError,
     SettDigitalAction,
     settDigitalSuccess,
     SettManuellAction,
     settManuellError,
     settManuellSuccess,
+    StoppEskaleringAction,
+    stoppEskaleringError,
+    stoppEskaleringSuccess,
+    StoppKVPAction,
+    stoppKVPError,
+    stoppKVPSuccess,
 } from './actions';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { OppfolgingActionType } from './action-type';
-import { StoppKVPAction, stoppKVPError, stoppKVPSuccess } from './actions';
 import OppfolgingApi from '../../api/oppfolging-api';
 import OppfolgingSelector from './selector';
 import VeilederSelector from '../tildel-veileder/selector';
@@ -26,6 +26,7 @@ import AvsluttOppfolgingStatusSelector from '../avslutningstatus/selector';
 import { navigerAction } from '../navigation/actions';
 import { opprettHenvendelseStoppEskalering } from '../dialog/actions';
 import { eskaleringVarselSendtEvent, triggerReRenderingAvMao } from '../../util/utils';
+import { Egenskaper } from '../../api/data/dialog';
 
 function* hentOppfolging(action: HentOppfolgingAction) {
     try {
@@ -81,7 +82,7 @@ function* stoppEskalering(action: StoppEskaleringAction) {
             yield put(
                 opprettHenvendelseStoppEskalering({
                     begrunnelse: action.begrunnelse,
-                    egenskaper: ['ESKALERINGSVARSEL'],
+                    egenskaper: [Egenskaper.ESKALERINGSVARSEL],
                     dialogId: action.dialogId,
                     tekst: action.begrunnelse,
                 })

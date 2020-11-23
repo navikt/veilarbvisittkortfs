@@ -1,21 +1,14 @@
 import React from 'react';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { Dispatch } from 'redux';
-import { navigerAction } from '../../../store/navigation/actions';
-import { connect } from 'react-redux';
+import { useModalStore } from '../../../store-midlertidig/modal-store';
 
-interface OwnProps {
+interface BegrunnelseFooterProps {
     spinner: boolean;
     disabled?: boolean;
 }
 
-interface DispatchProps {
-    tilbake: () => void;
-}
-
-type BegrunnelseFooterProps = OwnProps & DispatchProps;
-
 function BegrunnelseFooter(props: BegrunnelseFooterProps) {
+    const { hideModal } = useModalStore();
     return (
         <div className="modal-footer">
             <Hovedknapp
@@ -27,13 +20,9 @@ function BegrunnelseFooter(props: BegrunnelseFooterProps) {
             >
                 Bekreft
             </Hovedknapp>
-            <Knapp onClick={props.tilbake}>Avbryt</Knapp>
+            <Knapp onClick={hideModal}>Avbryt</Knapp>
         </div>
     );
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-    tilbake: () => dispatch(navigerAction(null)),
-});
-
-export default connect<{}, DispatchProps, OwnProps>(null, mapDispatchToProps)(BegrunnelseFooter);
+export default BegrunnelseFooter;

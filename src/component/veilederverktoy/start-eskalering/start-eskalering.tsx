@@ -14,6 +14,7 @@ import {
 } from '../../../api/api-midlertidig';
 import { useAppStore } from '../../../store-midlertidig/app-store';
 import { eskaleringVarselSendtEvent } from '../../../util/utils';
+import { Egenskaper } from '../../../api/data/dialog';
 
 interface OwnValues extends StartEskaleringValues {
     overskrift: string;
@@ -40,7 +41,7 @@ function StartEskalering() {
         const hendvendelseData: HenvendelseData = {
             begrunnelse: values.begrunnelse,
             overskrift: values.overskrift,
-            egenskaper: ['ESKALERINGSVARSEL'],
+            egenskaper: [Egenskaper.ESKALERINGSVARSEL],
             tekst: values.begrunnelse,
         };
 
