@@ -1,75 +1,61 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { Appstate } from '../../../types/appstate';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { AvsluttOppfolgingInfoText } from './components/avslutt-oppfolging-info-text';
-import AvsluttOppfolgingStatusSelector from '../../../store/avslutningstatus/selector';
-import PersonaliaSelector from '../../../store/personalia/selectors';
-import { lagreBegrunnelse, resetBegrunnelse } from '../../../store/avslutningstatus/actions';
-import DialogSelector from '../../../store/dialog/selector';
-import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
-import { navigerAction } from '../../../store/navigation/actions';
-import { OrNothing } from '../../../util/type/ornothing';
-import { AvslutningStatus } from '../../../api/data/oppfolging';
 import dayjs from 'dayjs';
+import { useAppStore } from '../../../store-midlertidig/app-store';
+import { useModalStore } from '../../../store-midlertidig/modal-store';
+import { useDataStore } from '../../../store-midlertidig/data-store';
+import { VEDTAKSSTTOTTE_PRELANSERING_TOGGLE } from '../../../api/data/features';
 
-interface StateProps {
-    begrunnelse: string;
-    avslutningStatus: OrNothing<AvslutningStatus>;
-    datoErInnenFor28DagerSiden: boolean;
-    harUbehandledeDialoger: boolean;
-    fnr: string;
-    isLoading: boolean;
-}
+const for28dagerSiden = dayjs().subtract(28, 'day').toISOString();
 
-interface DispatchProps {
-    handleSubmit: (values: BegrunnelseValues) => void;
-    lukkModal: () => void;
-}
+function AvsluttOppfolging() {
+    const { brukerFnr } = useAppStore();
+    const { oppfolging, features } = useDataStore();
+    const { showBekreftAvsluttOppfolging, hideModal } = useModalStore();
 
-type AvsluttOppfolgingProps = StateProps & DispatchProps;
+    const avslutningStatus = oppfolging.avslutningStatus;
+    const datoErInnenFor28DagerSiden = (avslutningStatus?.inaktiveringsDato || 0) > for28dagerSiden;
+    const harUbehandledeDialoger = false; // TODO: DialogSelector.selectHarUbehandledeDialoger(state)
 
-function AvsluttOppfolging(props: AvsluttOppfolgingProps) {
-    if (props.isLoading) {
-        return <LasterModal />;
+    function handleSubmitAvsluttOppfolging(values: BegrunnelseValues) {
+        showBekreftAvsluttOppfolging({ begrunnelse: values.begrunnelse });
     }
 
-    const kanAvslutte = props.avslutningStatus && props.avslutningStatus.kanAvslutte;
-    if (!kanAvslutte) {
-        const underOppfolging = props.avslutningStatus && props.avslutningStatus.underOppfolging;
-        const underKvp = props.avslutningStatus && props.avslutningStatus.underKvp;
+    if (!avslutningStatus?.kanAvslutte) {
         return (
             <VarselModal
                 contentLabel="Oppfølgingsperioden før brukeren kan ikke avslutes"
                 isOpen={true}
-                onRequestClose={props.lukkModal}
+                onRequestClose={hideModal}
                 type="ADVARSEL"
             >
                 Du kan ikke avslutte oppfølgingsperioden fordi:
                 <ul className="avslutt-oppfolging__ul">
-                    {underOppfolging && <li>Brukeren har aktiv status i Arena.</li>}
-                    {underKvp && <li>Brukeren deltar i på KVP. KVP må avsluttes først.</li>}
+                    {avslutningStatus?.underOppfolging && <li>Brukeren har aktiv status i Arena.</li>}
+                    {avslutningStatus?.underKvp && <li>Brukeren deltar i på KVP. KVP må avsluttes først.</li>}
                 </ul>
             </VarselModal>
         );
     }
 
+    //  TODO initialValues.begrunnelse: AvsluttOppfolgingStatusSelector.selectBegrunnelse(state) || ''
     return (
         <BegrunnelseForm
-            initialValues={{ begrunnelse: props.begrunnelse }}
-            handleSubmit={props.handleSubmit}
+            initialValues={{ begrunnelse: '' }}
+            handleSubmit={handleSubmitAvsluttOppfolging}
             tekstariaLabel="Begrunnelse"
             tittel="Avslutt oppfølgingsperioden"
             isLoading={false}
             infoTekst={
                 <>
                     <AvsluttOppfolgingInfoText
-                        avslutningStatus={props.avslutningStatus}
-                        datoErInnenFor28DagerSiden={props.datoErInnenFor28DagerSiden}
-                        harUbehandledeDialoger={props.harUbehandledeDialoger}
-                        fnr={props.fnr}
+                        vedtaksstottePrelanseringEnabled={features[VEDTAKSSTTOTTE_PRELANSERING_TOGGLE]}
+                        avslutningStatus={avslutningStatus}
+                        datoErInnenFor28DagerSiden={datoErInnenFor28DagerSiden}
+                        harUbehandledeDialoger={harUbehandledeDialoger}
+                        fnr={brukerFnr}
                     />
                 </>
             }
@@ -77,29 +63,4 @@ function AvsluttOppfolging(props: AvsluttOppfolgingProps) {
     );
 }
 
-//FLYTTE TIL VEILEDERVERTOY NAVIGATION ???
-
-const mapStateToProps = (state: Appstate): StateProps => {
-    const avslutningStatus = AvsluttOppfolgingStatusSelector.selectAvsluttOppfolgingData(state);
-    const for28dagerSide = dayjs().subtract(28, 'day').toISOString();
-    const datoErInnenFor28DagerSiden = ((avslutningStatus && avslutningStatus.inaktiveringsDato) || 0) > for28dagerSide;
-
-    return {
-        begrunnelse: AvsluttOppfolgingStatusSelector.selectBegrunnelse(state) || '',
-        harUbehandledeDialoger: DialogSelector.selectHarUbehandledeDialoger(state),
-        avslutningStatus,
-        datoErInnenFor28DagerSiden,
-        fnr: PersonaliaSelector.selectFodselsnummer(state),
-        isLoading: AvsluttOppfolgingStatusSelector.selectAvsluttOppfolgingIsLoading(state),
-    };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-    handleSubmit: (values: BegrunnelseValues) => dispatch(lagreBegrunnelse(values.begrunnelse)),
-    lukkModal: () => {
-        dispatch(navigerAction(null));
-        dispatch(resetBegrunnelse());
-    },
-});
-
-export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(AvsluttOppfolging);
+export default AvsluttOppfolging;

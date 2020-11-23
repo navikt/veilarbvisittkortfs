@@ -1,43 +1,40 @@
 import { Normaltekst } from 'nav-frontend-typografi';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
-import VedtaksstotteApi from '../../../../api/vedtaksstotte-api';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import FeatureApi from '../../../../api/feature-api';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { AvslutningStatus } from '../../../../api/data/oppfolging';
+import { useFetchHarUtkast } from '../../../../api/api-midlertidig';
 
 export function AvsluttOppfolgingInfoText(props: {
+    vedtaksstottePrelanseringEnabled: boolean;
     avslutningStatus: OrNothing<AvslutningStatus>;
     datoErInnenFor28DagerSiden: boolean;
     harUbehandledeDialoger: boolean;
     fnr: string;
 }) {
-    const [harUtkast, oppdaterHarUtkast] = useState(false);
-    const [lasterData, setLasterData] = useState(true);
+    const fetchHarUtkast = useFetchHarUtkast(props.fnr, { manual: true });
 
     useEffect(() => {
-        FeatureApi.hentFeatures('veilarbvedtaksstottefs.prelansering').then((resp) => {
-            if (!resp['veilarbvedtaksstottefs.prelansering']) {
-                VedtaksstotteApi.fetchHarUtkast(props.fnr).then((harUtkastResp) => {
-                    oppdaterHarUtkast(() => harUtkastResp);
-                });
-            }
-            setLasterData(false);
-        });
-    });
+        if (!props.vedtaksstottePrelanseringEnabled) {
+            fetchHarUtkast.fetch();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     if (!props.avslutningStatus) {
         return null;
     }
 
-    if (lasterData) {
+    if (!props.vedtaksstottePrelanseringEnabled && fetchHarUtkast.loading) {
         return <NavFrontendSpinner type="XL" />;
     }
     const aktivMindreEnn28Dager = props.datoErInnenFor28DagerSiden
         ? 'Brukeren har vært inaktiv i mindre enn 28 dager. Vil du likevel avslutte brukerens oppfølgingsperiode?'
         : 'Her avslutter du brukerens oppfølgingsperioden og legger inn en kort begrunnelse om hvorfor.';
+
     const { harTiltak, harYtelser } = props.avslutningStatus;
+
     return (
         <>
             <Normaltekst>{aktivMindreEnn28Dager}</Normaltekst>
@@ -50,7 +47,7 @@ export function AvsluttOppfolgingInfoText(props: {
                 </ul>
             </HiddenIfAlertStripeAdvarselSolid>
 
-            <HiddenIfAlertStripeAdvarselSolid hidden={!harUtkast}>
+            <HiddenIfAlertStripeAdvarselSolid hidden={!fetchHarUtkast.data}>
                 Utkast til oppfølgingsvedtak vil bli slettet
             </HiddenIfAlertStripeAdvarselSolid>
         </>

@@ -1,66 +1,50 @@
 import React from 'react';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { Appstate } from '../../../types/appstate';
-import PersonaliaSelector from '../../../store/personalia/selectors';
-import OppfolgingSelector from '../../../store/oppfolging/selector';
-import { Dispatch } from 'redux';
-import { avsluttOppfolging } from '../../../store/oppfolging/actions';
-import { connect } from 'react-redux';
-import { navigerAction } from '../../../store/navigation/actions';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { resetBegrunnelse } from '../../../store/avslutningstatus/actions';
+import { ModalType, useModalStore } from '../../../store-midlertidig/modal-store';
+import { useDataStore } from '../../../store-midlertidig/data-store';
+import { selectSammensattNavn } from '../../../util/selectors';
+import { avsluttOppfolging } from '../../../api/api-midlertidig';
+import { useAppStore } from '../../../store-midlertidig/app-store';
 
-interface StateProps {
-    navn: string;
-    isLoading: boolean;
+export interface AvsluttOppfolgingBekreftelseModalProps {
+    begrunnelse: string;
 }
 
-interface DispatchProps {
-    handleSubmit: () => void;
-    avbryt: () => void;
-}
+function AvsluttOppfolgingBekreft(props: AvsluttOppfolgingBekreftelseModalProps) {
+    const { brukerFnr } = useAppStore();
+    const { personalia, innloggetVeileder } = useDataStore();
+    const { showModal, showSpinnerModal, showErrorModal, hideModal } = useModalStore();
 
-type AvsluttOppfolgingBekreftelseModalProps = StateProps & DispatchProps;
+    const brukerNavn = selectSammensattNavn(personalia);
 
-function AvsluttOppfolgingBekreft({ navn, handleSubmit, isLoading, avbryt }: AvsluttOppfolgingBekreftelseModalProps) {
+    function handleSubmitAvsluttOppfolging() {
+        showSpinnerModal();
+
+        avsluttOppfolging(brukerFnr, props.begrunnelse, innloggetVeileder.ident)
+            .then(() => {
+                showModal(ModalType.AVSLUTT_OPPFOLGING_KVITTERING);
+            })
+            .catch(showErrorModal);
+    }
+
     return (
-        <VarselModal
-            className=""
-            contentLabel="Bruker kan ikke varsles"
-            onRequestClose={avbryt}
-            isOpen={true}
-            type="ADVARSEL"
-        >
-            <>
-                <Normaltekst>Er du sikker på at du vil avslutte oppfølgingsperioden til {navn}?</Normaltekst>
-                <div className="modal-footer">
-                    <Hovedknapp
-                        htmlType="submit"
-                        style={{ marginRight: '1rem' }}
-                        onClick={handleSubmit}
-                        spinner={isLoading}
-                    >
-                        Bekreft
-                    </Hovedknapp>
-                    <Knapp onClick={avbryt}>Avbryt</Knapp>
-                </div>
-            </>
+        <VarselModal contentLabel="Bruker kan ikke varsles" onRequestClose={hideModal} isOpen={true} type="ADVARSEL">
+            <Normaltekst>Er du sikker på at du vil avslutte oppfølgingsperioden til {brukerNavn}?</Normaltekst>
+            <div className="modal-footer">
+                <Hovedknapp
+                    htmlType="submit"
+                    style={{ marginRight: '1rem' }}
+                    onClick={handleSubmitAvsluttOppfolging}
+                    spinner={false}
+                >
+                    Bekreft
+                </Hovedknapp>
+                <Knapp onClick={hideModal}>Avbryt</Knapp>
+            </div>
         </VarselModal>
     );
 }
 
-const mapStateToProps = (state: Appstate): StateProps => ({
-    navn: PersonaliaSelector.selectSammensattNavn(state),
-    isLoading: OppfolgingSelector.selectOppfolgingStatus(state),
-});
-
-const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-    handleSubmit: () => dispatch(avsluttOppfolging()),
-    avbryt: () => {
-        dispatch(navigerAction(null));
-        dispatch(resetBegrunnelse());
-    },
-});
-
-export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(AvsluttOppfolgingBekreft);
+export default AvsluttOppfolgingBekreft;

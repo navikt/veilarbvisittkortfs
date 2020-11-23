@@ -18,7 +18,9 @@ import OpprettOppgaveKvittering, { OpprettOppgaveKvitteringProps } from '../oppr
 import AvsluttOppfolging from '../avsluttoppfolging/avslutt-oppfolging';
 import AvsluttOppfolgingKvittering from '../avsluttoppfolging/avslutt-oppfolging-kvittering';
 import StoppEskalering from '../stopp-eskalering/stopp-eskalering';
-import AvsluttOppfolgingBekreft from '../avsluttoppfolging/avslutt-oppfolging-bekreft';
+import AvsluttOppfolgingBekreft, {
+    AvsluttOppfolgingBekreftelseModalProps,
+} from '../avsluttoppfolging/avslutt-oppfolging-bekreft';
 import StopEskaleringKvittering from '../stopp-eskalering/stopp-esklaring-kvittering';
 import { FeilModal } from '../prosess/feil-modal';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
@@ -80,7 +82,7 @@ export function VeilederverktoyModalController() {
         case ModalType.AVSLUTT_OPPFOLGING:
             return <AvsluttOppfolging />;
         case ModalType.AVLUTT_OPPFOLGING_BEKREFT:
-            return <AvsluttOppfolgingBekreft />;
+            return <AvsluttOppfolgingBekreft {...(activeModalState.props as AvsluttOppfolgingBekreftelseModalProps)} />;
         case ModalType.AVSLUTT_OPPFOLGING_KVITTERING:
             return <AvsluttOppfolgingKvittering />;
         case ModalType.STOPP_ESKALERING:

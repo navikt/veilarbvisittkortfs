@@ -82,6 +82,10 @@ export function useFetchEnhetNavn(enhetId: string, options?: Options): UseAxiosR
     return useAxios<EnhetData>({ url: `/veilarbveileder/api/enhet/${enhetId}/navn` }, options);
 }
 
+export function useFetchHarUtkast(fnr: string, options?: Options): UseAxiosResponseValue<true> {
+    return useAxios<true>({ url: `/veilarbvedtaksstotte/api/${fnr}/harUtkast` }, options);
+}
+
 export function opprettOppgave(
     fnr: string,
     oppgaveFormData: OppgaveFormData
@@ -141,5 +145,12 @@ export function startEskalering(dialogId: string, begrunnelse: string, fnr: stri
 export function stoppEskalering(fnr: string, begrunnelse?: string): Promise<AxiosResponse> {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/stoppEskalering/?fnr=${fnr}`, {
         begrunnelse,
+    });
+}
+
+export function avsluttOppfolging(fnr: string, begrunnelse: string, veilederId: string): Promise<AxiosResponse> {
+    return axiosInstance.post(`/veilarboppfolging/api/oppfolging/avsluttOppfolging?fnr=${fnr}`, {
+        begrunnelse,
+        veilederId,
     });
 }
