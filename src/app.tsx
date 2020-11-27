@@ -9,6 +9,7 @@ import StoreProvider from './store-midlertidig/store-provider';
 import { InitialDataFetcher } from './component/initial-data-fetcher';
 import { VeilederverktoyModalController } from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-modal-controller';
 import './index.less';
+import { ToastController } from './component/components/toast-controller';
 
 NavFrontendModal.setAppElement(document.getElementById('modal-a11y-wrapper'));
 
@@ -37,6 +38,7 @@ function App(props: AppProps) {
                             <Veilederverktoyslinje />
                         </div>
                         <VeilederverktoyModalController />
+                        <ToastController />
                     </InitialDataFetcher>
                 </div>
             </AppProvider>

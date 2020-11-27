@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react';
-import './toast.less';
 import AlertStripeSuksess from 'nav-frontend-alertstriper/lib/suksess-alertstripe';
-import { useDispatch, useSelector } from 'react-redux';
-import { fjernTildeltVeilederToast } from '../../../store/toast/actions';
-import VeilederSelector from '../../../store/tildel-veileder/selector';
 import { useFocus } from '../../../util/hook/use-focus';
 import useTimer from '../../../util/hook/use-timer';
 import { logger } from '../../../util/logger';
+import { useToastStore } from '../../../store-midlertidig/toast-store';
+import './toast.less';
 
-function FjernTildelVeilederToast() {
+export interface FjernTildelVeilederToastProps {
+    tildeltVeilederNavn: string;
+}
+
+function FjernTildelVeilederToast(props: FjernTildelVeilederToastProps) {
+    const { hideToast } = useToastStore();
+
     const { focusRef } = useFocus();
     const { startTimer, stoppTimer } = useTimer();
-    const dispatch = useDispatch();
-    const veiledernavn = ' ' + useSelector(VeilederSelector.selectTildeltVeiledernavn);
 
     const handleClick = () => {
         const tidBrukt = stoppTimer();
@@ -20,7 +22,8 @@ function FjernTildelVeilederToast() {
             feature: 'toast-tildel-veileder',
             tidBrukt,
         });
-        dispatch(fjernTildeltVeilederToast());
+
+        hideToast();
     };
 
     useEffect(() => {
@@ -34,10 +37,9 @@ function FjernTildelVeilederToast() {
         <div className="toast-wrapper" key={new Date().getTime()}>
             <AlertStripeSuksess className="toast-alertstripe">
                 <span ref={focusRef} tabIndex={0} className="toast">
-                    Du har tildelt veileder{veiledernavn}. Det kan ta noe tid før brukeren er i Min oversikt.
-                    <button onClick={handleClick} className="lukknapp lukknapp--svart">
-                        &times;
-                    </button>
+                    Du har tildelt veileder {props.tildeltVeilederNavn}. Det kan ta noe tid før brukeren er i Min
+                    oversikt.
+                    <button onClick={handleClick} className="lukknapp lukknapp--svart" />
                 </span>
             </AlertStripeSuksess>
         </div>
