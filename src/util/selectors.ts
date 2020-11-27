@@ -5,6 +5,7 @@ import { VeilederData } from '../api/data/veilederdata';
 import { OppfolgingStatus } from '../api/data/oppfolging-status';
 import { Oppfolging } from '../api/data/oppfolging';
 import Dialog from '../api/data/dialog';
+import { TilgangTilBrukersKontor } from '../api/data/tilgangtilbrukerskontor';
 
 export function selectSammensattNavn(personalia: Personalia): string {
     const { fornavn, mellomnavn, etternavn } = personalia;
@@ -46,4 +47,70 @@ export function kanFjerneArbeidsliste(
     innloggetVeilederId: string
 ): boolean {
     return !!arbeidsliste.endringstidspunkt && oppfolging.veilederId === innloggetVeilederId;
+}
+
+export function selectKanSendeEskaleringsVarsel(
+    oppfolging: Oppfolging,
+    tilgangTilBrukersKontor: TilgangTilBrukersKontor
+): boolean {
+    return (
+        tilgangTilBrukersKontor.tilgangTilBrukersKontor &&
+        oppfolging.underOppfolging &&
+        !oppfolging.gjeldendeEskaleringsvarsel &&
+        !oppfolging.reservasjonKRR &&
+        !oppfolging.manuell
+    );
+}
+
+export function selectKanStoppeEskaleringsVarsel(
+    oppfolging: Oppfolging,
+    tilgangTilBrukersKontor: TilgangTilBrukersKontor
+): boolean {
+    return (
+        tilgangTilBrukersKontor.tilgangTilBrukersKontor &&
+        oppfolging.underOppfolging &&
+        !!oppfolging.gjeldendeEskaleringsvarsel &&
+        !oppfolging.reservasjonKRR &&
+        !oppfolging.manuell
+    );
+}
+
+export function selectKanAvslutteOppfolging(
+    oppfolging: Oppfolging,
+    tilgangTilBrukersKontor: TilgangTilBrukersKontor
+): boolean {
+    return tilgangTilBrukersKontor.tilgangTilBrukersKontor && oppfolging.underOppfolging;
+}
+
+export function selectKanStarteManuellOppfolging(
+    oppfolging: Oppfolging,
+    tilgangTilBrukersKontor: TilgangTilBrukersKontor
+): boolean {
+    return tilgangTilBrukersKontor.tilgangTilBrukersKontor && oppfolging.underOppfolging && !oppfolging.manuell;
+}
+
+export function selectKanStarteDigitalOppfolging(
+    oppfolging: Oppfolging,
+    tilgangTilBrukersKontor: TilgangTilBrukersKontor
+): boolean {
+    return tilgangTilBrukersKontor.tilgangTilBrukersKontor && oppfolging.underOppfolging && oppfolging.manuell;
+}
+
+export function selectKanStarteKVP(oppfolging: Oppfolging, tilgangTilBrukersKontor: TilgangTilBrukersKontor): boolean {
+    return tilgangTilBrukersKontor.tilgangTilBrukersKontor && oppfolging.underOppfolging && !oppfolging.underKvp;
+}
+
+export function selectKanStoppeKVP(oppfolging: Oppfolging, tilgangTilBrukersKontor: TilgangTilBrukersKontor): boolean {
+    return tilgangTilBrukersKontor.tilgangTilBrukersKontor && oppfolging.underOppfolging && oppfolging.underKvp;
+}
+
+export function selectKanEndreArbeidsliste(arbeidsliste?: Arbeidsliste): boolean {
+    return !!arbeidsliste?.endringstidspunkt && !!arbeidsliste?.harVeilederTilgang;
+}
+
+export function selectKanTildeleVeileder(
+    oppfolging: Oppfolging,
+    tilgangTilBrukersKontor: TilgangTilBrukersKontor
+): boolean {
+    return oppfolging.underOppfolging && tilgangTilBrukersKontor.tilgangTilBrukersKontor;
 }

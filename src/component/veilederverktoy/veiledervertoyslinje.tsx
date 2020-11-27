@@ -3,38 +3,41 @@ import './veilederverktoy.less';
 import Dropdown from '../components/dropdown/dropdown';
 import { ReactComponent as TannHjulIkon } from './tannhjul.svg';
 import StartRegistreringProsess from './start-registrering/start-registrering-prosess';
-import { useSelector } from 'react-redux';
-import OppfolgingSelector from '../../store/oppfolging/selector';
-import { Appstate } from '../../types/appstate';
-import ArbeidslisteSelector from '../../store/arbeidsliste/selector';
-import TilgangTilKontorSelector from '../../store/tilgang-til-brukerskontor/selector';
 import StartProsess from './prosess/start-prosess';
 import { useAppStore } from '../../store-midlertidig/app-store';
 import { logger } from '../../util/logger';
 import { ModalType, useModalStore } from '../../store-midlertidig/modal-store';
+import { useDataStore } from '../../store-midlertidig/data-store';
+import {
+    kanRegistreresEllerReaktiveres,
+    selectKanAvslutteOppfolging,
+    selectKanLeggeIArbeidsListe,
+    selectKanRedigereArbeidsliste,
+    selectKanSendeEskaleringsVarsel,
+    selectKanStarteDigitalOppfolging,
+    selectKanStarteKVP,
+    selectKanStarteManuellOppfolging,
+    selectKanStoppeEskaleringsVarsel,
+    selectKanStoppeKVP,
+    selectKanTildeleVeileder,
+} from '../../util/selectors';
 
 function Veilederverktoyslinje() {
     const { visVeilederVerktoy } = useAppStore();
+    const { oppfolging, tilgangTilBrukersKontor, innloggetVeileder, arbeidsliste, oppfolgingsstatus } = useDataStore();
     const { showModal } = useModalStore();
 
-    const kanStarteEskalering = useSelector(OppfolgingSelector.selectKanSendeEskaleringsVarsel);
-    const kanStoppeEskalering = useSelector(OppfolgingSelector.selectKanStoppeEskaleringsVarsel);
-    const kanAvslutteOppfolging = useSelector(OppfolgingSelector.selectKanAvslutteOppfolging);
-    const kanStarteManuellOppfolging = useSelector(OppfolgingSelector.selectKanStarteManuellOppfolging);
-    const kanStarteDigitalOppfolging = useSelector(OppfolgingSelector.selectKanStarteDigitalOppfolging);
-    const kanStarteKVP = useSelector(OppfolgingSelector.selectKanStarteKVP);
-    const kanStoppeKVP = useSelector(OppfolgingSelector.selectKanStoppeKVP);
-    const kanRegistrere = useSelector(OppfolgingSelector.kanRegistreresEllerReaktiveres);
-    const kanLagreArbeidsliste = useSelector(
-        (state: Appstate) =>
-            state.tildelVeileder.status !== 'LOADING' && ArbeidslisteSelector.selectKanLeggeIArbeidsListe(state)
-    );
-    const kanEndreArbeidsliste = useSelector(ArbeidslisteSelector.selectKanRedigereArbeidsliste);
-    const kanTildeleVeileder = useSelector(
-        (state: Appstate) =>
-            OppfolgingSelector.selectErUnderOppfolging(state) &&
-            TilgangTilKontorSelector.selectHarTilgangTilKontoret(state)
-    );
+    const kanStarteEskalering = selectKanSendeEskaleringsVarsel(oppfolging, tilgangTilBrukersKontor);
+    const kanStoppeEskalering = selectKanStoppeEskaleringsVarsel(oppfolging, tilgangTilBrukersKontor);
+    const kanAvslutteOppfolging = selectKanAvslutteOppfolging(oppfolging, tilgangTilBrukersKontor);
+    const kanStarteManuellOppfolging = selectKanStarteManuellOppfolging(oppfolging, tilgangTilBrukersKontor);
+    const kanStarteDigitalOppfolging = selectKanStarteDigitalOppfolging(oppfolging, tilgangTilBrukersKontor);
+    const kanStarteKVP = selectKanStarteKVP(oppfolging, tilgangTilBrukersKontor);
+    const kanStoppeKVP = selectKanStoppeKVP(oppfolging, tilgangTilBrukersKontor);
+    const kanRegistrere = kanRegistreresEllerReaktiveres(oppfolging);
+    const kanLagreArbeidsliste = selectKanLeggeIArbeidsListe(innloggetVeileder, oppfolgingsstatus, arbeidsliste);
+    const kanEndreArbeidsliste = selectKanRedigereArbeidsliste(arbeidsliste);
+    const kanTildeleVeileder = selectKanTildeleVeileder(oppfolging, tilgangTilBrukersKontor);
 
     const visModal = (type: ModalType) => {
         showModal(type);
