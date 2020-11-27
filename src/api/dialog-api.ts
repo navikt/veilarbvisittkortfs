@@ -1,6 +1,5 @@
-import { HenvendelseData } from '../store/dialog/actions';
 import { fetchToJson, postAsJson, putAsJson } from './api-utils';
-import Dialog from './data/dialog';
+import Dialog, { HenvendelseData } from './data/dialog';
 
 const DIALOG_BASE_URL = '/veilarbdialog/api/dialog';
 

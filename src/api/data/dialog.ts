@@ -34,4 +34,12 @@ interface Dialog {
     venterPaSvar: boolean;
 }
 
+export interface HenvendelseData {
+    begrunnelse: string;
+    egenskaper: Egenskaper[];
+    overskrift?: string;
+    tekst: string;
+    dialogId?: string;
+}
+
 export default Dialog;

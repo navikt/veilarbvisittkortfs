@@ -1,5 +1,4 @@
 import React from 'react';
-import { HenvendelseData } from '../../../store/dialog/actions';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import StartEskaleringForm, { StartEskaleringValues } from './start-eskalering-form';
@@ -14,7 +13,7 @@ import {
 } from '../../../api/api-midlertidig';
 import { useAppStore } from '../../../store-midlertidig/app-store';
 import { eskaleringVarselSendtEvent } from '../../../util/utils';
-import { Egenskaper } from '../../../api/data/dialog';
+import { Egenskaper, HenvendelseData } from '../../../api/data/dialog';
 
 interface OwnValues extends StartEskaleringValues {
     overskrift: string;

@@ -14,8 +14,7 @@ import { OppgaveHistorikk } from './data/oppgave-historikk';
 import { EnhetData } from './data/enhet';
 import { AxiosResponse } from 'axios';
 import { OppgaveFormData, OppgaveFormResponse } from './data/oppgave';
-import { HenvendelseData } from '../store/dialog/actions';
-import Dialog from './data/dialog';
+import Dialog, { HenvendelseData } from './data/dialog';
 import { TildelVeilederData } from './data/tildel-veileder';
 
 export function useFetchOppfolgingsstatus(fnr: string, options?: Options): UseAxiosResponseValue<OppfolgingStatus> {
