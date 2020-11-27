@@ -86,6 +86,10 @@ export function useFetchHarUtkast(fnr: string, options?: Options): UseAxiosRespo
     return useAxios<true>({ url: `/veilarbvedtaksstotte/api/${fnr}/harUtkast` }, options);
 }
 
+export function useFetchDialoger(fnr: string, options?: Options): UseAxiosResponseValue<Dialog[]> {
+    return useAxios<Dialog[]>(`/veilarbdialog/api/dialog?fnr=${fnr}`, options);
+}
+
 export function opprettOppgave(
     fnr: string,
     oppgaveFormData: OppgaveFormData

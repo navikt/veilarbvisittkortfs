@@ -4,6 +4,7 @@ import { Arbeidsliste } from '../api/data/arbeidsliste';
 import { VeilederData } from '../api/data/veilederdata';
 import { OppfolgingStatus } from '../api/data/oppfolging-status';
 import { Oppfolging } from '../api/data/oppfolging';
+import Dialog from '../api/data/dialog';
 
 export function selectSammensattNavn(personalia: Personalia): string {
     const { fornavn, mellomnavn, etternavn } = personalia;
@@ -27,4 +28,10 @@ export function kanRegistreresEllerReaktiveres(oppfolging: Oppfolging): boolean 
     const underOppfolging = oppfolging.underOppfolging;
     const kanReaktiveres = !!oppfolging.kanReaktiveres;
     return (underOppfolging && kanReaktiveres) || (!underOppfolging && !kanReaktiveres);
+}
+
+export function selectHarUbehandledeDialoger(dialoger: Dialog[]): boolean {
+    return (
+        dialoger.filter((dialog) => !dialog.historisk && (!dialog.ferdigBehandlet || dialog.venterPaSvar)).length > 0
+    );
 }
