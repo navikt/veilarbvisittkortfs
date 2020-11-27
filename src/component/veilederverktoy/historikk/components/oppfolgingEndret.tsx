@@ -4,7 +4,7 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { opprettetAvTekst } from './opprettet-av';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { InnstillingsHistorikk } from '../../../../api/data/innstillings-historikk';
-import { useFetchEnhetNavn } from '../../../../api/api-midlertidig';
+import { useFetchEnhetNavn } from '../../../../api/api';
 import { hasAnyFailed, isAnyLoading } from '../../../../api/utils';
 import { toSimpleDateStr } from '../../../../util/date-utils';
 

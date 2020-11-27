@@ -3,11 +3,11 @@ import ArbeidslisteModal from './arbeidsliste-modal';
 import FjernArbeidslisteModal from './fjern-arbeidsliste-modal';
 import { Arbeidsliste, ArbeidslisteformValues } from '../../api/data/arbeidsliste';
 import { dateToISODate } from '../../util/date-utils';
-import { useModalStore } from '../../store-midlertidig/modal-store';
-import { useDataStore } from '../../store-midlertidig/data-store';
-import { useAppStore } from '../../store-midlertidig/app-store';
+import { useModalStore } from '../../store/modal-store';
+import { useDataStore } from '../../store/data-store';
+import { useAppStore } from '../../store/app-store';
 import { kanFjerneArbeidsliste, selectSammensattNavn } from '../../util/selectors';
-import { lagreArbeidsliste, redigerArbeidsliste, slettArbeidsliste } from '../../api/api-midlertidig';
+import { lagreArbeidsliste, redigerArbeidsliste, slettArbeidsliste } from '../../api/api';
 import './arbeidsliste.less';
 
 function ArbeidslisteControllerModal() {

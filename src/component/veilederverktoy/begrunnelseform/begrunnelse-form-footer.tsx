@@ -1,6 +1,6 @@
 import React from 'react';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { useModalStore } from '../../../store-midlertidig/modal-store';
+import { useModalStore } from '../../../store/modal-store';
 
 interface BegrunnelseFooterProps {
     spinner: boolean;

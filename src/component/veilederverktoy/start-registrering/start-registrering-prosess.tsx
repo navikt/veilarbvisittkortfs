@@ -2,8 +2,8 @@ import React from 'react';
 import { StringOrNothing } from '../../../util/type/stringornothings';
 import { erITestMiljo, finnMiljoStreng, finnNaisDomene } from '../../../util/utils';
 import { logger } from '../../../util/logger';
-import { useAppStore } from '../../../store-midlertidig/app-store';
-import { useDataStore } from '../../../store-midlertidig/data-store';
+import { useAppStore } from '../../../store/app-store';
+import { useDataStore } from '../../../store/data-store';
 import { kanRegistreresEllerReaktiveres } from '../../../util/selectors';
 
 function byggRegistreringUrl(fnr: string, enhet: StringOrNothing) {

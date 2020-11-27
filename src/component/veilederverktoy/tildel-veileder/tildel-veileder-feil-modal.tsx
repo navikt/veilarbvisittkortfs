@@ -2,7 +2,7 @@ import React from 'react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { logger } from '../../../util/logger';
-import { useModalStore } from '../../../store-midlertidig/modal-store';
+import { useModalStore } from '../../../store/modal-store';
 
 export function FeilTildelingModal() {
     const { hideModal } = useModalStore();

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Kvittering from '../prosess/kvittering';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { logger } from '../../../util/logger';
-import { useAppStore } from '../../../store-midlertidig/app-store';
-import { useDataStore } from '../../../store-midlertidig/data-store';
-import { useFetchRegistrering } from '../../../api/api-midlertidig';
+import { useAppStore } from '../../../store/app-store';
+import { useDataStore } from '../../../store/data-store';
+import { useFetchRegistrering } from '../../../api/api';
 
 export interface StartManuellOppfolgingKvitteringProps {
     begrunnelse: string;

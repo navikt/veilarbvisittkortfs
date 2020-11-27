@@ -7,7 +7,7 @@ import Dropdown from '../../../components/dropdown/dropdown';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { StringOrNothing } from '../../../../util/type/stringornothings';
 import { BehandlandeEnhet, OppgaveTema } from '../../../../api/data/oppgave';
-import { hentBehandlendeEnheter } from '../../../../api/api-midlertidig';
+import { hentBehandlendeEnheter } from '../../../../api/api';
 
 interface OpprettOppgaveVelgEnhet {
     tema: OrNothing<OppgaveTema>;

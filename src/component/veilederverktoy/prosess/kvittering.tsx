@@ -1,7 +1,7 @@
 import React from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
-import { useModalStore } from '../../../store-midlertidig/modal-store';
+import { useModalStore } from '../../../store/modal-store';
 
 interface KvitteringProps {
     tittel: string;

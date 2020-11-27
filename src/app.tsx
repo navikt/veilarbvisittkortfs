@@ -4,7 +4,7 @@ import Veilederverktoyslinje from './component/veilederverktoy/veiledervertoysli
 import NavFrontendModal from 'nav-frontend-modal';
 import Etiketter from './component/personinfo/components/etiketter';
 import Tilbakelenke from './component/components/tilbakelenke/tilbakelenke';
-import StoreProvider from './store-midlertidig/store-provider';
+import StoreProvider from './store/store-provider';
 import { InitialDataFetcher } from './component/initial-data-fetcher';
 import { VeilederverktoyModalController } from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-modal-controller';
 import { ToastController } from './component/components/toast-controller';

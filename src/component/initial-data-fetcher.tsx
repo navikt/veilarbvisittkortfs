@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDataStore } from '../store-midlertidig/data-store';
+import { useDataStore } from '../store/data-store';
 import {
     useFetchTilgangTilBrukersKontor,
     useFetchInnloggetVeileder,
@@ -9,8 +9,8 @@ import {
     useFetchArbeidsliste,
     useFetchVeilederePaEnhet,
     useFetchFeatures,
-} from '../api/api-midlertidig';
-import { useAppStore } from '../store-midlertidig/app-store';
+} from '../api/api';
+import { useAppStore } from '../store/app-store';
 import { isAnyLoading } from '../api/utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 

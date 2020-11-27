@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from './modal';
 import ModalHeader from './modal-header';
 import classNames from 'classnames';
-import { useModalStore } from '../../../store-midlertidig/modal-store';
+import { useModalStore } from '../../../store/modal-store';
 
 interface VeilederVerktoyModalProps {
     children: React.ReactNode;

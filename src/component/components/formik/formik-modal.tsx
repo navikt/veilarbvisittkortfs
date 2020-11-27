@@ -3,7 +3,7 @@ import NavFrontendModal from 'nav-frontend-modal';
 import cls from 'classnames';
 import { Formik, FormikProps } from 'formik';
 import ModalHeader from '../modal/modal-header';
-import { useModalStore } from '../../../store-midlertidig/modal-store';
+import { useModalStore } from '../../../store/modal-store';
 
 interface FormikModalProps<Values> {
     initialValues: Values;

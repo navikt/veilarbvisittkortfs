@@ -1,7 +1,7 @@
 import React from 'react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
-import { useModalStore } from '../../../store-midlertidig/modal-store';
+import { useModalStore } from '../../../store/modal-store';
 
 export interface TildelVeilederKvitteringProps {
     tildeltVeilederNavn: string;

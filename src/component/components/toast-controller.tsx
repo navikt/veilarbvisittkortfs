@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToastType, useToastStore } from '../../store-midlertidig/toast-store';
+import { ToastType, useToastStore } from '../../store/toast-store';
 import FjernTildelVeilederToast, { FjernTildelVeilederToastProps } from './toast/fjern-tildel-veileder-toast';
 
 export function ToastController() {

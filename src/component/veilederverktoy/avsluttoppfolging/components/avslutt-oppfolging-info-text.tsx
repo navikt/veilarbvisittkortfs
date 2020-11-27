@@ -4,7 +4,7 @@ import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { AvslutningStatus } from '../../../../api/data/oppfolging';
-import { useFetchHarUtkast } from '../../../../api/api-midlertidig';
+import { useFetchHarUtkast } from '../../../../api/api';
 
 export function AvsluttOppfolgingInfoText(props: {
     vedtaksstottePrelanseringEnabled: boolean;

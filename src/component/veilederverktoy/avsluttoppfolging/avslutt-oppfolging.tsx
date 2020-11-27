@@ -3,11 +3,11 @@ import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnel
 import { AvsluttOppfolgingInfoText } from './components/avslutt-oppfolging-info-text';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import dayjs from 'dayjs';
-import { useAppStore } from '../../../store-midlertidig/app-store';
-import { useModalStore } from '../../../store-midlertidig/modal-store';
-import { useDataStore } from '../../../store-midlertidig/data-store';
+import { useAppStore } from '../../../store/app-store';
+import { useModalStore } from '../../../store/modal-store';
+import { useDataStore } from '../../../store/data-store';
 import { VEDTAKSSTTOTTE_PRELANSERING_TOGGLE } from '../../../api/data/features';
-import { useFetchDialoger } from '../../../api/api-midlertidig';
+import { useFetchDialoger } from '../../../api/api';
 import { selectHarUbehandledeDialoger } from '../../../util/selectors';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 

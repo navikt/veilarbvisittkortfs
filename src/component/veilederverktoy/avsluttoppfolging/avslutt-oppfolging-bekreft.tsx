@@ -2,11 +2,11 @@ import React from 'react';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { ModalType, useModalStore } from '../../../store-midlertidig/modal-store';
-import { useDataStore } from '../../../store-midlertidig/data-store';
+import { ModalType, useModalStore } from '../../../store/modal-store';
+import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
-import { avsluttOppfolging } from '../../../api/api-midlertidig';
-import { useAppStore } from '../../../store-midlertidig/app-store';
+import { avsluttOppfolging } from '../../../api/api';
+import { useAppStore } from '../../../store/app-store';
 
 export interface AvsluttOppfolgingBekreftelseModalProps {
     begrunnelse: string;

@@ -29,7 +29,7 @@ import ArbeidslisteControllerModal from '../../arbeidsliste/arbeidsliste-control
 import TildelVeileder from '../tildel-veileder/tildel-veileder';
 import { TildelVeilederKvittering, TildelVeilederKvitteringProps } from '../tildel-veileder/tildel-veileder-kvittering';
 import { FeilTildelingModal } from '../tildel-veileder/tildel-veileder-feil-modal';
-import { ModalType, useModalStore } from '../../../store-midlertidig/modal-store';
+import { ModalType, useModalStore } from '../../../store/modal-store';
 
 export function VeilederverktoyModalController() {
     const { activeModalState } = useModalStore();

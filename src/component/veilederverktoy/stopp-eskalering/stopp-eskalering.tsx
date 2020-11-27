@@ -5,11 +5,11 @@ import { Form } from 'formik';
 import FormikCheckBox from '../../components/formik/formik-checkbox';
 import BegrunnelseFooter from '../begrunnelseform/begrunnelse-form-footer';
 import { BegrunnelseTextArea } from '../begrunnelseform/begrunnelse-textarea';
-import { useAppStore } from '../../../store-midlertidig/app-store';
-import { ModalType, useModalStore } from '../../../store-midlertidig/modal-store';
-import { useDataStore } from '../../../store-midlertidig/data-store';
+import { useAppStore } from '../../../store/app-store';
+import { ModalType, useModalStore } from '../../../store/modal-store';
+import { useDataStore } from '../../../store/data-store';
 import { eskaleringVarselSendtEvent } from '../../../util/utils';
-import { nyHenvendelse, stoppEskalering, useFetchOppfolging } from '../../../api/api-midlertidig';
+import { nyHenvendelse, stoppEskalering, useFetchOppfolging } from '../../../api/api';
 import { Egenskaper } from '../../../api/data/dialog';
 import './stopp-eskalering.less';
 

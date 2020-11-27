@@ -3,7 +3,7 @@ import AlertStripeSuksess from 'nav-frontend-alertstriper/lib/suksess-alertstrip
 import { useFocus } from '../../../util/hook/use-focus';
 import useTimer from '../../../util/hook/use-timer';
 import { logger } from '../../../util/logger';
-import { useToastStore } from '../../../store-midlertidig/toast-store';
+import { useToastStore } from '../../../store/toast-store';
 import './toast.less';
 
 export interface FjernTildelVeilederToastProps {

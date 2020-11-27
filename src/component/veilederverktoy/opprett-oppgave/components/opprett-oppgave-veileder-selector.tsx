@@ -8,9 +8,9 @@ import { StringOrNothing } from '../../../../util/type/stringornothings';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { OppgaveTema } from '../../../../api/data/oppgave';
 import { VeilederData } from '../../../../api/data/veilederdata';
-import { useDataStore } from '../../../../store-midlertidig/data-store';
-import { useFetchVeilederePaEnhet } from '../../../../api/api-midlertidig';
-import { useAppStore } from '../../../../store-midlertidig/app-store';
+import { useDataStore } from '../../../../store/data-store';
+import { useFetchVeilederePaEnhet } from '../../../../api/api';
+import { useAppStore } from '../../../../store/app-store';
 
 interface OpprettOppgaveVelgVeilederProps {
     veilederId: StringOrNothing;

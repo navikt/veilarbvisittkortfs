@@ -1,7 +1,7 @@
 import React from 'react';
 import './tilbakelenke.less';
 import Chevron from 'nav-frontend-chevron';
-import { useAppStore } from '../../../store-midlertidig/app-store';
+import { useAppStore } from '../../../store/app-store';
 
 function Tilbakelenke() {
     const { brukerFnr, enhetId, tilbakeTilFlate } = useAppStore();

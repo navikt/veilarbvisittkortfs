@@ -3,11 +3,11 @@ import NavnOgAlder from './components/navnogalder';
 import Icon from './components/icon';
 import ArbeidslisteKnapp from '../arbeidsliste/arbeidsliste-knapp';
 import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
-import { useAppStore } from '../../store-midlertidig/app-store';
+import { useAppStore } from '../../store/app-store';
 import { logger } from '../../util/logger';
-import { useDataStore } from '../../store-midlertidig/data-store';
+import { useDataStore } from '../../store/data-store';
 import { selectKanLeggeIArbeidsListe, selectKanRedigereArbeidsliste, selectSammensattNavn } from '../../util/selectors';
-import { ModalType, useModalStore } from '../../store-midlertidig/modal-store';
+import { ModalType, useModalStore } from '../../store/modal-store';
 import './personinfo.less';
 
 function PersonInfo() {

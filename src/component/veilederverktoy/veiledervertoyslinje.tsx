@@ -4,10 +4,10 @@ import Dropdown from '../components/dropdown/dropdown';
 import { ReactComponent as TannHjulIkon } from './tannhjul.svg';
 import StartRegistreringProsess from './start-registrering/start-registrering-prosess';
 import StartProsess from './prosess/start-prosess';
-import { useAppStore } from '../../store-midlertidig/app-store';
+import { useAppStore } from '../../store/app-store';
 import { logger } from '../../util/logger';
-import { ModalType, useModalStore } from '../../store-midlertidig/modal-store';
-import { useDataStore } from '../../store-midlertidig/data-store';
+import { ModalType, useModalStore } from '../../store/modal-store';
+import { useDataStore } from '../../store/data-store';
 import {
     kanRegistreresEllerReaktiveres,
     selectKanAvslutteOppfolging,

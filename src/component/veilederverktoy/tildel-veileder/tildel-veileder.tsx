@@ -4,12 +4,12 @@ import SokFilter from '../../components/sokfilter/sok-filter';
 import RadioFilterForm from '../../components/radiofilterform/radio-filter-form';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { VeilederData } from '../../../api/data/veilederdata';
-import { useAppStore } from '../../../store-midlertidig/app-store';
+import { useAppStore } from '../../../store/app-store';
 import { lagVeilederSammensattNavn } from '../../../util/selectors';
-import { ModalType, useModalStore } from '../../../store-midlertidig/modal-store';
+import { ModalType, useModalStore } from '../../../store/modal-store';
 import { triggerReRenderingAvMao } from '../../../util/utils';
-import { tildelTilVeileder } from '../../../api/api-midlertidig';
-import { useDataStore } from '../../../store-midlertidig/data-store';
+import { tildelTilVeileder } from '../../../api/api';
+import { useDataStore } from '../../../store/data-store';
 import './tildel-veileder.less';
 
 function TildelVeileder() {

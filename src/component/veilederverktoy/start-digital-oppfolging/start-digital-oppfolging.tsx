@@ -3,10 +3,10 @@ import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnel
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { useAppStore } from '../../../store-midlertidig/app-store';
-import { useDataStore } from '../../../store-midlertidig/data-store';
-import { useModalStore } from '../../../store-midlertidig/modal-store';
-import { settBrukerTilDigital } from '../../../api/api-midlertidig';
+import { useAppStore } from '../../../store/app-store';
+import { useDataStore } from '../../../store/data-store';
+import { useModalStore } from '../../../store/modal-store';
+import { settBrukerTilDigital } from '../../../api/api';
 
 function StartDigitalOppfolging() {
     const { brukerFnr } = useAppStore();
