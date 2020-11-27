@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import SokFilter from '../../../components/sokfilter/sok-filter';
 import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
-import OppgaveApi from '../../../../api/oppgave-api';
 import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import Dropdown from '../../../components/dropdown/dropdown';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { StringOrNothing } from '../../../../util/type/stringornothings';
 import { BehandlandeEnhet, OppgaveTema } from '../../../../api/data/oppgave';
+import { hentBehandlendeEnheter } from '../../../../api/api-midlertidig';
 
 interface OpprettOppgaveVelgEnhet {
     tema: OrNothing<OppgaveTema>;
@@ -23,9 +23,10 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
 
     useEffect(() => {
         if (tema) {
-            OppgaveApi.hentBehandlandeEnheter(tema, fnr).then((behandladeEnheterData: BehandlandeEnhet[]) => {
-                setBehandladeEnheter(behandladeEnheterData);
-                setFieldValue('enhetId', behandladeEnheterData[0].enhetId);
+            hentBehandlendeEnheter(tema, fnr).then((res) => {
+                const behandlendeEnhetersData = res.data;
+                setBehandladeEnheter(behandlendeEnhetersData);
+                setFieldValue('enhetId', behandlendeEnhetersData[0].enhetId);
                 setIsLoading(false);
                 document
                     .getElementsByName('Velg enhet')

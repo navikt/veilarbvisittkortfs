@@ -7,8 +7,8 @@ import { useAppStore } from '../../../store-midlertidig/app-store';
 import { useFetchRegistrering } from '../../../api/api-midlertidig';
 import { PILOT_TOGGLE } from '../../../api/data/features';
 import './etiketter.less';
-import { InnsatsgruppeType } from '../../../api/registrering-api';
 import { OrNothing } from '../../../util/type/ornothing';
+import { InnsatsgruppeType } from '../../../api/data/registrering';
 
 const Advarsel = hiddenIf(EtikettAdvarsel);
 const Info = hiddenIf(EtikettInfo);

@@ -6,16 +6,16 @@ import { Personalia } from './data/personalia';
 import { HarBruktNivaa4Type } from './data/har-brukt-nivaa4';
 import { TilgangTilBrukersKontor } from './data/tilgangtilbrukerskontor';
 import { Arbeidsliste, ArbeidslisteformValues } from './data/arbeidsliste';
-import { RegistreringData } from './registrering-api';
 import { Oppfolging } from './data/oppfolging';
 import { ALL_TOGGLES, Features } from './data/features';
 import { InnstillingsHistorikk } from './data/innstillings-historikk';
 import { OppgaveHistorikk } from './data/oppgave-historikk';
 import { EnhetData } from './data/enhet';
 import { AxiosResponse } from 'axios';
-import { OppgaveFormData, OppgaveFormResponse } from './data/oppgave';
+import { BehandlandeEnhet, OppgaveFormData, OppgaveFormResponse, OppgaveTema } from './data/oppgave';
 import Dialog, { HenvendelseData } from './data/dialog';
 import { TildelVeilederData } from './data/tildel-veileder';
+import { RegistreringData } from './data/registrering';
 
 export function useFetchOppfolgingsstatus(fnr: string, options?: Options): UseAxiosResponseValue<OppfolgingStatus> {
     return useAxios<OppfolgingStatus>({ url: `/veilarboppfolging/api/person/${fnr}/oppfolgingsstatus` }, options);
@@ -175,4 +175,8 @@ export function redigerArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformV
 
 export function slettArbeidsliste(fnr: string): Promise<AxiosResponse> {
     return axiosInstance.delete(`/veilarbportefolje/api/arbeidsliste/${fnr}`);
+}
+
+export function hentBehandlendeEnheter(tema: OppgaveTema, fnr: string): Promise<AxiosResponse<BehandlandeEnhet[]>> {
+    return axiosInstance.get<BehandlandeEnhet[]>(`/veilarboppgave/api/enheter?tema=${tema}&fnr=${fnr}`);
 }

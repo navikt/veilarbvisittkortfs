@@ -7,8 +7,8 @@ import { OppgaveHistorikk } from '../api/data/oppgave-historikk';
 import { Personalia } from '../api/data/personalia';
 import { VeilederData, VeilederListe } from '../api/data/veilederdata';
 import { EnhetData } from '../api/data/enhet';
-import { RegistreringData } from '../api/registrering-api';
 import { Egenskaper } from '../api/data/dialog';
+import { RegistreringData } from '../api/data/registrering';
 
 export const mockArbeidsliste: Arbeidsliste = {
     arbeidslisteAktiv: null,
