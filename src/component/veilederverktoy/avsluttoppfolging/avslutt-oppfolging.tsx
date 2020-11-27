@@ -16,7 +16,7 @@ const for28dagerSiden = dayjs().subtract(28, 'day').toISOString();
 function AvsluttOppfolging() {
     const { brukerFnr } = useAppStore();
     const { oppfolging, features } = useDataStore();
-    const { showBekreftAvsluttOppfolging, hideModal } = useModalStore();
+    const { showBekreftAvsluttOppfolgingModal, hideModal } = useModalStore();
 
     const fetchDialoger = useFetchDialoger(brukerFnr);
 
@@ -25,7 +25,7 @@ function AvsluttOppfolging() {
     const harUbehandledeDialoger = fetchDialoger.data ? selectHarUbehandledeDialoger(fetchDialoger.data) : false;
 
     function handleSubmitAvsluttOppfolging(values: BegrunnelseValues) {
-        showBekreftAvsluttOppfolging({ begrunnelse: values.begrunnelse });
+        showBekreftAvsluttOppfolgingModal({ begrunnelse: values.begrunnelse });
     }
 
     if (fetchDialoger.loading) {

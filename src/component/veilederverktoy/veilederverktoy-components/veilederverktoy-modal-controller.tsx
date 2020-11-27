@@ -27,7 +27,7 @@ import { LasterModal } from '../../components/lastermodal/laster-modal';
 import Historikk from '../historikk/historikk';
 import ArbeidslisteController from '../../arbeidsliste/arbeidsliste-controller';
 import TildelVeileder from '../tildel-veileder/tildel-veileder';
-import { TildelVeilederKvittering } from '../tildel-veileder/tildel-veileder-kvittering';
+import { TildelVeilederKvittering, TildelVeilederKvitteringProps } from '../tildel-veileder/tildel-veileder-kvittering';
 import { FeilTildelingModal } from '../tildel-veileder/tildel-veileder-feil-modal';
 import { ModalType, useModalStore } from '../../../store-midlertidig/modal-store';
 
@@ -48,7 +48,7 @@ export function VeilederverktoyModalController() {
         case ModalType.TILDEL_VEILEDER_FEILET:
             return <FeilTildelingModal />;
         case ModalType.TILDEL_VEILEDER_KVITTERING:
-            return <TildelVeilederKvittering />;
+            return <TildelVeilederKvittering {...(activeModalState.props as TildelVeilederKvitteringProps)} />;
         case ModalType.START_ESKALERING_KVITTERING:
             return <StartEskaleringKvittering />;
         case ModalType.MANUELL_OPPFOLGING:

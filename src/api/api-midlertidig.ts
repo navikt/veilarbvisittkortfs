@@ -16,6 +16,7 @@ import { AxiosResponse } from 'axios';
 import { OppgaveFormData, OppgaveFormResponse } from './data/oppgave';
 import { HenvendelseData } from '../store/dialog/actions';
 import Dialog from './data/dialog';
+import { TildelVeilederData } from './data/tildel-veileder';
 
 export function useFetchOppfolgingsstatus(fnr: string, options?: Options): UseAxiosResponseValue<OppfolgingStatus> {
     return useAxios<OppfolgingStatus>({ url: `/veilarboppfolging/api/person/${fnr}/oppfolgingsstatus` }, options);
@@ -157,4 +158,10 @@ export function avsluttOppfolging(fnr: string, begrunnelse: string, veilederId: 
         begrunnelse,
         veilederId,
     });
+}
+
+export function tildelTilVeileder(
+    tilordninger: TildelVeilederData[]
+): Promise<AxiosResponse<{ resultat: string; feilendeTilordninger: TildelVeilederData[] }>> {
+    return axiosInstance.post(`/veilarboppfolging/api/tilordneveileder/`, tilordninger);
 }

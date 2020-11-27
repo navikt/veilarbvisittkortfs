@@ -1,83 +1,88 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import SokFilter from '../../components/sokfilter/sok-filter';
 import RadioFilterForm from '../../components/radiofilterform/radio-filter-form';
-import { Appstate } from '../../../types/appstate';
-import { useDispatch, useSelector } from 'react-redux';
-import { tildelTilVeileder } from '../../../store/tildel-veileder/actions';
-import './tildel-veileder.less';
-import OppfolgingSelector from '../../../store/oppfolging/selector';
-import VeilederSelector from '../../../store/tildel-veileder/selector';
-
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
-import { navigerAction } from '../../../store/navigation/actions';
-import { StringOrNothing } from '../../../util/type/stringornothings';
 import { VeilederData } from '../../../api/data/veilederdata';
-
-function settSammenNavn(veileder: VeilederData) {
-    return `${veileder.etternavn}, ${veileder.fornavn}`;
-}
+import { useAppStore } from '../../../store-midlertidig/app-store';
+import { lagVeilederSammensattNavn } from '../../../util/selectors';
+import { ModalType, useModalStore } from '../../../store-midlertidig/modal-store';
+import { triggerReRenderingAvMao } from '../../../util/utils';
+import { tildelTilVeileder } from '../../../api/api-midlertidig';
+import { useDataStore } from '../../../store-midlertidig/data-store';
+import './tildel-veileder.less';
 
 function TildelVeileder() {
-    const [selected, changeSelected] = useState('');
-    const fnr = useSelector(OppfolgingSelector.selectFnr);
+    const { brukerFnr } = useAppStore();
+    const { showTildelVeilederKvitteringModal, showModal, hideModal } = useModalStore();
+    const { veilederePaEnhet, oppfolging, setOppfolging } = useDataStore();
+    const [selectedVeilederId, setSelectedVeilederId] = useState('');
 
-    const fraVeileder: StringOrNothing = useSelector((state: Appstate) => {
-        const tildeltVeileder = VeilederSelector.selectTildeltVeilder(state);
-        const oppfolgendeVeileder = OppfolgingSelector.selectVeilederId(state);
-        return tildeltVeileder ? tildeltVeileder : oppfolgendeVeileder;
-    });
+    const veiledere = veilederePaEnhet?.veilederListe || [];
+    const fraVeileder = oppfolging.veilederId;
 
-    const veiledere: VeilederData[] = useSelector(
-        (state: Appstate) => state.tildelVeileder.veilederPaEnheten.data.veilederListe
-    );
+    const sorterteVeiledere = useMemo(() => {
+        return veiledere.sort((a, b) => a.etternavn.localeCompare(b.etternavn));
+    }, [veiledere]);
 
-    const sorterVeiledere = veiledere.sort((a, b) => a.etternavn.localeCompare(b.etternavn));
-
-    const dispatch = useDispatch();
-
-    const setValgtVeileder = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmitTildelVeileder = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         document
             .querySelectorAll('input[type=radio]:checked')
             .forEach((elem) => ((elem as HTMLInputElement).checked = false));
 
-        dispatch(
-            tildelTilVeileder([
-                {
-                    fraVeilederId: fraVeileder,
-                    tilVeilederId: selected,
-                    brukerFnr: fnr,
-                },
-            ])
-        );
-        dispatch(navigerAction(null));
+        tildelTilVeileder([
+            {
+                fraVeilederId: fraVeileder,
+                tilVeilederId: selectedVeilederId,
+                brukerFnr,
+            },
+        ])
+            .then((res) => {
+                if (res.data.feilendeTilordninger.length > 0) {
+                    throw new Error('Tildeling feilet');
+                }
+
+                // Oppdater oppfølging med ny veileder
+                setOppfolging((prevOppfolging) => ({ ...prevOppfolging, veilederId: selectedVeilederId }));
+
+                const veilederNavn =
+                    veiledere
+                        .filter((v) => v.ident === selectedVeilederId)
+                        .map((v) => lagVeilederSammensattNavn(v))[0] || 'Ukjent veileder';
+
+                showTildelVeilederKvitteringModal({ tildeltVeilederNavn: veilederNavn });
+                triggerReRenderingAvMao();
+            })
+            .catch(() => showModal(ModalType.TILDEL_VEILEDER_FEILET));
     };
 
     return (
         <VeilederVerktoyModal tittel="Tildel veileder">
             <form
-                onSubmit={(event: React.FormEvent<HTMLFormElement>) => setValgtVeileder(event)}
+                onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmitTildelVeileder(event)}
                 className="tildel-veileder__form"
             >
-                <SokFilter data={sorterVeiledere} label="" placeholder="Søk navn eller NAV-ident">
+                <SokFilter data={sorterteVeiledere} label="" placeholder="Søk navn eller NAV-ident">
                     {(data) => (
                         <RadioFilterForm
                             data={data}
-                            createLabel={settSammenNavn}
+                            createLabel={lagVeilederSammensattNavn}
                             createValue={(veileder: VeilederData) => veileder.ident}
                             radioName="tildel-veileder"
-                            selected={selected}
-                            changeSelected={(e: React.ChangeEvent<HTMLInputElement>) => changeSelected(e.target.value)}
+                            selected={selectedVeilederId}
+                            changeSelected={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                setSelectedVeilederId(e.target.value)
+                            }
                         />
                     )}
                 </SokFilter>
                 <div className="modal-footer">
-                    <Hovedknapp className="btn--mr1" htmlType="submit" disabled={!selected}>
+                    <Hovedknapp className="btn--mr1" htmlType="submit" disabled={!selectedVeilederId}>
                         Velg
                     </Hovedknapp>
-                    <Knapp htmlType="button" onClick={() => dispatch(navigerAction(null))}>
+                    <Knapp htmlType="button" onClick={hideModal}>
                         Lukk
                     </Knapp>
                 </div>

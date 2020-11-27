@@ -1,16 +1,15 @@
+import React from 'react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { navigerAction } from '../../../store/navigation/actions';
 import { logger } from '../../../util/logger';
+import { useModalStore } from '../../../store-midlertidig/modal-store';
 
 export function FeilTildelingModal() {
-    const dispatch = useDispatch();
+    const { hideModal } = useModalStore();
 
     const lukkModal = () => {
         logger.event('veilarbvisittkortfs.metrikker.lukk-modal-tildel-veileder');
-        dispatch(navigerAction(null));
+        hideModal();
     };
 
     return (

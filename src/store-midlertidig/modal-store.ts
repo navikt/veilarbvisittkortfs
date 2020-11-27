@@ -4,6 +4,7 @@ import { StartManuellOppfolgingKvitteringProps } from '../component/veilederverk
 import { StartDigitalOppfolgingKvitteringProps } from '../component/veilederverktoy/start-digital-oppfolging/start-digital-oppfolging-kvittering';
 import { OpprettOppgaveKvitteringProps } from '../component/veilederverktoy/opprett-oppgave/opprett-oppgave-kvittering';
 import { AvsluttOppfolgingBekreftelseModalProps } from '../component/veilederverktoy/avsluttoppfolging/avslutt-oppfolging-bekreft';
+import { TildelVeilederKvitteringProps } from '../component/veilederverktoy/tildel-veileder/tildel-veileder-kvittering';
 
 export enum ModalType {
     START_ESKALERING,
@@ -66,8 +67,12 @@ export const [ModalStore, useModalStore] = constate(() => {
         setActiveModalState({ type: ModalType.OPPGAVE_KVITTERING, props });
     }
 
-    function showBekreftAvsluttOppfolging(props: AvsluttOppfolgingBekreftelseModalProps) {
+    function showBekreftAvsluttOppfolgingModal(props: AvsluttOppfolgingBekreftelseModalProps) {
         setActiveModalState({ type: ModalType.AVLUTT_OPPFOLGING_BEKREFT, props });
+    }
+
+    function showTildelVeilederKvitteringModal(props: TildelVeilederKvitteringProps) {
+        setActiveModalState({ type: ModalType.TILDEL_VEILEDER_KVITTERING, props });
     }
 
     function hideModal() {
@@ -82,7 +87,8 @@ export const [ModalStore, useModalStore] = constate(() => {
         showStartManuellOppfolgingKvitteringModal,
         showStartDigitalOppfolgingKvitteringModal,
         showOpprettOppgaveKvitteringModal,
-        showBekreftAvsluttOppfolging,
+        showBekreftAvsluttOppfolgingModal,
+        showTildelVeilederKvitteringModal,
         hideModal,
     };
 });

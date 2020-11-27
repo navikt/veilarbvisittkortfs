@@ -1,24 +1,20 @@
-import { VarselModal } from '../../components/varselmodal/varsel-modal';
-import { navigerAction } from '../../../store/navigation/actions';
-import { useDispatch, useSelector } from 'react-redux';
-import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
-import VeilederSelector from '../../../store/tildel-veileder/selector';
+import { VarselModal } from '../../components/varselmodal/varsel-modal';
+import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import { useModalStore } from '../../../store-midlertidig/modal-store';
 
-export function TildelVeilederKvittering() {
-    const dispatch = useDispatch();
-    const veiledernavn = ' ' + useSelector(VeilederSelector.selectTildeltVeiledernavn);
+export interface TildelVeilederKvitteringProps {
+    tildeltVeilederNavn: string;
+}
+
+export function TildelVeilederKvittering(props: TildelVeilederKvitteringProps) {
+    const { hideModal } = useModalStore();
 
     return (
-        <VarselModal
-            isOpen={true}
-            onRequestClose={() => dispatch(navigerAction(null))}
-            contentLabel="Vellykket tildeling"
-            type="SUCCESS"
-        >
+        <VarselModal isOpen={true} onRequestClose={hideModal} contentLabel="Vellykket tildeling" type="SUCCESS">
             <Innholdstittel>Tildel veileder</Innholdstittel>
             <Normaltekst>
-                Du har tildelt veileder {veiledernavn}. Det kan ta noe tid før brukeren er i Min oversikt.
+                Du har tildelt veileder {props.tildeltVeilederNavn}. Det kan ta noe tid før brukeren er i Min oversikt.
             </Normaltekst>
         </VarselModal>
     );

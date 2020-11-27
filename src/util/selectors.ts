@@ -35,3 +35,7 @@ export function selectHarUbehandledeDialoger(dialoger: Dialog[]): boolean {
         dialoger.filter((dialog) => !dialog.historisk && (!dialog.ferdigBehandlet || dialog.venterPaSvar)).length > 0
     );
 }
+
+export function lagVeilederSammensattNavn(veileder: VeilederData): string {
+    return `${veileder.etternavn}, ${veileder.fornavn}`;
+}
