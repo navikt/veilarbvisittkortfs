@@ -5,7 +5,7 @@ import { VeilederData, VeilederListe } from './data/veilederdata';
 import { Personalia } from './data/personalia';
 import { HarBruktNivaa4Type } from './data/har-brukt-nivaa4';
 import { TilgangTilBrukersKontor } from './data/tilgangtilbrukerskontor';
-import { Arbeidsliste } from './data/arbeidsliste';
+import { Arbeidsliste, ArbeidslisteformValues } from './data/arbeidsliste';
 import { RegistreringData } from './registrering-api';
 import { Oppfolging } from './data/oppfolging';
 import { ALL_TOGGLES, Features } from './data/features';
@@ -163,5 +163,17 @@ export function avsluttOppfolging(fnr: string, begrunnelse: string, veilederId: 
 export function tildelTilVeileder(
     tilordninger: TildelVeilederData[]
 ): Promise<AxiosResponse<{ resultat: string; feilendeTilordninger: TildelVeilederData[] }>> {
-    return axiosInstance.post(`/veilarboppfolging/api/tilordneveileder/`, tilordninger);
+    return axiosInstance.post(`/veilarboppfolging/api/tilordneveileder`, tilordninger);
+}
+
+export function lagreArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformValues): Promise<AxiosResponse> {
+    return axiosInstance.post(`/veilarbportefolje/api/arbeidsliste/${fnr}`, arbeidsliste);
+}
+
+export function redigerArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformValues): Promise<AxiosResponse> {
+    return axiosInstance.put(`/veilarbportefolje/api/arbeidsliste/${fnr}`, arbeidsliste);
+}
+
+export function slettArbeidsliste(fnr: string): Promise<AxiosResponse> {
+    return axiosInstance.delete(`/veilarbportefolje/api/arbeidsliste/${fnr}`);
 }

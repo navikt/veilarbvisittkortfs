@@ -25,7 +25,7 @@ import StopEskaleringKvittering from '../stopp-eskalering/stopp-esklaring-kvitte
 import { FeilModal } from '../prosess/feil-modal';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 import Historikk from '../historikk/historikk';
-import ArbeidslisteController from '../../arbeidsliste/arbeidsliste-controller';
+import ArbeidslisteControllerModal from '../../arbeidsliste/arbeidsliste-controller-modal';
 import TildelVeileder from '../tildel-veileder/tildel-veileder';
 import { TildelVeilederKvittering, TildelVeilederKvitteringProps } from '../tildel-veileder/tildel-veileder-kvittering';
 import { FeilTildelingModal } from '../tildel-veileder/tildel-veileder-feil-modal';
@@ -42,7 +42,7 @@ export function VeilederverktoyModalController() {
         case ModalType.START_ESKALERING:
             return <StartEskalering />;
         case ModalType.VIS_ARBEIDSLISTE:
-            return <ArbeidslisteController />;
+            return <ArbeidslisteControllerModal />;
         case ModalType.TILDEL_VEILEDER:
             return <TildelVeileder />;
         case ModalType.TILDEL_VEILEDER_FEILET:

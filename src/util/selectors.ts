@@ -39,3 +39,11 @@ export function selectHarUbehandledeDialoger(dialoger: Dialog[]): boolean {
 export function lagVeilederSammensattNavn(veileder: VeilederData): string {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
 }
+
+export function kanFjerneArbeidsliste(
+    arbeidsliste: Arbeidsliste,
+    oppfolging: Oppfolging,
+    innloggetVeilederId: string
+): boolean {
+    return !!arbeidsliste.endringstidspunkt && oppfolging.veilederId === innloggetVeilederId;
+}
