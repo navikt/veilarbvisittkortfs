@@ -3,10 +3,10 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { opprettetAvTekst } from './opprettet-av';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { InnstillingsHistorikk } from '../../../../api/data/innstillings-historikk';
-import { useFetchEnhetNavn } from '../../../../api/api';
 import { hasAnyFailed, isAnyLoading } from '../../../../api/utils';
 import { toSimpleDateStr } from '../../../../util/date-utils';
+import { useFetchEnhetNavn } from '../../../../api/veilarbveileder';
+import { InnstillingsHistorikk } from '../../../../api/veilarboppfolging';
 
 export function OppfolgingEnhetEndret(props: { historikkElement: InnstillingsHistorikk; erGjeldendeEnhet: boolean }) {
     const { enhet, dato, opprettetAv, opprettetAvBrukerId } = props.historikkElement;

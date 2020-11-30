@@ -4,16 +4,16 @@ import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import StartEskaleringForm, { StartEskaleringValues } from './start-eskalering-form';
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
+import { useAppStore } from '../../../store/app-store';
+import { eskaleringVarselSendtEvent } from '../../../util/utils';
+import { startEskalering, useFetchOppfolging } from '../../../api/veilarboppfolging';
 import {
+    Egenskaper,
+    HenvendelseData,
     nyHenvendelse,
     oppdaterFerdigbehandlet,
     oppdaterVenterPaSvar,
-    startEskalering,
-    useFetchOppfolging,
-} from '../../../api/api';
-import { useAppStore } from '../../../store/app-store';
-import { eskaleringVarselSendtEvent } from '../../../util/utils';
-import { Egenskaper, HenvendelseData } from '../../../api/data/dialog';
+} from '../../../api/veilarbdialog';
 
 interface OwnValues extends StartEskaleringValues {
     overskrift: string;

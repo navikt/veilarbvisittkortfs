@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import ArbeidslisteModal from './arbeidsliste-modal';
 import FjernArbeidslisteModal from './fjern-arbeidsliste-modal';
-import { Arbeidsliste, ArbeidslisteformValues } from '../../api/data/arbeidsliste';
 import { dateToISODate } from '../../util/date-utils';
 import { useModalStore } from '../../store/modal-store';
 import { useDataStore } from '../../store/data-store';
 import { useAppStore } from '../../store/app-store';
 import { kanFjerneArbeidsliste, selectSammensattNavn } from '../../util/selectors';
-import { lagreArbeidsliste, redigerArbeidsliste, slettArbeidsliste } from '../../api/api';
 import './arbeidsliste.less';
+import {
+    Arbeidsliste,
+    ArbeidslisteformValues,
+    lagreArbeidsliste,
+    redigerArbeidsliste,
+    slettArbeidsliste,
+} from '../../api/veilarbportefolje';
 
 function ArbeidslisteControllerModal() {
     const { brukerFnr } = useAppStore();

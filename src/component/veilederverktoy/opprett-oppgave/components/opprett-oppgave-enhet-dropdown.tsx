@@ -6,8 +6,7 @@ import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import Dropdown from '../../../components/dropdown/dropdown';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { StringOrNothing } from '../../../../util/type/stringornothings';
-import { BehandlandeEnhet, OppgaveTema } from '../../../../api/data/oppgave';
-import { hentBehandlendeEnheter } from '../../../../api/api';
+import { BehandlandeEnhet, hentBehandlendeEnheter, OppgaveTema } from '../../../../api/veilarboppgave';
 
 interface OpprettOppgaveVelgEnhet {
     tema: OrNothing<OppgaveTema>;

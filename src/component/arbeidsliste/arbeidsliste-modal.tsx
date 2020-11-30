@@ -4,9 +4,9 @@ import Modal from '../components/modal/modal';
 import ArbeidslisteForm from './arbeidsliste-form';
 import ArbeidslisteFooter from './arbeidsliste-footer';
 import VeilederVerktoyModal from '../components/modal/veilederverktoy-modal';
-import { Arbeidsliste, ArbeidslisteformValues, KategoriModell } from '../../api/data/arbeidsliste';
 import { logger } from '../../util/logger';
 import { toReversedDateStr } from '../../util/date-utils';
+import { Arbeidsliste, ArbeidslisteformValues, KategoriModell } from '../../api/veilarbportefolje';
 
 interface ArbeidslisteProps {
     navn: string;

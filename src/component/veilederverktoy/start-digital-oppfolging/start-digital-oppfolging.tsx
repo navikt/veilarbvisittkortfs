@@ -6,7 +6,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
-import { settBrukerTilDigital } from '../../../api/api';
+import { settBrukerTilDigital } from '../../../api/veilarboppfolging';
 
 function StartDigitalOppfolging() {
     const { brukerFnr } = useAppStore();

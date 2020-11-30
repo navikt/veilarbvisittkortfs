@@ -3,14 +3,14 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import SokFilter from '../../components/sokfilter/sok-filter';
 import RadioFilterForm from '../../components/radiofilterform/radio-filter-form';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
-import { VeilederData } from '../../../api/data/veilederdata';
 import { useAppStore } from '../../../store/app-store';
 import { lagVeilederSammensattNavn } from '../../../util/selectors';
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { triggerReRenderingAvMao } from '../../../util/utils';
-import { tildelTilVeileder } from '../../../api/api';
 import { useDataStore } from '../../../store/data-store';
 import './tildel-veileder.less';
+import { tildelTilVeileder } from '../../../api/veilarboppfolging';
+import { VeilederData } from '../../../api/veilarbveileder';
 
 function TildelVeileder() {
     const { brukerFnr } = useAppStore();

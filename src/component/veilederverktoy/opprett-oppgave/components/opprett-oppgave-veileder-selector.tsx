@@ -6,11 +6,10 @@ import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import { StringOrNothing } from '../../../../util/type/stringornothings';
 import { OrNothing } from '../../../../util/type/ornothing';
-import { OppgaveTema } from '../../../../api/data/oppgave';
-import { VeilederData } from '../../../../api/data/veilederdata';
 import { useDataStore } from '../../../../store/data-store';
-import { useFetchVeilederePaEnhet } from '../../../../api/api';
 import { useAppStore } from '../../../../store/app-store';
+import { useFetchVeilederePaEnhet, VeilederData } from '../../../../api/veilarbveileder';
+import { OppgaveTema } from '../../../../api/veilarboppgave';
 
 interface OpprettOppgaveVelgVeilederProps {
     veilederId: StringOrNothing;

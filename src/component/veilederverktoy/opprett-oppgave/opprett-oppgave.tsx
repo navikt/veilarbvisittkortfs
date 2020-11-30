@@ -6,14 +6,13 @@ import OppgaveInnerForm from './components/oppgave-inner-form';
 import FormikModal from '../../components/formik/formik-modal';
 import { OrNothing } from '../../../util/type/ornothing';
 import { StringOrNothing } from '../../../util/type/stringornothings';
-import { OppgaveFormData, OppgaveTema, OppgaveType, PrioritetType } from '../../../api/data/oppgave';
 import { useModalStore } from '../../../store/modal-store';
-import { opprettOppgave } from '../../../api/api';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import './opprett-oppgave.less';
 import { todayReversedDateStr } from '../../../util/date-utils';
+import { OppgaveFormData, OppgaveTema, OppgaveType, opprettOppgave, PrioritetType } from '../../../api/veilarboppgave';
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;

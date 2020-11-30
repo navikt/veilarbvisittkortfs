@@ -1,9 +1,9 @@
 import React from 'react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { stoppKvpOppfolging } from '../../../api/api';
 import { useAppStore } from '../../../store/app-store';
 import { ModalType, useModalStore } from '../../../store/modal-store';
+import { stoppKvpOppfolging } from '../../../api/veilarboppfolging';
 
 function StoppKvpPeriode() {
     const { brukerFnr } = useAppStore();

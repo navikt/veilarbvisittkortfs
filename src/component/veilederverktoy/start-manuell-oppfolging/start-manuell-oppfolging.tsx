@@ -3,8 +3,8 @@ import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnel
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
-import { settBrukerTilManuell } from '../../../api/api';
 import { useModalStore } from '../../../store/modal-store';
+import { settBrukerTilManuell } from '../../../api/veilarboppfolging';
 
 function StartManuellOppfolging() {
     const { brukerFnr } = useAppStore();

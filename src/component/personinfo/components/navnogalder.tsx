@@ -1,6 +1,6 @@
 import React from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
-import { Personalia } from '../../../api/data/personalia';
+import { Personalia } from '../../../api/veilarbperson';
 
 export function kalkulerAlder(fodselsdato: Date): number {
     const diff = Date.now() - fodselsdato.getTime();

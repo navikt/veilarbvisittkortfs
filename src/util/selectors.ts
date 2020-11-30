@@ -1,11 +1,9 @@
 import { storeForbokstaver } from './utils';
-import { Personalia } from '../api/data/personalia';
-import { Arbeidsliste } from '../api/data/arbeidsliste';
-import { VeilederData } from '../api/data/veilederdata';
-import { OppfolgingStatus } from '../api/data/oppfolging-status';
-import { Oppfolging } from '../api/data/oppfolging';
-import Dialog from '../api/data/dialog';
-import { TilgangTilBrukersKontor } from '../api/data/tilgangtilbrukerskontor';
+import { Dialog } from '../api/veilarbdialog';
+import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/veilarboppfolging';
+import { Personalia } from '../api/veilarbperson';
+import { Arbeidsliste } from '../api/veilarbportefolje';
+import { VeilederData } from '../api/veilarbveileder';
 
 export function selectSammensattNavn(personalia: Personalia): string {
     const { fornavn, mellomnavn, etternavn } = personalia;

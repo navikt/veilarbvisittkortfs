@@ -2,9 +2,9 @@ import React from 'react';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { opprettetAvTekst } from './opprettet-av';
 import Lenke from 'nav-frontend-lenker';
-import { InnstillingsHistorikk } from '../../../../api/data/innstillings-historikk';
 import { useAppStore } from '../../../../store/app-store';
 import { toSimpleDateStr } from '../../../../util/date-utils';
+import { InnstillingsHistorikk } from '../../../../api/veilarboppfolging';
 
 interface InnstillingHistorikkKomponentProps {
     innstillingsHistorikk: InnstillingsHistorikk;

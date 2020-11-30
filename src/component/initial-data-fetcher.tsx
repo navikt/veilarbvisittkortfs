@@ -1,18 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDataStore } from '../store/data-store';
-import {
-    useFetchTilgangTilBrukersKontor,
-    useFetchInnloggetVeileder,
-    useFetchOppfolging,
-    useFetchOppfolgingsstatus,
-    useFetchPersonalia,
-    useFetchArbeidsliste,
-    useFetchVeilederePaEnhet,
-    useFetchFeatures,
-} from '../api/api';
+import { useFetchFeatures } from '../api/veilarbpersonflatefs';
 import { useAppStore } from '../store/app-store';
 import { isAnyLoading } from '../api/utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
+import {
+    useFetchOppfolging,
+    useFetchOppfolgingsstatus,
+    useFetchTilgangTilBrukersKontor,
+} from '../api/veilarboppfolging';
+import { useFetchPersonalia } from '../api/veilarbperson';
+import { useFetchInnloggetVeileder, useFetchVeilederePaEnhet } from '../api/veilarbveileder';
+import { useFetchArbeidsliste } from '../api/veilarbportefolje';
 
 export function InitialDataFetcher(props: { children: any }) {
     const { brukerFnr } = useAppStore();

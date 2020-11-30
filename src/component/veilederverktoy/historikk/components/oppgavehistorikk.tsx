@@ -1,8 +1,8 @@
 import React from 'react';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { opprettetAvTekst } from './opprettet-av';
-import { OppgaveHistorikk } from '../../../../api/data/oppgave-historikk';
 import { toSimpleDateStr } from '../../../../util/date-utils';
+import { OppgaveHistorikk } from '../../../../api/veilarboppgave';
 
 interface OwnProps {
     oppgaveHistorikk: OppgaveHistorikk;

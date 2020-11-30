@@ -4,7 +4,7 @@ import { ReactComponent as ArbeidslisteikonLilla } from './arbeidslistekategori/
 import { ReactComponent as ArbeidslisteikonGronn } from './arbeidslistekategori/arbeidslisteikon_gronn.svg';
 import { ReactComponent as ArbeidslisteikonGul } from './arbeidslistekategori/arbeidslisteikon_gul.svg';
 import { ReactComponent as ArbeidslisteIkon } from './arbeidsliste.svg';
-import { KategoriModell } from '../../api/data/arbeidsliste';
+import { KategoriModell } from '../../api/veilarbportefolje';
 
 interface ArbeidslistekategoriProps {
     kategori: KategoriModell;

@@ -1,13 +1,10 @@
 import constate from 'constate';
 import { useState } from 'react';
-import { OppfolgingStatus } from '../api/data/oppfolging-status';
-import { Oppfolging } from '../api/data/oppfolging';
-import { VeilederData, VeilederListe } from '../api/data/veilederdata';
-import { Personalia } from '../api/data/personalia';
-import { HarBruktNivaa4Type } from '../api/data/har-brukt-nivaa4';
-import { TilgangTilBrukersKontor } from '../api/data/tilgangtilbrukerskontor';
-import { Arbeidsliste } from '../api/data/arbeidsliste';
-import { Features } from '../api/data/features';
+import { Features } from '../api/veilarbpersonflatefs';
+import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/veilarboppfolging';
+import { HarBruktNivaa4Type, Personalia } from '../api/veilarbperson';
+import { Arbeidsliste } from '../api/veilarbportefolje';
+import { VeilederData, VeilederListe } from '../api/veilarbveileder';
 
 const placeholder = {} as any;
 

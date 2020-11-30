@@ -2,8 +2,8 @@ import React from 'react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { ModalType, useModalStore } from '../../../store/modal-store';
-import { startKvpOppfolging } from '../../../api/api';
 import { useAppStore } from '../../../store/app-store';
+import { startKvpOppfolging } from '../../../api/veilarboppfolging';
 
 function StarKvpPeriode() {
     const { brukerFnr } = useAppStore();

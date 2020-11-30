@@ -2,8 +2,8 @@ import React from 'react';
 import ArbeidslistekategoriVisning from './arbeidslistekategori-visning';
 import withClickMetric from '../components/click-metric/click-metric';
 import KnappFss from '../components/knapp-fss/knapp-fss';
-import { KategoriModell } from '../../api/data/arbeidsliste';
 import { useDataStore } from '../../store/data-store';
+import { KategoriModell } from '../../api/veilarbportefolje';
 
 export interface ArbeidslisteKnappProps {
     hidden: boolean;

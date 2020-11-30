@@ -4,9 +4,10 @@ import { LasterModal } from '../../components/lastermodal/laster-modal';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useAppStore } from '../../../store/app-store';
-import { useFetchInstillingsHistorikk, useFetchOppgaveHistorikk } from '../../../api/api';
 import { hasAnyFailed, isAnyLoading } from '../../../api/utils';
 import './historikk.less';
+import { useFetchInstillingsHistorikk } from '../../../api/veilarboppfolging';
+import { useFetchOppgaveHistorikk } from '../../../api/veilarboppgave';
 
 function Historikk() {
     const { brukerFnr } = useAppStore();

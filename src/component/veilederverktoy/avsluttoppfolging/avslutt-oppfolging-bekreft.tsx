@@ -5,8 +5,8 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
-import { avsluttOppfolging } from '../../../api/api';
 import { useAppStore } from '../../../store/app-store';
+import { avsluttOppfolging } from '../../../api/veilarboppfolging';
 
 export interface AvsluttOppfolgingBekreftelseModalProps {
     begrunnelse: string;

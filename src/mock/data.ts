@@ -1,14 +1,10 @@
-import { Arbeidsliste } from '../api/data/arbeidsliste';
-import { HarBruktNivaa4Type } from '../api/data/har-brukt-nivaa4';
-import { InnstillingsHistorikk } from '../api/data/innstillings-historikk';
-import { Oppfolging } from '../api/data/oppfolging';
-import { OppfolgingStatus } from '../api/data/oppfolging-status';
-import { OppgaveHistorikk } from '../api/data/oppgave-historikk';
-import { Personalia } from '../api/data/personalia';
-import { VeilederData, VeilederListe } from '../api/data/veilederdata';
-import { EnhetData } from '../api/data/enhet';
-import { Egenskaper } from '../api/data/dialog';
-import { RegistreringData } from '../api/data/registrering';
+import { Egenskaper } from '../api/veilarbdialog';
+import { RegistreringData } from '../api/veilarbregistrering';
+import { InnstillingsHistorikk, Oppfolging, OppfolgingStatus } from '../api/veilarboppfolging';
+import { HarBruktNivaa4Type, Personalia } from '../api/veilarbperson';
+import { OppgaveHistorikk } from '../api/veilarboppgave';
+import { Arbeidsliste } from '../api/veilarbportefolje';
+import { EnhetData, VeilederData, VeilederListe } from '../api/veilarbveileder';
 
 export const mockArbeidsliste: Arbeidsliste = {
     arbeidslisteAktiv: null,

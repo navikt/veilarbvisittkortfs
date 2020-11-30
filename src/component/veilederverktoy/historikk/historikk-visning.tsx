@@ -3,9 +3,9 @@ import InnstillingsHistorikkKomponent from './components/innstillingshistorikk';
 import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { OppfolgingEnhetEndret } from './components/oppfolgingEndret';
-import { InnstillingsHistorikk } from '../../../api/data/innstillings-historikk';
-import { OppgaveHistorikk } from '../../../api/data/oppgave-historikk';
 import dayjs from 'dayjs';
+import { InnstillingsHistorikk } from '../../../api/veilarboppfolging';
+import { OppgaveHistorikk } from '../../../api/veilarboppgave';
 
 type HistorikkInnslagType = InnstillingsHistorikk | OppgaveHistorikk;
 

@@ -11,7 +11,7 @@ import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import { StringOrNothing } from '../../../../util/type/stringornothings';
 import { OrNothing } from '../../../../util/type/ornothing';
-import { OppgaveTema } from '../../../../api/data/oppgave';
+import { OppgaveTema } from '../../../../api/veilarboppgave';
 
 interface OppgaveInnerForm {
     fnr: string;

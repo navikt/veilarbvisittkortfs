@@ -9,9 +9,9 @@ import { useAppStore } from '../../../store/app-store';
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { eskaleringVarselSendtEvent } from '../../../util/utils';
-import { nyHenvendelse, stoppEskalering, useFetchOppfolging } from '../../../api/api';
-import { Egenskaper } from '../../../api/data/dialog';
 import './stopp-eskalering.less';
+import { stoppEskalering, useFetchOppfolging } from '../../../api/veilarboppfolging';
+import { Egenskaper, nyHenvendelse } from '../../../api/veilarbdialog';
 
 interface FormValues {
     begrunnelse: string;

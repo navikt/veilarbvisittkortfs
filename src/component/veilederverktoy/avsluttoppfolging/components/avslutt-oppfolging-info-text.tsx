@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { OrNothing } from '../../../../util/type/ornothing';
-import { AvslutningStatus } from '../../../../api/data/oppfolging';
-import { useFetchHarUtkast } from '../../../../api/api';
+import { useFetchHarUtkast } from '../../../../api/veilarbvedtaksstotte';
+import { AvslutningStatus } from '../../../../api/veilarboppfolging';
 
 export function AvsluttOppfolgingInfoText(props: {
     vedtaksstottePrelanseringEnabled: boolean;

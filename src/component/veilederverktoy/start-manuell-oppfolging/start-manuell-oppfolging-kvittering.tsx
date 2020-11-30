@@ -4,7 +4,7 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { logger } from '../../../util/logger';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
-import { useFetchRegistrering } from '../../../api/api';
+import { useFetchRegistrering } from '../../../api/veilarbregistrering';
 
 export interface StartManuellOppfolgingKvitteringProps {
     begrunnelse: string;

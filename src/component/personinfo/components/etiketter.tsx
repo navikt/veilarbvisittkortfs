@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import hiddenIf from '../../components/hidden-if/hidden-if';
 import EtikettBase, { EtikettInfo, EtikettAdvarsel, EtikettFokus } from 'nav-frontend-etiketter';
-import { OppfolgingStatus } from '../../../api/data/oppfolging-status';
 import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
-import { useFetchRegistrering } from '../../../api/api';
-import { PILOT_TOGGLE } from '../../../api/data/features';
 import './etiketter.less';
 import { OrNothing } from '../../../util/type/ornothing';
-import { InnsatsgruppeType } from '../../../api/data/registrering';
+import { InnsatsgruppeType, useFetchRegistrering } from '../../../api/veilarbregistrering';
+import { PILOT_TOGGLE } from '../../../api/veilarbpersonflatefs';
+import { OppfolgingStatus } from '../../../api/veilarboppfolging';
 
 const Advarsel = hiddenIf(EtikettAdvarsel);
 const Info = hiddenIf(EtikettInfo);

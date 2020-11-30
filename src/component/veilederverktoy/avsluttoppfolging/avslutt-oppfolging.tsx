@@ -6,10 +6,10 @@ import dayjs from 'dayjs';
 import { useAppStore } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
-import { VEDTAKSSTTOTTE_PRELANSERING_TOGGLE } from '../../../api/data/features';
-import { useFetchDialoger } from '../../../api/api';
 import { selectHarUbehandledeDialoger } from '../../../util/selectors';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
+import { useFetchDialoger } from '../../../api/veilarbdialog';
+import { VEDTAKSSTTOTTE_PRELANSERING_TOGGLE } from '../../../api/veilarbpersonflatefs';
 
 const for28dagerSiden = dayjs().subtract(28, 'day').toISOString();
 
