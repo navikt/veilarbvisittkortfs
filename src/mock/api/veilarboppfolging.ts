@@ -1,24 +1,8 @@
-import { Egenskaper } from '../api/veilarbdialog';
-import { RegistreringData } from '../api/veilarbregistrering';
-import { InnstillingsHistorikk, Oppfolging, OppfolgingStatus } from '../api/veilarboppfolging';
-import { HarBruktNivaa4Type, Personalia } from '../api/veilarbperson';
-import { OppgaveHistorikk } from '../api/veilarboppgave';
-import { Arbeidsliste } from '../api/veilarbportefolje';
-import { EnhetData, VeilederData, VeilederListe } from '../api/veilarbveileder';
+import { rest } from 'msw';
+import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
+import { InnstillingsHistorikk, Oppfolging, OppfolgingStatus } from '../../api/veilarboppfolging';
 
-export const mockArbeidsliste: Arbeidsliste = {
-    arbeidslisteAktiv: null,
-    endringstidspunkt: null,
-    frist: null,
-    harVeilederTilgang: true,
-    isOppfolgendeVeileder: true,
-    kommentar: null,
-    overskrift: null,
-    sistEndretAv: null,
-    kategori: null,
-};
-
-export const mockAvslutningStatus = {
+const mockAvslutningStatus = {
     avslutningStatus: {
         kanAvslutte: true,
         harTiltak: false,
@@ -46,47 +30,7 @@ export const mockAvslutningStatus = {
     vilkarMaBesvarel: false,
 };
 
-export const mockEnheter = [
-    { enhetId: '0000', navn: 'NAV Ost' },
-    { enhetId: '0001', navn: 'NAV Kjeks' },
-    { enhetId: '0002', navn: 'NAV Med jætte lang navn' },
-    { enhetId: '1234', navn: 'NAV jepps' },
-];
-
-export const mockHarBruktNivaa4: HarBruktNivaa4Type = {
-    harbruktnivaa4: false,
-};
-
-export const mockHenvendelseData: any = {
-    aktivitetId: null,
-    egenskaper: [Egenskaper.ESKALERINGSVARSEL],
-    erLestAvBruker: false,
-    ferdigBehandlet: true,
-    henvendelser: [
-        {
-            avsender: 'VEILEDER',
-            avsenderId: 'Z1234',
-            dialogId: '1665',
-            id: '2201',
-            lest: true,
-            sendt: '2019-04-04T13:34:51.086+02:00',
-            tekst:
-                'Generell innledningstekst:Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne meldingen.',
-        },
-    ],
-    historisk: false,
-    id: '1665',
-    lest: true,
-    lestAvBrukerTidspunkt: null,
-    opprettetDato: '2019-04-04T13:34:51.057+02:00',
-    overskrift: 'Du har fått et varsel fra NAV',
-    sisteDato: '2019-04-04T13:34:51.086+02:00',
-    sisteTekst:
-        'Generell innledningstekst:Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne meldingen.',
-    venterPaSvar: false,
-};
-
-export const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
+const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
     {
         type: 'AVSLUTTET_OPPFOLGINGSPERIODE',
         dato: '2018-08-14T13:56:53.813+02:00',
@@ -195,7 +139,7 @@ export const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
     },
 ];
 
-export const mockOppfolging: Oppfolging = {
+const mockOppfolging: Oppfolging = {
     fnr: '123456',
     veilederId: 'Z007',
     reservasjonKRR: false,
@@ -233,7 +177,7 @@ export const mockOppfolging: Oppfolging = {
     kanVarsles: true,
 };
 
-export const mockOppfolgingsstatus: OppfolgingStatus = {
+const mockOppfolgingsstatus: OppfolgingStatus = {
     oppfolgingsenhet: {
         navn: 'NAV TestHeim',
         enhetId: '007',
@@ -243,107 +187,55 @@ export const mockOppfolgingsstatus: OppfolgingStatus = {
     servicegruppe: 'BKART',
 };
 
-export const mockOppgavehistorikk: OppgaveHistorikk[] = [
-    {
-        type: 'OPPRETTET_OPPGAVE',
-        oppgaveTema: 'OPPFOLGING',
-        oppgaveType: 'VURDER_HENVENDELSE',
-        opprettetAv: 'NAV',
-        opprettetAvBrukerId: 'Z995009',
-        dato: '2018-01-31T15:17:46.872+01:00',
-    },
-    {
-        type: 'OPPRETTET_OPPGAVE',
-        oppgaveTema: 'OPPFOLGING',
-        oppgaveType: 'VURDER_HENVENDELSE',
-        opprettetAv: 'NAV',
-        opprettetAvBrukerId: 'Z990286',
-        dato: '2018-09-07T10:40:52.445+02:00',
-    },
-    {
-        type: 'OPPRETTET_OPPGAVE',
-        oppgaveTema: 'DAGPENGER',
-        oppgaveType: 'VURDER_HENVENDELSE',
-        opprettetAv: 'NAV',
-        opprettetAvBrukerId: 'Z990286',
-        dato: '2018-09-07T10:43:19.348+02:00',
-    },
-    {
-        type: 'OPPRETTET_OPPGAVE',
-        oppgaveTema: 'INDIVIDSTONAD',
-        oppgaveType: 'VURDER_HENVENDELSE',
-        opprettetAv: 'NAV',
-        opprettetAvBrukerId: 'Z990286',
-        dato: '2018-09-07T10:46:34.778+02:00',
-    },
-    {
-        type: 'OPPRETTET_OPPGAVE',
-        oppgaveTema: 'OPPFOLGING',
-        oppgaveType: 'VURDER_HENVENDELSE',
-        opprettetAv: 'NAV',
-        opprettetAvBrukerId: 'Z990582',
-        dato: '2018-01-16T14:11:13.891+01:00',
-    },
+// const mockFeilResultat = {
+//     resultat: 'WARNING: Noen brukere kunne ikke tilordnes en veileder',
+//     feilendeTilordninger: [
+//         {
+//             brukerFnr: '123534546',
+//             aktoerId: '10000356543',
+//             innloggetVeilederId: 'BLABLA',
+//             fraVeilederId: 'BLABLA1',
+//             tilVeilederId: 'BLABLA',
+//         },
+//     ],
+// };
+
+export const veilarboppfolgingHandlers: RequestHandlersList = [
+    rest.post('/veilarboppfolging/api/oppfolging/stoppEskalering/', (req, res, ctx) => {
+        mockOppfolging.gjeldendeEskaleringsvarsel = null;
+        return res(ctx.delay(500), ctx.json({}));
+    }),
+    rest.post('/veilarboppfolging/api/tilordneveileder', (req, res, ctx) => {
+        return res(ctx.delay(500), ctx.json({ feilendeTilordninger: [] }));
+    }),
+    rest.get('/veilarboppfolging/api/oppfolging/veilederTilgang', (req, res, ctx) => {
+        return res(ctx.delay(500), ctx.json({ tilgangTilBrukersKontor: true }));
+    }),
+    rest.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', (req, res, ctx) => {
+        return res(ctx.delay(500), ctx.json(mockInnstillingsHistorikk));
+    }),
+    rest.post('/veilarboppfolging/api/oppfolging/startEskalering/', (req, res, ctx) => {
+        return res(ctx.delay(500), ctx.status(204));
+    }),
+    rest.post('/veilarboppfolging/api/oppfolging/avsluttOppfolging', (req, res, ctx) => {
+        return res(ctx.delay(500), ctx.json({})); // TODO: Might be wrong (return ResponseUtils.jsonPromise(args.body);)
+    }),
+    rest.post('/veilarboppfolging/api/oppfolging/settManuell', (req, res, ctx) => {
+        return res(ctx.delay(500), ctx.json(Object.assign({}, mockOppfolging, { manuell: true })));
+    }),
+    rest.get('/veilarboppfolging/api/oppfolging/avslutningStatus', (req, res, ctx) => {
+        return res(ctx.delay(500), ctx.json(mockAvslutningStatus));
+    }),
+    rest.post('/veilarboppfolging/api/oppfolging/startKvp', (req, res, ctx) => {
+        return res(ctx.delay(500), ctx.status(204));
+    }),
+    rest.post('/veilarboppfolging/api/oppfolging/stoppKvp', (req, res, ctx) => {
+        return res(ctx.delay(500), ctx.status(204));
+    }),
+    rest.get('/veilarboppfolging/api/person/:fnr/oppfolgingsstatus', (req, res, ctx) => {
+        return res(ctx.delay(500), ctx.json(mockOppfolgingsstatus));
+    }),
+    rest.get('/veilarboppfolging/api/oppfolging', (req, res, ctx) => {
+        return res(ctx.delay(500), ctx.json(mockOppfolging));
+    }),
 ];
-
-export const mockPersonalia: Personalia = {
-    fornavn: 'BRUCE BRUCE',
-    mellomnavn: 'BATTY BATTY',
-    etternavn: 'WAYNE',
-    sammensattNavn: 'Bruce Batty Wayne',
-    fodselsnummer: '10108000398',
-    fodselsdato: '1974-09-16',
-    dodsdato: null,
-    diskresjonskode: null,
-    sikkerhetstiltak: 'To ansatte i samtale',
-    egenAnsatt: false,
-    kjonn: 'K',
-};
-
-export const mockFeilResultat = {
-    resultat: 'WARNING: Noen brukere kunne ikke tilordnes en veileder',
-    feilendeTilordninger: [
-        {
-            brukerFnr: '123534546',
-            aktoerId: '10000356543',
-            innloggetVeilederId: 'BLABLA',
-            fraVeilederId: 'BLABLA1',
-            tilVeilederId: 'BLABLA',
-        },
-    ],
-};
-
-export const mockInnloggetVeileder: VeilederData = {
-    ident: 'Z007',
-    navn: 'James Bond',
-    fornavn: 'James',
-    etternavn: 'Bond',
-};
-
-export const mockEnhetData: EnhetData = {
-    enhetId: '1337',
-    navn: 'NAV Leeten',
-};
-
-export const mockRegistrering: RegistreringData = {
-    type: 'ORDINAER',
-    registrering: {
-        manueltRegistrertAv: null,
-    },
-};
-
-function lagVeileder(): VeilederData {
-    const fornavn = 'Herpsderps';
-    const etternavn = 'Apabepa';
-
-    const id = 'Z' + (Math.floor(Math.random() * 1000000) + 100000);
-
-    return {
-        ident: id,
-        navn: fornavn + ' ' + etternavn,
-        fornavn: fornavn,
-        etternavn: etternavn,
-    };
-}
-
-export const mockEnhetVeiledere: VeilederListe = { veilederListe: new Array(40).fill(0).map(() => lagVeileder()) };

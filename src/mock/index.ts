@@ -1,7 +1,7 @@
 import { setupWorker } from 'msw';
-import { handlers } from './handlers';
+import { allHandlers } from './api';
 
-setupWorker(...handlers)
+setupWorker(...allHandlers)
     .start({ serviceWorker: { url: process.env.PUBLIC_URL + '/mockServiceWorker.js' } })
     .catch((e) => {
         // tslint:disable-next-line:no-console
