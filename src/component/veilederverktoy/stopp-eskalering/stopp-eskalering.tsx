@@ -6,12 +6,12 @@ import FormikCheckBox from '../../components/formik/formik-checkbox';
 import BegrunnelseFooter from '../begrunnelseform/begrunnelse-form-footer';
 import { BegrunnelseTextArea } from '../begrunnelseform/begrunnelse-textarea';
 import { useAppStore } from '../../../store/app-store';
-import { ModalType, useModalStore } from '../../../store/modal-store';
+import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
-import { eskaleringVarselSendtEvent } from '../../../util/utils';
-import './stopp-eskalering.less';
 import { stoppEskalering, useFetchOppfolging } from '../../../api/veilarboppfolging';
+import { eskaleringVarselSendtEvent } from '../../../util/utils';
 import { Egenskaper, nyHenvendelse } from '../../../api/veilarbdialog';
+import './stopp-eskalering.less';
 
 interface FormValues {
     begrunnelse: string;
@@ -26,7 +26,7 @@ const initialFormValues: FormValues = {
 function StoppEskalering() {
     const { brukerFnr } = useAppStore();
     const { oppfolging, setOppfolging } = useDataStore();
-    const { showModal, showErrorModal, showSpinnerModal } = useModalStore();
+    const { showStoppEskaleringKvitteringModal, showErrorModal, showSpinnerModal } = useModalStore();
 
     const fetchOppfolging = useFetchOppfolging(brukerFnr, { manual: true });
 
@@ -54,8 +54,7 @@ function StoppEskalering() {
                 .catch(); // Selv om henting av oppfolging feiler så ønsker vi å vise kvittering på at stopping av eskalering gikk greit
 
             eskaleringVarselSendtEvent();
-
-            showModal(ModalType.STOPP_ESKALERING_KVITTERING);
+            showStoppEskaleringKvitteringModal();
         } catch (e) {
             showErrorModal();
         }

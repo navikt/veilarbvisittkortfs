@@ -2,7 +2,7 @@ import React from 'react';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { ModalType, useModalStore } from '../../../store/modal-store';
+import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import { useAppStore } from '../../../store/app-store';
@@ -15,7 +15,7 @@ export interface AvsluttOppfolgingBekreftelseModalProps {
 function AvsluttOppfolgingBekreft(props: AvsluttOppfolgingBekreftelseModalProps) {
     const { brukerFnr } = useAppStore();
     const { personalia, innloggetVeileder } = useDataStore();
-    const { showModal, showSpinnerModal, showErrorModal, hideModal } = useModalStore();
+    const { showAvsluttOppfolgingKvitteringModal, showSpinnerModal, showErrorModal, hideModal } = useModalStore();
 
     const brukerNavn = selectSammensattNavn(personalia);
 
@@ -23,9 +23,7 @@ function AvsluttOppfolgingBekreft(props: AvsluttOppfolgingBekreftelseModalProps)
         showSpinnerModal();
 
         avsluttOppfolging(brukerFnr, props.begrunnelse, innloggetVeileder.ident)
-            .then(() => {
-                showModal(ModalType.AVSLUTT_OPPFOLGING_KVITTERING);
-            })
+            .then(showAvsluttOppfolgingKvitteringModal)
             .catch(showErrorModal);
     }
 

@@ -2,12 +2,12 @@ import React from 'react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { useAppStore } from '../../../store/app-store';
-import { ModalType, useModalStore } from '../../../store/modal-store';
+import { useModalStore } from '../../../store/modal-store';
 import { stoppKvpOppfolging } from '../../../api/veilarboppfolging';
 
 function StoppKvpPeriode() {
     const { brukerFnr } = useAppStore();
-    const { showModal, showSpinnerModal, showErrorModal } = useModalStore();
+    const { showStoppKvpPeriodeKvitteringModal, showSpinnerModal, showErrorModal } = useModalStore();
 
     const infoTekst = (
         <Normaltekst className="blokk-xs">
@@ -21,11 +21,7 @@ function StoppKvpPeriode() {
     function stoppKvp({ begrunnelse }: BegrunnelseValues) {
         showSpinnerModal();
 
-        stoppKvpOppfolging(brukerFnr, begrunnelse)
-            .then(() => {
-                showModal(ModalType.STOPP_KVP_PERIODE_KVITTERING);
-            })
-            .catch(showErrorModal);
+        stoppKvpOppfolging(brukerFnr, begrunnelse).then(showStoppKvpPeriodeKvitteringModal).catch(showErrorModal);
     }
 
     return (

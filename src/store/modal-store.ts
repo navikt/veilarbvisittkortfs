@@ -13,8 +13,8 @@ export enum ModalType {
     TILDEL_VEILEDER_FEILET,
     TILDEL_VEILEDER_KVITTERING,
     START_ESKALERING_KVITTERING,
-    MANUELL_OPPFOLGING,
-    SETT_MANUELL_KVITTERING,
+    START_MANUELL_OPPFOLGING,
+    START_MANUELL_KVITTERING,
     START_DIGITAL_OPPFOLGING,
     START_DIGITAL_OPPFOLING_KVITTERIG,
     START_KVP_PERIODE,
@@ -38,57 +38,140 @@ export interface ModalState {
     props?: {};
 }
 
+// Denne storen blir brukt av <VeilederverktoyModalController/> for å sette hvilken dialog som skal vises
 export const [ModalStore, useModalStore] = constate(() => {
     const [activeModalState, setActiveModalState] = useState<ModalState>();
 
-    // TODO: Eksponer funksjon for hver modal, ikke lov å sette vilkårlig type
-
-    function showModal(type: ModalType) {
-        setActiveModalState({ type });
-    }
-
-    function showErrorModal() {
-        setActiveModalState({ type: ModalType.FEIL_I_VEILEDERVERKTOY });
-    }
-
-    function showSpinnerModal() {
-        setActiveModalState({ type: ModalType.SPINNER });
-    }
-
-    function showStartManuellOppfolgingKvitteringModal(props: StartManuellOppfolgingKvitteringProps) {
-        setActiveModalState({ type: ModalType.SETT_MANUELL_KVITTERING, props });
-    }
-
-    function showStartDigitalOppfolgingKvitteringModal(props: StartDigitalOppfolgingKvitteringProps) {
-        setActiveModalState({ type: ModalType.START_DIGITAL_OPPFOLING_KVITTERIG, props });
-    }
-
-    function showOpprettOppgaveKvitteringModal(props: OpprettOppgaveKvitteringProps) {
-        setActiveModalState({ type: ModalType.OPPGAVE_KVITTERING, props });
-    }
-
-    function showBekreftAvsluttOppfolgingModal(props: AvsluttOppfolgingBekreftelseModalProps) {
-        setActiveModalState({ type: ModalType.AVLUTT_OPPFOLGING_BEKREFT, props });
-    }
-
-    function showTildelVeilederKvitteringModal(props: TildelVeilederKvitteringProps) {
-        setActiveModalState({ type: ModalType.TILDEL_VEILEDER_KVITTERING, props });
+    function showModal(type: ModalType, props?: {}) {
+        setActiveModalState({ type, props });
     }
 
     function hideModal() {
         setActiveModalState(undefined);
     }
 
+    function showErrorModal() {
+        showModal(ModalType.FEIL_I_VEILEDERVERKTOY);
+    }
+
+    function showSpinnerModal() {
+        showModal(ModalType.SPINNER);
+    }
+
+    function showTildelVeilederModal() {
+        showModal(ModalType.TILDEL_VEILEDER);
+    }
+
+    function showStartEskaleringModal() {
+        showModal(ModalType.START_ESKALERING);
+    }
+
+    function showStoppEskaleringModal() {
+        showModal(ModalType.STOPP_ESKALERING);
+    }
+
+    function showStartManuellOppfolgingModal() {
+        showModal(ModalType.START_MANUELL_OPPFOLGING);
+    }
+
+    function showStartDigitalOppfolgingModal() {
+        showModal(ModalType.START_DIGITAL_OPPFOLGING);
+    }
+
+    function showStartKvpPeriodeModal() {
+        showModal(ModalType.START_KVP_PERIODE);
+    }
+
+    function showStoppKvpPeriodeModal() {
+        showModal(ModalType.STOPP_KVP_PERIODE);
+    }
+
+    function showOpprettOppgaveModal() {
+        showModal(ModalType.OPPRETT_OPPGAVE);
+    }
+
+    function showAvsluttOppfolgingModal() {
+        showModal(ModalType.AVSLUTT_OPPFOLGING);
+    }
+
+    function showVisHistorikkModal() {
+        showModal(ModalType.VIS_HISTORIKK);
+    }
+
+    function showStartManuellOppfolgingKvitteringModal(props: StartManuellOppfolgingKvitteringProps) {
+        showModal(ModalType.START_MANUELL_KVITTERING, props);
+    }
+
+    function showStartDigitalOppfolgingKvitteringModal(props: StartDigitalOppfolgingKvitteringProps) {
+        showModal(ModalType.START_DIGITAL_OPPFOLING_KVITTERIG, props);
+    }
+
+    function showOpprettOppgaveKvitteringModal(props: OpprettOppgaveKvitteringProps) {
+        showModal(ModalType.OPPGAVE_KVITTERING, props);
+    }
+
+    function showtAvsluttOppfolgingBekrefModal(props: AvsluttOppfolgingBekreftelseModalProps) {
+        showModal(ModalType.AVLUTT_OPPFOLGING_BEKREFT, props);
+    }
+
+    function showAvsluttOppfolgingKvitteringModal() {
+        showModal(ModalType.AVSLUTT_OPPFOLGING_KVITTERING);
+    }
+
+    function showTildelVeilederKvitteringModal(props: TildelVeilederKvitteringProps) {
+        showModal(ModalType.TILDEL_VEILEDER_KVITTERING, props);
+    }
+
+    function showTildelVeilederFeiletModal() {
+        showModal(ModalType.TILDEL_VEILEDER_FEILET);
+    }
+
+    function showArbeidslisteModal() {
+        showModal(ModalType.VIS_ARBEIDSLISTE);
+    }
+
+    function showStartEskaleringKvitteringModal() {
+        showModal(ModalType.START_ESKALERING_KVITTERING);
+    }
+
+    function showStartKvpPeriodeKvitteringModal() {
+        showModal(ModalType.START_KVP_PERIODE_KVITTERING);
+    }
+
+    function showStoppKvpPeriodeKvitteringModal() {
+        showModal(ModalType.STOPP_KVP_PERIODE_KVITTERING);
+    }
+
+    function showStoppEskaleringKvitteringModal() {
+        showModal(ModalType.STOPP_ESKALERING_KVITTERING);
+    }
+
     return {
         activeModalState,
-        showModal,
+        hideModal,
         showErrorModal,
         showSpinnerModal,
         showStartManuellOppfolgingKvitteringModal,
         showStartDigitalOppfolgingKvitteringModal,
         showOpprettOppgaveKvitteringModal,
-        showBekreftAvsluttOppfolgingModal,
+        showtAvsluttOppfolgingBekrefModal,
+        showAvsluttOppfolgingKvitteringModal,
+        showStartKvpPeriodeKvitteringModal,
+        showStoppKvpPeriodeKvitteringModal,
         showTildelVeilederKvitteringModal,
-        hideModal,
+        showTildelVeilederFeiletModal,
+        showArbeidslisteModal,
+        showStartEskaleringKvitteringModal,
+        showStoppEskaleringKvitteringModal,
+        showTildelVeilederModal,
+        showStartEskaleringModal,
+        showStoppEskaleringModal,
+        showStartManuellOppfolgingModal,
+        showStartDigitalOppfolgingModal,
+        showStartKvpPeriodeModal,
+        showStoppKvpPeriodeModal,
+        showOpprettOppgaveModal,
+        showAvsluttOppfolgingModal,
+        showVisHistorikkModal,
     };
 });

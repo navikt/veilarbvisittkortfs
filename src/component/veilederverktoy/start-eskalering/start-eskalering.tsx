@@ -2,7 +2,7 @@ import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import StartEskaleringForm, { StartEskaleringValues } from './start-eskalering-form';
-import { ModalType, useModalStore } from '../../../store/modal-store';
+import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
 import { eskaleringVarselSendtEvent } from '../../../util/utils';
@@ -30,7 +30,7 @@ const initialValues = {
 function StartEskalering() {
     const { brukerFnr } = useAppStore();
     const { oppfolging, harBruktNivaa4, setOppfolging } = useDataStore();
-    const { showModal, showSpinnerModal, hideModal, showErrorModal } = useModalStore();
+    const { showSpinnerModal, showStartEskaleringKvitteringModal, hideModal, showErrorModal } = useModalStore();
 
     const fetchOppfolging = useFetchOppfolging(brukerFnr, { manual: true });
 
@@ -68,8 +68,7 @@ function StartEskalering() {
                         .catch(); // Selv om henting av oppfolging feiler så ønsker vi å vise kvittering på at eskaleringen gikk greit
 
                     eskaleringVarselSendtEvent();
-
-                    showModal(ModalType.START_ESKALERING_KVITTERING);
+                    showStartEskaleringKvitteringModal();
                 } catch (e) {
                     showErrorModal();
                 }

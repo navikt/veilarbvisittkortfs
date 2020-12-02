@@ -5,16 +5,16 @@ import RadioFilterForm from '../../components/radiofilterform/radio-filter-form'
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { useAppStore } from '../../../store/app-store';
 import { lagVeilederSammensattNavn } from '../../../util/selectors';
-import { ModalType, useModalStore } from '../../../store/modal-store';
+import { useModalStore } from '../../../store/modal-store';
 import { triggerReRenderingAvMao } from '../../../util/utils';
 import { useDataStore } from '../../../store/data-store';
-import './tildel-veileder.less';
 import { tildelTilVeileder } from '../../../api/veilarboppfolging';
 import { VeilederData } from '../../../api/veilarbveileder';
+import './tildel-veileder.less';
 
 function TildelVeileder() {
     const { brukerFnr } = useAppStore();
-    const { showTildelVeilederKvitteringModal, showModal, hideModal } = useModalStore();
+    const { showTildelVeilederKvitteringModal, showTildelVeilederFeiletModal, hideModal } = useModalStore();
     const { veilederePaEnhet, oppfolging, setOppfolging } = useDataStore();
     const [selectedVeilederId, setSelectedVeilederId] = useState('');
 
@@ -55,7 +55,7 @@ function TildelVeileder() {
                 showTildelVeilederKvitteringModal({ tildeltVeilederNavn: veilederNavn });
                 triggerReRenderingAvMao();
             })
-            .catch(() => showModal(ModalType.TILDEL_VEILEDER_FEILET));
+            .catch(showTildelVeilederFeiletModal);
     };
 
     return (

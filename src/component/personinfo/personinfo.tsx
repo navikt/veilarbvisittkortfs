@@ -7,13 +7,13 @@ import { useAppStore } from '../../store/app-store';
 import { logger } from '../../util/logger';
 import { useDataStore } from '../../store/data-store';
 import { selectKanLeggeIArbeidsListe, selectKanRedigereArbeidsliste, selectSammensattNavn } from '../../util/selectors';
-import { ModalType, useModalStore } from '../../store/modal-store';
+import { useModalStore } from '../../store/modal-store';
 import './personinfo.less';
 
 function PersonInfo() {
     const { brukerFnr } = useAppStore();
     const { personalia, arbeidsliste, oppfolgingsstatus, innloggetVeileder } = useDataStore();
-    const { showModal } = useModalStore();
+    const { showArbeidslisteModal } = useModalStore();
 
     const navn = selectSammensattNavn(personalia);
 
@@ -25,7 +25,7 @@ function PersonInfo() {
 
     const klikk = () => {
         logger.event('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
-        showModal(ModalType.VIS_ARBEIDSLISTE);
+        showArbeidslisteModal();
     };
 
     return (

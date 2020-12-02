@@ -51,9 +51,9 @@ export function VeilederverktoyModalController() {
             return <TildelVeilederKvittering {...(activeModalState.props as TildelVeilederKvitteringProps)} />;
         case ModalType.START_ESKALERING_KVITTERING:
             return <StartEskaleringKvittering />;
-        case ModalType.MANUELL_OPPFOLGING:
+        case ModalType.START_MANUELL_OPPFOLGING:
             return <StarManuellOppfolging />;
-        case ModalType.SETT_MANUELL_KVITTERING:
+        case ModalType.START_MANUELL_KVITTERING:
             return (
                 <StartManuellOppfolgingKvittering
                     {...(activeModalState.props as StartManuellOppfolgingKvitteringProps)}

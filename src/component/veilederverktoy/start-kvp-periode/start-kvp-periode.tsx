@@ -1,22 +1,18 @@
 import React from 'react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { ModalType, useModalStore } from '../../../store/modal-store';
+import { useModalStore } from '../../../store/modal-store';
 import { useAppStore } from '../../../store/app-store';
 import { startKvpOppfolging } from '../../../api/veilarboppfolging';
 
 function StarKvpPeriode() {
     const { brukerFnr } = useAppStore();
-    const { showModal, showSpinnerModal, showErrorModal } = useModalStore();
+    const { showStartKvpPeriodeKvitteringModal, showSpinnerModal, showErrorModal } = useModalStore();
 
     function startKvp({ begrunnelse }: BegrunnelseValues) {
         showSpinnerModal();
 
-        startKvpOppfolging(brukerFnr, begrunnelse)
-            .then(() => {
-                showModal(ModalType.START_KVP_PERIODE_KVITTERING);
-            })
-            .catch(showErrorModal);
+        startKvpOppfolging(brukerFnr, begrunnelse).then(showStartKvpPeriodeKvitteringModal).catch(showErrorModal);
     }
 
     const infoTekst = (
