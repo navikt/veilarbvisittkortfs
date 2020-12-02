@@ -14,6 +14,8 @@ import {
     oppdaterFerdigbehandlet,
     oppdaterVenterPaSvar,
 } from '../../../api/veilarbdialog';
+import { useFetchHarNivaa4 } from '../../../api/veilarbperson';
+import { LasterModal } from '../../components/lastermodal/laster-modal';
 
 interface OwnValues extends StartEskaleringValues {
     overskrift: string;
@@ -29,9 +31,10 @@ const initialValues = {
 
 function StartEskalering() {
     const { brukerFnr } = useAppStore();
-    const { oppfolging, harBruktNivaa4, setOppfolging } = useDataStore();
+    const { oppfolging, setOppfolging } = useDataStore();
     const { showSpinnerModal, showStartEskaleringKvitteringModal, hideModal, showErrorModal } = useModalStore();
 
+    const fetchHarNivaa4 = useFetchHarNivaa4(brukerFnr);
     const fetchOppfolging = useFetchOppfolging(brukerFnr, { manual: true });
 
     function opprettHenvendelse(values: OwnValues) {
@@ -76,10 +79,14 @@ function StartEskalering() {
             .catch(showErrorModal);
     }
 
-    if (!oppfolging.reservasjonKRR || !harBruktNivaa4?.harbruktnivaa4) {
+    if (fetchHarNivaa4.loading) {
+        return <LasterModal />;
+    }
+
+    if (!oppfolging.reservasjonKRR || !fetchHarNivaa4.data?.harbruktnivaa4) {
         const varselTekst = !oppfolging.reservasjonKRR
             ? 'Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret, og du kan derfor ikke sende varsel.'
-            : 'Du kan ikke sende varsel fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4 (for eksempel BankID).';
+            : 'Du kan ikke sende varsel fordi systemet ikke får sjekket om denne brukeren er en digital eller manuell bruker.';
 
         return (
             <VarselModal

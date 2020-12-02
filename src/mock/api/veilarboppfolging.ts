@@ -1,33 +1,21 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
-import { InnstillingsHistorikk, Oppfolging, OppfolgingStatus } from '../../api/veilarboppfolging';
+import { AvslutningStatus, InnstillingsHistorikk, Oppfolging, OppfolgingStatus } from '../../api/veilarboppfolging';
 
-const mockAvslutningStatus = {
-    avslutningStatus: {
-        kanAvslutte: true,
-        harTiltak: false,
-        harYtelser: false,
-        underOppfolging: true,
-        inaktiveringsDato: null,
-        underKvp: false,
-    },
-    erIkkeArbeidssokerUtenOppfolging: false,
-    erSykmeldtMedArbeidsgiver: false,
-    fnr: '10108000398',
-    gjeldendeEskaleringsvarsel: null,
-    harSkriveTilgang: false,
-    inaktivtIArena: true,
-    inaktiveringsdato: null,
-    kanReaktiveras: false,
-    kanStarteOppfolging: false,
-    manuell: false,
-    oppfolgingUtgang: null,
-    oppfolgingsPerioder: [],
-    reservarsjonKRR: true,
-    underKvp: false,
+const mockAvslutningStatus: AvslutningStatus = {
+    kanAvslutte: true,
+    harYtelser: false,
     underOppfolging: true,
-    veilederId: null,
-    vilkarMaBesvarel: false,
+    inaktiveringsDato: null,
+    underKvp: false,
+};
+
+const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
+    kanAvslutte: false,
+    harYtelser: false,
+    underOppfolging: false,
+    inaktiveringsDato: null,
+    underKvp: false,
 };
 
 const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
@@ -218,7 +206,7 @@ export const veilarboppfolgingHandlers: RequestHandlersList = [
         return res(ctx.delay(500), ctx.status(204));
     }),
     rest.post('/veilarboppfolging/api/oppfolging/avsluttOppfolging', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json({})); // TODO: Might be wrong (return ResponseUtils.jsonPromise(args.body);)
+        return res(ctx.delay(500), ctx.json(mockOppfolgingAvsluttetStatus));
     }),
     rest.post('/veilarboppfolging/api/oppfolging/settManuell', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(Object.assign({}, mockOppfolging, { manuell: true })));
