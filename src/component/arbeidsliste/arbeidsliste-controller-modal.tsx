@@ -21,7 +21,7 @@ function ArbeidslisteControllerModal() {
     const { hideModal, showErrorModal } = useModalStore();
 
     const brukerSammensattNavn = selectSammensattNavn(personalia);
-    const arbeidslisteStatus = false; // true -> arbeidslisteStatus === 'NOT_STARTED' || arbeidslisteStatus === 'LOADING'
+    const arbeidslisteStatus = false; // TODO: true -> arbeidslisteStatus === 'NOT_STARTED' || arbeidslisteStatus === 'LOADING'
 
     const kanFjernesFraArbeidsliste =
         !!arbeidsliste && kanFjerneArbeidsliste(arbeidsliste, oppfolging, innloggetVeileder.ident);
