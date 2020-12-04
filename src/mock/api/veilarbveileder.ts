@@ -8,7 +8,7 @@ const mockEnhetData: EnhetData = {
     navn: 'NAV Leeten',
 };
 
-const mockInnloggetVeileder: VeilederData = {
+export const mockInnloggetVeileder: VeilederData = {
     ident: 'Z007',
     navn: 'James Bond',
     fornavn: 'James',

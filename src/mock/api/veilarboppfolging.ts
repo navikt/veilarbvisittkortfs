@@ -1,6 +1,7 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import { AvslutningStatus, InnstillingsHistorikk, Oppfolging, OppfolgingStatus } from '../../api/veilarboppfolging';
+import { mockInnloggetVeileder } from './veilarbveileder';
 
 const mockAvslutningStatus: AvslutningStatus = {
     kanAvslutte: true,
@@ -129,7 +130,7 @@ const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
 
 const mockOppfolging: Oppfolging = {
     fnr: '123456',
-    veilederId: 'Z007',
+    veilederId: mockInnloggetVeileder.ident,
     reservasjonKRR: false,
     manuell: false,
     underOppfolging: true,
@@ -170,7 +171,7 @@ const mockOppfolgingsstatus: OppfolgingStatus = {
         navn: 'NAV TestHeim',
         enhetId: '007',
     },
-    veilederId: '',
+    veilederId: mockInnloggetVeileder.ident,
     formidlingsgruppe: 'ARBS',
     servicegruppe: 'BKART',
 };
