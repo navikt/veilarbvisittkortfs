@@ -7,17 +7,21 @@ import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
 import { settBrukerTilDigital } from '../../../api/veilarboppfolging';
+import { useFetcherStore } from '../../../store/fetcher-store';
+import { ifResponseHasData } from '../../../util/utils';
 
 function StartDigitalOppfolging() {
     const { brukerFnr } = useAppStore();
-    const { innloggetVeileder, oppfolging } = useDataStore();
+    const { innloggetVeileder, oppfolging, setOppfolging } = useDataStore();
+    const { oppfolgingFetcher } = useFetcherStore();
     const { hideModal, showStartDigitalOppfolgingKvitteringModal, showSpinnerModal, showErrorModal } = useModalStore();
 
     function startDigitalOppgfolging(begrunnelseValues: BegrunnelseValues) {
         showSpinnerModal();
         settBrukerTilDigital(brukerFnr, innloggetVeileder.ident, begrunnelseValues.begrunnelse)
             .then(() => {
-                // TODO: Oppdater status for oppfølging eller refetch
+                oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging));
+
                 showStartDigitalOppfolgingKvitteringModal({ begrunnelse: begrunnelseValues.begrunnelse });
             })
             .catch(showErrorModal);

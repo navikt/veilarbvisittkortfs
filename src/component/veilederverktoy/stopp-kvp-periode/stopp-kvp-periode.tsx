@@ -31,7 +31,7 @@ function StoppKvpPeriode() {
             tekstariaLabel="Begrunnelse:"
             tittel="Avslutt periode i Kvalifiseringsprogrammet (KVP)"
             infoTekst={infoTekst}
-            isLoading={false} // TODO: ta bort
+            isLoading={false}
             maxLength={250}
         />
     );

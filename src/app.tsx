@@ -5,7 +5,7 @@ import NavFrontendModal from 'nav-frontend-modal';
 import Etiketter from './component/personinfo/components/etiketter';
 import Tilbakelenke from './component/components/tilbakelenke/tilbakelenke';
 import StoreProvider from './store/store-provider';
-import { InitialDataFetcher } from './component/initial-data-fetcher';
+import { DataFetcher } from './component/data-fetcher';
 import { VeilederverktoyModalController } from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-modal-controller';
 import { ToastController } from './component/components/toast-controller';
 import './index.less';
@@ -28,16 +28,16 @@ function App(props: AppProps) {
             visVeilederVerktoy={props.visVeilederVerktoy || false}
         >
             <div className="visittkortfs">
-                <InitialDataFetcher>
+                <DataFetcher>
                     <Tilbakelenke />
                     <div className="visittkortfs__container">
                         <PersonInfo />
                         <Etiketter />
                         <Veilederverktoyslinje />
                     </div>
-                    <VeilederverktoyModalController />
-                    <ToastController />
-                </InitialDataFetcher>
+                </DataFetcher>
+                <VeilederverktoyModalController />
+                <ToastController />
             </div>
         </StoreProvider>
     );

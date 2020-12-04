@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
-import { Arbeidsliste } from '../../api/veilarbportefolje';
+import { Arbeidsliste, ArbeidslisteformValues } from '../../api/veilarbportefolje';
 
 const mockArbeidsliste: Arbeidsliste = {
     arbeidslisteAktiv: null,
@@ -19,8 +19,7 @@ export const veilarbportefoljeHandlers: RequestHandlersList = [
         return res(ctx.delay(500), ctx.json(mockArbeidsliste));
     }),
     rest.post('/veilarbportefolje/api/arbeidsliste/:fnr', (req, res, ctx) => {
-        const requestBody = req.body as any; // TODO: Might need to be parsed to json
-
+        const requestBody = req.body as ArbeidslisteformValues;
         return res(
             ctx.delay(500),
             ctx.json({
@@ -37,8 +36,7 @@ export const veilarbportefoljeHandlers: RequestHandlersList = [
         );
     }),
     rest.put('/veilarbportefolje/api/arbeidsliste/:fnr', (req, res, ctx) => {
-        const requestBody = req.body as any; // TODO: Might need to be parsed to json
-
+        const requestBody = req.body as ArbeidslisteformValues;
         return res(
             ctx.delay(500),
             ctx.json({

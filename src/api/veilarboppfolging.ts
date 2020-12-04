@@ -106,12 +106,14 @@ export interface InnstillingsHistorikk {
     enhet?: StringOrNothing;
 }
 
-export function useFetchOppfolgingsstatus(fnr: string, options?: Options): UseAxiosResponseValue<OppfolgingStatus> {
-    return useAxios<OppfolgingStatus>({ url: `/veilarboppfolging/api/person/${fnr}/oppfolgingsstatus` }, options);
+export function createFetchOppfolging(
+    oppfolgingFetcher: UseAxiosResponseValue<Oppfolging>
+): (fnr: string) => Promise<AxiosResponse<Oppfolging>> {
+    return (fnr: string) => oppfolgingFetcher.fetch({ url: `/veilarboppfolging/api/oppfolging?fnr=${fnr}` });
 }
 
-export function useFetchOppfolging(fnr: string, options?: Options): UseAxiosResponseValue<Oppfolging> {
-    return useAxios<Oppfolging>({ url: `/veilarboppfolging/api/oppfolging?fnr=${fnr}` }, options);
+export function useFetchOppfolgingsstatus(fnr: string, options?: Options): UseAxiosResponseValue<OppfolgingStatus> {
+    return useAxios<OppfolgingStatus>({ url: `/veilarboppfolging/api/person/${fnr}/oppfolgingsstatus` }, options);
 }
 
 export function useFetchTilgangTilBrukersKontor(

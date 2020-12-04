@@ -8,10 +8,11 @@ import { BegrunnelseTextArea } from '../begrunnelseform/begrunnelse-textarea';
 import { useAppStore } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
-import { stoppEskalering, useFetchOppfolging } from '../../../api/veilarboppfolging';
-import { eskaleringVarselSendtEvent } from '../../../util/utils';
+import { stoppEskalering } from '../../../api/veilarboppfolging';
+import { eskaleringVarselSendtEvent, ifResponseHasData } from '../../../util/utils';
 import { Egenskaper, nyHenvendelse } from '../../../api/veilarbdialog';
 import './stopp-eskalering.less';
+import { useFetcherStore } from '../../../store/fetcher-store';
 
 interface FormValues {
     begrunnelse: string;
@@ -26,9 +27,8 @@ const initialFormValues: FormValues = {
 function StoppEskalering() {
     const { brukerFnr } = useAppStore();
     const { oppfolging, setOppfolging } = useDataStore();
+    const { oppfolgingFetcher } = useFetcherStore();
     const { showStoppEskaleringKvitteringModal, showErrorModal, showSpinnerModal } = useModalStore();
-
-    const fetchOppfolging = useFetchOppfolging(brukerFnr, { manual: true });
 
     async function startStoppingAvEskalering(values: FormValues) {
         showSpinnerModal();
@@ -48,10 +48,7 @@ function StoppEskalering() {
             await stoppEskalering(brukerFnr, values.begrunnelse);
 
             // Hent oppdatert data uten eskaleringsvarsel
-            await fetchOppfolging
-                .fetch()
-                .then((res) => setOppfolging(res.data))
-                .catch(); // Selv om henting av oppfolging feiler så ønsker vi å vise kvittering på at stopping av eskalering gikk greit
+            await oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging));
 
             eskaleringVarselSendtEvent();
             showStoppEskaleringKvitteringModal();

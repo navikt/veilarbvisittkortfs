@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosPromise, AxiosRequestConfig } from 'axios';
 import useAxiosHook, { configure, Options, RefetchOptions, ResponseValues } from 'axios-hooks';
 import { APP_NAME } from '../util/utils';
 
@@ -19,10 +19,10 @@ export function useAxios<T = any>(config: AxiosRequestConfig | string, options?:
     return useMemo(() => ({ data, loading, error, fetch: refetch }), [data, loading, error, refetch]);
 }
 
-export function isAnyLoading(...axiosResponseValues: Array<UseAxiosResponseValue<any>>): boolean {
+export function isAnyLoading(...axiosResponseValues: Array<{ loading: boolean }>): boolean {
     return axiosResponseValues.some((responseValue) => responseValue.loading);
 }
 
-export function hasAnyFailed(...axiosResponseValues: Array<UseAxiosResponseValue<any>>): boolean {
+export function hasAnyFailed(...axiosResponseValues: Array<{ error?: AxiosError }>): boolean {
     return axiosResponseValues.some((responseValue) => responseValue.error);
 }

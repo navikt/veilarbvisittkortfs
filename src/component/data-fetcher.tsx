@@ -4,16 +4,15 @@ import { useFetchFeatures } from '../api/veilarbpersonflatefs';
 import { useAppStore } from '../store/app-store';
 import { isAnyLoading } from '../api/utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import {
-    useFetchOppfolging,
-    useFetchOppfolgingsstatus,
-    useFetchTilgangTilBrukersKontor,
-} from '../api/veilarboppfolging';
+import { useFetchOppfolgingsstatus, useFetchTilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { useFetchPersonalia } from '../api/veilarbperson';
 import { useFetchInnloggetVeileder, useFetchVeilederePaEnhet } from '../api/veilarbveileder';
 import { useFetchArbeidsliste } from '../api/veilarbportefolje';
+import { useFetcherStore } from '../store/fetcher-store';
+import { ifResponseHasData } from '../util/utils';
+import './data-fetcher.less';
 
-export function InitialDataFetcher(props: { children: any }) {
+export function DataFetcher(props: { children: any }) {
     const { brukerFnr } = useAppStore();
     const {
         setOppfolgingsstatus,
@@ -26,8 +25,9 @@ export function InitialDataFetcher(props: { children: any }) {
         setFeatures,
     } = useDataStore();
 
+    const { oppfolgingFetcher } = useFetcherStore();
+
     const fetchOppfolgingsstatus = useFetchOppfolgingsstatus(brukerFnr);
-    const fetchOppfolging = useFetchOppfolging(brukerFnr);
     const fetchInnloggetVeileder = useFetchInnloggetVeileder();
     const fetchPersonalia = useFetchPersonalia(brukerFnr);
     const fetchTilgangTilBrukersKontor = useFetchTilgangTilBrukersKontor(brukerFnr);
@@ -39,18 +39,17 @@ export function InitialDataFetcher(props: { children: any }) {
     const fetchVeiledere = useFetchVeilederePaEnhet(oppfolgingsEnhet, { manual: true });
 
     useEffect(() => {
+        oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging));
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [brukerFnr]);
+
+    useEffect(() => {
         if (fetchOppfolgingsstatus.data) {
             setOppfolgingsstatus(fetchOppfolgingsstatus.data);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchOppfolgingsstatus]);
-
-    useEffect(() => {
-        if (fetchOppfolging.data) {
-            setOppfolging(fetchOppfolging.data);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchOppfolging]);
 
     useEffect(() => {
         if (fetchInnloggetVeileder.data) {
@@ -97,13 +96,13 @@ export function InitialDataFetcher(props: { children: any }) {
     useEffect(() => {
         const harTilgang =
             fetchTilgangTilBrukersKontor.data && fetchTilgangTilBrukersKontor.data.tilgangTilBrukersKontor;
-        const underOppfolging = fetchOppfolging.data && fetchOppfolging.data.underOppfolging;
+        const underOppfolging = oppfolgingFetcher.data && oppfolgingFetcher.data.underOppfolging;
 
         if (harTilgang && underOppfolging) {
             fetchArbeidsliste.fetch();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchTilgangTilBrukersKontor, fetchOppfolging]);
+    }, [fetchTilgangTilBrukersKontor, oppfolgingFetcher.data]);
 
     useEffect(() => {
         if (oppfolgingsEnhet) {
@@ -115,13 +114,13 @@ export function InitialDataFetcher(props: { children: any }) {
     if (
         isAnyLoading(
             fetchOppfolgingsstatus,
-            fetchOppfolging,
+            oppfolgingFetcher,
             fetchInnloggetVeileder,
             fetchPersonalia,
             fetchTilgangTilBrukersKontor
         )
     ) {
-        return <NavFrontendSpinner type="L" />;
+        return <NavFrontendSpinner className="visittkort-laster" type="L" />;
     }
 
     return <>{props.children}</>;
