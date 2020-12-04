@@ -30,7 +30,7 @@ function FormikDatoVelger({ name, validate, label, ariaLabel, className }: Formi
                                     id: name,
                                     name,
                                     placeholder: 'dd.mm.åååå',
-                                    ariaLabel,
+                                    'aria-label': ariaLabel,
                                 } as any
                             }
                             inputId="fristDatovelger"

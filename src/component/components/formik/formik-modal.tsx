@@ -45,7 +45,8 @@ function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalP
             initialValues={props.initialValues}
             validationSchema={props.validationSchema}
             onSubmit={(values) => props.handleSubmit(values)}
-            render={(formikProps) => (
+        >
+            {(formikProps) => (
                 <NavFrontendModal
                     className={cls('modal', props.className)}
                     contentLabel={props.contentLabel}
@@ -58,7 +59,7 @@ function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalP
                     {props.render(formikProps)}
                 </NavFrontendModal>
             )}
-        />
+        </Formik>
     );
 }
 

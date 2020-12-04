@@ -60,7 +60,8 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
                     applikasjon: 'visittkort',
                 });
             }}
-            render={(formikProps) => (
+        >
+            {(formikProps) => (
                 <Modal
                     contentLabel="Arbeidsliste"
                     isOpen={props.isOpen}
@@ -88,7 +89,7 @@ function ArbeidslisteModal(props: ArbeidslisteProps) {
                     </div>
                 </Modal>
             )}
-        />
+        </Formik>
     );
 }
 
