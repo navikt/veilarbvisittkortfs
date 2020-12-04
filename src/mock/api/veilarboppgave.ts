@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import { mockEnhetVeiledere } from './common-data';
-import { OppgaveHistorikk } from '../../api/veilarboppgave';
+import { OppgaveFormData, OppgaveHistorikk } from '../../api/veilarboppgave';
 
 const mockEnheter = [
     { enhetId: '0000', navn: 'NAV Ost' },
@@ -61,8 +61,7 @@ export const veilarboppgaveHandlers: RequestHandlersList = [
         return res(ctx.delay(500), ctx.json(mockEnhetVeiledere));
     }),
     rest.post('/veilarboppgave/api/oppgave', (req, res, ctx) => {
-        const requestBody = req.body as any; // TODO: Might need to be parsed to json
-
+        const requestBody = req.body as OppgaveFormData;
         return res(
             ctx.delay(500),
             ctx.json({

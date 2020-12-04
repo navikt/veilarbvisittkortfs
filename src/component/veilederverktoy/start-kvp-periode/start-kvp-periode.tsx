@@ -11,7 +11,6 @@ function StarKvpPeriode() {
 
     function startKvp({ begrunnelse }: BegrunnelseValues) {
         showSpinnerModal();
-
         startKvpOppfolging(brukerFnr, begrunnelse).then(showStartKvpPeriodeKvitteringModal).catch(showErrorModal);
     }
 
@@ -31,7 +30,7 @@ function StarKvpPeriode() {
             tekstariaLabel="Begrunnelse:"
             tittel="Start periode i Kvalifiseringsprogrammet (KVP)"
             infoTekst={infoTekst}
-            isLoading={false} // TODO ta bort
+            isLoading={false}
             maxLength={250}
         />
     );

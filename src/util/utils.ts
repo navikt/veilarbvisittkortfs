@@ -1,7 +1,20 @@
+import { AxiosResponse } from 'axios';
+
 export const APP_NAME = 'veilarbvisittkortfs';
 
 export function isDevelopment(): boolean {
     return process.env.REACT_APP_DEV === 'true';
+}
+
+export function ifResponseHasData<T>(
+    callback: (data: T) => void
+): (res: AxiosResponse<T>) => Promise<AxiosResponse<T>> {
+    return (res: AxiosResponse<T>) => {
+        if (res.status < 300 && res.data) {
+            callback(res.data);
+        }
+        return Promise.resolve(res);
+    };
 }
 
 export function storeForbokstaver(tekster: string[]): string {

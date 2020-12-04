@@ -15,7 +15,7 @@ import './tildel-veileder.less';
 function TildelVeileder() {
     const { brukerFnr } = useAppStore();
     const { showTildelVeilederKvitteringModal, showTildelVeilederFeiletModal, hideModal } = useModalStore();
-    const { veilederePaEnhet, oppfolging, setOppfolging } = useDataStore();
+    const { veilederePaEnhet, oppfolging, setOppfolging, setOppfolgingsstatus } = useDataStore();
     const [selectedVeilederId, setSelectedVeilederId] = useState('');
 
     const veiledere = veilederePaEnhet?.veilederListe || [];
@@ -44,8 +44,12 @@ function TildelVeileder() {
                     throw new Error('Tildeling feilet');
                 }
 
-                // Oppdater oppfølging med ny veileder
+                // Oppdater med ny veileder
                 setOppfolging((prevOppfolging) => ({ ...prevOppfolging, veilederId: selectedVeilederId }));
+                setOppfolgingsstatus((prevOppfolgingStatus) => ({
+                    ...prevOppfolgingStatus,
+                    veilederId: selectedVeilederId,
+                }));
 
                 const veilederNavn =
                     veiledere

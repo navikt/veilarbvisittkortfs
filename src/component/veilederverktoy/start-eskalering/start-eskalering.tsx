@@ -5,8 +5,8 @@ import StartEskaleringForm, { StartEskaleringValues } from './start-eskalering-f
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
-import { eskaleringVarselSendtEvent } from '../../../util/utils';
-import { startEskalering, useFetchOppfolging } from '../../../api/veilarboppfolging';
+import { eskaleringVarselSendtEvent, ifResponseHasData } from '../../../util/utils';
+import { startEskalering } from '../../../api/veilarboppfolging';
 import {
     Egenskaper,
     HenvendelseData,
@@ -14,6 +14,9 @@ import {
     oppdaterFerdigbehandlet,
     oppdaterVenterPaSvar,
 } from '../../../api/veilarbdialog';
+import { useFetchHarNivaa4 } from '../../../api/veilarbperson';
+import { LasterModal } from '../../components/lastermodal/laster-modal';
+import { useFetcherStore } from '../../../store/fetcher-store';
 
 interface OwnValues extends StartEskaleringValues {
     overskrift: string;
@@ -29,10 +32,11 @@ const initialValues = {
 
 function StartEskalering() {
     const { brukerFnr } = useAppStore();
-    const { oppfolging, harBruktNivaa4, setOppfolging } = useDataStore();
+    const { oppfolging, setOppfolging } = useDataStore();
+    const { oppfolgingFetcher } = useFetcherStore();
     const { showSpinnerModal, showStartEskaleringKvitteringModal, hideModal, showErrorModal } = useModalStore();
 
-    const fetchOppfolging = useFetchOppfolging(brukerFnr, { manual: true });
+    const fetchHarNivaa4 = useFetchHarNivaa4(brukerFnr);
 
     function opprettHenvendelse(values: OwnValues) {
         showSpinnerModal();
@@ -44,7 +48,7 @@ function StartEskalering() {
             tekst: values.begrunnelse,
         };
 
-        // TODO: Dette er kanskje logikk som burde bli gjort i backend istedenfor
+        // TODO: Dette er kanskje logikk som kunne blitt gjort i backend istedenfor
         nyHenvendelse(brukerFnr, hendvendelseData)
             .then(async (res) => {
                 const dialogId = res.data.id;
@@ -62,10 +66,7 @@ function StartEskalering() {
                     ]);
 
                     // Hent oppdatert data med ny eskaleringsvarsel
-                    await fetchOppfolging
-                        .fetch()
-                        .then((res) => setOppfolging(res.data))
-                        .catch(); // Selv om henting av oppfolging feiler så ønsker vi å vise kvittering på at eskaleringen gikk greit
+                    await oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging));
 
                     eskaleringVarselSendtEvent();
                     showStartEskaleringKvitteringModal();
@@ -76,10 +77,14 @@ function StartEskalering() {
             .catch(showErrorModal);
     }
 
-    if (!oppfolging.reservasjonKRR || !harBruktNivaa4?.harbruktnivaa4) {
+    if (fetchHarNivaa4.loading) {
+        return <LasterModal />;
+    }
+
+    if (!oppfolging.reservasjonKRR || !fetchHarNivaa4.data?.harbruktnivaa4) {
         const varselTekst = !oppfolging.reservasjonKRR
             ? 'Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret, og du kan derfor ikke sende varsel.'
-            : 'Du kan ikke sende varsel fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4 (for eksempel BankID).';
+            : 'Du kan ikke sende varsel fordi systemet ikke får sjekket om denne brukeren er en digital eller manuell bruker.';
 
         return (
             <VarselModal
@@ -101,7 +106,7 @@ function StartEskalering() {
             tekstariaLabel="Rediger teksten under slik at den passer."
             maxLength={5000}
             tittel="Send varsel til brukeren"
-            isLoading={false} // TODO: Fix? (OppfolgingSelector.selectOppfolgingStatus(state) || state.dialoger.status === 'LOADING')
+            isLoading={false}
             infoTekst={
                 <Normaltekst className="blokk-xs">
                     Husk å være tydelig på hvilken oppgave brukeren skal gjennomføre og hva som er fristen. Hvis du

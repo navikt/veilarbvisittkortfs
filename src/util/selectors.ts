@@ -10,7 +10,6 @@ export function selectSammensattNavn(personalia: Personalia): string {
     return storeForbokstaver([fornavn, mellomnavn || '', etternavn]);
 }
 
-// TODO: Husk å sette veilederId på oppfølging hvis man tildeler brukeren seg selv
 export function selectKanLeggeIArbeidsListe(
     innloggetVeileder: VeilederData,
     oppfolgingsstatus: OppfolgingStatus,

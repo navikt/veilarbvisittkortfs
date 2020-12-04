@@ -3,8 +3,8 @@ import { logger } from '../../../util/logger';
 
 export interface ClickMetricProps {
     metricName?: string;
-    tags?: any; // TODO
-    fields?: any; //TODO
+    tags?: {};
+    fields?: {};
 }
 
 export interface OnClickProps {
