@@ -14,11 +14,12 @@ import {
     redigerArbeidsliste,
     slettArbeidsliste,
 } from '../../api/veilarbportefolje';
+import { ifResponseHasData } from '../../util/utils';
 
 function ArbeidslisteControllerModal() {
     const { brukerFnr } = useAppStore();
-    const { arbeidsliste, oppfolging, innloggetVeileder, personalia } = useDataStore();
-    const { hideModal, showErrorModal } = useModalStore();
+    const { arbeidsliste, oppfolging, innloggetVeileder, personalia, setArbeidsliste } = useDataStore();
+    const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
 
     const brukerSammensattNavn = selectSammensattNavn(personalia);
     const arbeidslisteStatus = false; // TODO: true -> arbeidslisteStatus === 'NOT_STARTED' || arbeidslisteStatus === 'LOADING'
@@ -36,8 +37,14 @@ function ArbeidslisteControllerModal() {
 
     function slettArbeidslisteOgLukkModaler() {
         setVisFjernArbeidslisteModal(false);
-        hideModal();
-        slettArbeidsliste(brukerFnr).then(hideModal).catch(showErrorModal);
+        showSpinnerModal();
+
+        slettArbeidsliste(brukerFnr)
+            .then(() => {
+                setArbeidsliste(undefined);
+                hideModal();
+            })
+            .catch(showErrorModal);
     }
 
     function handleOnLagreArbeidsliste(values: ArbeidslisteformValues) {
@@ -48,7 +55,12 @@ function ArbeidslisteControllerModal() {
             kategori: values.kategori,
         };
 
-        lagreArbeidsliste(brukerFnr, formValus).then(hideModal).catch(showErrorModal);
+        showSpinnerModal();
+
+        lagreArbeidsliste(brukerFnr, formValus)
+            .then(ifResponseHasData(setArbeidsliste))
+            .then(hideModal)
+            .catch(showErrorModal);
     }
 
     function handleOnRedigerArbeidsliste(values: ArbeidslisteformValues) {
@@ -59,7 +71,12 @@ function ArbeidslisteControllerModal() {
             kategori: values.kategori,
         };
 
-        redigerArbeidsliste(brukerFnr, formValus).then(hideModal).catch(showErrorModal);
+        showSpinnerModal();
+
+        redigerArbeidsliste(brukerFnr, formValus)
+            .then(ifResponseHasData(setArbeidsliste))
+            .then(hideModal)
+            .catch(showErrorModal);
     }
 
     return (
