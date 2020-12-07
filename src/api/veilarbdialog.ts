@@ -1,6 +1,5 @@
-import { AxiosResponse } from 'axios';
-import { axiosInstance, useAxios, UseAxiosResponseValue } from './utils';
-import { Options } from 'axios-hooks';
+import { AxiosPromise, AxiosResponse } from 'axios';
+import { axiosInstance } from './utils';
 import { StringOrNothing } from '../util/type/stringornothings';
 
 export enum Egenskaper {
@@ -53,14 +52,14 @@ export function oppdaterFerdigbehandlet(
     return axiosInstance.put(`/veilarbdialog/api/dialog/${dialogId}/ferdigbehandlet/${erFerdigbehandlet}?fnr=${fnr}`);
 }
 
-export function oppdaterVenterPaSvar(dialogId: string, venterPaSvar: boolean, fnr: string): Promise<AxiosResponse> {
+export function oppdaterVenterPaSvar(dialogId: string, venterPaSvar: boolean, fnr: string): AxiosPromise {
     return axiosInstance.put(`/veilarbdialog/api/dialog/${dialogId}/venter_pa_svar/${venterPaSvar}?fnr=${fnr}`);
 }
 
-export function useFetchDialoger(fnr: string, options?: Options): UseAxiosResponseValue<Dialog[]> {
-    return useAxios<Dialog[]>(`/veilarbdialog/api/dialog?fnr=${fnr}`, options);
+export function fetchDialoger(fnr: string): AxiosPromise<Dialog[]> {
+    return axiosInstance.get<Dialog[]>(`/veilarbdialog/api/dialog?fnr=${fnr}`);
 }
 
-export function nyHenvendelse(fnr: string, henvendelse: HenvendelseData): Promise<AxiosResponse<Dialog>> {
+export function nyHenvendelse(fnr: string, henvendelse: HenvendelseData): AxiosPromise<Dialog> {
     return axiosInstance.post(`/veilarbdialog/api/dialog?fnr=${fnr}`, henvendelse);
 }

@@ -1,17 +1,15 @@
 import constate from 'constate';
-import { createFetchOppfolging, Oppfolging } from '../api/veilarboppfolging';
-import { useAxios } from '../api/utils';
+import { fetchOppfolging } from '../api/veilarboppfolging';
+import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
 
+/**
+ * Context store for fetchers.
+ * Brukes av komponenter som trenger å vite fetch status fra kall gjort i andre komponenter
+ */
 export const [FetcherStore, useFetcherStore] = constate(() => {
-    const oppfolgingFetcher = useAxios<Oppfolging>({}, { manual: true });
+    const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
 
     return {
-        oppfolgingFetcher: {
-            loading: oppfolgingFetcher.loading,
-            data: oppfolgingFetcher.data,
-            error: oppfolgingFetcher.error,
-            response: oppfolgingFetcher.response,
-            fetch: createFetchOppfolging(oppfolgingFetcher),
-        },
+        oppfolgingFetcher,
     };
 });

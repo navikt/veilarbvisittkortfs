@@ -4,7 +4,8 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { logger } from '../../../util/logger';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
-import { useFetchRegistrering } from '../../../api/veilarbregistrering';
+import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
+import { fetchRegistrering } from '../../../api/veilarbregistrering';
 
 export interface StartManuellOppfolgingKvitteringProps {
     begrunnelse: string;
@@ -14,12 +15,17 @@ function StartManuellOppfolgingKvittering(props: StartManuellOppfolgingKvitterin
     const { brukerFnr } = useAppStore();
     const { oppfolging } = useDataStore();
 
-    const fetchRegistrering = useFetchRegistrering(brukerFnr);
+    const registreringFetcher = useAxiosFetcher(fetchRegistrering);
     const [harLoggetMetrikk, setHarLoggetMetrikk] = useState(false);
 
     useEffect(() => {
-        if (fetchRegistrering.data && !harLoggetMetrikk) {
-            const registreringData = fetchRegistrering.data;
+        registreringFetcher.fetch(brukerFnr);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [brukerFnr]);
+
+    useEffect(() => {
+        if (registreringFetcher.data && !harLoggetMetrikk) {
+            const registreringData = registreringFetcher.data;
             const erManueltRegistrert = !!registreringData.registrering.manueltRegistrertAv;
             const logFields = {
                 brukerType: registreringData.type,
@@ -31,7 +37,7 @@ function StartManuellOppfolgingKvittering(props: StartManuellOppfolgingKvitterin
             setHarLoggetMetrikk(true);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchRegistrering]);
+    }, [registreringFetcher]);
 
     return (
         <Kvittering

@@ -3,9 +3,10 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { OrNothing } from '../../../../util/type/ornothing';
-import { useFetchHarUtkast } from '../../../../api/veilarbvedtaksstotte';
+import { fetchHarUtkast } from '../../../../api/veilarbvedtaksstotte';
 import { AvslutningStatus } from '../../../../api/veilarboppfolging';
-import { useFetchHarTiltak } from '../../../../api/veilarbaktivitet';
+import { fetchHarTiltak } from '../../../../api/veilarbaktivitet';
+import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
 
 export function AvsluttOppfolgingInfoText(props: {
     harYtelser?: boolean;
@@ -15,22 +16,22 @@ export function AvsluttOppfolgingInfoText(props: {
     harUbehandledeDialoger: boolean;
     fnr: string;
 }) {
-    const fetchHarTiltak = useFetchHarTiltak(props.fnr);
-    const fetchHarUtkast = useFetchHarUtkast(props.fnr, { manual: true });
+    const harTiltakFetcher = useAxiosFetcher(fetchHarTiltak);
+    const harUtakstFetcher = useAxiosFetcher(fetchHarUtkast);
 
     useEffect(() => {
         if (!props.vedtaksstottePrelanseringEnabled) {
-            fetchHarUtkast.fetch();
+            harUtakstFetcher.fetch(props.fnr);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    if (fetchHarTiltak.loading || (!props.vedtaksstottePrelanseringEnabled && fetchHarUtkast.loading)) {
+    if (harTiltakFetcher.loading || (!props.vedtaksstottePrelanseringEnabled && harUtakstFetcher.loading)) {
         return <NavFrontendSpinner type="XL" />;
     }
 
-    const harTiltak = fetchHarTiltak.data;
-    const hentTiltakFeilet = !!fetchHarTiltak.error;
+    const harTiltak = harTiltakFetcher.data;
+    const hentTiltakFeilet = !!harTiltakFetcher.error;
 
     const aktivMindreEnn28Dager = props.datoErInnenFor28DagerSiden
         ? 'Brukeren har vært inaktiv i mindre enn 28 dager. Vil du likevel avslutte brukerens oppfølgingsperiode?'
@@ -49,7 +50,7 @@ export function AvsluttOppfolgingInfoText(props: {
                 </ul>
             </HiddenIfAlertStripeAdvarselSolid>
 
-            <HiddenIfAlertStripeAdvarselSolid hidden={!fetchHarUtkast.data}>
+            <HiddenIfAlertStripeAdvarselSolid hidden={!harUtakstFetcher.data}>
                 Utkast til oppfølgingsvedtak vil bli slettet
             </HiddenIfAlertStripeAdvarselSolid>
         </>

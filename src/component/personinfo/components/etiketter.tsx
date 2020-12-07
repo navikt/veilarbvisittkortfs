@@ -5,9 +5,11 @@ import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
 import './etiketter.less';
 import { OrNothing } from '../../../util/type/ornothing';
-import { InnsatsgruppeType, useFetchRegistrering } from '../../../api/veilarbregistrering';
+import { fetchRegistrering, InnsatsgruppeType } from '../../../api/veilarbregistrering';
 import { PILOT_TOGGLE } from '../../../api/veilarbpersonflatefs';
 import { OppfolgingStatus } from '../../../api/veilarboppfolging';
+import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
+import { ifResponseHasData } from '../../../util/utils';
 
 const Advarsel = hiddenIf(EtikettAdvarsel);
 const Info = hiddenIf(EtikettInfo);
@@ -39,21 +41,18 @@ function Etiketter() {
 
     const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>(null);
 
-    const fetchRegistrering = useFetchRegistrering(brukerFnr, { manual: true });
+    const registreringFetcher = useAxiosFetcher(fetchRegistrering);
 
     useEffect(() => {
         if (brukerFnr && features[PILOT_TOGGLE]) {
-            fetchRegistrering.fetch();
+            registreringFetcher.fetch(brukerFnr).then(
+                ifResponseHasData((data) => {
+                    setInnsatsgruppe(data.registrering.profilering?.innsatsgruppe);
+                })
+            );
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr]);
-
-    useEffect(() => {
-        if (fetchRegistrering.data) {
-            setInnsatsgruppe(fetchRegistrering.data.registrering.profilering?.innsatsgruppe);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchRegistrering]);
 
     return (
         <div className="etikett-container">

@@ -1,6 +1,5 @@
-import { Options } from 'axios-hooks';
-import { axiosInstance, useAxios, UseAxiosResponseValue } from './utils';
-import { AxiosResponse } from 'axios';
+import { axiosInstance } from './utils';
+import { AxiosPromise } from 'axios';
 import { StringOrNothing } from '../util/type/stringornothings';
 
 export interface OppgaveHistorikk {
@@ -51,17 +50,14 @@ export interface OppgaveFormResponse {
     type: OppgaveType;
 }
 
-export function useFetchOppgaveHistorikk(fnr: string, options?: Options): UseAxiosResponseValue<OppgaveHistorikk[]> {
-    return useAxios<OppgaveHistorikk[]>({ url: `/veilarboppgave/api/oppgavehistorikk?fnr=${fnr}` }, options);
+export function fetchOppgaveHistorikk(fnr: string): AxiosPromise<OppgaveHistorikk[]> {
+    return axiosInstance.get<OppgaveHistorikk[]>(`/veilarboppgave/api/oppgavehistorikk?fnr=${fnr}`);
 }
 
-export function opprettOppgave(
-    fnr: string,
-    oppgaveFormData: OppgaveFormData
-): Promise<AxiosResponse<OppgaveFormResponse>> {
+export function opprettOppgave(fnr: string, oppgaveFormData: OppgaveFormData): AxiosPromise<OppgaveFormResponse> {
     return axiosInstance.post(`/veilarboppgave/api/oppgave?fnr=${fnr}`, oppgaveFormData);
 }
 
-export function hentBehandlendeEnheter(tema: OppgaveTema, fnr: string): Promise<AxiosResponse<BehandlandeEnhet[]>> {
+export function hentBehandlendeEnheter(tema: OppgaveTema, fnr: string): AxiosPromise<BehandlandeEnhet[]> {
     return axiosInstance.get<BehandlandeEnhet[]>(`/veilarboppgave/api/enheter?tema=${tema}&fnr=${fnr}`);
 }

@@ -1,6 +1,6 @@
 import constate from 'constate';
 import { useState } from 'react';
-import { Features } from '../api/veilarbpersonflatefs';
+import { FeatureToggles } from '../api/veilarbpersonflatefs';
 import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { HarBruktNivaa4Type, Personalia } from '../api/veilarbperson';
 import { Arbeidsliste } from '../api/veilarbportefolje';
@@ -15,7 +15,7 @@ export const [DataStore, useDataStore] = constate(() => {
     const [personalia, setPersonalia] = useState<Personalia>(placeholder);
     const [tilgangTilBrukersKontor, setTilgangTilBrukersKontor] = useState<TilgangTilBrukersKontor>(placeholder);
     const [harBruktNivaa4, setHarBruktNivaa4] = useState<HarBruktNivaa4Type>(placeholder);
-    const [features, setFeatures] = useState<Features>(placeholder);
+    const [features, setFeatures] = useState<FeatureToggles>(placeholder);
 
     const [arbeidsliste, setArbeidsliste] = useState<Arbeidsliste>();
     const [veilederePaEnhet, setVeilederePaEnhet] = useState<VeilederListe>();

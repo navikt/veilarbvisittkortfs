@@ -1,6 +1,5 @@
-import { Options } from 'axios-hooks';
-import { axiosInstance, useAxios, UseAxiosResponseValue } from './utils';
-import { AxiosResponse } from 'axios';
+import { AxiosPromise } from 'axios';
+import { axiosInstance } from './utils';
 import { StringOrNothing } from '../util/type/stringornothings';
 import { OrNothing } from '../util/type/ornothing';
 
@@ -106,76 +105,64 @@ export interface InnstillingsHistorikk {
     enhet?: StringOrNothing;
 }
 
-export function createFetchOppfolging(
-    oppfolgingFetcher: UseAxiosResponseValue<Oppfolging>
-): (fnr: string) => Promise<AxiosResponse<Oppfolging>> {
-    return (fnr: string) => oppfolgingFetcher.fetch({ url: `/veilarboppfolging/api/oppfolging?fnr=${fnr}` });
+export function fetchOppfolging(fnr: string): AxiosPromise<Oppfolging> {
+    return axiosInstance.get(`/veilarboppfolging/api/oppfolging?fnr=${fnr}`);
 }
 
-export function useFetchOppfolgingsstatus(fnr: string, options?: Options): UseAxiosResponseValue<OppfolgingStatus> {
-    return useAxios<OppfolgingStatus>({ url: `/veilarboppfolging/api/person/${fnr}/oppfolgingsstatus` }, options);
+export function fetchOppfolgingsstatus(fnr: string): AxiosPromise<OppfolgingStatus> {
+    return axiosInstance.get<OppfolgingStatus>(`/veilarboppfolging/api/person/${fnr}/oppfolgingsstatus`);
 }
 
-export function useFetchTilgangTilBrukersKontor(
-    fnr: string,
-    options?: Options
-): UseAxiosResponseValue<TilgangTilBrukersKontor> {
-    return useAxios<TilgangTilBrukersKontor>(
-        { url: `/veilarboppfolging/api/oppfolging/veilederTilgang?fnr=${fnr}` },
-        options
+export function fetchTilgangTilBrukersKontor(fnr: string): AxiosPromise<TilgangTilBrukersKontor> {
+    return axiosInstance.get<TilgangTilBrukersKontor>(`/veilarboppfolging/api/oppfolging/veilederTilgang?fnr=${fnr}`);
+}
+
+export function fetchInstillingsHistorikk(fnr: string): AxiosPromise<InnstillingsHistorikk[]> {
+    return axiosInstance.get<InnstillingsHistorikk[]>(
+        `/veilarboppfolging/api/oppfolging/innstillingsHistorikk?fnr=${fnr}`
     );
 }
 
-export function useFetchInstillingsHistorikk(
-    fnr: string,
-    options?: Options
-): UseAxiosResponseValue<InnstillingsHistorikk[]> {
-    return useAxios<InnstillingsHistorikk[]>(
-        { url: `/veilarboppfolging/api/oppfolging/innstillingsHistorikk?fnr=${fnr}` },
-        options
-    );
-}
-
-export function settBrukerTilDigital(fnr: string, veilederId: string, begrunnelse: string): Promise<AxiosResponse> {
+export function settBrukerTilDigital(fnr: string, veilederId: string, begrunnelse: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/settDigital?fnr=${fnr}`, {
         begrunnelse,
         veilederId,
     });
 }
 
-export function settBrukerTilManuell(fnr: string, veilederId: string, begrunnelse: string): Promise<AxiosResponse> {
+export function settBrukerTilManuell(fnr: string, veilederId: string, begrunnelse: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/settManuell?fnr=${fnr}`, {
         begrunnelse,
         veilederId,
     });
 }
 
-export function startKvpOppfolging(fnr: string, begrunnelse: string): Promise<AxiosResponse> {
+export function startKvpOppfolging(fnr: string, begrunnelse: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/startKvp?fnr=${fnr}`, {
         begrunnelse,
     });
 }
 
-export function stoppKvpOppfolging(fnr: string, begrunnelse: string): Promise<AxiosResponse> {
+export function stoppKvpOppfolging(fnr: string, begrunnelse: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/stoppKvp?fnr=${fnr}`, {
         begrunnelse,
     });
 }
 
-export function startEskalering(dialogId: string, begrunnelse: string, fnr: string): Promise<AxiosResponse> {
+export function startEskalering(dialogId: string, begrunnelse: string, fnr: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/startEskalering/?fnr=${fnr}`, {
         dialogId,
         begrunnelse,
     });
 }
 
-export function stoppEskalering(fnr: string, begrunnelse?: string): Promise<AxiosResponse> {
+export function stoppEskalering(fnr: string, begrunnelse?: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/stoppEskalering/?fnr=${fnr}`, {
         begrunnelse,
     });
 }
 
-export function avsluttOppfolging(fnr: string, begrunnelse: string, veilederId: string): Promise<AxiosResponse> {
+export function avsluttOppfolging(fnr: string, begrunnelse: string, veilederId: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/avsluttOppfolging?fnr=${fnr}`, {
         begrunnelse,
         veilederId,
@@ -184,6 +171,6 @@ export function avsluttOppfolging(fnr: string, begrunnelse: string, veilederId: 
 
 export function tildelTilVeileder(
     tilordninger: TildelVeilederData[]
-): Promise<AxiosResponse<{ resultat: string; feilendeTilordninger: TildelVeilederData[] }>> {
+): AxiosPromise<{ resultat: string; feilendeTilordninger: TildelVeilederData[] }> {
     return axiosInstance.post(`/veilarboppfolging/api/tilordneveileder`, tilordninger);
 }

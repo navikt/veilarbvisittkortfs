@@ -8,8 +8,10 @@ import { StringOrNothing } from '../../../../util/type/stringornothings';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { useDataStore } from '../../../../store/data-store';
 import { useAppStore } from '../../../../store/app-store';
-import { useFetchVeilederePaEnhet, VeilederData } from '../../../../api/veilarbveileder';
+import { fetchVeilederePaEnhet, VeilederData } from '../../../../api/veilarbveileder';
 import { OppgaveTema } from '../../../../api/veilarboppgave';
+import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
+import { ifResponseHasData } from '../../../../util/utils';
 
 interface OpprettOppgaveVelgVeilederProps {
     veilederId: StringOrNothing;
@@ -27,23 +29,16 @@ function OpprettOppgaveVelgVeileder({
     const { enhetId } = useAppStore();
     const { veilederePaEnhet, setVeilederePaEnhet } = useDataStore();
 
-    const fetchVeilederePaEnhet = useFetchVeilederePaEnhet(enhetId || '', { manual: true });
+    const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
 
     const veilederListe = veilederePaEnhet?.veilederListe || [];
 
     useEffect(() => {
         if (enhetId && !veilederePaEnhet) {
-            fetchVeilederePaEnhet.fetch();
+            veilederePaEnhetFetcher.fetch(enhetId).then(ifResponseHasData(setVeilederePaEnhet)).catch();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [enhetId, veilederePaEnhet]);
-
-    useEffect(() => {
-        if (fetchVeilederePaEnhet.data) {
-            setVeilederePaEnhet(fetchVeilederePaEnhet.data);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchVeilederePaEnhet]);
 
     if (tema !== 'OPPFOLGING' && formikProps.values.veilederId) {
         formikProps.setFieldValue('veilederId', null);

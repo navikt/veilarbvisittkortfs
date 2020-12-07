@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import StartEskaleringForm, { StartEskaleringValues } from './start-eskalering-form';
@@ -14,9 +14,10 @@ import {
     oppdaterFerdigbehandlet,
     oppdaterVenterPaSvar,
 } from '../../../api/veilarbdialog';
-import { useFetchHarNivaa4 } from '../../../api/veilarbperson';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { useFetcherStore } from '../../../store/fetcher-store';
+import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
+import { fetchHarNivaa4 } from '../../../api/veilarbperson';
 
 interface OwnValues extends StartEskaleringValues {
     overskrift: string;
@@ -36,7 +37,7 @@ function StartEskalering() {
     const { oppfolgingFetcher } = useFetcherStore();
     const { showSpinnerModal, showStartEskaleringKvitteringModal, hideModal, showErrorModal } = useModalStore();
 
-    const fetchHarNivaa4 = useFetchHarNivaa4(brukerFnr);
+    const harNivaa4Fetcher = useAxiosFetcher(fetchHarNivaa4);
 
     function opprettHenvendelse(values: OwnValues) {
         showSpinnerModal();
@@ -77,11 +78,16 @@ function StartEskalering() {
             .catch(showErrorModal);
     }
 
-    if (fetchHarNivaa4.loading) {
+    useEffect(() => {
+        harNivaa4Fetcher.fetch(brukerFnr);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [brukerFnr]);
+
+    if (harNivaa4Fetcher.loading) {
         return <LasterModal />;
     }
 
-    if (!oppfolging.reservasjonKRR || !fetchHarNivaa4.data?.harbruktnivaa4) {
+    if (!oppfolging.reservasjonKRR || !harNivaa4Fetcher.data?.harbruktnivaa4) {
         const varselTekst = !oppfolging.reservasjonKRR
             ? 'Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret, og du kan derfor ikke sende varsel.'
             : 'Du kan ikke sende varsel fordi systemet ikke får sjekket om denne brukeren er en digital eller manuell bruker.';

@@ -1,6 +1,6 @@
-import { Options } from 'axios-hooks';
-import { useAxios, UseAxiosResponseValue } from './utils';
+import { axiosInstance } from './utils';
+import { AxiosPromise } from 'axios';
 
-export function useFetchHarTiltak(fnr: string, options?: Options): UseAxiosResponseValue<boolean> {
-    return useAxios<boolean>(`/veilarbaktivitet/api/aktivitet/harTiltak?fnr=${fnr}`, options);
+export function fetchHarTiltak(fnr: string): AxiosPromise<boolean> {
+    return axiosInstance.get<boolean>(`/veilarbaktivitet/api/aktivitet/harTiltak?fnr=${fnr}`);
 }

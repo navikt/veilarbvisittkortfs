@@ -1,5 +1,5 @@
-import { Options } from 'axios-hooks';
-import { useAxios, UseAxiosResponseValue } from './utils';
+import { AxiosPromise } from 'axios';
+import { axiosInstance } from './utils';
 
 export type RegistreringType = 'ORDINAER' | 'SYKMELDT';
 export type InnsatsgruppeType = 'STANDARD_INNSATS' | 'SITUASJONSBESTEMT_INNSATS' | 'BEHOV_FOR_ARBEIDSEVNEVURDERING';
@@ -15,6 +15,6 @@ export interface RegistreringData {
     };
 }
 
-export function useFetchRegistrering(fnr: string, options?: Options): UseAxiosResponseValue<RegistreringData> {
-    return useAxios<RegistreringData>({ url: `/veilarbregistrering/api/registrering?fnr=${fnr}` }, options);
+export function fetchRegistrering(fnr: string): AxiosPromise<RegistreringData> {
+    return axiosInstance.get<RegistreringData>(`/veilarbregistrering/api/registrering?fnr=${fnr}`);
 }
