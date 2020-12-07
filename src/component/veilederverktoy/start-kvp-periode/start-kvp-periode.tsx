@@ -3,15 +3,25 @@ import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnel
 import { Normaltekst } from 'nav-frontend-typografi';
 import { useModalStore } from '../../../store/modal-store';
 import { useAppStore } from '../../../store/app-store';
-import { startKvpOppfolging } from '../../../api/veilarboppfolging';
+import { fetchOppfolging, startKvpOppfolging } from '../../../api/veilarboppfolging';
+import { ifResponseHasData } from '../../../util/utils';
+import { useDataStore } from '../../../store/data-store';
 
 function StarKvpPeriode() {
     const { brukerFnr } = useAppStore();
+    const { setOppfolging } = useDataStore();
     const { showStartKvpPeriodeKvitteringModal, showSpinnerModal, showErrorModal } = useModalStore();
 
     function startKvp({ begrunnelse }: BegrunnelseValues) {
         showSpinnerModal();
-        startKvpOppfolging(brukerFnr, begrunnelse).then(showStartKvpPeriodeKvitteringModal).catch(showErrorModal);
+        startKvpOppfolging(brukerFnr, begrunnelse)
+            .then(() => {
+                fetchOppfolging(brukerFnr)
+                    .then(ifResponseHasData(setOppfolging))
+                    .then(showStartKvpPeriodeKvitteringModal)
+                    .catch(showErrorModal);
+            })
+            .catch(showErrorModal);
     }
 
     const infoTekst = (
