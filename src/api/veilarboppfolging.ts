@@ -29,7 +29,6 @@ export interface EskaleringsVarsel {
 }
 
 export interface AvslutningStatus {
-    harTiltak: boolean;
     harYtelser: boolean;
     inaktiveringsDato: StringOrNothing;
     kanAvslutte: boolean;

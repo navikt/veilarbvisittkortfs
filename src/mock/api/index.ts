@@ -8,8 +8,10 @@ import { veilarbportefoljeHandlers } from './veilarbportefolje';
 import { veilarbregistreringHandlers } from './veilarbregistrering';
 import { veilarbvedtaksstotteHandlers } from './veilarbvedtaksstotte';
 import { veilarbveilederHandlers } from './veilarbveileder';
+import { veilarbaktivitetHandlers } from './veilarbaktivitet';
 
 export const allHandlers: RequestHandlersList = [
+    ...veilarbaktivitetHandlers,
     ...veilarbdialogHandlers,
     ...veilarboppfolgingHandlers,
     ...veilarboppfolgingHandlers,
