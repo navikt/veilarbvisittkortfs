@@ -37,7 +37,7 @@ function Veilederverktoyslinje() {
         showStoppKvpPeriodeModal,
         showOpprettOppgaveModal,
         showAvsluttOppfolgingModal,
-        showVisHistorikkModal,
+        showHistorikkModal,
     } = useModalStore();
 
     const kanStarteEskalering = selectKanSendeEskaleringsVarsel(oppfolging, tilgangTilBrukersKontor);
@@ -181,7 +181,7 @@ function Veilederverktoyslinje() {
                         <li>
                             <StartProsess
                                 knappeTekst="Vis historikk"
-                                onClick={() => doAll(showVisHistorikkModal, lukkDropdown)}
+                                onClick={() => doAll(showHistorikkModal, lukkDropdown)}
                                 metricName="historikk"
                             />
                         </li>

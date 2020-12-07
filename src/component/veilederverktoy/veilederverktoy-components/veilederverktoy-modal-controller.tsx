@@ -25,11 +25,12 @@ import StopEskaleringKvittering from '../stopp-eskalering/stopp-esklaring-kvitte
 import { FeilModal } from '../prosess/feil-modal';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 import Historikk from '../historikk/historikk';
-import ArbeidslisteControllerModal from '../../arbeidsliste/arbeidsliste-controller-modal';
 import TildelVeileder from '../tildel-veileder/tildel-veileder';
 import { TildelVeilederKvittering, TildelVeilederKvitteringProps } from '../tildel-veileder/tildel-veileder-kvittering';
 import { FeilTildelingModal } from '../tildel-veileder/tildel-veileder-feil-modal';
 import { ModalType, useModalStore } from '../../../store/modal-store';
+import FjernArbeidslisteModal from '../../arbeidsliste/fjern-arbeidsliste-modal';
+import ArbeidslisteModal from '../../arbeidsliste/arbeidsliste-modal';
 
 export function VeilederverktoyModalController() {
     const { activeModalState } = useModalStore();
@@ -41,8 +42,10 @@ export function VeilederverktoyModalController() {
     switch (activeModalState.type) {
         case ModalType.START_ESKALERING:
             return <StartEskalering />;
-        case ModalType.VIS_ARBEIDSLISTE:
-            return <ArbeidslisteControllerModal />;
+        case ModalType.ARBEIDSLISTE:
+            return <ArbeidslisteModal />;
+        case ModalType.FJERN_ARBEIDSLISTE:
+            return <FjernArbeidslisteModal />;
         case ModalType.TILDEL_VEILEDER:
             return <TildelVeileder />;
         case ModalType.TILDEL_VEILEDER_FEILET:
@@ -89,7 +92,7 @@ export function VeilederverktoyModalController() {
             return <StoppEskalering />;
         case ModalType.STOPP_ESKALERING_KVITTERING:
             return <StopEskaleringKvittering />;
-        case ModalType.VIS_HISTORIKK:
+        case ModalType.HISTORIKK:
             return <Historikk />;
         case ModalType.FEIL_I_VEILEDERVERKTOY:
             return <FeilModal />;
