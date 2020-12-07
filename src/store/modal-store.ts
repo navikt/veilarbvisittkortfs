@@ -8,7 +8,8 @@ import { TildelVeilederKvitteringProps } from '../component/veilederverktoy/tild
 
 export enum ModalType {
     START_ESKALERING,
-    VIS_ARBEIDSLISTE,
+    ARBEIDSLISTE,
+    FJERN_ARBEIDSLISTE,
     TILDEL_VEILEDER,
     TILDEL_VEILEDER_FEILET,
     TILDEL_VEILEDER_KVITTERING,
@@ -28,7 +29,7 @@ export enum ModalType {
     AVSLUTT_OPPFOLGING_KVITTERING,
     STOPP_ESKALERING,
     STOPP_ESKALERING_KVITTERING,
-    VIS_HISTORIKK,
+    HISTORIKK,
     FEIL_I_VEILEDERVERKTOY,
     SPINNER,
 }
@@ -94,8 +95,8 @@ export const [ModalStore, useModalStore] = constate(() => {
         showModal(ModalType.AVSLUTT_OPPFOLGING);
     }
 
-    function showVisHistorikkModal() {
-        showModal(ModalType.VIS_HISTORIKK);
+    function showHistorikkModal() {
+        showModal(ModalType.HISTORIKK);
     }
 
     function showStartManuellOppfolgingKvitteringModal(props: StartManuellOppfolgingKvitteringProps) {
@@ -127,7 +128,11 @@ export const [ModalStore, useModalStore] = constate(() => {
     }
 
     function showArbeidslisteModal() {
-        showModal(ModalType.VIS_ARBEIDSLISTE);
+        showModal(ModalType.ARBEIDSLISTE);
+    }
+
+    function showFjernArbeidslisteModal() {
+        showModal(ModalType.FJERN_ARBEIDSLISTE);
     }
 
     function showStartEskaleringKvitteringModal() {
@@ -161,6 +166,7 @@ export const [ModalStore, useModalStore] = constate(() => {
         showTildelVeilederKvitteringModal,
         showTildelVeilederFeiletModal,
         showArbeidslisteModal,
+        showFjernArbeidslisteModal,
         showStartEskaleringKvitteringModal,
         showStoppEskaleringKvitteringModal,
         showTildelVeilederModal,
@@ -172,6 +178,6 @@ export const [ModalStore, useModalStore] = constate(() => {
         showStoppKvpPeriodeModal,
         showOpprettOppgaveModal,
         showAvsluttOppfolgingModal,
-        showVisHistorikkModal,
+        showHistorikkModal,
     };
 });
