@@ -6,6 +6,10 @@ export function isDevelopment(): boolean {
     return process.env.REACT_APP_DEV === 'true';
 }
 
+export function hasFields(obj: {}): boolean {
+    return Object.keys(obj).length > 0;
+}
+
 export function ifResponseHasData<T>(
     callback: (data: T) => void
 ): (res: AxiosResponse<T>) => Promise<AxiosResponse<T>> {
