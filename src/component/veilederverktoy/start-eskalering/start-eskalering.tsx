@@ -6,7 +6,7 @@ import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
 import { eskaleringVarselSendtEvent, ifResponseHasData } from '../../../util/utils';
-import { startEskalering } from '../../../api/veilarboppfolging';
+import { fetchOppfolging, startEskalering } from '../../../api/veilarboppfolging';
 import {
     Egenskaper,
     HenvendelseData,
@@ -15,7 +15,6 @@ import {
     oppdaterVenterPaSvar,
 } from '../../../api/veilarbdialog';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
-import { useFetcherStore } from '../../../store/fetcher-store';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { fetchHarNivaa4 } from '../../../api/veilarbperson';
 
@@ -34,9 +33,9 @@ const initialValues = {
 function StartEskalering() {
     const { brukerFnr } = useAppStore();
     const { oppfolging, setOppfolging } = useDataStore();
-    const { oppfolgingFetcher } = useFetcherStore();
     const { showSpinnerModal, showStartEskaleringKvitteringModal, hideModal, showErrorModal } = useModalStore();
 
+    const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
     const harNivaa4Fetcher = useAxiosFetcher(fetchHarNivaa4);
 
     function opprettHenvendelse(values: OwnValues) {

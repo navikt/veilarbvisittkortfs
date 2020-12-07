@@ -6,15 +6,16 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
-import { settBrukerTilDigital } from '../../../api/veilarboppfolging';
-import { useFetcherStore } from '../../../store/fetcher-store';
+import { fetchOppfolging, settBrukerTilDigital } from '../../../api/veilarboppfolging';
 import { ifResponseHasData } from '../../../util/utils';
+import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 
 function StartDigitalOppfolging() {
     const { brukerFnr } = useAppStore();
     const { innloggetVeileder, oppfolging, setOppfolging } = useDataStore();
-    const { oppfolgingFetcher } = useFetcherStore();
     const { hideModal, showStartDigitalOppfolgingKvitteringModal, showSpinnerModal, showErrorModal } = useModalStore();
+
+    const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
 
     function startDigitalOppgfolging(begrunnelseValues: BegrunnelseValues) {
         showSpinnerModal();

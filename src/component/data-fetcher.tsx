@@ -3,11 +3,10 @@ import { useDataStore } from '../store/data-store';
 import { fetchFeaturesToggles } from '../api/veilarbpersonflatefs';
 import { useAppStore } from '../store/app-store';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { fetchOppfolgingsstatus, fetchTilgangTilBrukersKontor } from '../api/veilarboppfolging';
+import { fetchOppfolging, fetchOppfolgingsstatus, fetchTilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { fetchPersonalia } from '../api/veilarbperson';
 import { fetchInnloggetVeileder, fetchVeilederePaEnhet } from '../api/veilarbveileder';
 import { fetchArbeidsliste } from '../api/veilarbportefolje';
-import { useFetcherStore } from '../store/fetcher-store';
 import { hasFields, ifResponseHasData } from '../util/utils';
 import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
 import './data-fetcher.less';
@@ -30,8 +29,7 @@ export function DataFetcher(props: { children: any }) {
         setFeatures,
     } = useDataStore();
 
-    const { oppfolgingFetcher } = useFetcherStore();
-
+    const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
     const oppfolgingstatusFetcher = useAxiosFetcher(fetchOppfolgingsstatus);
     const innloggetVeilederFetcher = useAxiosFetcher(fetchInnloggetVeileder);
     const featureToggleFetcher = useAxiosFetcher(fetchFeaturesToggles);

@@ -8,11 +8,11 @@ import { BegrunnelseTextArea } from '../begrunnelseform/begrunnelse-textarea';
 import { useAppStore } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
-import { stoppEskalering } from '../../../api/veilarboppfolging';
+import { fetchOppfolging, stoppEskalering } from '../../../api/veilarboppfolging';
 import { eskaleringVarselSendtEvent, ifResponseHasData } from '../../../util/utils';
 import { Egenskaper, nyHenvendelse } from '../../../api/veilarbdialog';
 import './stopp-eskalering.less';
-import { useFetcherStore } from '../../../store/fetcher-store';
+import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 
 interface FormValues {
     begrunnelse: string;
@@ -27,8 +27,9 @@ const initialFormValues: FormValues = {
 function StoppEskalering() {
     const { brukerFnr } = useAppStore();
     const { oppfolging, setOppfolging } = useDataStore();
-    const { oppfolgingFetcher } = useFetcherStore();
     const { showStoppEskaleringKvitteringModal, showErrorModal, showSpinnerModal } = useModalStore();
+
+    const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
 
     async function startStoppingAvEskalering(values: FormValues) {
         showSpinnerModal();
