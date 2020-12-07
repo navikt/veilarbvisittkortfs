@@ -1,5 +1,5 @@
-import { Options } from 'axios-hooks';
-import { useAxios, UseAxiosResponseValue } from './utils';
+import { AxiosPromise } from 'axios';
+import { axiosInstance } from './utils';
 
 export interface VeilederData {
     ident: string;
@@ -17,14 +17,14 @@ export interface EnhetData {
     navn: string;
 }
 
-export function useFetchInnloggetVeileder(options?: Options): UseAxiosResponseValue<VeilederData> {
-    return useAxios<VeilederData>({ url: `/veilarbveileder/api/veileder/me` }, options);
+export function fetchInnloggetVeileder(): AxiosPromise<VeilederData> {
+    return axiosInstance.get<VeilederData>(`/veilarbveileder/api/veileder/me`);
 }
 
-export function useFetchVeilederePaEnhet(enhetId: string, options?: Options): UseAxiosResponseValue<VeilederListe> {
-    return useAxios<VeilederListe>({ url: `/veilarbveileder/api/enhet/${enhetId}/veiledere` }, options);
+export function fetchVeilederePaEnhet(enhetId: string): AxiosPromise<VeilederListe> {
+    return axiosInstance.get<VeilederListe>(`/veilarbveileder/api/enhet/${enhetId}/veiledere`);
 }
 
-export function useFetchEnhetNavn(enhetId: string, options?: Options): UseAxiosResponseValue<EnhetData> {
-    return useAxios<EnhetData>({ url: `/veilarbveileder/api/enhet/${enhetId}/navn` }, options);
+export function fetchEnhetNavn(enhetId: string): AxiosPromise<EnhetData> {
+    return axiosInstance.get<EnhetData>(`/veilarbveileder/api/enhet/${enhetId}/navn`);
 }

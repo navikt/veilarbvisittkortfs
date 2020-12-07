@@ -1,8 +1,8 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
-import { Features } from '../../api/veilarbpersonflatefs';
+import { FeatureToggles } from '../../api/veilarbpersonflatefs';
 
-const mockFeatures: Features = {
+const mockFeatures: FeatureToggles = {
     'pto.vedtaksstotte.pilot': true,
     'veilarbvedtaksstottefs.prelansering': true,
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { AvsluttOppfolgingInfoText } from './components/avslutt-oppfolging-info-text';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
@@ -8,27 +8,33 @@ import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { selectHarUbehandledeDialoger } from '../../../util/selectors';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
-import { useFetchDialoger } from '../../../api/veilarbdialog';
+import { fetchDialoger } from '../../../api/veilarbdialog';
 import { VEDTAKSSTTOTTE_PRELANSERING_TOGGLE } from '../../../api/veilarbpersonflatefs';
+import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 
 const for28dagerSiden = dayjs().subtract(28, 'day').toISOString();
 
 function AvsluttOppfolging() {
     const { brukerFnr } = useAppStore();
     const { oppfolging, features } = useDataStore();
-    const { showtAvsluttOppfolgingBekrefModal, hideModal } = useModalStore();
+    const { showtAvsluttOppfolgingBekrefModal: showAvsluttOppfolgingBekrefModal, hideModal } = useModalStore();
 
-    const fetchDialoger = useFetchDialoger(brukerFnr);
+    const dialogFetcher = useAxiosFetcher(fetchDialoger);
 
     const avslutningStatus = oppfolging.avslutningStatus;
     const datoErInnenFor28DagerSiden = (avslutningStatus?.inaktiveringsDato || 0) > for28dagerSiden;
-    const harUbehandledeDialoger = fetchDialoger.data ? selectHarUbehandledeDialoger(fetchDialoger.data) : false;
+    const harUbehandledeDialoger = dialogFetcher.data ? selectHarUbehandledeDialoger(dialogFetcher.data) : false;
 
     function handleSubmitAvsluttOppfolging(values: BegrunnelseValues) {
-        showtAvsluttOppfolgingBekrefModal({ begrunnelse: values.begrunnelse });
+        showAvsluttOppfolgingBekrefModal({ begrunnelse: values.begrunnelse });
     }
 
-    if (fetchDialoger.loading) {
+    useEffect(() => {
+        dialogFetcher.fetch(brukerFnr);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [brukerFnr]);
+
+    if (dialogFetcher.loading) {
         return <LasterModal />;
     }
 

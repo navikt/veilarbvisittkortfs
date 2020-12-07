@@ -27,6 +27,9 @@ function ArbeidslisteControllerModal() {
     const kanFjernesFraArbeidsliste =
         !!arbeidsliste && kanFjerneArbeidsliste(arbeidsliste, oppfolging, innloggetVeileder.ident);
 
+    // TODO: når man trykke på avbryt så fungerer ikke ArbeidslisteControllerModal
+    // TODO: Hvis man tildeler veileder til en annen, så står fortsatt knappen for å lage arbeidsliste til refresh
+
     const [visArbeidslisteModal, setVisArbeidslisteModal] = useState(true);
     const [visFjernArbeidslisteModal, setVisFjernArbeidslisteModal] = useState(false);
 

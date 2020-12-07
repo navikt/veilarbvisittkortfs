@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDataStore } from '../store/data-store';
-import { useFetchFeatures } from '../api/veilarbpersonflatefs';
+import { fetchFeaturesToggles } from '../api/veilarbpersonflatefs';
 import { useAppStore } from '../store/app-store';
 import { isAnyLoading } from '../api/utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { useFetchOppfolgingsstatus, useFetchTilgangTilBrukersKontor } from '../api/veilarboppfolging';
-import { useFetchPersonalia } from '../api/veilarbperson';
-import { useFetchInnloggetVeileder, useFetchVeilederePaEnhet } from '../api/veilarbveileder';
-import { useFetchArbeidsliste } from '../api/veilarbportefolje';
+import { fetchOppfolgingsstatus, fetchTilgangTilBrukersKontor } from '../api/veilarboppfolging';
+import { fetchPersonalia } from '../api/veilarbperson';
+import { fetchInnloggetVeileder, fetchVeilederePaEnhet } from '../api/veilarbveileder';
+import { fetchArbeidsliste } from '../api/veilarbportefolje';
 import { useFetcherStore } from '../store/fetcher-store';
 import { ifResponseHasData } from '../util/utils';
 import './data-fetcher.less';
+import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
 
 export function DataFetcher(props: { children: any }) {
     const { brukerFnr } = useAppStore();
@@ -27,97 +28,54 @@ export function DataFetcher(props: { children: any }) {
 
     const { oppfolgingFetcher } = useFetcherStore();
 
-    const fetchOppfolgingsstatus = useFetchOppfolgingsstatus(brukerFnr);
-    const fetchInnloggetVeileder = useFetchInnloggetVeileder();
-    const fetchPersonalia = useFetchPersonalia(brukerFnr);
-    const fetchTilgangTilBrukersKontor = useFetchTilgangTilBrukersKontor(brukerFnr);
-    const fetchFeatures = useFetchFeatures();
+    const oppfolgingstatusFetcher = useAxiosFetcher(fetchOppfolgingsstatus);
+    const innloggetVeilederFetcher = useAxiosFetcher(fetchInnloggetVeileder);
+    const featureToggleFetcher = useAxiosFetcher(fetchFeaturesToggles);
+    const personaliaFetcher = useAxiosFetcher(fetchPersonalia);
+    const tilgangTilBrukersKontorFetcher = useAxiosFetcher(fetchTilgangTilBrukersKontor);
+    const arbeidslisteFetcher = useAxiosFetcher(fetchArbeidsliste);
+    const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
 
-    const oppfolgingsEnhet = fetchOppfolgingsstatus?.data?.oppfolgingsenhet.enhetId || '';
-
-    const fetchArbeidsliste = useFetchArbeidsliste(brukerFnr, { manual: true });
-    const fetchVeiledere = useFetchVeilederePaEnhet(oppfolgingsEnhet, { manual: true });
+    const oppfolgingsEnhet = oppfolgingstatusFetcher?.data?.oppfolgingsenhet.enhetId || '';
 
     useEffect(() => {
-        oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging));
-
+        oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging)).catch();
+        oppfolgingstatusFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolgingsstatus)).catch();
+        personaliaFetcher.fetch(brukerFnr).then(ifResponseHasData(setPersonalia)).catch();
+        tilgangTilBrukersKontorFetcher.fetch(brukerFnr).then(ifResponseHasData(setTilgangTilBrukersKontor)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr]);
 
     useEffect(() => {
-        if (fetchOppfolgingsstatus.data) {
-            setOppfolgingsstatus(fetchOppfolgingsstatus.data);
-        }
+        innloggetVeilederFetcher.fetch().then(ifResponseHasData(setInnloggetVeileder)).catch();
+        featureToggleFetcher.fetch().then(ifResponseHasData(setFeatures)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchOppfolgingsstatus]);
+    }, []);
 
     useEffect(() => {
-        if (fetchInnloggetVeileder.data) {
-            setInnloggetVeileder(fetchInnloggetVeileder.data);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchInnloggetVeileder]);
-
-    useEffect(() => {
-        if (fetchPersonalia.data) {
-            setPersonalia(fetchPersonalia.data);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchPersonalia]);
-
-    useEffect(() => {
-        if (fetchTilgangTilBrukersKontor.data) {
-            setTilgangTilBrukersKontor(fetchTilgangTilBrukersKontor.data);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchTilgangTilBrukersKontor]);
-
-    useEffect(() => {
-        if (fetchFeatures.data) {
-            setFeatures(fetchFeatures.data);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchFeatures]);
-
-    useEffect(() => {
-        if (fetchArbeidsliste.data) {
-            setArbeidsliste(fetchArbeidsliste.data);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchArbeidsliste]);
-
-    useEffect(() => {
-        if (fetchVeiledere.data) {
-            setVeilederePaEnhet(fetchVeiledere.data);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchVeiledere]);
-
-    useEffect(() => {
-        const harTilgang =
-            fetchTilgangTilBrukersKontor.data && fetchTilgangTilBrukersKontor.data.tilgangTilBrukersKontor;
-        const underOppfolging = oppfolgingFetcher.data && oppfolgingFetcher.data.underOppfolging;
+        const harTilgang = tilgangTilBrukersKontorFetcher.data?.tilgangTilBrukersKontor;
+        const underOppfolging = oppfolgingFetcher.data?.underOppfolging;
 
         if (harTilgang && underOppfolging) {
-            fetchArbeidsliste.fetch();
+            arbeidslisteFetcher.fetch(brukerFnr).then(ifResponseHasData(setArbeidsliste)).catch();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchTilgangTilBrukersKontor, oppfolgingFetcher.data]);
+    }, [tilgangTilBrukersKontorFetcher, oppfolgingFetcher.data]);
 
     useEffect(() => {
         if (oppfolgingsEnhet) {
-            fetchVeiledere.fetch();
+            veilederePaEnhetFetcher.fetch(oppfolgingsEnhet).then(ifResponseHasData(setVeilederePaEnhet)).catch();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fetchOppfolgingsstatus]);
+    }, [oppfolgingstatusFetcher]);
 
     if (
         isAnyLoading(
-            fetchOppfolgingsstatus,
+            oppfolgingstatusFetcher,
             oppfolgingFetcher,
-            fetchInnloggetVeileder,
-            fetchPersonalia,
-            fetchTilgangTilBrukersKontor
+            innloggetVeilederFetcher,
+            personaliaFetcher,
+            tilgangTilBrukersKontorFetcher
         )
     ) {
         return <NavFrontendSpinner className="visittkort-laster" type="L" />;

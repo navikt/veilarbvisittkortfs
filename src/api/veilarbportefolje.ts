@@ -1,6 +1,5 @@
-import { AxiosResponse } from 'axios';
-import { axiosInstance, useAxios, UseAxiosResponseValue } from './utils';
-import { Options } from 'axios-hooks';
+import { AxiosPromise } from 'axios';
+import { axiosInstance } from './utils';
 import { StringOrNothing } from '../util/type/stringornothings';
 import { OrNothing } from '../util/type/ornothing';
 
@@ -32,18 +31,18 @@ export interface ArbeidslisteformValues {
     kategori: KategoriModell | null;
 }
 
-export function useFetchArbeidsliste(fnr: string, options?: Options): UseAxiosResponseValue<Arbeidsliste> {
-    return useAxios<Arbeidsliste>({ url: `/veilarbportefolje/api/arbeidsliste/${fnr}` }, options);
+export function fetchArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
+    return axiosInstance.get<Arbeidsliste>(`/veilarbportefolje/api/arbeidsliste/${fnr}`);
 }
 
-export function lagreArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformValues): Promise<AxiosResponse> {
+export function lagreArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformValues): AxiosPromise {
     return axiosInstance.post(`/veilarbportefolje/api/arbeidsliste/${fnr}`, arbeidsliste);
 }
 
-export function redigerArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformValues): Promise<AxiosResponse> {
+export function redigerArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformValues): AxiosPromise {
     return axiosInstance.put(`/veilarbportefolje/api/arbeidsliste/${fnr}`, arbeidsliste);
 }
 
-export function slettArbeidsliste(fnr: string): Promise<AxiosResponse> {
+export function slettArbeidsliste(fnr: string): AxiosPromise {
     return axiosInstance.delete(`/veilarbportefolje/api/arbeidsliste/${fnr}`);
 }

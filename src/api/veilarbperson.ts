@@ -1,5 +1,5 @@
-import { Options } from 'axios-hooks';
-import { useAxios, UseAxiosResponseValue } from './utils';
+import { AxiosPromise } from 'axios';
+import { axiosInstance } from './utils';
 import { StringOrNothing } from '../util/type/stringornothings';
 
 export interface Personalia {
@@ -21,10 +21,10 @@ export interface HarBruktNivaa4Type {
     personidentifikator?: string;
 }
 
-export function useFetchPersonalia(fnr: string, options?: Options): UseAxiosResponseValue<Personalia> {
-    return useAxios<Personalia>({ url: `/veilarbperson/api/person/${fnr}` }, options);
+export function fetchPersonalia(fnr: string): AxiosPromise<Personalia> {
+    return axiosInstance.get<Personalia>(`/veilarbperson/api/person/${fnr}`);
 }
 
-export function useFetchHarNivaa4(fnr: string, options?: Options): UseAxiosResponseValue<HarBruktNivaa4Type> {
-    return useAxios<HarBruktNivaa4Type>({ url: `/veilarbperson/api/person/${fnr}/harNivaa4` }, options);
+export function fetchHarNivaa4(fnr: string): AxiosPromise<HarBruktNivaa4Type> {
+    return axiosInstance.get<HarBruktNivaa4Type>(`/veilarbperson/api/person/${fnr}/harNivaa4`);
 }

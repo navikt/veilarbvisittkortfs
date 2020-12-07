@@ -1,22 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { opprettetAvTekst } from './opprettet-av';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { hasAnyFailed, isAnyLoading } from '../../../../api/utils';
 import { toSimpleDateStr } from '../../../../util/date-utils';
-import { useFetchEnhetNavn } from '../../../../api/veilarbveileder';
 import { InnstillingsHistorikk } from '../../../../api/veilarboppfolging';
+import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
+import { fetchEnhetNavn } from '../../../../api/veilarbveileder';
 
 export function OppfolgingEnhetEndret(props: { historikkElement: InnstillingsHistorikk; erGjeldendeEnhet: boolean }) {
     const { enhet, dato, opprettetAv, opprettetAvBrukerId } = props.historikkElement;
-    const fetchEnhetNavn = useFetchEnhetNavn(enhet!);
+    const enhetNavnFetcher = useAxiosFetcher(fetchEnhetNavn);
 
-    const enhetNavn = fetchEnhetNavn.data?.navn;
+    const enhetNavn = enhetNavnFetcher.data?.navn;
 
-    if (isAnyLoading(fetchEnhetNavn)) {
+    useEffect(() => {
+        if (enhet) {
+            enhetNavnFetcher.fetch(enhet);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [enhet]);
+
+    if (isAnyLoading(enhetNavnFetcher)) {
         return <NavFrontendSpinner type="XL" />;
-    } else if (hasAnyFailed(fetchEnhetNavn)) {
+    } else if (hasAnyFailed(enhetNavnFetcher)) {
         return <AlertStripeFeil>Noe gikk galt</AlertStripeFeil>;
     } else if (!enhetNavn) {
         return null;

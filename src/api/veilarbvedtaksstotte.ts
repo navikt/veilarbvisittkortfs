@@ -1,6 +1,6 @@
-import { Options } from 'axios-hooks';
-import { useAxios, UseAxiosResponseValue } from './utils';
+import { axiosInstance } from './utils';
+import { AxiosPromise } from 'axios';
 
-export function useFetchHarUtkast(fnr: string, options?: Options): UseAxiosResponseValue<true> {
-    return useAxios<true>({ url: `/veilarbvedtaksstotte/api/${fnr}/harUtkast` }, options);
+export function fetchHarUtkast(fnr: string): AxiosPromise<boolean> {
+    return axiosInstance.get<boolean>(`/veilarbvedtaksstotte/api/${fnr}/harUtkast`);
 }
