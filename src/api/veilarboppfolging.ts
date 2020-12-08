@@ -45,7 +45,6 @@ export interface OppfolgingsPerioder {
 }
 
 export interface Oppfolging {
-    avslutningStatus: OrNothing<AvslutningStatus>;
     erIkkeArbeidssokerUtenOppfolging: boolean;
     erSykmeldtMedArbeidsgiver: OrNothing<boolean>;
     fnr: string;
@@ -121,6 +120,10 @@ export function fetchInstillingsHistorikk(fnr: string): AxiosPromise<Innstilling
     return axiosInstance.get<InnstillingsHistorikk[]>(
         `/veilarboppfolging/api/oppfolging/innstillingsHistorikk?fnr=${fnr}`
     );
+}
+
+export function fetchAvsluttOppfolgingStatus(fnr: string): AxiosPromise<AvslutningStatus> {
+    return axiosInstance.get(`/veilarboppfolging/api/oppfolging/avslutningStatus?fnr=${fnr}`);
 }
 
 export function settBrukerTilDigital(fnr: string, veilederId: string, begrunnelse: string): AxiosPromise {

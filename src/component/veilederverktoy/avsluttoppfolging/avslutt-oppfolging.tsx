@@ -11,17 +11,20 @@ import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { fetchDialoger } from '../../../api/veilarbdialog';
 import { VEDTAKSSTTOTTE_PRELANSERING_TOGGLE } from '../../../api/veilarbpersonflatefs';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
+import { fetchAvsluttOppfolgingStatus } from '../../../api/veilarboppfolging';
+import { isAnyLoading } from '../../../api/utils';
 
 const for28dagerSiden = dayjs().subtract(28, 'day').toISOString();
 
 function AvsluttOppfolging() {
     const { brukerFnr } = useAppStore();
-    const { oppfolging, features } = useDataStore();
+    const { features } = useDataStore();
     const { showtAvsluttOppfolgingBekrefModal: showAvsluttOppfolgingBekrefModal, hideModal } = useModalStore();
 
+    const avsluttOppfolgingFetcher = useAxiosFetcher(fetchAvsluttOppfolgingStatus);
     const dialogFetcher = useAxiosFetcher(fetchDialoger);
 
-    const avslutningStatus = oppfolging?.avslutningStatus;
+    const avslutningStatus = avsluttOppfolgingFetcher.data;
     const datoErInnenFor28DagerSiden = (avslutningStatus?.inaktiveringsDato || 0) > for28dagerSiden;
     const harUbehandledeDialoger = dialogFetcher.data ? selectHarUbehandledeDialoger(dialogFetcher.data) : false;
 
@@ -31,10 +34,11 @@ function AvsluttOppfolging() {
 
     useEffect(() => {
         dialogFetcher.fetch(brukerFnr);
+        avsluttOppfolgingFetcher.fetch(brukerFnr);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr]);
 
-    if (dialogFetcher.loading) {
+    if (isAnyLoading(dialogFetcher, avsluttOppfolgingFetcher)) {
         return <LasterModal />;
     }
 

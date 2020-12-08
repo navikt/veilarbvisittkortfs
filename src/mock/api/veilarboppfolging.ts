@@ -146,7 +146,6 @@ const mockOppfolging: Oppfolging = {
         tilhorendeDialogId: '1'
     },*/
     kanStarteOppfolging: false,
-    avslutningStatus: null,
     oppfolgingsPerioder: [
         {
             aktorId: '00007',
