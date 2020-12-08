@@ -21,7 +21,7 @@ function AvsluttOppfolging() {
 
     const dialogFetcher = useAxiosFetcher(fetchDialoger);
 
-    const avslutningStatus = oppfolging.avslutningStatus;
+    const avslutningStatus = oppfolging?.avslutningStatus;
     const datoErInnenFor28DagerSiden = (avslutningStatus?.inaktiveringsDato || 0) > for28dagerSiden;
     const harUbehandledeDialoger = dialogFetcher.data ? selectHarUbehandledeDialoger(dialogFetcher.data) : false;
 

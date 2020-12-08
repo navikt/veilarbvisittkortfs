@@ -29,9 +29,9 @@ function StartRegistreringProsess() {
 
     const veilarbLoginUrl = byggVeilarbLoginUrl();
     const registreringUrl = byggRegistreringUrl(brukerFnr, enhetId);
-    const brukerType = oppfolging.erSykmeldtMedArbeidsgiver
+    const brukerType = oppfolging?.erSykmeldtMedArbeidsgiver
         ? 'erSykemeldtMedArbeidsgiver'
-        : oppfolging.kanReaktiveres
+        : oppfolging?.kanReaktiveres
         ? 'kanReaktiveres'
         : 'kanIkkeReaktiveres';
 

@@ -4,17 +4,20 @@ import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/ve
 import { Personalia } from '../api/veilarbperson';
 import { Arbeidsliste } from '../api/veilarbportefolje';
 import { VeilederData } from '../api/veilarbveileder';
+import { OrNothing } from './type/ornothing';
 
-export function selectSammensattNavn(personalia: Personalia): string {
+export function selectSammensattNavn(personalia: Personalia | undefined): string {
+    if (!personalia) return '';
     const { fornavn, mellomnavn, etternavn } = personalia;
     return storeForbokstaver([fornavn, mellomnavn || '', etternavn]);
 }
 
 export function selectKanLeggeIArbeidsListe(
-    innloggetVeileder: VeilederData,
-    oppfolgingsstatus: OppfolgingStatus,
+    innloggetVeileder: OrNothing<VeilederData>,
+    oppfolgingsstatus: OrNothing<OppfolgingStatus>,
     arbeidsliste?: Arbeidsliste
 ): boolean {
+    if (!innloggetVeileder || !arbeidsliste || !oppfolgingsstatus) return false;
     return arbeidsliste?.endringstidspunkt == null && oppfolgingsstatus.veilederId === innloggetVeileder.ident;
 }
 
@@ -22,7 +25,8 @@ export function selectKanRedigereArbeidsliste(arbeidsliste?: Arbeidsliste): bool
     return !!arbeidsliste?.endringstidspunkt && arbeidsliste?.harVeilederTilgang;
 }
 
-export function kanRegistreresEllerReaktiveres(oppfolging: Oppfolging): boolean {
+export function kanRegistreresEllerReaktiveres(oppfolging: OrNothing<Oppfolging>): boolean {
+    if (!oppfolging) return false;
     const underOppfolging = oppfolging.underOppfolging;
     const kanReaktiveres = !!oppfolging.kanReaktiveres;
     return (underOppfolging && kanReaktiveres) || (!underOppfolging && !kanReaktiveres);
@@ -40,16 +44,17 @@ export function lagVeilederSammensattNavn(veileder: VeilederData): string {
 
 export function kanFjerneArbeidsliste(
     arbeidsliste: Arbeidsliste,
-    oppfolging: Oppfolging,
-    innloggetVeilederId: string
+    oppfolging: OrNothing<Oppfolging>,
+    innloggetVeilederId: OrNothing<string>
 ): boolean {
-    return !!arbeidsliste.endringstidspunkt && oppfolging.veilederId === innloggetVeilederId;
+    return !!arbeidsliste.endringstidspunkt && !!innloggetVeilederId && oppfolging?.veilederId === innloggetVeilederId;
 }
 
 export function selectKanSendeEskaleringsVarsel(
-    oppfolging: Oppfolging,
-    tilgangTilBrukersKontor: TilgangTilBrukersKontor
+    oppfolging: OrNothing<Oppfolging>,
+    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
 ): boolean {
+    if (!oppfolging || !tilgangTilBrukersKontor) return false;
     return (
         tilgangTilBrukersKontor.tilgangTilBrukersKontor &&
         oppfolging.underOppfolging &&
@@ -60,9 +65,10 @@ export function selectKanSendeEskaleringsVarsel(
 }
 
 export function selectKanStoppeEskaleringsVarsel(
-    oppfolging: Oppfolging,
-    tilgangTilBrukersKontor: TilgangTilBrukersKontor
+    oppfolging: OrNothing<Oppfolging>,
+    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
 ): boolean {
+    if (!oppfolging || !tilgangTilBrukersKontor) return false;
     return (
         tilgangTilBrukersKontor.tilgangTilBrukersKontor &&
         oppfolging.underOppfolging &&
@@ -73,31 +79,42 @@ export function selectKanStoppeEskaleringsVarsel(
 }
 
 export function selectKanAvslutteOppfolging(
-    oppfolging: Oppfolging,
-    tilgangTilBrukersKontor: TilgangTilBrukersKontor
+    oppfolging: OrNothing<Oppfolging>,
+    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
 ): boolean {
+    if (!oppfolging || !tilgangTilBrukersKontor) return false;
     return tilgangTilBrukersKontor.tilgangTilBrukersKontor && oppfolging.underOppfolging;
 }
 
 export function selectKanStarteManuellOppfolging(
-    oppfolging: Oppfolging,
-    tilgangTilBrukersKontor: TilgangTilBrukersKontor
+    oppfolging: OrNothing<Oppfolging>,
+    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
 ): boolean {
+    if (!oppfolging || !tilgangTilBrukersKontor) return false;
     return tilgangTilBrukersKontor.tilgangTilBrukersKontor && oppfolging.underOppfolging && !oppfolging.manuell;
 }
 
 export function selectKanStarteDigitalOppfolging(
-    oppfolging: Oppfolging,
-    tilgangTilBrukersKontor: TilgangTilBrukersKontor
+    oppfolging: OrNothing<Oppfolging>,
+    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
 ): boolean {
+    if (!oppfolging || !tilgangTilBrukersKontor) return false;
     return tilgangTilBrukersKontor.tilgangTilBrukersKontor && oppfolging.underOppfolging && oppfolging.manuell;
 }
 
-export function selectKanStarteKVP(oppfolging: Oppfolging, tilgangTilBrukersKontor: TilgangTilBrukersKontor): boolean {
+export function selectKanStarteKVP(
+    oppfolging: OrNothing<Oppfolging>,
+    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
+): boolean {
+    if (!oppfolging || !tilgangTilBrukersKontor) return false;
     return tilgangTilBrukersKontor.tilgangTilBrukersKontor && oppfolging.underOppfolging && !oppfolging.underKvp;
 }
 
-export function selectKanStoppeKVP(oppfolging: Oppfolging, tilgangTilBrukersKontor: TilgangTilBrukersKontor): boolean {
+export function selectKanStoppeKVP(
+    oppfolging: OrNothing<Oppfolging>,
+    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
+): boolean {
+    if (!oppfolging || !tilgangTilBrukersKontor) return false;
     return tilgangTilBrukersKontor.tilgangTilBrukersKontor && oppfolging.underOppfolging && oppfolging.underKvp;
 }
 
@@ -106,8 +123,9 @@ export function selectKanEndreArbeidsliste(arbeidsliste?: Arbeidsliste): boolean
 }
 
 export function selectKanTildeleVeileder(
-    oppfolging: Oppfolging,
-    tilgangTilBrukersKontor: TilgangTilBrukersKontor
+    oppfolging: OrNothing<Oppfolging>,
+    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
 ): boolean {
+    if (!oppfolging || !tilgangTilBrukersKontor) return false;
     return oppfolging.underOppfolging && tilgangTilBrukersKontor.tilgangTilBrukersKontor;
 }

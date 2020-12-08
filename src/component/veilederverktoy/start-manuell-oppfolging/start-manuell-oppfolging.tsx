@@ -16,7 +16,7 @@ function StartManuellOppfolging() {
 
     function settBrukerTilManuellOppfolging(values: BegrunnelseValues) {
         showSpinnerModal();
-        settBrukerTilManuell(brukerFnr, innloggetVeileder.ident, values.begrunnelse)
+        settBrukerTilManuell(brukerFnr, innloggetVeileder!.ident, values.begrunnelse)
             .then(() => {
                 oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging));
 

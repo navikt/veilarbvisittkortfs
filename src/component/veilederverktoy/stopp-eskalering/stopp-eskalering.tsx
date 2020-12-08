@@ -39,7 +39,7 @@ function StoppEskalering() {
                 const stoppEskaleringHenvendelse = {
                     begrunnelse: values.begrunnelse,
                     egenskaper: [Egenskaper.ESKALERINGSVARSEL],
-                    dialogId: oppfolging.gjeldendeEskaleringsvarsel?.tilhorendeDialogId || '',
+                    dialogId: oppfolging?.gjeldendeEskaleringsvarsel?.tilhorendeDialogId || '',
                     tekst: values.begrunnelse,
                 };
 

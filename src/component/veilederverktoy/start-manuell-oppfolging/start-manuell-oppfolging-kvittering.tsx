@@ -29,7 +29,7 @@ function StartManuellOppfolgingKvittering(props: StartManuellOppfolgingKvitterin
             const erManueltRegistrert = !!registreringData.registrering.manueltRegistrertAv;
             const logFields = {
                 brukerType: registreringData.type,
-                erKRR: oppfolging.reservasjonKRR,
+                erKRR: !!oppfolging?.reservasjonKRR,
                 erManueltRegistrert,
             };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 export interface VisibleProps {
-    visible: boolean;
+    visible?: any;
 }
 
 export default function visibleIf<PROPS>(

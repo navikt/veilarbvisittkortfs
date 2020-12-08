@@ -22,7 +22,7 @@ function AvsluttOppfolgingBekreft(props: AvsluttOppfolgingBekreftelseModalProps)
     function handleSubmitAvsluttOppfolging() {
         showSpinnerModal();
 
-        avsluttOppfolging(brukerFnr, props.begrunnelse, innloggetVeileder.ident)
+        avsluttOppfolging(brukerFnr, props.begrunnelse, innloggetVeileder!.ident)
             .then(showAvsluttOppfolgingKvitteringModal)
             .catch(showErrorModal);
     }

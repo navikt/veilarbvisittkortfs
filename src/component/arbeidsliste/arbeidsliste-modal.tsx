@@ -40,7 +40,7 @@ function ArbeidslisteModal() {
     const frist = liste.frist ? liste.frist.toString() : Date.now().toString();
 
     const kanFjernesFraArbeidsliste =
-        !!arbeidsliste && kanFjerneArbeidsliste(arbeidsliste, oppfolging, innloggetVeileder.ident);
+        !!arbeidsliste && kanFjerneArbeidsliste(arbeidsliste, oppfolging, innloggetVeileder?.ident);
 
     const arbeidslisteValues = {
         overskrift: liste.overskrift,

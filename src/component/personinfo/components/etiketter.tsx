@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import hiddenIf from '../../components/hidden-if/hidden-if';
 import EtikettBase, { EtikettInfo, EtikettAdvarsel, EtikettFokus } from 'nav-frontend-etiketter';
 import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
@@ -10,26 +9,28 @@ import { PILOT_TOGGLE } from '../../../api/veilarbpersonflatefs';
 import { OppfolgingStatus } from '../../../api/veilarboppfolging';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { ifResponseHasData } from '../../../util/utils';
+import visibleIf from '../../components/visible-if';
 
-const Advarsel = hiddenIf(EtikettAdvarsel);
-const Info = hiddenIf(EtikettInfo);
-const Fokus = hiddenIf(EtikettFokus);
-const Base = hiddenIf(EtikettBase);
+const Advarsel = visibleIf(EtikettAdvarsel);
+const Info = visibleIf(EtikettInfo);
+const Fokus = visibleIf(EtikettFokus);
+const Base = visibleIf(EtikettBase);
 
-export function erBrukerSykmeldt(oppfolging: OppfolgingStatus): boolean {
-    return oppfolging.formidlingsgruppe === 'IARBS' && oppfolging.servicegruppe === 'VURDI';
+function erBrukerSykmeldt(oppfolging: OrNothing<OppfolgingStatus>): boolean {
+    return !!oppfolging && oppfolging.formidlingsgruppe === 'IARBS' && oppfolging.servicegruppe === 'VURDI';
 }
 
-export function trengerVurdering(oppfolging: OppfolgingStatus): boolean {
-    return oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'IVURD';
+function trengerVurdering(oppfolging: OrNothing<OppfolgingStatus>): boolean {
+    return !!oppfolging && oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'IVURD';
 }
 
-export function trengerAEV(oppfolging: OppfolgingStatus): boolean {
-    return oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'BKART';
+function trengerAEV(oppfolging: OrNothing<OppfolgingStatus>): boolean {
+    return !!oppfolging && oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'BKART';
 }
 
-export function maglerVedtak(oppfolging: OppfolgingStatus): boolean {
+function manglerVedtak(oppfolging: OrNothing<OppfolgingStatus>): boolean {
     return (
+        !!oppfolging &&
         oppfolging.formidlingsgruppe !== 'ISERV' &&
         (oppfolging.servicegruppe === 'BKART' || oppfolging.servicegruppe === 'IVURD')
     );
@@ -56,44 +57,44 @@ function Etiketter() {
 
     return (
         <div className="etikett-container">
-            <Base hidden={!personalia.dodsdato} type="info" className="etikett--mork">
+            <Base visible={personalia?.dodsdato} type="info" className="etikett--mork">
                 Død
             </Base>
-            <Advarsel hidden={!personalia.diskresjonskode}>Kode {personalia.diskresjonskode}</Advarsel>
-            <Advarsel hidden={!personalia.sikkerhetstiltak}>{personalia.sikkerhetstiltak}</Advarsel>
-            <Advarsel hidden={!personalia.egenAnsatt}>Egen ansatt</Advarsel>
-            <Fokus hidden={!oppfolging.underKvp}>KVP</Fokus>
+            <Advarsel visible={personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>
+            <Advarsel visible={personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
+            <Advarsel visible={personalia?.egenAnsatt}>Egen ansatt</Advarsel>
+            <Fokus visible={oppfolging?.underKvp}>KVP</Fokus>
             <Fokus
-                hidden={oppfolging.reservasjonKRR || !oppfolging.manuell}
+                visible={oppfolging && (!oppfolging.reservasjonKRR || oppfolging.manuell)}
                 title="Brukeren er vurdert til å ikke kunne benytte seg av aktivitetsplanen og dialogen. Du kan endre til digital oppfølging i Veilederverktøy."
             >
                 Manuell oppfølging
             </Fokus>
             <Fokus
-                hidden={!oppfolging.reservasjonKRR}
+                visible={oppfolging?.reservasjonKRR}
                 title="Brukeren har reservert seg mot digital kommunikasjon i Kontakt- og reservasjonsregisteret, og kan derfor ikke benytte seg av aktivitetsplanen og dialogen."
             >
                 Reservert KRR
             </Fokus>
-            <Fokus hidden={!oppfolging.inaktivIArena}>Inaktivert</Fokus>
-            <Fokus hidden={oppfolging.underOppfolging}>Ikke under oppfølging</Fokus>
-            <Fokus hidden={!oppfolging.gjeldendeEskaleringsvarsel}>Varsel</Fokus>
+            <Fokus visible={oppfolging?.inaktivIArena}>Inaktivert</Fokus>
+            <Fokus visible={!oppfolging?.underOppfolging}>Ikke under oppfølging</Fokus>
+            <Fokus visible={oppfolging?.gjeldendeEskaleringsvarsel}>Varsel</Fokus>
             <Fokus
-                hidden={oppfolging.reservasjonKRR || oppfolging.manuell || oppfolging.kanVarsles}
+                visible={!oppfolging?.reservasjonKRR && !oppfolging?.manuell && !oppfolging?.kanVarsles}
                 title="Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret og kan ikke varsles. Du kan derfor ikke samhandle digitalt med brukeren. "
             >
                 Ikke registrert KRR
             </Fokus>
-            <Info hidden={!(trengerVurdering(oppfolgingsstatus) && !innsatsgruppe)}>Trenger vurdering</Info>
-            <Info hidden={!(trengerAEV(oppfolgingsstatus) && !innsatsgruppe)}>Behov for AEV</Info>
-            <Info hidden={!erBrukerSykmeldt(oppfolgingsstatus)}>Sykmeldt</Info>
-            <Info hidden={!(innsatsgruppe === 'STANDARD_INNSATS' && maglerVedtak(oppfolgingsstatus))}>
+            <Info visible={trengerVurdering(oppfolgingsstatus) && !innsatsgruppe}>Trenger vurdering</Info>
+            <Info visible={trengerAEV(oppfolgingsstatus) && !innsatsgruppe}>Behov for AEV</Info>
+            <Info visible={erBrukerSykmeldt(oppfolgingsstatus)}>Sykmeldt</Info>
+            <Info visible={innsatsgruppe === 'STANDARD_INNSATS' && manglerVedtak(oppfolgingsstatus)}>
                 Antatt gode muligheter
             </Info>
-            <Info hidden={!(innsatsgruppe === 'SITUASJONSBESTEMT_INNSATS' && maglerVedtak(oppfolgingsstatus))}>
+            <Info visible={innsatsgruppe === 'SITUASJONSBESTEMT_INNSATS' && manglerVedtak(oppfolgingsstatus)}>
                 Antatt behov for veiledning
             </Info>
-            <Info hidden={!(innsatsgruppe === 'BEHOV_FOR_ARBEIDSEVNEVURDERING' && maglerVedtak(oppfolgingsstatus))}>
+            <Info visible={innsatsgruppe === 'BEHOV_FOR_ARBEIDSEVNEVURDERING' && manglerVedtak(oppfolgingsstatus)}>
                 Oppgitt hindringer
             </Info>
         </div>

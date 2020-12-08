@@ -2,27 +2,23 @@ import React, { useEffect } from 'react';
 import { useDataStore } from '../store/data-store';
 import { fetchFeaturesToggles } from '../api/veilarbpersonflatefs';
 import { useAppStore } from '../store/app-store';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import { fetchOppfolging, fetchOppfolgingsstatus, fetchTilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { fetchPersonalia } from '../api/veilarbperson';
 import { fetchInnloggetVeileder, fetchVeilederePaEnhet } from '../api/veilarbveileder';
 import { fetchArbeidsliste } from '../api/veilarbportefolje';
-import { hasFields, ifResponseHasData } from '../util/utils';
+import { ifResponseHasData } from '../util/utils';
 import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
 import './data-fetcher.less';
+import { isAnyLoading } from '../api/utils';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 
 export function DataFetcher(props: { children: any }) {
     const { brukerFnr } = useAppStore();
     const {
-        oppfolgingsstatus,
         setOppfolgingsstatus,
-        oppfolging,
         setOppfolging,
-        innloggetVeileder,
         setInnloggetVeileder,
-        personalia,
         setPersonalia,
-        tilgangTilBrukersKontor,
         setTilgangTilBrukersKontor,
         setArbeidsliste,
         setVeilederePaEnhet,
@@ -39,13 +35,6 @@ export function DataFetcher(props: { children: any }) {
     const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
 
     const oppfolgingsEnhet = oppfolgingstatusFetcher.data?.oppfolgingsenhet.enhetId || '';
-
-    const hasLoadedRequiredData =
-        hasFields(oppfolgingsstatus) &&
-        hasFields(oppfolging) &&
-        hasFields(innloggetVeileder) &&
-        hasFields(personalia) &&
-        hasFields(tilgangTilBrukersKontor);
 
     useEffect(() => {
         oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging)).catch();
@@ -78,7 +67,15 @@ export function DataFetcher(props: { children: any }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [oppfolgingstatusFetcher]);
 
-    if (!hasLoadedRequiredData) {
+    if (
+        isAnyLoading(
+            oppfolgingstatusFetcher,
+            oppfolgingFetcher,
+            innloggetVeilederFetcher,
+            personaliaFetcher,
+            tilgangTilBrukersKontorFetcher
+        )
+    ) {
         return <NavFrontendSpinner className="visittkort-laster" type="L" />;
     }
 

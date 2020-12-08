@@ -8,7 +8,7 @@ import { lagVeilederSammensattNavn } from '../../../util/selectors';
 import { useModalStore } from '../../../store/modal-store';
 import { triggerReRenderingAvMao } from '../../../util/utils';
 import { useDataStore } from '../../../store/data-store';
-import { tildelTilVeileder } from '../../../api/veilarboppfolging';
+import { Oppfolging, OppfolgingStatus, tildelTilVeileder } from '../../../api/veilarboppfolging';
 import { VeilederData } from '../../../api/veilarbveileder';
 import './tildel-veileder.less';
 
@@ -19,7 +19,7 @@ function TildelVeileder() {
     const [selectedVeilederId, setSelectedVeilederId] = useState('');
 
     const veiledere = veilederePaEnhet?.veilederListe || [];
-    const fraVeileder = oppfolging.veilederId;
+    const fraVeileder = oppfolging?.veilederId;
 
     const sorterteVeiledere = useMemo(() => {
         return veiledere.sort((a, b) => a.etternavn.localeCompare(b.etternavn));
@@ -45,11 +45,16 @@ function TildelVeileder() {
                 }
 
                 // Oppdater med ny veileder
-                setOppfolging((prevOppfolging) => ({ ...prevOppfolging, veilederId: selectedVeilederId }));
-                setOppfolgingsstatus((prevOppfolgingStatus) => ({
-                    ...prevOppfolgingStatus,
-                    veilederId: selectedVeilederId,
-                }));
+                setOppfolging(
+                    (prevOppfolging) => ({ ...(prevOppfolging || {}), veilederId: selectedVeilederId } as Oppfolging)
+                );
+                setOppfolgingsstatus(
+                    (prevOppfolgingStatus) =>
+                        ({
+                            ...(prevOppfolgingStatus || {}),
+                            veilederId: selectedVeilederId,
+                        } as OppfolgingStatus)
+                );
 
                 const veilederNavn =
                     veiledere

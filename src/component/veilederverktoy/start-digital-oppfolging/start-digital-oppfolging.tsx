@@ -19,7 +19,7 @@ function StartDigitalOppfolging() {
 
     function startDigitalOppgfolging(begrunnelseValues: BegrunnelseValues) {
         showSpinnerModal();
-        settBrukerTilDigital(brukerFnr, innloggetVeileder.ident, begrunnelseValues.begrunnelse)
+        settBrukerTilDigital(brukerFnr, innloggetVeileder!.ident, begrunnelseValues.begrunnelse)
             .then(() => {
                 oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging));
 
@@ -28,7 +28,7 @@ function StartDigitalOppfolging() {
             .catch(showErrorModal);
     }
 
-    if (oppfolging.reservasjonKRR) {
+    if (oppfolging?.reservasjonKRR) {
         return (
             <VarselModal
                 type="ADVARSEL"
