@@ -43,6 +43,6 @@ export function redigerArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformV
     return axiosInstance.put(`/veilarbportefolje/api/arbeidsliste/${fnr}`, arbeidsliste);
 }
 
-export function slettArbeidsliste(fnr: string): AxiosPromise {
+export function slettArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
     return axiosInstance.delete(`/veilarbportefolje/api/arbeidsliste/${fnr}`);
 }

@@ -8,6 +8,7 @@ import { useModalStore } from '../../store/modal-store';
 import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
 import { selectSammensattNavn } from '../../util/selectors';
+import { ifResponseHasData } from '../../util/utils';
 
 function FjernArbeidslisteModal() {
     const { brukerFnr } = useAppStore();
@@ -21,12 +22,7 @@ function FjernArbeidslisteModal() {
 
         showSpinnerModal();
 
-        slettArbeidsliste(brukerFnr)
-            .then(() => {
-                setArbeidsliste(undefined);
-                hideModal();
-            })
-            .catch(showErrorModal);
+        slettArbeidsliste(brukerFnr).then(ifResponseHasData(setArbeidsliste)).then(hideModal).catch(showErrorModal);
     }
 
     return (
