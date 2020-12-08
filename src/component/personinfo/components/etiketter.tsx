@@ -65,7 +65,7 @@ function Etiketter() {
             <Advarsel visible={personalia?.egenAnsatt}>Egen ansatt</Advarsel>
             <Fokus visible={oppfolging?.underKvp}>KVP</Fokus>
             <Fokus
-                visible={oppfolging && (!oppfolging.reservasjonKRR || oppfolging.manuell)}
+                visible={oppfolging && !oppfolging.reservasjonKRR && oppfolging.manuell}
                 title="Brukeren er vurdert til å ikke kunne benytte seg av aktivitetsplanen og dialogen. Du kan endre til digital oppfølging i Veilederverktøy."
             >
                 Manuell oppfølging
