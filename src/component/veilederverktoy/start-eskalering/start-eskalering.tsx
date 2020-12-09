@@ -86,8 +86,8 @@ function StartEskalering() {
         return <LasterModal />;
     }
 
-    if (!oppfolging?.reservasjonKRR || !harNivaa4Fetcher.data?.harbruktnivaa4) {
-        const varselTekst = !oppfolging?.reservasjonKRR
+    if (!oppfolging?.kanVarsles || !harNivaa4Fetcher.data?.harbruktnivaa4) {
+        const varselTekst = !oppfolging?.kanVarsles
             ? 'Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret, og du kan derfor ikke sende varsel.'
             : 'Du kan ikke sende varsel fordi systemet ikke får sjekket om denne brukeren er en digital eller manuell bruker.';
 
