@@ -13,33 +13,48 @@ interface OpprettOppgaveVelgEnhet {
     value: StringOrNothing;
     fnr: string;
     formikProps: FormikProps<OpprettOppgaveFormValues>;
+    erKode6Bruker?: boolean;
+    brukerEnhet?: OrNothing<BehandlandeEnhet>;
 }
 
-function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppgaveVelgEnhet) {
+function OpprettOppgaveVelgEnhet({
+    value,
+    tema,
+    fnr,
+    formikProps,
+    erKode6Bruker,
+    brukerEnhet,
+}: OpprettOppgaveVelgEnhet) {
     const [behandladeEnheter, setBehandladeEnheter] = useState([] as BehandlandeEnhet[]);
-    const [isLoading, setIsLoading] = useState(true);
     const { setFieldValue } = formikProps;
 
     useEffect(() => {
-        if (tema) {
+        if (erKode6Bruker && brukerEnhet) {
+            setBehandladeEnheter([brukerEnhet]);
+            setFieldValue('enhetId', brukerEnhet.enhetId);
+        }
+    }, [erKode6Bruker, brukerEnhet, setFieldValue]);
+
+    useEffect(() => {
+        if (tema && !(erKode6Bruker && brukerEnhet)) {
             hentBehandlendeEnheter(tema, fnr).then((res) => {
                 const behandlendeEnhetersData = res.data;
                 setBehandladeEnheter(behandlendeEnhetersData);
                 setFieldValue('enhetId', behandlendeEnhetersData[0].enhetId);
-                setIsLoading(false);
                 document
                     .getElementsByName('Velg enhet')
                     .forEach((elem) => ((elem as HTMLInputElement).checked = false));
             });
         }
-    }, [tema, fnr, setFieldValue]);
+    }, [tema, fnr, erKode6Bruker, brukerEnhet, setFieldValue]);
 
-    if (isLoading) {
+    if (behandladeEnheter.length === 0) {
         return <div />;
     }
 
     const valgtEnhet: OrNothing<BehandlandeEnhet> =
         behandladeEnheter.find((enhet) => enhet.enhetId === value) || behandladeEnheter[0];
+
     return (
         <div className="skjemaelement">
             <label className="skjemaelement__label">Enhet *</label>

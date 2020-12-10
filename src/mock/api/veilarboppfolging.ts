@@ -167,8 +167,8 @@ const mockOppfolging: Oppfolging = {
 
 const mockOppfolgingsstatus: OppfolgingStatus = {
     oppfolgingsenhet: {
-        navn: 'NAV TestHeim',
-        enhetId: '007',
+        navn: 'NAV Ost',
+        enhetId: '0000',
     },
     veilederId: mockInnloggetVeileder.ident,
     formidlingsgruppe: 'ARBS',

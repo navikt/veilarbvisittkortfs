@@ -11,7 +11,7 @@ import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import { StringOrNothing } from '../../../../util/type/stringornothings';
 import { OrNothing } from '../../../../util/type/ornothing';
-import { OppgaveTema } from '../../../../api/veilarboppgave';
+import { BehandlandeEnhet, OppgaveTema } from '../../../../api/veilarboppgave';
 
 interface OppgaveInnerForm {
     fnr: string;
@@ -21,9 +21,21 @@ interface OppgaveInnerForm {
     avsenderenhetId: StringOrNothing;
     formikProps: FormikProps<OpprettOppgaveFormValues>;
     tilbake: () => void;
+    erKode6Bruker?: boolean;
+    brukerEnhet?: OrNothing<BehandlandeEnhet>;
 }
 
-function OppgaveInnerForm({ fnr, tema, enhetId, veilederId, avsenderenhetId, formikProps, tilbake }: OppgaveInnerForm) {
+function OppgaveInnerForm({
+    fnr,
+    tema,
+    enhetId,
+    veilederId,
+    avsenderenhetId,
+    formikProps,
+    tilbake,
+    erKode6Bruker,
+    brukerEnhet,
+}: OppgaveInnerForm) {
     if (!tema) {
         return null;
     }
@@ -34,7 +46,14 @@ function OppgaveInnerForm({ fnr, tema, enhetId, veilederId, avsenderenhetId, for
             <OpprettOppgavePrioritetSelector />
             <OpprettOppgaveVelgDatoer />
             <div className="oppgave-enhet-container">
-                <OpprettOppgaveVelgEnhet value={enhetId} tema={tema} fnr={fnr} formikProps={formikProps} />
+                <OpprettOppgaveVelgEnhet
+                    value={enhetId}
+                    tema={tema}
+                    fnr={fnr}
+                    formikProps={formikProps}
+                    erKode6Bruker={erKode6Bruker}
+                    brukerEnhet={brukerEnhet}
+                />
                 <OpprettOppgaveVelgVeileder
                     avsenderenhetId={avsenderenhetId}
                     tema={tema}
