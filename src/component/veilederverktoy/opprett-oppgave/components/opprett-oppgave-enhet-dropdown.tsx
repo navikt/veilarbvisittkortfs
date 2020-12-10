@@ -6,7 +6,8 @@ import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import Dropdown from '../../../components/dropdown/dropdown';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { StringOrNothing } from '../../../../util/type/stringornothings';
-import { BehandlandeEnhet, hentBehandlendeEnheter, OppgaveTema } from '../../../../api/veilarboppgave';
+import { BehandlandeEnhet, hentBehandlendeEnheter, hentKode6Enhet, OppgaveTema } from '../../../../api/veilarboppgave';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 
 interface OpprettOppgaveVelgEnhet {
     tema: OrNothing<OppgaveTema>;
@@ -14,29 +15,24 @@ interface OpprettOppgaveVelgEnhet {
     fnr: string;
     formikProps: FormikProps<OpprettOppgaveFormValues>;
     erKode6Bruker?: boolean;
-    brukerEnhet?: OrNothing<BehandlandeEnhet>;
 }
 
-function OpprettOppgaveVelgEnhet({
-    value,
-    tema,
-    fnr,
-    formikProps,
-    erKode6Bruker,
-    brukerEnhet,
-}: OpprettOppgaveVelgEnhet) {
+function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps, erKode6Bruker }: OpprettOppgaveVelgEnhet) {
     const [behandladeEnheter, setBehandladeEnheter] = useState([] as BehandlandeEnhet[]);
     const { setFieldValue } = formikProps;
 
     useEffect(() => {
-        if (erKode6Bruker && brukerEnhet) {
-            setBehandladeEnheter([brukerEnhet]);
-            setFieldValue('enhetId', brukerEnhet.enhetId);
+        if (erKode6Bruker) {
+            hentKode6Enhet().then((res) => {
+                const kode6Enhet = res.data;
+                setBehandladeEnheter([kode6Enhet]);
+                setFieldValue('enhetId', kode6Enhet.enhetId);
+            });
         }
-    }, [erKode6Bruker, brukerEnhet, setFieldValue]);
+    }, [erKode6Bruker, setFieldValue]);
 
     useEffect(() => {
-        if (tema && !(erKode6Bruker && brukerEnhet)) {
+        if (tema && !erKode6Bruker) {
             hentBehandlendeEnheter(tema, fnr).then((res) => {
                 const behandlendeEnhetersData = res.data;
                 setBehandladeEnheter(behandlendeEnhetersData);
@@ -46,10 +42,10 @@ function OpprettOppgaveVelgEnhet({
                     .forEach((elem) => ((elem as HTMLInputElement).checked = false));
             });
         }
-    }, [tema, fnr, erKode6Bruker, brukerEnhet, setFieldValue]);
+    }, [tema, fnr, erKode6Bruker, setFieldValue]);
 
     if (behandladeEnheter.length === 0) {
-        return <div />;
+        return <NavFrontendSpinner type="M" />;
     }
 
     const valgtEnhet: OrNothing<BehandlandeEnhet> =

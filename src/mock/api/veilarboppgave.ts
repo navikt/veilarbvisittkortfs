@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import { mockEnhetVeiledere } from './common-data';
-import { OppgaveFormData, OppgaveHistorikk } from '../../api/veilarboppgave';
+import { BehandlandeEnhet, OppgaveFormData, OppgaveHistorikk } from '../../api/veilarboppgave';
 
 const mockEnheter = [
     { enhetId: '0000', navn: 'NAV Ost' },
@@ -53,6 +53,11 @@ const mockOppgavehistorikk: OppgaveHistorikk[] = [
     },
 ];
 
+export const kode6Enhet: BehandlandeEnhet = {
+    enhetId: '6666',
+    navn: 'NAV Kode6',
+};
+
 export const veilarboppgaveHandlers: RequestHandlersList = [
     rest.get('/veilarboppgave/api/enheter', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(mockEnheter));
@@ -76,5 +81,8 @@ export const veilarboppgaveHandlers: RequestHandlersList = [
     }),
     rest.get('/veilarboppgave/api/oppgavehistorikk', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(mockOppgavehistorikk));
+    }),
+    rest.get('/veilarboppgave/api/enheter/kode6', (req, res, ctx) => {
+        return res(ctx.delay(500), ctx.json(kode6Enhet));
     }),
 ];

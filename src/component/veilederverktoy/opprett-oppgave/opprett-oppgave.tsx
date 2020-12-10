@@ -12,14 +12,7 @@ import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import './opprett-oppgave.less';
 import { todayReversedDateStr } from '../../../util/date-utils';
-import {
-    BehandlandeEnhet,
-    OppgaveFormData,
-    OppgaveTema,
-    OppgaveType,
-    opprettOppgave,
-    PrioritetType,
-} from '../../../api/veilarboppgave';
+import { OppgaveFormData, OppgaveTema, OppgaveType, opprettOppgave, PrioritetType } from '../../../api/veilarboppgave';
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
@@ -36,16 +29,11 @@ export interface OpprettOppgaveFormValues {
 
 function OpprettOppgave() {
     const { brukerFnr, enhetId } = useAppStore();
-    const { personalia, oppfolgingsstatus } = useDataStore();
+    const { personalia } = useDataStore();
     const { hideModal, showOpprettOppgaveKvitteringModal, showErrorModal, showSpinnerModal } = useModalStore();
 
     const navn = selectSammensattNavn(personalia);
     const erKode6Bruker = personalia?.diskresjonskode === '6';
-    const oppfolgingsEnhet = oppfolgingsstatus?.oppfolgingsenhet;
-    const brukerEnhet: OrNothing<BehandlandeEnhet> =
-        !!oppfolgingsEnhet?.enhetId && !!oppfolgingsEnhet.navn
-            ? { enhetId: oppfolgingsEnhet.enhetId, navn: oppfolgingsEnhet.navn }
-            : null;
 
     const opprettOppgaveInitialValues: OpprettOppgaveFormValues = {
         beskrivelse: '',
@@ -92,7 +80,6 @@ function OpprettOppgave() {
                             formikProps={formikProps}
                             tilbake={hideModal}
                             erKode6Bruker={erKode6Bruker}
-                            brukerEnhet={brukerEnhet}
                         />
                     </Form>
                 </div>

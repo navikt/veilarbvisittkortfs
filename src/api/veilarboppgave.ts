@@ -61,3 +61,7 @@ export function opprettOppgave(fnr: string, oppgaveFormData: OppgaveFormData): A
 export function hentBehandlendeEnheter(tema: OppgaveTema, fnr: string): AxiosPromise<BehandlandeEnhet[]> {
     return axiosInstance.get<BehandlandeEnhet[]>(`/veilarboppgave/api/enheter?tema=${tema}&fnr=${fnr}`);
 }
+
+export function hentKode6Enhet(): AxiosPromise<BehandlandeEnhet> {
+    return axiosInstance.get<BehandlandeEnhet>(`/veilarboppgave/api/enheter/kode6`);
+}

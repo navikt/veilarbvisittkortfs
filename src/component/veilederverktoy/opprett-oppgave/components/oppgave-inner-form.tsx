@@ -11,7 +11,7 @@ import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import { StringOrNothing } from '../../../../util/type/stringornothings';
 import { OrNothing } from '../../../../util/type/ornothing';
-import { BehandlandeEnhet, OppgaveTema } from '../../../../api/veilarboppgave';
+import { OppgaveTema } from '../../../../api/veilarboppgave';
 
 interface OppgaveInnerForm {
     fnr: string;
@@ -22,7 +22,6 @@ interface OppgaveInnerForm {
     formikProps: FormikProps<OpprettOppgaveFormValues>;
     tilbake: () => void;
     erKode6Bruker?: boolean;
-    brukerEnhet?: OrNothing<BehandlandeEnhet>;
 }
 
 function OppgaveInnerForm({
@@ -34,7 +33,6 @@ function OppgaveInnerForm({
     formikProps,
     tilbake,
     erKode6Bruker,
-    brukerEnhet,
 }: OppgaveInnerForm) {
     if (!tema) {
         return null;
@@ -52,7 +50,6 @@ function OppgaveInnerForm({
                     fnr={fnr}
                     formikProps={formikProps}
                     erKode6Bruker={erKode6Bruker}
-                    brukerEnhet={brukerEnhet}
                 />
                 <OpprettOppgaveVelgVeileder
                     avsenderenhetId={avsenderenhetId}
