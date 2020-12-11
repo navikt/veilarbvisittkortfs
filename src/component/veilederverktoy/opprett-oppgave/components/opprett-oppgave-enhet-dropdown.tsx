@@ -7,6 +7,7 @@ import Dropdown from '../../../components/dropdown/dropdown';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { StringOrNothing } from '../../../../util/type/stringornothings';
 import { BehandlandeEnhet, hentBehandlendeEnheter, OppgaveTema } from '../../../../api/veilarboppgave';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 
 interface OpprettOppgaveVelgEnhet {
     tema: OrNothing<OppgaveTema>;
@@ -35,11 +36,12 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
     }, [tema, fnr, setFieldValue]);
 
     if (isLoading) {
-        return <div />;
+        return <NavFrontendSpinner type="M" />;
     }
 
     const valgtEnhet: OrNothing<BehandlandeEnhet> =
         behandladeEnheter.find((enhet) => enhet.enhetId === value) || behandladeEnheter[0];
+
     return (
         <div className="skjemaelement">
             <label className="skjemaelement__label">Enhet *</label>
