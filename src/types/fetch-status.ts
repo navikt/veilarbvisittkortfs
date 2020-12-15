@@ -1,1 +1,0 @@
-export type FETCH_STATUS = 'NOT_STARTED' | 'LOADING' | 'DONE' | 'ERROR';
