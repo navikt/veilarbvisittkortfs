@@ -14,7 +14,6 @@ export const allHandlers: RequestHandlersList = [
     ...veilarbaktivitetHandlers,
     ...veilarbdialogHandlers,
     ...veilarboppfolgingHandlers,
-    ...veilarboppfolgingHandlers,
     ...veilarboppgaveHandlers,
     ...veilarbpersonHandlers,
     ...veilarbpersonflatefsHandlers,
