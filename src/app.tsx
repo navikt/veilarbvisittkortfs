@@ -1,17 +1,14 @@
 import React from 'react';
-import PersonInfo from './app/personinfo/personinfo';
-import Veilederverktoyslinje from './app/veilederverktoy/veiledervertoyslinje';
-import AppProvider from './app/app-provider';
-import * as moment from 'moment';
-import 'moment/locale/nb';
-import './index.less';
+import PersonInfo from './component/personinfo/personinfo';
+import Veilederverktoyslinje from './component/veilederverktoy/veiledervertoyslinje';
 import NavFrontendModal from 'nav-frontend-modal';
-import VisittkortWrapper from './app/visittkort-wrapper';
-import Etiketter from './app/personinfo/components/etiketter';
-import Tilbakelenke from './app/components/tilbakelenke/tilbakelenke';
-import VeilederVerktoyNavigation from './app/veilederverktoy/veilederverktoy-components/veilederverktoy-navigation';
-
-moment.locale('nb');
+import Etiketter from './component/personinfo/components/etiketter';
+import Tilbakelenke from './component/components/tilbakelenke/tilbakelenke';
+import StoreProvider from './store/store-provider';
+import { DataFetcher } from './component/data-fetcher';
+import { VeilederverktoyModalController } from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-modal-controller';
+import { ToastController } from './component/components/toast-controller';
+import './index.less';
 
 NavFrontendModal.setAppElement(document.getElementById('modal-a11y-wrapper'));
 
@@ -24,16 +21,25 @@ export interface AppProps {
 
 function App(props: AppProps) {
     return (
-        <AppProvider fnr={props.fnr} enhet={props.enhet}>
-            <VisittkortWrapper>
-                <Tilbakelenke enhet={props.enhet} fnr={props.fnr} tilbakeTilFlate={props.tilbakeTilFlate} />
-                <VeilederVerktoyNavigation>
-                    <PersonInfo {...props} />
-                    <Etiketter />
-                    <Veilederverktoyslinje visVeilederVerktoy={props.visVeilederVerktoy} />
-                </VeilederVerktoyNavigation>
-            </VisittkortWrapper>
-        </AppProvider>
+        <StoreProvider
+            brukerFnr={props.fnr}
+            enhetId={props.enhet}
+            tilbakeTilFlate={props.tilbakeTilFlate}
+            visVeilederVerktoy={props.visVeilederVerktoy || false}
+        >
+            <div className="visittkortfs">
+                <DataFetcher>
+                    <Tilbakelenke />
+                    <div className="visittkortfs__container">
+                        <PersonInfo />
+                        <Etiketter />
+                        <Veilederverktoyslinje />
+                    </div>
+                </DataFetcher>
+                <VeilederverktoyModalController />
+                <ToastController />
+            </div>
+        </StoreProvider>
     );
 }
 
