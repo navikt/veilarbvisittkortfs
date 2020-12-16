@@ -9,7 +9,7 @@ export function kalkulerAlder(fodselsdato: Date): number {
 }
 
 export function lagAlderTekst(personalia: OrNothing<Personalia>): string {
-    if (!personalia || personalia.fodselsdato) {
+    if (!personalia || !personalia.fodselsdato) {
         return '';
     }
     const alder = kalkulerAlder(new Date(personalia.fodselsdato));
