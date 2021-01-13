@@ -89,7 +89,7 @@ function StartEskalering() {
     if (!oppfolging?.kanVarsles || !harNivaa4Fetcher.data?.harbruktnivaa4) {
         const varselTekst = !oppfolging?.kanVarsles
             ? 'Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret, og du kan derfor ikke sende varsel.'
-            : 'Du kan ikke sende varsel fordi systemet ikke får sjekket om denne brukeren er en digital eller manuell bruker.';
+            : 'Du kan ikke sende varsel fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4 (for eksempel BankID).';
 
         return (
             <VarselModal
