@@ -9,7 +9,7 @@ import { fetchArbeidsliste } from '../api/veilarbportefolje';
 import { ifResponseHasData } from '../util/utils';
 import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
 import './data-fetcher.less';
-import { isAnyLoading } from '../api/utils';
+import { isAnyLoadingOrNotStarted } from '../api/utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 
 export function DataFetcher(props: { children: any }) {
@@ -68,7 +68,7 @@ export function DataFetcher(props: { children: any }) {
     }, [oppfolgingstatusFetcher]);
 
     if (
-        isAnyLoading(
+        isAnyLoadingOrNotStarted(
             oppfolgingstatusFetcher,
             oppfolgingFetcher,
             innloggetVeilederFetcher,

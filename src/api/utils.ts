@@ -7,9 +7,13 @@ export const axiosInstance = axios.create({
 });
 
 export function isAnyLoading(...fetchers: Array<{ loading: boolean }>): boolean {
-    return fetchers.some((responseValue) => responseValue.loading);
+    return fetchers.some((f) => f.loading);
+}
+
+export function isAnyLoadingOrNotStarted(...fetchers: Array<{ data?: any; error?: any; loading: boolean }>): boolean {
+    return fetchers.some((f) => f.loading || (!f.error && !f.data));
 }
 
 export function hasAnyFailed(...fetchers: Array<{ error?: AxiosError }>): boolean {
-    return fetchers.some((responseValue) => responseValue.error);
+    return fetchers.some((f) => f.error);
 }
