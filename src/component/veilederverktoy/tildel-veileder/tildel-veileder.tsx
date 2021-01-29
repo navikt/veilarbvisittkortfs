@@ -18,12 +18,12 @@ function TildelVeileder() {
     const { veilederePaEnhet, oppfolging, setOppfolging, setOppfolgingsstatus } = useDataStore();
     const [selectedVeilederId, setSelectedVeilederId] = useState('');
 
-    const veiledere = veilederePaEnhet?.veilederListe || [];
     const fraVeileder = oppfolging?.veilederId;
 
     const sorterteVeiledere = useMemo(() => {
+        const veiledere = veilederePaEnhet?.veilederListe || [];
         return veiledere.sort((a, b) => a.etternavn.localeCompare(b.etternavn));
-    }, [veiledere]);
+    }, [veilederePaEnhet?.veilederListe]);
 
     const handleSubmitTildelVeileder = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -57,7 +57,7 @@ function TildelVeileder() {
                 );
 
                 const veilederNavn =
-                    veiledere
+                    sorterteVeiledere
                         .filter((v) => v.ident === selectedVeilederId)
                         .map((v) => lagVeilederSammensattNavn(v))[0] || 'Ukjent veileder';
 
