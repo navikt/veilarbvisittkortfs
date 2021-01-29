@@ -1,55 +1,25 @@
-name: Build -> Push -> Deploy
-
+name: Test, build and upload
 on: push
 env:
-  IMAGE_TAG: ${{ github.sha }}
-  IMAGE: docker.pkg.github.com/${{ github.repository }}/veilarbvisittkortfs
-  PRINT_PAYLOAD: true
+  CI: true
+  TZ: Europe/Amsterdam
 
 jobs:
-  build:
-    name: Build Project
+  test:
+    name: Run tests
     runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/dev' && github.ref != 'refs/heads/master'
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup node
+        uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - uses: actions/cache@v1
-        with:
-          path: ./node_modules
-          key: ${{ runner.os }}-node-cache-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-cache
-      - run: npm ci
-      - run: npm run build
-      - run: npm run test
-
-  build-docker-image:
-    runs-on: ubuntu-latest
-    name: Build and publish Docker image
-    needs: build
-    if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-      - uses: actions/cache@v1
-        with:
-          path: ./node_modules
-          key: ${{ runner.os }}-node-cache-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-cache
-      - name: Build production artifact
-        run: npm run build
-      - name: Build and publish Docker image
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} --password-stdin
-          docker build -t ${IMAGE}:${IMAGE_TAG} .
-          docker push ${IMAGE}:${IMAGE_TAG}
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm run test
 
   update-gh-pages:
     name: Update GitHub pages
@@ -73,45 +43,71 @@ jobs:
           publish_dir: ./build
 
   deploy-dev:
-    name: Deploy to dev
+    name: Deploy application to dev
     if: github.ref == 'refs/heads/dev'
-    needs: build-docker-image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: nais/deploy/actions/deploy@v1
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm run test
+      - name: Build application
+        run: npm run build
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-fss
-          RESOURCE: nais-dev.yaml
-          VAR: version=${{ env.IMAGE_TAG }}
+          PUBLIC_URL: https://veilarbvisittkortfs.dev.intern.nav.no
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GCS_SA_KEY_DEV }}
+          export_default_credentials: true
+      - name: Upload files to GCS
+        run: gsutil -m rsync -r build gs://veilarbvisittkortfs-dev
       - name: Create release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: release/dev@${{ env.IMAGE_TAG }}
+          tag_name: release/dev@${{ github.sha }}
           release_name: Release to dev
           prerelease: true
 
   deploy-prod:
-    name: Deploy to prod
+    name: Deploy application to prod
     if: github.ref == 'refs/heads/master'
-    needs: build-docker-image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: nais/deploy/actions/deploy@v1
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm run test
+      - name: Build application
+        run: npm run build
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: prod-fss
-          RESOURCE: nais-prod.yaml
-          VAR: version=${{ env.IMAGE_TAG }}
+          PUBLIC_URL: https://veilarbvisittkortfs.intern.nav.no
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GCS_SA_KEY_PROD }}
+          export_default_credentials: true
+      - name: Upload files to GCS
+        run: gsutil -m rsync -r build gs://veilarbvisittkortfs-prod
       - name: Create release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: release/prod@${{ env.IMAGE_TAG }}
+          tag_name: release/prod@${{ github.sha }}
           release_name: Release to prod
           prerelease: false
