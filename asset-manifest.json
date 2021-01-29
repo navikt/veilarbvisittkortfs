@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/veilarbvisittkortfs/static/css/main.d1010183.chunk.css",
-    "main.js": "/veilarbvisittkortfs/static/js/main.e41d5bd0.chunk.js",
-    "main.js.map": "/veilarbvisittkortfs/static/js/main.e41d5bd0.chunk.js.map",
+    "main.js": "/veilarbvisittkortfs/static/js/main.d7e9acbd.chunk.js",
+    "main.js.map": "/veilarbvisittkortfs/static/js/main.d7e9acbd.chunk.js.map",
     "runtime-main.js": "/veilarbvisittkortfs/static/js/runtime-main.650e0b15.js",
     "runtime-main.js.map": "/veilarbvisittkortfs/static/js/runtime-main.650e0b15.js.map",
     "static/css/2.f1f76003.chunk.css": "/veilarbvisittkortfs/static/css/2.f1f76003.chunk.css",
@@ -30,6 +30,6 @@
     "static/css/2.f1f76003.chunk.css",
     "static/js/2.8e7b0f61.chunk.js",
     "static/css/main.d1010183.chunk.css",
-    "static/js/main.e41d5bd0.chunk.js"
+    "static/js/main.d7e9acbd.chunk.js"
   ]
 }
