@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NAVSPA from '@navikt/navspa';
+import { Navspa } from '@navikt/navspa';
 import { isDevelopment } from './util/utils';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/nb';
@@ -8,7 +8,7 @@ import App from './app';
 
 dayjs.locale('nb');
 
-NAVSPA.eksporter('veilarbvisittkortfs', App);
+Navspa.eksporter('veilarbvisittkortfs', App);
 
 if (isDevelopment()) {
     require('./mock');
