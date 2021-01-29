@@ -9,14 +9,14 @@ import { StringOrNothing } from '../../../../util/type/stringornothings';
 import { BehandlandeEnhet, hentBehandlendeEnheter, OppgaveTema } from '../../../../api/veilarboppgave';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 
-interface OpprettOppgaveVelgEnhet {
+interface OpprettOppgaveVelgEnhetProps {
     tema: OrNothing<OppgaveTema>;
     value: StringOrNothing;
     fnr: string;
     formikProps: FormikProps<OpprettOppgaveFormValues>;
 }
 
-function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppgaveVelgEnhet) {
+function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppgaveVelgEnhetProps) {
     const [behandladeEnheter, setBehandladeEnheter] = useState([] as BehandlandeEnhet[]);
     const [isLoading, setIsLoading] = useState(true);
     const { setFieldValue } = formikProps;

@@ -6,18 +6,33 @@ metadata:
   labels:
     team: pto
 spec:
-  image: docker.pkg.github.com/navikt/veilarbvisittkortfs/veilarbvisittkortfs:{{version}}
-  port: 80
+  image: docker.pkg.github.com/navikt/pto-frontend/pto-frontend:43fdd666f3a803f284da73b51e248c91b2760a3d
+  port: 8080
+  ingresses:
+    - https://veilarbvisittkortfs.intern.nav.no
   liveness:
-    path: /veilarbvisittkortfs/isAlive
+    path: /internal/isAlive
     initialDelay: 10
   readiness:
-    path: /veilarbvisittkortfs/isReady
+    path: /internal/isReady
     initialDelay: 10
   replicas:
     min: 2
     max: 4
     cpuThresholdPercentage: 75
-  ingresses:
-    - https://veilarbvisittkortfs.nais.adeo.no
-    - https://app.adeo.no/veilarbvisittkortfs
+  resources:
+    limits:
+      cpu: "1"
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  gcp:
+    buckets:
+      - name: veilarbvisittkortfs-prod
+        cascadingDelete: false
+  env:
+    - name: GCS_BUCKET_NAME
+      value: veilarbvisittkortfs-prod
+    - name: CORS_DOMAIN
+      value: "*"

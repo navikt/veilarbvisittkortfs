@@ -9,7 +9,7 @@ interface FormikInputProps {
     label: string;
 }
 
-function FormikInput<P>({
+function FormikInput({
     name,
     validate,
     ...inputProps

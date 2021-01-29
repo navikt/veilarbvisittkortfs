@@ -13,7 +13,7 @@ import { StringOrNothing } from '../../../../util/type/stringornothings';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { OppgaveTema } from '../../../../api/veilarboppgave';
 
-interface OppgaveInnerForm {
+interface OppgaveInnerFormProps {
     fnr: string;
     tema: OrNothing<OppgaveTema>;
     enhetId: StringOrNothing;
@@ -23,7 +23,15 @@ interface OppgaveInnerForm {
     tilbake: () => void;
 }
 
-function OppgaveInnerForm({ fnr, tema, enhetId, veilederId, avsenderenhetId, formikProps, tilbake }: OppgaveInnerForm) {
+function OppgaveInnerForm({
+    fnr,
+    tema,
+    enhetId,
+    veilederId,
+    avsenderenhetId,
+    formikProps,
+    tilbake,
+}: OppgaveInnerFormProps) {
     if (!tema) {
         return null;
     }
