@@ -17,10 +17,12 @@ import {
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { fetchHarNivaa4 } from '../../../api/veilarbperson';
+import { logger } from '../../../util/logger';
 
 interface OwnValues extends StartEskaleringValues {
     overskrift: string;
     tekst: string;
+    type: string;
 }
 
 const initialValues = {
@@ -28,6 +30,7 @@ const initialValues = {
     brukMalvelger: true,
     overskrift: 'Du har fått et varsel fra NAV',
     tekst: '',
+    type: 'ikke_valgt',
 };
 
 function StartEskalering() {
@@ -64,6 +67,8 @@ function StartEskalering() {
                         oppdaterVenterPaSvarPromise,
                         startEskaleringPromise,
                     ]);
+
+                    logger.event('veilarbvisittkortfs.metrikker.forhonshorendtering.sendt', { type: values.type });
 
                     // Hent oppdatert data med ny eskaleringsvarsel
                     await oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging));
