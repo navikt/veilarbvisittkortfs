@@ -71,6 +71,7 @@ function Maltekstvelger() {
             const message = malTekster[e.target.value];
             context.setFieldValue('begrunnelse', message);
             context.setFieldValue('tekst', message);
+            context.setFieldValue('type', e.target.value);
         } else {
             context.resetForm();
         }
