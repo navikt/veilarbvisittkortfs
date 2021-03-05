@@ -5,6 +5,7 @@ import { FeatureToggles } from '../../api/veilarbpersonflatefs';
 const mockFeatures: FeatureToggles = {
     'pto.vedtaksstotte.pilot': true,
     'veilarbvedtaksstottefs.prelansering': true,
+    'vis.pto.persondata.fra.pdl': true,
 };
 
 export const veilarbpersonflatefsHandlers: RequestHandlersList = [

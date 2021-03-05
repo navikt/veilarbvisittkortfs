@@ -5,11 +5,12 @@ import { useAppStore } from '../../../store/app-store';
 import './etiketter.less';
 import { OrNothing } from '../../../util/type/ornothing';
 import { fetchRegistrering, InnsatsgruppeType } from '../../../api/veilarbregistrering';
-import { PILOT_TOGGLE } from '../../../api/veilarbpersonflatefs';
+import { HENT_PERSONALIA_FRA_PDL_TOGGLE, PILOT_TOGGLE } from '../../../api/veilarbpersonflatefs';
 import { OppfolgingStatus } from '../../../api/veilarboppfolging';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { ifResponseHasData } from '../../../util/utils';
 import visibleIf from '../../components/visible-if';
+import Show from '../../components/show/show';
 
 const Advarsel = visibleIf(EtikettAdvarsel);
 const Info = visibleIf(EtikettInfo);
@@ -38,7 +39,7 @@ function manglerVedtak(oppfolging: OrNothing<OppfolgingStatus>): boolean {
 
 function Etiketter() {
     const { brukerFnr } = useAppStore();
-    const { oppfolgingsstatus, oppfolging, personalia, features } = useDataStore();
+    const { oppfolgingsstatus, oppfolging, personalia, personaliaV2, features } = useDataStore();
 
     const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>(null);
 
@@ -63,6 +64,10 @@ function Etiketter() {
             <Advarsel visible={personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>
             <Advarsel visible={personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
             <Advarsel visible={personalia?.egenAnsatt}>Egen ansatt</Advarsel>
+            <Show if={features[HENT_PERSONALIA_FRA_PDL_TOGGLE]}>
+                <Fokus visible={personaliaV2?.harVergemaal}>Vergemål</Fokus>
+                <Fokus visible={personaliaV2?.harFullmakt}>Fullmakt</Fokus>
+            </Show>
             <Fokus visible={oppfolging?.underKvp}>KVP</Fokus>
             <Fokus
                 visible={oppfolging && !oppfolging.reservasjonKRR && oppfolging.manuell}
