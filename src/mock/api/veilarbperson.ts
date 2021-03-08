@@ -24,8 +24,6 @@ const mockPersonaliaV2: PersonaliaV2 = {
     fornavn: 'BRUCE BRUCE',
     mellomnavn: 'BATTY BATTY',
     etternavn: 'WAYNE',
-    forkortetNavn: 'Bruce Batty Wayne',
-    fodselsnummer: '10108000398',
     fodselsdato: '1974-09-16',
     dodsdato: null,
     diskresjonskode: null,

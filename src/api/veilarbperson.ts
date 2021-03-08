@@ -20,8 +20,6 @@ export interface PersonaliaV2 {
     fornavn: string;
     mellomnavn: StringOrNothing;
     etternavn: string;
-    forkortetNavn: string;
-    fodselsnummer: string;
     fodselsdato: string;
     dodsdato: StringOrNothing;
     kjonn: string;
