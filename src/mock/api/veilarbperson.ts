@@ -69,22 +69,7 @@ const mockvergeOgFullmakt: VergeOgFullmakt = {
             },
         },
     ],
-    fullmakt: [
-        {
-            motpartsPersonident: '1234567890',
-            motpartsRolle: 'FULLMEKTIG',
-            omraader: ['AAP', 'DAG'],
-            gyldigFraOgMed: '2021-03-02T13:00:42',
-            gyldigTilOgMed: '2021-03-03T13:00:42',
-        },
-        {
-            motpartsPersonident: '1234567891',
-            motpartsRolle: 'FULLMAKTSGIVER',
-            omraader: ['AAP', 'AAR'],
-            gyldigFraOgMed: '2021-03-04T13:00:42',
-            gyldigTilOgMed: '2021-03-05T13:00:42',
-        },
-    ],
+    fullmakt: [],
 };
 
 export const veilarbpersonHandlers: RequestHandlersList = [

@@ -65,8 +65,8 @@ function Etiketter() {
             <Advarsel visible={personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
             <Advarsel visible={personalia?.egenAnsatt}>Egen ansatt</Advarsel>
             <Show if={features[HENT_PERSONALIA_FRA_PDL_TOGGLE]}>
-                <Fokus visible={vergeOgFullmakt?.vergeEllerFremtidsfullmakt}>Vergemål</Fokus>
-                <Fokus visible={vergeOgFullmakt?.fullmakt}>Fullmakt</Fokus>
+                <Fokus visible={vergeOgFullmakt?.vergeEllerFremtidsfullmakt.length !== 0}>Vergemål</Fokus>
+                <Fokus visible={vergeOgFullmakt?.fullmakt.length !== 0}>Fullmakt</Fokus>
             </Show>
             <Fokus visible={oppfolging?.underKvp}>KVP</Fokus>
             <Fokus
