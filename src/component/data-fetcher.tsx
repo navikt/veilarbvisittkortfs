@@ -3,7 +3,7 @@ import { useDataStore } from '../store/data-store';
 import { fetchFeaturesToggles } from '../api/veilarbpersonflatefs';
 import { useAppStore } from '../store/app-store';
 import { fetchOppfolging, fetchOppfolgingsstatus, fetchTilgangTilBrukersKontor } from '../api/veilarboppfolging';
-import { fetchPersonalia, fetchPersonaliaV2 } from '../api/veilarbperson';
+import { fetchPersonalia, fetchPersonaliaV2, fetchVergeOgFullmakt } from '../api/veilarbperson';
 import { fetchInnloggetVeileder, fetchVeilederePaEnhet } from '../api/veilarbveileder';
 import { fetchArbeidsliste } from '../api/veilarbportefolje';
 import { ifResponseHasData } from '../util/utils';
@@ -24,6 +24,7 @@ export function DataFetcher(props: { children: any }) {
         setVeilederePaEnhet,
         setFeatures,
         setPersonaliaV2,
+        setVergeOgFullmakt,
     } = useDataStore();
 
     const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
@@ -35,7 +36,7 @@ export function DataFetcher(props: { children: any }) {
     const tilgangTilBrukersKontorFetcher = useAxiosFetcher(fetchTilgangTilBrukersKontor);
     const arbeidslisteFetcher = useAxiosFetcher(fetchArbeidsliste);
     const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
-
+    const vergeOgFullmaktFetcher = useAxiosFetcher(fetchVergeOgFullmakt);
     const oppfolgingsEnhet = oppfolgingstatusFetcher.data?.oppfolgingsenhet.enhetId || '';
 
     useEffect(() => {
@@ -43,6 +44,7 @@ export function DataFetcher(props: { children: any }) {
         oppfolgingstatusFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolgingsstatus)).catch();
         personaliaFetcher.fetch(brukerFnr).then(ifResponseHasData(setPersonalia)).catch();
         personaliaV2Fetcher.fetch(brukerFnr).then(ifResponseHasData(setPersonaliaV2)).catch();
+        vergeOgFullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setVergeOgFullmakt)).catch();
         tilgangTilBrukersKontorFetcher.fetch(brukerFnr).then(ifResponseHasData(setTilgangTilBrukersKontor)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr]);
@@ -77,6 +79,7 @@ export function DataFetcher(props: { children: any }) {
             innloggetVeilederFetcher,
             personaliaFetcher,
             personaliaV2Fetcher,
+            vergeOgFullmaktFetcher,
             tilgangTilBrukersKontorFetcher
         )
     ) {
