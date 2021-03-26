@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
-import { HarBruktNivaa4Type, Personalia, PersonaliaV2, VergeOgFullmakt } from '../../api/veilarbperson';
+import { HarBruktNivaa4Type, Personalia, VergeOgFullmakt } from '../../api/veilarbperson';
 
 const mockHarBruktNivaa4: HarBruktNivaa4Type = {
     harbruktnivaa4: false,
@@ -10,7 +10,6 @@ const mockPersonalia: Personalia = {
     fornavn: 'BRUCE BRUCE',
     mellomnavn: 'BATTY BATTY',
     etternavn: 'WAYNE',
-    sammensattNavn: 'Bruce Batty Wayne',
     fodselsnummer: '10108000398',
     fodselsdato: '1974-09-16',
     dodsdato: null,
@@ -20,20 +19,21 @@ const mockPersonalia: Personalia = {
     kjonn: 'K',
 };
 
-const mockPersonaliaV2: PersonaliaV2 = {
-    fornavn: 'BRUCE BRUCE',
-    mellomnavn: 'BATTY BATTY',
-    etternavn: 'WAYNE',
-    fodselsdato: '1974-09-16',
+const mockPersonaliaV2: Personalia = {
+    fornavn: 'GRØNN',
+    mellomnavn: 'LIV',
+    etternavn: 'STAFELLI',
+    fodselsnummer: '10108000398',
+    fodselsdato: '1990-09-16',
     dodsdato: null,
     diskresjonskode: null,
-    sikkerhetstiltak: 'To ansatte i samtale',
-    egenAnsatt: false,
-    kjonn: 'K',
+    sikkerhetstiltak: 'Ansatte i samtale',
+    egenAnsatt: true,
+    kjonn: 'M',
 };
 
 const mockvergeOgFullmakt: VergeOgFullmakt = {
-    vergeEllerFremtidsfullmakt: [
+    vergemaalEllerFremtidsfullmakt: [
         {
             type: 'Enslig mindreårig asylsøker',
             embete: 'Fylkesmannen i Agder',
@@ -79,10 +79,10 @@ export const veilarbpersonHandlers: RequestHandlersList = [
     rest.get('/veilarbperson/api/person/:fnr/harNivaa4', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(mockHarBruktNivaa4));
     }),
-    rest.get('/veilarbperson/api/v2/person/:fnr', (req, res, ctx) => {
+    rest.get('/veilarbperson/api/v2/person', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(mockPersonaliaV2));
     }),
-    rest.get('/veilarbperson/api/v2/person/vergeOgFullmakt/:fnr', (req, res, ctx) => {
+    rest.get('/veilarbperson/api/v2/person/vergeOgFullmakt', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(mockvergeOgFullmakt));
     }),
 ];

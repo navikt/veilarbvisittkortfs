@@ -6,20 +6,7 @@ export interface Personalia {
     fornavn: string;
     mellomnavn: StringOrNothing;
     etternavn: string;
-    sammensattNavn: string;
     fodselsnummer: string;
-    fodselsdato: string;
-    dodsdato: StringOrNothing;
-    kjonn: string;
-    diskresjonskode: StringOrNothing;
-    egenAnsatt: boolean;
-    sikkerhetstiltak: StringOrNothing;
-}
-
-export interface PersonaliaV2 {
-    fornavn: string;
-    mellomnavn: StringOrNothing;
-    etternavn: string;
     fodselsdato: string;
     dodsdato: StringOrNothing;
     kjonn: string;
@@ -52,7 +39,7 @@ export interface VergemaalEllerFremtidsfullmakt {
     folkeregistermetadata: Folkeregistermetadata;
 }
 
-export interface Fullmakter {
+export interface Fullmakt {
     motpartsPersonident: StringOrNothing;
     motpartsRolle: StringOrNothing;
     omraader: string[];
@@ -61,8 +48,8 @@ export interface Fullmakter {
 }
 
 export interface VergeOgFullmakt {
-    vergeEllerFremtidsfullmakt: VergemaalEllerFremtidsfullmakt[];
-    fullmakt: Fullmakter[];
+    vergemaalEllerFremtidsfullmakt: VergemaalEllerFremtidsfullmakt[];
+    fullmakt: Fullmakt[];
 }
 
 export interface HarBruktNivaa4Type {
@@ -70,16 +57,16 @@ export interface HarBruktNivaa4Type {
     personidentifikator?: string;
 }
 
-export function fetchPersonalia(fnr: string): AxiosPromise<Personalia> {
-    return axiosInstance.get<Personalia>(`/veilarbperson/api/person/${fnr}`);
-}
-
-export function fetchPersonaliaV2(fnr: string): AxiosPromise<PersonaliaV2> {
-    return axiosInstance.get<PersonaliaV2>(`/veilarbperson/api/v2/person/${fnr}`);
+export function fetchPersonalia(fnr: string, hentPersonDataFraPdl: boolean): AxiosPromise<Personalia> {
+    if (hentPersonDataFraPdl) {
+        return axiosInstance.get<Personalia>(`/veilarbperson/api/v2/person?fnr=${fnr}`);
+    } else {
+        return axiosInstance.get<Personalia>(`/veilarbperson/api/person/${fnr}`);
+    }
 }
 
 export function fetchVergeOgFullmakt(fnr: string): AxiosPromise<VergeOgFullmakt> {
-    return axiosInstance.get<VergeOgFullmakt>(`/veilarbperson/api/v2/person/vergeOgFullmakt/${fnr}`);
+    return axiosInstance.get<VergeOgFullmakt>(`/veilarbperson/api/v2/person/vergeOgFullmakt?fnr=${fnr}`);
 }
 
 export function fetchHarNivaa4(fnr: string): AxiosPromise<HarBruktNivaa4Type> {
