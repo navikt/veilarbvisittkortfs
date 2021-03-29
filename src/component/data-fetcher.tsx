@@ -3,7 +3,7 @@ import { useDataStore } from '../store/data-store';
 import { fetchFeaturesToggles, HENT_PERSONDATA_FRA_PDL_TOGGLE } from '../api/veilarbpersonflatefs';
 import { useAppStore } from '../store/app-store';
 import { fetchOppfolging, fetchOppfolgingsstatus, fetchTilgangTilBrukersKontor } from '../api/veilarboppfolging';
-import { fetchPersonalia, fetchVergeOgFullmakt } from '../api/veilarbperson';
+import { fetchPersonalia, fetchSpraakTolk, fetchVergeOgFullmakt } from '../api/veilarbperson';
 import { fetchInnloggetVeileder, fetchVeilederePaEnhet } from '../api/veilarbveileder';
 import { fetchArbeidsliste } from '../api/veilarbportefolje';
 import { ifResponseHasData } from '../util/utils';
@@ -24,6 +24,7 @@ export function DataFetcher(props: { children: any }) {
         setVeilederePaEnhet,
         setFeatures,
         setVergeOgFullmakt,
+        setSpraakTolk,
         features,
     } = useDataStore();
 
@@ -36,13 +37,14 @@ export function DataFetcher(props: { children: any }) {
     const arbeidslisteFetcher = useAxiosFetcher(fetchArbeidsliste);
     const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
     const vergeOgFullmaktFetcher = useAxiosFetcher(fetchVergeOgFullmakt);
-
+    const spraakTolkFetcher = useAxiosFetcher(fetchSpraakTolk);
     const oppfolgingsEnhet = oppfolgingstatusFetcher.data?.oppfolgingsenhet.enhetId || '';
 
     useEffect(() => {
         oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging)).catch();
         oppfolgingstatusFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolgingsstatus)).catch();
         vergeOgFullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setVergeOgFullmakt)).catch();
+        spraakTolkFetcher.fetch(brukerFnr).then(ifResponseHasData(setSpraakTolk));
         tilgangTilBrukersKontorFetcher.fetch(brukerFnr).then(ifResponseHasData(setTilgangTilBrukersKontor)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr]);
@@ -85,6 +87,7 @@ export function DataFetcher(props: { children: any }) {
             innloggetVeilederFetcher,
             personaliaFetcher,
             vergeOgFullmaktFetcher,
+            spraakTolkFetcher,
             featureToggleFetcher,
             tilgangTilBrukersKontorFetcher
         )

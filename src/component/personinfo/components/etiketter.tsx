@@ -39,7 +39,7 @@ function manglerVedtak(oppfolging: OrNothing<OppfolgingStatus>): boolean {
 
 function Etiketter() {
     const { brukerFnr } = useAppStore();
-    const { oppfolgingsstatus, oppfolging, personalia, features, vergeOgFullmakt } = useDataStore();
+    const { oppfolgingsstatus, oppfolging, personalia, features, vergeOgFullmakt, spraakTolk } = useDataStore();
 
     const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>(null);
 
@@ -67,6 +67,8 @@ function Etiketter() {
             <Show if={features[HENT_PERSONDATA_FRA_PDL_TOGGLE]}>
                 <Fokus visible={!isEmpty(vergeOgFullmakt?.vergemaalEllerFremtidsfullmakt)}>Vergemål</Fokus>
                 <Fokus visible={!isEmpty(vergeOgFullmakt?.fullmakt)}>Fullmakt</Fokus>
+                <Fokus visible={spraakTolk?.tegnspraak}>Tegnspråktolk</Fokus>
+                <Fokus visible={spraakTolk?.talespraak}>Tolk</Fokus>
             </Show>
             <Fokus visible={oppfolging?.underKvp}>KVP</Fokus>
             <Fokus

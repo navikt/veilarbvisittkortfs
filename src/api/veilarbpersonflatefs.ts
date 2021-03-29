@@ -3,7 +3,7 @@ import { axiosInstance } from './utils';
 
 export const PILOT_TOGGLE = 'pto.vedtaksstotte.pilot';
 export const VEDTAKSSTTOTTE_PRELANSERING_TOGGLE = 'veilarbvedtaksstottefs.prelansering';
-export const HENT_PERSONDATA_FRA_PDL_TOGGLE = 'veilarbvedtaksstottefs.persondata.fra.pdl';
+export const HENT_PERSONDATA_FRA_PDL_TOGGLE = 'veilarbvisitkortfs.persondata.fra.pdl';
 export const ALL_TOGGLES = [PILOT_TOGGLE, VEDTAKSSTTOTTE_PRELANSERING_TOGGLE, HENT_PERSONDATA_FRA_PDL_TOGGLE];
 
 export interface FeatureToggles {

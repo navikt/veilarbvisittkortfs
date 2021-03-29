@@ -2,7 +2,7 @@ import constate from 'constate';
 import { useState } from 'react';
 import { FeatureToggles } from '../api/veilarbpersonflatefs';
 import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/veilarboppfolging';
-import { HarBruktNivaa4Type, Personalia, VergeOgFullmakt } from '../api/veilarbperson';
+import { HarBruktNivaa4Type, Personalia, SpraakTolk, VergeOgFullmakt } from '../api/veilarbperson';
 import { Arbeidsliste } from '../api/veilarbportefolje';
 import { VeilederData, VeilederListe } from '../api/veilarbveileder';
 
@@ -14,6 +14,7 @@ export const [DataStore, useDataStore] = constate(() => {
     const [innloggetVeileder, setInnloggetVeileder] = useState<VeilederData>();
     const [personalia, setPersonalia] = useState<Personalia>();
     const [vergeOgFullmakt, setVergeOgFullmakt] = useState<VergeOgFullmakt>();
+    const [spraakTolk, setSpraakTolk] = useState<SpraakTolk>();
     const [tilgangTilBrukersKontor, setTilgangTilBrukersKontor] = useState<TilgangTilBrukersKontor>();
     const [harBruktNivaa4, setHarBruktNivaa4] = useState<HarBruktNivaa4Type>();
     const [features, setFeatures] = useState<FeatureToggles>(placeholder);
@@ -41,5 +42,7 @@ export const [DataStore, useDataStore] = constate(() => {
         setVeilederePaEnhet,
         vergeOgFullmakt,
         setVergeOgFullmakt,
+        spraakTolk,
+        setSpraakTolk,
     };
 });
