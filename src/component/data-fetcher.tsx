@@ -42,12 +42,16 @@ export function DataFetcher(props: { children: any }) {
     useEffect(() => {
         oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging)).catch();
         oppfolgingstatusFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolgingsstatus)).catch();
+        vergeOgFullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setVergeOgFullmakt)).catch();
+        tilgangTilBrukersKontorFetcher.fetch(brukerFnr).then(ifResponseHasData(setTilgangTilBrukersKontor)).catch();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [brukerFnr]);
+
+    useEffect(() => {
         personaliaFetcher
             .fetch(brukerFnr, features[HENT_PERSONDATA_FRA_PDL_TOGGLE])
             .then(ifResponseHasData(setPersonalia))
             .catch();
-        vergeOgFullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setVergeOgFullmakt)).catch();
-        tilgangTilBrukersKontorFetcher.fetch(brukerFnr).then(ifResponseHasData(setTilgangTilBrukersKontor)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr, features]);
 

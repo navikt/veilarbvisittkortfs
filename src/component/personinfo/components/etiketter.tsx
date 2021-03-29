@@ -8,7 +8,7 @@ import { fetchRegistrering, InnsatsgruppeType } from '../../../api/veilarbregist
 import { HENT_PERSONDATA_FRA_PDL_TOGGLE, PILOT_TOGGLE } from '../../../api/veilarbpersonflatefs';
 import { OppfolgingStatus } from '../../../api/veilarboppfolging';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
-import { ifResponseHasData } from '../../../util/utils';
+import { ifResponseHasData, isEmpty } from '../../../util/utils';
 import visibleIf from '../../components/visible-if';
 import Show from '../../components/show/show';
 
@@ -65,8 +65,8 @@ function Etiketter() {
             <Advarsel visible={personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
             <Advarsel visible={personalia?.egenAnsatt}>Egen ansatt</Advarsel>
             <Show if={features[HENT_PERSONDATA_FRA_PDL_TOGGLE]}>
-                <Fokus visible={vergeOgFullmakt?.vergemaalEllerFremtidsfullmakt.length !== 0}>Vergemål</Fokus>
-                <Fokus visible={vergeOgFullmakt?.fullmakt.length !== 0}>Fullmakt</Fokus>
+                <Fokus visible={!isEmpty(vergeOgFullmakt?.vergemaalEllerFremtidsfullmakt)}>Vergemål</Fokus>
+                <Fokus visible={!isEmpty(vergeOgFullmakt?.fullmakt)}>Fullmakt</Fokus>
             </Show>
             <Fokus visible={oppfolging?.underKvp}>KVP</Fokus>
             <Fokus
