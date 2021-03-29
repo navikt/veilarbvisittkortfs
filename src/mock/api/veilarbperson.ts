@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
-import { HarBruktNivaa4Type, Personalia, VergeOgFullmakt } from '../../api/veilarbperson';
+import { HarBruktNivaa4Type, Personalia, SpraakTolk, VergeOgFullmakt } from '../../api/veilarbperson';
 
 const mockHarBruktNivaa4: HarBruktNivaa4Type = {
     harbruktnivaa4: false,
@@ -32,7 +32,7 @@ const mockPersonaliaV2: Personalia = {
     kjonn: 'M',
 };
 
-const mockvergeOgFullmakt: VergeOgFullmakt = {
+const mockVergeOgFullmakt: VergeOgFullmakt = {
     vergemaalEllerFremtidsfullmakt: [
         {
             type: 'Enslig mindreårig asylsøker',
@@ -72,6 +72,11 @@ const mockvergeOgFullmakt: VergeOgFullmakt = {
     fullmakt: [],
 };
 
+const mockSpraakTolk: SpraakTolk = {
+    tegnspraak: 'Norsk',
+    talespraak: 'Engelsk',
+};
+
 export const veilarbpersonHandlers: RequestHandlersList = [
     rest.get('/veilarbperson/api/person/:fnr', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(mockPersonalia));
@@ -83,6 +88,9 @@ export const veilarbpersonHandlers: RequestHandlersList = [
         return res(ctx.delay(500), ctx.json(mockPersonaliaV2));
     }),
     rest.get('/veilarbperson/api/v2/person/vergeOgFullmakt', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockvergeOgFullmakt));
+        return res(ctx.delay(500), ctx.json(mockVergeOgFullmakt));
+    }),
+    rest.get('/veilarbperson/api/v2/person/tolk', (req, res, ctx) => {
+        return res(ctx.delay(500), ctx.json(mockSpraakTolk));
     }),
 ];

@@ -52,6 +52,11 @@ export interface VergeOgFullmakt {
     fullmakt: Fullmakt[];
 }
 
+export interface SpraakTolk {
+    tegnspraak: StringOrNothing;
+    talespraak: StringOrNothing;
+}
+
 export interface HarBruktNivaa4Type {
     harbruktnivaa4: boolean;
     personidentifikator?: string;
@@ -67,6 +72,10 @@ export function fetchPersonalia(fnr: string, hentPersonDataFraPdl: boolean): Axi
 
 export function fetchVergeOgFullmakt(fnr: string): AxiosPromise<VergeOgFullmakt> {
     return axiosInstance.get<VergeOgFullmakt>(`/veilarbperson/api/v2/person/vergeOgFullmakt?fnr=${fnr}`);
+}
+
+export function fetchSpraakTolk(fnr: string): AxiosPromise<SpraakTolk> {
+    return axiosInstance.get<SpraakTolk>(`/veilarbperson/api/v2/person/tolk?fnr=${fnr}`);
 }
 
 export function fetchHarNivaa4(fnr: string): AxiosPromise<HarBruktNivaa4Type> {
