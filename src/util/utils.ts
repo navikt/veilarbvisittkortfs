@@ -37,6 +37,10 @@ export function replaceAt<T>(array: T[], index: number, value: T) {
     return ret;
 }
 
+export function isEmpty(array: undefined | any[]): boolean {
+    return !array || array.length === 0;
+}
+
 export function doAll(...fns: (() => void)[]) {
     fns.forEach((fn) => fn());
 }
