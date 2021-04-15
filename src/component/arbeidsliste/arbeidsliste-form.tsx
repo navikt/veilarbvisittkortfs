@@ -3,7 +3,7 @@ import FormikInput from '../components/formik/formik-input';
 import FormikTekstArea from '../components/formik/formik-textarea';
 import FormikDatoVelger from '../components/formik/formik-datepicker';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
-import ArbeidslistekategoriVisning from './arbeidslistekategori/arbeidslisteikon-visning';
+import ArbeidslistekategoriVisning from './arbeidslisteikon/arbeidslisteikon-visning';
 import { OrNothing } from '../../util/type/ornothing';
 import {
     validerArbeidslisteDatoFelt,
