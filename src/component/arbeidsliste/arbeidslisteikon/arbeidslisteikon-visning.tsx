@@ -25,20 +25,20 @@ function ArbeidslistekategoriVisning(props: { name: string }) {
                             title="Arbeidslisteikon blå"
                         />
                         <Arbeidslistekategori
-                            value={KategoriModell.LILLA}
-                            arbeidslisteikon={<ArbeidslisteikonLilla />}
-                            name={props.name}
-                            onChange={() => form.setFieldValue(props.name, KategoriModell.LILLA)}
-                            checked={field.value === KategoriModell.LILLA}
-                            title="Arbeidslisteikon lilla"
-                        />
-                        <Arbeidslistekategori
                             value={KategoriModell.GRONN}
                             arbeidslisteikon={<ArbeidslisteikonGronn />}
                             name={props.name}
                             onChange={() => form.setFieldValue(props.name, KategoriModell.GRONN)}
                             checked={field.value === KategoriModell.GRONN}
                             title="Arbeidslisteikon grønn"
+                        />
+                        <Arbeidslistekategori
+                            value={KategoriModell.LILLA}
+                            arbeidslisteikon={<ArbeidslisteikonLilla />}
+                            name={props.name}
+                            onChange={() => form.setFieldValue(props.name, KategoriModell.LILLA)}
+                            checked={field.value === KategoriModell.LILLA}
+                            title="Arbeidslisteikon lilla"
                         />
                         <Arbeidslistekategori
                             value={KategoriModell.GUL}

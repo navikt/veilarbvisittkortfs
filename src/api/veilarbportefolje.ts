@@ -18,8 +18,8 @@ export interface Arbeidsliste {
 
 export enum KategoriModell {
     BLA = 'BLA',
-    LILLA = 'LILLA',
     GRONN = 'GRONN',
+    LILLA = 'LILLA',
     GUL = 'GUL',
     TOM = 'TOM',
 }
