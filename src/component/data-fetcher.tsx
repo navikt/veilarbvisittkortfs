@@ -38,22 +38,24 @@ export function DataFetcher(props: { children: any }) {
     const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
     const vergeOgFullmaktFetcher = useAxiosFetcher(fetchVergeOgFullmakt);
     const spraakTolkFetcher = useAxiosFetcher(fetchSpraakTolk);
+
+    const hentPersonDataFraPdl = features[HENT_PERSONDATA_FRA_PDL_TOGGLE];
     const oppfolgingsEnhet = oppfolgingstatusFetcher.data?.oppfolgingsenhet.enhetId || '';
 
     useEffect(() => {
         oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging)).catch();
         oppfolgingstatusFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolgingsstatus)).catch();
-        vergeOgFullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setVergeOgFullmakt)).catch();
-        spraakTolkFetcher.fetch(brukerFnr).then(ifResponseHasData(setSpraakTolk));
         tilgangTilBrukersKontorFetcher.fetch(brukerFnr).then(ifResponseHasData(setTilgangTilBrukersKontor)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr]);
 
     useEffect(() => {
-        personaliaFetcher
-            .fetch(brukerFnr, features[HENT_PERSONDATA_FRA_PDL_TOGGLE])
-            .then(ifResponseHasData(setPersonalia))
-            .catch();
+        if (hentPersonDataFraPdl) {
+            vergeOgFullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setVergeOgFullmakt)).catch();
+            spraakTolkFetcher.fetch(brukerFnr).then(ifResponseHasData(setSpraakTolk)).catch();
+        }
+
+        personaliaFetcher.fetch(brukerFnr, hentPersonDataFraPdl).then(ifResponseHasData(setPersonalia)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr, features]);
 
@@ -86,10 +88,9 @@ export function DataFetcher(props: { children: any }) {
             oppfolgingFetcher,
             innloggetVeilederFetcher,
             personaliaFetcher,
-            vergeOgFullmaktFetcher,
-            spraakTolkFetcher,
             featureToggleFetcher,
             tilgangTilBrukersKontorFetcher
+            // trenger ikke vente på vergeOgFullmaktFetcher eller spraakTolkFetcher
         )
     ) {
         return <NavFrontendSpinner className="visittkort-laster" type="L" />;
