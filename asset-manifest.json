@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/veilarbvisittkortfs/static/css/main.ff523384.chunk.css",
-    "main.js": "/veilarbvisittkortfs/static/js/main.59431410.chunk.js",
-    "main.js.map": "/veilarbvisittkortfs/static/js/main.59431410.chunk.js.map",
+    "main.js": "/veilarbvisittkortfs/static/js/main.fbbd5174.chunk.js",
+    "main.js.map": "/veilarbvisittkortfs/static/js/main.fbbd5174.chunk.js.map",
     "runtime-main.js": "/veilarbvisittkortfs/static/js/runtime-main.650e0b15.js",
     "runtime-main.js.map": "/veilarbvisittkortfs/static/js/runtime-main.650e0b15.js.map",
     "static/css/2.f1f76003.chunk.css": "/veilarbvisittkortfs/static/css/2.f1f76003.chunk.css",
@@ -13,10 +13,10 @@
     "static/css/main.ff523384.chunk.css.map": "/veilarbvisittkortfs/static/css/main.ff523384.chunk.css.map",
     "static/js/2.1a84e5d3.chunk.js.LICENSE.txt": "/veilarbvisittkortfs/static/js/2.1a84e5d3.chunk.js.LICENSE.txt",
     "static/media/advarsel-sirkel.42c46a6d.svg": "/veilarbvisittkortfs/static/media/advarsel-sirkel.42c46a6d.svg",
-    "static/media/arbeidslisteikon_bla.d759bd02.svg": "/veilarbvisittkortfs/static/media/arbeidslisteikon_bla.d759bd02.svg",
-    "static/media/arbeidslisteikon_gronn.0bcee4f8.svg": "/veilarbvisittkortfs/static/media/arbeidslisteikon_gronn.0bcee4f8.svg",
-    "static/media/arbeidslisteikon_gul.48375f31.svg": "/veilarbvisittkortfs/static/media/arbeidslisteikon_gul.48375f31.svg",
-    "static/media/arbeidslisteikon_lilla.83cd5366.svg": "/veilarbvisittkortfs/static/media/arbeidslisteikon_lilla.83cd5366.svg",
+    "static/media/arbeidslisteikon_bla.2e831f4a.svg": "/veilarbvisittkortfs/static/media/arbeidslisteikon_bla.2e831f4a.svg",
+    "static/media/arbeidslisteikon_gronn.15f551e0.svg": "/veilarbvisittkortfs/static/media/arbeidslisteikon_gronn.15f551e0.svg",
+    "static/media/arbeidslisteikon_gul.88974c5f.svg": "/veilarbvisittkortfs/static/media/arbeidslisteikon_gul.88974c5f.svg",
+    "static/media/arbeidslisteikon_lilla.eff38818.svg": "/veilarbvisittkortfs/static/media/arbeidslisteikon_lilla.eff38818.svg",
     "static/media/arbeidslisteikon_linje.b3a07a72.svg": "/veilarbvisittkortfs/static/media/arbeidslisteikon_linje.b3a07a72.svg",
     "static/media/feil-sirkel.6fbdadfa.svg": "/veilarbvisittkortfs/static/media/feil-sirkel.6fbdadfa.svg",
     "static/media/kvinne.943b327b.svg": "/veilarbvisittkortfs/static/media/kvinne.943b327b.svg",
@@ -30,6 +30,6 @@
     "static/css/2.f1f76003.chunk.css",
     "static/js/2.1a84e5d3.chunk.js",
     "static/css/main.ff523384.chunk.css",
-    "static/js/main.59431410.chunk.js"
+    "static/js/main.fbbd5174.chunk.js"
   ]
 }
