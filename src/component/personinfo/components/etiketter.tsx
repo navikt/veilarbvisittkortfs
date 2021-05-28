@@ -68,7 +68,7 @@ function Etiketter() {
                 <Fokus visible={!isEmpty(vergeOgFullmakt?.vergemaalEllerFremtidsfullmakt)}>Vergemål</Fokus>
                 <Fokus visible={!isEmpty(vergeOgFullmakt?.fullmakt)}>Fullmakt</Fokus>
                 <Fokus visible={spraakTolk?.tegnspraak}>Tegnspråktolk</Fokus>
-                <Fokus visible={spraakTolk?.talespraak}>Tolk</Fokus>
+                <Fokus visible={spraakTolk?.talespraak}>Språktolk</Fokus>
             </Show>
             <Fokus visible={oppfolging?.underKvp}>KVP</Fokus>
             <Fokus
