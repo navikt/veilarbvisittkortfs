@@ -1,0 +1,16 @@
+{
+  "baseUrl": "http://localhost:3042",
+  "viewportHeight": 1300,
+  "viewportWidth": 1800,
+  "defaultCommandTimeout": 10000,
+  "retries": {
+    "runMode": 2
+  },
+  "videoUploadOnPasses": false,
+  "component": {
+    "componentFolder": "src",
+    "viewportHeight": 500,
+    "viewportWidth": 700
+  },
+  "projectId": "c6z3ok"
+}

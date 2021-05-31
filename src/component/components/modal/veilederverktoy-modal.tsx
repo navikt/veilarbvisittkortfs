@@ -18,7 +18,7 @@ function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
             className={classNames('veilederverktoy-modal', props.className)}
             isOpen={true}
             onRequestClose={hideModal}
-            contentLabel="veilederverktoy"
+            contentLabel="veilederverktoy-modal"
         >
             <ModalHeader tittel={props.tittel} />
             <div className="modal-innhold">{props.children}</div>

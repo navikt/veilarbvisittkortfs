@@ -88,7 +88,12 @@ function TildelVeileder() {
                     )}
                 </SokFilter>
                 <div className="modal-footer">
-                    <Hovedknapp className="btn--mr1" htmlType="submit" disabled={!selectedVeilederId}>
+                    <Hovedknapp
+                        className="btn--mr1"
+                        htmlType="submit"
+                        disabled={!selectedVeilederId}
+                        data-testid="tildelVeilederSubmit"
+                    >
                         Velg
                     </Hovedknapp>
                     <Knapp htmlType="button" onClick={hideModal}>

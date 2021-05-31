@@ -100,7 +100,7 @@ function ArbeidslisteModal() {
                     <div className="modal-innhold">
                         <div className="modal-info-tekst">
                             <VeilederVerktoyModal tittel={modalTittel}>
-                                <Form>
+                                <Form data-testid="arbeidsliste-form">
                                     <ArbeidslisteForm
                                         navn={brukerSammensattNavn}
                                         fnr={brukerFnr}

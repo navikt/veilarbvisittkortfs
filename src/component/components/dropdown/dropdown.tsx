@@ -21,6 +21,7 @@ interface DropdownProps {
     onClick?: () => void;
     btnClassnames?: string;
     ariaLabelledBy?: string;
+    testid?: string;
 }
 
 function harTrykktPaEsc(e: React.KeyboardEvent) {
@@ -62,10 +63,10 @@ function Dropdown(props: DropdownProps) {
         }
     }
 
-    const { name, className, knappeTekst } = props;
+    const { name, className, knappeTekst, testid } = props;
     return (
         <div className="dropdown">
-            <div className={btnCls(apen, className)} ref={loggNode}>
+            <div className={btnCls(apen, className)} ref={loggNode} data-testid={`${testid}-dropdown`}>
                 <button
                     ref={btnRef}
                     type="button"
@@ -74,6 +75,7 @@ function Dropdown(props: DropdownProps) {
                     aria-expanded={apen}
                     aria-controls={`${name}-dropdown__innhold`}
                     aria-labelledby={props.ariaLabelledBy}
+                    data-testid={`${testid}-dropdownBtn`}
                 >
                     {knappeTekst}
                 </button>
@@ -88,6 +90,7 @@ function Dropdown(props: DropdownProps) {
                                 lukkDropdown();
                             }
                         }}
+                        data-testid={`${testid}-dropdown__innhold`}
                     >
                         {props.render(lukkDropdown)}
                     </ul>

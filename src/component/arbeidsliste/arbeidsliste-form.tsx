@@ -24,12 +24,19 @@ function ArbeidslisteForm(props: ArbeidslisteFormProps) {
         <div className="arbeidsliste__bruker">
             <div className="blokk-s">
                 <Undertittel>{`${props.navn}, ${props.fnr}`}</Undertittel>
-                <FormikInput name="overskrift" label="Tittel" validate={validerArbeidslisteTittelFelt} bredde="L" />
+                <FormikInput
+                    name="overskrift"
+                    label="Tittel"
+                    validate={validerArbeidslisteTittelFelt}
+                    bredde="L"
+                    data-testid="arbeidsliste-tittel"
+                />
                 <FormikTekstArea
                     name="kommentar"
                     label="Kommentar"
                     maxLength={500}
                     validate={validerArbeidslisteKommentarFelt}
+                    data-testid="arbeidsliste-kommentar"
                 />
                 {props.sistEndretAv && props.endringstidspunkt && (
                     <Undertekst className="arbeidsliste--modal-redigering">

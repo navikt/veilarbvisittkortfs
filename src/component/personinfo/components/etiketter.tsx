@@ -57,7 +57,7 @@ function Etiketter() {
     }, [brukerFnr]);
 
     return (
-        <div className="etikett-container">
+        <div className="etikett-container" data-testid="etikett-container">
             <Base visible={personalia?.dodsdato} type="info" className="etikett--mork">
                 Død
             </Base>

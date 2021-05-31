@@ -36,6 +36,7 @@ function AvsluttOppfolgingBekreft(props: AvsluttOppfolgingBekreftelseModalProps)
                     style={{ marginRight: '1rem' }}
                     onClick={handleSubmitAvsluttOppfolging}
                     spinner={false}
+                    data-testid="bekreft-avslutt-oppfolging"
                 >
                     Bekreft
                 </Hovedknapp>

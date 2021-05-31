@@ -68,7 +68,7 @@ function OpprettOppgave() {
             render={(formikProps) => (
                 <div className="modal-innhold">
                     <Undertittel className="opprett-oppgave__undertittel">{`Oppfølging av ${navn}`}</Undertittel>
-                    <Form>
+                    <Form data-testid="opprett-oppgave-form">
                         <OpprettOppgaveTemaSelector />
                         <OppgaveInnerForm
                             tema={formikProps.values.tema}

@@ -17,6 +17,7 @@ interface OwnProps<T extends BegrunnelseValues> {
     infoTekst?: React.ReactNode;
     render?: (formikProps: FormikProps<T>) => React.ReactNode;
     maxLength?: number;
+    formId?: string;
 }
 
 type BegrunnelseFormProps<T extends BegrunnelseValues> = OwnProps<T>;
@@ -26,13 +27,13 @@ function BegrunnelseForm<T extends BegrunnelseValues>(props: BegrunnelseFormProp
         <FormikModal
             initialValues={props.initialValues}
             handleSubmit={props.handleSubmit}
-            contentLabel=""
+            contentLabel="Begrunnelse modal"
             visConfirmDialog={true}
             tittel={props.tittel}
             render={() => (
                 <div className="modal-innhold">
                     {props.infoTekst}
-                    <Form>
+                    <Form data-testid={props.formId}>
                         <BegrunnelseTextArea tekstariaLabel={props.tekstariaLabel} maxLength={props.maxLength} />
                         <BegrunnelseFooter spinner={props.isLoading} />
                     </Form>

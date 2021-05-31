@@ -74,8 +74,9 @@ function Veilederverktoyslinje() {
                         <span id="veilederverkoy_span">Veilederverktøy</span>
                     </>
                 }
-                name="tildel veileder"
+                name="veiledervektoy"
                 btnClassnames="knapp knapp--standard knapp-fss"
+                testid="veiledervektoy"
                 render={(lukkDropdown) => (
                     <>
                         {kanEndreArbeidsliste && (

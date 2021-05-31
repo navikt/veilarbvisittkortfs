@@ -46,10 +46,11 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
         <div className="skjemaelement">
             <label className="skjemaelement__label">Enhet *</label>
             <Dropdown
-                name="Velg enhet dropdown"
+                name="Velg enhet"
                 knappeTekst={`${valgtEnhet.enhetId} ${valgtEnhet.navn}`}
                 className="velg-enhet-dropdown"
                 btnClassnames="velg-enhet-dropdown__button"
+                testid="velg-enhet"
                 render={(lukkDropdown) => (
                     <SokFilter data={behandladeEnheter} label="" placeholder="Søk etter enhet">
                         {(data) => (

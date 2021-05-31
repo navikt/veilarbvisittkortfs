@@ -1,0 +1,82 @@
+[
+  {
+    "tekst": "Vergemål",
+    "css": "fokus"
+  },
+  {
+    "tekst": "Tegnspråktolk",
+    "css": "fokus"
+  },
+  {
+    "tekst": "Språktolk",
+    "css": "fokus"
+  },
+  {
+    "tekst": "Fullmakt",
+    "css": "fokus"
+  },
+  {
+    "tekst": "Kode 6",
+    "css": "advarsel"
+  },
+  {
+    "tekst": "Kode 7",
+    "css": "advarsel"
+  },
+  {
+    "tekst": "Egen ansatt",
+    "css": "advarsel"
+  },
+  {
+    "tekst": "KVP",
+    "css": "fokus"
+  },
+  {
+    "tekst": "Manuell oppfølging",
+    "css": "fokus"
+  },
+  {
+    "tekst": "Reservert KRR",
+    "css": "fokus"
+  },
+  {
+    "tekst": "Inaktivert",
+    "css": "fokus"
+  },
+  {
+    "tekst": "Ikke under oppfølging",
+    "css": "fokus"
+  },
+  {
+    "tekst": "Varsel",
+    "css": "fokus"
+  },
+  {
+    "tekst": "Ikke registrert KRR",
+    "css": "fokus"
+  },
+  {
+    "tekst": "Trenger vurdering",
+    "css": "info"
+  },
+  {
+    "tekst": "Behov for AEV",
+    "css": "info"
+  },
+  {
+    "tekst": "Sykmeldt",
+    "css": "info"
+  },
+  {
+    "tekst": "Antatt gode muligheter",
+    "css": "info"
+  },
+  {
+    "tekst": "Antatt behov for veiledning",
+    "css": "info"
+  },
+  {
+    "tekst": "Oppgitt hindringer",
+    "css": "info"
+  }
+]
