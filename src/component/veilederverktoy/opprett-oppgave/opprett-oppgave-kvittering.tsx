@@ -13,6 +13,7 @@ function OpprettOppgaveKvittering({ tema, type }: OpprettOppgaveKvitteringProps)
         <Kvittering
             tittel="Opprett en Gosys-oppgave"
             alertStripeTekst={`Oppgave med tema ${tema} av type ${type} er opprettet.`}
+            kvitteringId="opprett-oppgave-kvittering"
         />
     );
 }

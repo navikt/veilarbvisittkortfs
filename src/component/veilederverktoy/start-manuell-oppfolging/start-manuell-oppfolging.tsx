@@ -32,8 +32,9 @@ function StartManuellOppfolging() {
             tekstariaLabel="Skriv en begrunnelse for hvorfor brukeren trenger manuell oppfølging"
             isLoading={false}
             tittel="Endre til manuell oppfølging"
+            formId="manuell-oppfolging-form"
             infoTekst={
-                <AlertStripeAdvarsel className="blokk-xxs">
+                <AlertStripeAdvarsel className="blokk-xxs" data-testid="manuell-oppfolging-infotekst">
                     Når du endrer til manuell oppfølging, har du ikke lenger mulighet til å ha dialog med brukeren i
                     aktivitetsplanen.
                 </AlertStripeAdvarsel>

@@ -7,6 +7,7 @@ function AvsluttOppfolgingKvittering() {
             tittel="Avslutt oppfølging fra NAV"
             alertStripeTekst="Oppfølgingsperioden er nå avsluttet."
             onRequestClose={window.location.reload.bind(window.location)}
+            kvitteringId="avslutt-oppfolging-kvittering"
         />
     );
 }

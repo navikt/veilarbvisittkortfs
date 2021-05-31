@@ -9,7 +9,7 @@ interface OwnProps {
 
 function ModalHeader({ className, tittel }: OwnProps) {
     return (
-        <div className={classNames('modal-header-wrapper', className)}>
+        <div className={classNames('modal-header-wrapper', className)} data-testid="modal-header">
             <header className="modal-header">
                 <Innholdstittel tag="h1" className="modal-info-tekst__overskrift">
                     {tittel}

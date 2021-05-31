@@ -65,6 +65,7 @@ function AvsluttOppfolging() {
             handleSubmit={handleSubmitAvsluttOppfolging}
             tekstariaLabel="Begrunnelse"
             tittel="Avslutt oppfølgingsperioden"
+            formId="avslutt-oppfolging-form"
             isLoading={false}
             infoTekst={
                 <AvsluttOppfolgingInfoText

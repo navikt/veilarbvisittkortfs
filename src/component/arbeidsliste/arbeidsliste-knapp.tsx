@@ -17,7 +17,12 @@ function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
     const kategori = arbeidsliste?.kategori || KategoriModell.TOM;
 
     return (
-        <KnappFss className="arbeidsliste-knapp" onClick={props.onClick} hidden={props.hidden}>
+        <KnappFss
+            className="arbeidsliste-knapp"
+            onClick={props.onClick}
+            hidden={props.hidden}
+            data-testid="arbeidsliste-knapp"
+        >
             <ArbeidslistekategoriVisning kategori={kategori} />
         </KnappFss>
     );

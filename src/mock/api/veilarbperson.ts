@@ -28,7 +28,7 @@ const mockPersonaliaV2: Personalia = {
     dodsdato: null,
     diskresjonskode: null,
     sikkerhetstiltak: 'Ansatte i samtale',
-    egenAnsatt: true,
+    egenAnsatt: false,
     kjonn: 'M',
 };
 

@@ -9,7 +9,7 @@ function KjonnIkon(props: { kjonn: string }) {
     const ikon = erKvinne ? KvinneIkon : MannIkon;
     const ikonTekst = `ikon ${erKvinne ? 'kvinne' : 'mann'}`;
 
-    return <img src={ikon} className="personinfo__ikon" alt={ikonTekst} />;
+    return <img src={ikon} className="personinfo__ikon" alt={ikonTekst} data-testid="personinfo__ikon" />;
 }
 
 export default visibleIf(KjonnIkon);

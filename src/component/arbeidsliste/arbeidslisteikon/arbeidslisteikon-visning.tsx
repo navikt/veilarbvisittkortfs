@@ -14,7 +14,7 @@ function ArbeidslistekategoriVisning(props: { name: string }) {
         <Field name={props.name}>
             {({ field, form }: FieldProps<KategoriModell>) => {
                 return (
-                    <div className="arbeidslistekategori">
+                    <div className="arbeidslistekategori" data-testid="arbeidslistekategori">
                         <span className="skjemaelement__label">Kategori</span>
                         <Arbeidslistekategori
                             value={KategoriModell.BLA}

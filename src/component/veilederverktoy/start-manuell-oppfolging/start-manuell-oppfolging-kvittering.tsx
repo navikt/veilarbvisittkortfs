@@ -48,6 +48,7 @@ function StartManuellOppfolgingKvittering(props: StartManuellOppfolgingKvitterin
                     Brukere som ikke kan legge inn CV og jobbprofil selv skal få hjelp til dette.
                 </AlertStripeAdvarsel>
             }
+            kvitteringId="start-manuell-oppfolging-kvittering"
         />
     );
 }

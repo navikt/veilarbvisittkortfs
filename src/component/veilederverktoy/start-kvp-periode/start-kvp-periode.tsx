@@ -25,7 +25,7 @@ function StarKvpPeriode() {
     }
 
     const infoTekst = (
-        <Normaltekst className="blokk-xs">
+        <Normaltekst className="blokk-xs" data-testid="start-kvp-infotekst">
             Når du klikker «Bekreft» vil bare veiledere i din enhet ha tilgang på dialoger, aktiviteter og mål som blir
             opprettet i KVP-perioden. Du må skrive en kommentar før du bekrefter.
         </Normaltekst>
@@ -42,6 +42,7 @@ function StarKvpPeriode() {
             infoTekst={infoTekst}
             isLoading={false}
             maxLength={250}
+            formId="start-kvp-form"
         />
     );
 }

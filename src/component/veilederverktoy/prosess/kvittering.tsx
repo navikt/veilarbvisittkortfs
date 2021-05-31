@@ -8,9 +8,10 @@ interface KvitteringProps {
     alertStripeTekst: string;
     footer?: React.ReactNode;
     onRequestClose?: () => void;
+    kvitteringId?: string;
 }
 
-function Kvittering({ tittel, alertStripeTekst, footer, onRequestClose }: KvitteringProps) {
+function Kvittering({ tittel, alertStripeTekst, footer, onRequestClose, kvitteringId }: KvitteringProps) {
     const { hideModal } = useModalStore();
 
     return (
@@ -25,7 +26,7 @@ function Kvittering({ tittel, alertStripeTekst, footer, onRequestClose }: Kvitte
             }}
             type="SUCCESS"
         >
-            <div className="blokk-xs">
+            <div className="blokk-xs" data-testid={kvitteringId}>
                 <Systemtittel className="modal-info-tekst__undertekst blokk-xs">{tittel}</Systemtittel>
                 <Normaltekst className="blokk-xs">{alertStripeTekst}</Normaltekst>
                 {!!footer && <div className="kvittering-footer">{footer}</div>}

@@ -27,7 +27,7 @@ function App(props: AppProps) {
             tilbakeTilFlate={props.tilbakeTilFlate}
             visVeilederVerktoy={props.visVeilederVerktoy || false}
         >
-            <div className="visittkortfs">
+            <div className="visittkortfs" data-testid="visittkortfs">
                 <DataFetcher>
                     <Tilbakelenke />
                     <div className="visittkortfs__container">

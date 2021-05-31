@@ -16,7 +16,7 @@ function RadioFilterForm<T>(props: RadioFilterFormProps<T>) {
     const { data, createLabel, createValue, radioName } = props;
     return (
         <div className="radio-filterform">
-            <div className="radio-filterform__valg scrollbar">
+            <div className="radio-filterform__valg scrollbar" data-testid="radio-filterform__valg">
                 {data.map((o) => {
                     const value = createValue(o);
                     return (

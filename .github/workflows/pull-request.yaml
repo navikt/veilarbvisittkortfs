@@ -1,0 +1,24 @@
+name: Cypress testing
+on: pull_request
+env:
+  CI: true
+  TZ: Europe/Amsterdam
+
+jobs:
+  cypress-run:
+    name: Run cypress test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          browser: chrome
+          headless: true
+          start: npm start cypress:run
+          wait-on: http://localhost:3042
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
