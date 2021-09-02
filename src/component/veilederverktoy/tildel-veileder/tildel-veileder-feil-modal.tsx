@@ -22,8 +22,8 @@ export function FeilTildelingModal() {
         >
             <Systemtittel>Handlingen kan ikke utføres</Systemtittel>
             <Normaltekst className="feil-modal-normaltekst">
-                Tildeling av veileder feilet. Det kan skyldes manglende tilgang på brukeren, eller at veilederen
-                allerede er tildelt brukeren.
+                Tildeling av veileder feilet. Det kan skyldes manglende tilgang til brukeren, at veilederen allerede er
+                tildelt brukeren, eller at brukeren ikke er under oppfølging.
             </Normaltekst>
             <button className="knapp knapp--hoved feil-modal-knapp" onClick={lukkModal}>
                 Ok
