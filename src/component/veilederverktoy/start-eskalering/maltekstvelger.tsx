@@ -17,6 +17,22 @@ const malTekster = {
         '[Fyll inn begrunnelse for varslet]\n' +
         '\n' +
         'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristdato]. Du kan uttale deg skriftlig her eller du kan ringe oss på 55 55 33 33 og uttale deg muntlig.\n',
+    dagpenger_vesentlig_avvik_fra_oppleringsplanen:
+        'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på meldingen.\n' +
+        '\n' +
+        'Hvis du ikke følger opplæringsplanen din hos NAV, kan du miste retten til å få dagpenger mens du tar utdanning eller opplæring. Hvis du mister retten, kan du tidligst søke på nytt om å få dagpenger mens du tar utdanning eller opplæring 6 måneder etter at du mistet retten. Les mer i forskrift om dagpenger under arbeidsløshet § 4-3f.\n' +
+        '\n' +
+        '[Fyll inn begrunnelse for varselet]\n' +
+        '\n' +
+        'Du kan gi en skriftlig tilbakemelding her i dialogen eller ringe oss på tlf. 55 55 33 33 før vi avgjør saken din. Fristen for tilbakemelding er [fristdato].',
+    dagpenger_fortsatt_utdanning_etter_opphort_utdanning:
+        'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på meldingen.\n' +
+        '\n' +
+        'Du har tidligere fått et vedtak fra oss om at du har mistet retten til å få dagpenger mens du tar utdanning eller opplæring. Hvis du velger å fortsette utdanningen/opplæringen, får du altså ikke lenger dagpenger. Du kan tidligst søke på nytt om å få dagpenger mens du tar utdanning eller opplæring 6 måneder etter at du mistet retten. Dette går fram av folketrygdloven § 4-6 første ledd og forskrift om dagpenger under arbeidsløshet § 4-3f.\n' +
+        '\n' +
+        '[Fyll inn begrunnelse for varselet]\n' +
+        '\n' +
+        'Du kan gi en skriftlig tilbakemelding her i dialogen eller ringe oss på tlf. 55 55 33 33, før vi avgjør saken din. Fristen for tilbakemelding er [fristdato].',
     ikke_mott_mote:
         'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne meldingen.\n' +
         '\n' +
@@ -87,7 +103,14 @@ function Maltekstvelger() {
     return (
         <Select className="malvelger" onChange={onChange}>
             <option value="">Velg en mal</option>
-            <option value="dagpenger">Dagpenger</option>
+            <option value="dagpenger">Dagpenger: Stans og tidsbegrenset bortfall.</option>
+            <option value="dagpenger_vesentlig_avvik_fra_oppleringsplanen">
+                {' '}
+                Dagpenger: Vesentlig avvik fra opplæringsplanen.
+            </option>
+            <option value="dagpenger_fortsatt_utdanning_etter_opphort_utdanning">
+                Dagpenger: Fortsatt utdanning etter opphørt utdanning.
+            </option>
             <option value="ikke_mott_mote">Arbeidsavklaringspenger: Ikke møtt til møte</option>
             <option value="ikke_deltatt_aktivitet">
                 Arbeidsavklaringspenger: Ikke deltatt på planlagt aktivitet eller bidrar ikke for å komme i arbeid
