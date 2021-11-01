@@ -68,7 +68,11 @@ function StartEskalering() {
                         startEskaleringPromise,
                     ]);
 
-                    logger.event('veilarbvisittkortfs.metrikker.forhonshorendtering.sendt', { type: values.type });
+                    logger.event(
+                        'veilarbvisittkortfs.metrikker.forhonshorendtering.sendt',
+                        { type: values.type },
+                        { typeTag: values.type }
+                    );
 
                     // Hent oppdatert data med ny eskaleringsvarsel
                     await oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging));
