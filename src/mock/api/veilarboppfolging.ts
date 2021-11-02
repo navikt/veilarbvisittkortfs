@@ -131,21 +131,21 @@ const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
 const mockOppfolging: Oppfolging = {
     fnr: '123456',
     veilederId: mockInnloggetVeileder.ident,
-    reservasjonKRR: false,
-    manuell: false,
-    underOppfolging: true,
-    underKvp: false,
+    reservasjonKRR: true,
+    manuell: true,
+    underOppfolging: false,
+    underKvp: true,
     oppfolgingUtgang: '2019-03-28T11:12:40.973+01:00',
-    gjeldendeEskaleringsvarsel: null,
-    /*gjeldendeEskaleringsvarsel: {
+    //gjeldendeEskaleringsvarsel: null,
+    gjeldendeEskaleringsvarsel: {
         varselId: '1',
         aktorId: '112345',
         oppretterAv: 'Z9091',
         opprettetDato: '2019-03-28T11:12:40.973+01:00',
         avsluttetDato: null,
-        tilhorendeDialogId: '1'
-    },*/
-    kanStarteOppfolging: false,
+        tilhorendeDialogId: '1',
+    },
+    kanStarteOppfolging: true,
     oppfolgingsPerioder: [
         {
             aktorId: '00007',
