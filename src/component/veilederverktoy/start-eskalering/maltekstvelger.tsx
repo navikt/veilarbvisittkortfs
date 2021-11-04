@@ -13,7 +13,7 @@ const malTekster = {
         '· Møte hos NAV når vi trenger å snakke med deg\n' +
         '· Utføre lovpålagte aktiviteter\n' +
         '\n' +
-        'Les mer i folketrygdloven §§ 4-5, og forskrift om dagpenger under arbeidsløshet 4-1' +
+        'Les mer i folketrygdloven §§ 4-5, og forskrift om dagpenger under arbeidsløshet 4-1\n' +
         '\n' +
         'Vi kan stanse dagpengene dine, eller stanse utbetalingen i en periode dersom du ikke følger opp aktivitetsplikten, takker nei til arbeid eller arbeidsmarkedstiltak. Vi kan stanse utbetalingen i en periode hvis du ikke møter opp når vi innkaller deg til møter.\n' +
         '\n' +
