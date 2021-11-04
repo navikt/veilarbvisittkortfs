@@ -69,7 +69,15 @@ const mockVergeOgFullmakt: VergeOgFullmakt = {
             },
         },
     ],
-    fullmakt: [],
+    fullmakt: [
+        {
+            motpartsPersonident: '',
+            motpartsRolle: '',
+            omraader: [],
+            gyldigFraOgMed: '',
+            gyldigTilOgMed: '',
+        },
+    ],
 };
 
 const mockSpraakTolk: SpraakTolk = {
