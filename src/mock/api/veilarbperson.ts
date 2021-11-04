@@ -29,7 +29,7 @@ const mockPersonaliaV2: Personalia = {
     diskresjonskode: null,
     sikkerhetstiltak: 'Ansatte i samtale',
     egenAnsatt: true,
-    kjonn: 'M',
+    kjonn: 'KVINNE',
 };
 
 const mockVergeOgFullmakt: VergeOgFullmakt = {
