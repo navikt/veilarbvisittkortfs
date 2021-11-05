@@ -1,6 +1,7 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import { HarBruktNivaa4Type, Personalia, SpraakTolk, VergeOgFullmakt } from '../../api/veilarbperson';
+import { RegistreringData } from '../../api/veilarbperson';
 
 const mockHarBruktNivaa4: HarBruktNivaa4Type = {
     harbruktnivaa4: false,
@@ -85,7 +86,17 @@ const mockSpraakTolk: SpraakTolk = {
     talespraak: 'Engelsk',
 };
 
+const mockRegistrering: RegistreringData = {
+    type: 'ORDINAER',
+    registrering: {
+        manueltRegistrertAv: null,
+    },
+};
+
 export const veilarbpersonHandlers: RequestHandlersList = [
+    rest.get('/veilarbperson/api/person/registrering', (req, res, ctx) => {
+        return res(ctx.delay(500), ctx.json(mockRegistrering));
+    }),
     rest.get('/veilarbperson/api/person/:fnr', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(mockPersonalia));
     }),
