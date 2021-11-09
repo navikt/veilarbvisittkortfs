@@ -5,7 +5,7 @@ import { logger } from '../../../util/logger';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
-import { fetchRegistrering } from '../../../api/veilarbregistrering';
+import { fetchRegistrering } from '../../../api/veilarbperson';
 
 export interface StartManuellOppfolgingKvitteringProps {
     begrunnelse: string;
