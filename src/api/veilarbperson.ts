@@ -62,6 +62,20 @@ export interface HarBruktNivaa4Type {
     personidentifikator?: string;
 }
 
+export type RegistreringType = 'ORDINAER' | 'SYKMELDT';
+export type InnsatsgruppeType = 'STANDARD_INNSATS' | 'SITUASJONSBESTEMT_INNSATS' | 'BEHOV_FOR_ARBEIDSEVNEVURDERING';
+
+export interface RegistreringData {
+    type: RegistreringType;
+    registrering: {
+        profilering?: {
+            jobbetSammenhengendeSeksAvTolvSisteManeder: boolean;
+            innsatsgruppe: InnsatsgruppeType;
+        };
+        manueltRegistrertAv: {} | null;
+    };
+}
+
 export function fetchPersonalia(fnr: string, hentPersonDataFraPdl: boolean): AxiosPromise<Personalia> {
     if (hentPersonDataFraPdl) {
         return axiosInstance.get<Personalia>(`/veilarbperson/api/v2/person?fnr=${fnr}`);
@@ -80,4 +94,8 @@ export function fetchSpraakTolk(fnr: string): AxiosPromise<SpraakTolk> {
 
 export function fetchHarNivaa4(fnr: string): AxiosPromise<HarBruktNivaa4Type> {
     return axiosInstance.get<HarBruktNivaa4Type>(`/veilarbperson/api/person/${fnr}/harNivaa4`);
+}
+
+export function fetchRegistrering(fnr: string): AxiosPromise<RegistreringData> {
+    return axiosInstance.get<RegistreringData>(`/veilarbperson/api/person/registrering?fnr=${fnr}`);
 }
