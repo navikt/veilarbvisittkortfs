@@ -73,7 +73,7 @@ function Etiketter() {
             <Fokus visible={oppfolging?.underKvp}>KVP</Fokus>
             <Fokus
                 visible={oppfolging && oppfolging.manuell}
-                title="Brukeren er vurdert til å ikke kunne benytte seg av aktivitetsplanen og dialogen. Du kan endre til digital oppfølging i Veilederverktøy."
+                title="Brukeren er vurdert til å ikke kunne benytte seg av aktivitetsplanen og dialogen. Du kan endre til digital oppfølging i Veilederverktøy dersom bruker ikke er reservert i KRR."
             >
                 Manuell oppfølging
             </Fokus>
