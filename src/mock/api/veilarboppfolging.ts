@@ -133,7 +133,7 @@ const mockOppfolging: Oppfolging = {
     veilederId: mockInnloggetVeileder.ident,
     reservasjonKRR: true,
     manuell: true,
-    underOppfolging: false,
+    underOppfolging: true,
     underKvp: true,
     oppfolgingUtgang: '2019-03-28T11:12:40.973+01:00',
     //gjeldendeEskaleringsvarsel: null,
