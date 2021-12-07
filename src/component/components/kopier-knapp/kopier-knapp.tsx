@@ -11,12 +11,7 @@ export function KopierKnappTekst(props: { kopierTekst: string }) {
 
     function copyToClipboard() {
         logger.event('veilarbvisittkortfs.metrikker.kopier.fnr');
-        const textField = window.document.createElement('textarea');
-        textField.innerText = props.kopierTekst;
-        window.document.body.appendChild(textField);
-        textField.select();
-        window.document.execCommand('copy');
-        textField.remove();
+        navigator.clipboard.writeText(props.kopierTekst);
         setCopySuccess(true);
     }
 
