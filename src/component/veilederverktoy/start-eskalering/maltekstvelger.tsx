@@ -79,11 +79,11 @@ const malTekster = {
         '\n' +
         'Du mottar arbeidsavklaringspenger (AAP), og har tidligere fått et vedtak som gjelder frem til [dato]. Vi vurderer nå å opphøre ytelsen tidligere enn denne datoen, fordi vi vurderer at du ikke lenger har nedsatt arbeidsevne på grunn av helsen din.\n' +
         '\n' +
-        '[Begrunnelse for varselet. Skriv en kort oppsummering fra det tidspunktet brukeren fikk innvilget arbeidsavklaringspenger og vis til hva som har skjedd etterpå.\n' +
+        '[Begrunnelse for varselet. Skriv en kort oppsummering fra det tidspunktet brukeren fikk innvilget arbeidsavklaringspenger og vis til hva som har skjedd etterpå.]\n' +
         '\n' +
-        '*Vis videre til grunnlaget for at NAV ikke lenger mener at folketrygdloven §11-5 er oppfylt, for eksempel: «Vurderingen er basert på følgende kilder:\n' +
+        '[Vis videre til grunnlaget for at NAV ikke lenger mener at folketrygdloven §11-5 er oppfylt, for eksempel: «Vurderingen er basert på følgende kilder:\n' +
         '    - legeerklæring fra fastlegen din (dato)\n' +
-        '    - rapport fra tiltaksarrangøren din (dato)]*\n' +
+        '    - rapport fra tiltaksarrangøren din (dato)]\n' +
         '\n' +
         'På bakgrunn av dette, vurderer vi at sykdom eller skade ikke lenger er en vesentlig medvirkende årsak til at du har nedsatt arbeidsevne, se folketrygdloven §11-5.\n' +
         '\n' +
