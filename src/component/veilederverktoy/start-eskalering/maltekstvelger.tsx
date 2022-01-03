@@ -74,6 +74,24 @@ const malTekster = {
         'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på 55 55 33 33 og uttale deg muntlig.\n' +
         '\n' +
         'Dersom arbeidsavklaringspengene dine blir stanset, kan du sende inn en ny søknad. Du kan tidligst gjenoppta arbeidsavklaringspengene dine fra den dagen du søker. Søknadsskjema finner du på nav.no.\n',
+    ikke_lenger_nedsatt_arbeidsevne:
+        'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe som du lurer på. Det gjør du ved å svare på denne dialogmeldingen.\n' +
+        '\n' +
+        'Du mottar arbeidsavklaringspenger (AAP), og har tidligere fått et vedtak som gjelder frem til [dato]. Vi vurderer nå å opphøre ytelsen tidligere enn denne datoen, fordi vi vurderer at du ikke lenger har nedsatt arbeidsevne på grunn av helsen din.\n' +
+        '\n' +
+        '[Begrunnelse for varselet. Skriv en kort oppsummering fra det tidspunktet brukeren fikk innvilget arbeidsavklaringspenger og vis til hva som har skjedd etterpå.]\n' +
+        '\n' +
+        '[Vis videre til grunnlaget for at NAV ikke lenger mener at folketrygdloven §11-5 er oppfylt, for eksempel: «Vurderingen er basert på følgende kilder:\n' +
+        '    - legeerklæring fra fastlegen din (dato)\n' +
+        '    - rapport fra tiltaksarrangøren din (dato)]\n' +
+        '\n' +
+        'På bakgrunn av dette, vurderer vi at sykdom eller skade ikke lenger er en vesentlig medvirkende årsak til at du har nedsatt arbeidsevne, se folketrygdloven §11-5.\n' +
+        '\n' +
+        'Du får dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du får nå en frist på 14 dager, til [dato], med å komme med tilbakemelding. Vi vil ta tilbakemeldingen din med i vurderingen som vi gjør når fristen har gått ut.\n' +
+        '\n' +
+        'Hvis du ikke har mulighet til å uttale deg innen fristen, må du ta kontakt med oss så snart som mulig.\n' +
+        '\n' +
+        'Hvis vi ikke endrer den foreløpige vurderingen vår, betyr det at arbeidsavklaringspengene dine opphører fra og med [dato].\n',
     overgangsstonad:
         'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne meldingen.\n' +
         '\n' +
@@ -121,6 +139,9 @@ function Maltekstvelger() {
                 Arbeidsavklaringspenger: Ikke deltatt på planlagt aktivitet eller bidrar ikke for å komme i arbeid
             </option>
             <option value="ikke_deltatt_tiltak">Arbeidsavklaringspenger: Ikke deltatt på tiltak</option>
+            <option value="ikke_lenger_nedsatt_arbeidsevne">
+                Arbeidsavklaringspenger: Ikke lenger nedsatt arbeidsevne
+            </option>
             <option value="overgangsstonad">Overgangsstønad</option>
             <option value="sykepenger">Sykepenger</option>
         </Select>
