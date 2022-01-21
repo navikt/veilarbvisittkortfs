@@ -6,7 +6,6 @@ import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { useAppStore } from '../../../store/app-store';
 import { lagVeilederSammensattNavn } from '../../../util/selectors';
 import { useModalStore } from '../../../store/modal-store';
-import { triggerReRenderingAvMao } from '../../../util/utils';
 import { useDataStore } from '../../../store/data-store';
 import { Oppfolging, OppfolgingStatus, tildelTilVeileder } from '../../../api/veilarboppfolging';
 import { VeilederData } from '../../../api/veilarbveileder';
@@ -62,7 +61,6 @@ function TildelVeileder() {
                         .map((v) => lagVeilederSammensattNavn(v))[0] || 'Ukjent veileder';
 
                 showTildelVeilederKvitteringModal({ tildeltVeilederNavn: veilederNavn });
-                triggerReRenderingAvMao();
             })
             .catch(showTildelVeilederFeiletModal);
     };
