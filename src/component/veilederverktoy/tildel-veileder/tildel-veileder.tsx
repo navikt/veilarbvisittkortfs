@@ -62,7 +62,6 @@ function TildelVeileder() {
                         .map((v) => lagVeilederSammensattNavn(v))[0] || 'Ukjent veileder';
 
                 showTildelVeilederKvitteringModal({ tildeltVeilederNavn: veilederNavn });
-                triggerReRenderingAvMao();
             })
             .catch(showTildelVeilederFeiletModal);
     };
