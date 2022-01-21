@@ -26,12 +26,6 @@ function TildelVeileder() {
     }, [veilederePaEnhet?.veilederListe]);
 
     const handleSubmitTildelVeileder = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        document
-            .querySelectorAll('input[type=radio]:checked')
-            .forEach((elem) => ((elem as HTMLInputElement).checked = false));
-
         tildelTilVeileder([
             {
                 fraVeilederId: fraVeileder,
