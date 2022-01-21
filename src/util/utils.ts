@@ -78,7 +78,3 @@ export function erITestMiljo() {
 export function eskaleringVarselSendtEvent() {
     window.dispatchEvent(new Event('eskaleringsVarselSendt'));
 }
-
-export function triggerReRenderingAvMao() {
-    window.dispatchEvent(new Event('rerenderMao'));
-}
