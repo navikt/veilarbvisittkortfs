@@ -5,23 +5,15 @@ import './maltekstvelger.less';
 
 const malTekster = {
     dagpenger:
-        'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne meldingen.\n' +
+        'NAV vurderer å stanse dagpengene dine, eller stanse utbetalingene dine i en periode, fordi du ikke har fulgt opp pliktene dine som arbeidssøker.\n' +
         '\n' +
-        'For å ha rett til dagpenger må du:\n' +
-        '· Være reell arbeidssøker\n' +
-        '· Delta i arbeidsmarkedstiltak\n' +
-        '· Møte hos NAV når vi trenger å snakke med deg\n' +
-        '· Utføre lovpålagte aktiviteter\n' +
+        '[Fyll inn en kort begrunnelse for varslet]\n' +
         '\n' +
-        'Les mer i folketrygdloven §§ 4-5, og forskrift om dagpenger under arbeidsløshet 4-1\n' +
+        'Vi sender deg dette varselet for å gi deg mulighet til å gi oss en forklaring før vi avgjør saken din. Svar på denne meldingen, eller ring oss for å gi forklaringen din. Fristen for å svare er [fristdato].\n' +
         '\n' +
-        'Vi kan stanse dagpengene dine, eller stanse utbetalingen i en periode dersom du ikke følger opp aktivitetsplikten, takker nei til arbeid eller arbeidsmarkedstiltak. Vi kan stanse utbetalingen i en periode hvis du ikke møter opp når vi innkaller deg til møter.\n' +
+        'Se folketrygdloven §§ 4-5, 4-20- 4-21 og forskrift om dagpenger under arbeidsløshet § 4-1.\n' +
         '\n' +
-        'Dette går frem av folketrygdloven §§ 4-20, og 4-21,' +
-        '\n' +
-        '[Fyll inn begrunnelse for varslet]\n' +
-        '\n' +
-        'Du kan gi en skriftlig tilbakemelding her i dialogen eller ringe oss på tlf. 55 55 33 33, før vi avgjør saken din. Fristen for tilbakemelding er [fristdato].\n',
+        'Har du spørsmål kan du svare på denne dialogmeldingen, eller ringe oss på tlf. 55 55 33 33.\n',
     dagpenger_vesentlig_avvik_fra_oppleringsplanen:
         'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på meldingen.\n' +
         '\n' +
