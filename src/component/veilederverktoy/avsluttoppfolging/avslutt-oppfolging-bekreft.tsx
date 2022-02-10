@@ -9,40 +9,40 @@ import { useAppStore } from '../../../store/app-store';
 import { avsluttOppfolging } from '../../../api/veilarboppfolging';
 
 export interface AvsluttOppfolgingBekreftelseModalProps {
-    begrunnelse: string;
+	begrunnelse: string;
 }
 
 function AvsluttOppfolgingBekreft(props: AvsluttOppfolgingBekreftelseModalProps) {
-    const { brukerFnr } = useAppStore();
-    const { personalia, innloggetVeileder } = useDataStore();
-    const { showAvsluttOppfolgingKvitteringModal, showSpinnerModal, showErrorModal, hideModal } = useModalStore();
+	const { brukerFnr } = useAppStore();
+	const { personalia, innloggetVeileder } = useDataStore();
+	const { showAvsluttOppfolgingKvitteringModal, showSpinnerModal, showErrorModal, hideModal } = useModalStore();
 
-    const brukerNavn = selectSammensattNavn(personalia);
+	const brukerNavn = selectSammensattNavn(personalia);
 
-    function handleSubmitAvsluttOppfolging() {
-        showSpinnerModal();
+	function handleSubmitAvsluttOppfolging() {
+		showSpinnerModal();
 
-        avsluttOppfolging(brukerFnr, props.begrunnelse, innloggetVeileder!.ident)
-            .then(showAvsluttOppfolgingKvitteringModal)
-            .catch(showErrorModal);
-    }
+		avsluttOppfolging(brukerFnr, props.begrunnelse, innloggetVeileder!.ident)
+			.then(showAvsluttOppfolgingKvitteringModal)
+			.catch(showErrorModal);
+	}
 
-    return (
-        <VarselModal contentLabel="Bruker kan ikke varsles" onRequestClose={hideModal} isOpen={true} type="ADVARSEL">
-            <Normaltekst>Er du sikker på at du vil avslutte oppfølgingsperioden til {brukerNavn}?</Normaltekst>
-            <div className="modal-footer">
-                <Hovedknapp
-                    htmlType="submit"
-                    style={{ marginRight: '1rem' }}
-                    onClick={handleSubmitAvsluttOppfolging}
-                    spinner={false}
-                >
-                    Bekreft
-                </Hovedknapp>
-                <Knapp onClick={hideModal}>Avbryt</Knapp>
-            </div>
-        </VarselModal>
-    );
+	return (
+		<VarselModal contentLabel="Bruker kan ikke varsles" onRequestClose={hideModal} isOpen={true} type="ADVARSEL">
+			<Normaltekst>Er du sikker på at du vil avslutte oppfølgingsperioden til {brukerNavn}?</Normaltekst>
+			<div className="modal-footer">
+				<Hovedknapp
+					htmlType="submit"
+					style={{ marginRight: '1rem' }}
+					onClick={handleSubmitAvsluttOppfolging}
+					spinner={false}
+				>
+					Bekreft
+				</Hovedknapp>
+				<Knapp onClick={hideModal}>Avbryt</Knapp>
+			</div>
+		</VarselModal>
+	);
 }
 
 export default AvsluttOppfolgingBekreft;

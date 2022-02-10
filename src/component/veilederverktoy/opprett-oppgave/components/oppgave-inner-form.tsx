@@ -14,53 +14,53 @@ import { OrNothing } from '../../../../util/type/ornothing';
 import { OppgaveTema } from '../../../../api/veilarboppgave';
 
 interface OppgaveInnerFormProps {
-    fnr: string;
-    tema: OrNothing<OppgaveTema>;
-    enhetId: StringOrNothing;
-    veilederId: StringOrNothing;
-    avsenderenhetId: StringOrNothing;
-    formikProps: FormikProps<OpprettOppgaveFormValues>;
-    tilbake: () => void;
+	fnr: string;
+	tema: OrNothing<OppgaveTema>;
+	enhetId: StringOrNothing;
+	veilederId: StringOrNothing;
+	avsenderenhetId: StringOrNothing;
+	formikProps: FormikProps<OpprettOppgaveFormValues>;
+	tilbake: () => void;
 }
 
 function OppgaveInnerForm({
-    fnr,
-    tema,
-    enhetId,
-    veilederId,
-    avsenderenhetId,
-    formikProps,
-    tilbake,
+	fnr,
+	tema,
+	enhetId,
+	veilederId,
+	avsenderenhetId,
+	formikProps,
+	tilbake
 }: OppgaveInnerFormProps) {
-    if (!tema) {
-        return null;
-    }
+	if (!tema) {
+		return null;
+	}
 
-    return (
-        <>
-            <OpprettOppgaveTypeSelector oppgaveTema={tema} />
-            <OpprettOppgavePrioritetSelector />
-            <OpprettOppgaveVelgDatoer />
-            <div className="oppgave-enhet-container">
-                <OpprettOppgaveVelgEnhet value={enhetId} tema={tema} fnr={fnr} formikProps={formikProps} />
-                <OpprettOppgaveVelgVeileder
-                    avsenderenhetId={avsenderenhetId}
-                    tema={tema}
-                    veilederId={veilederId}
-                    formikProps={formikProps}
-                />
-            </div>
-            <OpprettOppgaveBeskrivelseTekstArea />
-            <HiddenIfDiv className="modal-footer" hidden={!tema}>
-                <Hovedknapp className="btn--mr1" htmlType="submit" spinner={false}>
-                    Bekreft
-                </Hovedknapp>
-                <button type="button" className="knapp" onClick={tilbake}>
-                    Avbryt
-                </button>
-            </HiddenIfDiv>
-        </>
-    );
+	return (
+		<>
+			<OpprettOppgaveTypeSelector oppgaveTema={tema} />
+			<OpprettOppgavePrioritetSelector />
+			<OpprettOppgaveVelgDatoer />
+			<div className="oppgave-enhet-container">
+				<OpprettOppgaveVelgEnhet value={enhetId} tema={tema} fnr={fnr} formikProps={formikProps} />
+				<OpprettOppgaveVelgVeileder
+					avsenderenhetId={avsenderenhetId}
+					tema={tema}
+					veilederId={veilederId}
+					formikProps={formikProps}
+				/>
+			</div>
+			<OpprettOppgaveBeskrivelseTekstArea />
+			<HiddenIfDiv className="modal-footer" hidden={!tema}>
+				<Hovedknapp className="btn--mr1" htmlType="submit" spinner={false}>
+					Bekreft
+				</Hovedknapp>
+				<button type="button" className="knapp" onClick={tilbake}>
+					Avbryt
+				</button>
+			</HiddenIfDiv>
+		</>
+	);
 }
 
 export default OppgaveInnerForm;

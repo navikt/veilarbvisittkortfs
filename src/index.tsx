@@ -11,10 +11,10 @@ dayjs.locale('nb');
 Navspa.eksporter('veilarbvisittkortfs', App);
 
 if (isDevelopment()) {
-    require('./mock');
+	require('./mock');
 
-    ReactDOM.render(
-        <App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />,
-        document.getElementById('veilarbvisittkortfs-root')
-    );
+	ReactDOM.render(
+		<App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />,
+		document.getElementById('veilarbvisittkortfs-root')
+	);
 }

@@ -8,48 +8,48 @@ import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { fetchRegistrering } from '../../../api/veilarbperson';
 
 export interface StartManuellOppfolgingKvitteringProps {
-    begrunnelse: string;
+	begrunnelse: string;
 }
 
 function StartManuellOppfolgingKvittering(props: StartManuellOppfolgingKvitteringProps) {
-    const { brukerFnr } = useAppStore();
-    const { oppfolging } = useDataStore();
+	const { brukerFnr } = useAppStore();
+	const { oppfolging } = useDataStore();
 
-    const registreringFetcher = useAxiosFetcher(fetchRegistrering);
-    const [harLoggetMetrikk, setHarLoggetMetrikk] = useState(false);
+	const registreringFetcher = useAxiosFetcher(fetchRegistrering);
+	const [harLoggetMetrikk, setHarLoggetMetrikk] = useState(false);
 
-    useEffect(() => {
-        registreringFetcher.fetch(brukerFnr);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [brukerFnr]);
+	useEffect(() => {
+		registreringFetcher.fetch(brukerFnr);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [brukerFnr]);
 
-    useEffect(() => {
-        if (registreringFetcher.data && !harLoggetMetrikk) {
-            const registreringData = registreringFetcher.data;
-            const erManueltRegistrert = !!registreringData.registrering.manueltRegistrertAv;
-            const logFields = {
-                brukerType: registreringData.type,
-                erKRR: !!oppfolging?.reservasjonKRR,
-                erManueltRegistrert,
-            };
+	useEffect(() => {
+		if (registreringFetcher.data && !harLoggetMetrikk) {
+			const registreringData = registreringFetcher.data;
+			const erManueltRegistrert = !!registreringData.registrering.manueltRegistrertAv;
+			const logFields = {
+				brukerType: registreringData.type,
+				erKRR: !!oppfolging?.reservasjonKRR,
+				erManueltRegistrert
+			};
 
-            logger.event('veilarbvisittkortfs.metrikker.manuell_oppfolging', logFields);
-            setHarLoggetMetrikk(true);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [registreringFetcher]);
+			logger.event('veilarbvisittkortfs.metrikker.manuell_oppfolging', logFields);
+			setHarLoggetMetrikk(true);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [registreringFetcher]);
 
-    return (
-        <Kvittering
-            tittel="Endre til manuell oppfølging"
-            alertStripeTekst={`Endring til manuell oppfølging er gjennomført. Begrunnelse: ${props.begrunnelse}`}
-            footer={
-                <AlertStripeAdvarsel>
-                    Brukere som ikke kan legge inn CV og jobbprofil selv skal få hjelp til dette.
-                </AlertStripeAdvarsel>
-            }
-        />
-    );
+	return (
+		<Kvittering
+			tittel="Endre til manuell oppfølging"
+			alertStripeTekst={`Endring til manuell oppfølging er gjennomført. Begrunnelse: ${props.begrunnelse}`}
+			footer={
+				<AlertStripeAdvarsel>
+					Brukere som ikke kan legge inn CV og jobbprofil selv skal få hjelp til dette.
+				</AlertStripeAdvarsel>
+			}
+		/>
+	);
 }
 
 export default StartManuellOppfolgingKvittering;

@@ -10,49 +10,49 @@ import { OppgaveHistorikk } from '../../../api/veilarboppgave';
 type HistorikkInnslagType = InnstillingsHistorikk | OppgaveHistorikk;
 
 interface HistorikkVisningProps {
-    historikkInnslag: HistorikkInnslagType[];
+	historikkInnslag: HistorikkInnslagType[];
 }
 
 function HistorikkVisning({ historikkInnslag }: HistorikkVisningProps) {
-    const mapTilOppgaveEllerInnstillinger = (
-        historikkElem: HistorikkInnslagType,
-        idx: number,
-        idxForNyesteEnhetEndring: number
-    ) => {
-        switch (historikkElem.type) {
-            case 'OPPRETTET_OPPGAVE':
-                return <OppgaveHistorikkKomponent oppgaveHistorikk={historikkElem} key={idx} />;
-            case 'OPPFOLGINGSENHET_ENDRET':
-                return (
-                    <OppfolgingEnhetEndret
-                        historikkElement={historikkElem}
-                        key={idx}
-                        erGjeldendeEnhet={idx === idxForNyesteEnhetEndring}
-                    />
-                );
-            default:
-                return <InnstillingsHistorikkKomponent innstillingsHistorikk={historikkElem} key={idx} />;
-        }
-    };
+	const mapTilOppgaveEllerInnstillinger = (
+		historikkElem: HistorikkInnslagType,
+		idx: number,
+		idxForNyesteEnhetEndring: number
+	) => {
+		switch (historikkElem.type) {
+			case 'OPPRETTET_OPPGAVE':
+				return <OppgaveHistorikkKomponent oppgaveHistorikk={historikkElem} key={idx} />;
+			case 'OPPFOLGINGSENHET_ENDRET':
+				return (
+					<OppfolgingEnhetEndret
+						historikkElement={historikkElem}
+						key={idx}
+						erGjeldendeEnhet={idx === idxForNyesteEnhetEndring}
+					/>
+				);
+			default:
+				return <InnstillingsHistorikkKomponent innstillingsHistorikk={historikkElem} key={idx} />;
+		}
+	};
 
-    if (historikkInnslag.length === 0) {
-        return <Normaltekst> Ingen historikk </Normaltekst>;
-    }
+	if (historikkInnslag.length === 0) {
+		return <Normaltekst> Ingen historikk </Normaltekst>;
+	}
 
-    if (historikkInnslag.length === 1) {
-        return mapTilOppgaveEllerInnstillinger(historikkInnslag[0], 0, 0);
-    }
-    const sortertEtterDatoHistorikkInnslag = historikkInnslag.sort((a, b) => dayjs(b.dato).diff(a.dato));
+	if (historikkInnslag.length === 1) {
+		return mapTilOppgaveEllerInnstillinger(historikkInnslag[0], 0, 0);
+	}
+	const sortertEtterDatoHistorikkInnslag = historikkInnslag.sort((a, b) => dayjs(b.dato).diff(a.dato));
 
-    const indexForNyesteEnhetEndring = sortertEtterDatoHistorikkInnslag.findIndex(
-        (innslag) => innslag.type === 'OPPFOLGINGSENHET_ENDRET'
-    );
+	const indexForNyesteEnhetEndring = sortertEtterDatoHistorikkInnslag.findIndex(
+		innslag => innslag.type === 'OPPFOLGINGSENHET_ENDRET'
+	);
 
-    const historikkKomponenter = sortertEtterDatoHistorikkInnslag.map((elem: HistorikkInnslagType, idx) =>
-        mapTilOppgaveEllerInnstillinger(elem, idx, indexForNyesteEnhetEndring)
-    );
+	const historikkKomponenter = sortertEtterDatoHistorikkInnslag.map((elem: HistorikkInnslagType, idx) =>
+		mapTilOppgaveEllerInnstillinger(elem, idx, indexForNyesteEnhetEndring)
+	);
 
-    return <>{historikkKomponenter}</>;
+	return <>{historikkKomponenter}</>;
 }
 
 export default HistorikkVisning;

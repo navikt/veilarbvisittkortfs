@@ -7,22 +7,22 @@ import { ReactComponent as ArbeidslisteIkon } from './arbeidslisteikon/arbeidsli
 import { KategoriModell } from '../../api/veilarbportefolje';
 
 interface ArbeidslistekategoriProps {
-    kategori: KategoriModell;
+	kategori: KategoriModell;
 }
 
 export default function ArbeidslistekategoriVisning({ kategori }: ArbeidslistekategoriProps) {
-    switch (kategori) {
-        case KategoriModell.BLA:
-            return <ArbeidslisteikonBla className="arbeidsliste-knapp__icon" />;
-        case KategoriModell.GRONN:
-            return <ArbeidslisteikonGronn className="arbeidsliste-knapp__icon" />;
-        case KategoriModell.LILLA:
-            return <ArbeidslisteikonLilla className="arbeidsliste-knapp__icon" />;
-        case KategoriModell.GUL:
-            return <ArbeidslisteikonGul className="arbeidsliste-knapp__icon" />;
-        case KategoriModell.TOM:
-            return <ArbeidslisteIkon className="arbeidsliste-knapp__icon" />;
-        default:
-            return null;
-    }
+	switch (kategori) {
+		case KategoriModell.BLA:
+			return <ArbeidslisteikonBla className="arbeidsliste-knapp__icon" />;
+		case KategoriModell.GRONN:
+			return <ArbeidslisteikonGronn className="arbeidsliste-knapp__icon" />;
+		case KategoriModell.LILLA:
+			return <ArbeidslisteikonLilla className="arbeidsliste-knapp__icon" />;
+		case KategoriModell.GUL:
+			return <ArbeidslisteikonGul className="arbeidsliste-knapp__icon" />;
+		case KategoriModell.TOM:
+			return <ArbeidslisteIkon className="arbeidsliste-knapp__icon" />;
+		default:
+			return null;
+	}
 }
