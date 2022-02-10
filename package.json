@@ -5,7 +5,8 @@
   "scripts": {
     "start": "cross-env REACT_APP_DEV=true craco start",
     "build": "craco build",
-    "build:mock": "cross-env PUBLIC_URL=/veilarbvisittkortfs REACT_APP_DEV=true craco build"
+    "build:mock": "cross-env PUBLIC_URL=/veilarbvisittkortfs REACT_APP_DEV=true craco build",
+    "prettier": "prettier --write 'src/**/*.ts{,x}'"
   },
   "eslintConfig": {
     "extends": "react-app"
