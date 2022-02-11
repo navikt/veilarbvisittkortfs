@@ -5,23 +5,15 @@ import './maltekstvelger.less';
 
 const malTekster = {
     dagpenger:
-        'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne meldingen.\n' +
+        'NAV vurderer å stanse dagpengene dine, eller stanse utbetalingene dine i en periode, fordi du ikke har fulgt opp pliktene dine som arbeidssøker.\n' +
         '\n' +
-        'For å ha rett til dagpenger må du:\n' +
-        '· Være reell arbeidssøker\n' +
-        '· Delta i arbeidsmarkedstiltak\n' +
-        '· Møte hos NAV når vi trenger å snakke med deg\n' +
-        '· Utføre lovpålagte aktiviteter\n' +
+        '[Fyll inn en kort begrunnelse for varslet]\n' +
         '\n' +
-        'Les mer i folketrygdloven §§ 4-5, og forskrift om dagpenger under arbeidsløshet 4-1\n' +
+        'Vi sender deg dette varselet for å gi deg mulighet til å gi oss en forklaring før vi avgjør saken din. Svar på denne meldingen, eller ring oss for å gi forklaringen din. Fristen for å svare er [fristdato].\n' +
         '\n' +
-        'Vi kan stanse dagpengene dine, eller stanse utbetalingen i en periode dersom du ikke følger opp aktivitetsplikten, takker nei til arbeid eller arbeidsmarkedstiltak. Vi kan stanse utbetalingen i en periode hvis du ikke møter opp når vi innkaller deg til møter.\n' +
+        'Se folketrygdloven §§ 4-5, 4-20- 4-21 og forskrift om dagpenger under arbeidsløshet § 4-1.\n' +
         '\n' +
-        'Dette går frem av folketrygdloven §§ 4-20, og 4-21,' +
-        '\n' +
-        '[Fyll inn begrunnelse for varslet]\n' +
-        '\n' +
-        'Du kan gi en skriftlig tilbakemelding her i dialogen eller ringe oss på tlf. 55 55 33 33, før vi avgjør saken din. Fristen for tilbakemelding er [fristdato].\n',
+        'Har du spørsmål kan du svare på denne dialogmeldingen, eller ringe oss på tlf. 55 55 33 33.\n',
     dagpenger_vesentlig_avvik_fra_oppleringsplanen:
         'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på meldingen.\n' +
         '\n' +
@@ -108,6 +100,22 @@ const malTekster = {
         '[Fyll inn begrunnelse for varslet]\n' +
         '\n' +
         'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på 55 55 33 33 og uttale deg muntlig.\n',
+    stans_aap_i_periode:
+        'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne dialogmeldingen.\n' +
+        '\n' +
+        'Vi vurderer nå å stanse arbeidsavklaringspengene dine fordi:\n' +
+        '\n' +
+        '[Begrunnelse for varslet. Du må få frem hvilke aktiviteter eller plikter brukeren ikke har fulgt opp.]\n' +
+        '\n' +
+        'For å ha rett til arbeidsavklaringspenger mens du søker jobb, må du være registrert som arbeidssøker hos NAV og være villig til å ta ethvert arbeid, både heltid eller deltid, hvor som helst i landet. Du må også delta på tiltak og komme til møter vi innkaller til.\n' +
+        '\n' +
+        'Hvis du ikke gjennomfører aktiviteten du og NAV har blitt enige om, kan vi stanse arbeidsavklaringspengene, eller stanse utbetalingene dine i en periode.\n' +
+        '\n' +
+        'Dette går fram av folketrygdloven §§ 4-5, 4-20, 4-21, og 11-17.\n' +
+        '\n' +
+        'Du får dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du får en frist på 14 dager, til [dato], for å komme med tilbakemelding. Du kan gi oss skriftlig tilbakemelding her i dialogen, eller du kan ringe oss på telefon 55 55 33 33.\n' +
+        '\n' +
+        'Hvis du ikke har mulighet til å uttale deg innen fristen, må du ta kontakt med oss så snart som mulig.\n',
 };
 
 function Maltekstvelger() {
@@ -141,6 +149,9 @@ function Maltekstvelger() {
             <option value="ikke_deltatt_tiltak">Arbeidsavklaringspenger: Ikke deltatt på tiltak</option>
             <option value="ikke_lenger_nedsatt_arbeidsevne">
                 Arbeidsavklaringspenger: Ikke lenger nedsatt arbeidsevne
+            </option>
+            <option value="stans_aap_i_periode">
+                Arbeidsavklaringspenger: Stans av AAP i perioden som arbeidssøker
             </option>
             <option value="overgangsstonad">Overgangsstønad</option>
             <option value="sykepenger">Sykepenger</option>
