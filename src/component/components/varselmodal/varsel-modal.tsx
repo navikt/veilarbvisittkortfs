@@ -9,52 +9,52 @@ import classNames from 'classnames';
 type VarselModalType = 'ADVARSEL' | 'FEIL' | 'SUCCESS';
 
 interface VarselModalProps {
-	contentLabel: string;
-	isOpen: boolean;
-	onRequestClose: () => void;
-	closeTimeoutMS?: number;
-	closeButton?: boolean;
-	shouldCloseOnOverlayClick?: boolean;
-	className?: string;
-	type: VarselModalType;
+    contentLabel: string;
+    isOpen: boolean;
+    onRequestClose: () => void;
+    closeTimeoutMS?: number;
+    closeButton?: boolean;
+    shouldCloseOnOverlayClick?: boolean;
+    className?: string;
+    type: VarselModalType;
 }
 
 export function VarselModal({
-	contentLabel,
-	isOpen,
-	onRequestClose,
-	children,
-	closeTimeoutMS,
-	closeButton,
-	shouldCloseOnOverlayClick,
-	className,
-	type
+    contentLabel,
+    isOpen,
+    onRequestClose,
+    children,
+    closeTimeoutMS,
+    closeButton,
+    shouldCloseOnOverlayClick,
+    className,
+    type
 }: React.PropsWithChildren<VarselModalProps>) {
-	return (
-		<ModalWrapper
-			isOpen={isOpen}
-			contentLabel={contentLabel}
-			onRequestClose={onRequestClose}
-			closeTimeoutMS={closeTimeoutMS}
-			closeButton={closeButton}
-			portalClassName="veilarbvisittkortfs-varsel-modal"
-			shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
-		>
-			{getIkon(type)}
-			<div className={classNames('modal__innhold', className)}>{children}</div>
-		</ModalWrapper>
-	);
+    return (
+        <ModalWrapper
+            isOpen={isOpen}
+            contentLabel={contentLabel}
+            onRequestClose={onRequestClose}
+            closeTimeoutMS={closeTimeoutMS}
+            closeButton={closeButton}
+            portalClassName="veilarbvisittkortfs-varsel-modal"
+            shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
+        >
+            {getIkon(type)}
+            <div className={classNames('modal__innhold', className)}>{children}</div>
+        </ModalWrapper>
+    );
 }
 
 function getIkon(type: VarselModalType) {
-	switch (type) {
-		case 'ADVARSEL':
-			return <AdvarselSirkelIkon />;
-		case 'FEIL':
-			return <FeilSirkelIkon />;
-		case 'SUCCESS':
-			return <SuccessSirkelIkon />;
-		default:
-			return null;
-	}
+    switch (type) {
+        case 'ADVARSEL':
+            return <AdvarselSirkelIkon />;
+        case 'FEIL':
+            return <FeilSirkelIkon />;
+        case 'SUCCESS':
+            return <SuccessSirkelIkon />;
+        default:
+            return null;
+    }
 }

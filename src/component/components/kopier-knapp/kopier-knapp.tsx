@@ -7,28 +7,28 @@ import { useEffect } from 'react';
 import { logger } from '../../../util/logger';
 
 export function KopierKnappTekst(props: { kopierTekst: string }) {
-	const [copySuccess, setCopySuccess] = useState(false);
+    const [copySuccess, setCopySuccess] = useState(false);
 
-	function copyToClipboard() {
-		logger.event('veilarbvisittkortfs.metrikker.kopier.fnr');
-		navigator.clipboard.writeText(props.kopierTekst);
-		setCopySuccess(true);
-	}
+    function copyToClipboard() {
+        logger.event('veilarbvisittkortfs.metrikker.kopier.fnr');
+        navigator.clipboard.writeText(props.kopierTekst);
+        setCopySuccess(true);
+    }
 
-	useEffect(() => {
-		let timeOutId = 0;
-		if (copySuccess) {
-			timeOutId = window.setTimeout(() => setCopySuccess(false), 1000);
-		}
-		return () => clearTimeout(timeOutId);
-	}, [copySuccess]);
+    useEffect(() => {
+        let timeOutId = 0;
+        if (copySuccess) {
+            timeOutId = window.setTimeout(() => setCopySuccess(false), 1000);
+        }
+        return () => clearTimeout(timeOutId);
+    }, [copySuccess]);
 
-	return (
-		<KnappFss className="kopier-knapp" onClick={copyToClipboard}>
-			{props.kopierTekst}
-			<span className={classNames('kopier-knapp__tooltip', { 'tooltip--visible': copySuccess })}>
-				Kopiert fødselsnummer
-			</span>
-		</KnappFss>
-	);
+    return (
+        <KnappFss className="kopier-knapp" onClick={copyToClipboard}>
+            {props.kopierTekst}
+            <span className={classNames('kopier-knapp__tooltip', { 'tooltip--visible': copySuccess })}>
+                Kopiert fødselsnummer
+            </span>
+        </KnappFss>
+    );
 }

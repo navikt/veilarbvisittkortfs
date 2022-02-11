@@ -17,66 +17,66 @@ import { isAnyLoading } from '../../../api/utils';
 const for28dagerSiden = dayjs().subtract(28, 'day').toISOString();
 
 function AvsluttOppfolging() {
-	const { brukerFnr } = useAppStore();
-	const { features } = useDataStore();
-	const { showtAvsluttOppfolgingBekrefModal: showAvsluttOppfolgingBekrefModal, hideModal } = useModalStore();
+    const { brukerFnr } = useAppStore();
+    const { features } = useDataStore();
+    const { showtAvsluttOppfolgingBekrefModal: showAvsluttOppfolgingBekrefModal, hideModal } = useModalStore();
 
-	const avsluttOppfolgingFetcher = useAxiosFetcher(fetchAvsluttOppfolgingStatus);
-	const dialogFetcher = useAxiosFetcher(fetchDialoger);
+    const avsluttOppfolgingFetcher = useAxiosFetcher(fetchAvsluttOppfolgingStatus);
+    const dialogFetcher = useAxiosFetcher(fetchDialoger);
 
-	const avslutningStatus = avsluttOppfolgingFetcher.data;
-	const datoErInnenFor28DagerSiden = (avslutningStatus?.inaktiveringsDato || 0) > for28dagerSiden;
-	const harUbehandledeDialoger = dialogFetcher.data ? selectHarUbehandledeDialoger(dialogFetcher.data) : false;
+    const avslutningStatus = avsluttOppfolgingFetcher.data;
+    const datoErInnenFor28DagerSiden = (avslutningStatus?.inaktiveringsDato || 0) > for28dagerSiden;
+    const harUbehandledeDialoger = dialogFetcher.data ? selectHarUbehandledeDialoger(dialogFetcher.data) : false;
 
-	function handleSubmitAvsluttOppfolging(values: BegrunnelseValues) {
-		showAvsluttOppfolgingBekrefModal({ begrunnelse: values.begrunnelse });
-	}
+    function handleSubmitAvsluttOppfolging(values: BegrunnelseValues) {
+        showAvsluttOppfolgingBekrefModal({ begrunnelse: values.begrunnelse });
+    }
 
-	useEffect(() => {
-		dialogFetcher.fetch(brukerFnr);
-		avsluttOppfolgingFetcher.fetch(brukerFnr);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [brukerFnr]);
+    useEffect(() => {
+        dialogFetcher.fetch(brukerFnr);
+        avsluttOppfolgingFetcher.fetch(brukerFnr);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [brukerFnr]);
 
-	if (isAnyLoading(dialogFetcher, avsluttOppfolgingFetcher)) {
-		return <LasterModal />;
-	}
+    if (isAnyLoading(dialogFetcher, avsluttOppfolgingFetcher)) {
+        return <LasterModal />;
+    }
 
-	if (!avslutningStatus?.kanAvslutte) {
-		return (
-			<VarselModal
-				contentLabel="Oppfølgingsperioden før brukeren kan ikke avslutes"
-				isOpen={true}
-				onRequestClose={hideModal}
-				type="ADVARSEL"
-			>
-				Du kan ikke avslutte oppfølgingsperioden fordi:
-				<ul className="avslutt-oppfolging__ul">
-					{avslutningStatus?.underOppfolging && <li>Brukeren har aktiv status i Arena.</li>}
-					{avslutningStatus?.underKvp && <li>Brukeren deltar i på KVP. KVP må avsluttes først.</li>}
-				</ul>
-			</VarselModal>
-		);
-	}
+    if (!avslutningStatus?.kanAvslutte) {
+        return (
+            <VarselModal
+                contentLabel="Oppfølgingsperioden før brukeren kan ikke avslutes"
+                isOpen={true}
+                onRequestClose={hideModal}
+                type="ADVARSEL"
+            >
+                Du kan ikke avslutte oppfølgingsperioden fordi:
+                <ul className="avslutt-oppfolging__ul">
+                    {avslutningStatus?.underOppfolging && <li>Brukeren har aktiv status i Arena.</li>}
+                    {avslutningStatus?.underKvp && <li>Brukeren deltar i på KVP. KVP må avsluttes først.</li>}
+                </ul>
+            </VarselModal>
+        );
+    }
 
-	return (
-		<BegrunnelseForm
-			initialValues={{ begrunnelse: '' }}
-			handleSubmit={handleSubmitAvsluttOppfolging}
-			tekstariaLabel="Begrunnelse"
-			tittel="Avslutt oppfølgingsperioden"
-			isLoading={false}
-			infoTekst={
-				<AvsluttOppfolgingInfoText
-					vedtaksstottePrelanseringEnabled={features[VEDTAKSSTTOTTE_PRELANSERING_TOGGLE]}
-					avslutningStatus={avslutningStatus}
-					datoErInnenFor28DagerSiden={datoErInnenFor28DagerSiden}
-					harUbehandledeDialoger={harUbehandledeDialoger}
-					fnr={brukerFnr}
-				/>
-			}
-		/>
-	);
+    return (
+        <BegrunnelseForm
+            initialValues={{ begrunnelse: '' }}
+            handleSubmit={handleSubmitAvsluttOppfolging}
+            tekstariaLabel="Begrunnelse"
+            tittel="Avslutt oppfølgingsperioden"
+            isLoading={false}
+            infoTekst={
+                <AvsluttOppfolgingInfoText
+                    vedtaksstottePrelanseringEnabled={features[VEDTAKSSTTOTTE_PRELANSERING_TOGGLE]}
+                    avslutningStatus={avslutningStatus}
+                    datoErInnenFor28DagerSiden={datoErInnenFor28DagerSiden}
+                    harUbehandledeDialoger={harUbehandledeDialoger}
+                    fnr={brukerFnr}
+                />
+            }
+        />
+    );
 }
 
 export default AvsluttOppfolging;

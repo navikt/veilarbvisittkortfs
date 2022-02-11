@@ -4,17 +4,17 @@ import Chevron from 'nav-frontend-chevron';
 import { useAppStore } from '../../../store/app-store';
 
 function Tilbakelenke() {
-	const { brukerFnr, enhetId, tilbakeTilFlate } = useAppStore();
-	const tilbakeLenke =
-		tilbakeTilFlate === 'veilarbportefoljeflatefs'
-			? `/${tilbakeTilFlate}/tilbake?enhet=${enhetId}`
-			: `/${tilbakeTilFlate}/${brukerFnr}?enhet=${enhetId}`;
+    const { brukerFnr, enhetId, tilbakeTilFlate } = useAppStore();
+    const tilbakeLenke =
+        tilbakeTilFlate === 'veilarbportefoljeflatefs'
+            ? `/${tilbakeTilFlate}/tilbake?enhet=${enhetId}`
+            : `/${tilbakeTilFlate}/${brukerFnr}?enhet=${enhetId}`;
 
-	return (
-		<a className="visittkortfs__tilbakelenke" href={tilbakeLenke}>
-			<Chevron stor={true} type="venstre" />
-		</a>
-	);
+    return (
+        <a className="visittkortfs__tilbakelenke" href={tilbakeLenke}>
+            <Chevron stor={true} type="venstre" />
+        </a>
+    );
 }
 
 export default Tilbakelenke;

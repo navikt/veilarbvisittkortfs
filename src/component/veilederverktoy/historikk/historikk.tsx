@@ -11,34 +11,34 @@ import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { fetchInstillingsHistorikk } from '../../../api/veilarboppfolging';
 
 function Historikk() {
-	const { brukerFnr } = useAppStore();
+    const { brukerFnr } = useAppStore();
 
-	const innstillingsHistorikkFetcher = useAxiosFetcher(fetchInstillingsHistorikk);
-	const oppgaveHistorikkFetcher = useAxiosFetcher(fetchOppgaveHistorikk);
+    const innstillingsHistorikkFetcher = useAxiosFetcher(fetchInstillingsHistorikk);
+    const oppgaveHistorikkFetcher = useAxiosFetcher(fetchOppgaveHistorikk);
 
-	useEffect(() => {
-		innstillingsHistorikkFetcher.fetch(brukerFnr);
-		oppgaveHistorikkFetcher.fetch(brukerFnr);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [brukerFnr]);
+    useEffect(() => {
+        innstillingsHistorikkFetcher.fetch(brukerFnr);
+        oppgaveHistorikkFetcher.fetch(brukerFnr);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [brukerFnr]);
 
-	if (isAnyLoading(innstillingsHistorikkFetcher, oppgaveHistorikkFetcher)) {
-		return <LasterModal />;
-	} else if (hasAnyFailed(innstillingsHistorikkFetcher, oppgaveHistorikkFetcher)) {
-		return <AlertStripeFeil>Noe gikk galt</AlertStripeFeil>;
-	} else if (!innstillingsHistorikkFetcher.data && !oppgaveHistorikkFetcher.data) {
-		return null;
-	}
+    if (isAnyLoading(innstillingsHistorikkFetcher, oppgaveHistorikkFetcher)) {
+        return <LasterModal />;
+    } else if (hasAnyFailed(innstillingsHistorikkFetcher, oppgaveHistorikkFetcher)) {
+        return <AlertStripeFeil>Noe gikk galt</AlertStripeFeil>;
+    } else if (!innstillingsHistorikkFetcher.data && !oppgaveHistorikkFetcher.data) {
+        return null;
+    }
 
-	const historikk = [...(innstillingsHistorikkFetcher.data || []), ...(oppgaveHistorikkFetcher.data || [])];
+    const historikk = [...(innstillingsHistorikkFetcher.data || []), ...(oppgaveHistorikkFetcher.data || [])];
 
-	return (
-		<VeilederVerktoyModal className="historikk__modal" tittel="Historikk">
-			<article className="prosess blokk-s">
-				<HistorikkVisning historikkInnslag={historikk} />
-			</article>
-		</VeilederVerktoyModal>
-	);
+    return (
+        <VeilederVerktoyModal className="historikk__modal" tittel="Historikk">
+            <article className="prosess blokk-s">
+                <HistorikkVisning historikkInnslag={historikk} />
+            </article>
+        </VeilederVerktoyModal>
+    );
 }
 
 export default Historikk;

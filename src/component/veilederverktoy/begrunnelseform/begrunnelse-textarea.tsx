@@ -3,12 +3,12 @@ import { validerBeskrivelse, validerBeskrivelse500TegnFelt } from '../../../util
 import FormikTekstArea from '../../components/formik/formik-textarea';
 
 export function BegrunnelseTextArea(props: { tekstariaLabel: string; maxLength?: number }) {
-	return (
-		<FormikTekstArea
-			label={props.tekstariaLabel}
-			name="begrunnelse"
-			maxLength={props.maxLength || 500}
-			validate={props.maxLength ? validerBeskrivelse(props.maxLength) : validerBeskrivelse500TegnFelt}
-		/>
-	);
+    return (
+        <FormikTekstArea
+            label={props.tekstariaLabel}
+            name="begrunnelse"
+            maxLength={props.maxLength || 500}
+            validate={props.maxLength ? validerBeskrivelse(props.maxLength) : validerBeskrivelse500TegnFelt}
+        />
+    );
 }

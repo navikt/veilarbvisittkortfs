@@ -5,25 +5,25 @@ import classNames from 'classnames';
 import { useModalStore } from '../../../store/modal-store';
 
 interface VeilederVerktoyModalProps {
-	children: React.ReactNode;
-	className?: string;
-	tittel?: string;
+    children: React.ReactNode;
+    className?: string;
+    tittel?: string;
 }
 
 function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
-	const { hideModal } = useModalStore();
+    const { hideModal } = useModalStore();
 
-	return (
-		<Modal
-			className={classNames('veilederverktoy-modal', props.className)}
-			isOpen={true}
-			onRequestClose={hideModal}
-			contentLabel="veilederverktoy"
-		>
-			<ModalHeader tittel={props.tittel} />
-			<div className="modal-innhold">{props.children}</div>
-		</Modal>
-	);
+    return (
+        <Modal
+            className={classNames('veilederverktoy-modal', props.className)}
+            isOpen={true}
+            onRequestClose={hideModal}
+            contentLabel="veilederverktoy"
+        >
+            <ModalHeader tittel={props.tittel} />
+            <div className="modal-innhold">{props.children}</div>
+        </Modal>
+    );
 }
 
 export default VeilederVerktoyModal;

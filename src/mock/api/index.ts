@@ -10,13 +10,13 @@ import { veilarbveilederHandlers } from './veilarbveileder';
 import { veilarbaktivitetHandlers } from './veilarbaktivitet';
 
 export const allHandlers: RequestHandlersList = [
-	...veilarbaktivitetHandlers,
-	...veilarbdialogHandlers,
-	...veilarboppfolgingHandlers,
-	...veilarboppgaveHandlers,
-	...veilarbpersonHandlers,
-	...veilarbpersonflatefsHandlers,
-	...veilarbportefoljeHandlers,
-	...veilarbvedtaksstotteHandlers,
-	...veilarbveilederHandlers
+    ...veilarbaktivitetHandlers,
+    ...veilarbdialogHandlers,
+    ...veilarboppfolgingHandlers,
+    ...veilarboppgaveHandlers,
+    ...veilarbpersonHandlers,
+    ...veilarbpersonflatefsHandlers,
+    ...veilarbportefoljeHandlers,
+    ...veilarbvedtaksstotteHandlers,
+    ...veilarbveilederHandlers
 ];

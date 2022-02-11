@@ -13,34 +13,34 @@ import './index.less';
 NavFrontendModal.setAppElement(document.getElementById('modal-a11y-wrapper'));
 
 export interface AppProps {
-	fnr: string;
-	enhet?: string;
-	tilbakeTilFlate: string;
-	visVeilederVerktoy?: boolean;
+    fnr: string;
+    enhet?: string;
+    tilbakeTilFlate: string;
+    visVeilederVerktoy?: boolean;
 }
 
 function App(props: AppProps) {
-	return (
-		<StoreProvider
-			brukerFnr={props.fnr}
-			enhetId={props.enhet}
-			tilbakeTilFlate={props.tilbakeTilFlate}
-			visVeilederVerktoy={props.visVeilederVerktoy || false}
-		>
-			<div className="visittkortfs">
-				<DataFetcher>
-					<Tilbakelenke />
-					<div className="visittkortfs__container">
-						<PersonInfo />
-						<Etiketter />
-						<Veilederverktoyslinje />
-					</div>
-				</DataFetcher>
-				<VeilederverktoyModalController />
-				<ToastController />
-			</div>
-		</StoreProvider>
-	);
+    return (
+        <StoreProvider
+            brukerFnr={props.fnr}
+            enhetId={props.enhet}
+            tilbakeTilFlate={props.tilbakeTilFlate}
+            visVeilederVerktoy={props.visVeilederVerktoy || false}
+        >
+            <div className="visittkortfs">
+                <DataFetcher>
+                    <Tilbakelenke />
+                    <div className="visittkortfs__container">
+                        <PersonInfo />
+                        <Etiketter />
+                        <Veilederverktoyslinje />
+                    </div>
+                </DataFetcher>
+                <VeilederverktoyModalController />
+                <ToastController />
+            </div>
+        </StoreProvider>
+    );
 }
 
 export default App;

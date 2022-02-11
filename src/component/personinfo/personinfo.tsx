@@ -11,35 +11,35 @@ import { useModalStore } from '../../store/modal-store';
 import './personinfo.less';
 
 function PersonInfo() {
-	const { brukerFnr } = useAppStore();
-	const { personalia, arbeidsliste, oppfolgingsstatus, innloggetVeileder } = useDataStore();
-	const { showArbeidslisteModal } = useModalStore();
+    const { brukerFnr } = useAppStore();
+    const { personalia, arbeidsliste, oppfolgingsstatus, innloggetVeileder } = useDataStore();
+    const { showArbeidslisteModal } = useModalStore();
 
-	const arbeidslisteikon = arbeidsliste?.kategori;
+    const arbeidslisteikon = arbeidsliste?.kategori;
 
-	const navn = selectSammensattNavn(personalia);
-	const kanLeggeIArbeidsliste = selectKanLeggeIArbeidsListe(innloggetVeileder, oppfolgingsstatus, arbeidsliste);
-	const kanRedigereArbeidsliste = selectKanRedigereArbeidsliste(arbeidsliste);
+    const navn = selectSammensattNavn(personalia);
+    const kanLeggeIArbeidsliste = selectKanLeggeIArbeidsListe(innloggetVeileder, oppfolgingsstatus, arbeidsliste);
+    const kanRedigereArbeidsliste = selectKanRedigereArbeidsliste(arbeidsliste);
 
-	const klikk = () => {
-		logger.event('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
-		showArbeidslisteModal();
-	};
+    const klikk = () => {
+        logger.event('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
+        showArbeidslisteModal();
+    };
 
-	return (
-		<div className="personinfo">
-			<KjonnIkon visible={personalia?.kjonn} kjonn={personalia?.kjonn as string} />
-			<NavnOgAlder navn={navn} personalia={personalia} />
-			<div>
-				<ArbeidslisteKnapp
-					hidden={!(kanLeggeIArbeidsliste || kanRedigereArbeidsliste)}
-					onClick={klikk}
-					kanRedigereArbeidsliste={kanRedigereArbeidsliste}
-				/>
-				<KopierKnappTekst kopierTekst={brukerFnr} />
-			</div>
-		</div>
-	);
+    return (
+        <div className="personinfo">
+            <KjonnIkon visible={personalia?.kjonn} kjonn={personalia?.kjonn as string} />
+            <NavnOgAlder navn={navn} personalia={personalia} />
+            <div>
+                <ArbeidslisteKnapp
+                    hidden={!(kanLeggeIArbeidsliste || kanRedigereArbeidsliste)}
+                    onClick={klikk}
+                    kanRedigereArbeidsliste={kanRedigereArbeidsliste}
+                />
+                <KopierKnappTekst kopierTekst={brukerFnr} />
+            </div>
+        </div>
+    );
 }
 
 export default PersonInfo;

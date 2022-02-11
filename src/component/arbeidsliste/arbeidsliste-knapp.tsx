@@ -6,21 +6,21 @@ import { useDataStore } from '../../store/data-store';
 import { KategoriModell } from '../../api/veilarbportefolje';
 
 export interface ArbeidslisteKnappProps {
-	hidden: boolean;
-	onClick: () => void;
-	kanRedigereArbeidsliste: boolean;
+    hidden: boolean;
+    onClick: () => void;
+    kanRedigereArbeidsliste: boolean;
 }
 
 function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
-	const { arbeidsliste } = useDataStore();
+    const { arbeidsliste } = useDataStore();
 
-	const kategori = arbeidsliste?.kategori || KategoriModell.TOM;
+    const kategori = arbeidsliste?.kategori || KategoriModell.TOM;
 
-	return (
-		<KnappFss className="arbeidsliste-knapp" onClick={props.onClick} hidden={props.hidden}>
-			<ArbeidslistekategoriVisning kategori={kategori} />
-		</KnappFss>
-	);
+    return (
+        <KnappFss className="arbeidsliste-knapp" onClick={props.onClick} hidden={props.hidden}>
+            <ArbeidslistekategoriVisning kategori={kategori} />
+        </KnappFss>
+    );
 }
 
 export default withClickMetric(ArbeidslisteKnapp);
