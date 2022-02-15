@@ -20,7 +20,7 @@ function SokFilter<T>(props: SokFilterProps<T>) {
     const [query, changeQuery] = useState('');
     const { data, limitSize, children } = props;
     const rawfilteredData = data.filter(
-        (elem) => !query || JSON.stringify(elem).toLowerCase().includes(query.toLowerCase())
+        elem => !query || JSON.stringify(elem).toLowerCase().includes(query.toLowerCase())
     );
 
     const filteredData = limitSize === undefined ? rawfilteredData : limit(rawfilteredData, limitSize || 20);
@@ -29,12 +29,12 @@ function SokFilter<T>(props: SokFilterProps<T>) {
         <>
             <div className="sokfilter">
                 <Input
-                    inputRef={(inputRef) => (focusRef.current = inputRef)}
+                    inputRef={inputRef => (focusRef.current = inputRef)}
                     label={props.label}
                     placeholder={props.placeholder}
                     value={query}
                     inputClassName="sokfilter__input"
-                    onChange={(e) => changeQuery(e.target.value)}
+                    onChange={e => changeQuery(e.target.value)}
                 />
             </div>
             {children(filteredData)}

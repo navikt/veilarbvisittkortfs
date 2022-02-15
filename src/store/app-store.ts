@@ -22,6 +22,6 @@ export const [AppStore, useAppStore] = constate((initalValues: AppStoreInitialVa
         tilbakeTilFlate,
         setTilbakeTilFlate,
         visVeilederVerktoy,
-        setVisVeilederVerktoy,
+        setVisVeilederVerktoy
     };
 });

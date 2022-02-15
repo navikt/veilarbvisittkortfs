@@ -8,7 +8,7 @@ const mockAvslutningStatus: AvslutningStatus = {
     harYtelser: false,
     underOppfolging: true,
     inaktiveringsDato: null,
-    underKvp: false,
+    underKvp: false
 };
 
 const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
@@ -16,7 +16,7 @@ const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
     harYtelser: false,
     underOppfolging: false,
     inaktiveringsDato: null,
-    underKvp: false,
+    underKvp: false
 };
 
 const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
@@ -26,7 +26,7 @@ const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
         begrunnelse: 'Oppfølging avsluttet automatisk pga. inaktiv bruker som ikke kan reaktiveres',
         opprettetAv: 'SYSTEM',
         opprettetAvBrukerId: null,
-        dialogId: null,
+        dialogId: null
     },
     {
         type: 'VEILEDER_TILORDNET',
@@ -34,7 +34,7 @@ const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
         begrunnelse: 'Brukeren er tildelt veileder Z0002',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: null,
-        dialogId: null,
+        dialogId: null
     },
     {
         type: 'OPPFOLGINGSENHET_ENDRET',
@@ -43,7 +43,7 @@ const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
         opprettetAv: 'SYSTEM',
         opprettetAvBrukerId: null,
         dialogId: null,
-        enhet: '1337',
+        enhet: '1337'
     },
     {
         type: 'OPPFOLGINGSENHET_ENDRET',
@@ -52,7 +52,7 @@ const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
         opprettetAv: 'SYSTEM',
         opprettetAvBrukerId: null,
         dialogId: null,
-        enhet: '1234',
+        enhet: '1234'
     },
     {
         type: 'AVSLUTTET_OPPFOLGINGSPERIODE',
@@ -60,7 +60,7 @@ const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
         begrunnelse: 'Oppfølging avsluttet automatisk pga. inaktiv bruker som ikke kan reaktiveres',
         opprettetAv: 'SYSTEM',
         opprettetAvBrukerId: null,
-        dialogId: null,
+        dialogId: null
     },
     {
         type: 'AVSLUTTET_OPPFOLGINGSPERIODE',
@@ -68,7 +68,7 @@ const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
         begrunnelse: 'Oppfølging avsluttet automatisk pga. inaktiv bruker som ikke kan reaktiveres',
         opprettetAv: 'SYSTEM',
         opprettetAvBrukerId: null,
-        dialogId: null,
+        dialogId: null
     },
     {
         type: 'AVSLUTTET_OPPFOLGINGSPERIODE',
@@ -76,7 +76,7 @@ const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
         begrunnelse: 'Oppfølging avsluttet automatisk pga. inaktiv bruker som ikke kan reaktiveres',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: null,
-        dialogId: null,
+        dialogId: null
     },
     {
         type: 'ESKALERING_STARTET',
@@ -84,7 +84,7 @@ const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
         begrunnelse: 'TEST AV OPPGAVE (TONE)',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'Z990279',
-        dialogId: 1412,
+        dialogId: 1412
     },
     {
         type: 'ESKALERING_STOPPET',
@@ -92,7 +92,7 @@ const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
         begrunnelse: 'Du har gjennomført møtet eller aktiviteten som vi ba deg om å gjøre.',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'Z990279',
-        dialogId: 1412,
+        dialogId: 1412
     },
     {
         type: 'ESKALERING_STARTET',
@@ -100,7 +100,7 @@ const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
         begrunnelse: 'Test varsel om oppgave i aktivitetsplan 7/3 kl 1804',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'z990279',
-        dialogId: 1415,
+        dialogId: 1415
     },
     {
         type: 'ESKALERING_STOPPET',
@@ -108,7 +108,7 @@ const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
         begrunnelse: 'Du har gjennomført møtet eller aktiviteten som vi ba deg om å gjøre.\nasdfasdfasdfasdfsadfasdf',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'Z990781',
-        dialogId: 1415,
+        dialogId: 1415
     },
     {
         type: 'ESKALERING_STARTET',
@@ -116,7 +116,7 @@ const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
         begrunnelse: 'TEst ',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'z990279',
-        dialogId: 1413,
+        dialogId: 1413
     },
     {
         type: 'ESKALERING_STOPPET',
@@ -124,8 +124,8 @@ const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
         begrunnelse: null,
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'z990279',
-        dialogId: 1413,
-    },
+        dialogId: 1413
+    }
 ];
 
 const mockOppfolging: Oppfolging = {
@@ -143,7 +143,7 @@ const mockOppfolging: Oppfolging = {
         oppretterAv: 'Z9091',
         opprettetDato: '2019-03-28T11:12:40.973+01:00',
         avsluttetDato: null,
-        tilhorendeDialogId: '1',
+        tilhorendeDialogId: '1'
     },
     kanStarteOppfolging: true,
     oppfolgingsPerioder: [
@@ -153,8 +153,8 @@ const mockOppfolging: Oppfolging = {
             startDato: '2017-12-02T18:37:24.717+01:00',
             sluttDato: '2019-03-28T11:12:40.973+01:00',
             begrunnelse: 'Oppfølging avsluttet automatisk pga. inaktiv bruker som ikke kan reaktiveres',
-            kvpPerioder: [],
-        },
+            kvpPerioder: []
+        }
     ],
     harSkriveTilgang: true,
     inaktivIArena: true,
@@ -162,17 +162,17 @@ const mockOppfolging: Oppfolging = {
     inaktiveringsdato: '2019-02-22T00:00:00+01:00',
     erSykmeldtMedArbeidsgiver: false,
     erIkkeArbeidssokerUtenOppfolging: false,
-    kanVarsles: true,
+    kanVarsles: true
 };
 
 const mockOppfolgingsstatus: OppfolgingStatus = {
     oppfolgingsenhet: {
         navn: 'NAV TestHeim',
-        enhetId: '007',
+        enhetId: '007'
     },
     veilederId: mockInnloggetVeileder.ident,
     formidlingsgruppe: 'ARBS',
-    servicegruppe: 'BKART',
+    servicegruppe: 'BKART'
 };
 
 // const mockFeilResultat = {
@@ -225,5 +225,5 @@ export const veilarboppfolgingHandlers: RequestHandlersList = [
     }),
     rest.get('/veilarboppfolging/api/oppfolging', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(mockOppfolging));
-    }),
+    })
 ];

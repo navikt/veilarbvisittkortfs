@@ -28,7 +28,7 @@ export function VarselModal({
     closeButton,
     shouldCloseOnOverlayClick,
     className,
-    type,
+    type
 }: React.PropsWithChildren<VarselModalProps>) {
     return (
         <ModalWrapper

@@ -14,12 +14,12 @@ const oppgaveTemaTekst = {
     OPPFOLGING: 'Oppfølging',
     ARBEIDSAVKLARING: 'Arbeidsavklaringspenger',
     ENSLIG_FORSORGER: 'Enslig forsørger',
-    TILLEGGSTONAD: 'Tilleggsstønad',
+    TILLEGGSTONAD: 'Tilleggsstønad'
 };
 
 const oppgaveTypetekst = {
     VURDER_HENVENDELSE: 'Vurder henvendelse',
-    VURDER_KONSEKVENS_FOR_YTELSE: 'Vurder konsekvens for ytelse',
+    VURDER_KONSEKVENS_FOR_YTELSE: 'Vurder konsekvens for ytelse'
 };
 
 function OppgaveHistorikkKomponent({ oppgaveHistorikk }: OwnProps) {

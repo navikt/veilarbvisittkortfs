@@ -129,46 +129,46 @@ export function fetchAvsluttOppfolgingStatus(fnr: string): AxiosPromise<Avslutni
 export function settBrukerTilDigital(fnr: string, veilederId: string, begrunnelse: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/settDigital?fnr=${fnr}`, {
         begrunnelse,
-        veilederId,
+        veilederId
     });
 }
 
 export function settBrukerTilManuell(fnr: string, veilederId: string, begrunnelse: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/settManuell?fnr=${fnr}`, {
         begrunnelse,
-        veilederId,
+        veilederId
     });
 }
 
 export function startKvpOppfolging(fnr: string, begrunnelse: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/startKvp?fnr=${fnr}`, {
-        begrunnelse,
+        begrunnelse
     });
 }
 
 export function stoppKvpOppfolging(fnr: string, begrunnelse: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/stoppKvp?fnr=${fnr}`, {
-        begrunnelse,
+        begrunnelse
     });
 }
 
 export function startEskalering(dialogId: string, begrunnelse: string, fnr: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/startEskalering/?fnr=${fnr}`, {
         dialogId,
-        begrunnelse,
+        begrunnelse
     });
 }
 
 export function stoppEskalering(fnr: string, begrunnelse?: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/stoppEskalering/?fnr=${fnr}`, {
-        begrunnelse,
+        begrunnelse
     });
 }
 
 export function avsluttOppfolging(fnr: string, begrunnelse: string, veilederId: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/avsluttOppfolging?fnr=${fnr}`, {
         begrunnelse,
-        veilederId,
+        veilederId
     });
 }
 

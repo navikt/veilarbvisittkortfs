@@ -21,7 +21,7 @@ interface FormValues {
 
 const initialFormValues: FormValues = {
     begrunnelse: 'Du har gjennomført møtet eller aktiviteten som vi ba deg om å gjøre.',
-    skalSendeHendelse: false,
+    skalSendeHendelse: false
 };
 
 function StoppEskalering() {
@@ -40,7 +40,7 @@ function StoppEskalering() {
                     begrunnelse: values.begrunnelse,
                     egenskaper: [Egenskaper.ESKALERINGSVARSEL],
                     dialogId: oppfolging?.gjeldendeEskaleringsvarsel?.tilhorendeDialogId || '',
-                    tekst: values.begrunnelse,
+                    tekst: values.begrunnelse
                 };
 
                 await nyHenvendelse(brukerFnr, stoppEskaleringHenvendelse);
@@ -66,7 +66,7 @@ function StoppEskalering() {
             handleSubmit={startStoppingAvEskalering}
             contentLabel="Stopp begrunnelse"
             visConfirmDialog={false}
-            render={(formikProps) => {
+            render={formikProps => {
                 return (
                     <div className="modal-innhold">
                         <Form>

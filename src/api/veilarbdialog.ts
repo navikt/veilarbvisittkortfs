@@ -4,7 +4,7 @@ import { StringOrNothing } from '../util/type/stringornothings';
 
 export enum Egenskaper {
     ESKALERINGSVARSEL,
-    PARAGRAF8,
+    PARAGRAF8
 }
 
 type Avsender = 'VEILEDER' | 'BRUKER';

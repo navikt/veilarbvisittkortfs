@@ -33,9 +33,7 @@ export function kanRegistreresEllerReaktiveres(oppfolging: OrNothing<Oppfolging>
 }
 
 export function selectHarUbehandledeDialoger(dialoger: Dialog[]): boolean {
-    return (
-        dialoger.filter((dialog) => !dialog.historisk && (!dialog.ferdigBehandlet || dialog.venterPaSvar)).length > 0
-    );
+    return dialoger.filter(dialog => !dialog.historisk && (!dialog.ferdigBehandlet || dialog.venterPaSvar)).length > 0;
 }
 
 export function lagVeilederSammensattNavn(veileder: VeilederData): string {

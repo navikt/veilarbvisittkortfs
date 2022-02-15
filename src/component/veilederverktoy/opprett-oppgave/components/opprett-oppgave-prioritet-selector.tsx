@@ -11,7 +11,7 @@ function OpprettOppgavePrioritetSelector() {
     const typeOptions: PrioritetOption[] = [
         { value: 'LAV', label: 'Lav' },
         { value: 'NORM', label: 'Normal' },
-        { value: 'HOY', label: 'Høy' },
+        { value: 'HOY', label: 'Høy' }
     ];
 
     return <FormikSelect label="Prioritet *" name="prioritet" options={typeOptions} />;

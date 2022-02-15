@@ -20,7 +20,7 @@ const typeTilTekst = {
     ESKALERING_STOPPET: 'Varsel deaktivert',
     KVP_STARTET: 'Kvalifiseringsprogram startet',
     KVP_STOPPET: 'Kvalifiseringsprogram avsluttet',
-    VEILEDER_TILORDNET: 'Tildelt veileder',
+    VEILEDER_TILORDNET: 'Tildelt veileder'
 };
 
 function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHistorikkKomponentProps) {

@@ -17,7 +17,7 @@ function RadioFilterForm<T>(props: RadioFilterFormProps<T>) {
     return (
         <div className="radio-filterform">
             <div className="radio-filterform__valg scrollbar">
-                {data.map((o) => {
+                {data.map(o => {
                     const value = createValue(o);
                     return (
                         <Radio
@@ -27,7 +27,7 @@ function RadioFilterForm<T>(props: RadioFilterFormProps<T>) {
                             id={`${value}-${radioName}`}
                             key={`${value}-${radioName}`}
                             checked={value === props.selected}
-                            onChange={(e) => props.changeSelected(e)}
+                            onChange={e => props.changeSelected(e)}
                         />
                     );
                 })}

@@ -3,14 +3,14 @@ import StartEskalering from '../start-eskalering/start-eskalering';
 import StartEskaleringKvittering from '../start-eskalering/start-eskalering-kvittering';
 import StarManuellOppfolging from '../start-manuell-oppfolging/start-manuell-oppfolging';
 import StartManuellOppfolgingKvittering, {
-    StartManuellOppfolgingKvitteringProps,
+    StartManuellOppfolgingKvitteringProps
 } from '../start-manuell-oppfolging/start-manuell-oppfolging-kvittering';
 import StarKvpPeriode from '../start-kvp-periode/start-kvp-periode';
 import StartKVPKvittering from '../start-kvp-periode/start-kvp-periode-kvittering';
 import StoppKvpPeriode from '../stopp-kvp-periode/stopp-kvp-periode';
 import StoppKVPKvittering from '../stopp-kvp-periode/stopp-kvp-periode-kvittering';
 import StartDigitalOppfolgingKvittering, {
-    StartDigitalOppfolgingKvitteringProps,
+    StartDigitalOppfolgingKvitteringProps
 } from '../start-digital-oppfolging/start-digital-oppfolging-kvittering';
 import StartDigitalOppfolging from '../start-digital-oppfolging/start-digital-oppfolging';
 import OpprettOppgave from '../opprett-oppgave/opprett-oppgave';
@@ -19,7 +19,7 @@ import AvsluttOppfolging from '../avsluttoppfolging/avslutt-oppfolging';
 import AvsluttOppfolgingKvittering from '../avsluttoppfolging/avslutt-oppfolging-kvittering';
 import StoppEskalering from '../stopp-eskalering/stopp-eskalering';
 import AvsluttOppfolgingBekreft, {
-    AvsluttOppfolgingBekreftelseModalProps,
+    AvsluttOppfolgingBekreftelseModalProps
 } from '../avsluttoppfolging/avslutt-oppfolging-bekreft';
 import StopEskaleringKvittering from '../stopp-eskalering/stopp-esklaring-kvittering';
 import { FeilModal } from '../prosess/feil-modal';

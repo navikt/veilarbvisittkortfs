@@ -18,5 +18,5 @@ export const allHandlers: RequestHandlersList = [
     ...veilarbpersonflatefsHandlers,
     ...veilarbportefoljeHandlers,
     ...veilarbvedtaksstotteHandlers,
-    ...veilarbveilederHandlers,
+    ...veilarbveilederHandlers
 ];

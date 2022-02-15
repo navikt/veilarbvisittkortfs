@@ -31,7 +31,7 @@ export enum ModalType {
     STOPP_ESKALERING_KVITTERING,
     HISTORIKK,
     FEIL_I_VEILEDERVERKTOY,
-    SPINNER,
+    SPINNER
 }
 
 export interface ModalState {
@@ -178,6 +178,6 @@ export const [ModalStore, useModalStore] = constate(() => {
         showStoppKvpPeriodeModal,
         showOpprettOppgaveModal,
         showAvsluttOppfolgingModal,
-        showHistorikkModal,
+        showHistorikkModal
     };
 });

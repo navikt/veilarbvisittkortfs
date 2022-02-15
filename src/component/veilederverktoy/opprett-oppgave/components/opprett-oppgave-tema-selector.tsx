@@ -15,7 +15,7 @@ function OpprettOppgaveTemaSelector() {
         { value: 'ARBEIDSAVKLARING', label: 'Arbeidsavklaringspenger' },
         { value: 'INDIVIDSTONAD', label: 'Individstønad (Tiltakspenger)' },
         { value: 'ENSLIG_FORSORGER', label: 'Enslig førsørger' },
-        { value: 'TILLEGGSTONAD', label: 'Tilleggsstønad' },
+        { value: 'TILLEGGSTONAD', label: 'Tilleggsstønad' }
     ];
 
     return <FormikSelect label="Legg inn hvilket tema oppgaven gjelder *" name="tema" options={temaOptions} />;

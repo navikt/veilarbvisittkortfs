@@ -8,7 +8,7 @@ interface InnholdlasterProps {
 }
 
 function Innholdslaster(props: InnholdlasterProps) {
-    const visChildren = props.avhengigheter.every((avhengighet) => avhengighet);
+    const visChildren = props.avhengigheter.every(avhengighet => avhengighet);
 
     if (visChildren) {
         return props.children;

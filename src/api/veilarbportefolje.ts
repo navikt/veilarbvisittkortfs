@@ -21,7 +21,7 @@ export enum KategoriModell {
     GRONN = 'GRONN',
     LILLA = 'LILLA',
     GUL = 'GUL',
-    TOM = 'TOM',
+    TOM = 'TOM'
 }
 
 export interface ArbeidslisteformValues {

@@ -44,14 +44,14 @@ function OpprettOppgave() {
         tema: undefined,
         type: 'VURDER_HENVENDELSE',
         veilederId: null,
-        avsenderenhetId: enhetId,
+        avsenderenhetId: enhetId
     };
 
     function lagreOppgave(formdata: OppgaveFormData) {
         showSpinnerModal();
 
         opprettOppgave(brukerFnr, formdata)
-            .then((res) => {
+            .then(res => {
                 showOpprettOppgaveKvitteringModal({ type: res.data.type, tema: res.data.tema });
             })
             .catch(showErrorModal);
@@ -65,7 +65,7 @@ function OpprettOppgave() {
             tilbakeTekst="Tilbake"
             tittel="Opprett en Gosys-oppgave"
             className="opprett-oppgave"
-            render={(formikProps) => (
+            render={formikProps => (
                 <div className="modal-innhold">
                     <Undertittel className="opprett-oppgave__undertittel">{`Oppfølging av ${navn}`}</Undertittel>
                     <Form>

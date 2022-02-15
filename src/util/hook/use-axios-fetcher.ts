@@ -47,13 +47,13 @@ export function useAxiosFetcher<R>(fetcher: (...args: any[]) => AxiosPromise<R>)
         (...args: any[]): AxiosPromise<R> => {
             setFetchState({ loading: true });
             return fetcher(...args)
-                .then((res) => {
+                .then(res => {
                     if (isMounted.current) {
                         setFetchState({ loading: false, data: res.data, error: undefined });
                     }
                     return res;
                 })
-                .catch((err) => {
+                .catch(err => {
                     if (isMounted.current) {
                         setFetchState({ loading: false, data: undefined, error: err });
                     }

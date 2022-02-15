@@ -8,7 +8,7 @@ import { useDocumentEventListner } from '../../../util/hook/use-event-listner';
 /* tslint:disable */
 const btnCls = (erApen: boolean, className: string | undefined) =>
     classNames('dropdown', className, {
-        'dropdown--apen': erApen,
+        'dropdown--apen': erApen
     });
 
 interface DropdownProps {
@@ -81,7 +81,7 @@ function Dropdown(props: DropdownProps) {
                     <ul
                         className={'dropdown__innhold dropdown__innhold'}
                         id={`${name}-dropdown__innhold`}
-                        onKeyDown={(e) => {
+                        onKeyDown={e => {
                             if (harTrykktPaEsc(e)) {
                                 e.stopPropagation();
                                 e.preventDefault();
