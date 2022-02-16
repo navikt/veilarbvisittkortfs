@@ -12,7 +12,7 @@ import {
     HenvendelseData,
     nyHenvendelse,
     oppdaterFerdigbehandlet,
-    oppdaterVenterPaSvar,
+    oppdaterVenterPaSvar
 } from '../../../api/veilarbdialog';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
@@ -30,7 +30,7 @@ const initialValues = {
     brukMalvelger: true,
     overskrift: 'Du har fått et varsel fra NAV',
     tekst: '',
-    type: 'ikke_valgt',
+    type: 'ikke_valgt'
 };
 
 function StartEskalering() {
@@ -48,12 +48,12 @@ function StartEskalering() {
             begrunnelse: values.begrunnelse,
             overskrift: values.overskrift,
             egenskaper: [Egenskaper.ESKALERINGSVARSEL],
-            tekst: values.begrunnelse,
+            tekst: values.begrunnelse
         };
 
         // TODO: Dette er kanskje logikk som kunne blitt gjort i backend istedenfor
         nyHenvendelse(brukerFnr, hendvendelseData)
-            .then(async (res) => {
+            .then(async res => {
                 const dialogId = res.data.id;
                 const dialogHenvendelseTekst = res.data.henvendelser[0].tekst;
 
@@ -65,7 +65,7 @@ function StartEskalering() {
                     await Promise.all([
                         oppdaterFerdigbehandletPromise,
                         oppdaterVenterPaSvarPromise,
-                        startEskaleringPromise,
+                        startEskaleringPromise
                     ]);
 
                     logger.event(

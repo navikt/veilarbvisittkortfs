@@ -30,7 +30,7 @@ function OppgaveInnerForm({
     veilederId,
     avsenderenhetId,
     formikProps,
-    tilbake,
+    tilbake
 }: OppgaveInnerFormProps) {
     if (!tema) {
         return null;

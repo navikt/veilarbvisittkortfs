@@ -25,7 +25,7 @@ export function DataFetcher(props: { children: any }) {
         setFeatures,
         setVergeOgFullmakt,
         setSpraakTolk,
-        features,
+        features
     } = useDataStore();
 
     const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);

@@ -24,7 +24,7 @@ function OpprettOppgaveVelgVeileder({
     veilederId,
     tema,
     avsenderenhetId,
-    formikProps,
+    formikProps
 }: OpprettOppgaveVelgVeilederProps) {
     const { enhetId } = useAppStore();
     const { veilederePaEnhet, setVeilederePaEnhet } = useDataStore();
@@ -48,7 +48,7 @@ function OpprettOppgaveVelgVeileder({
         return null;
     }
 
-    const valgtVeileder: OrNothing<VeilederData> = veilederListe.find((veileder) => veileder.ident === veilederId);
+    const valgtVeileder: OrNothing<VeilederData> = veilederListe.find(veileder => veileder.ident === veilederId);
 
     const sorterteVeiledere = veilederListe.sort((a, b) => a.etternavn.localeCompare(b.etternavn));
 
@@ -60,9 +60,9 @@ function OpprettOppgaveVelgVeileder({
                 knappeTekst={(valgtVeileder && valgtVeileder.navn) || ''}
                 className="skjemaelement velg-enhet-dropdown"
                 btnClassnames="velg-enhet-dropdown__button"
-                render={(lukkDropdown) => (
+                render={lukkDropdown => (
                     <SokFilter data={sorterteVeiledere} label="" placeholder="Søk etter veileder">
-                        {(data) => (
+                        {data => (
                             <FormikRadioGroup
                                 data={data}
                                 createLabel={(veileder: VeilederData) => veileder.navn}

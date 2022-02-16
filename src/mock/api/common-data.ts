@@ -10,7 +10,7 @@ function lagVeileder(): VeilederData {
         ident: id,
         navn: fornavn + ' ' + etternavn,
         fornavn: fornavn,
-        etternavn: etternavn,
+        etternavn: etternavn
     };
 }
 

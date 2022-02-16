@@ -45,7 +45,7 @@ function HistorikkVisning({ historikkInnslag }: HistorikkVisningProps) {
     const sortertEtterDatoHistorikkInnslag = historikkInnslag.sort((a, b) => dayjs(b.dato).diff(a.dato));
 
     const indexForNyesteEnhetEndring = sortertEtterDatoHistorikkInnslag.findIndex(
-        (innslag) => innslag.type === 'OPPFOLGINGSENHET_ENDRET'
+        innslag => innslag.type === 'OPPFOLGINGSENHET_ENDRET'
     );
 
     const historikkKomponenter = sortertEtterDatoHistorikkInnslag.map((elem: HistorikkInnslagType, idx) =>

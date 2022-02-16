@@ -30,7 +30,7 @@ function StartManuellOppfolgingKvittering(props: StartManuellOppfolgingKvitterin
             const logFields = {
                 brukerType: registreringData.type,
                 erKRR: !!oppfolging?.reservasjonKRR,
-                erManueltRegistrert,
+                erManueltRegistrert
             };
 
             logger.event('veilarbvisittkortfs.metrikker.manuell_oppfolging', logFields);

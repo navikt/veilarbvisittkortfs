@@ -29,36 +29,36 @@ function TildelVeileder() {
 
         document
             .querySelectorAll('input[type=radio]:checked')
-            .forEach((elem) => ((elem as HTMLInputElement).checked = false));
+            .forEach(elem => ((elem as HTMLInputElement).checked = false));
 
         tildelTilVeileder([
             {
                 fraVeilederId: fraVeileder,
                 tilVeilederId: selectedVeilederId,
-                brukerFnr,
-            },
+                brukerFnr
+            }
         ])
-            .then((res) => {
+            .then(res => {
                 if (res.data.feilendeTilordninger.length > 0) {
                     throw new Error('Tildeling feilet');
                 }
 
                 // Oppdater med ny veileder
                 setOppfolging(
-                    (prevOppfolging) => ({ ...(prevOppfolging || {}), veilederId: selectedVeilederId } as Oppfolging)
+                    prevOppfolging => ({ ...(prevOppfolging || {}), veilederId: selectedVeilederId } as Oppfolging)
                 );
                 setOppfolgingsstatus(
-                    (prevOppfolgingStatus) =>
+                    prevOppfolgingStatus =>
                         ({
                             ...(prevOppfolgingStatus || {}),
-                            veilederId: selectedVeilederId,
+                            veilederId: selectedVeilederId
                         } as OppfolgingStatus)
                 );
 
                 const veilederNavn =
                     sorterteVeiledere
-                        .filter((v) => v.ident === selectedVeilederId)
-                        .map((v) => lagVeilederSammensattNavn(v))[0] || 'Ukjent veileder';
+                        .filter(v => v.ident === selectedVeilederId)
+                        .map(v => lagVeilederSammensattNavn(v))[0] || 'Ukjent veileder';
 
                 showTildelVeilederKvitteringModal({ tildeltVeilederNavn: veilederNavn });
             })
@@ -72,7 +72,7 @@ function TildelVeileder() {
                 className="tildel-veileder__form"
             >
                 <SokFilter data={sorterteVeiledere} label="" placeholder="Søk navn eller NAV-ident">
-                    {(data) => (
+                    {data => (
                         <RadioFilterForm
                             data={data}
                             createLabel={lagVeilederSammensattNavn}

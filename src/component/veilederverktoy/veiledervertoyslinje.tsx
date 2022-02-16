@@ -19,7 +19,7 @@ import {
     selectKanStarteManuellOppfolging,
     selectKanStoppeEskaleringsVarsel,
     selectKanStoppeKVP,
-    selectKanTildeleVeileder,
+    selectKanTildeleVeileder
 } from '../../util/selectors';
 import { doAll } from '../../util/utils';
 
@@ -37,7 +37,7 @@ function Veilederverktoyslinje() {
         showStoppKvpPeriodeModal,
         showOpprettOppgaveModal,
         showAvsluttOppfolgingModal,
-        showHistorikkModal,
+        showHistorikkModal
     } = useModalStore();
 
     const kanStarteEskalering = selectKanSendeEskaleringsVarsel(oppfolging, tilgangTilBrukersKontor);
@@ -58,13 +58,13 @@ function Veilederverktoyslinje() {
 
     const arbeidslisteKlikk = () => {
         logger.event('veilarbvisittkortfs.metrikker.veilederverktoy.arbeidsliste', {
-            leggtil: !kanEndreArbeidsliste && kanLagreArbeidsliste,
+            leggtil: !kanEndreArbeidsliste && kanLagreArbeidsliste
         });
         showArbeidslisteModal();
     };
 
     return (
-        <div className="veiledervektoy-dropdown">
+        <div className="veilederverktoy-dropdown">
             <Dropdown
                 metricName="dropdown-trykket"
                 ariaLabelledBy="veilederverkoy_span"
@@ -76,7 +76,7 @@ function Veilederverktoyslinje() {
                 }
                 name="tildel veileder"
                 btnClassnames="knapp knapp--standard knapp-fss"
-                render={(lukkDropdown) => (
+                render={lukkDropdown => (
                     <>
                         {kanEndreArbeidsliste && (
                             <li>

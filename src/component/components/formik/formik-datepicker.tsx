@@ -19,7 +19,7 @@ function FormikDatoVelger({ name, validate, label, ariaLabel, className }: Formi
             {({ field, form: { errors, setFieldValue } }: FieldProps) => {
                 const error = getIn(errors, name);
                 const datePickerClassName = classNames('skjemaelement datovelger', className, {
-                    'datovelger--harFeil': error,
+                    'datovelger--harFeil': error
                 });
                 return (
                     <div className={datePickerClassName}>
@@ -30,7 +30,7 @@ function FormikDatoVelger({ name, validate, label, ariaLabel, className }: Formi
                                     id: name,
                                     name,
                                     placeholder: 'dd.mm.åååå',
-                                    'aria-label': ariaLabel,
+                                    'aria-label': ariaLabel
                                 } as any
                             }
                             inputId="fristDatovelger"

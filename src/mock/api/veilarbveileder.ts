@@ -5,14 +5,14 @@ import { EnhetData, VeilederData } from '../../api/veilarbveileder';
 
 const mockEnhetData: EnhetData = {
     enhetId: '1337',
-    navn: 'NAV Leeten',
+    navn: 'NAV Leeten'
 };
 
 export const mockInnloggetVeileder: VeilederData = {
     ident: 'Z007',
     navn: 'James Bond',
     fornavn: 'James',
-    etternavn: 'Bond',
+    etternavn: 'Bond'
 };
 
 export const veilarbveilederHandlers: RequestHandlersList = [
@@ -24,5 +24,5 @@ export const veilarbveilederHandlers: RequestHandlersList = [
     }),
     rest.get('/veilarbveileder/api/veileder/me', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(mockInnloggetVeileder));
-    }),
+    })
 ];

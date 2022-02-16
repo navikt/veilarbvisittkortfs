@@ -8,7 +8,7 @@ import { OrNothing } from '../../util/type/ornothing';
 import {
     validerArbeidslisteDatoFelt,
     validerArbeidslisteKommentarFelt,
-    validerArbeidslisteTittelFelt,
+    validerArbeidslisteTittelFelt
 } from '../../util/formik-validation';
 import { toSimpleDateStr } from '../../util/date-utils';
 

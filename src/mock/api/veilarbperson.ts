@@ -4,7 +4,7 @@ import { HarBruktNivaa4Type, Personalia, SpraakTolk, VergeOgFullmakt } from '../
 import { RegistreringData } from '../../api/veilarbperson';
 
 const mockHarBruktNivaa4: HarBruktNivaa4Type = {
-    harbruktnivaa4: false,
+    harbruktnivaa4: false
 };
 
 const mockPersonalia: Personalia = {
@@ -17,7 +17,7 @@ const mockPersonalia: Personalia = {
     diskresjonskode: null,
     sikkerhetstiltak: 'To ansatte i samtale',
     egenAnsatt: false,
-    kjonn: 'K',
+    kjonn: 'K'
 };
 
 const mockPersonaliaV2: Personalia = {
@@ -30,7 +30,7 @@ const mockPersonaliaV2: Personalia = {
     diskresjonskode: '7',
     sikkerhetstiltak: 'Ansatte i samtale',
     egenAnsatt: true,
-    kjonn: 'KVINNE',
+    kjonn: 'KVINNE'
 };
 
 const mockVergeOgFullmakt: VergeOgFullmakt = {
@@ -42,15 +42,15 @@ const mockVergeOgFullmakt: VergeOgFullmakt = {
                 navn: {
                     fornavn: 'fornavn',
                     mellomnavn: 'mellomnavn',
-                    etternavn: 'etternavn',
+                    etternavn: 'etternavn'
                 },
                 motpartsPersonident: '1234567890',
-                omfang: 'Ivareta personens interesser innenfor det personlige og økonomiske området',
+                omfang: 'Ivareta personens interesser innenfor det personlige og økonomiske området'
             },
             folkeregistermetadata: {
                 ajourholdstidspunkt: '2021-03-02T13:00:42',
-                gyldighetstidspunkt: '2021-03-02T13:00:42',
-            },
+                gyldighetstidspunkt: '2021-03-02T13:00:42'
+            }
         },
         {
             type: 'Fremtidsfullmakt',
@@ -59,16 +59,16 @@ const mockVergeOgFullmakt: VergeOgFullmakt = {
                 navn: {
                     fornavn: 'fornavn',
                     mellomnavn: 'mellomnavn',
-                    etternavn: 'etternavn',
+                    etternavn: 'etternavn'
                 },
                 motpartsPersonident: '1234567890',
-                omfang: 'Ivareta personens interesser innenfor det personlige området',
+                omfang: 'Ivareta personens interesser innenfor det personlige området'
             },
             folkeregistermetadata: {
                 ajourholdstidspunkt: '2021-03-02T13:00:42',
-                gyldighetstidspunkt: '2021-03-02T13:00:42',
-            },
-        },
+                gyldighetstidspunkt: '2021-03-02T13:00:42'
+            }
+        }
     ],
     fullmakt: [
         {
@@ -76,21 +76,21 @@ const mockVergeOgFullmakt: VergeOgFullmakt = {
             motpartsRolle: '',
             omraader: [],
             gyldigFraOgMed: '',
-            gyldigTilOgMed: '',
-        },
-    ],
+            gyldigTilOgMed: ''
+        }
+    ]
 };
 
 const mockSpraakTolk: SpraakTolk = {
     tegnspraak: 'Norsk',
-    talespraak: 'Engelsk',
+    talespraak: 'Engelsk'
 };
 
 const mockRegistrering: RegistreringData = {
     type: 'ORDINAER',
     registrering: {
-        manueltRegistrertAv: null,
-    },
+        manueltRegistrertAv: null
+    }
 };
 
 export const veilarbpersonHandlers: RequestHandlersList = [
@@ -111,5 +111,5 @@ export const veilarbpersonHandlers: RequestHandlersList = [
     }),
     rest.get('/veilarbperson/api/v2/person/tolk', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(mockSpraakTolk));
-    }),
+    })
 ];

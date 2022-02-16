@@ -11,7 +11,7 @@ import {
     ArbeidslisteformValues,
     KategoriModell,
     lagreArbeidsliste,
-    redigerArbeidsliste,
+    redigerArbeidsliste
 } from '../../api/veilarbportefolje';
 import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
@@ -23,7 +23,7 @@ const arbeidslisteEmptyValues = {
     overskrift: '',
     kommentar: '',
     frist: '',
-    kategori: KategoriModell.BLA,
+    kategori: KategoriModell.BLA
 };
 
 function ArbeidslisteModal() {
@@ -46,7 +46,7 @@ function ArbeidslisteModal() {
         overskrift: liste.overskrift,
         kommentar: liste.kommentar,
         frist: liste.frist ? toReversedDateStr(liste.frist) : '',
-        kategori: liste.kategori,
+        kategori: liste.kategori
     };
 
     const initalValues = liste.endringstidspunkt ? arbeidslisteValues : arbeidslisteEmptyValues;
@@ -64,7 +64,7 @@ function ArbeidslisteModal() {
         logger.event('teamvoff.metrikker.arbeidslistekategori', {
             kategori: values.kategori,
             leggtil: !erIRedigeringModus,
-            applikasjon: 'visittkort',
+            applikasjon: 'visittkort'
         });
 
         showSpinnerModal();
@@ -73,7 +73,7 @@ function ArbeidslisteModal() {
             kommentar: values.kommentar,
             overskrift: values.overskrift,
             frist: values.frist ? dateToISODate(values.frist) : null,
-            kategori: values.kategori,
+            kategori: values.kategori
         };
 
         if (erIRedigeringModus) {
@@ -91,7 +91,7 @@ function ArbeidslisteModal() {
 
     return (
         <Formik key={frist} initialValues={initalValues} onSubmit={handleSubmit}>
-            {(formikProps) => (
+            {formikProps => (
                 <Modal
                     contentLabel="Arbeidsliste"
                     className="arbeidsliste-modal"

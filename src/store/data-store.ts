@@ -43,6 +43,6 @@ export const [DataStore, useDataStore] = constate(() => {
         vergeOgFullmakt,
         setVergeOgFullmakt,
         spraakTolk,
-        setSpraakTolk,
+        setSpraakTolk
     };
 });

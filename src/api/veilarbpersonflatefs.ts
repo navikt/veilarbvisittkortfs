@@ -13,6 +13,6 @@ export interface FeatureToggles {
 }
 
 export function fetchFeaturesToggles(): AxiosPromise<FeatureToggles> {
-    const features = ALL_TOGGLES.map((element) => 'feature=' + element).join('&');
+    const features = ALL_TOGGLES.map(element => 'feature=' + element).join('&');
     return axiosInstance.get<FeatureToggles>(`/veilarbpersonflatefs/api/feature?feature=${features}`);
 }

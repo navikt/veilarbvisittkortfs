@@ -1,7 +1,7 @@
 import {
     createFrontendLogger,
     createMockFrontendLogger,
-    DEFAULT_FRONTENDLOGGER_API_URL,
+    DEFAULT_FRONTENDLOGGER_API_URL
 } from '@navikt/frontendlogger/lib';
 import { APP_NAME, isDevelopment } from './utils';
 

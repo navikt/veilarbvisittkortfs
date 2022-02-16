@@ -18,7 +18,7 @@ function FormikRadioGroup<T>({
     radioName,
     createLabel,
     createValue,
-    defaultValue,
+    defaultValue
 }: FormikRadioFilterProps<T>) {
     return (
         <Field name={name}>
@@ -29,7 +29,7 @@ function FormikRadioGroup<T>({
                 return (
                     <div className="visittkortfs-radio-filterform">
                         <div className="radio-filterform__valg scrollbar">
-                            {data.map((o) => {
+                            {data.map(o => {
                                 const value = createValue(o);
                                 return (
                                     <Radio

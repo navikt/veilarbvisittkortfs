@@ -20,7 +20,7 @@ function FjernTildelVeilederToast(props: FjernTildelVeilederToastProps) {
         const tidBrukt = stoppTimer();
         logger.event('veilarbvisittkortfs.metrikker.lukk-toast-tildel-veileder', {
             feature: 'toast-tildel-veileder',
-            tidBrukt,
+            tidBrukt
         });
 
         hideToast();

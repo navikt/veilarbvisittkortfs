@@ -11,7 +11,7 @@ const mockArbeidsliste: Arbeidsliste = {
     kommentar: null,
     overskrift: null,
     sistEndretAv: null,
-    kategori: null,
+    kategori: null
 };
 
 export const veilarbportefoljeHandlers: RequestHandlersList = [
@@ -31,7 +31,7 @@ export const veilarbportefoljeHandlers: RequestHandlersList = [
                 kommentar: requestBody.kommentar,
                 overskrift: requestBody.overskrift,
                 sistEndretAv: 'Z007',
-                kategori: requestBody.kategori,
+                kategori: requestBody.kategori
             })
         );
     }),
@@ -48,11 +48,11 @@ export const veilarbportefoljeHandlers: RequestHandlersList = [
                 kommentar: requestBody.kommentar,
                 overskrift: requestBody.overskrift,
                 sistEndretAv: 'Z007',
-                kategori: requestBody.kategori,
+                kategori: requestBody.kategori
             })
         );
     }),
     rest.delete('/veilarbportefolje/api/arbeidsliste/:fnr', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(mockArbeidsliste));
-    }),
+    })
 ];

@@ -18,14 +18,14 @@ export function ifResponseHasData<T>(
 }
 
 export function storeForbokstaver(tekster: string[]): string {
-    const tekst = tekster.filter((s) => s).join(' ');
+    const tekst = tekster.filter(s => s).join(' ');
 
     return tekst
         .split(' ')
-        .map((ord) =>
+        .map(ord =>
             ord
                 .split('-')
-                .map((navn) => navn.charAt(0).toUpperCase() + navn.slice(1).toLowerCase())
+                .map(navn => navn.charAt(0).toUpperCase() + navn.slice(1).toLowerCase())
                 .join('-')
         )
         .join(' ');
@@ -42,7 +42,7 @@ export function isEmpty(array: undefined | any[]): boolean {
 }
 
 export function doAll(...fns: (() => void)[]) {
-    fns.forEach((fn) => fn());
+    fns.forEach(fn => fn());
 }
 
 export const NAIS_PREPROD_SUFFIX = 'preprod.local/';

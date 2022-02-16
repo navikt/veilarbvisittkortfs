@@ -48,7 +48,7 @@ function Etiketter() {
     useEffect(() => {
         if (brukerFnr && features[PILOT_TOGGLE]) {
             registreringFetcher.fetch(brukerFnr).then(
-                ifResponseHasData((data) => {
+                ifResponseHasData(data => {
                     setInnsatsgruppe(data.registrering.profilering?.innsatsgruppe);
                 })
             );

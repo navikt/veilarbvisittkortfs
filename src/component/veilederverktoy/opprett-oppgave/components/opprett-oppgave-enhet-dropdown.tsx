@@ -23,14 +23,12 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
 
     useEffect(() => {
         if (tema) {
-            hentBehandlendeEnheter(tema, fnr).then((res) => {
+            hentBehandlendeEnheter(tema, fnr).then(res => {
                 const behandlendeEnhetersData = res.data;
                 setBehandladeEnheter(behandlendeEnhetersData);
                 setFieldValue('enhetId', behandlendeEnhetersData[0].enhetId);
                 setIsLoading(false);
-                document
-                    .getElementsByName('Velg enhet')
-                    .forEach((elem) => ((elem as HTMLInputElement).checked = false));
+                document.getElementsByName('Velg enhet').forEach(elem => ((elem as HTMLInputElement).checked = false));
             });
         }
     }, [tema, fnr, setFieldValue]);
@@ -40,7 +38,7 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
     }
 
     const valgtEnhet: OrNothing<BehandlandeEnhet> =
-        behandladeEnheter.find((enhet) => enhet.enhetId === value) || behandladeEnheter[0];
+        behandladeEnheter.find(enhet => enhet.enhetId === value) || behandladeEnheter[0];
 
     return (
         <div className="skjemaelement">
@@ -50,9 +48,9 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
                 knappeTekst={`${valgtEnhet.enhetId} ${valgtEnhet.navn}`}
                 className="velg-enhet-dropdown"
                 btnClassnames="velg-enhet-dropdown__button"
-                render={(lukkDropdown) => (
+                render={lukkDropdown => (
                     <SokFilter data={behandladeEnheter} label="" placeholder="Søk etter enhet">
-                        {(data) => (
+                        {data => (
                             <FormikRadioGroup
                                 defaultValue={behandladeEnheter[0].enhetId}
                                 data={data}

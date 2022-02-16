@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FjernTildelVeilederToastProps } from '../component/components/toast/fjern-tildel-veileder-toast';
 
 export enum ToastType {
-    FJERN_TILDEL_VEILEDER = 'FJERN_TILDEL_VEILEDER',
+    FJERN_TILDEL_VEILEDER = 'FJERN_TILDEL_VEILEDER'
 }
 
 export interface ToastState {
@@ -25,6 +25,6 @@ export const [ToastStore, useToastStore] = constate(() => {
     return {
         activeToastState,
         showFjernTildelVeilederToast,
-        hideToast,
+        hideToast
     };
 });
