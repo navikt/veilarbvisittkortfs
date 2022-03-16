@@ -44,6 +44,40 @@ export interface HenvendelseData {
     dialogId?: string;
 }
 
+export interface StartEskaleringRequest {
+    fnr: string;
+    begrunnelse: string;
+    overskrift: string;
+    tekst: string;
+}
+
+export interface StopEskaleringRequest {
+    fnr: string;
+    begrunnelse: string;
+    skalSendeHendvendelse: boolean;
+}
+
+export interface GjeldendeEskaleringsvarsel {
+    id: number;
+    tilhorendeDialogId: number;
+    opprettetAv: string;
+    opprettetDato: string;
+    opprettetBegrunnelse: string;
+}
+
+export interface EskaleringsvarselHistorikkInnslag {
+    id: number;
+    tilhorendeDialogId: number;
+
+    opprettetAv: string;
+    opprettetDato: string;
+    opprettetBegrunnelse: string;
+
+    avsluttetDato: string | null;
+    avsluttetAv: string | null;
+    avsluttetBegrunnelse: string | null;
+}
+
 export function oppdaterFerdigbehandlet(
     dialogId: string,
     erFerdigbehandlet: boolean,
@@ -62,4 +96,20 @@ export function fetchDialoger(fnr: string): AxiosPromise<Dialog[]> {
 
 export function nyHenvendelse(fnr: string, henvendelse: HenvendelseData): AxiosPromise<Dialog> {
     return axiosInstance.post(`/veilarbdialog/api/dialog?fnr=${fnr}`, henvendelse);
+}
+
+export function hentGjeldendeEskaleringsvarsel(fnr: string): AxiosPromise<GjeldendeEskaleringsvarsel> {
+    return axiosInstance.get(`/veilarbdialog/api/eskaleringsvarsel/gjeldende?fnr=${fnr}`);
+}
+
+export function hentEskaleringsvarselHistorikk(fnr: string): AxiosPromise<EskaleringsvarselHistorikkInnslag[]> {
+    return axiosInstance.get(`/veilarbdialog/api/eskaleringsvarsel/historikk?fnr=${fnr}`);
+}
+
+export function startEskalering(startEskaleringRequest: StartEskaleringRequest): AxiosPromise {
+    return axiosInstance.post('/veilarbdialog/api/eskaleringsvarsel/start', startEskaleringRequest);
+}
+
+export function stopEskalering(stopEskaleringRequest: StopEskaleringRequest): AxiosPromise {
+    return axiosInstance.patch('/veilarbdialog/api/eskaleringsvarsel/stop', stopEskaleringRequest);
 }

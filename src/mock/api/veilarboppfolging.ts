@@ -1,6 +1,11 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
-import { AvslutningStatus, InnstillingsHistorikk, Oppfolging, OppfolgingStatus } from '../../api/veilarboppfolging';
+import {
+    AvslutningStatus,
+    InnstillingHistorikkInnslag,
+    Oppfolging,
+    OppfolgingStatus
+} from '../../api/veilarboppfolging';
 import { mockInnloggetVeileder } from './veilarbveileder';
 
 const mockAvslutningStatus: AvslutningStatus = {
@@ -19,7 +24,7 @@ const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
     underKvp: false
 };
 
-const mockInnstillingsHistorikk: InnstillingsHistorikk[] = [
+const mockInnstillingsHistorikk: InnstillingHistorikkInnslag[] = [
     {
         type: 'AVSLUTTET_OPPFOLGINGSPERIODE',
         dato: '2018-08-14T13:56:53.813+02:00',

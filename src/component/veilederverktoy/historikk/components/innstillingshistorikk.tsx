@@ -4,10 +4,10 @@ import { opprettetAvTekst } from './opprettet-av';
 import Lenke from 'nav-frontend-lenker';
 import { useAppStore } from '../../../../store/app-store';
 import { toSimpleDateStr } from '../../../../util/date-utils';
-import { InnstillingsHistorikk } from '../../../../api/veilarboppfolging';
+import { InnstillingHistorikkInnslag } from '../../../../api/veilarboppfolging';
 
 interface InnstillingHistorikkKomponentProps {
-    innstillingsHistorikk: InnstillingsHistorikk;
+    innstillingsHistorikk: InnstillingHistorikkInnslag;
 }
 
 const ESKALERING_MAX_LENGTH = 120;

@@ -8,9 +8,8 @@ import { BegrunnelseTextArea } from '../begrunnelseform/begrunnelse-textarea';
 import { useAppStore } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
-import { fetchOppfolging, stoppEskalering } from '../../../api/veilarboppfolging';
 import { eskaleringVarselSendtEvent, ifResponseHasData } from '../../../util/utils';
-import { Egenskaper, nyHenvendelse } from '../../../api/veilarbdialog';
+import { hentGjeldendeEskaleringsvarsel, stopEskalering } from '../../../api/veilarbdialog';
 import './stopp-eskalering.less';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 
@@ -26,30 +25,25 @@ const initialFormValues: FormValues = {
 
 function StoppEskalering() {
     const { brukerFnr } = useAppStore();
-    const { oppfolging, setOppfolging } = useDataStore();
+    const { setGjeldendeEskaleringsvarsel } = useDataStore();
     const { showStoppEskaleringKvitteringModal, showErrorModal, showSpinnerModal } = useModalStore();
 
-    const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
+    const gjeldendeEskaleringsvarselFetcher = useAxiosFetcher(hentGjeldendeEskaleringsvarsel);
 
     async function startStoppingAvEskalering(values: FormValues) {
         showSpinnerModal();
 
         try {
-            if (values.skalSendeHendelse && values.begrunnelse) {
-                const stoppEskaleringHenvendelse = {
-                    begrunnelse: values.begrunnelse,
-                    egenskaper: [Egenskaper.ESKALERINGSVARSEL],
-                    dialogId: oppfolging?.gjeldendeEskaleringsvarsel?.tilhorendeDialogId || '',
-                    tekst: values.begrunnelse
-                };
-
-                await nyHenvendelse(brukerFnr, stoppEskaleringHenvendelse);
-            }
-
-            await stoppEskalering(brukerFnr, values.begrunnelse);
+            await stopEskalering({
+                fnr: brukerFnr,
+                begrunnelse: values.begrunnelse,
+                skalSendeHendvendelse: values.skalSendeHendelse
+            });
 
             // Hent oppdatert data uten eskaleringsvarsel
-            await oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging));
+            await gjeldendeEskaleringsvarselFetcher
+                .fetch(brukerFnr)
+                .then(ifResponseHasData(setGjeldendeEskaleringsvarsel));
 
             eskaleringVarselSendtEvent();
             showStoppEskaleringKvitteringModal();

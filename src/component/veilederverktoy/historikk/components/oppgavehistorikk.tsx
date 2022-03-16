@@ -2,10 +2,10 @@ import React from 'react';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { opprettetAvTekst } from './opprettet-av';
 import { toSimpleDateStr } from '../../../../util/date-utils';
-import { OppgaveHistorikk } from '../../../../api/veilarboppgave';
+import { OppgaveHistorikkInnslag } from '../../../../api/veilarboppgave';
 
 interface OwnProps {
-    oppgaveHistorikk: OppgaveHistorikk;
+    oppgaveHistorikk: OppgaveHistorikkInnslag;
 }
 
 const oppgaveTemaTekst = {
