@@ -91,7 +91,6 @@ export function DataFetcher(props: { children: any }) {
 
     if (
         isAnyLoadingOrNotStarted(
-            gjeldendeEskaleringsvarselFetcher,
             oppfolgingstatusFetcher,
             oppfolgingFetcher,
             innloggetVeilederFetcher,
