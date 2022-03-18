@@ -52,8 +52,11 @@ function Veilederverktoyslinje() {
         gjeldendeEskaleringsvarsel,
         tilgangTilBrukersKontor
     );
-    const kanStoppeEskalering = true;
-    selectKanStoppeEskaleringsVarsel(oppfolging, gjeldendeEskaleringsvarsel, tilgangTilBrukersKontor);
+    const kanStoppeEskalering = selectKanStoppeEskaleringsVarsel(
+        oppfolging,
+        gjeldendeEskaleringsvarsel,
+        tilgangTilBrukersKontor
+    );
     const kanAvslutteOppfolging = selectKanAvslutteOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteManuellOppfolging = selectKanStarteManuellOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteDigitalOppfolging = selectKanStarteDigitalOppfolging(oppfolging, tilgangTilBrukersKontor);
