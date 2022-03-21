@@ -9,9 +9,10 @@ import { useAppStore } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { eskaleringVarselSendtEvent, ifResponseHasData } from '../../../util/utils';
-import { hentGjeldendeEskaleringsvarsel, stopEskalering } from '../../../api/veilarbdialog';
+import { Egenskaper, hentGjeldendeEskaleringsvarsel, nyHenvendelse, stopEskalering } from '../../../api/veilarbdialog';
 import './stopp-eskalering.less';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
+import { fetchOppfolging, stoppEskalering } from '../../../api/veilarboppfolging';
 
 interface FormValues {
     begrunnelse: string;
@@ -25,30 +26,60 @@ const initialFormValues: FormValues = {
 
 function StoppEskalering() {
     const { brukerFnr } = useAppStore();
-    const { setGjeldendeEskaleringsvarsel } = useDataStore();
+    const { oppfolging, setGjeldendeEskaleringsvarsel, setOppfolging } = useDataStore();
     const { showStoppEskaleringKvitteringModal, showErrorModal, showSpinnerModal } = useModalStore();
 
+    const eskaleringsvarselFraVeilarboppfolging = oppfolging?.gjeldendeEskaleringsvarsel != null;
+
+    const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
     const gjeldendeEskaleringsvarselFetcher = useAxiosFetcher(hentGjeldendeEskaleringsvarsel);
 
     async function startStoppingAvEskalering(values: FormValues) {
         showSpinnerModal();
 
-        try {
-            await stopEskalering({
-                fnr: brukerFnr,
-                begrunnelse: values.begrunnelse,
-                skalSendeHendvendelse: values.skalSendeHendelse
-            });
+        // Hvis eskaleringsvarselet ble startet i veilarboppfolging så må vi stoppe varselet der også istedenfor i veilarbdialog
+        // Denne IF-en er midlertidig™, og kan fjernes når eskaleringsvarsel er migrert helt ut av veilarboppfolging
+        if (eskaleringsvarselFraVeilarboppfolging) {
+            try {
+                if (values.skalSendeHendelse && values.begrunnelse) {
+                    const stoppEskaleringHenvendelse = {
+                        begrunnelse: values.begrunnelse,
+                        egenskaper: [Egenskaper.ESKALERINGSVARSEL],
+                        dialogId: oppfolging?.gjeldendeEskaleringsvarsel?.tilhorendeDialogId || '',
+                        tekst: values.begrunnelse
+                    };
 
-            // Hent oppdatert data uten eskaleringsvarsel
-            await gjeldendeEskaleringsvarselFetcher
-                .fetch(brukerFnr)
-                .then(ifResponseHasData(setGjeldendeEskaleringsvarsel));
+                    await nyHenvendelse(brukerFnr, stoppEskaleringHenvendelse);
+                }
 
-            eskaleringVarselSendtEvent();
-            showStoppEskaleringKvitteringModal();
-        } catch (e) {
-            showErrorModal();
+                await stoppEskalering(brukerFnr, values.begrunnelse);
+
+                // Hent oppdatert data uten eskaleringsvarsel
+                await oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging));
+
+                eskaleringVarselSendtEvent();
+                showStoppEskaleringKvitteringModal();
+            } catch (e) {
+                showErrorModal();
+            }
+        } else {
+            try {
+                await stopEskalering({
+                    fnr: brukerFnr,
+                    begrunnelse: values.begrunnelse,
+                    skalSendeHenvendelse: values.skalSendeHendelse
+                });
+
+                // Hent oppdatert data uten eskaleringsvarsel
+                await gjeldendeEskaleringsvarselFetcher
+                    .fetch(brukerFnr)
+                    .then(ifResponseHasData(setGjeldendeEskaleringsvarsel));
+
+                eskaleringVarselSendtEvent();
+                showStoppEskaleringKvitteringModal();
+            } catch (e) {
+                showErrorModal();
+            }
         }
     }
 

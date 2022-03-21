@@ -54,7 +54,7 @@ export interface StartEskaleringRequest {
 export interface StopEskaleringRequest {
     fnr: string;
     begrunnelse: string;
-    skalSendeHendvendelse: boolean;
+    skalSendeHenvendelse: boolean;
 }
 
 export interface GjeldendeEskaleringsvarsel {
