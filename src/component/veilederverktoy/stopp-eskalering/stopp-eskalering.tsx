@@ -9,7 +9,7 @@ import { useAppStore } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { eskaleringVarselSendtEvent, ifResponseHasData } from '../../../util/utils';
-import { Egenskaper, hentGjeldendeEskaleringsvarsel, nyHenvendelse, stopEskalering } from '../../../api/veilarbdialog';
+import { Egenskaper, nyHenvendelse, stopEskalering } from '../../../api/veilarbdialog';
 import './stopp-eskalering.less';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { fetchOppfolging, stoppEskalering } from '../../../api/veilarboppfolging';
@@ -32,7 +32,6 @@ function StoppEskalering() {
     const eskaleringsvarselFraVeilarboppfolging = oppfolging?.gjeldendeEskaleringsvarsel != null;
 
     const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
-    const gjeldendeEskaleringsvarselFetcher = useAxiosFetcher(hentGjeldendeEskaleringsvarsel);
 
     async function startStoppingAvEskalering(values: FormValues) {
         showSpinnerModal();
@@ -70,10 +69,7 @@ function StoppEskalering() {
                     skalSendeHenvendelse: values.skalSendeHendelse
                 });
 
-                // Hent oppdatert data uten eskaleringsvarsel
-                await gjeldendeEskaleringsvarselFetcher
-                    .fetch(brukerFnr)
-                    .then(ifResponseHasData(setGjeldendeEskaleringsvarsel));
+                setGjeldendeEskaleringsvarsel(null);
 
                 eskaleringVarselSendtEvent();
                 showStoppEskaleringKvitteringModal();
