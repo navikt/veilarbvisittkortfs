@@ -46,7 +46,7 @@ jobs:
 
     deploy-dev:
         name: Deploy application to dev
-        if: github.ref == 'refs/heads/eskaleringsvarsel-veilarbdialog'
+        if: github.ref == 'refs/heads/dev'
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
