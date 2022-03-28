@@ -9,7 +9,7 @@ import { useDataStore } from '../../../store/data-store';
 import { selectHarUbehandledeDialoger } from '../../../util/selectors';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { fetchDialoger } from '../../../api/veilarbdialog';
-import { VEDTAKSSTTOTTE_PRELANSERING_TOGGLE } from '../../../api/veilarbpersonflatefs';
+import { VEDTAKSSTTOTTE_PRELANSERING_TOGGLE } from '../../../api/features';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { fetchAvsluttOppfolgingStatus } from '../../../api/veilarboppfolging';
 import { isAnyLoading } from '../../../api/utils';

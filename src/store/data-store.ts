@@ -1,6 +1,6 @@
 import constate from 'constate';
 import { useState } from 'react';
-import { FeatureToggles } from '../api/veilarbpersonflatefs';
+import { FeatureToggles } from '../api/features';
 import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { HarBruktNivaa4Type, Personalia, SpraakTolk, VergeOgFullmakt } from '../api/veilarbperson';
 import { Arbeidsliste } from '../api/veilarbportefolje';

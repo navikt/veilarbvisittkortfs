@@ -6,6 +6,7 @@ export interface AppStoreInitialValues {
     enhetId?: string;
     tilbakeTilFlate: string;
     visVeilederVerktoy: boolean;
+    featureTogglesUrl?: string;
 }
 
 export const [AppStore, useAppStore] = constate((initalValues: AppStoreInitialValues) => {
@@ -13,6 +14,7 @@ export const [AppStore, useAppStore] = constate((initalValues: AppStoreInitialVa
     const [enhetId, setEnhetId] = useState<string | undefined>(initalValues.enhetId);
     const [tilbakeTilFlate, setTilbakeTilFlate] = useState<string>(initalValues.tilbakeTilFlate);
     const [visVeilederVerktoy, setVisVeilederVerktoy] = useState<boolean>(initalValues.visVeilederVerktoy);
+    const [featureTogglesUrl] = useState<string>(initalValues.featureTogglesUrl ?? '/veilarbpersonflatefs/api/feature');
 
     return {
         brukerFnr,
@@ -22,6 +24,7 @@ export const [AppStore, useAppStore] = constate((initalValues: AppStoreInitialVa
         tilbakeTilFlate,
         setTilbakeTilFlate,
         visVeilederVerktoy,
-        setVisVeilederVerktoy
+        setVisVeilederVerktoy,
+        featureTogglesUrl
     };
 });

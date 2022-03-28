@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDataStore } from '../store/data-store';
-import { fetchFeaturesToggles, HENT_PERSONDATA_FRA_PDL_TOGGLE } from '../api/veilarbpersonflatefs';
+import { fetchFeaturesToggles, HENT_PERSONDATA_FRA_PDL_TOGGLE } from '../api/features';
 import { useAppStore } from '../store/app-store';
 import { fetchOppfolging, fetchOppfolgingsstatus, fetchTilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { fetchPersonalia, fetchSpraakTolk, fetchVergeOgFullmakt } from '../api/veilarbperson';
@@ -13,7 +13,7 @@ import { isAnyLoadingOrNotStarted } from '../api/utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 
 export function DataFetcher(props: { children: any }) {
-    const { brukerFnr } = useAppStore();
+    const { brukerFnr, featureTogglesUrl } = useAppStore();
     const {
         setOppfolgingsstatus,
         setOppfolging,
@@ -61,7 +61,7 @@ export function DataFetcher(props: { children: any }) {
 
     useEffect(() => {
         innloggetVeilederFetcher.fetch().then(ifResponseHasData(setInnloggetVeileder)).catch();
-        featureToggleFetcher.fetch().then(ifResponseHasData(setFeatures)).catch();
+        featureToggleFetcher.fetch(featureTogglesUrl).then(ifResponseHasData(setFeatures)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

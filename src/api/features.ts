@@ -12,7 +12,7 @@ export interface FeatureToggles {
     [HENT_PERSONDATA_FRA_PDL_TOGGLE]: boolean;
 }
 
-export function fetchFeaturesToggles(): AxiosPromise<FeatureToggles> {
+export function fetchFeaturesToggles(url: string): AxiosPromise<FeatureToggles> {
     const features = ALL_TOGGLES.map(element => 'feature=' + element).join('&');
-    return axiosInstance.get<FeatureToggles>(`/veilarbpersonflatefs/api/feature?feature=${features}`);
+    return axiosInstance.get<FeatureToggles>(`${url}?feature=${features}`);
 }

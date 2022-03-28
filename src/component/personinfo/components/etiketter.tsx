@@ -5,7 +5,7 @@ import { useAppStore } from '../../../store/app-store';
 import './etiketter.less';
 import { OrNothing } from '../../../util/type/ornothing';
 import { fetchRegistrering, InnsatsgruppeType } from '../../../api/veilarbperson';
-import { HENT_PERSONDATA_FRA_PDL_TOGGLE, PILOT_TOGGLE } from '../../../api/veilarbpersonflatefs';
+import { HENT_PERSONDATA_FRA_PDL_TOGGLE, PILOT_TOGGLE } from '../../../api/features';
 import { OppfolgingStatus } from '../../../api/veilarboppfolging';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { ifResponseHasData, isEmpty } from '../../../util/utils';

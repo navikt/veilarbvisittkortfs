@@ -14,6 +14,7 @@ const StoreProvider = (props: StoreProviderProps) => {
             enhetId={props.enhetId}
             tilbakeTilFlate={props.tilbakeTilFlate}
             visVeilederVerktoy={props.visVeilederVerktoy}
+            featureTogglesUrl={props.featureTogglesUrl}
         >
             <DataStore>
                 <ModalStore>{props.children}</ModalStore>

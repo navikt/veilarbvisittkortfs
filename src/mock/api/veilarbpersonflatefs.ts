@@ -5,7 +5,7 @@ import {
     PILOT_TOGGLE,
     HENT_PERSONDATA_FRA_PDL_TOGGLE,
     VEDTAKSSTTOTTE_PRELANSERING_TOGGLE
-} from '../../api/veilarbpersonflatefs';
+} from '../../api/features';
 
 const mockFeatures: FeatureToggles = {
     [PILOT_TOGGLE]: true,
