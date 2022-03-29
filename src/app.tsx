@@ -17,6 +17,7 @@ export interface AppProps {
     enhet?: string;
     tilbakeTilFlate: string;
     visVeilederVerktoy?: boolean;
+    skjulEtiketter?: boolean;
 }
 
 function App(props: AppProps) {
@@ -32,7 +33,7 @@ function App(props: AppProps) {
                     <Tilbakelenke />
                     <div className="visittkortfs__container">
                         <PersonInfo />
-                        <Etiketter />
+                        {!props.skjulEtiketter && <Etiketter />}
                         <Veilederverktoyslinje />
                     </div>
                 </DataFetcher>
