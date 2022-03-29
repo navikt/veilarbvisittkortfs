@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDataStore } from '../store/data-store';
-import { fetchFeaturesToggles, HENT_PERSONDATA_FRA_PDL_TOGGLE } from '../api/veilarbpersonflatefs';
+import { fetchFeaturesToggles } from '../api/veilarbpersonflatefs';
 import { useAppStore } from '../store/app-store';
 import { fetchOppfolging, fetchOppfolgingsstatus, fetchTilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { fetchPersonalia, fetchSpraakTolk, fetchVergeOgFullmakt } from '../api/veilarbperson';
@@ -42,7 +42,6 @@ export function DataFetcher(props: { children: any }) {
     const spraakTolkFetcher = useAxiosFetcher(fetchSpraakTolk);
     const gjeldendeEskaleringsvarselFetcher = useAxiosFetcher(hentGjeldendeEskaleringsvarsel);
 
-    const hentPersonDataFraPdl = features[HENT_PERSONDATA_FRA_PDL_TOGGLE];
     const oppfolgingsEnhet = oppfolgingstatusFetcher.data?.oppfolgingsenhet.enhetId || '';
 
     useEffect(() => {
@@ -57,12 +56,10 @@ export function DataFetcher(props: { children: any }) {
     }, [brukerFnr]);
 
     useEffect(() => {
-        if (hentPersonDataFraPdl) {
-            vergeOgFullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setVergeOgFullmakt)).catch();
-            spraakTolkFetcher.fetch(brukerFnr).then(ifResponseHasData(setSpraakTolk)).catch();
-        }
+        vergeOgFullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setVergeOgFullmakt)).catch();
+        spraakTolkFetcher.fetch(brukerFnr).then(ifResponseHasData(setSpraakTolk)).catch();
 
-        personaliaFetcher.fetch(brukerFnr, hentPersonDataFraPdl).then(ifResponseHasData(setPersonalia)).catch();
+        personaliaFetcher.fetch(brukerFnr).then(ifResponseHasData(setPersonalia)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr, features]);
 

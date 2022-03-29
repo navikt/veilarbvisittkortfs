@@ -76,12 +76,8 @@ export interface RegistreringData {
     };
 }
 
-export function fetchPersonalia(fnr: string, hentPersonDataFraPdl: boolean): AxiosPromise<Personalia> {
-    if (hentPersonDataFraPdl) {
-        return axiosInstance.get<Personalia>(`/veilarbperson/api/v2/person?fnr=${fnr}`);
-    } else {
-        return axiosInstance.get<Personalia>(`/veilarbperson/api/person/${fnr}`);
-    }
+export function fetchPersonalia(fnr: string): AxiosPromise<Personalia> {
+    return axiosInstance.get<Personalia>(`/veilarbperson/api/v2/person?fnr=${fnr}`);
 }
 
 export function fetchVergeOgFullmakt(fnr: string): AxiosPromise<VergeOgFullmakt> {
