@@ -25,7 +25,14 @@ import { doAll } from '../../util/utils';
 
 function Veilederverktoyslinje() {
     const { visVeilederVerktoy } = useAppStore();
-    const { oppfolging, tilgangTilBrukersKontor, innloggetVeileder, arbeidsliste, oppfolgingsstatus } = useDataStore();
+    const {
+        oppfolging,
+        tilgangTilBrukersKontor,
+        innloggetVeileder,
+        arbeidsliste,
+        oppfolgingsstatus,
+        gjeldendeEskaleringsvarsel
+    } = useDataStore();
     const {
         showArbeidslisteModal,
         showTildelVeilederModal,
@@ -40,8 +47,16 @@ function Veilederverktoyslinje() {
         showHistorikkModal
     } = useModalStore();
 
-    const kanStarteEskalering = selectKanSendeEskaleringsVarsel(oppfolging, tilgangTilBrukersKontor);
-    const kanStoppeEskalering = selectKanStoppeEskaleringsVarsel(oppfolging, tilgangTilBrukersKontor);
+    const kanStarteEskalering = selectKanSendeEskaleringsVarsel(
+        oppfolging,
+        gjeldendeEskaleringsvarsel,
+        tilgangTilBrukersKontor
+    );
+    const kanStoppeEskalering = selectKanStoppeEskaleringsVarsel(
+        oppfolging,
+        gjeldendeEskaleringsvarsel,
+        tilgangTilBrukersKontor
+    );
     const kanAvslutteOppfolging = selectKanAvslutteOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteManuellOppfolging = selectKanStarteManuellOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteDigitalOppfolging = selectKanStarteDigitalOppfolging(oppfolging, tilgangTilBrukersKontor);

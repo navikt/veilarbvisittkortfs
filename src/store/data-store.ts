@@ -5,6 +5,7 @@ import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/ve
 import { HarBruktNivaa4Type, Personalia, SpraakTolk, VergeOgFullmakt } from '../api/veilarbperson';
 import { Arbeidsliste } from '../api/veilarbportefolje';
 import { VeilederData, VeilederListe } from '../api/veilarbveileder';
+import { GjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 
 const placeholder = {} as any;
 
@@ -20,6 +21,9 @@ export const [DataStore, useDataStore] = constate(() => {
     const [features, setFeatures] = useState<FeatureToggles>(placeholder);
     const [arbeidsliste, setArbeidsliste] = useState<Arbeidsliste>();
     const [veilederePaEnhet, setVeilederePaEnhet] = useState<VeilederListe>();
+    const [gjeldendeEskaleringsvarsel, setGjeldendeEskaleringsvarsel] = useState<GjeldendeEskaleringsvarsel | null>(
+        null
+    );
 
     return {
         oppfolgingsstatus,
@@ -43,6 +47,8 @@ export const [DataStore, useDataStore] = constate(() => {
         vergeOgFullmakt,
         setVergeOgFullmakt,
         spraakTolk,
-        setSpraakTolk
+        setSpraakTolk,
+        gjeldendeEskaleringsvarsel,
+        setGjeldendeEskaleringsvarsel
     };
 });

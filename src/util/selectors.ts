@@ -1,5 +1,5 @@
 import { storeForbokstaver } from './utils';
-import { Dialog } from '../api/veilarbdialog';
+import { Dialog, GjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { Personalia } from '../api/veilarbperson';
 import { Arbeidsliste } from '../api/veilarbportefolje';
@@ -50,6 +50,7 @@ export function kanFjerneArbeidsliste(
 
 export function selectKanSendeEskaleringsVarsel(
     oppfolging: OrNothing<Oppfolging>,
+    gjeldendeEskaleringsvarsel: OrNothing<GjeldendeEskaleringsvarsel>,
     tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
 ): boolean {
     if (!oppfolging || !tilgangTilBrukersKontor) return false;
@@ -57,6 +58,7 @@ export function selectKanSendeEskaleringsVarsel(
         tilgangTilBrukersKontor.tilgangTilBrukersKontor &&
         oppfolging.underOppfolging &&
         !oppfolging.gjeldendeEskaleringsvarsel &&
+        gjeldendeEskaleringsvarsel == null &&
         !oppfolging.reservasjonKRR &&
         !oppfolging.manuell
     );
@@ -64,13 +66,14 @@ export function selectKanSendeEskaleringsVarsel(
 
 export function selectKanStoppeEskaleringsVarsel(
     oppfolging: OrNothing<Oppfolging>,
+    gjeldendeEskaleringsvarsel: OrNothing<GjeldendeEskaleringsvarsel>,
     tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
 ): boolean {
     if (!oppfolging || !tilgangTilBrukersKontor) return false;
     return (
         tilgangTilBrukersKontor.tilgangTilBrukersKontor &&
         oppfolging.underOppfolging &&
-        !!oppfolging.gjeldendeEskaleringsvarsel &&
+        (!!oppfolging.gjeldendeEskaleringsvarsel || gjeldendeEskaleringsvarsel != null) &&
         !oppfolging.reservasjonKRR &&
         !oppfolging.manuell
     );

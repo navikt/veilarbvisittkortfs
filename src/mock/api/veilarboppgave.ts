@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import { mockEnhetVeiledere } from './common-data';
-import { OppgaveFormData, OppgaveHistorikk } from '../../api/veilarboppgave';
+import { OppgaveFormData, OppgaveHistorikkInnslag } from '../../api/veilarboppgave';
 
 const mockEnheter = [
     { enhetId: '0000', navn: 'NAV Ost' },
@@ -10,7 +10,7 @@ const mockEnheter = [
     { enhetId: '1234', navn: 'NAV jepps' }
 ];
 
-const mockOppgavehistorikk: OppgaveHistorikk[] = [
+const mockOppgavehistorikk: OppgaveHistorikkInnslag[] = [
     {
         type: 'OPPRETTET_OPPGAVE',
         oppgaveTema: 'OPPFOLGING',
