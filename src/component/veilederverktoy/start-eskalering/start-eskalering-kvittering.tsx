@@ -8,7 +8,7 @@ function StartEskaleringKvittering() {
             tittel="Send varsel til brukeren"
             alertStripeTekst={`Varselet er sendt til brukeren ${formaterDatoKortManed(
                 new Date()
-            )} på sms med lenke til aktivitetsplanen`}
+            )}  på sms/epost om å logge seg inn på ditt nav. Bruker vil se en brukernotefikasjon på ditt nav.`}
         />
     );
 }
