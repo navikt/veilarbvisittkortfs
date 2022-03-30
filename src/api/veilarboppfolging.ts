@@ -93,7 +93,7 @@ export type InnstillingsHistorikkType =
 
 export type InnstillingsHistorikkOpprettetAvType = 'NAV' | 'SYSTEM' | 'EKSTERN';
 
-export interface InnstillingsHistorikk {
+export interface InnstillingHistorikkInnslag {
     type: InnstillingsHistorikkType;
     dato: string;
     begrunnelse: StringOrNothing;
@@ -116,8 +116,8 @@ export function fetchTilgangTilBrukersKontor(fnr: string): AxiosPromise<TilgangT
     return axiosInstance.get<TilgangTilBrukersKontor>(`/veilarboppfolging/api/oppfolging/veilederTilgang?fnr=${fnr}`);
 }
 
-export function fetchInstillingsHistorikk(fnr: string): AxiosPromise<InnstillingsHistorikk[]> {
-    return axiosInstance.get<InnstillingsHistorikk[]>(
+export function fetchInstillingsHistorikk(fnr: string): AxiosPromise<InnstillingHistorikkInnslag[]> {
+    return axiosInstance.get<InnstillingHistorikkInnslag[]>(
         `/veilarboppfolging/api/oppfolging/innstillingsHistorikk?fnr=${fnr}`
     );
 }

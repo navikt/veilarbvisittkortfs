@@ -6,14 +6,7 @@ import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
 import { eskaleringVarselSendtEvent, ifResponseHasData } from '../../../util/utils';
-import { fetchOppfolging, startEskalering } from '../../../api/veilarboppfolging';
-import {
-    Egenskaper,
-    HenvendelseData,
-    nyHenvendelse,
-    oppdaterFerdigbehandlet,
-    oppdaterVenterPaSvar
-} from '../../../api/veilarbdialog';
+import { hentGjeldendeEskaleringsvarsel, startEskalering } from '../../../api/veilarbdialog';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { fetchHarNivaa4 } from '../../../api/veilarbperson';
@@ -35,55 +28,39 @@ const initialValues = {
 
 function StartEskalering() {
     const { brukerFnr } = useAppStore();
-    const { oppfolging, setOppfolging } = useDataStore();
+    const { oppfolging, setGjeldendeEskaleringsvarsel } = useDataStore();
     const { showSpinnerModal, showStartEskaleringKvitteringModal, hideModal, showErrorModal } = useModalStore();
 
-    const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
+    const gjeldendeEskaleringsvarselFetcher = useAxiosFetcher(hentGjeldendeEskaleringsvarsel);
     const harNivaa4Fetcher = useAxiosFetcher(fetchHarNivaa4);
 
-    function opprettHenvendelse(values: OwnValues) {
+    async function opprettHenvendelse(values: OwnValues) {
         showSpinnerModal();
 
-        const hendvendelseData: HenvendelseData = {
-            begrunnelse: values.begrunnelse,
-            overskrift: values.overskrift,
-            egenskaper: [Egenskaper.ESKALERINGSVARSEL],
-            tekst: values.begrunnelse
-        };
+        try {
+            await startEskalering({
+                fnr: brukerFnr,
+                begrunnelse: values.begrunnelse,
+                overskrift: values.overskrift,
+                tekst: values.begrunnelse
+            });
 
-        // TODO: Dette er kanskje logikk som kunne blitt gjort i backend istedenfor
-        nyHenvendelse(brukerFnr, hendvendelseData)
-            .then(async res => {
-                const dialogId = res.data.id;
-                const dialogHenvendelseTekst = res.data.henvendelser[0].tekst;
+            logger.event(
+                'veilarbvisittkortfs.metrikker.forhonshorendtering.sendt',
+                { type: values.type },
+                { typeTag: values.type }
+            );
 
-                const oppdaterFerdigbehandletPromise = oppdaterFerdigbehandlet(dialogId, true, brukerFnr);
-                const oppdaterVenterPaSvarPromise = oppdaterVenterPaSvar(dialogId, true, brukerFnr);
-                const startEskaleringPromise = startEskalering(dialogId, dialogHenvendelseTekst, brukerFnr);
+            // Hent oppdatert data med ny eskaleringsvarsel
+            await gjeldendeEskaleringsvarselFetcher
+                .fetch(brukerFnr)
+                .then(ifResponseHasData(setGjeldendeEskaleringsvarsel));
 
-                try {
-                    await Promise.all([
-                        oppdaterFerdigbehandletPromise,
-                        oppdaterVenterPaSvarPromise,
-                        startEskaleringPromise
-                    ]);
-
-                    logger.event(
-                        'veilarbvisittkortfs.metrikker.forhonshorendtering.sendt',
-                        { type: values.type },
-                        { typeTag: values.type }
-                    );
-
-                    // Hent oppdatert data med ny eskaleringsvarsel
-                    await oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging));
-
-                    eskaleringVarselSendtEvent();
-                    showStartEskaleringKvitteringModal();
-                } catch (e) {
-                    showErrorModal();
-                }
-            })
-            .catch(showErrorModal);
+            eskaleringVarselSendtEvent();
+            showStartEskaleringKvitteringModal();
+        } catch (_) {
+            showErrorModal();
+        }
     }
 
     useEffect(() => {

@@ -4,53 +4,121 @@ import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { OppfolgingEnhetEndret } from './components/oppfolgingEndret';
 import dayjs from 'dayjs';
-import { InnstillingsHistorikk } from '../../../api/veilarboppfolging';
-import { OppgaveHistorikk } from '../../../api/veilarboppgave';
+import { InnstillingHistorikkInnslag } from '../../../api/veilarboppfolging';
+import { OppgaveHistorikkInnslag } from '../../../api/veilarboppgave';
+import { EskaleringsvarselHistorikkInnslag } from '../../../api/veilarbdialog';
+import EskaleringsvarselHistorikkKomponent from './components/eskaleringsvarselHistorikk';
 
-type HistorikkInnslagType = InnstillingsHistorikk | OppgaveHistorikk;
+type Historikk = InnstillingHistorikk | OppgaveHistorikk | EskaleringsvarselHistorikk;
 
-interface HistorikkVisningProps {
-    historikkInnslag: HistorikkInnslagType[];
+interface InnstillingHistorikk {
+    type: 'innstilling';
+    innslag: InnstillingHistorikkInnslag;
 }
 
-function HistorikkVisning({ historikkInnslag }: HistorikkVisningProps) {
-    const mapTilOppgaveEllerInnstillinger = (
-        historikkElem: HistorikkInnslagType,
-        idx: number,
-        idxForNyesteEnhetEndring: number
-    ) => {
-        switch (historikkElem.type) {
-            case 'OPPRETTET_OPPGAVE':
-                return <OppgaveHistorikkKomponent oppgaveHistorikk={historikkElem} key={idx} />;
-            case 'OPPFOLGINGSENHET_ENDRET':
-                return (
-                    <OppfolgingEnhetEndret
-                        historikkElement={historikkElem}
-                        key={idx}
-                        erGjeldendeEnhet={idx === idxForNyesteEnhetEndring}
-                    />
-                );
-            default:
-                return <InnstillingsHistorikkKomponent innstillingsHistorikk={historikkElem} key={idx} />;
-        }
-    };
+interface OppgaveHistorikk {
+    type: 'oppgave';
+    innslag: OppgaveHistorikkInnslag;
+}
 
-    if (historikkInnslag.length === 0) {
+interface EskaleringsvarselHistorikk {
+    type: 'eskalering';
+    innslag: EskaleringsvarselHistorikkInnslag;
+}
+
+interface HistorikkVisningProps {
+    innstillingHistorikk: InnstillingHistorikkInnslag[];
+    oppgaveHistorikk: OppgaveHistorikkInnslag[];
+    eskaleringsvarselHistorikk: EskaleringsvarselHistorikkInnslag[];
+}
+
+function mapHistorikk(historikk: Historikk, idx: number, idxForNyesteEnhetEndring: number): React.ReactElement {
+    if (erInnstillingshistorikk(historikk)) {
+        if (historikk.innslag.type === 'OPPFOLGINGSENHET_ENDRET') {
+            return (
+                <OppfolgingEnhetEndret
+                    historikkElement={historikk.innslag}
+                    key={idx}
+                    erGjeldendeEnhet={idx === idxForNyesteEnhetEndring}
+                />
+            );
+        }
+
+        return <InnstillingsHistorikkKomponent innstillingsHistorikk={historikk.innslag} key={idx} />;
+    } else if (erOppgaveHistorikk(historikk)) {
+        return <OppgaveHistorikkKomponent oppgaveHistorikk={historikk.innslag} key={idx} />;
+    } else if (erEskaleringsvarselHistorikk(historikk)) {
+        return <EskaleringsvarselHistorikkKomponent innslag={historikk.innslag} key={idx} />;
+    } else {
+        return <></>;
+    }
+}
+
+function opprettHistorikk(
+    innstillingHistorikkInnslag: InnstillingHistorikkInnslag[],
+    oppgaveHistorikkInnslag: OppgaveHistorikkInnslag[],
+    eskaleringsvarselHistorikkInnslag: EskaleringsvarselHistorikkInnslag[]
+): Historikk[] {
+    let historikk: Historikk[] = [];
+
+    historikk = historikk.concat(innstillingHistorikkInnslag.map(ih => ({ type: 'innstilling', innslag: ih })));
+    historikk = historikk.concat(oppgaveHistorikkInnslag.map(oh => ({ type: 'oppgave', innslag: oh })));
+    historikk = historikk.concat(eskaleringsvarselHistorikkInnslag.map(eh => ({ type: 'eskalering', innslag: eh })));
+
+    return historikk;
+}
+
+function hentDato(historikk: Historikk): string {
+    if (erInnstillingshistorikk(historikk)) {
+        return historikk.innslag.dato;
+    } else if (erOppgaveHistorikk(historikk)) {
+        return historikk.innslag.dato;
+    } else if (erEskaleringsvarselHistorikk(historikk)) {
+        return historikk.innslag.avsluttetDato || historikk.innslag.opprettetDato;
+    } else {
+        return new Date(0).toISOString();
+    }
+}
+
+function erInnstillingshistorikk(historikk: Historikk): historikk is InnstillingHistorikk {
+    return historikk.type === 'innstilling';
+}
+
+function erOppgaveHistorikk(historikk: Historikk): historikk is OppgaveHistorikk {
+    return historikk.type === 'oppgave';
+}
+
+function erEskaleringsvarselHistorikk(historikk: Historikk): historikk is EskaleringsvarselHistorikk {
+    return historikk.type === 'eskalering';
+}
+
+function HistorikkVisning({
+    innstillingHistorikk,
+    oppgaveHistorikk,
+    eskaleringsvarselHistorikk
+}: HistorikkVisningProps) {
+    const historikk = opprettHistorikk(innstillingHistorikk, oppgaveHistorikk, eskaleringsvarselHistorikk).sort(
+        (h1, h2) => {
+            const d1 = hentDato(h1);
+            const d2 = hentDato(h2);
+
+            return dayjs(d2).diff(d1);
+        }
+    );
+
+    if (historikk.length === 0) {
         return <Normaltekst> Ingen historikk </Normaltekst>;
     }
 
-    if (historikkInnslag.length === 1) {
-        return mapTilOppgaveEllerInnstillinger(historikkInnslag[0], 0, 0);
+    if (historikk.length === 1) {
+        return mapHistorikk(historikk[0], 0, 0);
     }
-    const sortertEtterDatoHistorikkInnslag = historikkInnslag.sort((a, b) => dayjs(b.dato).diff(a.dato));
 
-    const indexForNyesteEnhetEndring = sortertEtterDatoHistorikkInnslag.findIndex(
-        innslag => innslag.type === 'OPPFOLGINGSENHET_ENDRET'
+    const indexForNyesteEnhetEndring = historikk.findIndex(
+        h => erInnstillingshistorikk(h) && h.innslag.type === 'OPPFOLGINGSENHET_ENDRET'
     );
 
-    const historikkKomponenter = sortertEtterDatoHistorikkInnslag.map((elem: HistorikkInnslagType, idx) =>
-        mapTilOppgaveEllerInnstillinger(elem, idx, indexForNyesteEnhetEndring)
-    );
+    const historikkKomponenter = historikk.map((elem, idx) => mapHistorikk(elem, idx, indexForNyesteEnhetEndring));
 
     return <>{historikkKomponenter}</>;
 }

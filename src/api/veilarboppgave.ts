@@ -2,7 +2,7 @@ import { axiosInstance } from './utils';
 import { AxiosPromise } from 'axios';
 import { StringOrNothing } from '../util/type/stringornothings';
 
-export interface OppgaveHistorikk {
+export interface OppgaveHistorikkInnslag {
     type: 'OPPRETTET_OPPGAVE';
     oppgaveTema: OppgaveTema;
     oppgaveType: OppgaveType;
@@ -50,8 +50,8 @@ export interface OppgaveFormResponse {
     type: OppgaveType;
 }
 
-export function fetchOppgaveHistorikk(fnr: string): AxiosPromise<OppgaveHistorikk[]> {
-    return axiosInstance.get<OppgaveHistorikk[]>(`/veilarboppgave/api/oppgavehistorikk?fnr=${fnr}`);
+export function fetchOppgaveHistorikk(fnr: string): AxiosPromise<OppgaveHistorikkInnslag[]> {
+    return axiosInstance.get<OppgaveHistorikkInnslag[]>(`/veilarboppgave/api/oppgavehistorikk?fnr=${fnr}`);
 }
 
 export function opprettOppgave(fnr: string, oppgaveFormData: OppgaveFormData): AxiosPromise<OppgaveFormResponse> {

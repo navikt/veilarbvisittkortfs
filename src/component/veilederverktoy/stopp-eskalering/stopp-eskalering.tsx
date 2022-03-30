@@ -8,11 +8,11 @@ import { BegrunnelseTextArea } from '../begrunnelseform/begrunnelse-textarea';
 import { useAppStore } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
-import { fetchOppfolging, stoppEskalering } from '../../../api/veilarboppfolging';
 import { eskaleringVarselSendtEvent, ifResponseHasData } from '../../../util/utils';
-import { Egenskaper, nyHenvendelse } from '../../../api/veilarbdialog';
+import { Egenskaper, nyHenvendelse, stopEskalering } from '../../../api/veilarbdialog';
 import './stopp-eskalering.less';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
+import { fetchOppfolging, stoppEskalering } from '../../../api/veilarboppfolging';
 
 interface FormValues {
     begrunnelse: string;
@@ -26,35 +26,56 @@ const initialFormValues: FormValues = {
 
 function StoppEskalering() {
     const { brukerFnr } = useAppStore();
-    const { oppfolging, setOppfolging } = useDataStore();
+    const { oppfolging, setGjeldendeEskaleringsvarsel, setOppfolging } = useDataStore();
     const { showStoppEskaleringKvitteringModal, showErrorModal, showSpinnerModal } = useModalStore();
+
+    const eskaleringsvarselFraVeilarboppfolging = oppfolging?.gjeldendeEskaleringsvarsel != null;
 
     const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
 
     async function startStoppingAvEskalering(values: FormValues) {
         showSpinnerModal();
 
-        try {
-            if (values.skalSendeHendelse && values.begrunnelse) {
-                const stoppEskaleringHenvendelse = {
-                    begrunnelse: values.begrunnelse,
-                    egenskaper: [Egenskaper.ESKALERINGSVARSEL],
-                    dialogId: oppfolging?.gjeldendeEskaleringsvarsel?.tilhorendeDialogId || '',
-                    tekst: values.begrunnelse
-                };
+        // Hvis eskaleringsvarselet ble startet i veilarboppfolging så må vi stoppe varselet der også istedenfor i veilarbdialog
+        // Denne IF-en er midlertidig™, og kan fjernes når eskaleringsvarsel er migrert helt ut av veilarboppfolging
+        if (eskaleringsvarselFraVeilarboppfolging) {
+            try {
+                if (values.skalSendeHendelse && values.begrunnelse) {
+                    const stoppEskaleringHenvendelse = {
+                        begrunnelse: values.begrunnelse,
+                        egenskaper: [Egenskaper.ESKALERINGSVARSEL],
+                        dialogId: oppfolging?.gjeldendeEskaleringsvarsel?.tilhorendeDialogId || '',
+                        tekst: values.begrunnelse
+                    };
 
-                await nyHenvendelse(brukerFnr, stoppEskaleringHenvendelse);
+                    await nyHenvendelse(brukerFnr, stoppEskaleringHenvendelse);
+                }
+
+                await stoppEskalering(brukerFnr, values.begrunnelse);
+
+                // Hent oppdatert data uten eskaleringsvarsel
+                await oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging));
+
+                eskaleringVarselSendtEvent();
+                showStoppEskaleringKvitteringModal();
+            } catch (e) {
+                showErrorModal();
             }
+        } else {
+            try {
+                await stopEskalering({
+                    fnr: brukerFnr,
+                    begrunnelse: values.begrunnelse,
+                    skalSendeHenvendelse: values.skalSendeHendelse
+                });
 
-            await stoppEskalering(brukerFnr, values.begrunnelse);
+                setGjeldendeEskaleringsvarsel(null);
 
-            // Hent oppdatert data uten eskaleringsvarsel
-            await oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging));
-
-            eskaleringVarselSendtEvent();
-            showStoppEskaleringKvitteringModal();
-        } catch (e) {
-            showErrorModal();
+                eskaleringVarselSendtEvent();
+                showStoppEskaleringKvitteringModal();
+            } catch (e) {
+                showErrorModal();
+            }
         }
     }
 

@@ -11,6 +11,7 @@ import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
 import './data-fetcher.less';
 import { isAnyLoadingOrNotStarted } from '../api/utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
+import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 
 export function DataFetcher(props: { children: any }) {
     const { brukerFnr } = useAppStore();
@@ -25,6 +26,7 @@ export function DataFetcher(props: { children: any }) {
         setFeatures,
         setVergeOgFullmakt,
         setSpraakTolk,
+        setGjeldendeEskaleringsvarsel,
         features
     } = useDataStore();
 
@@ -38,6 +40,7 @@ export function DataFetcher(props: { children: any }) {
     const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
     const vergeOgFullmaktFetcher = useAxiosFetcher(fetchVergeOgFullmakt);
     const spraakTolkFetcher = useAxiosFetcher(fetchSpraakTolk);
+    const gjeldendeEskaleringsvarselFetcher = useAxiosFetcher(hentGjeldendeEskaleringsvarsel);
 
     const hentPersonDataFraPdl = features[HENT_PERSONDATA_FRA_PDL_TOGGLE];
     const oppfolgingsEnhet = oppfolgingstatusFetcher.data?.oppfolgingsenhet.enhetId || '';
@@ -46,6 +49,10 @@ export function DataFetcher(props: { children: any }) {
         oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging)).catch();
         oppfolgingstatusFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolgingsstatus)).catch();
         tilgangTilBrukersKontorFetcher.fetch(brukerFnr).then(ifResponseHasData(setTilgangTilBrukersKontor)).catch();
+        gjeldendeEskaleringsvarselFetcher
+            .fetch(brukerFnr)
+            .then(ifResponseHasData(setGjeldendeEskaleringsvarsel))
+            .catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr]);
 

@@ -5,11 +5,14 @@ import { opprettetAvTekst } from './opprettet-av';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { hasAnyFailed, isAnyLoading } from '../../../../api/utils';
 import { toSimpleDateStr } from '../../../../util/date-utils';
-import { InnstillingsHistorikk } from '../../../../api/veilarboppfolging';
+import { InnstillingHistorikkInnslag } from '../../../../api/veilarboppfolging';
 import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
 import { fetchEnhetNavn } from '../../../../api/veilarbveileder';
 
-export function OppfolgingEnhetEndret(props: { historikkElement: InnstillingsHistorikk; erGjeldendeEnhet: boolean }) {
+export function OppfolgingEnhetEndret(props: {
+    historikkElement: InnstillingHistorikkInnslag;
+    erGjeldendeEnhet: boolean;
+}) {
     const { enhet, dato, opprettetAv, opprettetAvBrukerId } = props.historikkElement;
     const enhetNavnFetcher = useAxiosFetcher(fetchEnhetNavn);
 
