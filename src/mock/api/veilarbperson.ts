@@ -7,19 +7,6 @@ const mockHarBruktNivaa4: HarBruktNivaa4Type = {
     harbruktnivaa4: false
 };
 
-const mockPersonalia: Personalia = {
-    fornavn: 'BRUCE BRUCE',
-    mellomnavn: 'BATTY BATTY',
-    etternavn: 'WAYNE',
-    fodselsnummer: '10108000398',
-    fodselsdato: '1974-09-16',
-    dodsdato: null,
-    diskresjonskode: null,
-    sikkerhetstiltak: 'To ansatte i samtale',
-    egenAnsatt: false,
-    kjonn: 'K'
-};
-
 const mockPersonaliaV2: Personalia = {
     fornavn: 'GRØNN',
     mellomnavn: 'LIV',
@@ -96,9 +83,6 @@ const mockRegistrering: RegistreringData = {
 export const veilarbpersonHandlers: RequestHandlersList = [
     rest.get('/veilarbperson/api/person/registrering', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(mockRegistrering));
-    }),
-    rest.get('/veilarbperson/api/person/:fnr', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockPersonalia));
     }),
     rest.get('/veilarbperson/api/person/:fnr/harNivaa4', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(mockHarBruktNivaa4));
