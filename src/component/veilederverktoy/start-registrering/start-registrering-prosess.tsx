@@ -1,13 +1,15 @@
 import React from 'react';
 import { StringOrNothing } from '../../../util/type/stringornothings';
-import { erITestMiljo, finnMiljoStreng, finnNaisDomene } from '../../../util/utils';
+import { erITestMiljo, finnMiljoStreng, finnNaisDomene, isDevelopment } from '../../../util/utils';
 import { logger } from '../../../util/logger';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { kanRegistreresEllerReaktiveres } from '../../../util/selectors';
 
 function byggRegistreringUrl(fnr: string, enhet: StringOrNothing) {
-    return `https://arbeidssokerregistrering-fss${finnMiljoStreng()}${finnNaisDomene()}?fnr=${fnr}&enhetId=${enhet}`;
+    return isDevelopment()
+        ? `https://arbeidssokerregistrering.dev.intern.nav.no?fnr=${fnr}&enhetId=${enhet}`
+        : `https://arbeidssokerregistrering-fss${finnMiljoStreng()}${finnNaisDomene()}?fnr=${fnr}&enhetId=${enhet}`;
 }
 
 function byggVeilarbLoginUrl() {
