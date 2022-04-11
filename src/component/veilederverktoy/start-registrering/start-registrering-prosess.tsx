@@ -7,7 +7,7 @@ import { useDataStore } from '../../../store/data-store';
 import { kanRegistreresEllerReaktiveres } from '../../../util/selectors';
 
 function byggRegistreringUrl(fnr: string, enhet: StringOrNothing) {
-    return isDevelopment()
+    return erITestMiljo()
         ? `https://arbeidssokerregistrering.dev.intern.nav.no?fnr=${fnr}&enhetId=${enhet}`
         : `https://arbeidssokerregistrering-fss${finnMiljoStreng()}${finnNaisDomene()}?fnr=${fnr}&enhetId=${enhet}`;
 }
