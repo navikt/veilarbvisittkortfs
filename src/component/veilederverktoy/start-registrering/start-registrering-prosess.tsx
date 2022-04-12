@@ -1,6 +1,6 @@
 import React from 'react';
 import { StringOrNothing } from '../../../util/type/stringornothings';
-import { erITestMiljo, finnMiljoStreng, finnNaisDomene, isDevelopment } from '../../../util/utils';
+import { erITestMiljo, finnMiljoStreng, finnNaisDomene } from '../../../util/utils';
 import { logger } from '../../../util/logger';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
