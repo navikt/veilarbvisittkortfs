@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
-import { Arbeidsliste, ArbeidslisteformValues } from '../../api/veilarbportefolje';
+import { Arbeidsliste, ArbeidslisteformValues, KategoriModell } from '../../api/veilarbportefolje';
 
 const mockArbeidsliste: Arbeidsliste = {
     arbeidslisteAktiv: null,
@@ -11,7 +11,7 @@ const mockArbeidsliste: Arbeidsliste = {
     kommentar: null,
     overskrift: null,
     sistEndretAv: null,
-    kategori: null
+    kategori: KategoriModell.GRONN
 };
 
 export const veilarbportefoljeHandlers: RequestHandlersList = [
