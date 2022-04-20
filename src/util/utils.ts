@@ -72,7 +72,7 @@ export function finnNaisDomene() {
 }
 
 export function erITestMiljo() {
-    return window.location.hostname.indexOf('-q') >= 0;
+    return window.location.hostname.indexOf('-q') >= 0 || window.location.hostname.indexOf('dev') >= 0;
 }
 
 export function eskaleringVarselSendtEvent() {

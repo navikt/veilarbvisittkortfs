@@ -14,7 +14,7 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 
 export function DataFetcher(props: { children: any }) {
-    const { brukerFnr } = useAppStore();
+    const { brukerFnr, visVeilederVerktoy } = useAppStore();
     const {
         setOppfolgingsstatus,
         setOppfolging,
@@ -73,11 +73,11 @@ export function DataFetcher(props: { children: any }) {
         const harTilgang = tilgangTilBrukersKontorFetcher.data?.tilgangTilBrukersKontor;
         const underOppfolging = oppfolgingFetcher.data?.underOppfolging;
 
-        if (harTilgang && underOppfolging) {
+        if (visVeilederVerktoy && harTilgang && underOppfolging) {
             arbeidslisteFetcher.fetch(brukerFnr).then(ifResponseHasData(setArbeidsliste)).catch();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [tilgangTilBrukersKontorFetcher, oppfolgingFetcher.data]);
+    }, [visVeilederVerktoy, tilgangTilBrukersKontorFetcher, oppfolgingFetcher.data]);
 
     useEffect(() => {
         if (oppfolgingsEnhet) {
