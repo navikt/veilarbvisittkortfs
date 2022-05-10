@@ -1,6 +1,6 @@
 import React from 'react';
 import { StringOrNothing } from '../../../util/type/stringornothings';
-import { erITestMiljo, finnMiljoStreng, finnNaisDomene } from '../../../util/utils';
+import { erITestMiljo } from '../../../util/utils';
 import { logger } from '../../../util/logger';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
@@ -9,14 +9,7 @@ import { kanRegistreresEllerReaktiveres } from '../../../util/selectors';
 function byggRegistreringUrl(fnr: string, enhet: StringOrNothing) {
     return erITestMiljo()
         ? `https://arbeidssokerregistrering.dev.intern.nav.no?fnr=${fnr}&enhetId=${enhet}`
-        : `https://arbeidssokerregistrering-fss${finnMiljoStreng()}${finnNaisDomene()}?fnr=${fnr}&enhetId=${enhet}`;
-}
-
-function byggVeilarbLoginUrl() {
-    return (url: string) =>
-        `https://veilarblogin${finnMiljoStreng()}${finnNaisDomene()}veilarblogin/api/start?url=${encodeURIComponent(
-            url
-        )}`;
+        : `https://arbeidssokerregistrering.intern.nav.no?fnr=${fnr}&enhetId=${enhet}`;
 }
 
 function StartRegistreringProsess() {
@@ -28,9 +21,6 @@ function StartRegistreringProsess() {
     if (!kanRegistreres) {
         return null;
     }
-
-    const veilarbLoginUrl = byggVeilarbLoginUrl();
-    const registreringUrl = byggRegistreringUrl(brukerFnr, enhetId);
     const brukerType = oppfolging?.erSykmeldtMedArbeidsgiver
         ? 'erSykemeldtMedArbeidsgiver'
         : oppfolging?.kanReaktiveres
@@ -52,7 +42,7 @@ function StartRegistreringProsess() {
 
     return (
         <a
-            href={erITestMiljo() ? veilarbLoginUrl(registreringUrl) : registreringUrl}
+            href={byggRegistreringUrl(brukerFnr, enhetId)}
             className="knapp meny-knapp btn--mb1"
             onClick={() => logger.event('veilarbvisittkortfs.metrikker.registrering', {}, { brukerType: brukerType })}
         >
