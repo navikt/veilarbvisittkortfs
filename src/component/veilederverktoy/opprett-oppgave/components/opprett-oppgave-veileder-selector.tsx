@@ -7,7 +7,6 @@ import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import { StringOrNothing } from '../../../../util/type/stringornothings';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { useDataStore } from '../../../../store/data-store';
-import { useAppStore } from '../../../../store/app-store';
 import { fetchVeilederePaEnhet, VeilederData } from '../../../../api/veilarbveileder';
 import { OppgaveTema } from '../../../../api/veilarboppgave';
 import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
@@ -15,18 +14,12 @@ import { ifResponseHasData } from '../../../../util/utils';
 
 interface OpprettOppgaveVelgVeilederProps {
     veilederId: StringOrNothing;
-    avsenderenhetId: StringOrNothing;
     tema: OrNothing<OppgaveTema>;
     formikProps: FormikProps<OpprettOppgaveFormValues>;
+    enhetId: string;
 }
 
-function OpprettOppgaveVelgVeileder({
-    veilederId,
-    tema,
-    avsenderenhetId,
-    formikProps
-}: OpprettOppgaveVelgVeilederProps) {
-    const { enhetId } = useAppStore();
+function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: OpprettOppgaveVelgVeilederProps) {
     const { veilederePaEnhet, setVeilederePaEnhet } = useDataStore();
 
     const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
@@ -34,17 +27,16 @@ function OpprettOppgaveVelgVeileder({
     const veilederListe = veilederePaEnhet?.veilederListe || [];
 
     useEffect(() => {
-        if (enhetId && !veilederePaEnhet) {
+        if (enhetId) {
             veilederePaEnhetFetcher.fetch(enhetId).then(ifResponseHasData(setVeilederePaEnhet)).catch();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [enhetId, veilederePaEnhet]);
+    }, [enhetId, setVeilederePaEnhet]);
 
     if (tema !== 'OPPFOLGING' && formikProps.values.veilederId) {
         formikProps.setFieldValue('veilederId', null);
     }
 
-    if (!(avsenderenhetId === enhetId && tema === 'OPPFOLGING')) {
+    if (tema !== 'OPPFOLGING') {
         return null;
     }
 

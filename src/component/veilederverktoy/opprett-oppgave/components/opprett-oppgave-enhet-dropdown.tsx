@@ -33,39 +33,39 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
         }
     }, [tema, fnr, setFieldValue]);
 
-    if (isLoading) {
-        return <NavFrontendSpinner type="M" />;
-    }
-
     const valgtEnhet: OrNothing<BehandlandeEnhet> =
         behandladeEnheter.find(enhet => enhet.enhetId === value) || behandladeEnheter[0];
 
     return (
         <div className="skjemaelement">
             <label className="skjemaelement__label">Enhet *</label>
-            <Dropdown
-                name="Velg enhet dropdown"
-                knappeTekst={`${valgtEnhet.enhetId} ${valgtEnhet.navn}`}
-                className="velg-enhet-dropdown"
-                btnClassnames="velg-enhet-dropdown__button"
-                render={lukkDropdown => (
-                    <SokFilter data={behandladeEnheter} label="" placeholder="Søk etter enhet">
-                        {data => (
-                            <FormikRadioGroup
-                                defaultValue={behandladeEnheter[0].enhetId}
-                                data={data}
-                                createLabel={(behandlandeEnhet: BehandlandeEnhet) =>
-                                    `${behandlandeEnhet.enhetId} ${behandlandeEnhet.navn}`
-                                }
-                                createValue={(behandlandeEnhet: BehandlandeEnhet) => behandlandeEnhet.enhetId}
-                                radioName="Velg enhet"
-                                closeDropdown={lukkDropdown}
-                                name="enhetId"
-                            />
-                        )}
-                    </SokFilter>
-                )}
-            />
+            {isLoading ? (
+                <NavFrontendSpinner type="M" className="skjemaelement" />
+            ) : (
+                <Dropdown
+                    name="Velg enhet dropdown"
+                    knappeTekst={`${valgtEnhet.enhetId} ${valgtEnhet.navn}`}
+                    className="velg-enhet-dropdown"
+                    btnClassnames="velg-enhet-dropdown__button"
+                    render={lukkDropdown => (
+                        <SokFilter data={behandladeEnheter} label="" placeholder="Søk etter enhet">
+                            {data => (
+                                <FormikRadioGroup
+                                    defaultValue={behandladeEnheter[0].enhetId}
+                                    data={data}
+                                    createLabel={(behandlandeEnhet: BehandlandeEnhet) =>
+                                        `${behandlandeEnhet.enhetId} ${behandlandeEnhet.navn}`
+                                    }
+                                    createValue={(behandlandeEnhet: BehandlandeEnhet) => behandlandeEnhet.enhetId}
+                                    radioName="Velg enhet"
+                                    closeDropdown={lukkDropdown}
+                                    name="enhetId"
+                                />
+                            )}
+                        </SokFilter>
+                    )}
+                />
+            )}
         </div>
     );
 }
