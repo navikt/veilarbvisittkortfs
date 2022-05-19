@@ -30,7 +30,7 @@ function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: 
         if (enhetId) {
             veilederePaEnhetFetcher.fetch(enhetId).then(ifResponseHasData(setVeilederePaEnhet)).catch();
         }
-    }, [enhetId, setVeilederePaEnhet]);
+    }, [enhetId, setVeilederePaEnhet, veilederePaEnhetFetcher]);
 
     if (tema !== 'OPPFOLGING' && formikProps.values.veilederId) {
         formikProps.setFieldValue('veilederId', null);
