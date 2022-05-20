@@ -28,6 +28,7 @@ function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: 
 
     useEffect(() => {
         if (enhetId) {
+            setVeilederePaEnhet(undefined);
             veilederePaEnhetFetcher.fetch(enhetId).then(ifResponseHasData(setVeilederePaEnhet)).catch();
         }
         // eslint-disable-next-line
