@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import SokFilter from '../../../components/sokfilter/sok-filter';
 import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
 import Dropdown from '../../../components/dropdown/dropdown';
@@ -21,6 +21,7 @@ interface OpprettOppgaveVelgVeilederProps {
 
 function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: OpprettOppgaveVelgVeilederProps) {
     const { veilederePaEnhet, setVeilederePaEnhet } = useDataStore();
+    const [feilmelding, setFeilmelding] = useState(false);
 
     const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
 
@@ -28,8 +29,13 @@ function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: 
 
     useEffect(() => {
         if (enhetId) {
+            setFeilmelding(false);
             setVeilederePaEnhet(undefined);
-            veilederePaEnhetFetcher.fetch(enhetId).then(ifResponseHasData(setVeilederePaEnhet)).catch();
+            formikProps.setFieldValue('veilederId', null);
+            veilederePaEnhetFetcher
+                .fetch(enhetId)
+                .then(ifResponseHasData(setVeilederePaEnhet))
+                .catch(() => setFeilmelding(true));
         }
         // eslint-disable-next-line
     }, [enhetId, setVeilederePaEnhet]);
@@ -38,7 +44,7 @@ function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: 
         formikProps.setFieldValue('veilederId', null);
     }
 
-    if (tema !== 'OPPFOLGING') {
+    if (tema !== 'OPPFOLGING' || feilmelding) {
         return null;
     }
 
