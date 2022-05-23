@@ -46,7 +46,6 @@ function OpprettOppgave() {
         veilederId: null,
         avsenderenhetId: enhetId
     };
-
     function lagreOppgave(formdata: OppgaveFormData) {
         showSpinnerModal();
 
@@ -56,7 +55,9 @@ function OpprettOppgave() {
             })
             .catch(showErrorModal);
     }
-
+    if (!enhetId) {
+        return null;
+    }
     return (
         <FormikModal
             initialValues={opprettOppgaveInitialValues}
