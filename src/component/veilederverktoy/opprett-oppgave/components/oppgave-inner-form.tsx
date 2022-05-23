@@ -18,7 +18,7 @@ interface OppgaveInnerFormProps {
     tema: OrNothing<OppgaveTema>;
     enhetId: StringOrNothing;
     veilederId: StringOrNothing;
-    avsenderenhetId: StringOrNothing;
+    avsenderenhetId: string;
     formikProps: FormikProps<OpprettOppgaveFormValues>;
     tilbake: () => void;
 }
@@ -44,10 +44,10 @@ function OppgaveInnerForm({
             <div className="oppgave-enhet-container">
                 <OpprettOppgaveVelgEnhet value={enhetId} tema={tema} fnr={fnr} formikProps={formikProps} />
                 <OpprettOppgaveVelgVeileder
-                    avsenderenhetId={avsenderenhetId}
                     tema={tema}
                     veilederId={veilederId}
                     formikProps={formikProps}
+                    enhetId={!!enhetId ? enhetId : avsenderenhetId}
                 />
             </div>
             <OpprettOppgaveBeskrivelseTekstArea />
