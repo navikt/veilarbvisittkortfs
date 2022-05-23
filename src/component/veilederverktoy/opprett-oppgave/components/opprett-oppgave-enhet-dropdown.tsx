@@ -40,7 +40,9 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
         <div className="skjemaelement">
             <label className="skjemaelement__label">Enhet *</label>
             {isLoading ? (
-                <NavFrontendSpinner type="M" className="skjemaelement" />
+                <div className="velgenhet-spinner">
+                    <NavFrontendSpinner type="M" className="skjemaelement" />
+                </div>
             ) : (
                 <Dropdown
                     name="Velg enhet dropdown"
