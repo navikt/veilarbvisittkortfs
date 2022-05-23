@@ -21,30 +21,28 @@ interface OpprettOppgaveVelgVeilederProps {
 
 function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: OpprettOppgaveVelgVeilederProps) {
     const { veilederePaEnhet, setVeilederePaEnhet } = useDataStore();
-    const [feilmelding, setFeilmelding] = useState(false);
+    const [ingenData, setIngenData] = useState(false);
 
     const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
 
     const veilederListe = veilederePaEnhet?.veilederListe || [];
 
     useEffect(() => {
-        if (enhetId) {
-            setFeilmelding(false);
-            setVeilederePaEnhet(undefined);
-            formikProps.setFieldValue('veilederId', null);
-            veilederePaEnhetFetcher
-                .fetch(enhetId)
-                .then(ifResponseHasData(setVeilederePaEnhet))
-                .catch(() => setFeilmelding(true));
-        }
-        // eslint-disable-next-line
-    }, [enhetId, setVeilederePaEnhet]);
+        setIngenData(false);
+        setVeilederePaEnhet(undefined);
+        formikProps.setFieldValue('veilederId', null);
+        veilederePaEnhetFetcher
+            .fetch(enhetId)
+            .then(ifResponseHasData(setVeilederePaEnhet))
+            .catch(() => setIngenData(true));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [enhetId]);
 
     if (tema !== 'OPPFOLGING' && formikProps.values.veilederId) {
         formikProps.setFieldValue('veilederId', null);
     }
 
-    if (tema !== 'OPPFOLGING' || feilmelding) {
+    if (tema !== 'OPPFOLGING' || ingenData) {
         return null;
     }
 
