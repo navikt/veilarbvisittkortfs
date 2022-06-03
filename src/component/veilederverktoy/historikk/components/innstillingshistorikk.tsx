@@ -1,10 +1,10 @@
 import React from 'react';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { opprettetAvTekst } from './opprettet-av';
-import Lenke from 'nav-frontend-lenker';
 import { useAppStore } from '../../../../store/app-store';
 import { toSimpleDateStr } from '../../../../util/date-utils';
 import { InnstillingHistorikkInnslag } from '../../../../api/veilarboppfolging';
+import LenkeTilDialog from '../../../components/dialoglenke/dialoglenke';
 
 interface InnstillingHistorikkKomponentProps {
     innstillingsHistorikk: InnstillingHistorikkInnslag;
@@ -38,7 +38,9 @@ function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHis
             <Normaltekst>
                 {begrunnelseTekst}
                 {dialogId && (
-                    <Lenke href={`/veilarbpersonflatefs/${brukerFnr}/dialog/${dialogId}`}>Les mer i dialog</Lenke>
+                    <LenkeTilDialog brukerFnr={brukerFnr} dialogId={dialogId}>
+                        Les mer i dialog
+                    </LenkeTilDialog>
                 )}
             </Normaltekst>
             <Undertekst>
