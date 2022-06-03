@@ -16,7 +16,7 @@ function LenkeTilDialog({ brukerFnr, dialogId, className, children }: Props) {
         ? `/veilarbpersonflatefs/${brukerFnr}/${dialogId}/#visDialog`
         : `/veilarbpersonflatefs/${brukerFnr}`;
 
-    const onClick = (event: MouseEvent) => {
+    const gaaTilDialog = (event: MouseEvent) => {
         event.preventDefault();
         window.history.pushState('', 'Dialog', dialogLenke);
         window.dispatchEvent(
@@ -30,7 +30,7 @@ function LenkeTilDialog({ brukerFnr, dialogId, className, children }: Props) {
     };
 
     return (
-        <Lenke href={dialogLenke} onClick={onClick} className={className}>
+        <Lenke href={dialogLenke} onClick={gaaTilDialog} className={className}>
             {children}
         </Lenke>
     );
