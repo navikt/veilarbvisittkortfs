@@ -1,5 +1,6 @@
 import React, { MouseEvent } from 'react';
 import Lenke from 'nav-frontend-lenker';
+import { useModalStore } from '../../../store/modal-store';
 
 interface Props {
     brukerFnr: string;
@@ -9,8 +10,10 @@ interface Props {
 }
 
 function LenkeTilDialog({ brukerFnr, dialogId, className, children }: Props) {
+    const { hideModal } = useModalStore();
+
     const dialogLenke = dialogId
-        ? `/veilarbpersonflatefs/${brukerFnr}/${dialogId}`
+        ? `/veilarbpersonflatefs/${brukerFnr}/${dialogId}/#visDialog`
         : `/veilarbpersonflatefs/${brukerFnr}`;
 
     const onClick = (event: MouseEvent) => {
@@ -23,6 +26,7 @@ function LenkeTilDialog({ brukerFnr, dialogId, className, children }: Props) {
                 }
             })
         );
+        hideModal();
     };
 
     return (
