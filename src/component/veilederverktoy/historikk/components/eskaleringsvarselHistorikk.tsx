@@ -1,9 +1,9 @@
 import React from 'react';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import Lenke from 'nav-frontend-lenker';
 import { useAppStore } from '../../../../store/app-store';
 import { toSimpleDateStr } from '../../../../util/date-utils';
 import { EskaleringsvarselHistorikkInnslag } from '../../../../api/veilarbdialog';
+import LenkeTilDialog from '../../../components/dialoglenke/dialoglenke';
 
 interface EskaleringsvarselHistorikkKomponentProps {
     innslag: EskaleringsvarselHistorikkInnslag;
@@ -29,9 +29,9 @@ function EskaleringsvarselHistorikkKomponent({ innslag }: EskaleringsvarselHisto
             <Element>{overskrift}</Element>
             <Normaltekst>
                 {begrunnelseTekst}
-                <Lenke href={`/veilarbpersonflatefs/${brukerFnr}/dialog/${innslag.tilhorendeDialogId}`}>
+                <LenkeTilDialog brukerFnr={brukerFnr} dialogId={innslag.tilhorendeDialogId}>
                     Les mer i dialog
-                </Lenke>
+                </LenkeTilDialog>
             </Normaltekst>
             <Undertekst>{`${toSimpleDateStr(dato)} av ${utfortAv}`}</Undertekst>
         </div>
