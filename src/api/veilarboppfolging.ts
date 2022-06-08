@@ -54,6 +54,7 @@ export interface Oppfolging {
     inaktiveringsdato: StringOrNothing;
     kanReaktiveres: OrNothing<boolean>;
     kanStarteOppfolging: boolean;
+    kanVarsles: boolean;
     manuell: boolean;
     oppfolgingUtgang: StringOrNothing;
     oppfolgingsPerioder: OppfolgingsPerioder[];
@@ -61,7 +62,6 @@ export interface Oppfolging {
     underKvp: boolean;
     underOppfolging: boolean;
     veilederId: StringOrNothing;
-    kanVarsles: boolean;
 }
 
 export interface TildelVeilederData {
