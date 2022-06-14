@@ -141,7 +141,6 @@ const mockOppfolging: Oppfolging = {
     underOppfolging: true,
     underKvp: true,
     oppfolgingUtgang: '2019-03-28T11:12:40.973+01:00',
-    //gjeldendeEskaleringsvarsel: null,
     gjeldendeEskaleringsvarsel: {
         varselId: '1',
         aktorId: '112345',
@@ -180,24 +179,7 @@ const mockOppfolgingsstatus: OppfolgingStatus = {
     servicegruppe: 'BKART'
 };
 
-// const mockFeilResultat = {
-//     resultat: 'WARNING: Noen brukere kunne ikke tilordnes en veileder',
-//     feilendeTilordninger: [
-//         {
-//             brukerFnr: '123534546',
-//             aktoerId: '10000356543',
-//             innloggetVeilederId: 'BLABLA',
-//             fraVeilederId: 'BLABLA1',
-//             tilVeilederId: 'BLABLA',
-//         },
-//     ],
-// };
-
 export const veilarboppfolgingHandlers: RequestHandlersList = [
-    rest.post('/veilarboppfolging/api/oppfolging/stoppEskalering/', (req, res, ctx) => {
-        mockOppfolging.gjeldendeEskaleringsvarsel = null;
-        return res(ctx.delay(500), ctx.json({}));
-    }),
     rest.post('/veilarboppfolging/api/tilordneveileder', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json({ feilendeTilordninger: [] }));
     }),
