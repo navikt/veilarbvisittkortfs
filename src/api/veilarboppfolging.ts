@@ -74,8 +74,6 @@ export type InnstillingsHistorikkType =
     | 'SATT_TIL_DIGITAL'
     | 'SATT_TIL_MANUELL'
     | 'AVSLUTTET_OPPFOLGINGSPERIODE'
-    | 'ESKALERING_STARTET'
-    | 'ESKALERING_STOPPET'
     | 'KVP_STARTET'
     | 'KVP_STOPPET'
     | 'VEILEDER_TILORDNET'
