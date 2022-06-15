@@ -18,15 +18,6 @@ export interface OppfolgingStatus {
     servicegruppe: OrNothing<Servicegruppe>;
 }
 
-export interface EskaleringsVarsel {
-    varselId: string;
-    aktorId: string;
-    oppretterAv: string;
-    opprettetDato: string;
-    avsluttetDato: StringOrNothing;
-    tilhorendeDialogId: string;
-}
-
 export interface AvslutningStatus {
     harYtelser: boolean;
     inaktiveringsDato: StringOrNothing;
@@ -48,7 +39,6 @@ export interface Oppfolging {
     erIkkeArbeidssokerUtenOppfolging: boolean;
     erSykmeldtMedArbeidsgiver: OrNothing<boolean>;
     fnr: string;
-    gjeldendeEskaleringsvarsel: OrNothing<EskaleringsVarsel>;
     harSkriveTilgang: boolean;
     inaktivIArena: OrNothing<boolean>;
     inaktiveringsdato: StringOrNothing;
