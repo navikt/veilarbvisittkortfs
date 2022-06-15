@@ -142,19 +142,6 @@ export function stoppKvpOppfolging(fnr: string, begrunnelse: string): AxiosPromi
     });
 }
 
-export function startEskalering(dialogId: string, begrunnelse: string, fnr: string): AxiosPromise {
-    return axiosInstance.post(`/veilarboppfolging/api/oppfolging/startEskalering/?fnr=${fnr}`, {
-        dialogId,
-        begrunnelse
-    });
-}
-
-export function stoppEskalering(fnr: string, begrunnelse?: string): AxiosPromise {
-    return axiosInstance.post(`/veilarboppfolging/api/oppfolging/stoppEskalering/?fnr=${fnr}`, {
-        begrunnelse
-    });
-}
-
 export function avsluttOppfolging(fnr: string, begrunnelse: string, veilederId: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/avsluttOppfolging?fnr=${fnr}`, {
         begrunnelse,

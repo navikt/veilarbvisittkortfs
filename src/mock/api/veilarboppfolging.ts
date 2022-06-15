@@ -141,14 +141,6 @@ const mockOppfolging: Oppfolging = {
     underOppfolging: true,
     underKvp: true,
     oppfolgingUtgang: '2019-03-28T11:12:40.973+01:00',
-    gjeldendeEskaleringsvarsel: {
-        varselId: '1',
-        aktorId: '112345',
-        oppretterAv: 'Z9091',
-        opprettetDato: '2019-03-28T11:12:40.973+01:00',
-        avsluttetDato: null,
-        tilhorendeDialogId: '1'
-    },
     kanStarteOppfolging: true,
     oppfolgingsPerioder: [
         {
@@ -188,9 +180,6 @@ export const veilarboppfolgingHandlers: RequestHandlersList = [
     }),
     rest.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(mockInnstillingsHistorikk));
-    }),
-    rest.post('/veilarboppfolging/api/oppfolging/startEskalering/', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.status(204));
     }),
     rest.post('/veilarboppfolging/api/oppfolging/avsluttOppfolging', (req, res, ctx) => {
         return res(ctx.delay(500), ctx.json(mockOppfolgingAvsluttetStatus));
