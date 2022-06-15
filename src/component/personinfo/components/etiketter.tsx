@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import EtikettBase, { EtikettInfo, EtikettAdvarsel, EtikettFokus } from 'nav-frontend-etiketter';
+import EtikettBase, { EtikettAdvarsel, EtikettFokus, EtikettInfo } from 'nav-frontend-etiketter';
 import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
 import './etiketter.less';
@@ -38,7 +38,15 @@ function manglerVedtak(oppfolging: OrNothing<OppfolgingStatus>): boolean {
 
 function Etiketter() {
     const { brukerFnr } = useAppStore();
-    const { oppfolgingsstatus, oppfolging, personalia, features, vergeOgFullmakt, spraakTolk } = useDataStore();
+    const {
+        gjeldendeEskaleringsvarsel,
+        oppfolgingsstatus,
+        oppfolging,
+        personalia,
+        features,
+        vergeOgFullmakt,
+        spraakTolk
+    } = useDataStore();
 
     const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>(null);
 
@@ -82,7 +90,7 @@ function Etiketter() {
             </Fokus>
             <Fokus visible={oppfolging?.inaktivIArena}>Inaktivert</Fokus>
             <Fokus visible={!oppfolging?.underOppfolging}>Ikke under oppfølging</Fokus>
-            <Fokus visible={oppfolging?.gjeldendeEskaleringsvarsel}>Varsel</Fokus>
+            <Fokus visible={gjeldendeEskaleringsvarsel}>Varsel</Fokus>
             <Fokus
                 visible={!oppfolging?.reservasjonKRR && !oppfolging?.manuell && !oppfolging?.kanVarsles}
                 title="Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret og kan ikke varsles. Du kan derfor ikke samhandle digitalt med brukeren. "
@@ -104,4 +112,5 @@ function Etiketter() {
         </div>
     );
 }
+
 export default Etiketter;

@@ -57,7 +57,6 @@ export function selectKanSendeEskaleringsVarsel(
     return (
         tilgangTilBrukersKontor.tilgangTilBrukersKontor &&
         oppfolging.underOppfolging &&
-        !oppfolging.gjeldendeEskaleringsvarsel &&
         gjeldendeEskaleringsvarsel == null &&
         !oppfolging.reservasjonKRR &&
         !oppfolging.manuell
@@ -73,7 +72,7 @@ export function selectKanStoppeEskaleringsVarsel(
     return (
         tilgangTilBrukersKontor.tilgangTilBrukersKontor &&
         oppfolging.underOppfolging &&
-        (!!oppfolging.gjeldendeEskaleringsvarsel || gjeldendeEskaleringsvarsel != null) &&
+        gjeldendeEskaleringsvarsel != null &&
         !oppfolging.reservasjonKRR &&
         !oppfolging.manuell
     );

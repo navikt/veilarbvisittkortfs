@@ -18,15 +18,6 @@ export interface OppfolgingStatus {
     servicegruppe: OrNothing<Servicegruppe>;
 }
 
-export interface EskaleringsVarsel {
-    varselId: string;
-    aktorId: string;
-    oppretterAv: string;
-    opprettetDato: string;
-    avsluttetDato: StringOrNothing;
-    tilhorendeDialogId: string;
-}
-
 export interface AvslutningStatus {
     harYtelser: boolean;
     inaktiveringsDato: StringOrNothing;
@@ -48,12 +39,12 @@ export interface Oppfolging {
     erIkkeArbeidssokerUtenOppfolging: boolean;
     erSykmeldtMedArbeidsgiver: OrNothing<boolean>;
     fnr: string;
-    gjeldendeEskaleringsvarsel: OrNothing<EskaleringsVarsel>;
     harSkriveTilgang: boolean;
     inaktivIArena: OrNothing<boolean>;
     inaktiveringsdato: StringOrNothing;
     kanReaktiveres: OrNothing<boolean>;
     kanStarteOppfolging: boolean;
+    kanVarsles: boolean;
     manuell: boolean;
     oppfolgingUtgang: StringOrNothing;
     oppfolgingsPerioder: OppfolgingsPerioder[];
@@ -61,7 +52,6 @@ export interface Oppfolging {
     underKvp: boolean;
     underOppfolging: boolean;
     veilederId: StringOrNothing;
-    kanVarsles: boolean;
 }
 
 export interface TildelVeilederData {
@@ -84,8 +74,6 @@ export type InnstillingsHistorikkType =
     | 'SATT_TIL_DIGITAL'
     | 'SATT_TIL_MANUELL'
     | 'AVSLUTTET_OPPFOLGINGSPERIODE'
-    | 'ESKALERING_STARTET'
-    | 'ESKALERING_STOPPET'
     | 'KVP_STARTET'
     | 'KVP_STOPPET'
     | 'VEILEDER_TILORDNET'
@@ -148,19 +136,6 @@ export function startKvpOppfolging(fnr: string, begrunnelse: string): AxiosPromi
 
 export function stoppKvpOppfolging(fnr: string, begrunnelse: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/oppfolging/stoppKvp?fnr=${fnr}`, {
-        begrunnelse
-    });
-}
-
-export function startEskalering(dialogId: string, begrunnelse: string, fnr: string): AxiosPromise {
-    return axiosInstance.post(`/veilarboppfolging/api/oppfolging/startEskalering/?fnr=${fnr}`, {
-        dialogId,
-        begrunnelse
-    });
-}
-
-export function stoppEskalering(fnr: string, begrunnelse?: string): AxiosPromise {
-    return axiosInstance.post(`/veilarboppfolging/api/oppfolging/stoppEskalering/?fnr=${fnr}`, {
         begrunnelse
     });
 }
