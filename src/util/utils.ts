@@ -39,10 +39,6 @@ export function doAll(...fns: (() => void)[]) {
     fns.forEach(fn => fn());
 }
 
-export function erGCP(): boolean {
-    return window.location.hostname.endsWith('intern.nav.no');
-}
-
 export function erITestMiljo() {
     return window.location.hostname.indexOf('-q') >= 0 || window.location.hostname.indexOf('dev') >= 0;
 }
