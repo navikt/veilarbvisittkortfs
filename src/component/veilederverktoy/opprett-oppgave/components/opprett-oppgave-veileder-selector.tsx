@@ -31,7 +31,7 @@ function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: 
         setIngenData(false);
         setVeilederePaEnhet(undefined);
         formikProps.setFieldValue('veilederId', null);
-        if (tema == 'OPPFOLGING') {
+        if (tema === 'OPPFOLGING') {
             veilederePaEnhetFetcher
                 .fetch(enhetId)
                 .then(ifResponseHasData(setVeilederePaEnhet))
