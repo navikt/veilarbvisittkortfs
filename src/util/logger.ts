@@ -1,10 +1,17 @@
-import {
-    createFrontendLogger,
-    createMockFrontendLogger,
-    DEFAULT_FRONTENDLOGGER_API_URL
-} from '@navikt/frontendlogger/lib';
 import { APP_NAME, isDevelopment } from './utils';
+import { sendEventTilVeilarbperson } from '../api/veilarbperson';
 
-export const logger = isDevelopment()
-    ? createMockFrontendLogger(APP_NAME)
-    : createFrontendLogger(APP_NAME, DEFAULT_FRONTENDLOGGER_API_URL);
+export interface FrontendEvent {
+    name: string;
+    fields?: {};
+    tags?: {};
+}
+
+export const logMetrikk = (metrikkNavn: string, fields?: {}, tags?: {}): void => {
+    if (isDevelopment()) {
+        // tslint:disable-next-line:no-console
+        console.log('Event', metrikkNavn, 'Fields:', fields, 'Tags:', tags);
+    } else {
+        sendEventTilVeilarbperson({ name: `${APP_NAME}.metrikker.${metrikkNavn}`, fields, tags });
+    }
+};

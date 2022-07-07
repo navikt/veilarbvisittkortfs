@@ -1,7 +1,7 @@
 import React from 'react';
 import { StringOrNothing } from '../../../util/type/stringornothings';
 import { erITestMiljo } from '../../../util/utils';
-import { logger } from '../../../util/logger';
+import { logMetrikk } from '../../../util/logger';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { kanRegistreresEllerReaktiveres } from '../../../util/selectors';
@@ -44,7 +44,7 @@ function StartRegistreringProsess() {
         <a
             href={byggRegistreringUrl(brukerFnr, enhetId)}
             className="knapp meny-knapp btn--mb1"
-            onClick={() => logger.event('veilarbvisittkortfs.metrikker.registrering', {}, { brukerType: brukerType })}
+            onClick={() => logMetrikk('veilarbvisittkortfs.metrikker.registrering', {}, { brukerType: brukerType })}
         >
             {brukerTekst()}
         </a>
