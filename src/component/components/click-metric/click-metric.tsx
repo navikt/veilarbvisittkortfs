@@ -1,5 +1,5 @@
 import React from 'react';
-import { logger } from '../../../util/logger';
+import { logMetrikk } from '../../../util/logger';
 
 export interface ClickMetricProps {
     metricName?: string;
@@ -19,7 +19,7 @@ const handleClickMetricWrapperClicked = (
 ) => {
     return (event?: any) => {
         if (metricName) {
-            logger.event(`veilarbvisittkortfs.metrikker.${metricName}`, fields, tags);
+            logMetrikk(`veilarbvisittkortfs.metrikker.${metricName}`, fields, tags);
         }
 
         if (onClick) {

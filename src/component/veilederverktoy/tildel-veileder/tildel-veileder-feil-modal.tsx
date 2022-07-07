@@ -1,14 +1,14 @@
 import React from 'react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import { logger } from '../../../util/logger';
+import { logMetrikk } from '../../../util/logger';
 import { useModalStore } from '../../../store/modal-store';
 
 export function FeilTildelingModal() {
     const { hideModal } = useModalStore();
 
     const lukkModal = () => {
-        logger.event('veilarbvisittkortfs.metrikker.lukk-modal-tildel-veileder');
+        logMetrikk('veilarbvisittkortfs.metrikker.lukk-modal-tildel-veileder');
         hideModal();
     };
 

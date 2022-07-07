@@ -1,6 +1,7 @@
 import { AxiosPromise } from 'axios';
 import { axiosInstance } from './utils';
 import { StringOrNothing } from '../util/type/stringornothings';
+import { FrontendEvent } from '../util/logger';
 
 export interface Personalia {
     fornavn: string;
@@ -94,4 +95,8 @@ export function fetchHarNivaa4(fnr: string): AxiosPromise<HarBruktNivaa4Type> {
 
 export function fetchRegistrering(fnr: string): AxiosPromise<RegistreringData> {
     return axiosInstance.get<RegistreringData>(`/veilarbperson/api/person/registrering?fnr=${fnr}`);
+}
+
+export function sendEventTilVeilarbperson(event: FrontendEvent): AxiosPromise<void> {
+    return axiosInstance.post<void>(`/veilarbperson/api/logger/event`, event);
 }

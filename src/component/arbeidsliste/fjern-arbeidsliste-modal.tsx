@@ -2,13 +2,13 @@ import React from 'react';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element, Innholdstittel } from 'nav-frontend-typografi';
 import { VarselModal } from '../components/varselmodal/varsel-modal';
-import { logger } from '../../util/logger';
 import { slettArbeidsliste } from '../../api/veilarbportefolje';
 import { useModalStore } from '../../store/modal-store';
 import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
 import { selectSammensattNavn } from '../../util/selectors';
 import { ifResponseHasData } from '../../util/utils';
+import { logMetrikk } from '../../util/logger';
 
 function FjernArbeidslisteModal() {
     const { brukerFnr } = useAppStore();
@@ -18,7 +18,7 @@ function FjernArbeidslisteModal() {
     const brukerSammensattNavn = selectSammensattNavn(personalia);
 
     function handleSlettArbeidsListe() {
-        logger.event('visittkort.metrikker.fjern_arbeidsliste');
+        logMetrikk('visittkort.metrikker.fjern_arbeidsliste');
 
         showSpinnerModal();
 

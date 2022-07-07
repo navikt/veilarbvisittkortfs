@@ -4,7 +4,6 @@ import Modal from '../components/modal/modal';
 import ArbeidslisteForm from './arbeidsliste-form';
 import ArbeidslisteFooter from './arbeidsliste-footer';
 import VeilederVerktoyModal from '../components/modal/veilederverktoy-modal';
-import { logger } from '../../util/logger';
 import { dateToISODate, toReversedDateStr } from '../../util/date-utils';
 import {
     Arbeidsliste,
@@ -18,6 +17,7 @@ import { useDataStore } from '../../store/data-store';
 import { kanFjerneArbeidsliste, selectSammensattNavn } from '../../util/selectors';
 import { useModalStore } from '../../store/modal-store';
 import { ifResponseHasData } from '../../util/utils';
+import { logMetrikk } from '../../util/logger';
 
 const arbeidslisteEmptyValues = {
     overskrift: '',
@@ -55,13 +55,13 @@ function ArbeidslisteModal() {
         const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
         if (!formikProps.dirty || window.confirm(dialogTekst)) {
             hideModal();
-            logger.event('veilarbvisittkortfs.metrikker.arbeidslistekategori.avbryt');
+            logMetrikk('veilarbvisittkortfs.metrikker.arbeidslistekategori.avbryt');
             formikProps.resetForm();
         }
     }
 
     function handleSubmit(values: ArbeidslisteformValues) {
-        logger.event('teamvoff.metrikker.arbeidslistekategori', {
+        logMetrikk('teamvoff.metrikker.arbeidslistekategori', {
             kategori: values.kategori,
             leggtil: !erIRedigeringModus,
             applikasjon: 'visittkort'

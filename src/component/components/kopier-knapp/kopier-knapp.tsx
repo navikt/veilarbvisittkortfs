@@ -4,13 +4,13 @@ import './kopier-knapp.less';
 import { useState } from 'react';
 import classNames from 'classnames';
 import { useEffect } from 'react';
-import { logger } from '../../../util/logger';
+import { logMetrikk } from '../../../util/logger';
 
 export function KopierKnappTekst(props: { kopierTekst: string }) {
     const [copySuccess, setCopySuccess] = useState(false);
 
     function copyToClipboard() {
-        logger.event('veilarbvisittkortfs.metrikker.kopier.fnr');
+        logMetrikk('veilarbvisittkortfs.metrikker.kopier.fnr');
         navigator.clipboard.writeText(props.kopierTekst);
         setCopySuccess(true);
     }
