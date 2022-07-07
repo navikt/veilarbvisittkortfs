@@ -1,4 +1,4 @@
-import { APP_NAME, isDevelopment } from './utils';
+import { isDevelopment } from './utils';
 import { sendEventTilVeilarbperson } from '../api/veilarbperson';
 
 export interface FrontendEvent {
@@ -7,11 +7,11 @@ export interface FrontendEvent {
     tags?: {};
 }
 
-export const logMetrikk = (metrikkNavn: string, fields?: {}, tags?: {}): void => {
+export const logMetrikk = (name: string, fields?: {}, tags?: {}): void => {
     if (isDevelopment()) {
         // tslint:disable-next-line:no-console
-        console.log('Event', metrikkNavn, 'Fields:', fields, 'Tags:', tags);
+        console.log('Event', name, 'Fields:', fields, 'Tags:', tags);
     } else {
-        sendEventTilVeilarbperson({ name: `${APP_NAME}.metrikker.${metrikkNavn}`, fields, tags });
+        sendEventTilVeilarbperson({ name, fields, tags });
     }
 };
