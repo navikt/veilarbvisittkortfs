@@ -31,12 +31,14 @@ function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: 
         setIngenData(false);
         setVeilederePaEnhet(undefined);
         formikProps.setFieldValue('veilederId', null);
-        veilederePaEnhetFetcher
-            .fetch(enhetId)
-            .then(ifResponseHasData(setVeilederePaEnhet))
-            .catch(() => setIngenData(true));
+        if (tema === 'OPPFOLGING') {
+            veilederePaEnhetFetcher
+                .fetch(enhetId)
+                .then(ifResponseHasData(setVeilederePaEnhet))
+                .catch(() => setIngenData(true));
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [enhetId]);
+    }, [enhetId, tema]);
 
     if (tema !== 'OPPFOLGING' && formikProps.values.veilederId) {
         formikProps.setFieldValue('veilederId', null);

@@ -10,7 +10,7 @@ import { hentGjeldendeEskaleringsvarsel, startEskalering } from '../../../api/ve
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { fetchHarNivaa4 } from '../../../api/veilarbperson';
-import { logger } from '../../../util/logger';
+import { logMetrikk } from '../../../util/logger';
 
 interface OwnValues extends StartEskaleringValues {
     overskrift: string;
@@ -45,7 +45,7 @@ function StartEskalering() {
                 tekst: values.begrunnelse
             });
 
-            logger.event(
+            logMetrikk(
                 'veilarbvisittkortfs.metrikker.forhonshorendtering.sendt',
                 { type: values.type },
                 { typeTag: values.type }

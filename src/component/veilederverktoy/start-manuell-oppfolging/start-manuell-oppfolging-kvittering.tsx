@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Kvittering from '../prosess/kvittering';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { logger } from '../../../util/logger';
+import { logMetrikk } from '../../../util/logger';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
@@ -33,7 +33,7 @@ function StartManuellOppfolgingKvittering(props: StartManuellOppfolgingKvitterin
                 erManueltRegistrert
             };
 
-            logger.event('veilarbvisittkortfs.metrikker.manuell_oppfolging', logFields);
+            logMetrikk('veilarbvisittkortfs.metrikker.manuell_oppfolging', logFields);
             setHarLoggetMetrikk(true);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

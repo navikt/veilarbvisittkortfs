@@ -4,11 +4,11 @@ import KjonnIkon from './components/kjonn-ikon';
 import ArbeidslisteKnapp from '../arbeidsliste/arbeidsliste-knapp';
 import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
 import { useAppStore } from '../../store/app-store';
-import { logger } from '../../util/logger';
 import { useDataStore } from '../../store/data-store';
 import { selectKanLeggeIArbeidsListe, selectKanRedigereArbeidsliste, selectSammensattNavn } from '../../util/selectors';
 import { useModalStore } from '../../store/modal-store';
 import './personinfo.less';
+import { logMetrikk } from '../../util/logger';
 
 function PersonInfo() {
     const { brukerFnr } = useAppStore();
@@ -22,7 +22,7 @@ function PersonInfo() {
     const kanRedigereArbeidsliste = selectKanRedigereArbeidsliste(arbeidsliste);
 
     const klikk = () => {
-        logger.event('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
+        logMetrikk('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
         showArbeidslisteModal();
     };
 

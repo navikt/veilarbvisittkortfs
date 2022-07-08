@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import AlertStripeSuksess from 'nav-frontend-alertstriper/lib/suksess-alertstripe';
 import { useFocus } from '../../../util/hook/use-focus';
 import useTimer from '../../../util/hook/use-timer';
-import { logger } from '../../../util/logger';
 import { useToastStore } from '../../../store/toast-store';
 import './toast.less';
+import { logMetrikk } from '../../../util/logger';
 
 export interface FjernTildelVeilederToastProps {
     tildeltVeilederNavn: string;
@@ -18,7 +18,7 @@ function FjernTildelVeilederToast(props: FjernTildelVeilederToastProps) {
 
     const handleClick = () => {
         const tidBrukt = stoppTimer();
-        logger.event('veilarbvisittkortfs.metrikker.lukk-toast-tildel-veileder', {
+        logMetrikk('veilarbvisittkortfs.metrikker.lukk-toast-tildel-veileder', {
             feature: 'toast-tildel-veileder',
             tidBrukt
         });

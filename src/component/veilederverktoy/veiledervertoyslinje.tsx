@@ -5,7 +5,7 @@ import { ReactComponent as TannHjulIkon } from './tannhjul.svg';
 import StartRegistreringProsess from './start-registrering/start-registrering-prosess';
 import StartProsess from './prosess/start-prosess';
 import { useAppStore } from '../../store/app-store';
-import { logger } from '../../util/logger';
+import { logMetrikk } from '../../util/logger';
 import { useModalStore } from '../../store/modal-store';
 import { useDataStore } from '../../store/data-store';
 import {
@@ -72,7 +72,7 @@ function Veilederverktoyslinje() {
     }
 
     const arbeidslisteKlikk = () => {
-        logger.event('veilarbvisittkortfs.metrikker.veilederverktoy.arbeidsliste', {
+        logMetrikk('veilarbvisittkortfs.metrikker.veilederverktoy.arbeidsliste', {
             leggtil: !kanEndreArbeidsliste && kanLagreArbeidsliste
         });
         showArbeidslisteModal();
