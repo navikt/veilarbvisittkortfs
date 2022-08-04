@@ -96,18 +96,17 @@ function StartEskalering() {
             initialValues={initialValues}
             tekstariaLabel="Rediger teksten under slik at den passer."
             maxLength={5000}
-            tittel="Send varsel om mulig stans til brukeren"
+            tittel="Send varsel om mulig stans"
             isLoading={false}
             infoTekst={
                 <>
                     <Normaltekst className="blokk-xs">
-                        Når du sender forhåndsvarsel til bruker må du huske å være tydelig på hvilken oppgave bruker
-                        skal gjennomføre, og hvilken frist bruker får for tilbakemelding. Bruker får en
-                        brukernotifikasjon på ditt nav med teksten: Viktig oppgave. NAV vurderer å stanse pengene dine.
-                        Se hva du må gjøre.
+                        Når du sender forhåndsvarsel må du huske å være tydelig på hvilken oppgave som skal gjennomføre,
+                        og hvilken frist personen får for tilbakemelding. Personen får en brukernotifikasjon på ditt nav
+                        med teksten: Viktig oppgave. NAV vurderer å stanse pengene dine. Se hva du må gjøre.
                     </Normaltekst>
                     <Normaltekst className="blokk-xs">
-                        Ved å klikke på brukernotifikasjon, kommer bruker direkte inn i riktig dialog der
+                        Ved å klikke på brukernotifikasjon, kommer personen direkte inn i riktig dialog der
                         forhåndsvarslet ligger.
                     </Normaltekst>
                 </>
