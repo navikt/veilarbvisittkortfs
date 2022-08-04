@@ -7,6 +7,7 @@ import BegrunnelseFooter from '../begrunnelseform/begrunnelse-form-footer';
 
 export interface StartEskaleringValues {
     begrunnelse: string;
+    type: string;
 }
 
 interface OwnProps<T extends StartEskaleringValues> {
@@ -30,14 +31,21 @@ function StartEskaleringForm<T extends StartEskaleringValues>(props: StartEskale
             contentLabel=""
             visConfirmDialog={true}
             tittel={props.tittel}
-            render={() => (
+            render={({ values }) => (
                 <div className="modal-innhold">
                     {props.infoTekst}
                     <div>
                         <Form>
                             <Maltekstvelger />
-                            <BegrunnelseTextArea tekstariaLabel={props.tekstariaLabel} maxLength={props.maxLength} />
-                            <BegrunnelseFooter spinner={props.isLoading} />
+                            <BegrunnelseTextArea
+                                tekstariaLabel={props.tekstariaLabel}
+                                maxLength={props.maxLength}
+                                hidden={values.type === props.initialValues.type}
+                            />
+                            <BegrunnelseFooter
+                                spinner={props.isLoading}
+                                disabled={values.type === props.initialValues.type}
+                            />
                         </Form>
                     </div>
                 </div>
