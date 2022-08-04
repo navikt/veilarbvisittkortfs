@@ -2,7 +2,11 @@ import React from 'react';
 import { validerBeskrivelse, validerBeskrivelse500TegnFelt } from '../../../util/formik-validation';
 import FormikTekstArea from '../../components/formik/formik-textarea';
 
-export function BegrunnelseTextArea(props: { tekstariaLabel: string; maxLength?: number }) {
+export function BegrunnelseTextArea(props: { tekstariaLabel: string; maxLength?: number; hidden?: boolean }) {
+    if (props.hidden) {
+        return null;
+    }
+
     return (
         <FormikTekstArea
             label={props.tekstariaLabel}
