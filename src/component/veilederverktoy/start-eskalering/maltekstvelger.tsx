@@ -115,7 +115,21 @@ const malTekster = {
         '\n' +
         'Du får dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du får en frist på 14 dager, til [dato], for å komme med tilbakemelding. Du kan gi oss skriftlig tilbakemelding her i dialogen, eller du kan ringe oss på telefon 55 55 33 33.\n' +
         '\n' +
-        'Hvis du ikke har mulighet til å uttale deg innen fristen, må du ta kontakt med oss så snart som mulig.\n'
+        'Hvis du ikke har mulighet til å uttale deg innen fristen, må du ta kontakt med oss så snart som mulig.\n',
+    uutnyttet_arbeidsevne:
+        'Les denne meldingen nøye. Gi beskjed til veilederen din hvis det er noe som du lurer på. Det kan du gjøre ved å svare på denne meldingen. \n' +
+        '\n' +
+        'Du mottar arbeidsavklaringspenger (AAP) og vi vurderer nå å redusere utbetaling av pengene dine. Hvis du har tapt arbeidsevnen din delvis, skal arbeidsavklaringspengene reduseres slik at du kun får utbetaling for den delen av arbeidsevnen som er tapt.\n' +
+        '\n' +
+        '(Forklar hvorfor vi mener at personen har en arbeidsevne som ikke er utnyttet og hvor stor del av arbeidsevnen det gjelder. Arbeidsevnen som ikke er utnyttet skal angis i prosent.) \n' +
+        '\n' +
+        'På bakgrunn av dette, vurderer vi at utbetalingen av arbeidsavklaringspengene dine skal reduseres, se folketrygdloven § 11-23. \n' +
+        '\n' +
+        'Du får dette varselet slik at du har mulighet til å uttale deg før vi avgjør saken din. Du får nå en frist på 14 dager, til xx.xx.xxxx, for å komme med en tilbakemelding. Vi vil ta tilbakemeldingen din med i vurderingen som vi gjør når fristen har gått ut. \n' +
+        '\n' +
+        'Hvis du ikke har mulighet til å uttale deg innen fristen, må du ta kontakt med oss så fort som mulig. \n' +
+        '\n' +
+        'Hvis vi ikke endrer den foreløpige vurderingen vår, betyr det at arbeidsavklaringspengene dine reduseres fra og med xx.xx.xxxx. Du vil få et eget vedtak som viser hvor mye arbeidsavklaringspengene dine reduseres. \n'
 };
 
 function Maltekstvelger() {
@@ -149,6 +163,9 @@ function Maltekstvelger() {
             <option value="ikke_deltatt_tiltak">Arbeidsavklaringspenger: Ikke deltatt på tiltak</option>
             <option value="ikke_lenger_nedsatt_arbeidsevne">
                 Arbeidsavklaringspenger: Ikke lenger nedsatt arbeidsevne
+            </option>
+            <option value="uutnyttet_arbeidsevne">
+                Arbeidsavklaringspenger: Reduksjon i utbetaling på grunn av arbeidsevne som ikke er utnyttet
             </option>
             <option value="stans_aap_i_periode">
                 Arbeidsavklaringspenger: Stans av AAP i perioden som arbeidssøker
