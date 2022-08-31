@@ -7,6 +7,7 @@ import {
     OppfolgingStatus
 } from '../../api/veilarboppfolging';
 import { mockInnloggetVeileder } from './veilarbveileder';
+import { defaultNetworkResponseDelay } from '../config';
 
 const mockAvslutningStatus: AvslutningStatus = {
     kanAvslutte: true,
@@ -25,6 +26,22 @@ const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
 };
 
 const mockInnstillingsHistorikk: InnstillingHistorikkInnslag[] = [
+    {
+        type: 'VEILEDER_TILORDNET',
+        dato: '2022-01-14T13:56:53.813+02:00',
+        begrunnelse: 'Brukeren er tildelt veileder Z0004',
+        opprettetAv: 'NAV',
+        opprettetAvBrukerId: 'Z0003',
+        dialogId: null
+    },
+    {
+        type: 'VEILEDER_TILORDNET',
+        dato: '2021-08-14T13:56:53.813+02:00',
+        begrunnelse: 'Brukeren er tildelt veileder Z0003',
+        opprettetAv: 'NAV',
+        opprettetAvBrukerId: 'Z0002',
+        dialogId: null
+    },
     {
         type: 'AVSLUTTET_OPPFOLGINGSPERIODE',
         dato: '2018-08-14T13:56:53.813+02:00',
@@ -125,33 +142,36 @@ const mockOppfolgingsstatus: OppfolgingStatus = {
 
 export const veilarboppfolgingHandlers: RequestHandlersList = [
     rest.post('/veilarboppfolging/api/tilordneveileder', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json({ feilendeTilordninger: [] }));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json({ feilendeTilordninger: [] }));
     }),
     rest.get('/veilarboppfolging/api/oppfolging/veilederTilgang', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json({ tilgangTilBrukersKontor: true }));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json({ tilgangTilBrukersKontor: true }));
     }),
     rest.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockInnstillingsHistorikk));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockInnstillingsHistorikk));
     }),
     rest.post('/veilarboppfolging/api/oppfolging/avsluttOppfolging', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockOppfolgingAvsluttetStatus));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockOppfolgingAvsluttetStatus));
     }),
     rest.post('/veilarboppfolging/api/oppfolging/settManuell', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(Object.assign({}, mockOppfolging, { manuell: true })));
+        return res(
+            ctx.delay(defaultNetworkResponseDelay),
+            ctx.json(Object.assign({}, mockOppfolging, { manuell: true }))
+        );
     }),
     rest.get('/veilarboppfolging/api/oppfolging/avslutningStatus', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockAvslutningStatus));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockAvslutningStatus));
     }),
     rest.post('/veilarboppfolging/api/oppfolging/startKvp', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.status(204));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.status(204));
     }),
     rest.post('/veilarboppfolging/api/oppfolging/stoppKvp', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.status(204));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.status(204));
     }),
     rest.get('/veilarboppfolging/api/person/:fnr/oppfolgingsstatus', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockOppfolgingsstatus));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockOppfolgingsstatus));
     }),
     rest.get('/veilarboppfolging/api/oppfolging', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockOppfolging));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockOppfolging));
     })
 ];

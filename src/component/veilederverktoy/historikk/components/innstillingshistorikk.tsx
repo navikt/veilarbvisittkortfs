@@ -46,7 +46,8 @@ function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHis
             <Undertekst>
                 {`${toSimpleDateStr(innstillingsHistorikk.dato)} ${opprettetAvTekst(
                     innstillingsHistorikk.opprettetAv,
-                    innstillingsHistorikk.opprettetAvBrukerId || ''
+                    innstillingsHistorikk.opprettetAvBrukerId || '',
+                    innstillingsHistorikk.opprettetAvBrukerNavn
                 )}`}
             </Undertekst>
         </div>

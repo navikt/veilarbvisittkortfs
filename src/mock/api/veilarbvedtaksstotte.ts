@@ -1,8 +1,9 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
+import { defaultNetworkResponseDelay } from '../config';
 
 export const veilarbvedtaksstotteHandlers: RequestHandlersList = [
     rest.get('/veilarbvedtaksstotte/api/:fnr/harutkast', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(true));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(true));
     })
 ];

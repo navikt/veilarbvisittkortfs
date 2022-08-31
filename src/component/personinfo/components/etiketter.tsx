@@ -3,13 +3,13 @@ import EtikettBase, { EtikettAdvarsel, EtikettFokus, EtikettInfo } from 'nav-fro
 import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
 import './etiketter.less';
-import { OrNothing } from '../../../util/type/ornothing';
 import { fetchRegistrering, InnsatsgruppeType } from '../../../api/veilarbperson';
 import { PILOT_TOGGLE } from '../../../api/veilarbpersonflatefs';
 import { OppfolgingStatus } from '../../../api/veilarboppfolging';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { ifResponseHasData, isEmpty } from '../../../util/utils';
 import visibleIf from '../../components/visible-if';
+import { OrNothing } from '../../../util/type/utility-types';
 
 const Advarsel = visibleIf(EtikettAdvarsel);
 const Info = visibleIf(EtikettInfo);

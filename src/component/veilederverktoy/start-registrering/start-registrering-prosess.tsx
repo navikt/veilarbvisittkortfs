@@ -1,10 +1,10 @@
 import React from 'react';
-import { StringOrNothing } from '../../../util/type/stringornothings';
 import { erITestMiljo } from '../../../util/utils';
 import { logMetrikk } from '../../../util/logger';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { kanRegistreresEllerReaktiveres } from '../../../util/selectors';
+import { StringOrNothing } from '../../../util/type/utility-types';
 
 function byggRegistreringUrl(fnr: string, enhet: StringOrNothing) {
     return erITestMiljo()

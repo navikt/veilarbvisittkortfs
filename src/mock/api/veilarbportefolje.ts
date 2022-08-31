@@ -1,6 +1,7 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import { Arbeidsliste, ArbeidslisteformValues, KategoriModell } from '../../api/veilarbportefolje';
+import { defaultNetworkResponseDelay } from '../config';
 
 const mockArbeidsliste: Arbeidsliste = {
     arbeidslisteAktiv: null,
@@ -16,12 +17,12 @@ const mockArbeidsliste: Arbeidsliste = {
 
 export const veilarbportefoljeHandlers: RequestHandlersList = [
     rest.get('/veilarbportefolje/api/arbeidsliste/:fnr', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockArbeidsliste));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockArbeidsliste));
     }),
     rest.post('/veilarbportefolje/api/arbeidsliste/:fnr', (req, res, ctx) => {
         const requestBody = req.body as ArbeidslisteformValues;
         return res(
-            ctx.delay(500),
+            ctx.delay(defaultNetworkResponseDelay),
             ctx.json({
                 arbeidslisteAktiv: null,
                 endringstidspunkt: new Date().toISOString(),
@@ -38,7 +39,7 @@ export const veilarbportefoljeHandlers: RequestHandlersList = [
     rest.put('/veilarbportefolje/api/arbeidsliste/:fnr', (req, res, ctx) => {
         const requestBody = req.body as ArbeidslisteformValues;
         return res(
-            ctx.delay(500),
+            ctx.delay(defaultNetworkResponseDelay),
             ctx.json({
                 arbeidslisteAktiv: null,
                 endringstidspunkt: new Date().toISOString(),
@@ -53,6 +54,6 @@ export const veilarbportefoljeHandlers: RequestHandlersList = [
         );
     }),
     rest.delete('/veilarbportefolje/api/arbeidsliste/:fnr', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockArbeidsliste));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockArbeidsliste));
     })
 ];

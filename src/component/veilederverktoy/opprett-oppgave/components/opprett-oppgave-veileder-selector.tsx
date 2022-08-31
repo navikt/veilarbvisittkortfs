@@ -4,13 +4,12 @@ import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
 import Dropdown from '../../../components/dropdown/dropdown';
 import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
-import { StringOrNothing } from '../../../../util/type/stringornothings';
-import { OrNothing } from '../../../../util/type/ornothing';
 import { useDataStore } from '../../../../store/data-store';
 import { fetchVeilederePaEnhet, VeilederData } from '../../../../api/veilarbveileder';
 import { OppgaveTema } from '../../../../api/veilarboppgave';
 import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
 import { ifResponseHasData } from '../../../../util/utils';
+import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
 
 interface OpprettOppgaveVelgVeilederProps {
     veilederId: StringOrNothing;

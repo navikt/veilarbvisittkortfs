@@ -9,9 +9,8 @@ import HiddenIfDiv from '../../../components/hidden-if/hidden-if-div';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
-import { StringOrNothing } from '../../../../util/type/stringornothings';
-import { OrNothing } from '../../../../util/type/ornothing';
 import { OppgaveTema } from '../../../../api/veilarboppgave';
+import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
 
 interface OppgaveInnerFormProps {
     fnr: string;

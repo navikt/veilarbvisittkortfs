@@ -17,8 +17,16 @@ export interface EnhetData {
     navn: string;
 }
 
+export type VeilederDataListeRequest = string[];
+
 export function fetchInnloggetVeileder(): AxiosPromise<VeilederData> {
     return axiosInstance.get<VeilederData>(`/veilarbveileder/api/veileder/me`);
+}
+
+export function fetchVeilederDataListe(
+    veilederDataListeRequest: VeilederDataListeRequest
+): AxiosPromise<VeilederData[]> {
+    return axiosInstance.post<VeilederData[]>('/veilarbveileder/api/veileder/list', veilederDataListeRequest);
 }
 
 export function fetchVeilederePaEnhet(enhetId: string): AxiosPromise<VeilederListe> {

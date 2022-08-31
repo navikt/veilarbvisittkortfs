@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
-import { HarBruktNivaa4Type, Personalia, SpraakTolk, VergeOgFullmakt } from '../../api/veilarbperson';
-import { RegistreringData } from '../../api/veilarbperson';
+import { HarBruktNivaa4Type, Personalia, RegistreringData, SpraakTolk, VergeOgFullmakt } from '../../api/veilarbperson';
+import { defaultNetworkResponseDelay } from '../config';
 
 const mockHarBruktNivaa4: HarBruktNivaa4Type = {
     harbruktnivaa4: false
@@ -82,18 +82,18 @@ const mockRegistrering: RegistreringData = {
 
 export const veilarbpersonHandlers: RequestHandlersList = [
     rest.get('/veilarbperson/api/person/registrering', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockRegistrering));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockRegistrering));
     }),
     rest.get('/veilarbperson/api/person/:fnr/harNivaa4', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockHarBruktNivaa4));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockHarBruktNivaa4));
     }),
     rest.get('/veilarbperson/api/v2/person', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockPersonaliaV2));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockPersonaliaV2));
     }),
     rest.get('/veilarbperson/api/v2/person/vergeOgFullmakt', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockVergeOgFullmakt));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockVergeOgFullmakt));
     }),
     rest.get('/veilarbperson/api/v2/person/tolk', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockSpraakTolk));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockSpraakTolk));
     })
 ];

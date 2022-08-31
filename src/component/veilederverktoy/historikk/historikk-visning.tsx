@@ -32,23 +32,23 @@ interface HistorikkVisningProps {
     eskaleringsvarselHistorikk: EskaleringsvarselHistorikkInnslag[];
 }
 
-function mapHistorikk(historikk: Historikk, idx: number, idxForNyesteEnhetEndring: number): React.ReactElement {
+function mapHistorikk(historikk: Historikk, indeks: number, indeksForNyesteEnhetEndring: number): React.ReactElement {
     if (erInnstillingshistorikk(historikk)) {
         if (historikk.innslag.type === 'OPPFOLGINGSENHET_ENDRET') {
             return (
                 <OppfolgingEnhetEndret
                     historikkElement={historikk.innslag}
-                    key={idx}
-                    erGjeldendeEnhet={idx === idxForNyesteEnhetEndring}
+                    key={indeks}
+                    erGjeldendeEnhet={indeks === indeksForNyesteEnhetEndring}
                 />
             );
         }
 
-        return <InnstillingsHistorikkKomponent innstillingsHistorikk={historikk.innslag} key={idx} />;
+        return <InnstillingsHistorikkKomponent innstillingsHistorikk={historikk.innslag} key={indeks} />;
     } else if (erOppgaveHistorikk(historikk)) {
-        return <OppgaveHistorikkKomponent oppgaveHistorikk={historikk.innslag} key={idx} />;
+        return <OppgaveHistorikkKomponent oppgaveHistorikk={historikk.innslag} key={indeks} />;
     } else if (erEskaleringsvarselHistorikk(historikk)) {
-        return <EskaleringsvarselHistorikkKomponent innslag={historikk.innslag} key={idx} />;
+        return <EskaleringsvarselHistorikkKomponent innslag={historikk.innslag} key={indeks} />;
     } else {
         return <></>;
     }
