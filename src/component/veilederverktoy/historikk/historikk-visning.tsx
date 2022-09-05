@@ -32,7 +32,11 @@ interface HistorikkVisningProps {
     eskaleringsvarselHistorikk: EskaleringsvarselHistorikkInnslag[];
 }
 
-function mapHistorikk(historikk: Historikk, indeks: number, indeksForNyesteEnhetEndring: number): React.ReactElement {
+function mapTilKomponent(
+    historikk: Historikk,
+    indeks: number,
+    indeksForNyesteEnhetEndring: number
+): React.ReactElement {
     if (erInnstillingshistorikk(historikk)) {
         if (historikk.innslag.type === 'OPPFOLGINGSENHET_ENDRET') {
             return (
@@ -111,16 +115,20 @@ function HistorikkVisning({
     }
 
     if (historikk.length === 1) {
-        return mapHistorikk(historikk[0], 0, 0);
+        return mapTilKomponent(historikk[0], 0, 0);
     }
 
     const indexForNyesteEnhetEndring = historikk.findIndex(
         h => erInnstillingshistorikk(h) && h.innslag.type === 'OPPFOLGINGSENHET_ENDRET'
     );
 
-    const historikkKomponenter = historikk.map((elem, idx) => mapHistorikk(elem, idx, indexForNyesteEnhetEndring));
-
-    return <>{historikkKomponenter}</>;
+    return (
+        <ul className="ustilet">
+            {historikk.map((elem, idx) => (
+                <li>{mapTilKomponent(elem, idx, indexForNyesteEnhetEndring)}</li>
+            ))}
+        </ul>
+    );
 }
 
 export default HistorikkVisning;

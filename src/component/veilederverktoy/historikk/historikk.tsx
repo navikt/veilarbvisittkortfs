@@ -111,13 +111,13 @@ function Historikk() {
 
     return (
         <VeilederVerktoyModal className="historikk__modal" tittel="Historikk">
-            <article className="prosess blokk-s">
+            <div className="prosess blokk-s">
                 <HistorikkVisning
                     innstillingHistorikk={innstillingHistorikk}
                     oppgaveHistorikk={oppgaveHistorikk}
                     eskaleringsvarselHistorikk={eskaleringsvarselHistorikk}
                 />
-            </article>
+            </div>
         </VeilederVerktoyModal>
     );
 }
