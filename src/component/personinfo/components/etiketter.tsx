@@ -70,7 +70,7 @@ function Etiketter() {
             </Base>
             <Advarsel visible={personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>
             <Advarsel visible={personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
-            <Advarsel visible={personalia?.egenAnsatt}>Egen ansatt</Advarsel>
+            <Advarsel visible={personalia?.egenAnsatt}>Skjermet</Advarsel>
             <Fokus visible={!isEmpty(vergeOgFullmakt?.vergemaalEllerFremtidsfullmakt)}>Vergemål</Fokus>
             <Fokus visible={!isEmpty(vergeOgFullmakt?.fullmakt)}>Fullmakt</Fokus>
             <Fokus visible={spraakTolk?.tegnspraak}>Tegnspråktolk</Fokus>
