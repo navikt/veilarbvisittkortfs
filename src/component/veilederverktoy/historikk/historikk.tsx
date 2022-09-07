@@ -13,6 +13,7 @@ import { EskaleringsvarselHistorikkInnslag, hentEskaleringsvarselHistorikk } fro
 import { fetchVeilederDataListe } from '../../../api/veilarbveileder';
 import { isNonEmptyArray, isString } from '../../../util/type/type-guards';
 import { Common } from '../../../util/type/utility-types';
+import { filterUnique } from '../../../util/utils';
 
 type HistorikkInnslag = Common<InnstillingHistorikkInnslag, OppgaveHistorikkInnslag>;
 
@@ -71,10 +72,10 @@ function Historikk() {
         oppgaveHistorikkFetcher.fetch(brukerFnr);
         eskaleringsvarselHistorikkFetcher.fetch(brukerFnr);
 
-        const veilederIdentListe = [
+        const veilederIdentListe = filterUnique([
             ...mapTilIdentListe(innstillingsHistorikkFetcher.data),
             ...mapTilIdentListe(oppgaveHistorikkFetcher.data)
-        ];
+        ]);
 
         if (isNonEmptyArray(veilederIdentListe)) {
             veilederDataListeFetcher.fetch(veilederIdentListe);
