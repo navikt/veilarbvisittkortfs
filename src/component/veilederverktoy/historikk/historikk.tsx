@@ -4,7 +4,7 @@ import { LasterModal } from '../../components/lastermodal/laster-modal';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useAppStore } from '../../../store/app-store';
-import { hasAnyFailed, isAnyLoading } from '../../../api/utils';
+import { hasAnyFailed, isAnyLoading, isAnyLoadingOrNotStarted } from '../../../api/utils';
 import './historikk.less';
 import { fetchOppgaveHistorikk, OppgaveHistorikkInnslag } from '../../../api/veilarboppgave';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
@@ -65,31 +65,41 @@ function Historikk() {
     const innstillingsHistorikkFetcher = useAxiosFetcher(fetchInstillingsHistorikk);
     const oppgaveHistorikkFetcher = useAxiosFetcher(fetchOppgaveHistorikk);
     const eskaleringsvarselHistorikkFetcher = useAxiosFetcher(hentEskaleringsvarselHistorikk);
-    const veilederDataListeFetcher = useAxiosFetcher(fetchVeilederDataListe);
+
+    const {
+        fetch: hentVeilederDataListe,
+        data: veilederDataListeData,
+        loading: veilederDataListeLoading
+    } = useAxiosFetcher(fetchVeilederDataListe);
 
     useEffect(() => {
         innstillingsHistorikkFetcher.fetch(brukerFnr);
         oppgaveHistorikkFetcher.fetch(brukerFnr);
         eskaleringsvarselHistorikkFetcher.fetch(brukerFnr);
-
-        const veilederIdentListe = filterUnique([
-            ...mapTilIdentListe(innstillingsHistorikkFetcher.data),
-            ...mapTilIdentListe(oppgaveHistorikkFetcher.data)
-        ]);
-
-        if (isNonEmptyArray(veilederIdentListe)) {
-            veilederDataListeFetcher.fetch(veilederIdentListe);
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr]);
 
-    if (
-        isAnyLoading(
+    useEffect(() => {
+        const skalHenteVeilederDataListe = !isAnyLoadingOrNotStarted(
             innstillingsHistorikkFetcher,
-            oppgaveHistorikkFetcher,
-            eskaleringsvarselHistorikkFetcher,
-            veilederDataListeFetcher
-        )
+            oppgaveHistorikkFetcher
+        );
+
+        if (skalHenteVeilederDataListe) {
+            const veilederIdentListe = filterUnique([
+                ...mapTilIdentListe(innstillingsHistorikkFetcher.data),
+                ...mapTilIdentListe(oppgaveHistorikkFetcher.data)
+            ]);
+
+            if (isNonEmptyArray(veilederIdentListe)) {
+                hentVeilederDataListe(veilederIdentListe);
+            }
+        }
+    }, [innstillingsHistorikkFetcher, oppgaveHistorikkFetcher, hentVeilederDataListe]);
+
+    if (
+        isAnyLoading(innstillingsHistorikkFetcher, oppgaveHistorikkFetcher, eskaleringsvarselHistorikkFetcher) ||
+        veilederDataListeLoading
     ) {
         return <LasterModal />;
     } else if (hasAnyFailed(innstillingsHistorikkFetcher, oppgaveHistorikkFetcher, eskaleringsvarselHistorikkFetcher)) {
@@ -105,7 +115,7 @@ function Historikk() {
     const innstillingHistorikk =
         innstillingsHistorikkFetcher.data?.map(ih => ({
             ...ih,
-            opprettetAvBrukerNavn: veilederDataListeFetcher.data?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn
+            opprettetAvBrukerNavn: veilederDataListeData?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn
         })) || [];
     const oppgaveHistorikk = oppgaveHistorikkFetcher.data || [];
     const eskaleringsvarselHistorikk = eskaleringsvarselHistorikkTilEvent(eskaleringsvarselHistorikkFetcher.data || []);
