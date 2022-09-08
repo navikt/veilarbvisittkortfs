@@ -1,7 +1,6 @@
 import { AxiosPromise } from 'axios';
 import { axiosInstance } from './utils';
-import { StringOrNothing } from '../util/type/stringornothings';
-import { OrNothing } from '../util/type/ornothing';
+import { OrNothing, StringOrNothing } from '../util/type/utility-types';
 
 export type Formidlingsgruppe = 'ARBS' | 'IARBS' | 'ISERV' | 'PARBS' | 'RARBS';
 export type Servicegruppe = 'BKART' | 'IVURD' | 'OPPFI' | 'VARIG' | 'VURDI' | 'VURDU';
@@ -87,6 +86,7 @@ export interface InnstillingHistorikkInnslag {
     begrunnelse: StringOrNothing;
     opprettetAv: InnstillingsHistorikkOpprettetAvType;
     opprettetAvBrukerId: StringOrNothing;
+    opprettetAvBrukerNavn?: StringOrNothing;
     dialogId: OrNothing<number>;
     veileder?: string;
     enhet?: StringOrNothing;

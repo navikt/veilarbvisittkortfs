@@ -4,10 +4,9 @@ import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
 import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import Dropdown from '../../../components/dropdown/dropdown';
-import { OrNothing } from '../../../../util/type/ornothing';
-import { StringOrNothing } from '../../../../util/type/stringornothings';
 import { BehandlandeEnhet, hentBehandlendeEnheter, OppgaveTema } from '../../../../api/veilarboppgave';
 import NavFrontendSpinner from 'nav-frontend-spinner';
+import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
 
 interface OpprettOppgaveVelgEnhetProps {
     tema: OrNothing<OppgaveTema>;

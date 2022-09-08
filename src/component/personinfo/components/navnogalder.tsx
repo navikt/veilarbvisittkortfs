@@ -1,7 +1,7 @@
 import React from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Personalia } from '../../../api/veilarbperson';
-import { OrNothing } from '../../../util/type/ornothing';
+import { OrNothing } from '../../../util/type/utility-types';
 
 export function kalkulerAlder(fodselsdato: Date): number {
     const diff = Date.now() - fodselsdato.getTime();

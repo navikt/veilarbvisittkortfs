@@ -1,7 +1,6 @@
 import { AxiosPromise } from 'axios';
 import { axiosInstance } from './utils';
-import { StringOrNothing } from '../util/type/stringornothings';
-import { OrNothing } from '../util/type/ornothing';
+import { OrNothing, StringOrNothing } from '../util/type/utility-types';
 
 export interface Arbeidsliste {
     arbeidslisteAktiv: StringOrNothing; //TODO WHAT IS ZIS?
