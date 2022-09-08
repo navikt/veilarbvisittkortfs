@@ -92,7 +92,7 @@ function Historikk() {
             ]);
 
             if (isNonEmptyArray(veilederIdentListe)) {
-                hentVeilederDataListe(veilederIdentListe);
+                hentVeilederDataListe({ identer: veilederIdentListe });
             }
         }
     }, [innstillingsHistorikkFetcher, oppgaveHistorikkFetcher, hentVeilederDataListe]);
