@@ -26,7 +26,6 @@ export function fetchInnloggetVeileder(): AxiosPromise<VeilederData> {
 export function fetchVeilederDataListe(
     veilederDataListeRequest: VeilederDataListeRequest
 ): AxiosPromise<VeilederData[]> {
-    debugger;
     return axiosInstance.post<VeilederData[]>('/veilarbveileder/api/veileder/list', veilederDataListeRequest);
 }
 
