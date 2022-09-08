@@ -17,7 +17,7 @@ export interface EnhetData {
     navn: string;
 }
 
-export type VeilederDataListeRequest = string[];
+export type VeilederDataListeRequest = { identer: string[] };
 
 export function fetchInnloggetVeileder(): AxiosPromise<VeilederData> {
     return axiosInstance.get<VeilederData>(`/veilarbveileder/api/veileder/me`);
@@ -26,6 +26,7 @@ export function fetchInnloggetVeileder(): AxiosPromise<VeilederData> {
 export function fetchVeilederDataListe(
     veilederDataListeRequest: VeilederDataListeRequest
 ): AxiosPromise<VeilederData[]> {
+    debugger;
     return axiosInstance.post<VeilederData[]>('/veilarbveileder/api/veileder/list', veilederDataListeRequest);
 }
 
