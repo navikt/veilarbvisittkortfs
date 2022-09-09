@@ -1,7 +1,7 @@
 import FormikSelect from '../../../components/formik/formik-select';
 import React from 'react';
-import { OrNothing } from '../../../../util/type/ornothing';
 import { OppgaveTema, OppgaveType } from '../../../../api/veilarboppgave';
+import { OrNothing } from '../../../../util/type/utility-types';
 
 interface OpprettOppgaveTypeSelectorProps {
     oppgaveTema: OrNothing<OppgaveTema>;

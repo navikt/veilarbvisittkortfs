@@ -24,6 +24,7 @@ export const [DataStore, useDataStore] = constate(() => {
     const [gjeldendeEskaleringsvarsel, setGjeldendeEskaleringsvarsel] = useState<GjeldendeEskaleringsvarsel | null>(
         null
     );
+    const [veilederDataListe, setVeilederDataListe] = useState<VeilederData[]>([]);
 
     return {
         oppfolgingsstatus,
@@ -49,6 +50,8 @@ export const [DataStore, useDataStore] = constate(() => {
         spraakTolk,
         setSpraakTolk,
         gjeldendeEskaleringsvarsel,
-        setGjeldendeEskaleringsvarsel
+        setGjeldendeEskaleringsvarsel,
+        veilederDataListe,
+        setVeilederDataListe
     };
 });

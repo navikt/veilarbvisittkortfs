@@ -1,6 +1,6 @@
 import { axiosInstance } from './utils';
 import { AxiosPromise } from 'axios';
-import { StringOrNothing } from '../util/type/stringornothings';
+import { StringOrNothing } from '../util/type/utility-types';
 
 export interface OppgaveHistorikkInnslag {
     type: 'OPPRETTET_OPPGAVE';

@@ -9,7 +9,7 @@ export interface FrontendEvent {
 
 export const logMetrikk = (name: string, fields?: {}, tags?: {}): void => {
     if (isDevelopment()) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         console.log('Event', name, 'Fields:', fields, 'Tags:', tags);
     } else {
         sendEventTilVeilarbperson({ name, fields, tags });

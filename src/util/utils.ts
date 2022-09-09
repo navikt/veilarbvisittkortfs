@@ -46,3 +46,8 @@ export function erITestMiljo() {
 export function eskaleringVarselSendtEvent() {
     window.dispatchEvent(new Event('eskaleringsVarselSendt'));
 }
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+export function filterUnique(array: any[]): any[] {
+    return Array.from(new Set(array));
+}

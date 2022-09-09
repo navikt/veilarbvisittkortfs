@@ -2,6 +2,7 @@ import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import { mockEnhetVeiledere } from './common-data';
 import { OppgaveFormData, OppgaveHistorikkInnslag } from '../../api/veilarboppgave';
+import { defaultNetworkResponseDelay } from '../config';
 
 const mockEnheter = [
     { enhetId: '0000', navn: 'NAV Ost' },
@@ -55,15 +56,15 @@ const mockOppgavehistorikk: OppgaveHistorikkInnslag[] = [
 
 export const veilarboppgaveHandlers: RequestHandlersList = [
     rest.get('/veilarboppgave/api/enheter', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockEnheter));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockEnheter));
     }),
     rest.get('/veilarboppgave/api/enhet/:enhetsId/veiledere', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockEnhetVeiledere));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockEnhetVeiledere));
     }),
     rest.post('/veilarboppgave/api/oppgave', (req, res, ctx) => {
         const requestBody = req.body as OppgaveFormData;
         return res(
-            ctx.delay(500),
+            ctx.delay(defaultNetworkResponseDelay),
             ctx.json({
                 ID: 123,
                 aktoerid: '00000012345',
@@ -75,6 +76,6 @@ export const veilarboppgaveHandlers: RequestHandlersList = [
         );
     }),
     rest.get('/veilarboppgave/api/oppgavehistorikk', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockOppgavehistorikk));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockOppgavehistorikk));
     })
 ];

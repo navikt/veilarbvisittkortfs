@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { OrNothing } from '../../../../util/type/ornothing';
 import { fetchHarUtkast } from '../../../../api/veilarbvedtaksstotte';
 import { AvslutningStatus } from '../../../../api/veilarboppfolging';
 import { fetchHarTiltak } from '../../../../api/veilarbaktivitet';
 import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
+import { OrNothing } from '../../../../util/type/utility-types';
 
 export function AvsluttOppfolgingInfoText(props: {
     harYtelser?: boolean;

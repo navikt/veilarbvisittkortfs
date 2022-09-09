@@ -32,23 +32,27 @@ interface HistorikkVisningProps {
     eskaleringsvarselHistorikk: EskaleringsvarselHistorikkInnslag[];
 }
 
-function mapHistorikk(historikk: Historikk, idx: number, idxForNyesteEnhetEndring: number): React.ReactElement {
+function mapTilKomponent(
+    historikk: Historikk,
+    indeks: number,
+    indeksForNyesteEnhetEndring: number
+): React.ReactElement {
     if (erInnstillingshistorikk(historikk)) {
         if (historikk.innslag.type === 'OPPFOLGINGSENHET_ENDRET') {
             return (
                 <OppfolgingEnhetEndret
                     historikkElement={historikk.innslag}
-                    key={idx}
-                    erGjeldendeEnhet={idx === idxForNyesteEnhetEndring}
+                    key={indeks}
+                    erGjeldendeEnhet={indeks === indeksForNyesteEnhetEndring}
                 />
             );
         }
 
-        return <InnstillingsHistorikkKomponent innstillingsHistorikk={historikk.innslag} key={idx} />;
+        return <InnstillingsHistorikkKomponent innstillingsHistorikk={historikk.innslag} key={indeks} />;
     } else if (erOppgaveHistorikk(historikk)) {
-        return <OppgaveHistorikkKomponent oppgaveHistorikk={historikk.innslag} key={idx} />;
+        return <OppgaveHistorikkKomponent oppgaveHistorikk={historikk.innslag} key={indeks} />;
     } else if (erEskaleringsvarselHistorikk(historikk)) {
-        return <EskaleringsvarselHistorikkKomponent innslag={historikk.innslag} key={idx} />;
+        return <EskaleringsvarselHistorikkKomponent innslag={historikk.innslag} key={indeks} />;
     } else {
         return <></>;
     }
@@ -111,16 +115,20 @@ function HistorikkVisning({
     }
 
     if (historikk.length === 1) {
-        return mapHistorikk(historikk[0], 0, 0);
+        return mapTilKomponent(historikk[0], 0, 0);
     }
 
     const indexForNyesteEnhetEndring = historikk.findIndex(
         h => erInnstillingshistorikk(h) && h.innslag.type === 'OPPFOLGINGSENHET_ENDRET'
     );
 
-    const historikkKomponenter = historikk.map((elem, idx) => mapHistorikk(elem, idx, indexForNyesteEnhetEndring));
-
-    return <>{historikkKomponenter}</>;
+    return (
+        <ul className="ustilet">
+            {historikk.map((elem, idx) => (
+                <li>{mapTilKomponent(elem, idx, indexForNyesteEnhetEndring)}</li>
+            ))}
+        </ul>
+    );
 }
 
 export default HistorikkVisning;

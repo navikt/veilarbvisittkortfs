@@ -1,6 +1,7 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import { Egenskaper, EskaleringsvarselHistorikkInnslag, GjeldendeEskaleringsvarsel } from '../../api/veilarbdialog';
+import { defaultNetworkResponseDelay } from '../config';
 
 const mockHenvendelseData: any = {
     aktivitetId: null,
@@ -33,13 +34,13 @@ const mockHenvendelseData: any = {
 
 export const veilarbdialogHandlers: RequestHandlersList = [
     rest.post('/veilarbdialog/api/dialog', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockHenvendelseData));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockHenvendelseData));
     }),
     rest.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/true', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockHenvendelseData));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockHenvendelseData));
     }),
     rest.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/true', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.json(mockHenvendelseData));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockHenvendelseData));
     }),
 
     rest.get('/veilarbdialog/api/eskaleringsvarsel/gjeldende', (req, res, ctx) => {
@@ -50,7 +51,7 @@ export const veilarbdialogHandlers: RequestHandlersList = [
             opprettetDato: new Date().toISOString(),
             opprettetBegrunnelse: 'begrunnelse'
         };
-        return res(ctx.delay(500), ctx.json(gjeldendeEskaleringsvarsel));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(gjeldendeEskaleringsvarsel));
     }),
     rest.get('/veilarbdialog/api/eskaleringsvarsel/historikk', (req, res, ctx) => {
         const now = new Date();
@@ -67,12 +68,12 @@ export const veilarbdialogHandlers: RequestHandlersList = [
             avsluttetBegrunnelse: 'Begrunnelse for stopp av eskalering'
         };
 
-        return res(ctx.delay(500), ctx.json([eskaleringsvarsel]));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json([eskaleringsvarsel]));
     }),
     rest.post('/veilarbdialog/api/eskaleringsvarsel/start', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.status(200));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.status(200));
     }),
     rest.patch('/veilarbdialog/api/eskaleringsvarsel/stop', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.status(200));
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.status(200));
     })
 ];

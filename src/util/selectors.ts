@@ -4,7 +4,7 @@ import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/ve
 import { Personalia } from '../api/veilarbperson';
 import { Arbeidsliste } from '../api/veilarbportefolje';
 import { VeilederData } from '../api/veilarbveileder';
-import { OrNothing } from './type/ornothing';
+import { OrNothing } from './type/utility-types';
 
 export function selectSammensattNavn(personalia: Personalia | undefined): string {
     if (!personalia) return '';

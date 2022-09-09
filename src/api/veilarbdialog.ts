@@ -1,6 +1,6 @@
 import { AxiosPromise, AxiosResponse } from 'axios';
 import { axiosInstance } from './utils';
-import { StringOrNothing } from '../util/type/stringornothings';
+import { StringOrNothing } from '../util/type/utility-types';
 
 export enum Egenskaper {
     ESKALERINGSVARSEL,

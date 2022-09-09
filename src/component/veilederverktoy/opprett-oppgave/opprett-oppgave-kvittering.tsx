@@ -1,7 +1,7 @@
 import React from 'react';
 import Kvittering from '../prosess/kvittering';
-import { OrNothing } from '../../../util/type/ornothing';
 import { OppgaveTema, OppgaveType } from '../../../api/veilarboppgave';
+import { OrNothing } from '../../../util/type/utility-types';
 
 export interface OpprettOppgaveKvitteringProps {
     tema: OrNothing<OppgaveTema>;

@@ -1,7 +1,7 @@
 import { AxiosPromise } from 'axios';
 import { axiosInstance } from './utils';
-import { StringOrNothing } from '../util/type/stringornothings';
 import { FrontendEvent } from '../util/logger';
+import { StringOrNothing } from '../util/type/utility-types';
 
 export interface Personalia {
     fornavn: string;
