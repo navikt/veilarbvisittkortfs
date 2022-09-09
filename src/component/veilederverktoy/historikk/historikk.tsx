@@ -6,16 +6,20 @@ import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useAppStore } from '../../../store/app-store';
 import { hasAnyFailed, isAnyLoading, isAnyLoadingOrNotStarted } from '../../../api/utils';
 import './historikk.less';
-import { fetchOppgaveHistorikk, OppgaveHistorikkInnslag } from '../../../api/veilarboppgave';
+import { fetchOppgaveHistorikk } from '../../../api/veilarboppgave';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
-import { fetchInstillingsHistorikk, InnstillingHistorikkInnslag } from '../../../api/veilarboppfolging';
+import { fetchInstillingsHistorikk, InnstillingsHistorikkOpprettetAvType } from '../../../api/veilarboppfolging';
 import { EskaleringsvarselHistorikkInnslag, hentEskaleringsvarselHistorikk } from '../../../api/veilarbdialog';
-import { fetchVeilederDataListe } from '../../../api/veilarbveileder';
+import { fetchVeilederDataListe, VeilederData } from '../../../api/veilarbveileder';
 import { isNonEmptyArray, isString } from '../../../util/type/type-guards';
-import { Common } from '../../../util/type/utility-types';
+import { StringOrNothing } from '../../../util/type/utility-types';
 import { filterUnique } from '../../../util/utils';
 
-type HistorikkInnslag = Common<InnstillingHistorikkInnslag, OppgaveHistorikkInnslag>;
+type HistorikkInnslag = {
+    opprettetAv: InnstillingsHistorikkOpprettetAvType;
+    opprettetAvBrukerId: StringOrNothing;
+    opprettetAvBrukerNavn?: StringOrNothing;
+};
 
 function eskaleringsvarselHistorikkTilEvent(
     historikk: EskaleringsvarselHistorikkInnslag[]
@@ -51,12 +55,30 @@ function eskaleringsvarselHistorikkTilEvent(
     return eventHistorikk;
 }
 
-function mapTilIdentListe(historikkInnslag: HistorikkInnslag[] | undefined): string[] {
+function mapTilIdentListe<T extends HistorikkInnslag>(
+    historikkInnslag: T[] | undefined,
+    opprettetAvFilter: InnstillingsHistorikkOpprettetAvType = 'NAV'
+): string[] {
     if (isNonEmptyArray(historikkInnslag)) {
-        return historikkInnslag.map(hi => hi.opprettetAvBrukerId).filter(isString);
+        return historikkInnslag
+            .filter(hi => hi.opprettetAv === opprettetAvFilter)
+            .map(hi => hi.opprettetAvBrukerId)
+            .filter(isString);
     }
 
     return [];
+}
+
+function dekorerHistorikkInnslagMedOpprettetAvBrukerNavn<T extends HistorikkInnslag>(
+    historikkInnslag: T[] | undefined,
+    veilederDataListe: VeilederData[] | undefined
+): T[] | undefined {
+    return historikkInnslag?.map(ih => {
+        return {
+            ...ih,
+            opprettetAvBrukerNavn: veilederDataListe?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn
+        };
+    });
 }
 
 function Historikk() {
@@ -113,11 +135,9 @@ function Historikk() {
     }
 
     const innstillingHistorikk =
-        innstillingsHistorikkFetcher.data?.map(ih => ({
-            ...ih,
-            opprettetAvBrukerNavn: veilederDataListeData?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn
-        })) || [];
-    const oppgaveHistorikk = oppgaveHistorikkFetcher.data || [];
+        dekorerHistorikkInnslagMedOpprettetAvBrukerNavn(innstillingsHistorikkFetcher.data, veilederDataListeData) || [];
+    const oppgaveHistorikk =
+        dekorerHistorikkInnslagMedOpprettetAvBrukerNavn(oppgaveHistorikkFetcher.data, veilederDataListeData) || [];
     const eskaleringsvarselHistorikk = eskaleringsvarselHistorikkTilEvent(eskaleringsvarselHistorikkFetcher.data || []);
 
     return (
