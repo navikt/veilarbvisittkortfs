@@ -1,19 +1,12 @@
 import React from 'react';
-import KnappFss from '../knapp-fss/knapp-fss';
 import './kopier-knapp.less';
 import { useState } from 'react';
-import classNames from 'classnames';
 import { useEffect } from 'react';
-import { logMetrikk } from '../../../util/logger';
+import { BodyShort } from '@navikt/ds-react';
+import { CopyToClipboard } from '@navikt/ds-react-internal';
 
 export function KopierKnappTekst(props: { kopierTekst: string }) {
     const [copySuccess, setCopySuccess] = useState(false);
-
-    function copyToClipboard() {
-        logMetrikk('veilarbvisittkortfs.metrikker.kopier.fnr');
-        navigator.clipboard.writeText(props.kopierTekst);
-        setCopySuccess(true);
-    }
 
     useEffect(() => {
         let timeOutId = 0;
@@ -24,11 +17,9 @@ export function KopierKnappTekst(props: { kopierTekst: string }) {
     }, [copySuccess]);
 
     return (
-        <KnappFss className="kopier-knapp" onClick={copyToClipboard}>
+        <BodyShort as="div" size="small" className="kopier-knapp">
             {props.kopierTekst}
-            <span className={classNames('kopier-knapp__tooltip', { 'tooltip--visible': copySuccess })}>
-                Kopiert fødselsnummer
-            </span>
-        </KnappFss>
+            {props.kopierTekst && <CopyToClipboard copyText={props.kopierTekst} popoverText="Kopiert" size="xsmall" />}
+        </BodyShort>
     );
 }
