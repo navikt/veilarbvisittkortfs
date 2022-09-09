@@ -10,13 +10,6 @@
         "prettier": "prettier --write 'src/**/*.ts{,x}'",
         "lint": "eslint src"
     },
-    "eslintConfig": {
-        "extends": "react-app",
-      "rules": {
-        "no-debugger": "error",
-        "no-console": "error"
-      }
-    },
     "browserslist": [
         ">0.2%",
         "not dead",
@@ -34,7 +27,7 @@
     "lint-staged": {
         "src/**/*.{ts,tsx}": [
             "prettier --write",
-            "eslint src"
+            "eslint src --config .eslintrc.lintstaged.json"
         ]
     },
     "dependencies": {
