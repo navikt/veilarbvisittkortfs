@@ -31,7 +31,7 @@ export const veilarbportefoljeHandlers: RequestHandlersList = [
                 isOppfolgendeVeileder: true,
                 kommentar: requestBody.kommentar,
                 overskrift: requestBody.overskrift,
-                sistEndretAv: 'Z007',
+                sistEndretAv: 'Z000007',
                 kategori: requestBody.kategori
             })
         );
@@ -48,7 +48,7 @@ export const veilarbportefoljeHandlers: RequestHandlersList = [
                 isOppfolgendeVeileder: true,
                 kommentar: requestBody.kommentar,
                 overskrift: requestBody.overskrift,
-                sistEndretAv: 'Z007',
+                sistEndretAv: 'Z000007',
                 kategori: requestBody.kategori
             })
         );

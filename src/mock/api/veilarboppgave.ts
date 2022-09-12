@@ -14,6 +14,14 @@ const mockEnheter = [
 const mockOppgavehistorikk: OppgaveHistorikkInnslag[] = [
     {
         type: 'OPPRETTET_OPPGAVE',
+        oppgaveTema: 'ARBEIDSAVKLARING',
+        oppgaveType: 'VURDER_HENVENDELSE',
+        opprettetAv: 'NAV',
+        opprettetAvBrukerId: 'Z000004',
+        dato: '2022-09-09T12:41:47.821+00:00'
+    },
+    {
+        type: 'OPPRETTET_OPPGAVE',
         oppgaveTema: 'OPPFOLGING',
         oppgaveType: 'VURDER_HENVENDELSE',
         opprettetAv: 'NAV',
@@ -69,7 +77,7 @@ export const veilarboppgaveHandlers: RequestHandlersList = [
                 ID: 123,
                 aktoerid: '00000012345',
                 gsakID: '1234',
-                opprettetAv: 'Z007',
+                opprettetAv: 'Z000007',
                 tema: requestBody.tema,
                 type: requestBody.type
             })

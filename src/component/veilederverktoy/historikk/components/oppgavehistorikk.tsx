@@ -33,7 +33,8 @@ function OppgaveHistorikkKomponent({ oppgaveHistorikk }: OwnProps) {
             <Undertekst>
                 {`${toSimpleDateStr(oppgaveHistorikk.dato)} ${opprettetAvTekst(
                     oppgaveHistorikk.opprettetAv,
-                    oppgaveHistorikk.opprettetAvBrukerId
+                    oppgaveHistorikk.opprettetAvBrukerId,
+                    oppgaveHistorikk.opprettetAvBrukerNavn
                 )}`}
             </Undertekst>
         </div>
