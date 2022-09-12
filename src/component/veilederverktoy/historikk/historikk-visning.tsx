@@ -125,7 +125,7 @@ function HistorikkVisning({
     return (
         <ul className="ustilet">
             {historikk.map((elem, idx) => (
-                <li>{mapTilKomponent(elem, idx, indexForNyesteEnhetEndring)}</li>
+                <li key={`historikk_visning_${idx}`}>{mapTilKomponent(elem, idx, indexForNyesteEnhetEndring)}</li>
             ))}
         </ul>
     );
