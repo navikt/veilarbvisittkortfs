@@ -17,7 +17,7 @@ const mockOppgavehistorikk: OppgaveHistorikkInnslag[] = [
         oppgaveTema: 'ARBEIDSAVKLARING',
         oppgaveType: 'VURDER_HENVENDELSE',
         opprettetAv: 'NAV',
-        opprettetAvBrukerId: 'Z0004',
+        opprettetAvBrukerId: 'Z000004',
         dato: '2022-09-09T12:41:47.821+00:00'
     },
     {
@@ -77,7 +77,7 @@ export const veilarboppgaveHandlers: RequestHandlersList = [
                 ID: 123,
                 aktoerid: '00000012345',
                 gsakID: '1234',
-                opprettetAv: 'Z007',
+                opprettetAv: 'Z000007',
                 tema: requestBody.tema,
                 type: requestBody.type
             })

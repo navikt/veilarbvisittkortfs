@@ -70,11 +70,13 @@ export interface EskaleringsvarselHistorikkInnslag {
     tilhorendeDialogId: number;
 
     opprettetAv: string;
+    opprettetAvBrukerNavn?: StringOrNothing;
     opprettetDato: string;
     opprettetBegrunnelse: string;
 
     avsluttetDato: string | null;
     avsluttetAv: string | null;
+    avsluttetAvBrukerNavn?: StringOrNothing;
     avsluttetBegrunnelse: string | null;
 }
 

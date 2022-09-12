@@ -15,6 +15,7 @@ function EskaleringsvarselHistorikkKomponent({ innslag }: EskaleringsvarselHisto
     const { brukerFnr } = useAppStore();
 
     const utfortAv = innslag.avsluttetAv || innslag.opprettetAv;
+    const utfortAvBrukerNavn = innslag.avsluttetAvBrukerNavn || innslag.opprettetAvBrukerNavn;
     const dato = innslag.avsluttetDato || innslag.opprettetDato;
     const begrunnelse = innslag.avsluttetBegrunnelse || innslag.opprettetBegrunnelse;
     const overskrift = innslag.avsluttetDato != null ? 'Varsel deaktivert' : 'Varsel sendt';
@@ -33,7 +34,9 @@ function EskaleringsvarselHistorikkKomponent({ innslag }: EskaleringsvarselHisto
                     Les mer i dialog
                 </LenkeTilDialog>
             </Normaltekst>
-            <Undertekst>{`${toSimpleDateStr(dato)} av ${utfortAv}`}</Undertekst>
+            <Undertekst>{`${toSimpleDateStr(dato)} av ${utfortAv}${
+                utfortAvBrukerNavn ? ` (${utfortAvBrukerNavn})` : ''
+            }`}</Undertekst>
         </div>
     );
 }

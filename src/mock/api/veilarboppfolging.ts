@@ -29,17 +29,17 @@ const mockInnstillingsHistorikk: InnstillingHistorikkInnslag[] = [
     {
         type: 'VEILEDER_TILORDNET',
         dato: '2022-01-14T13:56:53.813+02:00',
-        begrunnelse: 'Brukeren er tildelt veileder Z0004',
+        begrunnelse: 'Brukeren er tildelt veileder Z000004',
         opprettetAv: 'NAV',
-        opprettetAvBrukerId: 'Z0003',
+        opprettetAvBrukerId: 'Z000003',
         dialogId: null
     },
     {
         type: 'VEILEDER_TILORDNET',
         dato: '2021-08-14T13:56:53.813+02:00',
-        begrunnelse: 'Brukeren er tildelt veileder Z0003',
+        begrunnelse: 'Brukeren er tildelt veileder Z000003',
         opprettetAv: 'NAV',
-        opprettetAvBrukerId: 'Z0002',
+        opprettetAvBrukerId: 'Z000002',
         dialogId: null
     },
     {
@@ -53,7 +53,7 @@ const mockInnstillingsHistorikk: InnstillingHistorikkInnslag[] = [
     {
         type: 'VEILEDER_TILORDNET',
         dato: '2019-08-14T13:56:53.813+02:00',
-        begrunnelse: 'Brukeren er tildelt veileder Z0002',
+        begrunnelse: 'Brukeren er tildelt veileder Z000002',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: null,
         dialogId: null

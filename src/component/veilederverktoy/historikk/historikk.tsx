@@ -4,29 +4,25 @@ import { LasterModal } from '../../components/lastermodal/laster-modal';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useAppStore } from '../../../store/app-store';
-import { hasAnyFailed, isAnyLoading, isAnyLoadingOrNotStarted } from '../../../api/utils';
+import { hasAllData, hasAnyFailed, isAnyLoading } from '../../../api/utils';
 import './historikk.less';
-import { fetchOppgaveHistorikk } from '../../../api/veilarboppgave';
+import { fetchOppgaveHistorikk, OppgaveHistorikkInnslag } from '../../../api/veilarboppgave';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
-import { fetchInstillingsHistorikk, InnstillingsHistorikkOpprettetAvType } from '../../../api/veilarboppfolging';
+import { fetchInstillingsHistorikk, InnstillingHistorikkInnslag } from '../../../api/veilarboppfolging';
 import { EskaleringsvarselHistorikkInnslag, hentEskaleringsvarselHistorikk } from '../../../api/veilarbdialog';
-import { fetchVeilederDataListe, VeilederData } from '../../../api/veilarbveileder';
+import { fetchVeilederDataListe } from '../../../api/veilarbveileder';
 import { isNonEmptyArray, isString } from '../../../util/type/type-guards';
 import { StringOrNothing } from '../../../util/type/utility-types';
 import { filterUnique } from '../../../util/utils';
 
-type HistorikkInnslag = {
-    opprettetAv: InnstillingsHistorikkOpprettetAvType;
-    opprettetAvBrukerId: StringOrNothing;
-    opprettetAvBrukerNavn?: StringOrNothing;
-};
+type HistorikkInnslag = InnstillingHistorikkInnslag | OppgaveHistorikkInnslag | EskaleringsvarselHistorikkInnslag;
 
 function eskaleringsvarselHistorikkTilEvent(
-    historikk: EskaleringsvarselHistorikkInnslag[]
+    historikk: EskaleringsvarselHistorikkInnslag[] | undefined
 ): EskaleringsvarselHistorikkInnslag[] {
     const eventHistorikk: EskaleringsvarselHistorikkInnslag[] = [];
 
-    historikk.forEach(h => {
+    historikk?.forEach(h => {
         eventHistorikk.push({
             id: h.id,
             tilhorendeDialogId: h.tilhorendeDialogId,
@@ -55,30 +51,16 @@ function eskaleringsvarselHistorikkTilEvent(
     return eventHistorikk;
 }
 
-function mapTilIdentListe<T extends HistorikkInnslag>(
-    historikkInnslag: T[] | undefined,
-    opprettetAvFilter: InnstillingsHistorikkOpprettetAvType = 'NAV'
+function tilIdentListe(
+    historikkInnslag: HistorikkInnslag[] | undefined,
+    identMapper: (hi: HistorikkInnslag) => StringOrNothing,
+    filter: (hi: HistorikkInnslag) => boolean
 ): string[] {
     if (isNonEmptyArray(historikkInnslag)) {
-        return historikkInnslag
-            .filter(hi => hi.opprettetAv === opprettetAvFilter)
-            .map(hi => hi.opprettetAvBrukerId)
-            .filter(isString);
+        return historikkInnslag.filter(filter).map(identMapper).filter(isString);
     }
 
     return [];
-}
-
-function dekorerHistorikkInnslagMedOpprettetAvBrukerNavn<T extends HistorikkInnslag>(
-    historikkInnslag: T[] | undefined,
-    veilederDataListe: VeilederData[] | undefined
-): T[] | undefined {
-    return historikkInnslag?.map(ih => {
-        return {
-            ...ih,
-            opprettetAvBrukerNavn: veilederDataListe?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn
-        };
-    });
 }
 
 function Historikk() {
@@ -102,22 +84,44 @@ function Historikk() {
     }, [brukerFnr]);
 
     useEffect(() => {
-        const skalHenteVeilederDataListe = !isAnyLoadingOrNotStarted(
-            innstillingsHistorikkFetcher,
-            oppgaveHistorikkFetcher
-        );
+        const skalHenteVeilederDataListe =
+            !isAnyLoading(innstillingsHistorikkFetcher, oppgaveHistorikkFetcher, eskaleringsvarselHistorikkFetcher) &&
+            hasAllData(innstillingsHistorikkFetcher, oppgaveHistorikkFetcher, eskaleringsvarselHistorikkFetcher);
 
         if (skalHenteVeilederDataListe) {
             const veilederIdentListe = filterUnique([
-                ...mapTilIdentListe(innstillingsHistorikkFetcher.data),
-                ...mapTilIdentListe(oppgaveHistorikkFetcher.data)
+                ...tilIdentListe(
+                    innstillingsHistorikkFetcher.data,
+                    (ihi: InnstillingHistorikkInnslag) => ihi.opprettetAvBrukerId,
+                    (ihi: InnstillingHistorikkInnslag) => ihi.opprettetAv === 'NAV'
+                ),
+                ...tilIdentListe(
+                    oppgaveHistorikkFetcher.data,
+                    (ohi: OppgaveHistorikkInnslag) => ohi.opprettetAvBrukerId,
+                    (ohi: OppgaveHistorikkInnslag) => ohi.opprettetAv === 'NAV'
+                ),
+                ...tilIdentListe(
+                    eskaleringsvarselHistorikkFetcher.data,
+                    (evhi: EskaleringsvarselHistorikkInnslag) => evhi.opprettetAv,
+                    (evhi: EskaleringsvarselHistorikkInnslag) => /^[A-Z]\d{6}$/.test(evhi.opprettetAv)
+                ),
+                ...tilIdentListe(
+                    eskaleringsvarselHistorikkFetcher.data,
+                    (evhi: EskaleringsvarselHistorikkInnslag) => evhi.avsluttetAv,
+                    (evhi: EskaleringsvarselHistorikkInnslag) => /^[A-Z]\d{6}$/.test(evhi.avsluttetAv ?? '')
+                )
             ]);
 
             if (isNonEmptyArray(veilederIdentListe)) {
                 hentVeilederDataListe({ identer: veilederIdentListe });
             }
         }
-    }, [innstillingsHistorikkFetcher, oppgaveHistorikkFetcher, hentVeilederDataListe]);
+    }, [
+        innstillingsHistorikkFetcher,
+        oppgaveHistorikkFetcher,
+        eskaleringsvarselHistorikkFetcher,
+        hentVeilederDataListe
+    ]);
 
     if (
         isAnyLoading(innstillingsHistorikkFetcher, oppgaveHistorikkFetcher, eskaleringsvarselHistorikkFetcher) ||
@@ -135,10 +139,29 @@ function Historikk() {
     }
 
     const innstillingHistorikk =
-        dekorerHistorikkInnslagMedOpprettetAvBrukerNavn(innstillingsHistorikkFetcher.data, veilederDataListeData) || [];
+        innstillingsHistorikkFetcher.data?.map(ih => {
+            return {
+                ...ih,
+                opprettetAvBrukerNavn: veilederDataListeData?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn
+            };
+        }) || [];
+
     const oppgaveHistorikk =
-        dekorerHistorikkInnslagMedOpprettetAvBrukerNavn(oppgaveHistorikkFetcher.data, veilederDataListeData) || [];
-    const eskaleringsvarselHistorikk = eskaleringsvarselHistorikkTilEvent(eskaleringsvarselHistorikkFetcher.data || []);
+        oppgaveHistorikkFetcher.data?.map(ih => {
+            return {
+                ...ih,
+                opprettetAvBrukerNavn: veilederDataListeData?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn
+            };
+        }) || [];
+
+    const eskaleringsvarselHistorikk =
+        eskaleringsvarselHistorikkTilEvent(eskaleringsvarselHistorikkFetcher.data)?.map(evhi => {
+            return {
+                ...evhi,
+                opprettetAvBrukerNavn: veilederDataListeData?.find(vd => evhi.opprettetAv === vd.ident)?.navn,
+                avsluttetAvBrukerNavn: veilederDataListeData?.find(vd => evhi.avsluttetAv === vd.ident)?.navn
+            };
+        }) || [];
 
     return (
         <VeilederVerktoyModal className="historikk__modal" tittel="Historikk">

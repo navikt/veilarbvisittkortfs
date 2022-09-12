@@ -10,19 +10,24 @@ const mockEnhetData: EnhetData = {
 };
 
 export const mockInnloggetVeileder: VeilederData = {
-    ident: 'Z007',
+    ident: 'Z000007',
     navn: 'James Bond',
     fornavn: 'James',
     etternavn: 'Bond'
 };
 
-const mockVeiledereNavn = (veiledereDataListeRequest: VeilederDataListeRequest): VeilederData[] =>
-    veiledereDataListeRequest.identer.map(veilederIdent => ({
-        ident: veilederIdent,
-        navn: 'Bond, James',
-        fornavn: 'James',
-        etternavn: 'Bond'
-    }));
+const mockVeiledereNavn = (veiledereDataListeRequest: VeilederDataListeRequest): VeilederData[] => {
+    const veilederIdenterSomSkalMockes = ['Z000002', 'Z123456', 'Z000003', 'Z995009'];
+
+    return veiledereDataListeRequest.identer
+        .filter(i => veilederIdenterSomSkalMockes.some(vism => vism === i))
+        .map(veilederIdent => ({
+            ident: veilederIdent,
+            navn: 'Bond, James',
+            fornavn: 'James',
+            etternavn: 'Bond'
+        }));
+};
 
 export const veilarbveilederHandlers: RequestHandlersList = [
     rest.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', (req, res, ctx) => {
