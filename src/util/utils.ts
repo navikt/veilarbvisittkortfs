@@ -51,3 +51,7 @@ export function eskaleringVarselSendtEvent() {
 export function filterUnique(array: any[]): any[] {
     return Array.from(new Set(array));
 }
+
+export function isDefined(subject: any): boolean {
+    return subject !== undefined && subject !== null;
+}

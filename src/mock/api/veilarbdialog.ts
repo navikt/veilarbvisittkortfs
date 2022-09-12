@@ -11,7 +11,7 @@ const mockHenvendelseData: any = {
     henvendelser: [
         {
             avsender: 'VEILEDER',
-            avsenderId: 'Z1234',
+            avsenderId: 'Z123456',
             dialogId: '1665',
             id: '2201',
             lest: true,
@@ -47,7 +47,7 @@ export const veilarbdialogHandlers: RequestHandlersList = [
         const gjeldendeEskaleringsvarsel: GjeldendeEskaleringsvarsel = {
             id: 1,
             tilhorendeDialogId: 42,
-            opprettetAv: 'Z1234',
+            opprettetAv: 'Z123456',
             opprettetDato: new Date().toISOString(),
             opprettetBegrunnelse: 'begrunnelse'
         };
@@ -60,11 +60,11 @@ export const veilarbdialogHandlers: RequestHandlersList = [
         const eskaleringsvarsel: EskaleringsvarselHistorikkInnslag = {
             id: 1,
             tilhorendeDialogId: 42,
-            opprettetAv: 'Z1234',
+            opprettetAv: 'Z123456',
             opprettetDato: yesterday.toISOString(),
             opprettetBegrunnelse: 'Begrunnelse for start av eskalering',
             avsluttetDato: now.toISOString(),
-            avsluttetAv: 'Z1234',
+            avsluttetAv: 'Z123456',
             avsluttetBegrunnelse: 'Begrunnelse for stopp av eskalering'
         };
 

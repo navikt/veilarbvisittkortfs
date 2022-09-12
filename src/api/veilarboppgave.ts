@@ -8,6 +8,7 @@ export interface OppgaveHistorikkInnslag {
     oppgaveType: OppgaveType;
     opprettetAv: 'NAV';
     opprettetAvBrukerId: string;
+    opprettetAvBrukerNavn?: StringOrNothing;
     dato: string; //OPPRETTET DATO
 }
 
