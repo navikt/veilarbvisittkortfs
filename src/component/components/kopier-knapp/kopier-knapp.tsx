@@ -3,9 +3,7 @@ import './kopier-knapp.less';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-// @ts-ignore
 import { CopyToClipboard } from '@navikt/ds-react-internal';
-// @ts-ignore
 import { BodyShort } from '@navikt/ds-react';
 
 export function KopierKnappTekst(props: { kopierTekst: string }) {
@@ -20,9 +18,14 @@ export function KopierKnappTekst(props: { kopierTekst: string }) {
     }, [copySuccess]);
 
     return (
-        <BodyShort as="div" size="small" className="kopier-knapp">
+        <BodyShort as="div" size="small" className="kopier-knapp navds-body-short navds-body-short--small">
             {props.kopierTekst && (
-                <CopyToClipboard copyText={props.kopierTekst} popoverText="kopiert" size="xsmall">
+                <CopyToClipboard
+                    className="navdsi-copy-to-clipboard navds-button navds-button--tertiary navds-button--xsmall"
+                    copyText={props.kopierTekst}
+                    popoverText="kopiert"
+                    size="xsmall"
+                >
                     {props.kopierTekst}
                 </CopyToClipboard>
             )}
