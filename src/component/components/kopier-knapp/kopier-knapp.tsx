@@ -18,14 +18,9 @@ export function KopierKnappTekst(props: { kopierTekst: string }) {
     }, [copySuccess]);
 
     return (
-        <BodyShort as="div" size="small" className="kopier-knapp navds-body-short navds-body-short--small">
+        <BodyShort as="div" size="small" className="kopier-knapp">
             {props.kopierTekst && (
-                <CopyToClipboard
-                    className="navdsi-copy-to-clipboard navds-button navds-button--tertiary navds-button--xsmall"
-                    copyText={props.kopierTekst}
-                    popoverText="kopiert"
-                    size="xsmall"
-                >
+                <CopyToClipboard copyText={props.kopierTekst} popoverText="kopiert" size="xsmall" iconPosition="right">
                     {props.kopierTekst}
                 </CopyToClipboard>
             )}
