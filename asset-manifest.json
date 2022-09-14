@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/veilarbvisittkortfs/static/css/main.ef0a508a.chunk.css",
-    "main.js": "/veilarbvisittkortfs/static/js/main.a9cbb9e6.chunk.js",
-    "main.js.map": "/veilarbvisittkortfs/static/js/main.a9cbb9e6.chunk.js.map",
+    "main.css": "/veilarbvisittkortfs/static/css/main.1b55133d.chunk.css",
+    "main.js": "/veilarbvisittkortfs/static/js/main.078498d1.chunk.js",
+    "main.js.map": "/veilarbvisittkortfs/static/js/main.078498d1.chunk.js.map",
     "runtime-main.js": "/veilarbvisittkortfs/static/js/runtime-main.4701006c.js",
     "runtime-main.js.map": "/veilarbvisittkortfs/static/js/runtime-main.4701006c.js.map",
     "static/css/2.f1f76003.chunk.css": "/veilarbvisittkortfs/static/css/2.f1f76003.chunk.css",
-    "static/js/2.3833e2e6.chunk.js": "/veilarbvisittkortfs/static/js/2.3833e2e6.chunk.js",
-    "static/js/2.3833e2e6.chunk.js.map": "/veilarbvisittkortfs/static/js/2.3833e2e6.chunk.js.map",
+    "static/js/2.1c7c11ca.chunk.js": "/veilarbvisittkortfs/static/js/2.1c7c11ca.chunk.js",
+    "static/js/2.1c7c11ca.chunk.js.map": "/veilarbvisittkortfs/static/js/2.1c7c11ca.chunk.js.map",
     "index.html": "/veilarbvisittkortfs/index.html",
     "static/css/2.f1f76003.chunk.css.map": "/veilarbvisittkortfs/static/css/2.f1f76003.chunk.css.map",
-    "static/css/main.ef0a508a.chunk.css.map": "/veilarbvisittkortfs/static/css/main.ef0a508a.chunk.css.map",
-    "static/js/2.3833e2e6.chunk.js.LICENSE.txt": "/veilarbvisittkortfs/static/js/2.3833e2e6.chunk.js.LICENSE.txt",
+    "static/css/main.1b55133d.chunk.css.map": "/veilarbvisittkortfs/static/css/main.1b55133d.chunk.css.map",
+    "static/js/2.1c7c11ca.chunk.js.LICENSE.txt": "/veilarbvisittkortfs/static/js/2.1c7c11ca.chunk.js.LICENSE.txt",
     "static/media/advarsel-sirkel.42c46a6d.svg": "/veilarbvisittkortfs/static/media/advarsel-sirkel.42c46a6d.svg",
     "static/media/arbeidslisteikon_bla.2e831f4a.svg": "/veilarbvisittkortfs/static/media/arbeidslisteikon_bla.2e831f4a.svg",
     "static/media/arbeidslisteikon_gronn.15f551e0.svg": "/veilarbvisittkortfs/static/media/arbeidslisteikon_gronn.15f551e0.svg",
@@ -28,8 +28,8 @@
   "entrypoints": [
     "static/js/runtime-main.4701006c.js",
     "static/css/2.f1f76003.chunk.css",
-    "static/js/2.3833e2e6.chunk.js",
-    "static/css/main.ef0a508a.chunk.css",
-    "static/js/main.a9cbb9e6.chunk.js"
+    "static/js/2.1c7c11ca.chunk.js",
+    "static/css/main.1b55133d.chunk.css",
+    "static/js/main.078498d1.chunk.js"
   ]
 }
