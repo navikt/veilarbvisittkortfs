@@ -30,7 +30,7 @@ function PersonInfo() {
         <div className="personinfo">
             <KjonnIkon visible={personalia?.kjonn} kjonn={personalia?.kjonn as string} />
             <NavnOgAlder navn={navn} personalia={personalia} />
-            <div>
+            <div className="arbeidsliste">
                 <ArbeidslisteKnapp
                     hidden={!(kanLeggeIArbeidsliste || kanRedigereArbeidsliste)}
                     onClick={klikk}
