@@ -26,6 +26,8 @@ jobs:
               run: npm run test
             - name: Build application
               run: npm run build:gcp
+              env:
+                PUBLIC_URL: https://veilarbvisittkortfs.intern.nav.no
             - name: Authenticate to Google Cloud
               uses: google-github-actions/auth@v0
               with:
