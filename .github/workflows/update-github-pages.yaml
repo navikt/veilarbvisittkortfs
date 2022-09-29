@@ -17,11 +17,9 @@ jobs:
                   node-version: '16'
                   cache: 'npm'
             - name: Install dependencies
-              run: npm ci
+              run: npm ci --legacy-peer-deps
             - name: Build mock application
               run: npm run build:mock
-            - name: Legg til 404 fil
-              run: cp ./.github/pages/404.html ./build/404.html
             - name: Update GitHub pages
               uses: peaceiris/actions-gh-pages@v3
               with:
