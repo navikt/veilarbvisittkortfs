@@ -52,7 +52,9 @@ function AvsluttOppfolging() {
             >
                 Du kan ikke avslutte oppfølgingsperioden fordi:
                 <ul className="avslutt-oppfolging__ul">
-                    {avslutningStatus?.underOppfolging && <li>Brukeren har aktiv status i Arena.</li>}
+                    {(avslutningStatus?.underOppfolging || avslutningStatus?.erSykmeldtMedArbeidsgiver) && (
+                        <li>Brukeren har aktiv status i Arena.</li>
+                    )}
                     {avslutningStatus?.underKvp && <li>Brukeren deltar i på KVP. KVP må avsluttes først.</li>}
                 </ul>
             </VarselModal>

@@ -23,6 +23,7 @@ export interface AvslutningStatus {
     kanAvslutte: boolean;
     underKvp: boolean;
     underOppfolging: boolean;
+    erSykmeldtMedArbeidsgiver: boolean;
 }
 
 export interface OppfolgingsPerioder {
