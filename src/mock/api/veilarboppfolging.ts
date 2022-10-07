@@ -14,7 +14,8 @@ const mockAvslutningStatus: AvslutningStatus = {
     harYtelser: false,
     underOppfolging: true,
     inaktiveringsDato: null,
-    underKvp: false
+    underKvp: false,
+    erIserv: false
 };
 
 const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
@@ -22,7 +23,8 @@ const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
     harYtelser: false,
     underOppfolging: false,
     inaktiveringsDato: null,
-    underKvp: false
+    underKvp: false,
+    erIserv: false
 };
 
 const mockInnstillingsHistorikk: InnstillingHistorikkInnslag[] = [

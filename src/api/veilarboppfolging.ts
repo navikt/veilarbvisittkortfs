@@ -23,6 +23,7 @@ export interface AvslutningStatus {
     kanAvslutte: boolean;
     underKvp: boolean;
     underOppfolging: boolean;
+    erIserv: boolean;
 }
 
 export interface OppfolgingsPerioder {
