@@ -1,9 +1,6 @@
 name: Deploy to dev
 on:
     workflow_dispatch:
-    push:
-        branches:
-            - dev
 env:
     CI: true
     TZ: Europe/Amsterdam
@@ -25,7 +22,7 @@ jobs:
             - name: Run tests
               run: npm run test
             - name: Build application
-              run: npm run build:gcp
+              run: npm run build
               env:
                 PUBLIC_URL: https://veilarbvisittkortfs.dev.intern.nav.no
             - name: Authenticate to Google Cloud
