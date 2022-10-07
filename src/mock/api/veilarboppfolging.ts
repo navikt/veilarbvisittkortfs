@@ -15,7 +15,7 @@ const mockAvslutningStatus: AvslutningStatus = {
     underOppfolging: true,
     inaktiveringsDato: null,
     underKvp: false,
-    erSykmeldtMedArbeidsgiver: false
+    erIserv: false
 };
 
 const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
@@ -24,7 +24,7 @@ const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
     underOppfolging: false,
     inaktiveringsDato: null,
     underKvp: false,
-    erSykmeldtMedArbeidsgiver: false
+    erIserv: false
 };
 
 const mockInnstillingsHistorikk: InnstillingHistorikkInnslag[] = [
