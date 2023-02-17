@@ -8,7 +8,7 @@ import { lagVeilederSammensattNavn } from '../../../util/selectors';
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { Oppfolging, OppfolgingStatus, tildelTilVeileder } from '../../../api/veilarboppfolging';
-import { VeilederData } from '../../../api/veilarbveileder';
+import {fetchInnloggetVeileder, VeilederData} from '../../../api/veilarbveileder';
 import './tildel-veileder.less';
 
 function TildelVeileder() {
@@ -16,13 +16,22 @@ function TildelVeileder() {
     const { showTildelVeilederKvitteringModal, showTildelVeilederFeiletModal, hideModal } = useModalStore();
     const { veilederePaEnhet, oppfolging, setOppfolging, setOppfolgingsstatus } = useDataStore();
     const [selectedVeilederId, setSelectedVeilederId] = useState('');
-
+    const innloggetVeileder = fetchInnloggetVeileder();
     const fraVeileder = oppfolging?.veilederId;
+    
+    const sorterVeiledere = (input: VeilederData[]): VeilederData[] => {
+        input.sort((a, b) => (a.etternavn && b.etternavn ? a.etternavn.localeCompare(b.etternavn) : 1));
+        if (innloggetVeileder) {
+            input = input.filter(item => item.ident !== innloggetVeileder.ident);
+            input.unshift(innloggetVeileder);
+        }
+        return input;
+    };
 
     const sorterteVeiledere = useMemo(() => {
         const veiledere = veilederePaEnhet?.veilederListe || [];
-        return veiledere.sort((a, b) => a.etternavn.localeCompare(b.etternavn));
-    }, [veilederePaEnhet?.veilederListe]);
+        return sorterVeiledere(veiledere);
+    });
 
     const handleSubmitTildelVeileder = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
