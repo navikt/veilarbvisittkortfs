@@ -24,9 +24,9 @@ function TildelVeileder() {
     const sorterteVeiledere = useMemo(() => {
         const veiledere = veilederePaEnhet?.veilederListe || [];
         return veiledere.sort((a, b) => {
-            if (a.ident == b.ident) return 0;
-            if (a.ident == innloggetVeileder?.ident) return -1;
-            if (b.ident == innloggetVeileder?.ident) return 1;
+            if (a.ident === b.ident) return 0;
+            if (a.ident === innloggetVeileder?.ident) return -1;
+            if (b.ident === innloggetVeileder?.ident) return 1;
             return a.etternavn.localeCompare(b.etternavn);
         });
     }, [veilederePaEnhet?.veilederListe]);
