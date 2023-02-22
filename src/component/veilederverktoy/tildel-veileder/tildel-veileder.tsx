@@ -14,15 +14,19 @@ import './tildel-veileder.less';
 function TildelVeileder() {
     const { brukerFnr } = useAppStore();
     const { showTildelVeilederKvitteringModal, showTildelVeilederFeiletModal, hideModal } = useModalStore();
-    const { veilederePaEnhet, oppfolging, setOppfolging, setOppfolgingsstatus } = useDataStore();
+    const { veilederePaEnhet, oppfolging, setOppfolging, setOppfolgingsstatus, innloggetVeileder } = useDataStore();
     const [selectedVeilederId, setSelectedVeilederId] = useState('');
-
     const fraVeileder = oppfolging?.veilederId;
 
     const sorterteVeiledere = useMemo(() => {
         const veiledere = veilederePaEnhet?.veilederListe || [];
-        return veiledere.sort((a, b) => a.etternavn.localeCompare(b.etternavn));
-    }, [veilederePaEnhet?.veilederListe]);
+        return veiledere.sort((a, b) => {
+            if (a.ident === b.ident) return 0;
+            if (a.ident === innloggetVeileder?.ident) return -1;
+            if (b.ident === innloggetVeileder?.ident) return 1;
+            return a.etternavn.localeCompare(b.etternavn);
+        });
+    }, [veilederePaEnhet?.veilederListe, innloggetVeileder]);
 
     const handleSubmitTildelVeileder = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
