@@ -8,7 +8,7 @@ import { StringOrNothing } from '../../../util/type/utility-types';
 
 function byggRegistreringUrl(fnr: string, enhet: StringOrNothing) {
     return erITestMiljo()
-        ? `https://arbeidssokerregistrering.dev.intern.nav.no?fnr=${fnr}&enhetId=${enhet}`
+        ? `https://arbeidssokerregistrering.intern.dev.nav.no?fnr=${fnr}&enhetId=${enhet}`
         : `https://arbeidssokerregistrering.intern.nav.no?fnr=${fnr}&enhetId=${enhet}`;
 }
 
