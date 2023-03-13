@@ -36,7 +36,10 @@ spec:
       value: >
         {
           "cors": {
-            "origin": "https://veilarbpersonflate.intern.nav.no"
+            "origin": [
+              "https://veilarbpersonflate.intern.nav.no",
+              "https://arbeidssokerregistrering.intern.nav.no"
+            ]
           },
           "gcs": {
             "bucketName": "veilarbvisittkortfs-prod"
