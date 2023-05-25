@@ -1,4 +1,3 @@
-@import '~nav-frontend-core/less/_variabler';
 
 .visittkortfs-modal {
     .opprett-oppgave {
@@ -51,17 +50,17 @@
 
     &__button:focus {
         outline: 0;
-        box-shadow: 0 0 0 3px @fokusFarge;
+        box-shadow: 0 0 0 3px var(--a-blue-300);
     }
 
     .dropdown {
         &__innhold {
             position: absolute;
             z-index: 110;
-            border: 1px solid @navGra40;
+            border: 1px solid var(--a-gray-400);
             top: ~'calc(100% - 14px)';
-            background-color: @white;
-            border-radius: 0 0 @border-radius-small @border-radius-small;
+            background-color: var(--a-white);
+            border-radius: 0 0 2px 2px;
             width: 250px;
             padding: 0 0.5rem;
             right: auto;

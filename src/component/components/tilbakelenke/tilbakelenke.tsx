@@ -1,7 +1,7 @@
 import React from 'react';
 import './tilbakelenke.less';
-import Chevron from 'nav-frontend-chevron';
 import { useAppStore } from '../../../store/app-store';
+import {ChevronLeftCircle} from "@navikt/ds-icons";
 
 function Tilbakelenke() {
     const { brukerFnr, enhetId, tilbakeTilFlate } = useAppStore();
@@ -9,7 +9,7 @@ function Tilbakelenke() {
 
     return (
         <a className="visittkortfs__tilbakelenke" href={tilbakeLenke}>
-            <Chevron stor={true} type="venstre" />
+            <ChevronLeftCircle />
         </a>
     );
 }

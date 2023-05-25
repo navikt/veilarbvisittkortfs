@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import AlertStripeSuksess from 'nav-frontend-alertstriper/lib/suksess-alertstripe';
 import { useFocus } from '../../../util/hook/use-focus';
 import useTimer from '../../../util/hook/use-timer';
 import { useToastStore } from '../../../store/toast-store';
 import './toast.less';
 import { logMetrikk } from '../../../util/logger';
+import {Alert} from "@navikt/ds-react";
 
 export interface FjernTildelVeilederToastProps {
     tildeltVeilederNavn: string;
@@ -35,13 +35,13 @@ function FjernTildelVeilederToast(props: FjernTildelVeilederToastProps) {
 
     return (
         <div className="toast-wrapper" key={new Date().getTime()}>
-            <AlertStripeSuksess className="toast-alertstripe">
+            <Alert variant="success" className="toast-alertstripe">
                 <span ref={focusRef} tabIndex={0} className="toast">
                     Du har tildelt veileder {props.tildeltVeilederNavn}. Det kan ta noe tid før brukeren er i Min
                     oversikt.
                     <button onClick={handleClick} className="lukknapp lukknapp--svart" />
                 </span>
-            </AlertStripeSuksess>
+            </Alert>
         </div>
     );
 }

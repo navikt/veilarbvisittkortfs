@@ -1,8 +1,8 @@
 import React from 'react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { logMetrikk } from '../../../util/logger';
 import { useModalStore } from '../../../store/modal-store';
+import {BodyLong, BodyShort, Heading} from "@navikt/ds-react";
 
 export function FeilTildelingModal() {
     const { hideModal } = useModalStore();
@@ -20,11 +20,11 @@ export function FeilTildelingModal() {
             type="FEIL"
             onRequestClose={lukkModal}
         >
-            <Systemtittel>Handlingen kan ikke utføres</Systemtittel>
-            <Normaltekst className="feil-modal-normaltekst">
+            <Heading level="2" size="medium">Handlingen kan ikke utføres</Heading>
+            <BodyLong className="feil-modal-normaltekst">
                 Tildeling av veileder feilet. Det kan skyldes manglende tilgang til brukeren, at veilederen allerede er
                 tildelt brukeren, eller at brukeren ikke er under oppfølging.
-            </Normaltekst>
+            </BodyLong>
             <button className="knapp knapp--hoved feil-modal-knapp" onClick={lukkModal}>
                 Ok
             </button>

@@ -2,7 +2,6 @@ import React from 'react';
 import FormikInput from '../components/formik/formik-input';
 import FormikTekstArea from '../components/formik/formik-textarea';
 import FormikDatoVelger from '../components/formik/formik-datepicker';
-import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import ArbeidslistekategoriVisning from './arbeidslisteikon/arbeidslisteikon-visning';
 import {
     validerArbeidslisteDatoFelt,
@@ -11,6 +10,7 @@ import {
 } from '../../util/formik-validation';
 import { toSimpleDateStr } from '../../util/date-utils';
 import { OrNothing } from '../../util/type/utility-types';
+import { Heading, Ingress } from '@navikt/ds-react';
 
 interface ArbeidslisteFormProps {
     sistEndretAv?: OrNothing<{ veilederId: string }>;
@@ -23,7 +23,7 @@ function ArbeidslisteForm(props: ArbeidslisteFormProps) {
     return (
         <div className="arbeidsliste__bruker">
             <div className="blokk-s">
-                <Undertittel>{`${props.navn}, ${props.fnr}`}</Undertittel>
+                <Heading size="medium" level="3">{`${props.navn}, ${props.fnr}`}</Heading>
                 <FormikInput name="overskrift" label="Tittel" validate={validerArbeidslisteTittelFelt} bredde="L" />
                 <FormikTekstArea
                     name="kommentar"
@@ -32,9 +32,9 @@ function ArbeidslisteForm(props: ArbeidslisteFormProps) {
                     validate={validerArbeidslisteKommentarFelt}
                 />
                 {props.sistEndretAv && props.endringstidspunkt && (
-                    <Undertekst className="arbeidsliste--modal-redigering">
+                    <Ingress className="arbeidsliste--modal-redigering">
                         {`Oppdatert ${toSimpleDateStr(props.endringstidspunkt)} av ${props.sistEndretAv.veilederId}`}
-                    </Undertekst>
+                    </Ingress>
                 )}
             </div>
             <div className="dato-kategori-wrapper">

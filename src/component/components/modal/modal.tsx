@@ -1,9 +1,7 @@
-import NavFrontendModal from 'nav-frontend-modal';
 import React from 'react';
 import classNames from 'classnames';
+import { Modal as AkselModal } from '@navikt/ds-react';
 import './modal.less';
-
-const cls = (className: string | undefined) => classNames('modal', className);
 
 interface ModalProps {
     children: React.ReactNode;
@@ -15,16 +13,16 @@ interface ModalProps {
 
 function Modal({ children, className, contentLabel, isOpen = true, onRequestClose }: ModalProps) {
     return (
-        <NavFrontendModal
-            className={cls(className)}
-            contentLabel={contentLabel}
-            isOpen={isOpen}
-            onRequestClose={onRequestClose}
-            portalClassName="visittkortfs-modal"
-            closeButton={true}
+        <AkselModal
+            className={classNames('modal', 'visittkortfs-modal', className)}
+            // contentLabel={contentLabel}
+            open={isOpen}
+            onClose={onRequestClose}
+            // portalClassName="visittkortfs-modal"
+            // closeButton={true}
         >
             {children}
-        </NavFrontendModal>
+        </AkselModal>
     );
 }
 

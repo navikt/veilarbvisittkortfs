@@ -1,7 +1,7 @@
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { HiddenIfFlatKnapp } from '../components/hidden-if/hidden-if-knapp';
 import { ReactComponent as SlettIcon } from '../components/ikoner/slett.svg';
 import React from 'react';
+import { Button } from '@navikt/ds-react';
 
 interface ArbeidslisteFooterProps {
     onRequestClose: () => void;
@@ -12,14 +12,14 @@ interface ArbeidslisteFooterProps {
 function ArbeidslisteFooter(props: ArbeidslisteFooterProps) {
     return (
         <div className="modal-footer">
-            <Hovedknapp htmlType="submit" className="btn--mr1">
+            <Button variant="primary" type="submit" className="btn--mr1">
                 Lagre
-            </Hovedknapp>
-            <Knapp htmlType="button" onClick={props.onRequestClose}>
+            </Button>
+            <Button variant="secondary" type="button" onClick={props.onRequestClose}>
                 Avbryt
-            </Knapp>
+            </Button>
             <HiddenIfFlatKnapp
-                htmlType="button"
+                type="button"
                 hidden={!props.kanFjerneArbeidsliste}
                 onClick={props.slettArbeidsliste}
                 className="fjern--knapp"

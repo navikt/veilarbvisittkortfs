@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import NavFrontendModal from 'nav-frontend-modal';
 import cls from 'classnames';
 import { Formik, FormikProps } from 'formik';
 import ModalHeader from '../modal/modal-header';
 import { useModalStore } from '../../../store/modal-store';
+import Modal from '../modal/modal';
 
 interface FormikModalProps<Values> {
     initialValues: Values;
@@ -47,17 +47,17 @@ function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalP
             onSubmit={values => props.handleSubmit(values)}
         >
             {formikProps => (
-                <NavFrontendModal
+                <Modal
                     className={cls('modal', props.className)}
                     contentLabel={props.contentLabel}
                     isOpen={props.isOpen || isOpen}
                     onRequestClose={() => tilbake(formikProps)}
-                    closeButton={true}
-                    portalClassName="visittkortfs-modal"
+                    // closeButton={true}
+                    // portalClassName="visittkortfs-modal"
                 >
                     <ModalHeader tittel={props.tittel} />
                     {props.render(formikProps)}
-                </NavFrontendModal>
+                </Modal>
             )}
         </Formik>
     );

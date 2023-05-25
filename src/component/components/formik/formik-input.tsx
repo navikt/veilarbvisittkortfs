@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
-import { Input, InputProps } from 'nav-frontend-skjema';
 import { getErrors } from './formik-utils';
+import {TextField, TextFieldProps} from "@navikt/ds-react";
 
 interface FormikInputProps {
     name: string;
@@ -13,17 +13,17 @@ function FormikInput({
     name,
     validate,
     ...inputProps
-}: FormikInputProps & InputProps): React.ReactElement<FieldProps & InputProps> {
+}: FormikInputProps & TextFieldProps): React.ReactElement<FieldProps & TextFieldProps> {
     return (
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
                 const feil = getErrors(form.errors, form.touched, name);
                 return (
-                    <Input
+                    <TextField
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
                         name={name}
-                        feil={feil && feil.feilmelding}
+                        error={feil && feil.feilmelding}
                         value={field.value}
                         {...inputProps}
                     />

@@ -1,14 +1,13 @@
 import React from 'react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
-import { Normaltekst } from 'nav-frontend-typografi';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
 import { fetchOppfolging, settBrukerTilDigital } from '../../../api/veilarboppfolging';
 import { ifResponseHasData } from '../../../util/utils';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
+import {Alert, BodyShort} from "@navikt/ds-react";
 
 function StartDigitalOppfolging() {
     const { brukerFnr } = useAppStore();
@@ -36,18 +35,18 @@ function StartDigitalOppfolging() {
                 isOpen={true}
                 onRequestClose={hideModal}
             >
-                <Normaltekst>
+                <BodyShort>
                     Brukeren er reservert i Kontakt- og reservasjonsregisteret og må selv fjerne reservasjonen for å få
                     digital oppfølging.
-                </Normaltekst>
+                </BodyShort>
             </VarselModal>
         );
     }
 
     const infoTekst = (
-        <AlertStripeAdvarsel className="blokk-xxs">
+        <Alert variant="warning" className="blokk-xxs">
             Når du endrer til digital oppfølging, kan du ha dialog med brukeren i aktivitetsplanen.
-        </AlertStripeAdvarsel>
+        </Alert>
     );
 
     return (

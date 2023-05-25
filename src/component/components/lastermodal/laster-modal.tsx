@@ -1,18 +1,19 @@
 import React from 'react';
-import ModalWrapper from 'nav-frontend-modal';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import './laster-modal.less';
+import { Loader, Modal } from '@navikt/ds-react';
+import classNames from 'classnames';
 
 export function LasterModal() {
     return (
-        <ModalWrapper
-            isOpen={true}
-            contentLabel="Laster data"
-            onRequestClose={() => {}} // tslint:disable-line:no-empty
+        <Modal
+            open={true}
+            // contentLabel="Laster data"
+            onClose={() => {}} // tslint:disable-line:no-empty
             closeButton={false}
-            portalClassName="veilarbvisittkortfs-laster-modal"
+            // portalClassName="veilarbvisittkortfs-laster-modal"
+            className={classNames('visittkortfs-modal__laster-modal')}
         >
-            <NavFrontendSpinner type="XXL" />
-        </ModalWrapper>
+            <Loader size="2xlarge" />
+        </Modal>
     );
 }

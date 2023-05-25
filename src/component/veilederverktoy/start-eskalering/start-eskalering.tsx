@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import StartEskaleringForm, { StartEskaleringValues } from './start-eskalering-form';
 import { useModalStore } from '../../../store/modal-store';
@@ -11,6 +10,7 @@ import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { fetchHarNivaa4 } from '../../../api/veilarbperson';
 import { logMetrikk } from '../../../util/logger';
+import {BodyShort} from "@navikt/ds-react";
 
 interface OwnValues extends StartEskaleringValues {
     overskrift: string;
@@ -100,15 +100,15 @@ function StartEskalering() {
             isLoading={false}
             infoTekst={
                 <>
-                    <Normaltekst className="blokk-xs">
+                    <BodyShort className="blokk-xs">
                         Når du sender forhåndsvarsel må du huske å være tydelig på hvilken oppgave som skal gjennomføre,
                         og hvilken frist personen får for tilbakemelding. Personen får en brukernotifikasjon på ditt nav
                         med teksten: Viktig oppgave. NAV vurderer å stanse pengene dine. Se hva du må gjøre.
-                    </Normaltekst>
-                    <Normaltekst className="blokk-xs">
+                    </BodyShort>
+                    <BodyShort className="blokk-xs">
                         Ved å klikke på brukernotifikasjon, kommer personen direkte inn i riktig dialog der
                         forhåndsvarslet ligger.
-                    </Normaltekst>
+                    </BodyShort>
                 </>
             }
         />

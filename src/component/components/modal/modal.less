@@ -1,6 +1,10 @@
-@import '~nav-frontend-core/less/_variabler';
 
 .visittkortfs-modal {
+
+    width: 100%;
+    max-width: 40rem;
+    padding: 20px;
+
     //SCOPE
     .blokk-xs {
         margin-bottom: 1rem;
@@ -13,6 +17,16 @@
     .ReactModal__Content {
         margin: 4rem auto;
         overflow: visible;
+    }
+
+    &__laster-modal {
+        flex: 1;
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 40rem;
+        padding: 20px;
     }
 
     .modal__overlay {
@@ -30,7 +44,7 @@
 
         .modal {
             position: relative;
-            border: 1px solid @navGra40;
+            border: 1px solid var(--a-gray-400);
             background-color: #f4f4f4;
             outline: none;
             max-width: 50rem;
@@ -40,7 +54,7 @@
 
             .modal-header {
                 height: 4rem;
-                border-bottom: 1px solid @navGra40;
+                border-bottom: 1px solid var(--a-gray-400);
                 padding: 1.13rem 0;
                 margin: 0 2rem 1rem;
             }
@@ -50,7 +64,7 @@
 
                 .alertstripe--advarsel {
                     background-color: #ffe9cc;
-                    color: @navMorkGra;
+                    color: var(--a-gray-500);
                 }
 
                 .arbeidsliste--modal-redigering {
@@ -79,7 +93,7 @@
 
             .tilbakeknapp:focus {
                 outline: none;
-                box-shadow: 0 0 0 3px @fokusFarge;
+                box-shadow: 0 0 0 3px var(--a-blue-300);
             }
         }
     }
@@ -97,6 +111,6 @@
     }
 
     .gra-border {
-        border-bottom: 1px solid @navGra40;
+        border-bottom: 1px solid var(--a-gray-400);
     }
 }

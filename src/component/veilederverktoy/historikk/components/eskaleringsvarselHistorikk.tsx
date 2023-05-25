@@ -1,9 +1,9 @@
 import React from 'react';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { useAppStore } from '../../../../store/app-store';
 import { toSimpleDateStr } from '../../../../util/date-utils';
 import { EskaleringsvarselHistorikkInnslag } from '../../../../api/veilarbdialog';
 import LenkeTilDialog from '../../../components/dialoglenke/dialoglenke';
+import {BodyLong, Heading} from "@navikt/ds-react";
 
 interface EskaleringsvarselHistorikkKomponentProps {
     innslag: EskaleringsvarselHistorikkInnslag;
@@ -27,16 +27,16 @@ function EskaleringsvarselHistorikkKomponent({ innslag }: EskaleringsvarselHisto
 
     return (
         <div className="historikk__elem blokk-xs">
-            <Element>{overskrift}</Element>
-            <Normaltekst>
+            <Heading level="2" size="medium">{overskrift}</Heading>
+            <BodyLong>
                 {begrunnelseTekst}
                 <LenkeTilDialog brukerFnr={brukerFnr} dialogId={innslag.tilhorendeDialogId}>
                     Les mer i dialog
                 </LenkeTilDialog>
-            </Normaltekst>
-            <Undertekst>{`${toSimpleDateStr(dato)} av ${utfortAv}${
+            </BodyLong>
+            <BodyLong>{`${toSimpleDateStr(dato)} av ${utfortAv}${
                 utfortAvBrukerNavn ? ` (${utfortAvBrukerNavn})` : ''
-            }`}</Undertekst>
+            }`}</BodyLong>
         </div>
     );
 }

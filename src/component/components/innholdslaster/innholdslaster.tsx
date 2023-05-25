@@ -1,5 +1,5 @@
 import React from 'react';
-import Spinner from 'nav-frontend-spinner';
+import {Loader} from "@navikt/ds-react";
 
 interface InnholdlasterProps {
     className?: string;
@@ -14,7 +14,7 @@ function Innholdslaster(props: InnholdlasterProps) {
         return props.children;
     }
 
-    return <Spinner className={props.className || ''} type="XL" />;
+    return <Loader className={props.className || ''} type="XL" />;
 }
 
 export default Innholdslaster;

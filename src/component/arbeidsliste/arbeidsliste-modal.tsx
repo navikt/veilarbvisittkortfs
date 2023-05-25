@@ -18,6 +18,7 @@ import { kanFjerneArbeidsliste, selectSammensattNavn } from '../../util/selector
 import { useModalStore } from '../../store/modal-store';
 import { ifResponseHasData } from '../../util/utils';
 import { logMetrikk } from '../../util/logger';
+import { Heading } from '@navikt/ds-react';
 
 const arbeidslisteEmptyValues = {
     overskrift: '',
@@ -98,22 +99,21 @@ function ArbeidslisteModal() {
                     onRequestClose={() => onRequestClose(formikProps)}
                 >
                     <div className="modal-innhold">
+                        <Heading size="large">{modalTittel}</Heading>
                         <div className="modal-info-tekst">
-                            <VeilederVerktoyModal tittel={modalTittel}>
-                                <Form>
-                                    <ArbeidslisteForm
-                                        navn={brukerSammensattNavn}
-                                        fnr={brukerFnr}
-                                        endringstidspunkt={liste.endringstidspunkt}
-                                        sistEndretAv={liste.sistEndretAv}
-                                    />
-                                    <ArbeidslisteFooter
-                                        onRequestClose={() => onRequestClose(formikProps)}
-                                        slettArbeidsliste={showFjernArbeidslisteModal}
-                                        kanFjerneArbeidsliste={kanFjernesFraArbeidsliste}
-                                    />
-                                </Form>
-                            </VeilederVerktoyModal>
+                            <Form>
+                                <ArbeidslisteForm
+                                    navn={brukerSammensattNavn}
+                                    fnr={brukerFnr}
+                                    endringstidspunkt={liste.endringstidspunkt}
+                                    sistEndretAv={liste.sistEndretAv}
+                                />
+                                <ArbeidslisteFooter
+                                    onRequestClose={() => onRequestClose(formikProps)}
+                                    slettArbeidsliste={showFjernArbeidslisteModal}
+                                    kanFjerneArbeidsliste={kanFjernesFraArbeidsliste}
+                                />
+                            </Form>
                         </div>
                     </div>
                 </Modal>

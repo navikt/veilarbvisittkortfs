@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios';
 export const APP_NAME = 'veilarbvisittkortfs';
 
 export function isDevelopment(): boolean {
-    return process.env.REACT_APP_DEV === 'true';
+    return import.meta.env.MODE === 'development';
 }
 
 export function ifResponseHasData<T>(

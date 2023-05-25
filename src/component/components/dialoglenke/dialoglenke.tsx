@@ -1,6 +1,6 @@
 import React, { MouseEvent } from 'react';
-import Lenke from 'nav-frontend-lenker';
 import { useModalStore } from '../../../store/modal-store';
+import {Link} from "@navikt/ds-react";
 
 interface Props {
     brukerFnr: string;
@@ -30,9 +30,9 @@ function LenkeTilDialog({ brukerFnr, dialogId, className, children }: Props) {
     };
 
     return (
-        <Lenke href={dialogLenke} onClick={gaaTilDialog} className={className}>
+        <Link href={dialogLenke} onClick={gaaTilDialog} className={className}>
             {children}
-        </Lenke>
+        </Link>
     );
 }
 

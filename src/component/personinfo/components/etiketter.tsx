@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import EtikettBase, { EtikettAdvarsel, EtikettFokus, EtikettInfo } from 'nav-frontend-etiketter';
 import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
 import './etiketter.less';
@@ -10,11 +9,12 @@ import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { ifResponseHasData, isEmpty } from '../../../util/utils';
 import visibleIf from '../../components/visible-if';
 import { OrNothing } from '../../../util/type/utility-types';
+import {Tag, TagProps} from "@navikt/ds-react";
 
-const Advarsel = visibleIf(EtikettAdvarsel);
-const Info = visibleIf(EtikettInfo);
-const Fokus = visibleIf(EtikettFokus);
-const Base = visibleIf(EtikettBase);
+const Advarsel = visibleIf(({ children,...otherProps }: Omit<TagProps, 'variant'>) => <Tag variant="warning" {...otherProps} >{ children }</Tag>);
+const Info = visibleIf(({ children,...otherProps }: Omit<TagProps, 'variant'>) => <Tag variant="info" {...otherProps} >{ children }</Tag>);
+const Fokus = visibleIf(({ children,...otherProps }: Omit<TagProps, 'variant'>) => <Tag variant="success" {...otherProps} >{ children }</Tag>);
+const Base = visibleIf(({ children,...otherProps }: TagProps) => <Tag {...otherProps} >{ children }</Tag>);
 
 function erBrukerSykmeldt(oppfolging: OrNothing<OppfolgingStatus>): boolean {
     return !!oppfolging && oppfolging.formidlingsgruppe === 'IARBS' && oppfolging.servicegruppe === 'VURDI';
@@ -65,7 +65,7 @@ function Etiketter() {
 
     return (
         <div className="etikett-container">
-            <Base visible={personalia?.dodsdato} type="info" className="etikett--mork">
+            <Base visible={personalia?.dodsdato} variant="info" className="etikett--mork">
                 Død
             </Base>
             <Advarsel visible={personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>

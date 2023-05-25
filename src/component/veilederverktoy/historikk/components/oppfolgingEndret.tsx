@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
-import NavFrontendSpinner from 'nav-frontend-spinner';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { opprettetAvTekst } from './opprettet-av';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { hasAnyFailed, isAnyLoading } from '../../../../api/utils';
 import { toSimpleDateStr } from '../../../../util/date-utils';
 import { InnstillingHistorikkInnslag } from '../../../../api/veilarboppfolging';
 import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
 import { fetchEnhetNavn } from '../../../../api/veilarbveileder';
+import {Alert, BodyLong, BodyShort, Heading, Loader} from "@navikt/ds-react";
 
 export function OppfolgingEnhetEndret(props: {
     historikkElement: InnstillingHistorikkInnslag;
@@ -26,9 +24,9 @@ export function OppfolgingEnhetEndret(props: {
     }, [enhet]);
 
     if (isAnyLoading(enhetNavnFetcher)) {
-        return <NavFrontendSpinner type="XL" />;
+        return <Loader type="XL" />;
     } else if (hasAnyFailed(enhetNavnFetcher)) {
-        return <AlertStripeFeil>Noe gikk galt</AlertStripeFeil>;
+        return <Alert variant="error">Noe gikk galt</Alert>;
     } else if (!enhetNavn) {
         return null;
     }
@@ -39,11 +37,11 @@ export function OppfolgingEnhetEndret(props: {
 
     return (
         <div className="historikk__elem blokk-xs" key={dato}>
-            <Element>{props.erGjeldendeEnhet ? 'Gjeldende oppfølgingsenhet' : 'Oppfølgingsenhet endret'}</Element>
-            <Normaltekst>{begrunnelseTekst}</Normaltekst>
-            <Undertekst>
+            <Heading level="2" size="medium">{props.erGjeldendeEnhet ? 'Gjeldende oppfølgingsenhet' : 'Oppfølgingsenhet endret'}</Heading>
+            <BodyShort>{begrunnelseTekst}</BodyShort>
+            <BodyLong>
                 {`${toSimpleDateStr(dato)} ${opprettetAvTekst(opprettetAv, opprettetAvBrukerId || '')}`}
-            </Undertekst>
+            </BodyLong>
         </div>
     );
 }

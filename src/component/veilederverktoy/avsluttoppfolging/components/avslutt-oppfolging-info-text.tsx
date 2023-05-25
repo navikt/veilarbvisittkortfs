@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
 import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import { fetchHarUtkast } from '../../../../api/veilarbvedtaksstotte';
 import { AvslutningStatus } from '../../../../api/veilarboppfolging';
 import { fetchHarTiltak } from '../../../../api/veilarbaktivitet';
 import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
 import { OrNothing } from '../../../../util/type/utility-types';
+import {BodyShort, Loader} from "@navikt/ds-react";
 
 export function AvsluttOppfolgingInfoText(props: {
     harYtelser?: boolean;
@@ -27,7 +26,7 @@ export function AvsluttOppfolgingInfoText(props: {
     }, []);
 
     if (harTiltakFetcher.loading || (!props.vedtaksstottePrelanseringEnabled && harUtakstFetcher.loading)) {
-        return <NavFrontendSpinner type="XL" />;
+        return <Loader type="XL" />;
     }
 
     const harTiltak = harTiltakFetcher.data;
@@ -39,7 +38,7 @@ export function AvsluttOppfolgingInfoText(props: {
 
     return (
         <>
-            <Normaltekst>{aktivMindreEnn28Dager}</Normaltekst>
+            <BodyShort>{aktivMindreEnn28Dager}</BodyShort>
             <HiddenIfAlertStripeAdvarselSolid hidden={!props.harUbehandledeDialoger && !harTiltak && !props.harYtelser}>
                 Du kan avslutte oppfølgingsperioden selv om:
                 <ul className="margin--0">

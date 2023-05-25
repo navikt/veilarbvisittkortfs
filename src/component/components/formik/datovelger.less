@@ -1,6 +1,3 @@
-@import (reference) '~nav-frontend-core/less/_variabler';
-@import (reference) '~nav-frontend-core/less/core';
-@import '~nav-frontend-typografi-style/src/mixins';
 
 .visittkortfs-modal {
     @gray-background: #efefef;
@@ -182,7 +179,7 @@
 
     .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
         background-color: @navDypBla;
-        color: @white;
+        color: var(--a-white);
     }
 
     .datovelger {
@@ -239,8 +236,8 @@
                 position: absolute;
                 padding: 0.5em;
                 top: 2.5em;
-                border-radius: @border-radius-small;
-                background-color: @white;
+                border-radius: 2px;
+                background-color: var(--a-white);
                 border: 1px solid @gray-icon;
                 z-index: 1;
             }

@@ -1,9 +1,10 @@
-@import '~nav-frontend-core/less/_variabler';
 
 .visittkortfs {
     .knapp-fss {
-        border: 1px solid @navMorkGra;
-        color: @navMorkGra;
+        display: flex;
+        align-items: center;
+        border: 1px solid var(--a-border-default);
+        color: var(--a-gray-800);
         font-weight: normal;
         text-transform: none;
         border-radius: 4px;
@@ -13,18 +14,17 @@
         }
 
         .knapp-fss__icon:first-child {
-            stroke: @navMorkGra;
+            stroke: var(--a-gray-800);
             fill: none;
         }
     }
 
     .knapp-fss:hover {
-        background-color: @navMorkGra;
-        color: white;
+        background-color: var(--a-gray-100);
 
         .knapp-fss__icon:first-child {
-            stroke: white;
-            fill: none;
+            //stroke: white;
+            //fill: none;
         }
     }
 }

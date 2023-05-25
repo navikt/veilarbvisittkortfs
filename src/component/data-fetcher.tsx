@@ -10,8 +10,8 @@ import { ifResponseHasData } from '../util/utils';
 import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
 import './data-fetcher.less';
 import { isAnyLoadingOrNotStarted } from '../api/utils';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
+import {Loader} from "@navikt/ds-react";
 
 export function DataFetcher(props: { children: any }) {
     const { brukerFnr, visVeilederVerktoy } = useAppStore();
@@ -97,7 +97,7 @@ export function DataFetcher(props: { children: any }) {
             // trenger ikke vente på vergeOgFullmaktFetcher eller spraakTolkFetcher
         )
     ) {
-        return <NavFrontendSpinner className="visittkort-laster" type="L" />;
+        return <Loader className="visittkort-laster" type="L" />;
     }
 
     return <>{props.children}</>;

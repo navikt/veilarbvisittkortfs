@@ -5,6 +5,8 @@ import withClickMetric from '../click-metric/click-metric';
 import hiddenIf from '../hidden-if/hidden-if';
 import { useDocumentEventListner } from '../../../util/hook/use-event-listner';
 
+import { Dropdown as AkselDropdown } from '@navikt/ds-react-internal';
+
 /* tslint:disable */
 const btnCls = (erApen: boolean, className: string | undefined) =>
     classNames('dropdown', className, {
@@ -64,35 +66,32 @@ function Dropdown(props: DropdownProps) {
 
     const { name, className, knappeTekst } = props;
     return (
-        <div className="dropdown">
-            <div className={btnCls(apen, className)} ref={loggNode}>
-                <button
-                    ref={btnRef}
-                    type="button"
-                    className={classNames('dropdown__btn', props.btnClassnames)}
-                    onClick={toggleDropdown}
-                    aria-expanded={apen}
-                    aria-controls={`${name}-dropdown__innhold`}
-                    aria-labelledby={props.ariaLabelledBy}
-                >
-                    {knappeTekst}
-                </button>
-                {apen && (
-                    <ul
-                        className={'dropdown__innhold dropdown__innhold'}
-                        id={`${name}-dropdown__innhold`}
-                        onKeyDown={e => {
-                            if (harTrykktPaEsc(e)) {
-                                e.stopPropagation();
-                                e.preventDefault();
-                                lukkDropdown();
-                            }
-                        }}
+        <div className={btnCls(apen, className)} ref={loggNode}>
+            <AkselDropdown defaultOpen={true}>
+                <AkselDropdown.Toggle className="akseltoggle-override">
+                    <div
+                        className={classNames('dropdown__btn', props.btnClassnames)}
+                        onClick={toggleDropdown}
+                        aria-expanded={apen}
+                        aria-controls={`${name}-dropdown__innhold`}
+                        aria-labelledby={props.ariaLabelledBy}
                     >
-                        {props.render(lukkDropdown)}
-                    </ul>
-                )}
-            </div>
+                        {knappeTekst}
+                    </div>
+                </AkselDropdown.Toggle>
+                <AkselDropdown.Menu
+                    // className={'dropdown__innhold dropdown__innhold'}
+                    id={`${name}-dropdown__innhold`}
+                    onKeyDown={e => {
+                        if (harTrykktPaEsc(e)) {
+                            e.stopPropagation();
+                            e.preventDefault();
+                        }
+                    }}
+                >
+                    {props.render(lukkDropdown)}
+                </AkselDropdown.Menu>
+            </AkselDropdown>
         </div>
     );
 }
