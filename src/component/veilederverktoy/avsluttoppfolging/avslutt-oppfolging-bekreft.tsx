@@ -7,6 +7,7 @@ import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import { useAppStore } from '../../../store/app-store';
 import { avsluttOppfolging } from '../../../api/veilarboppfolging';
+import { logMetrikk } from '../../../util/logger';
 
 export interface AvsluttOppfolgingBekreftelseModalProps {
     begrunnelse: string;
@@ -20,6 +21,7 @@ function AvsluttOppfolgingBekreft(props: AvsluttOppfolgingBekreftelseModalProps)
     const brukerNavn = selectSammensattNavn(personalia);
 
     function handleSubmitAvsluttOppfolging() {
+        logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt_oppfolging_bekreftet`);
         showSpinnerModal();
 
         avsluttOppfolging(brukerFnr, props.begrunnelse, innloggetVeileder!.ident)
