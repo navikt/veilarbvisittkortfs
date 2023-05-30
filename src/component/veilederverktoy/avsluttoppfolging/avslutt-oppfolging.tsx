@@ -13,6 +13,7 @@ import { VEDTAKSSTTOTTE_PRELANSERING_TOGGLE } from '../../../api/veilarbpersonfl
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { fetchAvsluttOppfolgingStatus } from '../../../api/veilarboppfolging';
 import { isAnyLoading } from '../../../api/utils';
+import { logMetrikk } from '../../../util/logger';
 
 const for28dagerSiden = dayjs().subtract(28, 'day').toISOString();
 
@@ -43,9 +44,11 @@ function AvsluttOppfolging() {
     }
 
     if (!avslutningStatus?.kanAvslutte) {
+        // lagt inn for testformål
+        logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt_oppfolging_ikke_mulig`);
         return (
             <VarselModal
-                contentLabel="Oppfølgingsperioden før brukeren kan ikke avslutes"
+                contentLabel="Oppfølgingsperioden før brukeren kan ikke avsluttes"
                 isOpen={true}
                 onRequestClose={hideModal}
                 type="ADVARSEL"
