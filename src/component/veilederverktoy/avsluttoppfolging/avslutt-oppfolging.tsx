@@ -44,11 +44,10 @@ function AvsluttOppfolging() {
     }
 
     if (!avslutningStatus?.kanAvslutte) {
-        // lagt inn for testformål
         logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt_oppfolging_ikke_mulig`);
         return (
             <VarselModal
-                contentLabel="Oppfølgingsperioden før brukeren kan ikke avsluttes"
+                contentLabel="Oppfølgingsperioden for brukeren kan ikke avsluttes"
                 isOpen={true}
                 onRequestClose={hideModal}
                 type="ADVARSEL"
