@@ -13,7 +13,6 @@ import { VEDTAKSSTTOTTE_PRELANSERING_TOGGLE } from '../../../api/veilarbpersonfl
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { fetchAvsluttOppfolgingStatus } from '../../../api/veilarboppfolging';
 import { isAnyLoading } from '../../../api/utils';
-import { logMetrikk } from '../../../util/logger';
 
 const for28dagerSiden = dayjs().subtract(28, 'day').toISOString();
 
@@ -44,7 +43,6 @@ function AvsluttOppfolging() {
     }
 
     if (!avslutningStatus?.kanAvslutte) {
-        logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt_oppfolging_ikke_mulig`);
         return (
             <VarselModal
                 contentLabel="Oppfølgingsperioden for brukeren kan ikke avsluttes"
