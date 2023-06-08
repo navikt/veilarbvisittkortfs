@@ -5,7 +5,6 @@ import { ReactComponent as AdvarselSirkelIkon } from './advarsel-sirkel.svg';
 import { ReactComponent as FeilSirkelIkon } from './feil-sirkel.svg';
 import { ReactComponent as SuccessSirkelIkon } from './ok-sirkel.svg';
 import classNames from 'classnames';
-import { logMetrikk } from '../../../util/logger';
 
 type VarselModalType = 'ADVARSEL' | 'FEIL' | 'SUCCESS';
 
@@ -31,9 +30,6 @@ export function VarselModal({
     className,
     type
 }: React.PropsWithChildren<VarselModalProps>) {
-    if (contentLabel === 'Oppfølgingsperioden for brukeren kan ikke avsluttes') {
-        logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt_oppfolging_ikke_mulig`);
-    }
     return (
         <ModalWrapper
             isOpen={isOpen}
