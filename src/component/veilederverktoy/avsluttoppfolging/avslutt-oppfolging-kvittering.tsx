@@ -7,7 +7,7 @@ function AvsluttOppfolgingKvittering() {
     const { avsluttOppfolgingOpptelt, setAvsluttOppfolgingOpptelt } = useAppStore();
 
     if (!avsluttOppfolgingOpptelt) {
-        logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt oppfolging_bekreftet`);
+        logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt_oppfolging_bekreftet`);
         setAvsluttOppfolgingOpptelt(true);
     }
     return (
