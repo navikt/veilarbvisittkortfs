@@ -1,15 +1,9 @@
 import React from 'react';
 import Kvittering from '../prosess/kvittering';
 import { logMetrikk } from '../../../util/logger';
-import { useAppStore } from '../../../store/app-store';
 
 function AvsluttOppfolgingKvittering() {
-    const { avsluttOppfolgingOpptelt, setAvsluttOppfolgingOpptelt } = useAppStore();
-
-    if (!avsluttOppfolgingOpptelt) {
-        logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt_oppfolging_bekreftet`);
-        setAvsluttOppfolgingOpptelt(true);
-    }
+    logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt_oppfolging_bekreftet`);
     return (
         <Kvittering
             tittel="Avslutt oppfølging fra NAV"
