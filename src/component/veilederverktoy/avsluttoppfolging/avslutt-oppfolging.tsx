@@ -28,7 +28,7 @@ function AvsluttOppfolging() {
     const avslutningStatus = avsluttOppfolgingFetcher.data;
     const datoErInnenFor28DagerSiden = (avslutningStatus?.inaktiveringsDato || 0) > for28dagerSiden;
     const harUbehandledeDialoger = dialogFetcher.data ? selectHarUbehandledeDialoger(dialogFetcher.data) : false;
-
+    setAvsluttOppfolgingOpptelt(false);
     function handleSubmitAvsluttOppfolging(values: BegrunnelseValues) {
         showAvsluttOppfolgingBekrefModal({ begrunnelse: values.begrunnelse });
     }
