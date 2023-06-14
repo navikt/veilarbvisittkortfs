@@ -6,6 +6,7 @@ import { ReactComponent as FeilSirkelIkon } from './feil-sirkel.svg';
 import { ReactComponent as SuccessSirkelIkon } from './ok-sirkel.svg';
 import classNames from 'classnames';
 import { logMetrikk } from '../../../util/logger';
+import { useAppStore } from '../../../store/app-store';
 
 type VarselModalType = 'ADVARSEL' | 'FEIL' | 'SUCCESS';
 
@@ -31,8 +32,12 @@ export function VarselModal({
     className,
     type
 }: React.PropsWithChildren<VarselModalProps>) {
+    const { avsluttOppfolgingOpptelt, setAvsluttOppfolgingOpptelt } = useAppStore();
     if (contentLabel === 'Oppfølgingsperioden for brukeren kan ikke avsluttes') {
-        logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt_oppfolging_ikke_mulig_alternativ`);
+        if (!avsluttOppfolgingOpptelt) {
+            logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt_oppfolging_ikke_mulig_alternativ`);
+            setAvsluttOppfolgingOpptelt(true);
+        }
     }
     return (
         <ModalWrapper
