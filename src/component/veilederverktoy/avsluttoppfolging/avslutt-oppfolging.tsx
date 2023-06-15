@@ -44,9 +44,11 @@ function AvsluttOppfolging() {
     }
 
     if (!avslutningStatus?.kanAvslutte) {
-        if (!avsluttOppfolgingOpptelt) {
-            logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt_oppfolging_ikke_mulig`);
-            setAvsluttOppfolgingOpptelt(true);
+        if (avslutningStatus?.kanAvslutte !== undefined && !avslutningStatus?.kanAvslutte !== null) {
+            if (!avsluttOppfolgingOpptelt) {
+                logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt_oppfolging_ikke_mulig`);
+                setAvsluttOppfolgingOpptelt(true);
+            }
         }
         return (
             <VarselModal
