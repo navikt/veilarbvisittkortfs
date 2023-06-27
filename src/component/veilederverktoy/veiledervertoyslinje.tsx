@@ -15,10 +15,8 @@ import {
     selectKanRedigereArbeidsliste,
     selectKanSendeEskaleringsVarsel,
     selectKanStarteDigitalOppfolging,
-    selectKanStarteKVP,
     selectKanStarteManuellOppfolging,
     selectKanStoppeEskaleringsVarsel,
-    selectKanStoppeKVP,
     selectKanTildeleVeileder
 } from '../../util/selectors';
 import { doAll } from '../../util/utils';
