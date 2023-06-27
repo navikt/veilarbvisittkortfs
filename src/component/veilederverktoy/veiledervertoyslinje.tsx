@@ -15,8 +15,10 @@ import {
     selectKanRedigereArbeidsliste,
     selectKanSendeEskaleringsVarsel,
     selectKanStarteDigitalOppfolging,
+    selectKanStarteKVP,
     selectKanStarteManuellOppfolging,
     selectKanStoppeEskaleringsVarsel,
+    selectKanStoppeKVP,
     selectKanTildeleVeileder
 } from '../../util/selectors';
 import { doAll } from '../../util/utils';
@@ -58,8 +60,8 @@ function Veilederverktoyslinje() {
     const kanAvslutteOppfolging = selectKanAvslutteOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteManuellOppfolging = selectKanStarteManuellOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteDigitalOppfolging = selectKanStarteDigitalOppfolging(oppfolging, tilgangTilBrukersKontor);
-    const kanStarteKVP = false; // selectKanStarteKVP(oppfolging, tilgangTilBrukersKontor);
-    const kanStoppeKVP = false; // selectKanStoppeKVP(oppfolging, tilgangTilBrukersKontor);
+    const kanStarteKVP = selectKanStarteKVP(oppfolging, tilgangTilBrukersKontor);
+    const kanStoppeKVP = selectKanStoppeKVP(oppfolging, tilgangTilBrukersKontor);
     const kanRegistrere = kanRegistreresEllerReaktiveres(oppfolging);
     const kanLagreArbeidsliste = selectKanLeggeIArbeidsListe(innloggetVeileder, oppfolgingsstatus, arbeidsliste);
     const kanEndreArbeidsliste = selectKanRedigereArbeidsliste(arbeidsliste);
