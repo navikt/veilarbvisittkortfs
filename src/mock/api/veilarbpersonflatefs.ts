@@ -1,11 +1,10 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
-import { FeatureToggles, PILOT_TOGGLE, VEDTAKSSTTOTTE_PRELANSERING_TOGGLE } from '../../api/veilarbpersonflatefs';
+import { FeatureToggles, PILOT_TOGGLE } from '../../api/veilarbpersonflatefs';
 import { defaultNetworkResponseDelay } from '../config';
 
 const mockFeatures: FeatureToggles = {
-    [PILOT_TOGGLE]: true,
-    [VEDTAKSSTTOTTE_PRELANSERING_TOGGLE]: true
+    [PILOT_TOGGLE]: true
 };
 
 export const veilarbpersonflatefsHandlers: RequestHandlersList = [
