@@ -10,7 +10,7 @@ import { OrNothing } from '../../../../util/type/utility-types';
 
 export function AvsluttOppfolgingInfoText(props: {
     harYtelser?: boolean;
-    vedtaksstottePrelanseringEnabled: boolean;
+    visVarselDersom14aUtkastEksisterer: boolean;
     avslutningStatus: OrNothing<AvslutningStatus>;
     datoErInnenFor28DagerSiden: boolean;
     harUbehandledeDialoger: boolean;
@@ -20,13 +20,13 @@ export function AvsluttOppfolgingInfoText(props: {
     const harUtakstFetcher = useAxiosFetcher(fetchHarUtkast);
 
     useEffect(() => {
-        if (!props.vedtaksstottePrelanseringEnabled) {
+        if (props.visVarselDersom14aUtkastEksisterer) {
             harUtakstFetcher.fetch(props.fnr);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    if (harTiltakFetcher.loading || (!props.vedtaksstottePrelanseringEnabled && harUtakstFetcher.loading)) {
+    if (harTiltakFetcher.loading || (props.visVarselDersom14aUtkastEksisterer && harUtakstFetcher.loading)) {
         return <NavFrontendSpinner type="XL" />;
     }
 
