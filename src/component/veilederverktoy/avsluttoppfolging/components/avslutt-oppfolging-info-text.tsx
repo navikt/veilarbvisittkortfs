@@ -5,11 +5,11 @@ import { AvslutningStatus } from '../../../../api/veilarboppfolging';
 import { fetchHarTiltak } from '../../../../api/veilarbaktivitet';
 import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
 import { OrNothing } from '../../../../util/type/utility-types';
-import {BodyShort, Loader} from "@navikt/ds-react";
+import { BodyShort, Loader } from '@navikt/ds-react';
 
 export function AvsluttOppfolgingInfoText(props: {
     harYtelser?: boolean;
-    vedtaksstottePrelanseringEnabled: boolean;
+    visVarselDersom14aUtkastEksisterer: boolean;
     avslutningStatus: OrNothing<AvslutningStatus>;
     datoErInnenFor28DagerSiden: boolean;
     harUbehandledeDialoger: boolean;
@@ -19,13 +19,13 @@ export function AvsluttOppfolgingInfoText(props: {
     const harUtakstFetcher = useAxiosFetcher(fetchHarUtkast);
 
     useEffect(() => {
-        if (!props.vedtaksstottePrelanseringEnabled) {
+        if (props.visVarselDersom14aUtkastEksisterer) {
             harUtakstFetcher.fetch(props.fnr);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    if (harTiltakFetcher.loading || (!props.vedtaksstottePrelanseringEnabled && harUtakstFetcher.loading)) {
+    if (harTiltakFetcher.loading || (props.visVarselDersom14aUtkastEksisterer && harUtakstFetcher.loading)) {
         return <Loader type="XL" />;
     }
 

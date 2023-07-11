@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps, getIn } from 'formik';
 import classNames from 'classnames';
-import { ErrorMessage, UNSAFE_DatePicker as DatePicker, UNSAFE_useDatepicker as useDatepicker } from '@navikt/ds-react';
+import { ErrorMessage, DatePicker, useDatepicker } from '@navikt/ds-react';
 
 interface FormikDatepickerProps {
     name: string;

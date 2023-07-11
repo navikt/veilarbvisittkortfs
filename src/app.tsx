@@ -18,6 +18,7 @@ export interface AppProps {
     tilbakeTilFlate: string;
     visVeilederVerktoy?: boolean;
     skjulEtiketter?: boolean;
+    avsluttOppfolgingOpptelt?: boolean;
 }
 
 function App(props: AppProps) {
@@ -28,6 +29,7 @@ function App(props: AppProps) {
                 enhetId={props.enhet}
                 tilbakeTilFlate={props.tilbakeTilFlate}
                 visVeilederVerktoy={props.visVeilederVerktoy || false}
+                avsluttOppfolgingOpptelt={props.avsluttOppfolgingOpptelt || false}
             >
                 <div className="visittkortfs">
                     <DataFetcher>

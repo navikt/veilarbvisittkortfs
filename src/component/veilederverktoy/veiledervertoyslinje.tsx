@@ -22,7 +22,7 @@ import {
     selectKanTildeleVeileder
 } from '../../util/selectors';
 
-import { Dropdown as AkselDropdown } from '@navikt/ds-react-internal';
+import { Dropdown as AkselDropdown } from '@navikt/ds-react';
 import { doAll } from '../../util/utils';
 
 function Veilederverktoyslinje() {

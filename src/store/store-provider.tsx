@@ -15,6 +15,7 @@ const StoreProvider = (props: StoreProviderProps) => {
             enhetId={props.enhetId}
             tilbakeTilFlate={props.tilbakeTilFlate}
             visVeilederVerktoy={props.visVeilederVerktoy}
+            avsluttOppfolgingOpptelt={props.avsluttOppfolgingOpptelt}
         >
             <ToastStore>
                 <DataStore>

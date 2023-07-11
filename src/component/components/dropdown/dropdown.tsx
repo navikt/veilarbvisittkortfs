@@ -5,7 +5,7 @@ import withClickMetric from '../click-metric/click-metric';
 import hiddenIf from '../hidden-if/hidden-if';
 import { useDocumentEventListner } from '../../../util/hook/use-event-listner';
 
-import { Dropdown as AkselDropdown } from '@navikt/ds-react-internal';
+import { Dropdown as AkselDropdown } from '@navikt/ds-react';
 
 /* tslint:disable */
 const btnCls = (erApen: boolean, className: string | undefined) =>

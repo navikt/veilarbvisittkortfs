@@ -33,6 +33,9 @@ const mockHenvendelseData: any = {
 };
 
 export const veilarbdialogHandlers: RequestHandlersList = [
+    rest.get('/veilarbdialog/api/dialog', (req, res, ctx) => {
+        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json([]));
+    }),
     rest.post('/veilarbdialog/api/dialog', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockHenvendelseData));
     }),
