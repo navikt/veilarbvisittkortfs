@@ -1,16 +1,17 @@
 import React from 'react';
 import './tilbakelenke.less';
 import { useAppStore } from '../../../store/app-store';
-import { ChevronLeftCircleIcon } from '@navikt/aksel-icons';
+import { ChevronLeftCircleIcon, ChevronLeftIcon } from '@navikt/aksel-icons';
+import { Button, Link } from '@navikt/ds-react';
 
 function Tilbakelenke() {
     const { brukerFnr, enhetId, tilbakeTilFlate } = useAppStore();
     const tilbakeLenke = getTilbakeUrl(tilbakeTilFlate, brukerFnr, enhetId);
 
     return (
-        <a className="visittkortfs__tilbakelenke" href={tilbakeLenke}>
-            <ChevronLeftCircleIcon />
-        </a>
+        <Link className="visittkortfs__tilbakelenke" href={tilbakeLenke}>
+            <ChevronLeftIcon />
+        </Link>
     );
 }
 
