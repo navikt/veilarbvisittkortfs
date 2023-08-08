@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Navspa } from '@navikt/navspa';
 import { isDevelopment } from './util/utils';
 import * as dayjs from 'dayjs';
@@ -12,7 +11,7 @@ dayjs.locale('nb');
 Navspa.eksporter('veilarbvisittkortfs', App);
 
 if (isDevelopment()) {
-    import('./mock').then(() => {
+    await import('./mock').then(() => {
         const rootElement = document.getElementById("veilarbvisittkortfs-root")
         const root = createRoot(rootElement!)
         root.render(

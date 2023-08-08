@@ -7,7 +7,7 @@ import StoreProvider from './store/store-provider';
 import { DataFetcher } from './component/data-fetcher';
 import { VeilederverktoyModalController } from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-modal-controller';
 import { ToastController } from './component/components/toast-controller';
-import './index.less';
+import '../index.less';
 import { Modal, Provider as ModalProvider } from '@navikt/ds-react';
 
 Modal.setAppElement(document.getElementById('modal-a11y-wrapper'));
