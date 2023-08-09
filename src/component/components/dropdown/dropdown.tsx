@@ -80,7 +80,7 @@ function Dropdown(props: DropdownProps) {
                     </div>
                 </AkselDropdown.Toggle>
                 <AkselDropdown.Menu
-                    // className={'dropdown__innhold dropdown__innhold'}
+                     className={'dropdown__innhold'}
                     id={`${name}-dropdown__innhold`}
                     onKeyDown={e => {
                         if (harTrykktPaEsc(e)) {

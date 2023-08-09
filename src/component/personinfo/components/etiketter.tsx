@@ -11,10 +11,10 @@ import visibleIf from '../../components/visible-if';
 import { OrNothing } from '../../../util/type/utility-types';
 import {Tag, TagProps} from "@navikt/ds-react";
 
-const Advarsel = visibleIf(({ children,...otherProps }: Omit<TagProps, 'variant'>) => <Tag variant="warning" {...otherProps} >{ children }</Tag>);
-const Info = visibleIf(({ children,...otherProps }: Omit<TagProps, 'variant'>) => <Tag variant="info" {...otherProps} >{ children }</Tag>);
-const Fokus = visibleIf(({ children,...otherProps }: Omit<TagProps, 'variant'>) => <Tag variant="success" {...otherProps} >{ children }</Tag>);
-const Base = visibleIf(({ children,...otherProps }: TagProps) => <Tag {...otherProps} >{ children }</Tag>);
+const Advarsel = visibleIf(({ children}: Omit<TagProps, 'variant'>) => <Tag variant="error">{ children }</Tag>);
+const Info = visibleIf(({ children }: Omit<TagProps, 'variant'>) => <Tag variant="info">{ children }</Tag>);
+const Fokus = visibleIf(({ children }: Omit<TagProps, 'variant'>) => <Tag variant="warning">{ children }</Tag>);
+const BaseDod = visibleIf(({ children }: TagProps) => <Tag   variant="neutral" className="etikett--mork">{ children }</Tag>);
 
 function erBrukerSykmeldt(oppfolging: OrNothing<OppfolgingStatus>): boolean {
     return !!oppfolging && oppfolging.formidlingsgruppe === 'IARBS' && oppfolging.servicegruppe === 'VURDI';
@@ -65,9 +65,9 @@ function Etiketter() {
 
     return (
         <div className="etikett-container">
-            <Base visible={personalia?.dodsdato} variant="info" className="etikett--mork">
+            <BaseDod visible={personalia?.dodsdato}>
                 Død
-            </Base>
+            </BaseDod>
             <Advarsel visible={personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>
             <Advarsel visible={personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
             <Advarsel visible={personalia?.egenAnsatt}>Skjermet</Advarsel>
