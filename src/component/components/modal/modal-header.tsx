@@ -11,7 +11,7 @@ function ModalHeader({ className, tittel }: OwnProps) {
     return (
         <div className={classNames('modal-header-wrapper', className)}>
             <header className="modal-header">
-                <Heading level="1" size="large" as="h1" className="modal-info-tekst__overskrift">
+                <Heading level="3" size="medium" className="modal-info-tekst__overskrift">
                     {tittel}
                 </Heading>
             </header>
