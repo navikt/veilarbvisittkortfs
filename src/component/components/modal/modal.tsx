@@ -7,7 +7,7 @@ interface ModalProps {
     children: React.ReactNode;
     className?: string;
     contentLabel: string;
-    isOpen?: boolean;
+    isOpen: boolean;
     onRequestClose: () => void;
 }
 
@@ -15,11 +15,11 @@ function Modal({ children, className, contentLabel, isOpen = true, onRequestClos
     return (
         <AkselModal
             className={classNames('modal', 'visittkortfs-modal', className)}
-            // contentLabel={contentLabel}
             open={isOpen}
             onClose={onRequestClose}
-            // portalClassName="visittkortfs-modal"
-            // closeButton={true}
+            aria-labelledby={contentLabel}
+            aria-describedby={contentLabel}
+            closeButton={true}
         >
             {children}
         </AkselModal>

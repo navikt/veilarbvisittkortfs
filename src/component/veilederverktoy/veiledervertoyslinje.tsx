@@ -1,7 +1,7 @@
 import React from 'react';
 import './veilederverktoy.less';
 import Dropdown from '../components/dropdown/dropdown';
-import { ReactComponent as TannHjulIkon } from './tannhjul.svg';
+import { CogIcon } from '@navikt/aksel-icons';
 import StartRegistreringProsess from './start-registrering/start-registrering-prosess';
 import StartProsess from './prosess/start-prosess';
 import { useAppStore } from '../../store/app-store';
@@ -87,7 +87,7 @@ function Veilederverktoyslinje() {
                 ariaLabelledBy="veilederverkoy_span"
                 knappeTekst={
                     <>
-                        <TannHjulIkon className="knapp-fss__icon" />{' '}
+                        <CogIcon title="verktøyikon" fontSize="1.5rem" className="knapp-fss__icon"/>
                         <span id="veilederverkoy_span">Veilederverktøy</span>
                     </>
                 }

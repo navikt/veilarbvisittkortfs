@@ -1,12 +1,12 @@
 import React from 'react';
 import cls from 'classnames';
 import './meny-knapp.less';
-import { Button, ButtonProps } from '@navikt/ds-react';
+import { ButtonProps } from '@navikt/ds-react';
 
 export function MenyKnapp(props: ButtonProps) {
     const { children, className, ...rest } = props;
     return (
-        <div className={cls('meny-knapp', className)} {...rest}>
+        <div className={cls('meny-knapp')} {...rest}>
             {children}
         </div>
     );
