@@ -67,7 +67,7 @@ function Dropdown(props: DropdownProps) {
     const { name, className, knappeTekst } = props;
     return (
         <div className={btnCls(apen, className)} ref={loggNode}>
-            <AkselDropdown defaultOpen={true}>
+            <AkselDropdown defaultOpen={false}>
                 <AkselDropdown.Toggle className="akseltoggle-override">
                     <div
                         className={classNames('dropdown__btn', props.btnClassnames)}
