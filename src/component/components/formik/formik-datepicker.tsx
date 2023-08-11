@@ -12,7 +12,7 @@ interface FormikDatepickerProps {
 }
 
 function FormikDatoVelger({ name, validate, label, ariaLabel, className }: FormikDatepickerProps) {
-    const { inputProps, datepickerProps } = useDatepicker({});
+    const { inputProps, datepickerProps } = useDatepicker!({});
 
     return (
         <Field validate={validate} name={name} id={name}>

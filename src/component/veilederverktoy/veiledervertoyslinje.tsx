@@ -87,7 +87,7 @@ function Veilederverktoyslinje() {
                 ariaLabelledBy="veilederverkoy_span"
                 knappeTekst={
                     <>
-                        <CogIcon title="verktøyikon" fontSize="1.5rem" className="knapp-fss__icon"/>
+                        <CogIcon title="verktøyikon" className="knapp-fss__icon"/>
                         <span id="veilederverkoy_span">Veilederverktøy</span>
                     </>
                 }

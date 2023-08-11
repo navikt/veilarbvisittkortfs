@@ -11,10 +11,10 @@ import visibleIf from '../../components/visible-if';
 import { OrNothing } from '../../../util/type/utility-types';
 import {Tag, TagProps} from "@navikt/ds-react";
 
-const Advarsel = visibleIf(({ children}: Omit<TagProps, 'variant'>) => <Tag variant="error">{ children }</Tag>);
-const Info = visibleIf(({ children }: Omit<TagProps, 'variant'>) => <Tag variant="info">{ children }</Tag>);
-const Fokus = visibleIf(({ children }: Omit<TagProps, 'variant'>) => <Tag variant="warning">{ children }</Tag>);
-const BaseDod = visibleIf(({ children }: TagProps) => <Tag   variant="neutral" className="etikett--mork">{ children }</Tag>);
+const Advarsel = visibleIf(({ children}: Omit<TagProps, 'variant'>) => <Tag variant="error" size="small" className="etikett">{ children }</Tag>);
+const Info = visibleIf(({ children }: Omit<TagProps, 'variant'>) => <Tag variant="info" size="small" className="etikett">{ children }</Tag>);
+const Fokus = visibleIf(({ children }: Omit<TagProps, 'variant'>) => <Tag variant="warning" size="small" className="etikett">{ children }</Tag>);
+const BaseDod = visibleIf(({ children }: TagProps) => <Tag   variant="neutral" size="small" className="etikett etikett--mork">{ children }</Tag>);
 
 function erBrukerSykmeldt(oppfolging: OrNothing<OppfolgingStatus>): boolean {
     return !!oppfolging && oppfolging.formidlingsgruppe === 'IARBS' && oppfolging.servicegruppe === 'VURDI';
