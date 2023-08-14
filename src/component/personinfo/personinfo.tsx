@@ -10,6 +10,7 @@ import { useModalStore } from '../../store/modal-store';
 import './personinfo.less';
 import { logMetrikk } from '../../util/logger';
 import { formaterTelefonnummer } from "../../util/utils";
+import { BodyShort } from "@navikt/ds-react";
 
 function PersonInfo() {
     const { brukerFnr } = useAppStore();
@@ -26,7 +27,8 @@ function PersonInfo() {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
         showArbeidslisteModal();
     };
-    const telefon: string = formaterTelefonnummer(personalia.telefon?.find((entry) => entry.prioritet === '1')?.telefonNr);
+    const uformattertTelefon: string = personalia.telefon?.find((entry) => entry.prioritet === '1')?.telefonNr;
+    const telefon: string = formaterTelefonnummer(uformattertTelefon);
 
     return (
         <div className="personinfo">
@@ -38,8 +40,10 @@ function PersonInfo() {
                     onClick={klikk}
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
-                <KopierKnappTekst kopierTekst={brukerFnr} />
-                <KopierKnappTekst kopierTekst={telefon} />
+                <BodyShort>/</BodyShort>
+                <KopierKnappTekst kopierTekst={brukerFnr} viseTekst={brukerFnr} />
+                <BodyShort>/</BodyShort>
+                <KopierKnappTekst kopierTekst={uformattertTelefon} viseTekst={`Tlf:  ${telefon}`}/>
             </div>
         </div>
     );

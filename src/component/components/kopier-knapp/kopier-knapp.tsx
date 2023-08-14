@@ -1,11 +1,11 @@
 import React from 'react';
 import { CopyButton } from '@navikt/ds-react';
 
-export function KopierKnappTekst(props: { kopierTekst: string }) {
+export function KopierKnappTekst(props: { kopierTekst: string, viseTekst: string }) {
     return (
         <div>
             {props.kopierTekst && (
-                <CopyButton copyText={props.kopierTekst} text={props.kopierTekst} activeText="kopiert" size="medium"/>
+                <CopyButton copyText={props.kopierTekst} text={props.viseTekst} activeText="kopiert" size="medium"/>
             )}
         </div>
     );
