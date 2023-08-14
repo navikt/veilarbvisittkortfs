@@ -9,6 +9,7 @@ import { selectKanLeggeIArbeidsListe, selectKanRedigereArbeidsliste, selectSamme
 import { useModalStore } from '../../store/modal-store';
 import './personinfo.less';
 import { logMetrikk } from '../../util/logger';
+import { formaterTelefonnummer } from "../../util/utils";
 
 function PersonInfo() {
     const { brukerFnr } = useAppStore();
@@ -25,6 +26,7 @@ function PersonInfo() {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
         showArbeidslisteModal();
     };
+    const telefon: string = formaterTelefonnummer(personalia.telefon?.find((entry) => entry.prioritet === '1')?.telefonNr);
 
     return (
         <div className="personinfo">
@@ -37,6 +39,7 @@ function PersonInfo() {
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
                 <KopierKnappTekst kopierTekst={brukerFnr} />
+                <KopierKnappTekst kopierTekst={telefon} />
             </div>
         </div>
     );
