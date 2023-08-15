@@ -42,9 +42,9 @@ function PersonInfo() {
                 />
                 <KopierKnappTekst kopierTekst={brukerFnr}/>
                 <h3>/</h3>
-                {(telefon !== '-') &&
+                {(uformattertTelefon) &&
                 <KopierKnappTekst kopierTekst={`Tlf: ${telefon}`}/>}
-                {(telefon === '-') &&
+                {(!uformattertTelefon) &&
                     <h3>Tlf: -</h3>}
             </div>
         </div>
