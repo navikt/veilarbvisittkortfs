@@ -14,6 +14,7 @@ export interface Personalia {
     diskresjonskode: StringOrNothing;
     egenAnsatt: boolean;
     sikkerhetstiltak: StringOrNothing;
+    telefon: PersonaliaTelefon[];
 }
 
 export interface VergeNavn {
@@ -61,6 +62,13 @@ export interface SpraakTolk {
 export interface HarBruktNivaa4Type {
     harbruktnivaa4: boolean;
     personidentifikator?: string;
+}
+
+export interface PersonaliaTelefon {
+    prioritet: string;
+    telefonNr: string;
+    registrertDato: StringOrNothing;
+    master: StringOrNothing;
 }
 
 export type RegistreringType = 'ORDINAER' | 'SYKMELDT';
