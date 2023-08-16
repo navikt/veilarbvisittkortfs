@@ -40,10 +40,10 @@ function PersonInfo() {
                     onClick={klikk}
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
-                <KopierKnappTekst kopierTekst={brukerFnr}/>
+                <KopierKnappTekst kopierTekst={`F.nr: ${brukerFnr}`}/>
                 <h3>/</h3>
                 {(uformattertTelefon) &&
-                <KopierKnappTekst kopierTekst={`Tlf: ${telefon}`}/>}
+                <KopierKnappTekst kopierTekst={`Tlf.: ${telefon}`}/>}
                 {(!uformattertTelefon) &&
                     <h4 className="uten-telefon">Tlf: -</h4>}
             </div>
