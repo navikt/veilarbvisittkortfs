@@ -7,14 +7,12 @@ import StoreProvider from './store/store-provider';
 import { DataFetcher } from './component/data-fetcher';
 import { VeilederverktoyModalController } from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-modal-controller';
 import { ToastController } from './component/components/toast-controller';
+import { Provider } from '@navikt/ds-react';
 import '../index.less';
-import { Modal, Provider as ModalProvider } from '@navikt/ds-react';
-
-Modal.setAppElement(document.getElementById('modal-a11y-wrapper'));
 
 export interface AppProps {
     fnr: string;
-    enhet?: string;
+    enhet: string;
     tilbakeTilFlate: string;
     visVeilederVerktoy?: boolean;
     skjulEtiketter?: boolean;
@@ -23,7 +21,7 @@ export interface AppProps {
 
 function App(props: AppProps) {
     return (
-        <ModalProvider>
+        <Provider rootElement={document.getElementById('modal-a11y-wrapper')}>
             <StoreProvider
                 brukerFnr={props.fnr}
                 enhetId={props.enhet}
@@ -44,7 +42,7 @@ function App(props: AppProps) {
                     <ToastController />
                 </div>
             </StoreProvider>
-        </ModalProvider>
+        </Provider>
     );
 }
 

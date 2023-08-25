@@ -5,7 +5,7 @@ export function KopierKnappTekst(props: { kopierTekst: string, viseTekst: string
     return (
         <div>
             {props.kopierTekst && (
-                <CopyButton copyText={props.kopierTekst} text={props.viseTekst} activeText="kopiert" size="medium"/>
+                <CopyButton copyText={props.kopierTekst} text={props.viseTekst} activeText="kopiert" size="medium" iconPosition="right"/>
             )}
         </div>
     );
