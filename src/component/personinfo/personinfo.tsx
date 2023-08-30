@@ -42,7 +42,7 @@ function PersonInfo() {
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
                 <KopierKnappTekst kopierTekst={brukerFnr} visTekst={`F.nr: ${brukerFnr}`} />
-                <h3>/</h3>
+                {features[VEILARBDETALJERFS_ENABLED] && <h3>/</h3>}
                 {uformattertTelefon && features[VEILARBDETALJERFS_ENABLED] && (
                     <KopierKnappTekst kopierTekst={uformattertTelefon} visTekst={`Tlf.: ${telefon}`} />
                 )}
