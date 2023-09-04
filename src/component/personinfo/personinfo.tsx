@@ -12,6 +12,7 @@ import { logMetrikk } from '../../util/logger';
 import { formaterTelefonnummer } from '../../util/utils';
 import { StringOrNothing } from '../../util/type/utility-types';
 import { VEILARBDETALJERFS_ENABLED } from '../../api/veilarbpersonflatefs';
+import { Label } from '@navikt/ds-react';
 
 function PersonInfo() {
     const { brukerFnr } = useAppStore();
@@ -42,12 +43,12 @@ function PersonInfo() {
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
                 <KopierKnappTekst kopierTekst={brukerFnr} visTekst={`F.nr.: ${brukerFnr}`} />
-                {features[VEILARBDETALJERFS_ENABLED] && <h3>/</h3>}
+                {features[VEILARBDETALJERFS_ENABLED] && <Label>/</Label>}
                 {uformattertTelefon && features[VEILARBDETALJERFS_ENABLED] && (
                     <KopierKnappTekst kopierTekst={uformattertTelefon} visTekst={`Tlf.: ${telefon}`} />
                 )}
                 {!uformattertTelefon && features[VEILARBDETALJERFS_ENABLED] && (
-                    <h4 className="uten-telefon">Tlf.: -</h4>
+                    <Label className="uten-telefon">Tlf.: -</Label>
                 )}
             </div>
         </div>
