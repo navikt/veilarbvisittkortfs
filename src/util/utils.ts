@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
-import { PersonaliaTelefon } from "../api/veilarbperson";
-import { StringOrNothing } from "./type/utility-types";
+import { PersonaliaTelefon } from '../api/veilarbperson';
+import { StringOrNothing } from './type/utility-types';
 
 const emdashCharacterCode = 8212;
 const EMDASH = String.fromCharCode(emdashCharacterCode);
@@ -12,9 +12,11 @@ export function visEmdashHvisNull(verdi: StringOrNothing) {
 }
 export const APP_NAME = 'veilarbvisittkortfs';
 
-export function isDevelopment(): boolean {
-    return process.env.REACT_APP_DEV === 'true';
+export function isLocalDevelopment(): boolean {
+    return process.env.REACT_APP_MOCK === 'true';
 }
+
+export const erProd = () => (process.env.REACT_APP_DEPLOYMENT_ENV as DeploymentEnvironment) === 'production';
 
 export function ifResponseHasData<T>(
     callback: (data: T) => void
@@ -90,3 +92,5 @@ export function formaterTelefonnummer(telefon: PersonaliaTelefon | undefined | s
 
     return `${landkode} ${splittTall.join(' ')}`;
 }
+
+export type DeploymentEnvironment = 'local' | 'development' | 'production';

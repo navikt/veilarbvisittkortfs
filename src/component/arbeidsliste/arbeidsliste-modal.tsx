@@ -18,6 +18,7 @@ import { kanFjerneArbeidsliste, selectSammensattNavn } from '../../util/selector
 import { useModalStore } from '../../store/modal-store';
 import { ifResponseHasData } from '../../util/utils';
 import { logMetrikk } from '../../util/logger';
+import { trackAmplitude } from '../../amplitude/amplitude';
 
 const arbeidslisteEmptyValues = {
     overskrift: '',
@@ -66,6 +67,22 @@ function ArbeidslisteModal() {
             leggtil: !erIRedigeringModus,
             applikasjon: 'visittkort'
         });
+
+        trackAmplitude(
+            {
+                name: 'skjema fullført',
+                data: {
+                    skjemanavn: erIRedigeringModus ? 'Rediger arbeidsliste' : 'Legg til arbeidsliste',
+                    skjemaId: 'veilarbvisittkortfs-arbeidsliste'
+                }
+            },
+            {
+                kategori: values.kategori,
+                overskriftslengde: values.overskrift?.length,
+                kommentarlengde: values.kommentar?.length,
+                fristSatt: !!values.frist?.length
+            }
+        );
 
         showSpinnerModal();
 

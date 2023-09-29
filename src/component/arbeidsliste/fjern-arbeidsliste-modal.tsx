@@ -9,6 +9,7 @@ import { useDataStore } from '../../store/data-store';
 import { selectSammensattNavn } from '../../util/selectors';
 import { ifResponseHasData } from '../../util/utils';
 import { logMetrikk } from '../../util/logger';
+import { trackAmplitude } from '../../amplitude/amplitude';
 
 function FjernArbeidslisteModal() {
     const { brukerFnr } = useAppStore();
@@ -19,7 +20,10 @@ function FjernArbeidslisteModal() {
 
     function handleSlettArbeidsListe() {
         logMetrikk('visittkort.metrikker.fjern_arbeidsliste');
-
+        trackAmplitude({
+            name: 'knapp klikket',
+            data: { knapptekst: 'Fjern arbeidsliste', effekt: 'Fjern bruker fra arbeidslista' }
+        });
         showSpinnerModal();
 
         slettArbeidsliste(brukerFnr).then(ifResponseHasData(setArbeidsliste)).then(hideModal).catch(showErrorModal);
