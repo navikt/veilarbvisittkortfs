@@ -4,6 +4,9 @@ on:
     push:
         branches:
             - master
+permissions:
+  contents: write
+  pages: write
 jobs:
     update-gh-pages:
         name: Update GitHub pages
