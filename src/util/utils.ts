@@ -1,5 +1,4 @@
 import { AxiosResponse } from 'axios';
-import { PersonaliaTelefon } from '../api/veilarbperson';
 import { StringOrNothing } from './type/utility-types';
 
 const emdashCharacterCode = 8212;
@@ -68,7 +67,7 @@ export function isDefined(subject: any): boolean {
     return subject !== undefined && subject !== null;
 }
 
-export function formaterTelefonnummer(telefon: PersonaliaTelefon | undefined | string) {
+export function formaterTelefonnummer(telefon: StringOrNothing) {
     if (!telefon) {
         return EMDASH;
     }

@@ -5,7 +5,12 @@ import ArbeidslisteKnapp from '../arbeidsliste/arbeidsliste-knapp';
 import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
 import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
-import { selectKanLeggeIArbeidsListe, selectKanRedigereArbeidsliste, selectSammensattNavn } from '../../util/selectors';
+import {
+    selectKanLeggeIArbeidsListe,
+    selectKanRedigereArbeidsliste,
+    selectSammensattNavn,
+    selectTelefonnummer
+} from '../../util/selectors';
 import { useModalStore } from '../../store/modal-store';
 import './personinfo.less';
 import { logMetrikk } from '../../util/logger';
@@ -29,7 +34,7 @@ function PersonInfo() {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
         showArbeidslisteModal();
     };
-    const uformattertTelefon: StringOrNothing = personalia?.telefon?.find(entry => entry.prioritet === '1')?.telefonNr;
+    const uformattertTelefon: StringOrNothing = selectTelefonnummer(personalia);
     const telefon: string = formaterTelefonnummer(uformattertTelefon);
 
     return (
