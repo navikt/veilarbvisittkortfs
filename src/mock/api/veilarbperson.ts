@@ -16,13 +16,13 @@ const mockHarBruktNivaa4: HarBruktNivaa4Type = {
 
 const mockTelefon: PersonaliaTelefon[] = [
     {
-        prioritet: '1',
+        prioritet: '2',
         telefonNr: '0047 463 33 333',
         registrertDato: '10.07.2008',
         master: 'FREG'
     },
     {
-        prioritet: '2',
+        prioritet: '1',
         telefonNr: '+47 80 02 22 22',
         registrertDato: '10.04.2010',
         master: 'KRR'

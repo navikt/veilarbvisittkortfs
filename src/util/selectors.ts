@@ -131,12 +131,13 @@ export function selectKanTildeleVeileder(
 }
 
 export function selectTelefonnummer(personalia: Personalia | undefined): StringOrNothing {
-    if (!personalia?.telefon) return '';
-    if (personalia.telefon.find(entry => entry.prioritet === '1'))
-        return personalia.telefon.find(entry => entry.prioritet === '1')?.telefonNr;
-    if (personalia.telefon.find(entry => entry.prioritet === '2'))
-        return personalia.telefon.find(entry => entry.prioritet === '2')?.telefonNr;
-    if (personalia.telefon.find(entry => entry.prioritet === '3'))
-        return personalia.telefon.find(entry => entry.prioritet === '3')?.telefonNr;
-    return;
+    const telefonEntries = personalia?.telefon ?? [];
+    const telefonPriorities = ['1', '2', '3'];
+    for (const priority of telefonPriorities) {
+        const entry = telefonEntries.find(entry => entry.prioritet === priority);
+        if (entry) {
+            return entry.telefonNr;
+        }
+    }
+    return undefined;
 }
