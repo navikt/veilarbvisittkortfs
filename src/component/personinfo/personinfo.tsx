@@ -50,7 +50,7 @@ function PersonInfo() {
                 <KopierKnappTekst kopierTekst={brukerFnr} visTekst={`F.nr.: ${brukerFnr}`} />
                 {features[VEILARBDETALJERFS_ENABLED] && <Label>/</Label>}
                 {uformattertTelefon && features[VEILARBDETALJERFS_ENABLED] && (
-                    <KopierKnappTekst kopierTekst={uformattertTelefon} visTekst={`Tlf.: ${telefon}`} />
+                    <KopierKnappTekst kopierTekst={telefon.replace(/\s/g, '')} visTekst={`Tlf.: ${telefon}`} />
                 )}
                 {!uformattertTelefon && features[VEILARBDETALJERFS_ENABLED] && (
                     <Label className="uten-telefon">Tlf.: -</Label>
