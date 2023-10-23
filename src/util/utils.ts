@@ -68,18 +68,22 @@ export function isDefined(subject: any): boolean {
 }
 
 export function formaterTelefonnummer(telefon: StringOrNothing) {
+    let norskTelefonnummer = false;
+
     if (!telefon) {
         return EMDASH;
     }
-    let telefonNr = telefon?.toString();
+    let telefonNr = telefon?.toString().replace(/\s/g, '');
     let landkode = '';
 
     if (telefonNr?.startsWith('0047')) {
         landkode = '+47';
         telefonNr = telefonNr.slice(4);
+        norskTelefonnummer = true;
     } else if (telefonNr?.startsWith('+47')) {
         landkode = telefonNr.slice(0, 3);
         telefonNr = telefonNr.slice(3);
+        norskTelefonnummer = true;
     }
 
     const tall = telefonNr?.split('');
@@ -88,8 +92,9 @@ export function formaterTelefonnummer(telefon: StringOrNothing) {
     while (tall?.length) {
         splittTall.push(tall.splice(0, 2).join(''));
     }
-
-    return `${landkode} ${splittTall.join(' ')}`;
+    if (norskTelefonnummer) {
+        return splittTall.join(' ');
+    } else return `${landkode} ${splittTall.join(' ')}`;
 }
 
 export type DeploymentEnvironment = 'local' | 'development' | 'production';
