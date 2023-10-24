@@ -14,6 +14,9 @@ export const APP_NAME = 'veilarbvisittkortfs';
 export function isDevelopment(): boolean {
     return import.meta.env.MODE === 'development';
 }
+export function erProd(): boolean {
+    return import.meta.env.MODE === 'production';
+}
 
 export function ifResponseHasData<T>(
     callback: (data: T) => void
@@ -94,4 +97,3 @@ export function formaterTelefonnummer(telefon: StringOrNothing) {
         return splittTall.join(' ');
     } else return `${landkode} ${splittTall.join(' ')}`;
 }
-

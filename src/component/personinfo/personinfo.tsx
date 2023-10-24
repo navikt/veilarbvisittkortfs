@@ -46,16 +46,12 @@ function PersonInfo() {
                     onClick={klikk}
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
-                <KopierKnappTekst kopierTekst={brukerFnr} visTekst={`F.nr.: ${brukerFnr}`} />
+                <KopierKnappTekst kopierTekst={brukerFnr} viseTekst={`F.nr.: ${brukerFnr}`} />
                 {<Label>/</Label>}
                 {uformattertTelefon && (
-                    <KopierKnappTekst kopierTekst={telefon.replace(/\s/g, '')} visTekst={`Tlf.: ${telefon}`} />
+                    <KopierKnappTekst kopierTekst={telefon.replace(/\s/g, '')} viseTekst={`Tlf.: ${telefon}`} />
                 )}
                 {!uformattertTelefon && <Label className="uten-telefon">Tlf.: -</Label>}
-                <BodyShort>/</BodyShort>
-                <KopierKnappTekst kopierTekst={brukerFnr} viseTekst={brukerFnr} />
-                <BodyShort>/</BodyShort>
-                <KopierKnappTekst kopierTekst={uformattertTelefon} viseTekst={`Tlf:  ${telefon}`}/>
             </div>
         </div>
     );
