@@ -5,18 +5,22 @@ import ArbeidslisteKnapp from '../arbeidsliste/arbeidsliste-knapp';
 import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
 import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
-import { selectKanLeggeIArbeidsListe, selectKanRedigereArbeidsliste, selectSammensattNavn } from '../../util/selectors';
+import {
+    selectKanLeggeIArbeidsListe,
+    selectKanRedigereArbeidsliste,
+    selectSammensattNavn,
+    selectTelefonnummer
+} from '../../util/selectors';
 import { useModalStore } from '../../store/modal-store';
 import './personinfo.less';
 import { logMetrikk } from '../../util/logger';
 import { formaterTelefonnummer } from '../../util/utils';
 import { StringOrNothing } from '../../util/type/utility-types';
-import { VEILARBDETALJERFS_ENABLED } from '../../api/veilarbpersonflatefs';
 import { Label } from '@navikt/ds-react';
 
 function PersonInfo() {
     const { brukerFnr } = useAppStore();
-    const { personalia, arbeidsliste, oppfolgingsstatus, innloggetVeileder, features } = useDataStore();
+    const { personalia, arbeidsliste, oppfolgingsstatus, innloggetVeileder } = useDataStore();
     const { showArbeidslisteModal } = useModalStore();
 
     const arbeidslisteikon = arbeidsliste?.kategori;
@@ -29,7 +33,7 @@ function PersonInfo() {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
         showArbeidslisteModal();
     };
-    const uformattertTelefon: StringOrNothing = personalia?.telefon?.find(entry => entry.prioritet === '1')?.telefonNr;
+    const uformattertTelefon: StringOrNothing = selectTelefonnummer(personalia);
     const telefon: string = formaterTelefonnummer(uformattertTelefon);
 
     return (
@@ -43,13 +47,11 @@ function PersonInfo() {
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
                 <KopierKnappTekst kopierTekst={brukerFnr} visTekst={`F.nr.: ${brukerFnr}`} />
-                {features[VEILARBDETALJERFS_ENABLED] && <Label>/</Label>}
-                {uformattertTelefon && features[VEILARBDETALJERFS_ENABLED] && (
-                    <KopierKnappTekst kopierTekst={uformattertTelefon} visTekst={`Tlf.: ${telefon}`} />
+                {<Label>/</Label>}
+                {uformattertTelefon && (
+                    <KopierKnappTekst kopierTekst={telefon.replace(/\s/g, '')} visTekst={`Tlf.: ${telefon}`} />
                 )}
-                {!uformattertTelefon && features[VEILARBDETALJERFS_ENABLED] && (
-                    <Label className="uten-telefon">Tlf.: -</Label>
-                )}
+                {!uformattertTelefon && <Label className="uten-telefon">Tlf.: -</Label>}
             </div>
         </div>
     );

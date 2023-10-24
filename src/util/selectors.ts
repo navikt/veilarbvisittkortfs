@@ -4,7 +4,7 @@ import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/ve
 import { Personalia } from '../api/veilarbperson';
 import { Arbeidsliste } from '../api/veilarbportefolje';
 import { VeilederData } from '../api/veilarbveileder';
-import { OrNothing } from './type/utility-types';
+import { OrNothing, StringOrNothing } from './type/utility-types';
 
 export function selectSammensattNavn(personalia: Personalia | undefined): string {
     if (!personalia) return '';
@@ -128,4 +128,12 @@ export function selectKanTildeleVeileder(
 ): boolean {
     if (!oppfolging || !tilgangTilBrukersKontor) return false;
     return oppfolging.underOppfolging && tilgangTilBrukersKontor.tilgangTilBrukersKontor;
+}
+
+export function selectTelefonnummer(personalia: Personalia | undefined): StringOrNothing {
+    const telefonEntries = personalia?.telefon ?? [];
+    // Filtrer bort tomme telefonnumre og sorter på prioritet, velger det med lavest prioritet
+    return telefonEntries
+        .filter(tlfEntry => tlfEntry.telefonNr)
+        .sort((a, b) => Number(a.prioritet) - Number(b.prioritet))[0]?.telefonNr;
 }

@@ -7,35 +7,33 @@ import {
     RegistreringData,
     SpraakTolk,
     VergeOgFullmakt
-} from "../../api/veilarbperson";
+} from '../../api/veilarbperson';
 import { defaultNetworkResponseDelay } from '../config';
 
 const mockHarBruktNivaa4: HarBruktNivaa4Type = {
     harbruktnivaa4: false
 };
 
-const mockTelefon: PersonaliaTelefon[] =
-    [
-        {
-            prioritet: '1',
-            telefonNr: '+4746333333',
-            registrertDato: '10.07.2008',
-            master: 'FREG'
-
-        },
-        {
-            prioritet: '2',
-            telefonNr: '80022222',
-            registrertDato: '10.04.2010',
-            master: 'KRR'
-        },
-        {
-            prioritet: '3',
-            telefonNr: '44222444',
-            registrertDato: null,
-            master: 'PDL'
-        }
-    ]
+const mockTelefon: PersonaliaTelefon[] = [
+    {
+        prioritet: '2',
+        telefonNr: '0047 463 33 333',
+        registrertDato: '10.07.2008',
+        master: 'FREG'
+    },
+    {
+        prioritet: '3',
+        telefonNr: '+47 80 02 22 22',
+        registrertDato: '10.04.2010',
+        master: 'KRR'
+    },
+    {
+        prioritet: '1',
+        telefonNr: '+213 207 860 11 29',
+        registrertDato: null,
+        master: 'PDL'
+    }
+];
 
 const mockPersonaliaV2: Personalia = {
     fornavn: 'GRØNN',
