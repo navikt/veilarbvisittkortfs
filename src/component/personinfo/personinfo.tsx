@@ -5,12 +5,18 @@ import ArbeidslisteKnapp from '../arbeidsliste/arbeidsliste-knapp';
 import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
 import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
-import { selectKanLeggeIArbeidsListe, selectKanRedigereArbeidsliste, selectSammensattNavn } from '../../util/selectors';
+import {
+    selectKanLeggeIArbeidsListe,
+    selectKanRedigereArbeidsliste,
+    selectSammensattNavn,
+    selectTelefonnummer
+} from '../../util/selectors';
 import { useModalStore } from '../../store/modal-store';
 import './personinfo.less';
 import { logMetrikk } from '../../util/logger';
-import { formaterTelefonnummer } from "../../util/utils";
-import { BodyShort } from "@navikt/ds-react";
+import { formaterTelefonnummer } from '../../util/utils';
+import { StringOrNothing } from '../../util/type/utility-types';
+import { Label } from '@navikt/ds-react';
 
 function PersonInfo() {
     const { brukerFnr } = useAppStore();
@@ -27,7 +33,7 @@ function PersonInfo() {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
         showArbeidslisteModal();
     };
-    const uformattertTelefon: string = personalia.telefon?.find((entry) => entry.prioritet === '1')?.telefonNr;
+    const uformattertTelefon: StringOrNothing = selectTelefonnummer(personalia);
     const telefon: string = formaterTelefonnummer(uformattertTelefon);
 
     return (
@@ -40,6 +46,12 @@ function PersonInfo() {
                     onClick={klikk}
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
+                <KopierKnappTekst kopierTekst={brukerFnr} visTekst={`F.nr.: ${brukerFnr}`} />
+                {<Label>/</Label>}
+                {uformattertTelefon && (
+                    <KopierKnappTekst kopierTekst={telefon.replace(/\s/g, '')} visTekst={`Tlf.: ${telefon}`} />
+                )}
+                {!uformattertTelefon && <Label className="uten-telefon">Tlf.: -</Label>}
                 <BodyShort>/</BodyShort>
                 <KopierKnappTekst kopierTekst={brukerFnr} viseTekst={brukerFnr} />
                 <BodyShort>/</BodyShort>

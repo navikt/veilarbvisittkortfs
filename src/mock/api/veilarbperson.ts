@@ -1,34 +1,40 @@
 import { rest } from 'msw';
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
-import { HarBruktNivaa4Type, Personalia, PersonaliaTelefon, RegistreringData, SpraakTolk, VergeOgFullmakt } from '../../api/veilarbperson';
+import {
+    HarBruktNivaa4Type,
+    Personalia,
+    PersonaliaTelefon,
+    RegistreringData,
+    SpraakTolk,
+    VergeOgFullmakt
+} from '../../api/veilarbperson';
 import { defaultNetworkResponseDelay } from '../config';
 
 const mockHarBruktNivaa4: HarBruktNivaa4Type = {
     harbruktnivaa4: false
 };
 
-const mockTelefon: PersonaliaTelefon[] =
-    [
-            {
-                prioritet: '1',
-                telefonNr: '+4746333333',
-                registrertDato: '10.07.2008',
-                master: 'FREG'
-
-    },
+const mockTelefon: PersonaliaTelefon[] = [
     {
         prioritet: '2',
-        telefonNr: '80022222',
+        telefonNr: '0047 463 33 333',
+        registrertDato: '10.07.2008',
+        master: 'FREG'
+    },
+    {
+        prioritet: '3',
+        telefonNr: '+47 80 02 22 22',
         registrertDato: '10.04.2010',
         master: 'KRR'
     },
     {
-        prioritet: '3',
-        telefonNr: '44222444',
+        prioritet: '1',
+        telefonNr: '+213 207 860 11 29',
         registrertDato: null,
         master: 'PDL'
     }
-]
+];
+
 const mockPersonaliaV2: Personalia = {
     fornavn: 'GRØNN',
     mellomnavn: 'LIV',
@@ -36,11 +42,11 @@ const mockPersonaliaV2: Personalia = {
     fodselsnummer: '10108000398',
     fodselsdato: '1990-09-16',
     dodsdato: '2021-09-16',
-    kjonn: 'KVINNE',
     diskresjonskode: '7',
-    egenAnsatt: true,
     sikkerhetstiltak: 'Ansatte i samtale',
-    telefon: mockTelefon,
+    egenAnsatt: true,
+    kjonn: 'KVINNE',
+    telefon: mockTelefon
 };
 
 const mockVergeOgFullmakt: VergeOgFullmakt = {

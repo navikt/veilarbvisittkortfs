@@ -5,6 +5,7 @@ import * as dayjs from 'dayjs';
 import 'dayjs/locale/nb';
 import App from './app';
 import {createRoot} from "react-dom/client";
+import { initAmplitude } from './amplitude/amplitude';
 
 dayjs.locale('nb');
 
@@ -18,4 +19,6 @@ if (isDevelopment()) {
             <App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />
         );
     });
+} else {
+    initAmplitude();
 }

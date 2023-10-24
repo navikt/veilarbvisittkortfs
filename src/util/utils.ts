@@ -1,6 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { PersonaliaTelefon } from "../api/veilarbperson";
-import { StringOrNothing } from "./type/utility-types";
+import { StringOrNothing } from './type/utility-types';
 
 const emdashCharacterCode = 8212;
 const EMDASH = String.fromCharCode(emdashCharacterCode);
@@ -10,7 +9,6 @@ export default EMDASH;
 export function visEmdashHvisNull(verdi: StringOrNothing) {
     return verdi ? verdi : EMDASH;
 }
-
 export const APP_NAME = 'veilarbvisittkortfs';
 
 export function isDevelopment(): boolean {
@@ -67,19 +65,23 @@ export function isDefined(subject: any): boolean {
     return subject !== undefined && subject !== null;
 }
 
-export function formaterTelefonnummer(telefon: PersonaliaTelefon | undefined | string) {
+export function formaterTelefonnummer(telefon: StringOrNothing) {
+    let norskTelefonnummer = false;
+
     if (!telefon) {
         return EMDASH;
     }
-    let telefonNr = telefon?.toString();
+    let telefonNr = telefon?.toString().replace(/\s/g, '');
     let landkode = '';
 
     if (telefonNr?.startsWith('0047')) {
         landkode = '+47';
         telefonNr = telefonNr.slice(4);
+        norskTelefonnummer = true;
     } else if (telefonNr?.startsWith('+47')) {
         landkode = telefonNr.slice(0, 3);
         telefonNr = telefonNr.slice(3);
+        norskTelefonnummer = true;
     }
 
     const tall = telefonNr?.split('');
@@ -88,7 +90,8 @@ export function formaterTelefonnummer(telefon: PersonaliaTelefon | undefined | s
     while (tall?.length) {
         splittTall.push(tall.splice(0, 2).join(''));
     }
-
-    return `${landkode} ${splittTall.join(' ')}`;
+    if (norskTelefonnummer) {
+        return splittTall.join(' ');
+    } else return `${landkode} ${splittTall.join(' ')}`;
 }
 
