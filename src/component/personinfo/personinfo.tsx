@@ -16,12 +16,11 @@ import './personinfo.less';
 import { logMetrikk } from '../../util/logger';
 import { formaterTelefonnummer } from '../../util/utils';
 import { StringOrNothing } from '../../util/type/utility-types';
-import { VEILARBDETALJERFS_ENABLED } from '../../api/veilarbpersonflatefs';
 import { Label } from '@navikt/ds-react';
 
 function PersonInfo() {
     const { brukerFnr } = useAppStore();
-    const { personalia, arbeidsliste, oppfolgingsstatus, innloggetVeileder, features } = useDataStore();
+    const { personalia, arbeidsliste, oppfolgingsstatus, innloggetVeileder } = useDataStore();
     const { showArbeidslisteModal } = useModalStore();
 
     const arbeidslisteikon = arbeidsliste?.kategori;
@@ -48,13 +47,11 @@ function PersonInfo() {
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
                 <KopierKnappTekst kopierTekst={brukerFnr} visTekst={`F.nr.: ${brukerFnr}`} />
-                {features[VEILARBDETALJERFS_ENABLED] && <Label>/</Label>}
-                {uformattertTelefon && features[VEILARBDETALJERFS_ENABLED] && (
+                {<Label>/</Label>}
+                {uformattertTelefon && (
                     <KopierKnappTekst kopierTekst={telefon.replace(/\s/g, '')} visTekst={`Tlf.: ${telefon}`} />
                 )}
-                {!uformattertTelefon && features[VEILARBDETALJERFS_ENABLED] && (
-                    <Label className="uten-telefon">Tlf.: -</Label>
-                )}
+                {!uformattertTelefon && <Label className="uten-telefon">Tlf.: -</Label>}
             </div>
         </div>
     );

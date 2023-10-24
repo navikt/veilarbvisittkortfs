@@ -22,14 +22,14 @@ const mockTelefon: PersonaliaTelefon[] = [
         master: 'FREG'
     },
     {
-        prioritet: '1',
+        prioritet: '3',
         telefonNr: '+47 80 02 22 22',
         registrertDato: '10.04.2010',
         master: 'KRR'
     },
     {
-        prioritet: '3',
-        telefonNr: '0044 207 860 11 29',
+        prioritet: '1',
+        telefonNr: '+213 207 860 11 29',
         registrertDato: null,
         master: 'PDL'
     }
