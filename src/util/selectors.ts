@@ -132,12 +132,8 @@ export function selectKanTildeleVeileder(
 
 export function selectTelefonnummer(personalia: Personalia | undefined): StringOrNothing {
     const telefonEntries = personalia?.telefon ?? [];
-    const telefonPriorities = ['1', '2', '3'];
-    for (const priority of telefonPriorities) {
-        const entry = telefonEntries.find(entry => entry.prioritet === priority);
-        if (entry) {
-            return entry.telefonNr;
-        }
-    }
-    return undefined;
+    // Filtrer bort tomme telefonnumre og sorter på prioritet, velger det med lavest prioritet
+    return telefonEntries
+        .filter(tlfEntry => tlfEntry.telefonNr)
+        .sort((a, b) => Number(a.prioritet) - Number(b.prioritet))[0]?.telefonNr;
 }
