@@ -16,10 +16,10 @@ const mockArbeidsliste: Arbeidsliste = {
 };
 
 export const veilarbportefoljeHandlers: RequestHandlersList = [
-    rest.get('/veilarbportefolje/api/arbeidsliste/:fnr', (req, res, ctx) => {
+    rest.post('/veilarbportefolje/api/v2/hent-arbeidsliste', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockArbeidsliste));
     }),
-    rest.post('/veilarbportefolje/api/arbeidsliste/:fnr', (req, res, ctx) => {
+    rest.post('/veilarbportefolje/api/v2/arbeidsliste', (req, res, ctx) => {
         const requestBody = req.body as ArbeidslisteformValues;
         return res(
             ctx.delay(defaultNetworkResponseDelay),
@@ -36,7 +36,7 @@ export const veilarbportefoljeHandlers: RequestHandlersList = [
             })
         );
     }),
-    rest.put('/veilarbportefolje/api/arbeidsliste/:fnr', (req, res, ctx) => {
+    rest.put('/veilarbportefolje/api/v2/arbeidsliste', (req, res, ctx) => {
         const requestBody = req.body as ArbeidslisteformValues;
         return res(
             ctx.delay(defaultNetworkResponseDelay),
@@ -53,7 +53,7 @@ export const veilarbportefoljeHandlers: RequestHandlersList = [
             })
         );
     }),
-    rest.delete('/veilarbportefolje/api/arbeidsliste/:fnr', (req, res, ctx) => {
+    rest.delete('/veilarbportefolje/api/arbeidsliste', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockArbeidsliste));
     })
 ];

@@ -24,7 +24,6 @@ const typeTilTekst = {
 };
 
 function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHistorikkKomponentProps) {
-    const { brukerFnr } = useAppStore();
     const { type, begrunnelse, dialogId } = innstillingsHistorikk;
 
     let begrunnelseTekst =
@@ -37,11 +36,7 @@ function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHis
             <Element>{typeTilTekst[type]}</Element>
             <Normaltekst>
                 {begrunnelseTekst}
-                {dialogId && (
-                    <LenkeTilDialog brukerFnr={brukerFnr} dialogId={dialogId}>
-                        Les mer i dialog
-                    </LenkeTilDialog>
-                )}
+                {dialogId && <LenkeTilDialog dialogId={dialogId}>Les mer i dialog</LenkeTilDialog>}
             </Normaltekst>
             <Undertekst>
                 {`${toSimpleDateStr(innstillingsHistorikk.dato)} ${opprettetAvTekst(

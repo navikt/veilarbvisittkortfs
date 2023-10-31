@@ -14,26 +14,28 @@ const mockHarBruktNivaa4: HarBruktNivaa4Type = {
     harbruktnivaa4: false
 };
 
-const mockTelefon: PersonaliaTelefon[] = [
-    {
-        prioritet: '2',
-        telefonNr: '0047 463 33 333',
-        registrertDato: '10.07.2008',
-        master: 'FREG'
-    },
-    {
-        prioritet: '3',
-        telefonNr: '+47 80 02 22 22',
-        registrertDato: '10.04.2010',
-        master: 'KRR'
-    },
-    {
-        prioritet: '1',
-        telefonNr: '+213 207 860 11 29',
-        registrertDato: null,
-        master: 'PDL'
-    }
-];
+const mockTelefon: PersonaliaTelefon[] =
+    [
+        {
+            prioritet: '1',
+            telefonNr: '+4746333333',
+            registrertDato: '10.07.2008',
+            master: 'FREG'
+
+        },
+        {
+            prioritet: '2',
+            telefonNr: '80022222',
+            registrertDato: '10.04.2010',
+            master: 'KRR'
+        },
+        {
+            prioritet: '3',
+            telefonNr: '44222444',
+            registrertDato: null,
+            master: 'PDL'
+        }
+    ]
 
 const mockPersonaliaV2: Personalia = {
     fornavn: 'GRØNN',
@@ -110,19 +112,19 @@ const mockRegistrering: RegistreringData = {
 };
 
 export const veilarbpersonHandlers: RequestHandlersList = [
-    rest.get('/veilarbperson/api/person/registrering', (req, res, ctx) => {
+    rest.post('/veilarbperson/api/v3/person/hent-registrering', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockRegistrering));
     }),
     rest.get('/veilarbperson/api/person/:fnr/harNivaa4', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockHarBruktNivaa4));
     }),
-    rest.get('/veilarbperson/api/v2/person', (req, res, ctx) => {
+    rest.post('/veilarbperson/api/v3/hent-person', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockPersonaliaV2));
     }),
-    rest.get('/veilarbperson/api/v2/person/vergeOgFullmakt', (req, res, ctx) => {
+    rest.post('/veilarbperson/api/v3/person/hent-vergeOgFullmakt', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockVergeOgFullmakt));
     }),
-    rest.get('/veilarbperson/api/v2/person/tolk', (req, res, ctx) => {
+    rest.post('/veilarbperson/api/v3/person/hent-tolk', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockSpraakTolk));
     })
 ];

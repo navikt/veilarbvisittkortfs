@@ -94,55 +94,65 @@ export interface InnstillingHistorikkInnslag {
 }
 
 export function fetchOppfolging(fnr: string): AxiosPromise<Oppfolging> {
-    return axiosInstance.get(`/veilarboppfolging/api/oppfolging?fnr=${fnr}`);
+    return axiosInstance.post(`/veilarboppfolging/api/v2/hent-underOppfolging`, { fnr: fnr });
 }
 
 export function fetchOppfolgingsstatus(fnr: string): AxiosPromise<OppfolgingStatus> {
-    return axiosInstance.get<OppfolgingStatus>(`/veilarboppfolging/api/person/${fnr}/oppfolgingsstatus`);
+    return axiosInstance.post<OppfolgingStatus>(`/veilarboppfolging/api/v2/person/hent-oppfolgingsstatus`, {
+        fnr: fnr
+    });
 }
 
 export function fetchTilgangTilBrukersKontor(fnr: string): AxiosPromise<TilgangTilBrukersKontor> {
-    return axiosInstance.get<TilgangTilBrukersKontor>(`/veilarboppfolging/api/oppfolging/veilederTilgang?fnr=${fnr}`);
+    return axiosInstance.post<TilgangTilBrukersKontor>(`/veilarboppfolging/api/v3/oppfolging/hent-veilederTilgang`, {
+        fnr: fnr
+    });
 }
 
 export function fetchInstillingsHistorikk(fnr: string): AxiosPromise<InnstillingHistorikkInnslag[]> {
-    return axiosInstance.get<InnstillingHistorikkInnslag[]>(
-        `/veilarboppfolging/api/oppfolging/innstillingsHistorikk?fnr=${fnr}`
+    return axiosInstance.post<InnstillingHistorikkInnslag[]>(
+        `/veilarboppfolging/api/v3/hent-instillingshistorikk`,
+        { fnr: fnr }
     );
 }
 
 export function fetchAvsluttOppfolgingStatus(fnr: string): AxiosPromise<AvslutningStatus> {
-    return axiosInstance.get(`/veilarboppfolging/api/oppfolging/avslutningStatus?fnr=${fnr}`);
+    return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/hent-avslutning-status`, { fnr: fnr });
 }
 
 export function settBrukerTilDigital(fnr: string, veilederId: string, begrunnelse: string): AxiosPromise {
-    return axiosInstance.post(`/veilarboppfolging/api/oppfolging/settDigital?fnr=${fnr}`, {
+    return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/settDigital`, {
+        fnr,
         begrunnelse,
         veilederId
     });
 }
 
 export function settBrukerTilManuell(fnr: string, veilederId: string, begrunnelse: string): AxiosPromise {
-    return axiosInstance.post(`/veilarboppfolging/api/oppfolging/settManuell?fnr=${fnr}`, {
+    return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/settManuell`, {
+        fnr,
         begrunnelse,
         veilederId
     });
 }
 
 export function startKvpOppfolging(fnr: string, begrunnelse: string): AxiosPromise {
-    return axiosInstance.post(`/veilarboppfolging/api/oppfolging/startKvp?fnr=${fnr}`, {
+    return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/startKvp`, {
+        fnr,
         begrunnelse
     });
 }
 
 export function stoppKvpOppfolging(fnr: string, begrunnelse: string): AxiosPromise {
-    return axiosInstance.post(`/veilarboppfolging/api/oppfolging/stoppKvp?fnr=${fnr}`, {
+    return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/stoppKvp`, {
+        fnr,
         begrunnelse
     });
 }
-
+//TODO: wait for new endpoint to be created
 export function avsluttOppfolging(fnr: string, begrunnelse: string, veilederId: string): AxiosPromise {
-    return axiosInstance.post(`/veilarboppfolging/api/oppfolging/avsluttOppfolging?fnr=${fnr}`, {
+    return axiosInstance.post(`/veilarboppfolging/api/v2/oppfolging/avsluttOppfolging`, {
+        fnr,
         begrunnelse,
         veilederId
     });

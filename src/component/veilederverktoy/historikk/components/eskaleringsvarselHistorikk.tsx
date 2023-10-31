@@ -12,8 +12,6 @@ interface EskaleringsvarselHistorikkKomponentProps {
 const ESKALERING_MAX_LENGTH = 120;
 
 function EskaleringsvarselHistorikkKomponent({ innslag }: EskaleringsvarselHistorikkKomponentProps) {
-    const { brukerFnr } = useAppStore();
-
     const utfortAv = innslag.avsluttetAv || innslag.opprettetAv;
     const utfortAvBrukerNavn = innslag.avsluttetAvBrukerNavn || innslag.opprettetAvBrukerNavn;
     const dato = innslag.avsluttetDato || innslag.opprettetDato;
@@ -30,9 +28,7 @@ function EskaleringsvarselHistorikkKomponent({ innslag }: EskaleringsvarselHisto
             <Element>{overskrift}</Element>
             <Normaltekst>
                 {begrunnelseTekst}
-                <LenkeTilDialog brukerFnr={brukerFnr} dialogId={innslag.tilhorendeDialogId}>
-                    Les mer i dialog
-                </LenkeTilDialog>
+                <LenkeTilDialog dialogId={innslag.tilhorendeDialogId}>Les mer i dialog</LenkeTilDialog>
             </Normaltekst>
             <Undertekst>{`${toSimpleDateStr(dato)} av ${utfortAv}${
                 utfortAvBrukerNavn ? ` (${utfortAvBrukerNavn})` : ''

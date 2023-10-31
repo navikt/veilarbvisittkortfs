@@ -63,7 +63,7 @@ const mockOppgavehistorikk: OppgaveHistorikkInnslag[] = [
 ];
 
 export const veilarboppgaveHandlers: RequestHandlersList = [
-    rest.get('/veilarboppgave/api/enheter', (req, res, ctx) => {
+    rest.post('/veilarboppgave/api/v2/hent-enheter', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockEnheter));
     }),
     rest.get('/veilarboppgave/api/enhet/:enhetsId/veiledere', (req, res, ctx) => {
@@ -83,7 +83,7 @@ export const veilarboppgaveHandlers: RequestHandlersList = [
             })
         );
     }),
-    rest.get('/veilarboppgave/api/oppgavehistorikk', (req, res, ctx) => {
+    rest.post('/veilarboppgave/api/v2/hent-oppgavehistorikk', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockOppgavehistorikk));
     })
 ];
