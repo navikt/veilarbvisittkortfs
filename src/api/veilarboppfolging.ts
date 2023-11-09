@@ -149,9 +149,8 @@ export function stoppKvpOppfolging(fnr: string, begrunnelse: string): AxiosPromi
         begrunnelse
     });
 }
-//TODO: wait for new endpoint to be created
 export function avsluttOppfolging(fnr: string, begrunnelse: string, veilederId: string): AxiosPromise {
-    return axiosInstance.post(`/veilarboppfolging/api/v2/oppfolging/avsluttOppfolging`, {
+    return axiosInstance.post(`/veilarboppfolging/api/v2/oppfolging/avslutt`, {
         fnr,
         begrunnelse,
         veilederId

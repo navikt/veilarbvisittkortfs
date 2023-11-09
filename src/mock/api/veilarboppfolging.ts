@@ -152,7 +152,7 @@ export const veilarboppfolgingHandlers: RequestHandlersList = [
     rest.post('/veilarboppfolging/api/v2/oppfolging/innstillingsHistorikk', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockInnstillingsHistorikk));
     }),
-    rest.post('/veilarboppfolging/api/v2/oppfolging/avsluttOppfolging', (req, res, ctx) => {
+    rest.post('/veilarboppfolging/api/v2/oppfolging/avslutt', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockOppfolgingAvsluttetStatus));
     }),
     rest.post('/veilarboppfolging/api/v2/oppfolging/settManuell', (req, res, ctx) => {
