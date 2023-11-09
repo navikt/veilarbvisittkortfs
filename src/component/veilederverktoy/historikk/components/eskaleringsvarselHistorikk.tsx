@@ -1,6 +1,5 @@
 import React from 'react';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { useAppStore } from '../../../../store/app-store';
 import { toSimpleDateStr } from '../../../../util/date-utils';
 import { EskaleringsvarselHistorikkInnslag } from '../../../../api/veilarbdialog';
 import LenkeTilDialog from '../../../components/dialoglenke/dialoglenke';
