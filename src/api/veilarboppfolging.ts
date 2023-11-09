@@ -94,7 +94,7 @@ export interface InnstillingHistorikkInnslag {
 }
 
 export function fetchOppfolging(fnr: string): AxiosPromise<Oppfolging> {
-    return axiosInstance.post(`/veilarboppfolging/api/v2/hent-underOppfolging`, { fnr: fnr });
+    return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/hent-status`, { fnr: fnr });
 }
 
 export function fetchOppfolgingsstatus(fnr: string): AxiosPromise<OppfolgingStatus> {
