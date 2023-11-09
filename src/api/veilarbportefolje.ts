@@ -24,7 +24,6 @@ export enum KategoriModell {
 }
 
 export interface ArbeidslisteformValues {
-    fnr: StringOrNothing;
     kommentar: StringOrNothing;
     frist: StringOrNothing;
     overskrift: StringOrNothing;
@@ -36,12 +35,10 @@ export function fetchArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
 }
 
 export function lagreArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformValues): AxiosPromise {
-    arbeidsliste.fnr = fnr;
-    return axiosInstance.post(`/veilarbportefolje/api/v2/arbeidsliste`, arbeidsliste);
+    return axiosInstance.post(`/veilarbportefolje/api/v2/arbeidsliste`, { ...{ fnr: fnr }, ...arbeidsliste });
 }
 
 export function redigerArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformValues): AxiosPromise {
-    arbeidsliste.fnr = fnr;
     return axiosInstance.put(`/veilarbportefolje/api/v2/arbeidsliste`, arbeidsliste);
 }
 
