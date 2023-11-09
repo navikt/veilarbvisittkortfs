@@ -3,18 +3,15 @@ import Lenke from 'nav-frontend-lenker';
 import { useModalStore } from '../../../store/modal-store';
 
 interface Props {
-    brukerFnr: string;
     dialogId?: number;
     className?: string;
     children: React.ReactNode;
 }
 
-function LenkeTilDialog({ brukerFnr, dialogId, className, children }: Props) {
+function LenkeTilDialog({ dialogId, className, children }: Props) {
     const { hideModal } = useModalStore();
 
-    const dialogLenke = dialogId
-        ? `/veilarbpersonflatefs/${brukerFnr}/${dialogId}/#visDialog`
-        : `/veilarbpersonflatefs/${brukerFnr}`;
+    const dialogLenke = dialogId ? `/veilarbpersonflatefs/${dialogId}/#visDialog` : `/veilarbpersonflatefs/`;
 
     const gaaTilDialog = (event: MouseEvent) => {
         event.preventDefault();

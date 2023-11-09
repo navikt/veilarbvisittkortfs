@@ -71,6 +71,10 @@ export interface PersonaliaTelefon {
     master: StringOrNothing;
 }
 
+export interface PersonRequest {
+    fnr: string;
+}
+
 export type RegistreringType = 'ORDINAER' | 'SYKMELDT';
 export type InnsatsgruppeType = 'STANDARD_INNSATS' | 'SITUASJONSBESTEMT_INNSATS' | 'BEHOV_FOR_ARBEIDSEVNEVURDERING';
 
@@ -86,23 +90,28 @@ export interface RegistreringData {
 }
 
 export function fetchPersonalia(fnr: string): AxiosPromise<Personalia> {
-    return axiosInstance.get<Personalia>(`/veilarbperson/api/v2/person?fnr=${fnr}`);
+    return axiosInstance.post<Personalia>(`/veilarbperson/api/v3/hent-person`, { fnr: fnr } as PersonRequest);
 }
 
 export function fetchVergeOgFullmakt(fnr: string): AxiosPromise<VergeOgFullmakt> {
-    return axiosInstance.get<VergeOgFullmakt>(`/veilarbperson/api/v2/person/vergeOgFullmakt?fnr=${fnr}`);
+    return axiosInstance.post<VergeOgFullmakt>(`/veilarbperson/api/v3/person/hent-vergeOgFullmakt`, {
+        fnr: fnr
+    } as PersonRequest);
 }
 
 export function fetchSpraakTolk(fnr: string): AxiosPromise<SpraakTolk> {
-    return axiosInstance.get<SpraakTolk>(`/veilarbperson/api/v2/person/tolk?fnr=${fnr}`);
+    return axiosInstance.post<SpraakTolk>(`/veilarbperson/api/v3/person/hent-tolk`, { fnr: fnr } as PersonRequest);
 }
 
+//@TODO: 21/08/2023 denne skal slettes etter vi har ryddet opp i kode i de andre appene da dkif slutter å tilby tjenesten
 export function fetchHarNivaa4(fnr: string): AxiosPromise<HarBruktNivaa4Type> {
     return axiosInstance.get<HarBruktNivaa4Type>(`/veilarbperson/api/person/${fnr}/harNivaa4`);
 }
 
 export function fetchRegistrering(fnr: string): AxiosPromise<RegistreringData> {
-    return axiosInstance.get<RegistreringData>(`/veilarbperson/api/person/registrering?fnr=${fnr}`);
+    return axiosInstance.post<RegistreringData>(`/veilarbperson/api/v3/person/hent-registrering`, {
+        fnr: fnr
+    } as PersonRequest);
 }
 
 export function sendEventTilVeilarbperson(event: FrontendEvent): AxiosPromise<void> {

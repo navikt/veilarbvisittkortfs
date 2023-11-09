@@ -52,13 +52,14 @@ export interface OppgaveFormResponse {
 }
 
 export function fetchOppgaveHistorikk(fnr: string): AxiosPromise<OppgaveHistorikkInnslag[]> {
-    return axiosInstance.get<OppgaveHistorikkInnslag[]>(`/veilarboppgave/api/oppgavehistorikk?fnr=${fnr}`);
+    return axiosInstance.post<OppgaveHistorikkInnslag[]>(`/veilarboppgave/api/v2/hent-oppgavehistorikk`, { fnr: fnr });
 }
 
 export function opprettOppgave(fnr: string, oppgaveFormData: OppgaveFormData): AxiosPromise<OppgaveFormResponse> {
-    return axiosInstance.post(`/veilarboppgave/api/oppgave?fnr=${fnr}`, oppgaveFormData);
+    oppgaveFormData.fnr = fnr;
+    return axiosInstance.post(`/veilarboppgave/api/oppgave`, oppgaveFormData);
 }
 
 export function hentBehandlendeEnheter(tema: OppgaveTema, fnr: string): AxiosPromise<BehandlandeEnhet[]> {
-    return axiosInstance.get<BehandlandeEnhet[]>(`/veilarboppgave/api/enheter?tema=${tema}&fnr=${fnr}`);
+    return axiosInstance.post<BehandlandeEnhet[]>(`/veilarboppgave/api/v2/hent-enheter?tema=${tema}`, { fnr: fnr });
 }
