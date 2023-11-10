@@ -39,7 +39,7 @@ export function lagreArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformVal
 }
 
 export function redigerArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformValues): AxiosPromise {
-    return axiosInstance.put(`/veilarbportefolje/api/v2/arbeidsliste`, arbeidsliste);
+    return axiosInstance.put(`/veilarbportefolje/api/v2/arbeidsliste`, { ...arbeidsliste, fnr });
 }
 
 export function slettArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
