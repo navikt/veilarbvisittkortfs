@@ -44,8 +44,8 @@ function ArbeidslisteModal() {
         !!arbeidsliste && kanFjerneArbeidsliste(arbeidsliste, oppfolging, innloggetVeileder?.ident);
 
     const arbeidslisteValues = {
-        overskrift: liste.overskrift,
-        kommentar: liste.kommentar,
+        overskrift: liste.overskrift ?? '',
+        kommentar: liste.kommentar ?? '',
         frist: liste.frist ? toReversedDateStr(liste.frist) : '',
         kategori: liste.kategori
     };
