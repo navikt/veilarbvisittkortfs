@@ -25,9 +25,7 @@ export const validerOppgaveDatoFelt = (input: string): string | undefined => {
 
 export const validerArbeidslisteTittelFelt = (input: string): string | undefined => {
     let error;
-    if (!input) {
-        error = 'Du må fylle ut en tittel';
-    } else if (input.length > 30) {
+    if (input.length > 30) {
         error = 'Du må korte ned teksten til 30 tegn';
     }
     return error;
@@ -35,9 +33,7 @@ export const validerArbeidslisteTittelFelt = (input: string): string | undefined
 
 export const validerArbeidslisteKommentarFelt = (kommentar: string): string | undefined => {
     let error;
-    if (!kommentar) {
-        error = 'Du må fylle ut en kommentar';
-    } else if (kommentar.length > 500) {
+    if (kommentar.length > 500) {
         error = 'Du må korte ned teksten til 500 tegn';
     }
     return error;

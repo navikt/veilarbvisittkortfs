@@ -87,8 +87,8 @@ function ArbeidslisteModal() {
         showSpinnerModal();
 
         const formValus: ArbeidslisteformValues = {
-            kommentar: values.kommentar,
-            overskrift: values.overskrift,
+            kommentar: values.kommentar ? values.kommentar : null,
+            overskrift: values.overskrift ? values.overskrift : null,
             frist: values.frist ? dateToISODate(values.frist) : null,
             kategori: values.kategori
         };

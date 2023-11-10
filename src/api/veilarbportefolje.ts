@@ -24,9 +24,9 @@ export enum KategoriModell {
 }
 
 export interface ArbeidslisteformValues {
-    kommentar: StringOrNothing;
+    kommentar: StringOrNothing | null;
     frist: StringOrNothing;
-    overskrift: StringOrNothing;
+    overskrift: StringOrNothing | null;
     kategori: KategoriModell | null;
 }
 
