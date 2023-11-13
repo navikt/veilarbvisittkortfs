@@ -4,8 +4,8 @@ import Chevron from 'nav-frontend-chevron';
 import { useAppStore } from '../../../store/app-store';
 
 function Tilbakelenke() {
-    const { brukerFnr, enhetId, tilbakeTilFlate } = useAppStore();
-    const tilbakeLenke = getTilbakeUrl(tilbakeTilFlate, brukerFnr, enhetId);
+    const { enhetId, tilbakeTilFlate } = useAppStore();
+    const tilbakeLenke = getTilbakeUrl(tilbakeTilFlate, enhetId);
 
     return (
         <a className="visittkortfs__tilbakelenke" href={tilbakeLenke}>
@@ -14,14 +14,17 @@ function Tilbakelenke() {
     );
 }
 
-function getTilbakeUrl(tilbakeTilFlate: string, brukerFnr: string, enhet?: string): string {
+//veilarbpersonflatefs
+//veilarbportefoljeflatefs
+//arbeidssokerregistrering-fss
+function getTilbakeUrl(tilbakeTilFlate: string, enhet?: string): string {
     const enhetParam = enhet ? '?enhet=' + enhet : '';
     if (tilbakeTilFlate === 'veilarbportefoljeflatefs') {
         return `/${tilbakeTilFlate}/tilbake${enhetParam}`;
     } else if (tilbakeTilFlate === '') {
-        return `./${brukerFnr}${enhetParam}`;
+        return `./${enhetParam}`;
     }
-    return `/${tilbakeTilFlate}/${brukerFnr}${enhetParam}`;
+    return `/${tilbakeTilFlate}/${enhetParam}`;
 }
 
 export default Tilbakelenke;

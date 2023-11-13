@@ -31,17 +31,17 @@ export interface ArbeidslisteformValues {
 }
 
 export function fetchArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
-    return axiosInstance.get<Arbeidsliste>(`/veilarbportefolje/api/arbeidsliste/${fnr}`);
+    return axiosInstance.post<Arbeidsliste>(`/veilarbportefolje/api/v2/hent-arbeidsliste`, { fnr: fnr });
 }
 
 export function lagreArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformValues): AxiosPromise {
-    return axiosInstance.post(`/veilarbportefolje/api/arbeidsliste/${fnr}`, arbeidsliste);
+    return axiosInstance.post(`/veilarbportefolje/api/v2/arbeidsliste`, { ...{ fnr: fnr }, ...arbeidsliste });
 }
 
 export function redigerArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformValues): AxiosPromise {
-    return axiosInstance.put(`/veilarbportefolje/api/arbeidsliste/${fnr}`, arbeidsliste);
+    return axiosInstance.put(`/veilarbportefolje/api/v2/arbeidsliste`, { ...arbeidsliste, fnr });
 }
 
 export function slettArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
-    return axiosInstance.delete(`/veilarbportefolje/api/arbeidsliste/${fnr}`);
+    return axiosInstance.delete(`/veilarbportefolje/api/v2/arbeidsliste`, { data: { fnr: fnr } });
 }

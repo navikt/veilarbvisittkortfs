@@ -26,8 +26,7 @@ export function DataFetcher(props: { children: any }) {
         setFeatures,
         setVergeOgFullmakt,
         setSpraakTolk,
-        setGjeldendeEskaleringsvarsel,
-        features
+        setGjeldendeEskaleringsvarsel
     } = useDataStore();
 
     const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
@@ -52,16 +51,11 @@ export function DataFetcher(props: { children: any }) {
             .fetch(brukerFnr)
             .then(ifResponseHasData(setGjeldendeEskaleringsvarsel))
             .catch();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [brukerFnr]);
-
-    useEffect(() => {
         vergeOgFullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setVergeOgFullmakt)).catch();
         spraakTolkFetcher.fetch(brukerFnr).then(ifResponseHasData(setSpraakTolk)).catch();
-
         personaliaFetcher.fetch(brukerFnr).then(ifResponseHasData(setPersonalia)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [brukerFnr, features]);
+    }, [brukerFnr]);
 
     useEffect(() => {
         innloggetVeilederFetcher.fetch().then(ifResponseHasData(setInnloggetVeileder)).catch();

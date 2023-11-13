@@ -19,6 +19,7 @@ import { useModalStore } from '../../store/modal-store';
 import { ifResponseHasData } from '../../util/utils';
 import { logMetrikk } from '../../util/logger';
 import { trackAmplitude } from '../../amplitude/amplitude';
+import { ArbeidslisteInformasjonsmelding } from './arbeidsliste-informasjonsmelding';
 
 const arbeidslisteEmptyValues = {
     overskrift: '',
@@ -117,6 +118,7 @@ function ArbeidslisteModal() {
                     <div className="modal-innhold">
                         <div className="modal-info-tekst">
                             <VeilederVerktoyModal tittel={modalTittel}>
+                                <ArbeidslisteInformasjonsmelding />
                                 <Form>
                                     <ArbeidslisteForm
                                         navn={brukerSammensattNavn}

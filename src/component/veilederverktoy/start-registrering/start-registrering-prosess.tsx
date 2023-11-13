@@ -6,6 +6,7 @@ import { useDataStore } from '../../../store/data-store';
 import { kanRegistreresEllerReaktiveres } from '../../../util/selectors';
 import { StringOrNothing } from '../../../util/type/utility-types';
 
+//@todo: check with arbeidssokerregistrering if they can fetch fnr from modiacontext holder
 function byggRegistreringUrl(fnr: string, enhet: StringOrNothing) {
     return erITestMiljo()
         ? `https://arbeidssokerregistrering.intern.dev.nav.no?fnr=${fnr}&enhetId=${enhet}`
