@@ -45,8 +45,8 @@ function ArbeidslisteModal() {
         !!arbeidsliste && kanFjerneArbeidsliste(arbeidsliste, oppfolging, innloggetVeileder?.ident);
 
     const arbeidslisteValues = {
-        overskrift: liste.overskrift,
-        kommentar: liste.kommentar,
+        overskrift: liste.overskrift ?? '',
+        kommentar: liste.kommentar ?? '',
         frist: liste.frist ? toReversedDateStr(liste.frist) : '',
         kategori: liste.kategori
     };
@@ -88,8 +88,8 @@ function ArbeidslisteModal() {
         showSpinnerModal();
 
         const formValus: ArbeidslisteformValues = {
-            kommentar: values.kommentar,
-            overskrift: values.overskrift,
+            kommentar: values.kommentar ? values.kommentar : null,
+            overskrift: values.overskrift ? values.overskrift : null,
             frist: values.frist ? dateToISODate(values.frist) : null,
             kategori: values.kategori
         };
