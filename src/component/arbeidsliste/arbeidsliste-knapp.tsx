@@ -4,6 +4,7 @@ import withClickMetric from '../components/click-metric/click-metric';
 import KnappFss from '../components/knapp-fss/knapp-fss';
 import { useDataStore } from '../../store/data-store';
 import { KategoriModell } from '../../api/veilarbportefolje';
+import { trackAmplitude } from '../../amplitude/amplitude';
 
 export interface ArbeidslisteKnappProps {
     hidden: boolean;
@@ -16,8 +17,16 @@ function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
 
     const kategori = arbeidsliste?.kategori || KategoriModell.TOM;
 
+    const onClick = () => {
+        trackAmplitude({
+            name: 'navigere',
+            data: { lenketekst: 'visittkort-fargekategori-ikon', destinasjon: 'arbeidslista' }
+        });
+        props.onClick();
+    };
+
     return (
-        <KnappFss className="arbeidsliste-knapp" onClick={props.onClick} hidden={props.hidden}>
+        <KnappFss className="arbeidsliste-knapp" onClick={onClick} hidden={props.hidden}>
             <ArbeidslistekategoriVisning kategori={kategori} />
         </KnappFss>
     );
