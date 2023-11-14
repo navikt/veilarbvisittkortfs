@@ -22,6 +22,7 @@ import {
     selectKanTildeleVeileder
 } from '../../util/selectors';
 import { doAll } from '../../util/utils';
+import { trackAmplitude } from '../../amplitude/amplitude';
 
 function Veilederverktoyslinje() {
     const { visVeilederVerktoy } = useAppStore();
@@ -74,6 +75,13 @@ function Veilederverktoyslinje() {
     const arbeidslisteKlikk = () => {
         logMetrikk('veilarbvisittkortfs.metrikker.veilederverktoy.arbeidsliste', {
             leggtil: !kanEndreArbeidsliste && kanLagreArbeidsliste
+        });
+        trackAmplitude({
+            name: 'navigere',
+            data: {
+                lenketekst: `veiledervektoy-${kanLagreArbeidsliste ? 'opprett-arbeidsliste' : 'rediger-arbeidsliste'}`,
+                destinasjon: 'arbeidslista'
+            }
         });
         showArbeidslisteModal();
     };
