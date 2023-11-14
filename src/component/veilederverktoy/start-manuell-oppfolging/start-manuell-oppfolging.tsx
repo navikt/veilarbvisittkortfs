@@ -1,6 +1,6 @@
 import React from 'react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
@@ -33,10 +33,10 @@ function StartManuellOppfolging() {
             isLoading={false}
             tittel="Endre til manuell oppfølging"
             infoTekst={
-                <AlertStripeAdvarsel className="blokk-xxs">
+                <Alert variant="warning" className="blokk-xxs">
                     Når du endrer til manuell oppfølging, har du ikke lenger mulighet til å ha dialog med brukeren i
                     aktivitetsplanen.
-                </AlertStripeAdvarsel>
+                </Alert>
             }
         />
     );

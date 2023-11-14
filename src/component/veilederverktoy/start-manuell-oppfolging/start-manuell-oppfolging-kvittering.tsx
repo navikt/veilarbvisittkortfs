@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Kvittering from '../prosess/kvittering';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import { logMetrikk } from '../../../util/logger';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
@@ -44,9 +44,9 @@ function StartManuellOppfolgingKvittering(props: StartManuellOppfolgingKvitterin
             tittel="Endre til manuell oppfølging"
             alertStripeTekst={`Endring til manuell oppfølging er gjennomført. Begrunnelse: ${props.begrunnelse}`}
             footer={
-                <AlertStripeAdvarsel>
+                <Alert variant="warning">
                     Brukere som ikke kan legge inn CV og jobbprofil selv skal få hjelp til dette.
-                </AlertStripeAdvarsel>
+                </Alert>
             }
         />
     );
