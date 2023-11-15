@@ -1,6 +1,6 @@
 import React from 'react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { useAppStore } from '../../../store/app-store';
@@ -45,9 +45,9 @@ function StartDigitalOppfolging() {
     }
 
     const infoTekst = (
-        <AlertStripeAdvarsel className="blokk-xxs">
+        <Alert variant="warning">
             Når du endrer til digital oppfølging, kan du ha dialog med brukeren i aktivitetsplanen.
-        </AlertStripeAdvarsel>
+        </Alert>
     );
 
     return (

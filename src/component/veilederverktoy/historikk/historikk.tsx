@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import HistorikkVisning from './historikk-visning';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import { useAppStore } from '../../../store/app-store';
 import { hasAllData, hasAnyFailed, isAnyLoading } from '../../../api/utils';
 import './historikk.less';
@@ -129,7 +129,7 @@ function Historikk() {
     ) {
         return <LasterModal />;
     } else if (hasAnyFailed(innstillingsHistorikkFetcher, oppgaveHistorikkFetcher, eskaleringsvarselHistorikkFetcher)) {
-        return <AlertStripeFeil>Noe gikk galt</AlertStripeFeil>;
+        return <Alert variant="error">Noe gikk galt</Alert>;
     } else if (
         !innstillingsHistorikkFetcher.data &&
         !oppgaveHistorikkFetcher.data &&
