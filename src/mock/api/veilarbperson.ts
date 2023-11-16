@@ -107,8 +107,12 @@ const mockSpraakTolk: SpraakTolk = {
 const mockRegistrering: RegistreringData = {
     type: 'ORDINAER',
     registrering: {
-        manueltRegistrertAv: null
-    }
+        manueltRegistrertAv: null,
+        profilering: {
+            innsatsgruppe: "SITUASJONSBESTEMT_INNSATS",
+            jobbetSammenhengendeSeksAvTolvSisteManeder: false
+        }
+    },
 };
 
 export const veilarbpersonHandlers: RequestHandlersList = [

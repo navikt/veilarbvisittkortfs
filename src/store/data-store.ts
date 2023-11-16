@@ -1,11 +1,11 @@
 import constate from 'constate';
 import { useState } from 'react';
+import { OboUnleashFeatures } from '../api/obo-unleash';
 import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/veilarboppfolging';
-import { HarBruktNivaa4Type, Personalia, SpraakTolk, VergeOgFullmakt } from '../api/veilarbperson';
+import {HarBruktNivaa4Type, Personalia, RegistreringData, SpraakTolk, VergeOgFullmakt} from '../api/veilarbperson';
 import { Arbeidsliste } from '../api/veilarbportefolje';
 import { VeilederData, VeilederListe } from '../api/veilarbveileder';
 import { GjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
-import { OboUnleashFeatures } from '../api/veilarbpersonflatefs';
 
 const placeholder = {} as any;
 
@@ -25,6 +25,8 @@ export const [DataStore, useDataStore] = constate(() => {
         null
     );
     const [veilederDataListe, setVeilederDataListe] = useState<VeilederData[]>([]);
+    const [erUtrulletTilEnhet, setErUtrulletTilEnhet] = useState<boolean>(false);
+    const [registreringData, setRegistreringData] = useState<RegistreringData | null>(null);
 
     return {
         oppfolgingsstatus,
@@ -52,6 +54,10 @@ export const [DataStore, useDataStore] = constate(() => {
         gjeldendeEskaleringsvarsel,
         setGjeldendeEskaleringsvarsel,
         veilederDataListe,
-        setVeilederDataListe
+        setVeilederDataListe,
+        erUtrulletTilEnhet,
+        setErUtrulletTilEnhet,
+        registreringData,
+        setRegistreringData
     };
 });

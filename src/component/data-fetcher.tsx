@@ -2,19 +2,20 @@ import React, { useEffect } from 'react';
 import { useDataStore } from '../store/data-store';
 import { useAppStore } from '../store/app-store';
 import { fetchOppfolging, fetchOppfolgingsstatus, fetchTilgangTilBrukersKontor } from '../api/veilarboppfolging';
-import { fetchPersonalia, fetchSpraakTolk, fetchVergeOgFullmakt } from '../api/veilarbperson';
+import { fetchPersonalia, fetchRegistrering, fetchSpraakTolk, fetchVergeOgFullmakt } from '../api/veilarbperson';
 import { fetchInnloggetVeileder, fetchVeilederePaEnhet } from '../api/veilarbveileder';
 import { fetchArbeidsliste } from '../api/veilarbportefolje';
-import { ifResponseHasData } from '../util/utils';
+import { ifResponseHasData, isDefined } from '../util/utils';
 import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
 import './data-fetcher.less';
-import { isAnyLoadingOrNotStarted } from '../api/utils';
+import { isAnyLoading, isAnyLoadingOrNotStarted } from '../api/utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
-import { useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
+import { useFetchFeaturesFromOboUnleash } from '../api/obo-unleash';
+import { fetchErUtrullet } from '../api/veilarbvedtaksstotte';
 
 export function DataFetcher(props: { children: any }) {
-    const { brukerFnr, visVeilederVerktoy } = useAppStore();
+    const { brukerFnr, enhetId, visVeilederVerktoy } = useAppStore();
     const {
         setOppfolgingsstatus,
         setOppfolging,
@@ -26,7 +27,9 @@ export function DataFetcher(props: { children: any }) {
         setFeatures,
         setVergeOgFullmakt,
         setSpraakTolk,
-        setGjeldendeEskaleringsvarsel
+        setGjeldendeEskaleringsvarsel,
+        setErUtrulletTilEnhet,
+        setRegistreringData
     } = useDataStore();
 
     const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
@@ -40,6 +43,8 @@ export function DataFetcher(props: { children: any }) {
     const vergeOgFullmaktFetcher = useAxiosFetcher(fetchVergeOgFullmakt);
     const spraakTolkFetcher = useAxiosFetcher(fetchSpraakTolk);
     const gjeldendeEskaleringsvarselFetcher = useAxiosFetcher(hentGjeldendeEskaleringsvarsel);
+    const erUtrulletTilEnhetFetcher = useAxiosFetcher(fetchErUtrullet);
+    const registreringDataFetcher = useAxiosFetcher(fetchRegistrering);
 
     const oppfolgingsEnhet = oppfolgingstatusFetcher.data?.oppfolgingsenhet.enhetId || '';
 
@@ -80,6 +85,23 @@ export function DataFetcher(props: { children: any }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [oppfolgingstatusFetcher]);
 
+    useEffect(() => {
+        if (enhetId) {
+            erUtrulletTilEnhetFetcher.fetch(enhetId).then(ifResponseHasData(setErUtrulletTilEnhet)).catch();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [enhetId]);
+
+    useEffect(() => {
+        const hentRegistreringData =
+            isDefined(erUtrulletTilEnhetFetcher.data) && erUtrulletTilEnhetFetcher.data !== false;
+
+        if (hentRegistreringData) {
+            registreringDataFetcher.fetch(brukerFnr).then(ifResponseHasData(setRegistreringData)).catch();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [brukerFnr, erUtrulletTilEnhetFetcher.data]);
+
     if (
         isAnyLoadingOrNotStarted(
             oppfolgingstatusFetcher,
@@ -87,9 +109,11 @@ export function DataFetcher(props: { children: any }) {
             innloggetVeilederFetcher,
             personaliaFetcher,
             featureToggleFetcher,
-            tilgangTilBrukersKontorFetcher
+            tilgangTilBrukersKontorFetcher,
+            erUtrulletTilEnhetFetcher
             // trenger ikke vente på vergeOgFullmaktFetcher eller spraakTolkFetcher
-        )
+        ) ||
+        (isDefined(erUtrulletTilEnhetFetcher.data) && isAnyLoading(registreringDataFetcher))
     ) {
         return <NavFrontendSpinner className="visittkort-laster" type="L" />;
     }

@@ -64,7 +64,7 @@ export function filterUnique(array: any[]): any[] {
 }
 
 export function isDefined(subject: any): boolean {
-    return subject !== undefined && subject !== null;
+    return typeof subject !== "undefined" && subject !== null;
 }
 
 export function formaterTelefonnummer(telefon: StringOrNothing) {
