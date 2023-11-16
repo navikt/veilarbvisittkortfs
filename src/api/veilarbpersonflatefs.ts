@@ -1,14 +1,14 @@
 import { AxiosPromise } from 'axios';
 import { axiosInstance } from './utils';
 
-export const PILOT_TOGGLE = 'pto.vedtaksstotte.pilot';
-export const ALL_TOGGLES = [PILOT_TOGGLE];
+export const BRUK_GAMMEL_ARBEIDSREGISTRERING_URL = 'veilarbvisitkortfs.bruk-gammel-arbeidsregistrering-url';
+export const ALL_TOGGLES = [BRUK_GAMMEL_ARBEIDSREGISTRERING_URL];
 
-export interface FeatureToggles {
-    [PILOT_TOGGLE]: boolean;
+export interface OboUnleashFeatures {
+    [BRUK_GAMMEL_ARBEIDSREGISTRERING_URL]: boolean;
 }
 
-export function fetchFeaturesToggles(): AxiosPromise<FeatureToggles> {
+export function useFetchFeaturesFromOboUnleash(): AxiosPromise<OboUnleashFeatures> {
     const features = ALL_TOGGLES.map(element => 'feature=' + element).join('&');
-    return axiosInstance.get<FeatureToggles>(`/veilarbpersonflatefs/api/feature?feature=${features}`);
+    return axiosInstance.get<OboUnleashFeatures>(`/obo-unleash/api/feature?${features}`);
 }

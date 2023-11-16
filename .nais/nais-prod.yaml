@@ -38,7 +38,8 @@ spec:
           "cors": {
             "origin": [
               "https://veilarbpersonflate.intern.nav.no",
-              "https://arbeidssokerregistrering.intern.nav.no"
+              "https://arbeidssokerregistrering.intern.nav.no",
+              "https://arbeidssokerregistrering-for-veileder.intern.nav.no/"
             ]
           },
           "gcs": {

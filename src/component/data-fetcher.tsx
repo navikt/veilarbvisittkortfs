@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDataStore } from '../store/data-store';
-import { fetchFeaturesToggles } from '../api/veilarbpersonflatefs';
 import { useAppStore } from '../store/app-store';
 import { fetchOppfolging, fetchOppfolgingsstatus, fetchTilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { fetchPersonalia, fetchSpraakTolk, fetchVergeOgFullmakt } from '../api/veilarbperson';
@@ -12,6 +11,7 @@ import './data-fetcher.less';
 import { isAnyLoadingOrNotStarted } from '../api/utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
+import { useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 
 export function DataFetcher(props: { children: any }) {
     const { brukerFnr, visVeilederVerktoy } = useAppStore();
@@ -32,7 +32,7 @@ export function DataFetcher(props: { children: any }) {
     const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
     const oppfolgingstatusFetcher = useAxiosFetcher(fetchOppfolgingsstatus);
     const innloggetVeilederFetcher = useAxiosFetcher(fetchInnloggetVeileder);
-    const featureToggleFetcher = useAxiosFetcher(fetchFeaturesToggles);
+    const featureToggleFetcher = useAxiosFetcher(useFetchFeaturesFromOboUnleash);
     const personaliaFetcher = useAxiosFetcher(fetchPersonalia);
     const tilgangTilBrukersKontorFetcher = useAxiosFetcher(fetchTilgangTilBrukersKontor);
     const arbeidslisteFetcher = useAxiosFetcher(fetchArbeidsliste);
