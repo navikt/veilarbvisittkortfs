@@ -42,7 +42,6 @@ function Etiketter() {
         oppfolgingsstatus,
         oppfolging,
         personalia,
-        features,
         vergeOgFullmakt,
         spraakTolk
     } = useDataStore();

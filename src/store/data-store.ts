@@ -1,11 +1,11 @@
 import constate from 'constate';
 import { useState } from 'react';
-import { FeatureToggles } from '../api/veilarbpersonflatefs';
 import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { HarBruktNivaa4Type, Personalia, SpraakTolk, VergeOgFullmakt } from '../api/veilarbperson';
 import { Arbeidsliste } from '../api/veilarbportefolje';
 import { VeilederData, VeilederListe } from '../api/veilarbveileder';
 import { GjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
+import { OboUnleashFeatures } from '../api/veilarbpersonflatefs';
 
 const placeholder = {} as any;
 
@@ -18,7 +18,7 @@ export const [DataStore, useDataStore] = constate(() => {
     const [spraakTolk, setSpraakTolk] = useState<SpraakTolk>();
     const [tilgangTilBrukersKontor, setTilgangTilBrukersKontor] = useState<TilgangTilBrukersKontor>();
     const [harBruktNivaa4, setHarBruktNivaa4] = useState<HarBruktNivaa4Type>();
-    const [features, setFeatures] = useState<FeatureToggles>(placeholder);
+    const [features, setFeatures] = useState<OboUnleashFeatures>(placeholder);
     const [arbeidsliste, setArbeidsliste] = useState<Arbeidsliste>();
     const [veilederePaEnhet, setVeilederePaEnhet] = useState<VeilederListe>();
     const [gjeldendeEskaleringsvarsel, setGjeldendeEskaleringsvarsel] = useState<GjeldendeEskaleringsvarsel | null>(
