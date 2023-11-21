@@ -3,7 +3,6 @@ import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
 import './etiketter.less';
 import { fetchRegistrering, InnsatsgruppeType } from '../../../api/veilarbperson';
-import { PILOT_TOGGLE } from '../../../api/veilarbpersonflatefs';
 import { OppfolgingStatus } from '../../../api/veilarboppfolging';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { ifResponseHasData, isEmpty } from '../../../util/utils';
@@ -43,7 +42,6 @@ function Etiketter() {
         oppfolgingsstatus,
         oppfolging,
         personalia,
-        features,
         vergeOgFullmakt,
         spraakTolk
     } = useDataStore();
@@ -52,8 +50,9 @@ function Etiketter() {
 
     const registreringFetcher = useAxiosFetcher(fetchRegistrering);
 
+    const pilot_toggle = false;
     useEffect(() => {
-        if (brukerFnr && features[PILOT_TOGGLE]) {
+        if (brukerFnr && pilot_toggle) {
             registreringFetcher.fetch(brukerFnr).then(
                 ifResponseHasData(data => {
                     setInnsatsgruppe(data.registrering.profilering?.innsatsgruppe);

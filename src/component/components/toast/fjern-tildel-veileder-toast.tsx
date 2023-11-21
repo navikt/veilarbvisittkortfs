@@ -35,7 +35,7 @@ function FjernTildelVeilederToast(props: FjernTildelVeilederToastProps) {
 
     return (
         <div className="toast-wrapper" key={new Date().getTime()}>
-            <Alert variant="success" className="toast-alertstripe">
+            <Alert variant="success">
                 <span ref={focusRef} tabIndex={0} className="toast">
                     Du har tildelt veileder {props.tildeltVeilederNavn}. Det kan ta noe tid før brukeren er i Min
                     oversikt.

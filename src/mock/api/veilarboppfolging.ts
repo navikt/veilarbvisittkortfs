@@ -146,34 +146,34 @@ export const veilarboppfolgingHandlers: RequestHandlersList = [
     rest.post('/veilarboppfolging/api/tilordneveileder', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json({ feilendeTilordninger: [] }));
     }),
-    rest.get('/veilarboppfolging/api/oppfolging/veilederTilgang', (req, res, ctx) => {
+    rest.post('/veilarboppfolging/api/v3/oppfolging/hent-veilederTilgang', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json({ tilgangTilBrukersKontor: true }));
     }),
-    rest.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', (req, res, ctx) => {
+    rest.post('/veilarboppfolging/api/v3/hent-instillingshistorikk', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockInnstillingsHistorikk));
     }),
-    rest.post('/veilarboppfolging/api/oppfolging/avsluttOppfolging', (req, res, ctx) => {
+    rest.post('/veilarboppfolging/api/v2/oppfolging/avslutt', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockOppfolgingAvsluttetStatus));
     }),
-    rest.post('/veilarboppfolging/api/oppfolging/settManuell', (req, res, ctx) => {
+    rest.post('/veilarboppfolging/api/v3/oppfolging/settManuell', (req, res, ctx) => {
         return res(
             ctx.delay(defaultNetworkResponseDelay),
             ctx.json(Object.assign({}, mockOppfolging, { manuell: true }))
         );
     }),
-    rest.get('/veilarboppfolging/api/oppfolging/avslutningStatus', (req, res, ctx) => {
+    rest.post('/veilarboppfolging/api/v3/oppfolging/hent-avslutning-status', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockAvslutningStatus));
     }),
-    rest.post('/veilarboppfolging/api/oppfolging/startKvp', (req, res, ctx) => {
+    rest.post('/veilarboppfolging/api/v3/oppfolging/startKvp', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.status(204));
     }),
-    rest.post('/veilarboppfolging/api/oppfolging/stoppKvp', (req, res, ctx) => {
+    rest.post('/veilarboppfolging/api/v3/oppfolging/stoppKvp', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.status(204));
     }),
-    rest.get('/veilarboppfolging/api/person/:fnr/oppfolgingsstatus', (req, res, ctx) => {
+    rest.post('/veilarboppfolging/api/v2/person/hent-oppfolgingsstatus', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockOppfolgingsstatus));
     }),
-    rest.get('/veilarboppfolging/api/oppfolging', (req, res, ctx) => {
+    rest.post('/veilarboppfolging/api/v3/oppfolging/hent-status', (req, res, ctx) => {
         return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockOppfolging));
     })
 ];

@@ -44,7 +44,7 @@ function StartDigitalOppfolging() {
     }
 
     const infoTekst = (
-        <Alert variant="warning" className="blokk-xxs">
+        <Alert variant="warning">
             Når du endrer til digital oppfølging, kan du ha dialog med brukeren i aktivitetsplanen.
         </Alert>
     );

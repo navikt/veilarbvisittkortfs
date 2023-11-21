@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDataStore } from '../store/data-store';
-import { fetchFeaturesToggles } from '../api/veilarbpersonflatefs';
 import { useAppStore } from '../store/app-store';
 import { fetchOppfolging, fetchOppfolgingsstatus, fetchTilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { fetchPersonalia, fetchSpraakTolk, fetchVergeOgFullmakt } from '../api/veilarbperson';
@@ -12,6 +11,7 @@ import './data-fetcher.less';
 import { isAnyLoadingOrNotStarted } from '../api/utils';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 import {Loader} from "@navikt/ds-react";
+import { useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 
 export function DataFetcher(props: { children: any }) {
     const { brukerFnr, visVeilederVerktoy } = useAppStore();
@@ -26,14 +26,13 @@ export function DataFetcher(props: { children: any }) {
         setFeatures,
         setVergeOgFullmakt,
         setSpraakTolk,
-        setGjeldendeEskaleringsvarsel,
-        features
+        setGjeldendeEskaleringsvarsel
     } = useDataStore();
 
     const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
     const oppfolgingstatusFetcher = useAxiosFetcher(fetchOppfolgingsstatus);
     const innloggetVeilederFetcher = useAxiosFetcher(fetchInnloggetVeileder);
-    const featureToggleFetcher = useAxiosFetcher(fetchFeaturesToggles);
+    const featureToggleFetcher = useAxiosFetcher(useFetchFeaturesFromOboUnleash);
     const personaliaFetcher = useAxiosFetcher(fetchPersonalia);
     const tilgangTilBrukersKontorFetcher = useAxiosFetcher(fetchTilgangTilBrukersKontor);
     const arbeidslisteFetcher = useAxiosFetcher(fetchArbeidsliste);
@@ -52,16 +51,11 @@ export function DataFetcher(props: { children: any }) {
             .fetch(brukerFnr)
             .then(ifResponseHasData(setGjeldendeEskaleringsvarsel))
             .catch();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [brukerFnr]);
-
-    useEffect(() => {
         vergeOgFullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setVergeOgFullmakt)).catch();
         spraakTolkFetcher.fetch(brukerFnr).then(ifResponseHasData(setSpraakTolk)).catch();
-
         personaliaFetcher.fetch(brukerFnr).then(ifResponseHasData(setPersonalia)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [brukerFnr, features]);
+    }, [brukerFnr]);
 
     useEffect(() => {
         innloggetVeilederFetcher.fetch().then(ifResponseHasData(setInnloggetVeileder)).catch();

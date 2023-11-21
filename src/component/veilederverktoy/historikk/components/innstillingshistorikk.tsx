@@ -1,6 +1,5 @@
 import React from 'react';
 import { opprettetAvTekst } from './opprettet-av';
-import { useAppStore } from '../../../../store/app-store';
 import { toSimpleDateStr } from '../../../../util/date-utils';
 import { InnstillingHistorikkInnslag } from '../../../../api/veilarboppfolging';
 import LenkeTilDialog from '../../../components/dialoglenke/dialoglenke';
@@ -24,7 +23,6 @@ const typeTilTekst = {
 };
 
 function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHistorikkKomponentProps) {
-    const { brukerFnr } = useAppStore();
     const { type, begrunnelse, dialogId } = innstillingsHistorikk;
 
     let begrunnelseTekst =
@@ -37,11 +35,7 @@ function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHis
             <Heading level="2" size="medium">{typeTilTekst[type]}</Heading>
             <BodyShort>
                 {begrunnelseTekst}
-                {dialogId && (
-                    <LenkeTilDialog brukerFnr={brukerFnr} dialogId={dialogId}>
-                        Les mer i dialog
-                    </LenkeTilDialog>
-                )}
+                {dialogId && <LenkeTilDialog dialogId={dialogId}>Les mer i dialog</LenkeTilDialog>}
             </BodyShort>
             <BodyLong>
                 {`${toSimpleDateStr(innstillingsHistorikk.dato)} ${opprettetAvTekst(

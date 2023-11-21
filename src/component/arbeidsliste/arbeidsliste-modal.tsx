@@ -20,6 +20,7 @@ import { ifResponseHasData } from '../../util/utils';
 import { logMetrikk } from '../../util/logger';
 import { trackAmplitude } from '../../amplitude/amplitude';
 import { Heading } from '@navikt/ds-react';
+import { ArbeidslisteInformasjonsmelding } from './arbeidsliste-informasjonsmelding';
 
 const arbeidslisteEmptyValues = {
     overskrift: '',
@@ -45,8 +46,8 @@ function ArbeidslisteModal() {
         !!arbeidsliste && kanFjerneArbeidsliste(arbeidsliste, oppfolging, innloggetVeileder?.ident);
 
     const arbeidslisteValues = {
-        overskrift: liste.overskrift,
-        kommentar: liste.kommentar,
+        overskrift: liste.overskrift ?? '',
+        kommentar: liste.kommentar ?? '',
         frist: liste.frist ? toReversedDateStr(liste.frist) : '',
         kategori: liste.kategori
     };
@@ -88,8 +89,8 @@ function ArbeidslisteModal() {
         showSpinnerModal();
 
         const formValus: ArbeidslisteformValues = {
-            kommentar: values.kommentar,
-            overskrift: values.overskrift,
+            kommentar: values.kommentar ? values.kommentar : null,
+            overskrift: values.overskrift ? values.overskrift : null,
             frist: values.frist ? dateToISODate(values.frist) : null,
             kategori: values.kategori
         };
@@ -118,6 +119,22 @@ function ArbeidslisteModal() {
                     <div className="modal-innhold">
                         <Heading size="large">{modalTittel}</Heading>
                         <div className="modal-info-tekst">
+                            <VeilederVerktoyModal tittel={modalTittel}>
+                                <ArbeidslisteInformasjonsmelding />
+                                <Form>
+                                    <ArbeidslisteForm
+                                        navn={brukerSammensattNavn}
+                                        fnr={brukerFnr}
+                                        endringstidspunkt={liste.endringstidspunkt}
+                                        sistEndretAv={liste.sistEndretAv}
+                                    />
+                                    <ArbeidslisteFooter
+                                        onRequestClose={() => onRequestClose(formikProps)}
+                                        slettArbeidsliste={showFjernArbeidslisteModal}
+                                        kanFjerneArbeidsliste={kanFjernesFraArbeidsliste}
+                                    />
+                                </Form>
+                            </VeilederVerktoyModal>
                             <Form>
                                 <ArbeidslisteForm
                                     navn={brukerSammensattNavn}
