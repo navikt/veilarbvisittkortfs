@@ -1,12 +1,13 @@
-import { rest } from 'msw';
-import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import { defaultNetworkResponseDelay } from '../config';
+import { delay, http, HttpResponse, RequestHandler } from 'msw';
 
-export const veilarbvedtaksstotteHandlers: RequestHandlersList = [
-    rest.post('/veilarbvedtaksstotte/api/v2/hent-harUtkast', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(true));
+export const veilarbvedtaksstotteHandlers: RequestHandler[] = [
+    http.post('/veilarbvedtaksstotte/api/v2/hent-harUtkast', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(true);
     }),
-    rest.get('/veilarbvedtaksstotte/api/utrulling/erUtrullet', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(true));
+    http.get('/veilarbvedtaksstotte/api/utrulling/erUtrullet', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(true);
     })
 ];

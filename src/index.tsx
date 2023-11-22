@@ -12,12 +12,20 @@ dayjs.locale('nb');
 Navspa.eksporter('veilarbvisittkortfs', App);
 
 if (isLocalDevelopment()) {
-    require('./mock');
+    const { worker } = require('./mock');
 
-    ReactDOM.render(
-        <App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />,
-        document.getElementById('veilarbvisittkortfs-root')
-    );
+    worker
+        .start({ serviceWorker: { url: process.env.PUBLIC_URL + '/mockServiceWorker.js' } })
+        .then(() =>
+            ReactDOM.render(
+                <App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />,
+                document.getElementById('veilarbvisittkortfs-root')
+            )
+        )
+        .catch((e: Error) => {
+            // eslint-disable-next-line no-console
+            console.error('Unable to setup mocked API endpoints', e);
+        });
 } else {
     initAmplitude();
 }
