@@ -1,5 +1,5 @@
-import { rest } from 'msw';
-import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
+// import { rest } from 'msw';
+// import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import {
     HarBruktNivaa4Type,
     Personalia,
@@ -8,34 +8,33 @@ import {
     SpraakTolk,
     VergeOgFullmakt
 } from '../../api/veilarbperson';
-import { defaultNetworkResponseDelay } from '../config';
+import {defaultNetworkResponseDelay} from '../config';
+import {delay, http, HttpResponse, RequestHandler} from 'msw';
 
 const mockHarBruktNivaa4: HarBruktNivaa4Type = {
     harbruktnivaa4: false
 };
 
-const mockTelefon: PersonaliaTelefon[] =
-    [
-        {
-            prioritet: '1',
-            telefonNr: '+4746333333',
-            registrertDato: '10.07.2008',
-            master: 'FREG'
-
-        },
-        {
-            prioritet: '2',
-            telefonNr: '80022222',
-            registrertDato: '10.04.2010',
-            master: 'KRR'
-        },
-        {
-            prioritet: '3',
-            telefonNr: '44222444',
-            registrertDato: null,
-            master: 'PDL'
-        }
-    ]
+const mockTelefon: PersonaliaTelefon[] = [
+    {
+        prioritet: '1',
+        telefonNr: '+4746333333',
+        registrertDato: '10.07.2008',
+        master: 'FREG'
+    },
+    {
+        prioritet: '2',
+        telefonNr: '80022222',
+        registrertDato: '10.04.2010',
+        master: 'KRR'
+    },
+    {
+        prioritet: '3',
+        telefonNr: '44222444',
+        registrertDato: null,
+        master: 'PDL'
+    }
+];
 
 const mockPersonaliaV2: Personalia = {
     fornavn: 'GRØNN',
@@ -111,20 +110,30 @@ const mockRegistrering: RegistreringData = {
     }
 };
 
-export const veilarbpersonHandlers: RequestHandlersList = [
-    rest.post('/veilarbperson/api/v3/person/hent-registrering', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockRegistrering));
+export const veilarbpersonHandlers: RequestHandler[] = [
+    http.post('/veilarbperson/api/v3/person/hent-registrering', async () => {
+        await delay(defaultNetworkResponseDelay);
+
+        return HttpResponse.json(mockRegistrering);
     }),
-    rest.get('/veilarbperson/api/person/:fnr/harNivaa4', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockHarBruktNivaa4));
+    http.get('/veilarbperson/api/person/:fnr/harNivaa4', async () => {
+        await delay(defaultNetworkResponseDelay);
+
+        return HttpResponse.json(mockHarBruktNivaa4);
     }),
-    rest.post('/veilarbperson/api/v3/hent-person', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockPersonaliaV2));
+    http.post('/veilarbperson/api/v3/hent-person', async () => {
+        await delay(defaultNetworkResponseDelay);
+
+        return HttpResponse.json(mockPersonaliaV2);
     }),
-    rest.post('/veilarbperson/api/v3/person/hent-vergeOgFullmakt', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockVergeOgFullmakt));
+    http.post('/veilarbperson/api/v3/person/hent-vergeOgFullmakt', async () => {
+        await delay(defaultNetworkResponseDelay);
+
+        return HttpResponse.json(mockVergeOgFullmakt);
     }),
-    rest.post('/veilarbperson/api/v3/person/hent-tolk', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockSpraakTolk));
+    http.post('/veilarbperson/api/v3/person/hent-tolk', async () => {
+        await delay(defaultNetworkResponseDelay);
+
+        return HttpResponse.json(mockSpraakTolk);
     })
 ];
