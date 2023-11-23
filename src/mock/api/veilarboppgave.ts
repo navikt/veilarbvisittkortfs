@@ -1,8 +1,7 @@
-import { rest } from 'msw';
-import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import { mockEnhetVeiledere } from './common-data';
 import { OppgaveFormData, OppgaveHistorikkInnslag } from '../../api/veilarboppgave';
 import { defaultNetworkResponseDelay } from '../config';
+import { delay, http, HttpResponse, RequestHandler } from 'msw';
 
 const mockEnheter = [
     { enhetId: '0000', navn: 'NAV Ost' },
@@ -62,28 +61,29 @@ const mockOppgavehistorikk: OppgaveHistorikkInnslag[] = [
     }
 ];
 
-export const veilarboppgaveHandlers: RequestHandlersList = [
-    rest.post('/veilarboppgave/api/v2/hent-enheter', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockEnheter));
+export const veilarboppgaveHandlers: RequestHandler[] = [
+    http.post('/veilarboppgave/api/v2/hent-enheter', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(mockEnheter);
     }),
-    rest.get('/veilarboppgave/api/enhet/:enhetsId/veiledere', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockEnhetVeiledere));
+    http.get('/veilarboppgave/api/enhet/:enhetsId/veiledere', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(mockEnhetVeiledere);
     }),
-    rest.post('/veilarboppgave/api/oppgave', (req, res, ctx) => {
-        const requestBody = req.body as OppgaveFormData;
-        return res(
-            ctx.delay(defaultNetworkResponseDelay),
-            ctx.json({
-                ID: 123,
-                aktoerid: '00000012345',
-                gsakID: '1234',
-                opprettetAv: 'Z000007',
-                tema: requestBody.tema,
-                type: requestBody.type
-            })
-        );
+    http.post('/veilarboppgave/api/oppgave', async ({ request }) => {
+        const requestBody = (await request.json()) as OppgaveFormData;
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json({
+            ID: 123,
+            aktoerid: '00000012345',
+            gsakID: '1234',
+            opprettetAv: 'Z000007',
+            tema: requestBody.tema,
+            type: requestBody.type
+        });
     }),
-    rest.post('/veilarboppgave/api/v2/hent-oppgavehistorikk', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockOppgavehistorikk));
+    http.post('/veilarboppgave/api/v2/hent-oppgavehistorikk', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(mockOppgavehistorikk);
     })
 ];

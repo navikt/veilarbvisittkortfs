@@ -1,8 +1,7 @@
-import { rest } from 'msw';
-import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import { mockEnhetVeiledere } from './common-data';
 import { EnhetData, VeilederData, VeilederDataListeRequest } from '../../api/veilarbveileder';
 import { defaultNetworkResponseDelay } from '../config';
+import { delay, http, HttpResponse, RequestHandler } from 'msw';
 
 const mockEnhetData: EnhetData = {
     enhetId: '1337',
@@ -29,18 +28,22 @@ const mockVeiledereNavn = (veiledereDataListeRequest: VeilederDataListeRequest):
         }));
 };
 
-export const veilarbveilederHandlers: RequestHandlersList = [
-    rest.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockEnhetVeiledere));
+export const veilarbveilederHandlers: RequestHandler[] = [
+    http.get('/veilarbveileder/api/enhet/:enhetsid/veiledere', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(mockEnhetVeiledere);
     }),
-    rest.get('/veilarbveileder/api/enhet/:enhetId/navn', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockEnhetData));
+    http.get('/veilarbveileder/api/enhet/:enhetId/navn', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(mockEnhetData);
     }),
-    rest.get('/veilarbveileder/api/veileder/me', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockInnloggetVeileder));
+    http.get('/veilarbveileder/api/veileder/me', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(mockInnloggetVeileder);
     }),
-    rest.post('/veilarbveileder/api/veileder/list', (req, res, ctx) => {
-        const reqBody = req.body as VeilederDataListeRequest;
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockVeiledereNavn(reqBody)));
+    http.post('/veilarbveileder/api/veileder/list', async ({ request }) => {
+        await delay(defaultNetworkResponseDelay);
+        const reqBody = (await request.json()) as VeilederDataListeRequest;
+        return HttpResponse.json(mockVeiledereNavn(reqBody));
     })
 ];

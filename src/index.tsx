@@ -22,7 +22,7 @@ if (isLocalDevelopment()) {
                 document.getElementById('veilarbvisittkortfs-root')
             )
         )
-        .catch((e: any) => {
+        .catch((e: Error) => {
             // eslint-disable-next-line no-console
             console.error('Unable to setup mocked API endpoints', e);
         });

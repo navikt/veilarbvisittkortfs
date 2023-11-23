@@ -1,7 +1,6 @@
-import { rest } from 'msw';
-import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import { Egenskaper, EskaleringsvarselHistorikkInnslag, GjeldendeEskaleringsvarsel } from '../../api/veilarbdialog';
 import { defaultNetworkResponseDelay } from '../config';
+import { delay, http, HttpResponse, RequestHandler } from 'msw';
 
 const mockHenvendelseData: any = {
     aktivitetId: null,
@@ -32,21 +31,26 @@ const mockHenvendelseData: any = {
     venterPaSvar: false
 };
 
-export const veilarbdialogHandlers: RequestHandlersList = [
-    rest.get('/veilarbdialog/api/dialog', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json([]));
+export const veilarbdialogHandlers: RequestHandler[] = [
+    http.get('/veilarbdialog/api/dialog', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json([]);
     }),
-    rest.post('/veilarbdialog/api/dialog', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockHenvendelseData));
+    http.post('/veilarbdialog/api/dialog', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(mockHenvendelseData);
     }),
-    rest.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/true', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockHenvendelseData));
+    http.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/true', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(mockHenvendelseData);
     }),
-    rest.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/true', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(mockHenvendelseData));
+    http.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/true', async () => {
+        await delay(defaultNetworkResponseDelay);
+
+        return HttpResponse.json(mockHenvendelseData);
     }),
 
-    rest.get('/veilarbdialog/api/eskaleringsvarsel/gjeldende', (req, res, ctx) => {
+    http.get('/veilarbdialog/api/eskaleringsvarsel/gjeldende', async () => {
         const gjeldendeEskaleringsvarsel: GjeldendeEskaleringsvarsel = {
             id: 1,
             tilhorendeDialogId: 42,
@@ -54,9 +58,11 @@ export const veilarbdialogHandlers: RequestHandlersList = [
             opprettetDato: new Date().toISOString(),
             opprettetBegrunnelse: 'begrunnelse'
         };
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json(gjeldendeEskaleringsvarsel));
+
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(gjeldendeEskaleringsvarsel);
     }),
-    rest.get('/veilarbdialog/api/eskaleringsvarsel/historikk', (req, res, ctx) => {
+    http.get('/veilarbdialog/api/eskaleringsvarsel/historikk', async () => {
         const now = new Date();
         const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
 
@@ -71,12 +77,17 @@ export const veilarbdialogHandlers: RequestHandlersList = [
             avsluttetBegrunnelse: 'Begrunnelse for stopp av eskalering'
         };
 
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.json([eskaleringsvarsel]));
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json([eskaleringsvarsel]);
     }),
-    rest.post('/veilarbdialog/api/eskaleringsvarsel/start', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.status(200));
+    http.post('/veilarbdialog/api/eskaleringsvarsel/start', async () => {
+        await delay(defaultNetworkResponseDelay);
+
+        return new HttpResponse(null, { status: 200 });
     }),
-    rest.patch('/veilarbdialog/api/eskaleringsvarsel/stop', (req, res, ctx) => {
-        return res(ctx.delay(defaultNetworkResponseDelay), ctx.status(200));
+    http.patch('/veilarbdialog/api/eskaleringsvarsel/stop', async () => {
+        await delay(defaultNetworkResponseDelay);
+
+        return new HttpResponse(null, { status: 200 });
     })
 ];
