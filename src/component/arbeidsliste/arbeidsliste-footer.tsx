@@ -12,10 +12,10 @@ interface ArbeidslisteFooterProps {
 function ArbeidslisteFooter(props: ArbeidslisteFooterProps) {
     return (
         <div className="modal-footer">
-            <Button variant="primary" type="submit" className="btn--mr1">
+            <Button variant="primary" size="small" type="submit" className="btn--mr1">
                 Lagre
             </Button>
-            <Button variant="secondary" type="button" onClick={props.onRequestClose}>
+            <Button variant="secondary" size="small" type="button" onClick={props.onRequestClose}>
                 Avbryt
             </Button>
             <HiddenIfFlatKnapp

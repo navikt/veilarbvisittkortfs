@@ -7,7 +7,7 @@ import { Button, ButtonProps } from '@navikt/ds-react';
 const KnappFss: React.FunctionComponent<ButtonProps> = (props: ButtonProps) => {
     const { children, className, ...rest } = props;
     return (
-        <Button variant="tertiary-neutral" size="small" className="knapp-fss" {...rest}>
+        <Button variant="tertiary-neutral" size="xsmall" className="knapp-fss" {...rest}>
             {children}
         </Button>
     );

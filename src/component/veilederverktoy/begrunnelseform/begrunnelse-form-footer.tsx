@@ -13,6 +13,7 @@ function BegrunnelseFooter(props: BegrunnelseFooterProps) {
         <div className="modal-footer">
             <Button
                 variant="primary"
+                size="small"
                 type="submit"
                 spinner={props.spinner}
                 autoDisableVedSpinner={true}
@@ -21,7 +22,7 @@ function BegrunnelseFooter(props: BegrunnelseFooterProps) {
             >
                 Bekreft
             </Button>
-            <Button variant="secondary" onClick={hideModal}>
+            <Button variant="secondary" size="small" onClick={hideModal}>
                 Avbryt
             </Button>
         </div>

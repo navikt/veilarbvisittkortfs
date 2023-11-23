@@ -33,6 +33,7 @@ function AvsluttOppfolgingBekreft(props: AvsluttOppfolgingBekreftelseModalProps)
             <div className="modal-footer">
                 <Button
                     variant="primary"
+                    size="small"
                     type="submit"
                     style={{ marginRight: '1rem' }}
                     onClick={handleSubmitAvsluttOppfolging}
@@ -40,7 +41,7 @@ function AvsluttOppfolgingBekreft(props: AvsluttOppfolgingBekreftelseModalProps)
                 >
                     Bekreft
                 </Button>
-                <Button variant="secondary" onClick={hideModal}>
+                <Button variant="secondary" size="small" onClick={hideModal}>
                     Avbryt
                 </Button>
             </div>

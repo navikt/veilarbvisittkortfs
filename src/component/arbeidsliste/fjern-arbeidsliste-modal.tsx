@@ -36,10 +36,16 @@ function FjernArbeidslisteModal() {
                 <Element className="blokk-m">{`${brukerSammensattNavn}, ${brukerFnr}`}</Element>
             </div>
             <div className="knapper">
-                <Button variant="primary" type="submit" className="btn--mr1" onClick={handleSlettArbeidsListe}>
+                <Button
+                    variant="primary"
+                    size="small"
+                    type="submit"
+                    className="btn--mr1"
+                    onClick={handleSlettArbeidsListe}
+                >
                     Bekreft
                 </Button>
-                <Button variant="secondary" type="button" onClick={hideModal}>
+                <Button variant="secondary" size="small" type="button" onClick={hideModal}>
                     Avbryt
                 </Button>
             </div>
