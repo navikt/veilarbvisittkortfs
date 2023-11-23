@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Button } from '@navikt/ds-react';
 import SokFilter from '../../components/sokfilter/sok-filter';
 import RadioFilterForm from '../../components/radiofilterform/radio-filter-form';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
@@ -90,12 +90,12 @@ function TildelVeileder() {
                     )}
                 </SokFilter>
                 <div className="modal-footer">
-                    <Hovedknapp className="btn--mr1" htmlType="submit" disabled={!selectedVeilederId}>
+                    <Button variant="primary" className="btn--mr1" type="submit" disabled={!selectedVeilederId}>
                         Velg
-                    </Hovedknapp>
-                    <Knapp htmlType="button" onClick={hideModal}>
+                    </Button>
+                    <Button variant="secondary" type="button" onClick={hideModal}>
                         Lukk
-                    </Knapp>
+                    </Button>
                 </div>
             </form>
         </VeilederVerktoyModal>

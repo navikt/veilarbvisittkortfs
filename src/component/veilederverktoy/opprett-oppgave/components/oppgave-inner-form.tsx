@@ -6,7 +6,7 @@ import OpprettOppgaveVelgEnhet from './opprett-oppgave-enhet-dropdown';
 import OpprettOppgaveVelgVeileder from './opprett-oppgave-veileder-selector';
 import OpprettOppgaveBeskrivelseTekstArea from './opprett-oppgave-beskrivelse-textarea';
 import HiddenIfDiv from '../../../components/hidden-if/hidden-if-div';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Button } from '@navikt/ds-react';
 import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import { OppgaveTema } from '../../../../api/veilarboppgave';
@@ -51,12 +51,12 @@ function OppgaveInnerForm({
             </div>
             <OpprettOppgaveBeskrivelseTekstArea />
             <HiddenIfDiv className="modal-footer" hidden={!tema}>
-                <Hovedknapp className="btn--mr1" htmlType="submit" spinner={false}>
+                <Button variant="primary" className="btn--mr1" type="submit" spinner={false}>
                     Bekreft
-                </Hovedknapp>
-                <button type="button" className="knapp" onClick={tilbake}>
+                </Button>
+                <Button variant="secondary" className="knapp" onClick={tilbake}>
                     Avbryt
-                </button>
+                </Button>
             </HiddenIfDiv>
         </>
     );

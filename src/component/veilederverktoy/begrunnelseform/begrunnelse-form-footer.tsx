@@ -1,6 +1,6 @@
 import React from 'react';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { useModalStore } from '../../../store/modal-store';
+import { Button } from '@navikt/ds-react';
 
 interface BegrunnelseFooterProps {
     spinner: boolean;
@@ -11,16 +11,19 @@ function BegrunnelseFooter(props: BegrunnelseFooterProps) {
     const { hideModal } = useModalStore();
     return (
         <div className="modal-footer">
-            <Hovedknapp
-                htmlType="submit"
+            <Button
+                variant="primary"
+                type="submit"
                 spinner={props.spinner}
                 autoDisableVedSpinner={true}
                 className="btn--mr1"
                 disabled={props.disabled}
             >
                 Bekreft
-            </Hovedknapp>
-            <Knapp onClick={hideModal}>Avbryt</Knapp>
+            </Button>
+            <Button variant="secondary" onClick={hideModal}>
+                Avbryt
+            </Button>
         </div>
     );
 }

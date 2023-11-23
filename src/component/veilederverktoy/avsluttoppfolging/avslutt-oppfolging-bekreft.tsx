@@ -1,5 +1,4 @@
 import React from 'react';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { useModalStore } from '../../../store/modal-store';
@@ -7,6 +6,7 @@ import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import { useAppStore } from '../../../store/app-store';
 import { avsluttOppfolging } from '../../../api/veilarboppfolging';
+import { Button } from '@navikt/ds-react';
 
 export interface AvsluttOppfolgingBekreftelseModalProps {
     begrunnelse: string;
@@ -31,15 +31,18 @@ function AvsluttOppfolgingBekreft(props: AvsluttOppfolgingBekreftelseModalProps)
         <VarselModal contentLabel="Bruker kan ikke varsles" onRequestClose={hideModal} isOpen={true} type="ADVARSEL">
             <Normaltekst>Er du sikker på at du vil avslutte oppfølgingsperioden til {brukerNavn}?</Normaltekst>
             <div className="modal-footer">
-                <Hovedknapp
-                    htmlType="submit"
+                <Button
+                    variant="primary"
+                    type="submit"
                     style={{ marginRight: '1rem' }}
                     onClick={handleSubmitAvsluttOppfolging}
                     spinner={false}
                 >
                     Bekreft
-                </Hovedknapp>
-                <Knapp onClick={hideModal}>Avbryt</Knapp>
+                </Button>
+                <Button variant="secondary" onClick={hideModal}>
+                    Avbryt
+                </Button>
             </div>
         </VarselModal>
     );
