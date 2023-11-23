@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Innholdstittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 
 interface OwnProps {
     className?: string;
@@ -11,9 +11,9 @@ function ModalHeader({ className, tittel }: OwnProps) {
     return (
         <div className={classNames('modal-header-wrapper', className)}>
             <header className="modal-header">
-                <Innholdstittel tag="h1" className="modal-info-tekst__overskrift">
+                <Heading size="large" as="h1" className="modal-info-tekst__overskrift">
                     {tittel}
-                </Innholdstittel>
+                </Heading>
             </header>
         </div>
     );

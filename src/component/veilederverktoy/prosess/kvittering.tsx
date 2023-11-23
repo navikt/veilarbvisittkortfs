@@ -1,7 +1,7 @@
 import React from 'react';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { useModalStore } from '../../../store/modal-store';
+import { BodyShort, Heading } from '@navikt/ds-react';
 
 interface KvitteringProps {
     tittel: string;
@@ -26,9 +26,13 @@ function Kvittering({ tittel, alertStripeTekst, footer, onRequestClose }: Kvitte
             type="SUCCESS"
         >
             <div className="blokk-xs">
-                <Systemtittel className="modal-info-tekst__undertekst blokk-xs">{tittel}</Systemtittel>
-                <Normaltekst className="blokk-xs">{alertStripeTekst}</Normaltekst>
-                {!!footer && <div className="kvittering-footer">{footer}</div>}
+                <Heading size="medium" as="h2" className="modal-info-tekst__undertekst blokk-xs">
+                    {tittel}
+                </Heading>
+                <BodyShort className="blokk-xs" size="small">
+                    {alertStripeTekst}
+                </BodyShort>
+                {!!footer && <BodyShort size="medium">{footer}</BodyShort>}
             </div>
         </VarselModal>
     );

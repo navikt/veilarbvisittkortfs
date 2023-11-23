@@ -1,11 +1,11 @@
 import React from 'react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
-import { Normaltekst } from 'nav-frontend-typografi';
 import { useModalStore } from '../../../store/modal-store';
 import { useAppStore } from '../../../store/app-store';
 import { fetchOppfolging, startKvpOppfolging } from '../../../api/veilarboppfolging';
 import { ifResponseHasData } from '../../../util/utils';
 import { useDataStore } from '../../../store/data-store';
+import { BodyShort } from '@navikt/ds-react';
 
 function StarKvpPeriode() {
     const { brukerFnr } = useAppStore();
@@ -25,10 +25,10 @@ function StarKvpPeriode() {
     }
 
     const infoTekst = (
-        <Normaltekst className="blokk-xs">
+        <BodyShort size="small" className="blokk-xs">
             Når du klikker «Bekreft» vil bare veiledere i din enhet ha tilgang på dialoger, aktiviteter og mål som blir
             opprettet i KVP-perioden. Du må skrive en kommentar før du bekrefter.
-        </Normaltekst>
+        </BodyShort>
     );
 
     const initialValues = { begrunnelse: '' };

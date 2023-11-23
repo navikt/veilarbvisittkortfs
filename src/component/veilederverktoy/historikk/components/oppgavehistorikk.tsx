@@ -1,8 +1,8 @@
 import React from 'react';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { opprettetAvTekst } from './opprettet-av';
 import { toSimpleDateStr } from '../../../../util/date-utils';
 import { OppgaveHistorikkInnslag } from '../../../../api/veilarboppgave';
+import { BodyShort, Detail } from '@navikt/ds-react';
 
 interface OwnProps {
     oppgaveHistorikk: OppgaveHistorikkInnslag;
@@ -26,17 +26,15 @@ function OppgaveHistorikkKomponent({ oppgaveHistorikk }: OwnProps) {
     const { oppgaveTema, oppgaveType } = oppgaveHistorikk;
     return (
         <div className="historikk__elem blokk-xs">
-            <Element>Gosys-oppgave opprettet</Element>
-            <Normaltekst>
-                {`Oppgave med tema ${oppgaveTemaTekst[oppgaveTema]} og type ${oppgaveTypetekst[oppgaveType]} opprettet`}
-            </Normaltekst>
-            <Undertekst>
-                {`${toSimpleDateStr(oppgaveHistorikk.dato)} ${opprettetAvTekst(
-                    oppgaveHistorikk.opprettetAv,
-                    oppgaveHistorikk.opprettetAvBrukerId,
-                    oppgaveHistorikk.opprettetAvBrukerNavn
-                )}`}
-            </Undertekst>
+            <BodyShort size="small" weight="semibold">
+                Gosys-oppgave opprettet
+            </BodyShort>
+            <BodyShort size="small">{`Oppgave med tema ${oppgaveTemaTekst[oppgaveTema]} og type ${oppgaveTypetekst[oppgaveType]} opprettet`}</BodyShort>
+            <Detail>{`${toSimpleDateStr(oppgaveHistorikk.dato)} ${opprettetAvTekst(
+                oppgaveHistorikk.opprettetAv,
+                oppgaveHistorikk.opprettetAvBrukerId,
+                oppgaveHistorikk.opprettetAvBrukerNavn
+            )}`}</Detail>
         </div>
     );
 }

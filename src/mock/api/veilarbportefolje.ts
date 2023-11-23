@@ -4,13 +4,13 @@ import { delay, http, HttpResponse, RequestHandler } from 'msw';
 
 const mockArbeidsliste: Arbeidsliste = {
     arbeidslisteAktiv: null,
-    endringstidspunkt: null,
+    endringstidspunkt: new Date(),
     frist: null,
     harVeilederTilgang: true,
     isOppfolgendeVeileder: true,
     kommentar: null,
     overskrift: null,
-    sistEndretAv: null,
+    sistEndretAv: {veilederId: "Z123456"},
     kategori: KategoriModell.GRONN
 };
 

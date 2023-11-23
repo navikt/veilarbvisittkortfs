@@ -1,6 +1,5 @@
 import React from 'react';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { Element, Innholdstittel } from 'nav-frontend-typografi';
 import { VarselModal } from '../components/varselmodal/varsel-modal';
 import { slettArbeidsliste } from '../../api/veilarbportefolje';
 import { useModalStore } from '../../store/modal-store';
@@ -10,6 +9,7 @@ import { selectSammensattNavn } from '../../util/selectors';
 import { ifResponseHasData } from '../../util/utils';
 import { logMetrikk } from '../../util/logger';
 import { trackAmplitude } from '../../amplitude/amplitude';
+import { BodyShort, Heading } from '@navikt/ds-react';
 
 function FjernArbeidslisteModal() {
     const { brukerFnr } = useAppStore();
@@ -32,8 +32,14 @@ function FjernArbeidslisteModal() {
     return (
         <VarselModal contentLabel="Fjern fra arbeidslisten" isOpen={true} onRequestClose={hideModal} type="ADVARSEL">
             <div className="modal-info-tekst blokk-s">
-                <Innholdstittel className="modal-info-tekst__overskrift blokk-s">Fjern fra arbeidsliste</Innholdstittel>
-                <Element className="blokk-m">{`${brukerSammensattNavn}, ${brukerFnr}`}</Element>
+                <Heading size="large" as="h1" className="modal-info-tekst__overskrift blokk-s">
+                    Fjern fra arbeidsliste
+                </Heading>
+                <BodyShort
+                    size="small"
+                    className="blokk-m"
+                    weight="semibold"
+                >{`${brukerSammensattNavn}, ${brukerFnr}`}</BodyShort>
             </div>
             <div className="knapper">
                 <Hovedknapp htmlType="submit" className="btn--mr1" onClick={handleSlettArbeidsListe}>
