@@ -1,6 +1,5 @@
 import React from 'react';
 import { Form } from 'formik';
-import { Undertittel } from 'nav-frontend-typografi';
 import OpprettOppgaveTemaSelector from './components/opprett-oppgave-tema-selector';
 import OppgaveInnerForm from './components/oppgave-inner-form';
 import FormikModal from '../../components/formik/formik-modal';
@@ -12,6 +11,7 @@ import './opprett-oppgave.less';
 import { todayReversedDateStr } from '../../../util/date-utils';
 import { OppgaveFormData, OppgaveTema, OppgaveType, opprettOppgave, PrioritetType } from '../../../api/veilarboppgave';
 import { OrNothing, StringOrNothing } from '../../../util/type/utility-types';
+import { Heading } from '@navikt/ds-react';
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
@@ -45,6 +45,7 @@ function OpprettOppgave() {
         veilederId: null,
         avsenderenhetId: enhetId
     };
+
     function lagreOppgave(formdata: OppgaveFormData) {
         showSpinnerModal();
 
@@ -54,6 +55,7 @@ function OpprettOppgave() {
             })
             .catch(showErrorModal);
     }
+
     if (!enhetId) {
         return null;
     }
@@ -67,7 +69,11 @@ function OpprettOppgave() {
             className="opprett-oppgave"
             render={formikProps => (
                 <div className="modal-innhold">
-                    <Undertittel className="opprett-oppgave__undertittel">{`Oppfølging av ${navn}`}</Undertittel>
+                    <Heading
+                        size="small"
+                        as="h2"
+                        className="opprett-oppgave__undertittel"
+                    >{`Oppfølging av ${navn}`}</Heading>
                     <Form>
                         <OpprettOppgaveTemaSelector />
                         <OppgaveInnerForm

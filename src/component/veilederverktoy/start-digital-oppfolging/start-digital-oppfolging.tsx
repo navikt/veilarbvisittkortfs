@@ -1,8 +1,7 @@
 import React from 'react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
-import { Alert } from '@navikt/ds-react';
+import { Alert, BodyShort } from '@navikt/ds-react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
-import { Normaltekst } from 'nav-frontend-typografi';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
@@ -36,10 +35,10 @@ function StartDigitalOppfolging() {
                 isOpen={true}
                 onRequestClose={hideModal}
             >
-                <Normaltekst>
+                <BodyShort size="small">
                     Brukeren er reservert i Kontakt- og reservasjonsregisteret og må selv fjerne reservasjonen for å få
                     digital oppfølging.
-                </Normaltekst>
+                </BodyShort>
             </VarselModal>
         );
     }

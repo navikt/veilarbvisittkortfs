@@ -1,9 +1,9 @@
 import React from 'react';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { opprettetAvTekst } from './opprettet-av';
 import { toSimpleDateStr } from '../../../../util/date-utils';
 import { InnstillingHistorikkInnslag } from '../../../../api/veilarboppfolging';
 import LenkeTilDialog from '../../../components/dialoglenke/dialoglenke';
+import { BodyShort, Detail } from '@navikt/ds-react';
 
 interface InnstillingHistorikkKomponentProps {
     innstillingsHistorikk: InnstillingHistorikkInnslag;
@@ -32,18 +32,18 @@ function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHis
 
     return (
         <div className="historikk__elem blokk-xs">
-            <Element>{typeTilTekst[type]}</Element>
-            <Normaltekst>
+            <BodyShort size="small" weight="semibold">
+                {typeTilTekst[type]}
+            </BodyShort>
+            <BodyShort size="small">
                 {begrunnelseTekst}
                 {dialogId && <LenkeTilDialog dialogId={dialogId}>Les mer i dialog</LenkeTilDialog>}
-            </Normaltekst>
-            <Undertekst>
-                {`${toSimpleDateStr(innstillingsHistorikk.dato)} ${opprettetAvTekst(
-                    innstillingsHistorikk.opprettetAv,
-                    innstillingsHistorikk.opprettetAvBrukerId || '',
-                    innstillingsHistorikk.opprettetAvBrukerNavn
-                )}`}
-            </Undertekst>
+            </BodyShort>
+            <Detail>{`${toSimpleDateStr(innstillingsHistorikk.dato)} ${opprettetAvTekst(
+                innstillingsHistorikk.opprettetAv,
+                innstillingsHistorikk.opprettetAvBrukerId || '',
+                innstillingsHistorikk.opprettetAvBrukerNavn
+            )}`}</Detail>
         </div>
     );
 }

@@ -1,13 +1,13 @@
 import OppgaveHistorikkKomponent from './components/oppgavehistorikk';
 import InnstillingsHistorikkKomponent from './components/innstillingshistorikk';
 import React from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
 import { OppfolgingEnhetEndret } from './components/oppfolgingEndret';
 import dayjs from 'dayjs';
 import { InnstillingHistorikkInnslag } from '../../../api/veilarboppfolging';
 import { OppgaveHistorikkInnslag } from '../../../api/veilarboppgave';
 import { EskaleringsvarselHistorikkInnslag } from '../../../api/veilarbdialog';
 import EskaleringsvarselHistorikkKomponent from './components/eskaleringsvarselHistorikk';
+import { BodyShort } from '@navikt/ds-react';
 
 type Historikk = InnstillingHistorikk | OppgaveHistorikk | EskaleringsvarselHistorikk;
 
@@ -111,7 +111,7 @@ function HistorikkVisning({
     );
 
     if (historikk.length === 0) {
-        return <Normaltekst> Ingen historikk </Normaltekst>;
+        return <BodyShort size="small">Ingen historikk</BodyShort>;
     }
 
     if (historikk.length === 1) {
