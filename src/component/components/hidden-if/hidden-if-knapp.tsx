@@ -1,6 +1,11 @@
 import hiddenIf from './hidden-if';
-import { Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import React from 'react';
+import { Button, ButtonProps } from '@navikt/ds-react';
 
-export const HiddenIfHovedKnapp = hiddenIf(Hovedknapp);
-export const HiddenIfKnapp = hiddenIf(Knapp);
-export const HiddenIfFlatKnapp = hiddenIf(Flatknapp);
+export const HiddenIfHovedKnapp = hiddenIf((props: ButtonProps) => (
+    <Button variant="primary" size="small" {...props} />
+));
+export const HiddenIfKnapp = hiddenIf((props: ButtonProps) => <Button variant="secondary" size="small" {...props} />);
+export const HiddenIfFlatKnapp = hiddenIf((props: ButtonProps) => (
+    <Button variant="tertiary" size="small" {...props} />
+));
