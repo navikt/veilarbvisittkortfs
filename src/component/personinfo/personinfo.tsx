@@ -17,11 +17,12 @@ import { logMetrikk } from '../../util/logger';
 import { formaterTelefonnummer } from '../../util/utils';
 import { StringOrNothing } from '../../util/type/utility-types';
 import { Label } from '@navikt/ds-react';
+import HuskelappKnapp from '../huskelapp/huskelapp-knapp';
 
 function PersonInfo() {
     const { brukerFnr } = useAppStore();
     const { personalia, arbeidsliste, oppfolgingsstatus, innloggetVeileder } = useDataStore();
-    const { showArbeidslisteModal } = useModalStore();
+    const { showArbeidslisteModal, showHuskelappModal } = useModalStore();
 
     const arbeidslisteikon = arbeidsliste?.kategori;
 
@@ -29,9 +30,14 @@ function PersonInfo() {
     const kanLeggeIArbeidsliste = selectKanLeggeIArbeidsListe(innloggetVeileder, oppfolgingsstatus, arbeidsliste);
     const kanRedigereArbeidsliste = selectKanRedigereArbeidsliste(arbeidsliste);
 
-    const klikk = () => {
+    const klikkShowArbeidslisteModal = () => {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
         showArbeidslisteModal();
+    };
+
+    const klikkShowHuskelapp = () => {
+        logMetrikk('veilarbvisittkortfs.metrikker.visittkort.huskelapp-ikon');
+        showHuskelappModal();
     };
     const uformattertTelefon: StringOrNothing = selectTelefonnummer(personalia);
     const telefon: string = formaterTelefonnummer(uformattertTelefon);
@@ -43,13 +49,18 @@ function PersonInfo() {
             <div className="arbeidsliste">
                 <ArbeidslisteKnapp
                     hidden={!(kanLeggeIArbeidsliste || kanRedigereArbeidsliste)}
-                    onClick={klikk}
+                    onClick={klikkShowArbeidslisteModal}
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
-                <KopierKnappTekst kopierTekst={brukerFnr} viseTekst={`F.nr.: ${brukerFnr}`} />
+                <HuskelappKnapp
+                    hidden={!(kanLeggeIArbeidsliste || kanRedigereArbeidsliste)}
+                    onClick={klikkShowHuskelapp}
+                    kanRedigereHuskelapp={kanRedigereArbeidsliste}
+                />
+                <KopierKnappTekst kopierTekst={brukerFnr} visTekst={`F.nr.: ${brukerFnr}`} />
                 {<Label>/</Label>}
                 {uformattertTelefon && (
-                    <KopierKnappTekst kopierTekst={telefon.replace(/\s/g, '')} viseTekst={`Tlf.: ${telefon}`} />
+                    <KopierKnappTekst kopierTekst={telefon.replace(/\s/g, '')} visTekst={`Tlf.: ${telefon}`} />
                 )}
                 {!uformattertTelefon && <Label className="uten-telefon">Tlf.: -</Label>}
             </div>

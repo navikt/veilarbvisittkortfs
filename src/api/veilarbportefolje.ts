@@ -15,6 +15,16 @@ export interface Arbeidsliste {
     veilederId?: StringOrNothing;
 }
 
+export interface Huskelapp {
+    endringstidspunkt: OrNothing<Date>;
+    frist: OrNothing<Date>;
+    harVeilederTilgang: boolean;
+    isOppfolgendeVeileder: boolean;
+    kommentar: StringOrNothing;
+    sistEndretAv: OrNothing<{ veilederId: string }>;
+    veilederId?: StringOrNothing;
+}
+
 export enum KategoriModell {
     BLA = 'BLA',
     GRONN = 'GRONN',
@@ -28,6 +38,11 @@ export interface ArbeidslisteformValues {
     frist: StringOrNothing;
     overskrift: StringOrNothing | null;
     kategori: KategoriModell | null;
+}
+
+export interface HuskelappformValues {
+    kommentar: StringOrNothing | null;
+    frist: StringOrNothing;
 }
 
 export function fetchArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
@@ -44,4 +59,20 @@ export function redigerArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformV
 
 export function slettArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
     return axiosInstance.delete(`/veilarbportefolje/api/v2/arbeidsliste`, { data: { fnr: fnr } });
+}
+
+export function fetchHuskelapp(fnr: string): AxiosPromise<Huskelapp> {
+    return axiosInstance.post<Arbeidsliste>(`/veilarbportefolje/api/v1/hent-huskelapp-for-bruker`, { fnr: fnr });
+}
+
+export function lagreHuskelapp(fnr: string, huskelappformValues: HuskelappformValues): AxiosPromise {
+    return axiosInstance.post(`/veilarbportefolje/api/v1/huskelapp`, { ...{ fnr: fnr }, ...huskelappformValues });
+}
+
+export function redigerHuskelapp(fnr: string, huskelappformValues: HuskelappformValues): AxiosPromise {
+    return axiosInstance.put(`/veilarbportefolje/api/v1/huskelapp`, { ...huskelappformValues, fnr });
+}
+
+export function slettHuskelapp(fnr: string): AxiosPromise<Huskelapp> {
+    return axiosInstance.delete(`/veilarbportefolje/api/v1/huskelapp`, { data: { fnr: fnr } });
 }

@@ -2,7 +2,7 @@ import { storeForbokstaver } from './utils';
 import { Dialog, GjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { Personalia } from '../api/veilarbperson';
-import { Arbeidsliste } from '../api/veilarbportefolje';
+import { Arbeidsliste, Huskelapp } from '../api/veilarbportefolje';
 import { VeilederData } from '../api/veilarbveileder';
 import { OrNothing, StringOrNothing } from './type/utility-types';
 
@@ -46,6 +46,14 @@ export function kanFjerneArbeidsliste(
     innloggetVeilederId: OrNothing<string>
 ): boolean {
     return !!arbeidsliste.endringstidspunkt && !!innloggetVeilederId && oppfolging?.veilederId === innloggetVeilederId;
+}
+
+export function kanFjerneHuskelapp(
+    huskelapp: Huskelapp,
+    oppfolging: OrNothing<Oppfolging>,
+    innloggetVeilederId: OrNothing<string>
+): boolean {
+    return !!huskelapp.endringstidspunkt && !!innloggetVeilederId && oppfolging?.veilederId === innloggetVeilederId;
 }
 
 export function selectKanSendeEskaleringsVarsel(

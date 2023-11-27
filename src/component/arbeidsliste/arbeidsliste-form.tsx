@@ -4,7 +4,7 @@ import FormikTekstArea from '../components/formik/formik-textarea';
 import FormikDatoVelger from '../components/formik/formik-datepicker';
 import ArbeidslistekategoriVisning from './arbeidslisteikon/arbeidslisteikon-visning';
 import {
-    validerArbeidslisteDatoFelt,
+    validerFristFelt,
     validerArbeidslisteKommentarFelt,
     validerArbeidslisteTittelFelt
 } from '../../util/formik-validation';
@@ -37,7 +37,7 @@ function ArbeidslisteForm({ sistEndretAv, endringstidspunkt, navn, fnr }: Arbeid
             <div className="dato-kategori-wrapper">
                 <FormikDatoVelger
                     name="frist"
-                    validate={validerArbeidslisteDatoFelt}
+                    validate={validerFristFelt}
                     label="Frist"
                     ariaLabel="Frist før arbeidslisten"
                     size="small"

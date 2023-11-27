@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { erGyldigISODato } from './date-utils';
 
-export const validerArbeidslisteDatoFelt = (input: string): string | undefined => {
+export const validerFristFelt = (input: string): string | undefined => {
     let error;
     const inputDato = dayjs(input);
     const fraDato = dayjs();
@@ -35,6 +35,14 @@ export const validerArbeidslisteKommentarFelt = (kommentar: string): string | un
     let error;
     if (kommentar.length > 500) {
         error = 'Du må korte ned teksten til 500 tegn';
+    }
+    return error;
+};
+
+export const validerHuskelappKommentarFelt = (kommentar: string): string | undefined => {
+    let error;
+    if (kommentar.length > 140) {
+        error = 'Du må korte ned teksten til 140 tegn';
     }
     return error;
 };

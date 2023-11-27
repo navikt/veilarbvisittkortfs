@@ -31,6 +31,7 @@ import { FeilTildelingModal } from '../tildel-veileder/tildel-veileder-feil-moda
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import FjernArbeidslisteModal from '../../arbeidsliste/fjern-arbeidsliste-modal';
 import ArbeidslisteModal from '../../arbeidsliste/arbeidsliste-modal';
+import HuskelappModal from '../../huskelapp/huskelapp-modal';
 
 export function VeilederverktoyModalController() {
     const { activeModalState } = useModalStore();
@@ -98,6 +99,8 @@ export function VeilederverktoyModalController() {
             return <FeilModal />;
         case ModalType.SPINNER:
             return <LasterModal />;
+        case ModalType.HUSKELAPP:
+            return <HuskelappModal />;
         default:
             return null;
     }

@@ -1,0 +1,49 @@
+@import '~nav-frontend-core/less/_variabler';
+
+.visittkortfs {
+    .huskelapp-knapp {
+        padding: 0;
+        margin-left: 0.5rem;
+        border: none;
+        width: 2rem;
+
+        &__icon {
+            width: 1.2rem;
+            height: 1.3rem;
+        }
+
+        .huskelapp-knapp:first-child {
+            stroke: @navMorkGra;
+            fill: none;
+        }
+    }
+
+    .huskelapp-knapp:hover {
+        background-color: @navMorkGra;
+        border: none;
+
+        svg {
+            #Arbeidslistekategori_tom {
+                stroke: white;
+            }
+        }
+    }
+
+    .huskelapp-knapp:focus {
+        border: none;
+
+        .icon--filled:first-child {
+            stroke: @navBla;
+            fill: @navBla;
+        }
+
+        svg:first-child {
+            stroke: @navMorkGra;
+            fill: none;
+        }
+    }
+
+    .huskelapp-knapp:active {
+        border: none;
+    }
+}
