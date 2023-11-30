@@ -53,7 +53,7 @@ export function kanFjerneHuskelapp(
     oppfolging: OrNothing<Oppfolging>,
     innloggetVeilederId: OrNothing<string>
 ): boolean {
-    return !!huskelapp.endringstidspunkt && !!innloggetVeilederId && oppfolging?.veilederId === innloggetVeilederId;
+    return !!huskelapp.endretDato && !!innloggetVeilederId && oppfolging?.veilederId === innloggetVeilederId;
 }
 
 export function selectKanSendeEskaleringsVarsel(

@@ -1,14 +1,7 @@
 import React from 'react';
-import FormikInput from '../components/formik/formik-input';
 import FormikTekstArea from '../components/formik/formik-textarea';
 import FormikDatoVelger from '../components/formik/formik-datepicker';
-import ArbeidslistekategoriVisning from '../arbeidsliste/arbeidslisteikon/arbeidslisteikon-visning';
-import {
-    validerFristFelt,
-    validerArbeidslisteKommentarFelt,
-    validerArbeidslisteTittelFelt,
-    validerHuskelappKommentarFelt
-} from '../../util/formik-validation';
+import { validerFristFelt, validerHuskelappKommentarFelt } from '../../util/formik-validation';
 import { toSimpleDateStr } from '../../util/date-utils';
 import { OrNothing } from '../../util/type/utility-types';
 import { Detail, Heading } from '@navikt/ds-react';

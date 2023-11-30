@@ -2,49 +2,57 @@ import React from 'react';
 import { Form, Formik, FormikProps } from 'formik';
 import Modal from '../components/modal/modal';
 import VeilederVerktoyModal from '../components/modal/veilederverktoy-modal';
-import { dateToISODate, toReversedDateStr } from '../../util/date-utils';
-import { HuskelappformValues, lagreHuskelapp, redigerHuskelapp } from '../../api/veilarbportefolje';
+import {
+    HuskelappformValues,
+    HuskelappLagreValues,
+    lagreHuskelapp,
+    redigerHuskelapp
+} from '../../api/veilarbportefolje';
 import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
 import { kanFjerneHuskelapp, selectSammensattNavn } from '../../util/selectors';
 import { useModalStore } from '../../store/modal-store';
-import { ifResponseHasData } from '../../util/utils';
 import { logMetrikk } from '../../util/logger';
 import { trackAmplitude } from '../../amplitude/amplitude';
 import { HuskelappInformasjonsmelding } from './huskelapp-informasjonsmelding';
 import HuskelappForm from './huskelapp-form';
 import HuskelappFooter from './huskelapp-footer';
+import { EksisterendeArbeidsliste } from './eksisterendeArbeidsliste';
+import './huskelapp.less';
+import { Heading } from '@navikt/ds-react';
 
 const huskelappEmptyValues = {
+    huskelappId: null,
     kommentar: '',
     frist: ''
 };
 
 function HuskelappModal() {
-    const { brukerFnr } = useAppStore();
+    const { brukerFnr, enhetId } = useAppStore();
+    const { arbeidsliste } = useDataStore();
     const {
         hideModal,
         showSpinnerModal,
         showErrorModal,
         showFjernArbeidslisteModal: showFjernHuskelappModal
     } = useModalStore();
-    const { huskelapp, oppfolging, innloggetVeileder, personalia, setHuskelapp } = useDataStore();
+    const { huskelapp, oppfolging, innloggetVeileder, personalia } = useDataStore();
 
     const brukerSammensattNavn = selectSammensattNavn(personalia);
 
-    const erIRedigeringModus = huskelapp?.endringstidspunkt;
-    const modalTittel = erIRedigeringModus ? 'Rediger huskelapp' : 'Opprett huskelapp';
-    const frist = huskelapp?.frist ? huskelapp?.frist.toString() : Date.now().toString();
+    const erIRedigeringModus = huskelapp?.endretDato;
+    const modalTittel = 'Huskelapp';
 
     const kanFjernesFraArbeidsliste =
         !!huskelapp && kanFjerneHuskelapp(huskelapp, oppfolging, innloggetVeileder?.ident);
 
-    const huskelappValues = {
+    const huskelappValues: HuskelappformValues = {
+        huskelappId: huskelapp?.huskelappId ? huskelapp.huskelappId : null,
         kommentar: huskelapp?.kommentar ?? '',
-        frist: huskelapp?.frist ? toReversedDateStr(huskelapp.frist) : ''
+        frist: huskelapp?.frist ? huskelapp.frist.toLocaleDateString() : null
     };
 
-    const initalValues = huskelapp?.endringstidspunkt ? huskelappValues : huskelappEmptyValues;
+    const initalValues: HuskelappformValues = huskelapp?.endretDato ? huskelappValues : huskelappEmptyValues;
 
     function onRequestClose(formikProps: FormikProps<HuskelappformValues>) {
         const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
@@ -71,58 +79,61 @@ function HuskelappModal() {
             },
             {
                 kommentarlengde: values.kommentar?.length,
-                fristSatt: !!values.frist?.length
+                fristSatt: !!values.frist?.toString().length
             }
         );
 
         showSpinnerModal();
 
-        const formValus = {
+        const lagreValues: HuskelappLagreValues = {
+            huskelappId: values.huskelappId ? values.huskelappId : null,
             kommentar: values.kommentar ? values.kommentar : null,
-            frist: values.frist ? dateToISODate(values.frist) : null
+            frist: values.frist ? values.frist : null,
+            brukerFnr: brukerFnr,
+            enhetId: enhetId
         };
 
         if (erIRedigeringModus) {
-            redigerHuskelapp(brukerFnr, formValus)
-                .then(ifResponseHasData(setHuskelapp))
-                .then(hideModal)
-                .catch(showErrorModal);
+            redigerHuskelapp(brukerFnr, lagreValues).then(hideModal).catch(showErrorModal);
         } else {
-            lagreHuskelapp(brukerFnr, formValus)
-                .then(ifResponseHasData(setHuskelapp))
-                .then(hideModal)
-                .catch(showErrorModal);
+            lagreHuskelapp(brukerFnr, lagreValues).then(hideModal).catch(showErrorModal);
         }
     }
 
     return (
-        <Formik key={frist} initialValues={initalValues} onSubmit={handleSubmit}>
+        <Formik key={brukerFnr} initialValues={initalValues} onSubmit={handleSubmit}>
             {formikProps => (
                 <Modal
                     contentLabel="Huskelapp"
-                    className="huskelapp-modal"
                     onRequestClose={() => onRequestClose(formikProps)}
+                    className={'huskelapp-modal'}
                 >
-                    <div className="modal-innhold">
-                        <div className="modal-info-tekst">
-                            <VeilederVerktoyModal tittel={modalTittel}>
+                    <VeilederVerktoyModal tittel={modalTittel}>
+                        <div className={'huskelappmodal-innhold'}>
+                            <div className={'huskelapp-innhold'}>
+                                <Heading size={'medium'} visuallyHidden={true}>
+                                    Huskelapp innhold
+                                </Heading>
+                                {/* TODO: ask Mathias about screen reader only component so we can add header for huskelapp  */}
                                 <HuskelappInformasjonsmelding />
                                 <Form>
                                     <HuskelappForm
                                         navn={brukerSammensattNavn}
                                         fnr={brukerFnr}
-                                        endringstidspunkt={huskelapp?.endringstidspunkt}
-                                        sistEndretAv={huskelapp?.sistEndretAv}
-                                    />
-                                    <HuskelappFooter
-                                        onRequestClose={() => onRequestClose(formikProps)}
-                                        slettHuskelapp={showFjernHuskelappModal}
-                                        kanFjerneHuskelapp={kanFjernesFraArbeidsliste}
+                                        endringstidspunkt={huskelapp?.endretDato}
                                     />
                                 </Form>
-                            </VeilederVerktoyModal>
+                            </div>
+                            <div className={'arbeidslisteInnhold'}>
+                                <EksisterendeArbeidsliste arbeidsliste={arbeidsliste} />
+                            </div>
                         </div>
-                    </div>
+                        <HuskelappFooter
+                            onRequestClose={() => onRequestClose(formikProps)}
+                            slettHuskelapp={showFjernHuskelappModal}
+                            kanFjerneHuskelapp={kanFjernesFraArbeidsliste}
+                        />
+                    </VeilederVerktoyModal>
                 </Modal>
             )}
         </Formik>

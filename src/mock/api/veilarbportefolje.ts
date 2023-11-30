@@ -5,12 +5,13 @@ import { delay, http, HttpResponse, RequestHandler } from 'msw';
 const mockArbeidsliste: Arbeidsliste = {
     arbeidslisteAktiv: null,
     endringstidspunkt: new Date(),
-    frist: null,
+    frist: new Date(),
     harVeilederTilgang: true,
     isOppfolgendeVeileder: true,
-    kommentar: null,
-    overskrift: null,
-    sistEndretAv: {veilederId: "Z123456"},
+    kommentar:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since  survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    overskrift: 'Her er tittelen daa!',
+    sistEndretAv: { veilederId: 'Z123456' },
     kategori: KategoriModell.GRONN
 };
 

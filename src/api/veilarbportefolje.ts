@@ -16,13 +16,10 @@ export interface Arbeidsliste {
 }
 
 export interface Huskelapp {
-    endringstidspunkt: OrNothing<Date>;
+    huskelappId: StringOrNothing;
     frist: OrNothing<Date>;
-    harVeilederTilgang: boolean;
-    isOppfolgendeVeileder: boolean;
     kommentar: StringOrNothing;
-    sistEndretAv: OrNothing<{ veilederId: string }>;
-    veilederId?: StringOrNothing;
+    endretDato: OrNothing<Date>;
 }
 
 export enum KategoriModell {
@@ -41,8 +38,17 @@ export interface ArbeidslisteformValues {
 }
 
 export interface HuskelappformValues {
-    kommentar: StringOrNothing | null;
+    huskelappId: StringOrNothing;
+    kommentar: StringOrNothing;
     frist: StringOrNothing;
+}
+
+export interface HuskelappLagreValues {
+    huskelappId: StringOrNothing;
+    brukerFnr: StringOrNothing;
+    kommentar: StringOrNothing;
+    frist: StringOrNothing;
+    enhetId: StringOrNothing;
 }
 
 export function fetchArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
@@ -62,17 +68,17 @@ export function slettArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
 }
 
 export function fetchHuskelapp(fnr: string): AxiosPromise<Huskelapp> {
-    return axiosInstance.post<Arbeidsliste>(`/veilarbportefolje/api/v1/hent-huskelapp-for-bruker`, { fnr: fnr });
+    return axiosInstance.post(`/veilarbportefolje/api/v1/hent-huskelapp-for-bruker`, { fnr: fnr });
 }
 
-export function lagreHuskelapp(fnr: string, huskelappformValues: HuskelappformValues): AxiosPromise {
+export function lagreHuskelapp(fnr: string, huskelappformValues: HuskelappLagreValues): AxiosPromise<String> {
     return axiosInstance.post(`/veilarbportefolje/api/v1/huskelapp`, { ...{ fnr: fnr }, ...huskelappformValues });
 }
 
-export function redigerHuskelapp(fnr: string, huskelappformValues: HuskelappformValues): AxiosPromise {
+export function redigerHuskelapp(fnr: string, huskelappformValues: HuskelappLagreValues): AxiosPromise {
     return axiosInstance.put(`/veilarbportefolje/api/v1/huskelapp`, { ...huskelappformValues, fnr });
 }
 
-export function slettHuskelapp(fnr: string): AxiosPromise<Huskelapp> {
+export function slettHuskelapp(fnr: string): AxiosPromise<String> {
     return axiosInstance.delete(`/veilarbportefolje/api/v1/huskelapp`, { data: { fnr: fnr } });
 }
