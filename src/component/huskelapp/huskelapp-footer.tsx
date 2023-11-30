@@ -1,6 +1,6 @@
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { HiddenIfFlatKnapp } from '../components/hidden-if/hidden-if-knapp';
 import { ReactComponent as SlettIcon } from '../components/ikoner/slett.svg';
+import { Button } from '@navikt/ds-react';
 import React from 'react';
 
 interface ArbeidslisteFooterProps {
@@ -12,12 +12,12 @@ interface ArbeidslisteFooterProps {
 function HuskelappFooter(props: ArbeidslisteFooterProps) {
     return (
         <div className="modal-footer">
-            <Hovedknapp htmlType="submit" className="btn--mr1">
-                Lagre
-            </Hovedknapp>
-            <Knapp htmlType="button" onClick={props.onRequestClose}>
+            <Button variant={'secondary'} htmlType="button" className="btn--mr1" onClick={props.onRequestClose}>
                 Avbryt
-            </Knapp>
+            </Button>
+            <Button variant={'primary'} htmlType="submit">
+                Lagre og slett eksisterende
+            </Button>
             <HiddenIfFlatKnapp
                 htmlType="button"
                 hidden={!props.kanFjerneHuskelapp}

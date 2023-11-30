@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Formik, FormikProps } from 'formik';
-import Modal from '../components/modal/modal';
+//import Modal from '../components/modal/modal';
 import VeilederVerktoyModal from '../components/modal/veilederverktoy-modal';
 import {
     HuskelappformValues,
@@ -19,7 +19,8 @@ import HuskelappForm from './huskelapp-form';
 import HuskelappFooter from './huskelapp-footer';
 import { EksisterendeArbeidsliste } from './eksisterendeArbeidsliste';
 import './huskelapp.less';
-import { Heading } from '@navikt/ds-react';
+import { Heading, Modal } from '@navikt/ds-react';
+import { ReactComponent as HuskelappIkon } from './ikon/huskelapp.svg';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -104,15 +105,17 @@ function HuskelappModal() {
         <Formik key={brukerFnr} initialValues={initalValues} onSubmit={handleSubmit}>
             {formikProps => (
                 <Modal
-                    contentLabel="Huskelapp"
-                    onRequestClose={() => onRequestClose(formikProps)}
-                    className={'huskelapp-modal'}
+                    header={{
+                        icon: <HuskelappIkon aria-hidden />,
+                        heading: 'Huskelapp'
+                    }}
+                    open={true}
                 >
-                    <VeilederVerktoyModal tittel={modalTittel}>
+                    <Modal.Body>
                         <div className={'huskelappmodal-innhold'}>
                             <div className={'huskelapp-innhold'}>
                                 <Heading size={'medium'} visuallyHidden={true}>
-                                    Huskelapp innhold
+                                    Huskelappinnhold
                                 </Heading>
                                 {/* TODO: ask Mathias about screen reader only component so we can add header for huskelapp  */}
                                 <HuskelappInformasjonsmelding />
@@ -133,7 +136,7 @@ function HuskelappModal() {
                             slettHuskelapp={showFjernHuskelappModal}
                             kanFjerneHuskelapp={kanFjernesFraArbeidsliste}
                         />
-                    </VeilederVerktoyModal>
+                    </Modal.Body>
                 </Modal>
             )}
         </Formik>
