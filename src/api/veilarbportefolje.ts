@@ -73,8 +73,8 @@ export function slettArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
     return axiosInstance.delete(`/veilarbportefolje/api/v2/arbeidsliste`, { data: { fnr: fnr } });
 }
 
-export function fetchHuskelapp(fnr: string): AxiosPromise<Huskelapp> {
-    return axiosInstance.post(`/veilarbportefolje/api/v1/hent-huskelapp-for-bruker`, { fnr: fnr });
+export function fetchHuskelapp(fnr: string, enhetId: string): AxiosPromise<Huskelapp> {
+    return axiosInstance.post(`/veilarbportefolje/api/v1/hent-huskelapp-for-bruker`, { fnr: fnr, enhetId: enhetId });
 }
 
 export function lagreHuskelapp(huskelappformValues: HuskelappLagreValues): AxiosPromise<String> {

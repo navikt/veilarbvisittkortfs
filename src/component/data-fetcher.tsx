@@ -72,7 +72,7 @@ export function DataFetcher(props: { children: any }) {
 
         if (visVeilederVerktoy && harTilgang && underOppfolging) {
             arbeidslisteFetcher.fetch(brukerFnr).then(ifResponseHasData(setArbeidsliste)).catch();
-            huskelappFetcher.fetch(brukerFnr).then(ifResponseHasData(setHuskelapp)).catch();
+            huskelappFetcher.fetch(brukerFnr, oppfolgingsEnhet).then(ifResponseHasData(setHuskelapp)).catch();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [visVeilederVerktoy, tilgangTilBrukersKontorFetcher, oppfolgingFetcher.data]);
