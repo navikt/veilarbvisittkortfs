@@ -4,7 +4,7 @@ import FormikDatoVelger from '../components/formik/formik-datepicker';
 import { validerFristFelt, validerHuskelappKommentarFelt } from '../../util/formik-validation';
 import { toSimpleDateStr } from '../../util/date-utils';
 import { OrNothing } from '../../util/type/utility-types';
-import { Detail, Heading } from '@navikt/ds-react';
+import { Detail } from '@navikt/ds-react';
 
 interface HuskelappFormProps {
     sistEndretAv?: OrNothing<{ veilederId: string }>;
@@ -17,13 +17,8 @@ function HuskelappForm(props: HuskelappFormProps) {
     return (
         <div className="huskelapp__bruker">
             <div className="blokk-s">
-                <Heading size="small" as="h2">{`${props.navn}, ${props.fnr}`}</Heading>
-                <FormikTekstArea
-                    name="kommentar"
-                    label="Kommentar"
-                    maxLength={140}
-                    validate={validerHuskelappKommentarFelt}
-                />
+                {/* <Heading size="small" as="h2">{`${props.navn}, ${props.fnr}`}</Heading> */}
+                <FormikTekstArea name="kommentar" label="" maxLength={140} validate={validerHuskelappKommentarFelt} />
                 {props.sistEndretAv && props.endringstidspunkt && (
                     <Detail className="huskelapp--modal-redigering">
                         {`Oppdatert ${toSimpleDateStr(props.endringstidspunkt)} av ${props.sistEndretAv.veilederId}`}

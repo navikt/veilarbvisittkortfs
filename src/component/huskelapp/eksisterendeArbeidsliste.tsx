@@ -1,8 +1,5 @@
-import { Alert, BodyShort, Heading, Link } from '@navikt/ds-react';
-import { trackAmplitude } from '../../amplitude/amplitude';
-import { ExternalLink } from '@navikt/ds-icons';
+import { Alert, BodyLong, BodyShort, Heading } from '@navikt/ds-react';
 import * as React from 'react';
-import { useDataStore } from '../../store/data-store';
 import { Arbeidsliste } from '../../api/veilarbportefolje';
 import { toSimpleDateStr } from '../../util/date-utils';
 
@@ -13,21 +10,23 @@ interface Props {
 export const EksisterendeArbeidsliste = ({ arbeidsliste }: Props) => {
     return (
         <div>
-            <Heading size={'medium'} as="h2">
+            <Heading size={'small'} as="h2">
                 Eksisterende arbeidslisteinnhold
             </Heading>
-            <Alert variant="info" className="huskelapp-alert" size="small">
+            <Alert variant="info" className="huskelapp-alert" size={'small'}>
                 Når du <b>lagrer</b> huskelapp første gang vil eksisterende arbeidslisteinnhold på personen automatisk
                 slettes. Alt eksisterende arbeidslisteinnhold blir slettet <b>2. januar 2024.</b>
             </Alert>
-            <BodyShort className="blokk-xs" weight={'semibold'}>
+            <BodyShort className="blokk-xxs" weight={'semibold'} size={'small'}>
                 {arbeidsliste?.overskrift}
             </BodyShort>
-            <BodyShort className="blokk-xs">
-                <i>Arbeidsliste frist {toSimpleDateStr(arbeidsliste?.frist ?? new Date())}</i>
+            <BodyShort className="blokk-xxs font-xs" size={'small'}>
+                <i>Arbeidsliste frist: {toSimpleDateStr(arbeidsliste?.frist ?? new Date())}</i>
             </BodyShort>
-            <BodyShort className="blokk-xs">{arbeidsliste?.kommentar}</BodyShort>
-            <BodyShort className="blokk-xs">
+            <BodyLong size={'small'} className="blokk-xxs font-xs">
+                {arbeidsliste?.kommentar}
+            </BodyLong>
+            <BodyShort size={'small'} className="blokk-xxs font-xs">
                 <i>
                     Oppdatert {toSimpleDateStr(arbeidsliste?.endringstidspunkt ?? new Date())} av{' '}
                     {arbeidsliste?.sistEndretAv?.veilederId}

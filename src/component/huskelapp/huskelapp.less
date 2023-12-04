@@ -53,14 +53,38 @@
     grid-auto-flow: column;
 
     .huskelapp-innhold, .arbeidslisteInnhold {
-        margin: 0 0.5rem;
+        margin-top:0.6rem;
     }
 
     .arbeidslisteInnhold {
-        background-color: @navGra20;
+        background-color: @navLysGra;
         padding: 0.5rem;
         margin-bottom: 1rem;
+        margin-left: 1.5rem;
+        border-radius: @border-radius-base;
+
+        .font-xs {
+            font-size: 14px;
+        }
+
+        .huskelapp-alert{
+            margin-top: 0.6rem;
+        }
     }
+
+    .huskelapp-alert{
+        margin-bottom: 0.6rem;
+    }
+}
+
+.huskelapp-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+        margin-left: 0.5rem;
+    }
+
 }
 
 

@@ -11,11 +11,17 @@ interface ArbeidslisteFooterProps {
 
 function HuskelappFooter(props: ArbeidslisteFooterProps) {
     return (
-        <div className="modal-footer">
-            <Button variant={'secondary'} htmlType="button" className="btn--mr1" onClick={props.onRequestClose}>
+        <div className="huskelapp-modal-footer">
+            <Button
+                size={'small'}
+                variant={'secondary'}
+                htmlType="button"
+                className="btn--mr1"
+                onClick={props.onRequestClose}
+            >
                 Avbryt
             </Button>
-            <Button variant={'primary'} htmlType="submit">
+            <Button size={'small'} variant={'primary'} htmlType="submit">
                 Lagre og slett eksisterende
             </Button>
             <HiddenIfFlatKnapp

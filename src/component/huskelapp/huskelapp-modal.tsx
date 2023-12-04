@@ -1,7 +1,6 @@
 import React from 'react';
 import { Form, Formik, FormikProps } from 'formik';
 //import Modal from '../components/modal/modal';
-import VeilederVerktoyModal from '../components/modal/veilederverktoy-modal';
 import {
     HuskelappformValues,
     HuskelappLagreValues,
@@ -107,9 +106,11 @@ function HuskelappModal() {
                 <Modal
                     header={{
                         icon: <HuskelappIkon aria-hidden />,
-                        heading: 'Huskelapp'
+                        heading: 'Huskelapp',
+                        size: 'small'
                     }}
                     open={true}
+                    onClose={() => onRequestClose(formikProps)}
                 >
                     <Modal.Body>
                         <div className={'huskelappmodal-innhold'}>
