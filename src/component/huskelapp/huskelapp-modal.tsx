@@ -122,7 +122,7 @@ function HuskelappModal() {
                                 </Heading>
                                 {/* TODO: ask Mathias about screen reader only component so we can add header for huskelapp  */}
                                 <HuskelappInformasjonsmelding />
-                                <Form>
+                                <Form id={'huskelapp-form'}>
                                     <HuskelappForm
                                         navn={brukerSammensattNavn}
                                         fnr={brukerFnr}
