@@ -36,7 +36,6 @@ function HuskelappModal() {
     const brukerSammensattNavn = selectSammensattNavn(personalia);
 
     const erIRedigeringModus = huskelapp?.endretDato;
-    const modalTittel = 'Huskelapp';
 
     const kanFjernesFraArbeidsliste =
         !!huskelapp && kanFjerneHuskelapp(huskelapp, oppfolging, innloggetVeileder?.ident);
