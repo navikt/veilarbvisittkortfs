@@ -44,6 +44,12 @@ export interface HuskelappformValues {
 }
 
 export interface HuskelappLagreValues {
+    brukerFnr: StringOrNothing;
+    kommentar: StringOrNothing;
+    frist: StringOrNothing;
+    enhetId: StringOrNothing;
+}
+export interface HuskelappRedigerValues {
     huskelappId: StringOrNothing;
     brukerFnr: StringOrNothing;
     kommentar: StringOrNothing;
@@ -71,14 +77,14 @@ export function fetchHuskelapp(fnr: string): AxiosPromise<Huskelapp> {
     return axiosInstance.post(`/veilarbportefolje/api/v1/hent-huskelapp-for-bruker`, { fnr: fnr });
 }
 
-export function lagreHuskelapp(fnr: string, huskelappformValues: HuskelappLagreValues): AxiosPromise<String> {
-    return axiosInstance.post(`/veilarbportefolje/api/v1/huskelapp`, { ...{ fnr: fnr }, ...huskelappformValues });
+export function lagreHuskelapp(huskelappformValues: HuskelappLagreValues): AxiosPromise<String> {
+    return axiosInstance.post(`/veilarbportefolje/api/v1/huskelapp`, huskelappformValues);
 }
 
-export function redigerHuskelapp(fnr: string, huskelappformValues: HuskelappLagreValues): AxiosPromise {
-    return axiosInstance.put(`/veilarbportefolje/api/v1/huskelapp`, { ...huskelappformValues, fnr });
+export function redigerHuskelapp(huskelappformValues: HuskelappRedigerValues): AxiosPromise {
+    return axiosInstance.put(`/veilarbportefolje/api/v1/huskelapp`, huskelappformValues);
 }
 
-export function slettHuskelapp(fnr: string): AxiosPromise<String> {
-    return axiosInstance.delete(`/veilarbportefolje/api/v1/huskelapp`, { data: { fnr: fnr } });
+export function slettHuskelapp(huskelappId: string): AxiosPromise<String> {
+    return axiosInstance.delete(`/veilarbportefolje/api/v1/huskelapp`, { data: { huskelappId: huskelappId } });
 }

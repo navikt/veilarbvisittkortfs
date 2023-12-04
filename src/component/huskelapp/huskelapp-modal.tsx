@@ -1,12 +1,7 @@
 import React from 'react';
 import { Form, Formik, FormikProps } from 'formik';
 //import Modal from '../components/modal/modal';
-import {
-    HuskelappformValues,
-    HuskelappLagreValues,
-    lagreHuskelapp,
-    redigerHuskelapp
-} from '../../api/veilarbportefolje';
+import { HuskelappformValues, lagreHuskelapp, redigerHuskelapp, slettArbeidsliste } from '../../api/veilarbportefolje';
 import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
 import { kanFjerneHuskelapp, selectSammensattNavn } from '../../util/selectors';
@@ -85,18 +80,26 @@ function HuskelappModal() {
 
         showSpinnerModal();
 
-        const lagreValues: HuskelappLagreValues = {
-            huskelappId: values.huskelappId ? values.huskelappId : null,
-            kommentar: values.kommentar ? values.kommentar : null,
-            frist: values.frist ? values.frist : null,
-            brukerFnr: brukerFnr,
-            enhetId: enhetId
-        };
-
         if (erIRedigeringModus) {
-            redigerHuskelapp(brukerFnr, lagreValues).then(hideModal).catch(showErrorModal);
+            redigerHuskelapp({
+                huskelappId: values.huskelappId ? values.huskelappId : null,
+                kommentar: values.kommentar ? values.kommentar : null,
+                frist: values.frist ? values.frist : null,
+                brukerFnr: brukerFnr,
+                enhetId: enhetId
+            })
+                .then(hideModal)
+                .catch(showErrorModal);
         } else {
-            lagreHuskelapp(brukerFnr, lagreValues).then(hideModal).catch(showErrorModal);
+            lagreHuskelapp({
+                kommentar: values.kommentar ? values.kommentar : null,
+                frist: values.frist ? values.frist : null,
+                brukerFnr: brukerFnr,
+                enhetId: enhetId
+            })
+                .then(hideModal)
+                .catch(showErrorModal);
+            slettArbeidsliste(brukerFnr);
         }
     }
 
