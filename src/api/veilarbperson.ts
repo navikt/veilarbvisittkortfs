@@ -75,6 +75,11 @@ export interface PersonRequest {
     fnr: string;
 }
 
+export interface PdlRequest {
+    fnr: string;
+    behandlingsnummer: string;
+}
+
 export type RegistreringType = 'ORDINAER' | 'SYKMELDT';
 export type InnsatsgruppeType = 'STANDARD_INNSATS' | 'SITUASJONSBESTEMT_INNSATS' | 'BEHOV_FOR_ARBEIDSEVNEVURDERING';
 
@@ -89,18 +94,25 @@ export interface RegistreringData {
     };
 }
 
-export function fetchPersonalia(fnr: string): AxiosPromise<Personalia> {
-    return axiosInstance.post<Personalia>(`/veilarbperson/api/v3/hent-person`, { fnr: fnr } as PersonRequest);
+export function fetchPersonalia(fnr: string, behandlingsnummer: string): AxiosPromise<Personalia> {
+    return axiosInstance.post<Personalia>(`/veilarbperson/api/v3/hent-person`, {
+        fnr: fnr,
+        behandlingsnummer: behandlingsnummer
+    } as PdlRequest);
 }
 
-export function fetchVergeOgFullmakt(fnr: string): AxiosPromise<VergeOgFullmakt> {
+export function fetchVergeOgFullmakt(fnr: string, behandlingsnummer: string): AxiosPromise<VergeOgFullmakt> {
     return axiosInstance.post<VergeOgFullmakt>(`/veilarbperson/api/v3/person/hent-vergeOgFullmakt`, {
-        fnr: fnr
-    } as PersonRequest);
+        fnr: fnr,
+        behandlingsnummer: behandlingsnummer
+    } as PdlRequest);
 }
 
-export function fetchSpraakTolk(fnr: string): AxiosPromise<SpraakTolk> {
-    return axiosInstance.post<SpraakTolk>(`/veilarbperson/api/v3/person/hent-tolk`, { fnr: fnr } as PersonRequest);
+export function fetchSpraakTolk(fnr: string, behandlingsnummer: string): AxiosPromise<SpraakTolk> {
+    return axiosInstance.post<SpraakTolk>(`/veilarbperson/api/v3/person/hent-tolk`, {
+        fnr: fnr,
+        behandlingsnummer: behandlingsnummer
+    } as PdlRequest);
 }
 
 //@TODO: 21/08/2023 denne skal slettes etter vi har ryddet opp i kode i de andre appene da dkif slutter å tilby tjenesten
