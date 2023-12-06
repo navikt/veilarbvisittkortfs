@@ -2,7 +2,7 @@ import React from 'react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { logMetrikk } from '../../../util/logger';
 import { useModalStore } from '../../../store/modal-store';
-import { BodyShort, Heading } from '@navikt/ds-react';
+import { BodyShort, Heading, Button } from '@navikt/ds-react';
 
 export function FeilTildelingModal() {
     const { hideModal } = useModalStore();
@@ -27,9 +27,9 @@ export function FeilTildelingModal() {
                 Tildeling av veileder feilet. Det kan skyldes manglende tilgang til brukeren, at veilederen allerede er
                 tildelt brukeren, eller at brukeren ikke er under oppfølging.
             </BodyShort>
-            <button className="knapp knapp--hoved feil-modal-knapp" onClick={lukkModal}>
+            <Button variant="primary" size="small" className="knapp knapp--hoved feil-modal-knapp" onClick={lukkModal}>
                 Ok
-            </button>
+            </Button>
         </VarselModal>
     );
 }
