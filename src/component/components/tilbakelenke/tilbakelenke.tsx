@@ -9,7 +9,7 @@ function Tilbakelenke() {
 
     return (
         <a className="visittkortfs__tilbakelenke" href={tilbakeLenke}>
-            <ChevronLeftIcon title="tilbakelenke" fontSize="3.0rem" fontWeight="bold" />
+            <ChevronLeftIcon title="tilbakelenke" fontSize="2.8rem" fontWeight="bold" />
         </a>
     );
 }
