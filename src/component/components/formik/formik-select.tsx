@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
-import { Select, SelectProps } from 'nav-frontend-skjema';
+import { Select, SelectProps } from '@navikt/ds-react';
 import { getErrors } from './formik-utils';
 
 interface FormikInputProps {
@@ -18,10 +18,11 @@ function FormikSelect({ name, validate, label, options, ...selectProps }: Formik
                 return (
                     <Select
                         id={name}
+                        label={label}
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
                         name={name}
-                        feil={feil}
+                        error={feil}
                         {...selectProps}
                         value={field.value}
                     >

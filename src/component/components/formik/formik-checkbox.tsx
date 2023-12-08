@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
-import { Checkbox } from 'nav-frontend-skjema';
+import { Checkbox } from '@navikt/ds-react';
 
 interface FormikCheckboxProps {
     name: string;
@@ -13,13 +13,9 @@ function FormikCheckBox({ name, label }: FormikCheckboxProps) {
         <Field name={name}>
             {({ field, form }: FieldProps) => {
                 return (
-                    <Checkbox
-                        onChange={form.handleChange}
-                        onBlur={form.handleBlur}
-                        name={name}
-                        value={field.value}
-                        label={label}
-                    />
+                    <Checkbox onChange={form.handleChange} onBlur={form.handleBlur} name={name} value={field.value}>
+                        {label}
+                    </Checkbox>
                 );
             }}
         </Field>
