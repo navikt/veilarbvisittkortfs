@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import { opprettetAvTekst } from './opprettet-av';
-import { Alert, BodyShort, Detail } from '@navikt/ds-react';
+import { Alert, BodyShort, Detail, Loader } from '@navikt/ds-react';
 import { hasAnyFailed, isAnyLoading } from '../../../../api/utils';
 import { toSimpleDateStr } from '../../../../util/date-utils';
 import { InnstillingHistorikkInnslag } from '../../../../api/veilarboppfolging';
@@ -25,7 +24,7 @@ export function OppfolgingEnhetEndret(props: {
     }, [enhet]);
 
     if (isAnyLoading(enhetNavnFetcher)) {
-        return <NavFrontendSpinner type="XL" />;
+        return <Loader size="2xlarge" />;
     } else if (hasAnyFailed(enhetNavnFetcher)) {
         return <Alert variant="error">Noe gikk galt</Alert>;
     } else if (!enhetNavn) {
