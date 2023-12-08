@@ -24,7 +24,7 @@ function ArbeidslisteForm(props: ArbeidslisteFormProps) {
         <div className="arbeidsliste__bruker">
             <div className="blokk-s">
                 <Heading size="small" as="h2">{`${props.navn}, ${props.fnr}`}</Heading>
-                <FormikInput name="overskrift" label="Tittel" validate={validerArbeidslisteTittelFelt} bredde="L" />
+                <FormikInput name="overskrift" label="Tittel" validate={validerArbeidslisteTittelFelt} width="L" />
                 <FormikTekstArea
                     name="kommentar"
                     label="Kommentar"

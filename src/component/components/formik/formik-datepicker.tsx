@@ -20,13 +20,12 @@ function FormikDatoVelger({ name, validate, label, ariaLabel, className }: Formi
                 const datePickerClassName = classNames('skjemaelement datovelger', className, {
                     'datovelger--harFeil': error
                 });
-                // @ts-ignore
                 return (
                     <div className={datePickerClassName}>
                         <DatePicker
                             {...datepickerProps}
                             defaultValue={field.value}
-                            onSelect={(date?: Date) => setFieldValue(field.name, date?.toString())}
+                            onSelect={(date?: any) => setFieldValue(field.name, date)}
                         >
                             <DatePicker.Input
                                 label={label}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Radio } from 'nav-frontend-skjema';
+import { Radio } from '@navikt/ds-react';
 import './radio-filterform.less';
 
 export interface RadioFilterFormProps<T> {
@@ -22,13 +22,14 @@ function RadioFilterForm<T>(props: RadioFilterFormProps<T>) {
                     return (
                         <Radio
                             name={radioName}
-                            label={createLabel(o)}
                             value={value}
                             id={`${value}-${radioName}`}
                             key={`${value}-${radioName}`}
                             checked={value === props.selected}
                             onChange={e => props.changeSelected(e)}
-                        />
+                        >
+                            label={createLabel(o)}
+                        </Radio>
                     );
                 })}
             </div>
