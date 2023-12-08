@@ -15,6 +15,8 @@ interface OpprettOppgaveVelgEnhetProps {
     formikProps: FormikProps<OpprettOppgaveFormValues>;
 }
 
+const behandlingsnummer = 'B643';
+
 function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppgaveVelgEnhetProps) {
     const [behandladeEnheter, setBehandladeEnheter] = useState([] as BehandlandeEnhet[]);
     const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +24,7 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
 
     useEffect(() => {
         if (tema) {
-            hentBehandlendeEnheter(tema, fnr).then(res => {
+            hentBehandlendeEnheter(tema, fnr, behandlingsnummer).then(res => {
                 const behandlendeEnhetersData = res.data;
                 setBehandladeEnheter(behandlendeEnhetersData);
                 setFieldValue('enhetId', behandlendeEnhetersData[0].enhetId);
