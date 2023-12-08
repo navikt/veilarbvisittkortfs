@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
-import NavFrontendSpinner from 'nav-frontend-spinner';
+import { BodyShort, Loader } from '@navikt/ds-react';
 import { fetchHarUtkast } from '../../../../api/veilarbvedtaksstotte';
 import { AvslutningStatus } from '../../../../api/veilarboppfolging';
 import { fetchHarTiltak } from '../../../../api/veilarbaktivitet';
 import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
 import { OrNothing } from '../../../../util/type/utility-types';
-import { BodyShort } from '@navikt/ds-react';
 
 export function AvsluttOppfolgingInfoText(props: {
     harYtelser?: boolean;
@@ -27,7 +26,7 @@ export function AvsluttOppfolgingInfoText(props: {
     }, []);
 
     if (harTiltakFetcher.loading || (props.visVarselDersom14aUtkastEksisterer && harUtakstFetcher.loading)) {
-        return <NavFrontendSpinner type="XL" />;
+        return <Loader size="2xlarge" />;
     }
 
     const harTiltak = harTiltakFetcher.data;

@@ -5,8 +5,8 @@ import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import Dropdown from '../../../components/dropdown/dropdown';
 import { BehandlandeEnhet, hentBehandlendeEnheter, OppgaveTema } from '../../../../api/veilarboppgave';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
+import { Loader } from '@navikt/ds-react';
 
 interface OpprettOppgaveVelgEnhetProps {
     tema: OrNothing<OppgaveTema>;
@@ -15,6 +15,8 @@ interface OpprettOppgaveVelgEnhetProps {
     formikProps: FormikProps<OpprettOppgaveFormValues>;
 }
 
+const behandlingsnummer = 'B643';
+
 function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppgaveVelgEnhetProps) {
     const [behandladeEnheter, setBehandladeEnheter] = useState([] as BehandlandeEnhet[]);
     const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +24,7 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
 
     useEffect(() => {
         if (tema) {
-            hentBehandlendeEnheter(tema, fnr).then(res => {
+            hentBehandlendeEnheter(tema, fnr, behandlingsnummer).then(res => {
                 const behandlendeEnhetersData = res.data;
                 setBehandladeEnheter(behandlendeEnhetersData);
                 setFieldValue('enhetId', behandlendeEnhetersData[0].enhetId);
@@ -40,7 +42,7 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
             <label className="skjemaelement__label">Enhet *</label>
             {isLoading ? (
                 <div className="velgenhet-spinner">
-                    <NavFrontendSpinner type="M" className="skjemaelement" />
+                    <Loader size="large" className="skjemaelement" />
                 </div>
             ) : (
                 <Dropdown
