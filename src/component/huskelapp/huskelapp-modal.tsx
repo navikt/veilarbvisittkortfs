@@ -1,7 +1,13 @@
 import React from 'react';
 import { Form, Formik, FormikProps } from 'formik';
 //import Modal from '../components/modal/modal';
-import { HuskelappformValues, lagreHuskelapp, redigerHuskelapp, slettArbeidsliste } from '../../api/veilarbportefolje';
+import {
+    fetchHuskelapp,
+    HuskelappformValues,
+    lagreHuskelapp,
+    redigerHuskelapp,
+    slettArbeidsliste
+} from '../../api/veilarbportefolje';
 import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
 import { kanFjerneHuskelapp, selectSammensattNavn } from '../../util/selectors';
@@ -25,14 +31,21 @@ const huskelappEmptyValues = {
 
 function HuskelappModal() {
     const { brukerFnr, enhetId } = useAppStore();
-    const { arbeidsliste } = useDataStore();
     const {
         hideModal,
         showSpinnerModal,
         showErrorModal,
         showFjernArbeidslisteModal: showFjernHuskelappModal
     } = useModalStore();
-    const { huskelapp, oppfolging, innloggetVeileder, personalia } = useDataStore();
+    const {
+        huskelapp,
+        setHuskelapp,
+        oppfolging,
+        innloggetVeileder,
+        personalia,
+        arbeidsliste,
+        setArbeidsliste
+    } = useDataStore();
 
     const brukerSammensattNavn = selectSammensattNavn(personalia);
 
@@ -88,6 +101,9 @@ function HuskelappModal() {
                 brukerFnr: brukerFnr,
                 enhetId: enhetId
             })
+                .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
+                .then(res => res.data)
+                .then(setHuskelapp)
                 .then(hideModal)
                 .catch(showErrorModal);
         } else {
@@ -97,9 +113,14 @@ function HuskelappModal() {
                 brukerFnr: brukerFnr,
                 enhetId: enhetId
             })
+                .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
+                .then(res => res.data)
+                .then(setHuskelapp)
                 .then(hideModal)
                 .catch(showErrorModal);
-            slettArbeidsliste(brukerFnr);
+            slettArbeidsliste(brukerFnr)
+                .then(res => res.data)
+                .then(setArbeidsliste);
         }
     }
 
