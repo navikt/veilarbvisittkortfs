@@ -25,6 +25,7 @@ function HuskelappFooter(props: ArbeidslisteFooterProps) {
                 Lagre og slett eksisterende
             </Button>
             <HiddenIfFlatKnapp
+                // @ts-ignore
                 htmlType="button"
                 hidden={!props.kanFjerneHuskelapp}
                 onClick={props.slettHuskelapp}

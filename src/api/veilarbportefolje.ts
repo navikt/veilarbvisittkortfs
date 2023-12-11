@@ -20,6 +20,7 @@ export interface Huskelapp {
     frist: OrNothing<Date>;
     kommentar: StringOrNothing;
     endretDato: OrNothing<Date>;
+    endretAv: StringOrNothing;
 }
 
 export enum KategoriModell {

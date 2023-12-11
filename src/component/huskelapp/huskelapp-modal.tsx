@@ -43,7 +43,7 @@ function HuskelappModal() {
     const huskelappValues: HuskelappformValues = {
         huskelappId: huskelapp?.huskelappId ? huskelapp.huskelappId : null,
         kommentar: huskelapp?.kommentar ?? '',
-        frist: huskelapp?.frist ? huskelapp.frist.toLocaleDateString() : ''
+        frist: huskelapp?.frist ? new Date(huskelapp.frist).toLocaleDateString() : ''
     };
 
     const initalValues: HuskelappformValues = huskelapp?.endretDato ? huskelappValues : huskelappEmptyValues;

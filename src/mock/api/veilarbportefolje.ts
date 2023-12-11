@@ -1,6 +1,8 @@
-import { Arbeidsliste, ArbeidslisteformValues, KategoriModell } from '../../api/veilarbportefolje';
+import { Arbeidsliste, ArbeidslisteformValues, Huskelapp, KategoriModell } from '../../api/veilarbportefolje';
 import { defaultNetworkResponseDelay } from '../config';
 import { delay, http, HttpResponse, RequestHandler } from 'msw';
+import { AxiosPromise } from 'axios';
+import { axiosInstance } from '../../api/utils';
 
 const mockArbeidsliste: Arbeidsliste = {
     arbeidslisteAktiv: null,
@@ -13,6 +15,14 @@ const mockArbeidsliste: Arbeidsliste = {
     overskrift: 'Her er tittelen daa!',
     sistEndretAv: { veilederId: 'Z123456' },
     kategori: KategoriModell.GRONN
+};
+
+const mockHuskelapp: Huskelapp = {
+    huskelappId: 'e4c54511-7668-4b89-9436-9acfd85071ff',
+    kommentar: 'Husk å ringe legen asap og noter det i møtereferat',
+    frist: new Date(),
+    endretAv: 'Z12347',
+    endretDato: new Date()
 };
 
 export const veilarbportefoljeHandlers: RequestHandler[] = [
@@ -53,5 +63,9 @@ export const veilarbportefoljeHandlers: RequestHandler[] = [
     http.delete('/veilarbportefolje/api/arbeidsliste', async () => {
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json(mockArbeidsliste);
+    }),
+    http.post('/veilarbportefolje/api/v1/hent-huskelapp-for-bruker', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(mockHuskelapp);
     })
 ];
