@@ -1,8 +1,6 @@
 import { Arbeidsliste, ArbeidslisteformValues, Huskelapp, KategoriModell } from '../../api/veilarbportefolje';
 import { defaultNetworkResponseDelay } from '../config';
 import { delay, http, HttpResponse, RequestHandler } from 'msw';
-import { AxiosPromise } from 'axios';
-import { axiosInstance } from '../../api/utils';
 
 const mockArbeidsliste: Arbeidsliste = {
     arbeidslisteAktiv: null,
