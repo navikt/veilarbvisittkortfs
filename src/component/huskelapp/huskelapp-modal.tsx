@@ -15,6 +15,7 @@ import { EksisterendeArbeidsliste } from './eksisterendeArbeidsliste';
 import './huskelapp.less';
 import { Heading, Modal } from '@navikt/ds-react';
 import { ReactComponent as HuskelappIkon } from './ikon/huskelapp.svg';
+import { toSimpleDateStr } from '../../util/date-utils';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -43,7 +44,7 @@ function HuskelappModal() {
     const huskelappValues: HuskelappformValues = {
         huskelappId: huskelapp?.huskelappId ? huskelapp.huskelappId : null,
         kommentar: huskelapp?.kommentar ?? '',
-        frist: huskelapp?.frist ? new Date(huskelapp.frist).toLocaleDateString() : ''
+        frist: huskelapp?.frist ? toSimpleDateStr(huskelapp.frist) : ''
     };
 
     const initalValues: HuskelappformValues = huskelapp?.endretDato ? huskelappValues : huskelappEmptyValues;
