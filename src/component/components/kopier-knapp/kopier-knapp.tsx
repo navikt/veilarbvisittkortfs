@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './kopier-knapp.less';
 import { CopyButton } from '@navikt/ds-react';
 
 export function KopierKnappTekst(props: { kopierTekst: string; viseTekst: string }) {
@@ -12,6 +12,7 @@ export function KopierKnappTekst(props: { kopierTekst: string; viseTekst: string
                     activeText="kopiert"
                     size="medium"
                     iconPosition="right"
+                    className="copybutton"
                 />
             )}
         </div>
