@@ -28,12 +28,7 @@ const huskelappEmptyValues = {
 
 function HuskelappRedigereModal() {
     const { brukerFnr, enhetId } = useAppStore();
-    const {
-        hideModal,
-        showSpinnerModal,
-        showErrorModal,
-        showFjernArbeidslisteModal: showFjernHuskelappModal
-    } = useModalStore();
+    const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
     const { huskelapp, setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
 
     const erIRedigeringModus = huskelapp?.endretDato;
