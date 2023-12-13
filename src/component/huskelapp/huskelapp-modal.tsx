@@ -22,6 +22,7 @@ import './huskelapp.less';
 import { Heading, Modal } from '@navikt/ds-react';
 import { ReactComponent as HuskelappIkon } from './ikon/huskelapp.svg';
 import { toSimpleDateStr } from '../../util/date-utils';
+import HiddenIfDiv from '../components/hidden-if/hidden-if-div';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -53,6 +54,8 @@ function HuskelappModal() {
 
     const kanFjernesFraArbeidsliste =
         !!huskelapp && kanFjerneHuskelapp(huskelapp, oppfolging, innloggetVeileder?.ident);
+
+    const erArbeidslisteTom = arbeidsliste?.sistEndretAv === null;
 
     const huskelappValues: HuskelappformValues = {
         huskelappId: huskelapp?.huskelappId ? huskelapp.huskelappId : null,
@@ -152,9 +155,9 @@ function HuskelappModal() {
                                     />
                                 </Form>
                             </div>
-                            <div className={'arbeidslisteInnhold'}>
+                            <HiddenIfDiv className={'arbeidslisteInnhold'} hidden={erArbeidslisteTom}>
                                 <EksisterendeArbeidsliste arbeidsliste={arbeidsliste} />
-                            </div>
+                            </HiddenIfDiv>
                         </div>
                         <HuskelappFooter
                             onRequestClose={() => onRequestClose(formikProps)}
