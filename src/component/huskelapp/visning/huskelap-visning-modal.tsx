@@ -5,7 +5,7 @@ import React from 'react';
 import { ReactComponent as HuskelappIkon } from '../ikon/huskelapp.svg';
 import HuskelappFooter from './huskelapp-footer';
 import { useDataStore } from '../../../store/data-store';
-import { toReversedDateStr } from '../../../util/date-utils';
+import { toSimpleDateStr } from '../../../util/date-utils';
 
 function HuskelappVisningModal() {
     const { hideModal, showHuskelappRedigereModal, showFjernHuskelappModal } = useModalStore();
@@ -25,14 +25,14 @@ function HuskelappVisningModal() {
                     <div className={'huskelapp-innhold'}>
                         <div className="huskelapp-visning">
                             <BodyShort as="div">
-                                <div className="frist-info">Frist: {toReversedDateStr(huskelapp!.frist!)}</div>
+                                <div className="frist-info">Frist: {toSimpleDateStr(huskelapp!.frist!)}</div>
                             </BodyShort>
                             <BodyShort as="div" size="small">
                                 {huskelapp!.kommentar}
                             </BodyShort>
                             <BodyShort as="div" size="small">
                                 <i>
-                                    Endret {toReversedDateStr(huskelapp!.endretDato!)} av {huskelapp!.endretAv}
+                                    Endret {toSimpleDateStr(huskelapp!.endretDato!)} av {huskelapp!.endretAv}
                                 </i>
                             </BodyShort>
                         </div>
