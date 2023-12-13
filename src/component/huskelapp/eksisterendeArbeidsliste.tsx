@@ -1,13 +1,18 @@
-import { Alert, BodyLong, BodyShort, Heading } from '@navikt/ds-react';
+import { Alert, BodyLong, BodyShort, Button, Heading } from '@navikt/ds-react';
 import * as React from 'react';
 import { Arbeidsliste } from '../../api/veilarbportefolje';
 import { toSimpleDateStr } from '../../util/date-utils';
+import { useModalStore } from '../../store/modal-store';
+import './huskelapp.less';
+import { TrashIcon } from '@navikt/aksel-icons';
 
 interface Props {
     arbeidsliste: Arbeidsliste | undefined;
+    visFjernKnapp: boolean;
 }
 
-export const EksisterendeArbeidsliste = ({ arbeidsliste }: Props) => {
+export const EksisterendeArbeidsliste = ({ arbeidsliste, visFjernKnapp }: Props) => {
+    const { showFjernArbeidslisteModal } = useModalStore();
     return (
         <div>
             <Heading size={'small'} as="h2">
@@ -32,6 +37,17 @@ export const EksisterendeArbeidsliste = ({ arbeidsliste }: Props) => {
                     {arbeidsliste?.sistEndretAv?.veilederId}
                 </i>
             </BodyShort>
+
+            {visFjernKnapp && (
+                <Button
+                    onClick={() => showFjernArbeidslisteModal()}
+                    size="xsmall"
+                    variant="primary"
+                    icon={<TrashIcon aria-hidden />}
+                >
+                    <span>Slett</span>
+                </Button>
+            )}
         </div>
     );
 };

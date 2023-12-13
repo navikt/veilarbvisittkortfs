@@ -6,6 +6,7 @@ import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
 import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
 import {
+    selectKanLeggeHuskelapp,
     selectKanLeggeIArbeidsListe,
     selectKanRedigereArbeidsliste,
     selectSammensattNavn,
@@ -21,13 +22,19 @@ import HuskelappKnapp from '../huskelapp/huskelapp-knapp';
 
 function PersonInfo() {
     const { brukerFnr } = useAppStore();
-    const { personalia, arbeidsliste, oppfolgingsstatus, innloggetVeileder } = useDataStore();
-    const { showArbeidslisteModal, showHuskelappModal } = useModalStore();
+    const { personalia, arbeidsliste, oppfolgingsstatus, innloggetVeileder, huskelapp } = useDataStore();
+    const {
+        showArbeidslisteModal,
+        showHuskelappRedigereModal,
+        showHuskelappModal,
+        showHuskelappMedArbeidslisteModal
+    } = useModalStore();
 
     const arbeidslisteikon = arbeidsliste?.kategori;
 
     const navn = selectSammensattNavn(personalia);
     const kanLeggeIArbeidsliste = selectKanLeggeIArbeidsListe(innloggetVeileder, oppfolgingsstatus, arbeidsliste);
+    const kanLeggeHuskelapp = selectKanLeggeHuskelapp(innloggetVeileder, oppfolgingsstatus);
     const kanRedigereArbeidsliste = selectKanRedigereArbeidsliste(arbeidsliste);
 
     const klikkShowArbeidslisteModal = () => {
@@ -35,9 +42,20 @@ function PersonInfo() {
         showArbeidslisteModal();
     };
 
+    const erArbeidslisteTom = arbeidsliste?.sistEndretAv == null;
+    const erHuskelappTom = huskelapp?.huskelappId == null;
+
     const klikkShowHuskelapp = () => {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.huskelapp-ikon');
-        showHuskelappModal();
+        if (erArbeidslisteTom && erHuskelappTom) {
+            showHuskelappRedigereModal();
+        } else if (erArbeidslisteTom && !erHuskelappTom) {
+            showHuskelappModal();
+        } else if (!erArbeidslisteTom && erHuskelappTom) {
+            showHuskelappMedArbeidslisteModal();
+        } else if (!erArbeidslisteTom && !erHuskelappTom) {
+            showHuskelappRedigereModal();
+        }
     };
     const uformattertTelefon: StringOrNothing = selectTelefonnummer(personalia);
     const telefon: string = formaterTelefonnummer(uformattertTelefon);
@@ -53,7 +71,7 @@ function PersonInfo() {
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
                 <HuskelappKnapp
-                    hidden={!(kanLeggeIArbeidsliste || kanRedigereArbeidsliste)}
+                    hidden={!kanLeggeHuskelapp}
                     onClick={klikkShowHuskelapp}
                     kanRedigereHuskelapp={kanRedigereArbeidsliste}
                 />

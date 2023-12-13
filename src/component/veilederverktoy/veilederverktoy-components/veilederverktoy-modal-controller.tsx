@@ -31,7 +31,10 @@ import { FeilTildelingModal } from '../tildel-veileder/tildel-veileder-feil-moda
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import FjernArbeidslisteModal from '../../arbeidsliste/fjern-arbeidsliste-modal';
 import ArbeidslisteModal from '../../arbeidsliste/arbeidsliste-modal';
-import HuskelappModal from '../../huskelapp/huskelapp-modal';
+import HuskelappRedigereModal from '../../huskelapp/redigering/huskelapp-redigere-modal';
+import HuskelappVisningModal from '../../huskelapp/visning/huskelap-visning-modal';
+import HuskelappMedArbiedslisteVisningModal from '../../huskelapp/visning/huskelap-visning-med-arbiedsliste-modal';
+import FjernHuskelappModal from '../../huskelapp/redigering/fjern-huskelapp-modal';
 
 export function VeilederverktoyModalController() {
     const { activeModalState } = useModalStore();
@@ -100,7 +103,13 @@ export function VeilederverktoyModalController() {
         case ModalType.SPINNER:
             return <LasterModal />;
         case ModalType.HUSKELAPP:
-            return <HuskelappModal />;
+            return <HuskelappVisningModal />;
+        case ModalType.HUSKELAPP_REDIGERE:
+            return <HuskelappRedigereModal />;
+        case ModalType.HUSKELAPP_MED_ARBEIDSLISTE:
+            return <HuskelappMedArbiedslisteVisningModal />;
+        case ModalType.FJERN_HUSKELAPP:
+            return <FjernHuskelappModal />;
         default:
             return null;
     }

@@ -48,6 +48,14 @@ export function kanFjerneArbeidsliste(
     return !!arbeidsliste.endringstidspunkt && !!innloggetVeilederId && oppfolging?.veilederId === innloggetVeilederId;
 }
 
+export function selectKanLeggeHuskelapp(
+    innloggetVeileder: OrNothing<VeilederData>,
+    oppfolgingsstatus: OrNothing<OppfolgingStatus>
+): boolean {
+    if (!innloggetVeileder || !oppfolgingsstatus) return false;
+    return oppfolgingsstatus.veilederId === innloggetVeileder.ident;
+}
+
 export function kanFjerneHuskelapp(
     huskelapp: Huskelapp,
     oppfolging: OrNothing<Oppfolging>,

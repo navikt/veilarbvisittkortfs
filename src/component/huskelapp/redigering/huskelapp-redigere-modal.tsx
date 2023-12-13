@@ -1,28 +1,24 @@
 import React from 'react';
-import { Form, Formik, FormikProps } from 'formik';
-//import Modal from '../components/modal/modal';
+import { Formik, FormikProps } from 'formik';
 import {
     fetchHuskelapp,
     HuskelappformValues,
     lagreHuskelapp,
     redigerHuskelapp,
-    slettArbeidsliste
-} from '../../api/veilarbportefolje';
-import { useAppStore } from '../../store/app-store';
-import { useDataStore } from '../../store/data-store';
-import { kanFjerneHuskelapp, selectSammensattNavn } from '../../util/selectors';
-import { useModalStore } from '../../store/modal-store';
-import { logMetrikk } from '../../util/logger';
-import { trackAmplitude } from '../../amplitude/amplitude';
-import { HuskelappInformasjonsmelding } from './huskelapp-informasjonsmelding';
-import HuskelappForm from './huskelapp-form';
-import HuskelappFooter from './huskelapp-footer';
-import { EksisterendeArbeidsliste } from './eksisterendeArbeidsliste';
-import './huskelapp.less';
-import { Heading, Modal } from '@navikt/ds-react';
-import { ReactComponent as HuskelappIkon } from './ikon/huskelapp.svg';
-import { toSimpleDateStr } from '../../util/date-utils';
-import HiddenIfDiv from '../components/hidden-if/hidden-if-div';
+    slettArbeidsliste,
+    slettHuskelapp
+} from '../../../api/veilarbportefolje';
+import { useAppStore } from '../../../store/app-store';
+import { useDataStore } from '../../../store/data-store';
+import { useModalStore } from '../../../store/modal-store';
+import { logMetrikk } from '../../../util/logger';
+import { trackAmplitude } from '../../../amplitude/amplitude';
+import '../huskelapp.less';
+import { Modal } from '@navikt/ds-react';
+import { ReactComponent as HuskelappIkon } from '../ikon/huskelapp.svg';
+import { toSimpleDateStr } from '../../../util/date-utils';
+import { HuskelappMedArbeidslisteEditModal } from './huskelapp-med-arbeidsliste-edit-modal';
+import { HuskelappEditModal } from './huskelapp-edit-modal';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -30,7 +26,7 @@ const huskelappEmptyValues = {
     frist: ''
 };
 
-function HuskelappModal() {
+function HuskelappRedigereModal() {
     const { brukerFnr, enhetId } = useAppStore();
     const {
         hideModal,
@@ -38,22 +34,9 @@ function HuskelappModal() {
         showErrorModal,
         showFjernArbeidslisteModal: showFjernHuskelappModal
     } = useModalStore();
-    const {
-        huskelapp,
-        setHuskelapp,
-        oppfolging,
-        innloggetVeileder,
-        personalia,
-        arbeidsliste,
-        setArbeidsliste
-    } = useDataStore();
-
-    const brukerSammensattNavn = selectSammensattNavn(personalia);
+    const { huskelapp, setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
 
     const erIRedigeringModus = huskelapp?.endretDato;
-
-    const kanFjernesFraArbeidsliste =
-        !!huskelapp && kanFjerneHuskelapp(huskelapp, oppfolging, innloggetVeileder?.ident);
 
     const erArbeidslisteTom = arbeidsliste?.sistEndretAv === null;
 
@@ -140,30 +123,16 @@ function HuskelappModal() {
                     onClose={() => onRequestClose(formikProps)}
                 >
                     <Modal.Body>
-                        <div className={'huskelappmodal-innhold'}>
-                            <div className={'huskelapp-innhold'}>
-                                <Heading size={'medium'} visuallyHidden={true}>
-                                    Huskelappinnhold
-                                </Heading>
-                                {/* TODO: ask Mathias about screen reader only component so we can add header for huskelapp  */}
-                                <HuskelappInformasjonsmelding />
-                                <Form id={'huskelapp-form'}>
-                                    <HuskelappForm
-                                        navn={brukerSammensattNavn}
-                                        fnr={brukerFnr}
-                                        endringstidspunkt={huskelapp?.endretDato}
-                                    />
-                                </Form>
-                            </div>
-                            <HiddenIfDiv className={'arbeidslisteInnhold'} hidden={erArbeidslisteTom}>
-                                <EksisterendeArbeidsliste arbeidsliste={arbeidsliste} />
-                            </HiddenIfDiv>
-                        </div>
-                        <HuskelappFooter
-                            onRequestClose={() => onRequestClose(formikProps)}
-                            slettHuskelapp={showFjernHuskelappModal}
-                            kanFjerneHuskelapp={kanFjernesFraArbeidsliste}
-                        />
+                        {erArbeidslisteTom
+                            ? HuskelappEditModal({
+                                  onRequestClose: () => onRequestClose(formikProps),
+                                  slettHuskelapp: () => slettHuskelapp(huskelapp!.huskelappId!)
+                              })
+                            : HuskelappMedArbeidslisteEditModal({
+                                  onRequestClose: () => onRequestClose(formikProps),
+                                  slettHuskelapp: () => slettHuskelapp(huskelapp!.huskelappId!),
+                                  arbeidsliste: arbeidsliste!!
+                              })}
                     </Modal.Body>
                 </Modal>
             )}
@@ -171,4 +140,4 @@ function HuskelappModal() {
     );
 }
 
-export default HuskelappModal;
+export default HuskelappRedigereModal;
