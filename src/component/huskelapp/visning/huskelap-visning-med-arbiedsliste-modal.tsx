@@ -24,7 +24,7 @@ function HuskelappMedArbiedslisteVisningModal() {
             onClose={() => hideModal()}
         >
             <Modal.Body>
-                <div className={'huskelappmodal-innhold'}>
+                <div className={'huskelappmodal-med-arbeidsliste-innhold'}>
                     <div className={'huskelapp-innhold'}>
                         <Heading size={'medium'} visuallyHidden={true}>
                             Huskelappinnhold

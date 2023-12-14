@@ -17,7 +17,7 @@ import '../huskelapp.less';
 import { Modal } from '@navikt/ds-react';
 import { ReactComponent as HuskelappIkon } from '../ikon/huskelapp.svg';
 import { toReversedDateStr } from '../../../util/date-utils';
-import { HuskelappEditForm } from './huskelapp-edit-form';
+import { HuskelappMedArbeidslisteEditForm } from './huskelapp-med-arbeidsliste-edit-form';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -28,7 +28,7 @@ const huskelappEmptyValues = {
 function HuskelappRedigereModal() {
     const { brukerFnr, enhetId } = useAppStore();
     const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
-    const { huskelapp, setHuskelapp, setArbeidsliste } = useDataStore();
+    const { huskelapp, setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
 
     const erIRedigeringModus = huskelapp?.endretDato;
 
@@ -113,11 +113,13 @@ function HuskelappRedigereModal() {
                     }}
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
+                    width={'800px'}
                 >
                     <Modal.Body>
-                        <HuskelappEditForm
+                        <HuskelappMedArbeidslisteEditForm
                             onRequestClose={() => onRequestClose(formikProps)}
                             slettHuskelapp={() => slettHuskelapp(huskelapp!.huskelappId!)}
+                            arbeidsliste={arbeidsliste!}
                         />
                     </Modal.Body>
                 </Modal>

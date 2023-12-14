@@ -41,8 +41,8 @@ export const validerArbeidslisteKommentarFelt = (kommentar: string): string | un
 
 export const validerHuskelappKommentarFelt = (kommentar: string): string | undefined => {
     let error;
-    if (kommentar.length > 140) {
-        error = 'Du må korte ned teksten til 140 tegn';
+    if (kommentar.length > 100) {
+        error = 'Du må korte ned teksten til 100 tegn';
     }
     return error;
 };

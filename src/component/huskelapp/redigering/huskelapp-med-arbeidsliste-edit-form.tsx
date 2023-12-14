@@ -16,15 +16,14 @@ interface HuskelappMedArbeidslisteFormProps {
     arbeidsliste: Arbeidsliste;
 }
 
-export function HuskelappMedArbeidslisteEditModal(formValues: HuskelappMedArbeidslisteFormProps) {
+export function HuskelappMedArbeidslisteEditForm(formValues: HuskelappMedArbeidslisteFormProps) {
     return (
         <>
-            <div className={'huskelappmodal-innhold'}>
+            <div className={'huskelappmodal-med-arbeidsliste-innhold'}>
                 <div className={'huskelapp-innhold'}>
                     <Heading size={'medium'} visuallyHidden={true}>
                         Huskelappinnhold
                     </Heading>
-                    {/* TODO: ask Mathias about screen reader only component so we can add header for huskelapp  */}
                     <HuskelappInformasjonsmelding />
                     <Form id={'huskelapp-form'}>
                         <HuskelappForm />
