@@ -11,6 +11,7 @@ import {
 import { toSimpleDateStr } from '../../util/date-utils';
 import { OrNothing } from '../../util/type/utility-types';
 import { Detail, Heading } from '@navikt/ds-react';
+import './arbeidsliste.less';
 
 interface ArbeidslisteFormProps {
     sistEndretAv?: OrNothing<{ veilederId: string }>;
@@ -24,7 +25,7 @@ function ArbeidslisteForm(props: ArbeidslisteFormProps) {
         <div className="arbeidsliste__bruker">
             <div className="blokk-s">
                 <Heading size="small" as="h2">{`${props.navn}, ${props.fnr}`}</Heading>
-                <FormikInput name="overskrift" label="Tittel" validate={validerArbeidslisteTittelFelt} width="L" />
+                <FormikInput name="overskrift" label="Tittel" validate={validerArbeidslisteTittelFelt} />
                 <FormikTekstArea
                     name="kommentar"
                     label="Kommentar"

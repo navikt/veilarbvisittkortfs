@@ -2,6 +2,7 @@ import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { Select, SelectProps } from '@navikt/ds-react';
 import { getErrors } from './formik-utils';
+import './formik.less';
 
 interface FormikInputProps {
     name: string;
@@ -17,6 +18,7 @@ function FormikSelect({ name, validate, label, options, ...selectProps }: Formik
                 const feil = getErrors(form.errors, form.touched, name);
                 return (
                     <Select
+                        className="formik-textarea"
                         id={name}
                         label={label}
                         onChange={form.handleChange}

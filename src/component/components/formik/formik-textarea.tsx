@@ -2,6 +2,7 @@ import React from 'react';
 import { Textarea, TextareaProps } from '@navikt/ds-react';
 import { Field, FieldProps } from 'formik';
 import { getErrors } from './formik-utils';
+import './formik.less';
 
 interface TekstAreaProps {
     name: string;
@@ -18,6 +19,7 @@ function FormikTekstArea({ name, validate, label, ...textAreaProps }: TekstAreaP
                 const feil = getErrors(form.errors, form.touched, name);
                 return (
                     <Textarea
+                        className="formik-textarea"
                         id={name}
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
