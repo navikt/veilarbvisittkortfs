@@ -35,7 +35,8 @@ export enum ModalType {
     HUSKELAPP,
     FJERN_HUSKELAPP,
     HUSKELAPP_REDIGERE,
-    HUSKELAPP_MED_ARBEIDSLISTE
+    HUSKELAPP_MED_ARBEIDSLISTE,
+    HUSKELAPP_REDIGERE_MED_ARBEIDSLISTE
 }
 
 export interface ModalState {
@@ -151,6 +152,10 @@ export const [ModalStore, useModalStore] = constate(() => {
         showModal(ModalType.HUSKELAPP_REDIGERE);
     }
 
+    function showHuskelappRedigereMedArbeidslisteModal() {
+        showModal(ModalType.HUSKELAPP_REDIGERE_MED_ARBEIDSLISTE);
+    }
+
     function showFjernHuskelappModal() {
         showModal(ModalType.FJERN_HUSKELAPP);
     }
@@ -202,6 +207,7 @@ export const [ModalStore, useModalStore] = constate(() => {
         showHuskelappModal,
         showFjernHuskelappModal,
         showHuskelappRedigereModal,
-        showHuskelappMedArbeidslisteModal
+        showHuskelappMedArbeidslisteModal,
+        showHuskelappRedigereMedArbeidslisteModal
     };
 });

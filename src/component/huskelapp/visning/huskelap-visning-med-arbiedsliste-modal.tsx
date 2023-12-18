@@ -9,7 +9,7 @@ import { EksisterendeArbeidsliste } from '../eksisterendeArbeidsliste';
 import HuskelappMedArbeidslisteFooter from './huskelapp-med-arbeidsliste-footer';
 
 function HuskelappMedArbiedslisteVisningModal() {
-    const { hideModal, showHuskelappRedigereModal } = useModalStore();
+    const { hideModal, showHuskelappRedigereMedArbeidslisteModal } = useModalStore();
 
     const { arbeidsliste } = useDataStore();
 
@@ -36,7 +36,7 @@ function HuskelappMedArbiedslisteVisningModal() {
                     </div>
                 </div>
                 <HuskelappMedArbeidslisteFooter
-                    lagHuskelapp={() => showHuskelappRedigereModal()}
+                    lagHuskelapp={() => showHuskelappRedigereMedArbeidslisteModal()}
                     onRequestClose={() => hideModal()}
                 />
             </Modal.Body>
