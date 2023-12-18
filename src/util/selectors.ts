@@ -48,12 +48,21 @@ export function kanFjerneArbeidsliste(
     return !!arbeidsliste.endringstidspunkt && !!innloggetVeilederId && oppfolging?.veilederId === innloggetVeilederId;
 }
 
-export function selectKanLeggeHuskelapp(
+export function selectKanOppretteHuskelapp(
     innloggetVeileder: OrNothing<VeilederData>,
     oppfolgingsstatus: OrNothing<OppfolgingStatus>
 ): boolean {
     if (!innloggetVeileder || !oppfolgingsstatus) return false;
     return oppfolgingsstatus.veilederId === innloggetVeileder.ident;
+}
+
+export function selectKanRedigereHuskelapp(
+    innloggetVeileder: OrNothing<VeilederData>,
+    oppfolgingsstatus: OrNothing<OppfolgingStatus>,
+    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
+): boolean {
+    if (!innloggetVeileder || !oppfolgingsstatus || !tilgangTilBrukersKontor) return false;
+    return tilgangTilBrukersKontor.tilgangTilBrukersKontor;
 }
 
 export function kanFjerneHuskelapp(

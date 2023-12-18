@@ -6,9 +6,10 @@ import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
 import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
 import {
-    selectKanLeggeHuskelapp,
     selectKanLeggeIArbeidsListe,
+    selectKanOppretteHuskelapp,
     selectKanRedigereArbeidsliste,
+    selectKanRedigereHuskelapp,
     selectSammensattNavn,
     selectTelefonnummer
 } from '../../util/selectors';
@@ -19,10 +20,19 @@ import { formaterTelefonnummer } from '../../util/utils';
 import { StringOrNothing } from '../../util/type/utility-types';
 import { Label } from '@navikt/ds-react';
 import HuskelappKnapp from '../huskelapp/huskelapp-knapp';
+import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
 
 function PersonInfo() {
     const { brukerFnr } = useAppStore();
-    const { personalia, arbeidsliste, oppfolgingsstatus, innloggetVeileder, huskelapp } = useDataStore();
+    const {
+        personalia,
+        arbeidsliste,
+        oppfolgingsstatus,
+        innloggetVeileder,
+        huskelapp,
+        features,
+        tilgangTilBrukersKontor
+    } = useDataStore();
     const {
         showArbeidslisteModal,
         showHuskelappRedigereModal,
@@ -34,8 +44,13 @@ function PersonInfo() {
 
     const navn = selectSammensattNavn(personalia);
     const kanLeggeIArbeidsliste = selectKanLeggeIArbeidsListe(innloggetVeileder, oppfolgingsstatus, arbeidsliste);
-    const kanLeggeHuskelapp = selectKanLeggeHuskelapp(innloggetVeileder, oppfolgingsstatus);
     const kanRedigereArbeidsliste = selectKanRedigereArbeidsliste(arbeidsliste);
+    const kanOppretteHuskelapp = selectKanOppretteHuskelapp(innloggetVeileder, oppfolgingsstatus);
+    const kanRedigereHuskelapp = selectKanRedigereHuskelapp(
+        innloggetVeileder,
+        oppfolgingsstatus,
+        tilgangTilBrukersKontor
+    );
 
     const klikkShowArbeidslisteModal = () => {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
@@ -71,9 +86,14 @@ function PersonInfo() {
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
                 <HuskelappKnapp
-                    hidden={!kanLeggeHuskelapp}
+                    hidden={
+                        !(
+                            ((!huskelapp && kanOppretteHuskelapp) || (huskelapp && kanRedigereHuskelapp)) &&
+                            features[HUSKELAPP]
+                        )
+                    }
                     onClick={klikkShowHuskelapp}
-                    kanRedigereHuskelapp={kanRedigereArbeidsliste}
+                    harHuskelapp={!erHuskelappTom}
                 />
                 <KopierKnappTekst kopierTekst={brukerFnr} visTekst={`F.nr.: ${brukerFnr}`} />
                 {<Label>/</Label>}
