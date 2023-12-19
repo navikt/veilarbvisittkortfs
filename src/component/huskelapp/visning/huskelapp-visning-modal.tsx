@@ -6,10 +6,20 @@ import { ReactComponent as HuskelappIkon } from '../ikon/huskelapp.svg';
 import HuskelappFooter from './huskelapp-footer';
 import { useDataStore } from '../../../store/data-store';
 import { toSimpleDateStr } from '../../../util/date-utils';
+import { trackAmplitude } from '../../../amplitude/amplitude';
 
 function HuskelappVisningModal() {
     const { hideModal, showHuskelappRedigereModal, showFjernHuskelappModal } = useModalStore();
     const { huskelapp } = useDataStore();
+
+    const endreHuskelappKlikk = () => {
+        trackAmplitude({
+            name: 'knapp klikket',
+            data: { knapptekst: 'Endre huskelapp', effekt: 'Åpne endre huskelapp-modal for bruker' }
+        });
+        showHuskelappRedigereModal();
+    };
+
     return (
         <Modal
             header={{
@@ -40,7 +50,7 @@ function HuskelappVisningModal() {
                     </div>
                 </div>
                 <HuskelappFooter
-                    endreHuskelapp={() => showHuskelappRedigereModal()}
+                    endreHuskelapp={endreHuskelappKlikk}
                     onRequestClose={() => hideModal()}
                     slettHuskelapp={() => showFjernHuskelappModal()}
                 />
