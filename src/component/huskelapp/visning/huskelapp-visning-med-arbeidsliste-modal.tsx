@@ -9,7 +9,7 @@ import { EksisterendeArbeidsliste } from '../eksisterendeArbeidsliste';
 import HuskelappMedArbeidslisteFooter from './huskelapp-med-arbeidsliste-footer';
 import { trackAmplitude } from '../../../amplitude/amplitude';
 
-function HuskelappMedArbiedslisteVisningModal() {
+function HuskelappMedArbeidslisteVisningModal() {
     const { hideModal, showHuskelappRedigereMedArbeidslisteModal } = useModalStore();
 
     const { arbeidsliste } = useDataStore();
@@ -50,4 +50,4 @@ function HuskelappMedArbiedslisteVisningModal() {
     );
 }
 
-export default HuskelappMedArbiedslisteVisningModal;
+export default HuskelappMedArbeidslisteVisningModal;
