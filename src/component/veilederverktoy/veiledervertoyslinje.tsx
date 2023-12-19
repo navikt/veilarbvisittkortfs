@@ -11,7 +11,9 @@ import {
     kanRegistreresEllerReaktiveres,
     selectKanAvslutteOppfolging,
     selectKanLeggeIArbeidsListe,
+    selectKanOppretteHuskelapp,
     selectKanRedigereArbeidsliste,
+    selectKanRedigereHuskelapp,
     selectKanSendeEskaleringsVarsel,
     selectKanStarteDigitalOppfolging,
     selectKanStarteKVP,
@@ -22,6 +24,7 @@ import {
 } from '../../util/selectors';
 import { doAll } from '../../util/utils';
 import { trackAmplitude } from '../../amplitude/amplitude';
+import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
 
 function Veilederverktoyslinje() {
     const { visVeilederVerktoy } = useAppStore();
@@ -31,7 +34,9 @@ function Veilederverktoyslinje() {
         innloggetVeileder,
         arbeidsliste,
         oppfolgingsstatus,
-        gjeldendeEskaleringsvarsel
+        gjeldendeEskaleringsvarsel,
+        huskelapp,
+        features
     } = useDataStore();
     const {
         showArbeidslisteModal,
@@ -44,7 +49,10 @@ function Veilederverktoyslinje() {
         showStoppKvpPeriodeModal,
         showOpprettOppgaveModal,
         showAvsluttOppfolgingModal,
-        showHistorikkModal
+        showHistorikkModal,
+        showHuskelappRedigereModal,
+        showHuskelappModal,
+        showHuskelappMedArbeidslisteModal
     } = useModalStore();
 
     const kanStarteEskalering = selectKanSendeEskaleringsVarsel(
@@ -66,6 +74,14 @@ function Veilederverktoyslinje() {
     const kanLagreArbeidsliste = selectKanLeggeIArbeidsListe(innloggetVeileder, oppfolgingsstatus, arbeidsliste);
     const kanEndreArbeidsliste = selectKanRedigereArbeidsliste(arbeidsliste);
     const kanTildeleVeileder = selectKanTildeleVeileder(oppfolging, tilgangTilBrukersKontor);
+    const kanOppretteHuskelapp =
+        selectKanOppretteHuskelapp(innloggetVeileder, oppfolgingsstatus) &&
+        !huskelapp?.huskelappId &&
+        features[HUSKELAPP];
+    const kanRedigereHuskelapp =
+        selectKanRedigereHuskelapp(innloggetVeileder, oppfolgingsstatus, tilgangTilBrukersKontor) &&
+        !!huskelapp?.huskelappId &&
+        features[HUSKELAPP];
 
     if (!visVeilederVerktoy) {
         return null;
@@ -83,6 +99,26 @@ function Veilederverktoyslinje() {
             }
         });
         showArbeidslisteModal();
+    };
+
+    const huskelappKlikk = () => {
+        trackAmplitude({
+            name: 'navigere',
+            data: {
+                lenketekst: `veiledervektoy-${kanOppretteHuskelapp ? 'lag-huskelapp' : 'vis-huskelapp'}`,
+                destinasjon: 'huskelapp'
+            }
+        });
+
+        const harHuskelapp = !!huskelapp?.huskelappId;
+        const harArbeidsliste = !!arbeidsliste?.sistEndretAv;
+        if (!harArbeidsliste && harHuskelapp) {
+            return showHuskelappModal();
+        } else if (harArbeidsliste && !harHuskelapp) {
+            return showHuskelappMedArbeidslisteModal();
+        }
+
+        return showHuskelappRedigereModal();
     };
 
     return (
@@ -108,6 +144,22 @@ function Veilederverktoyslinje() {
                                 <StartProsess
                                     knappeTekst="Legg i arbeidsliste"
                                     onClick={() => doAll(arbeidslisteKlikk, lukkDropdown)}
+                                />
+                            </li>
+                        )}
+                        {kanRedigereHuskelapp && (
+                            <li>
+                                <StartProsess
+                                    knappeTekst="Vis huskelapp"
+                                    onClick={() => doAll(huskelappKlikk, lukkDropdown)}
+                                />
+                            </li>
+                        )}
+                        {kanOppretteHuskelapp && (
+                            <li>
+                                <StartProsess
+                                    knappeTekst="Lag huskelapp"
+                                    onClick={() => doAll(huskelappKlikk, lukkDropdown)}
                                 />
                             </li>
                         )}
