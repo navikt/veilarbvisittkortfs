@@ -82,7 +82,7 @@ function Dropdown(props: DropdownProps) {
                 </Button>
                 {apen && (
                     <ul
-                        className={'dropdown__innhold dropdown__innhold'}
+                        className={'dropdown__innhold'}
                         id={`${name}-dropdown__innhold`}
                         onKeyDown={e => {
                             if (harTrykktPaEsc(e)) {
