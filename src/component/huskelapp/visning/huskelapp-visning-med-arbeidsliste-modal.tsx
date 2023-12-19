@@ -7,11 +7,20 @@ import { useDataStore } from '../../../store/data-store';
 import { HuskelappInformasjonsmelding } from '../huskelapp-informasjonsmelding';
 import { EksisterendeArbeidsliste } from '../eksisterendeArbeidsliste';
 import HuskelappMedArbeidslisteFooter from './huskelapp-med-arbeidsliste-footer';
+import { trackAmplitude } from '../../../amplitude/amplitude';
 
 function HuskelappMedArbiedslisteVisningModal() {
     const { hideModal, showHuskelappRedigereMedArbeidslisteModal } = useModalStore();
 
     const { arbeidsliste } = useDataStore();
+
+    const lagHuskelappKlikk = () => {
+        trackAmplitude({
+            name: 'knapp klikket',
+            data: { knapptekst: 'Lag huskelapp', effekt: 'Åpne lag huskelapp-modal for bruker' }
+        });
+        showHuskelappRedigereMedArbeidslisteModal();
+    };
 
     return (
         <Modal
@@ -35,10 +44,7 @@ function HuskelappMedArbiedslisteVisningModal() {
                         <EksisterendeArbeidsliste arbeidsliste={arbeidsliste} visFjernKnapp={true} />
                     </div>
                 </div>
-                <HuskelappMedArbeidslisteFooter
-                    lagHuskelapp={() => showHuskelappRedigereMedArbeidslisteModal()}
-                    onRequestClose={() => hideModal()}
-                />
+                <HuskelappMedArbeidslisteFooter lagHuskelapp={lagHuskelappKlikk} onRequestClose={() => hideModal()} />
             </Modal.Body>
         </Modal>
     );
