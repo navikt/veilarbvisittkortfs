@@ -1,5 +1,6 @@
 import React from 'react';
 import './tilbakelenke.less';
+// @ts-ignore
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { useAppStore } from '../../../store/app-store';
 

@@ -4,6 +4,8 @@ import './dropdown.less';
 import withClickMetric from '../click-metric/click-metric';
 import hiddenIf from '../hidden-if/hidden-if';
 import { useDocumentEventListner } from '../../../util/hook/use-event-listner';
+import { Button } from '@navikt/ds-react';
+import { ReactComponent as TannHjulIkon } from '../../veilederverktoy/tannhjul.svg';
 
 /* tslint:disable */
 const btnCls = (erApen: boolean, className: string | undefined) =>
@@ -66,9 +68,10 @@ function Dropdown(props: DropdownProps) {
     return (
         <div className="dropdown">
             <div className={btnCls(apen, className)} ref={loggNode}>
-                <button
+                <Button
+                    variant="tertiary"
+                    icon={<TannHjulIkon className="knapp-fss__icon" />}
                     ref={btnRef}
-                    type="button"
                     className={classNames('dropdown__btn', props.btnClassnames)}
                     onClick={toggleDropdown}
                     aria-expanded={apen}
@@ -76,7 +79,7 @@ function Dropdown(props: DropdownProps) {
                     aria-labelledby={props.ariaLabelledBy}
                 >
                     {knappeTekst}
-                </button>
+                </Button>
                 {apen && (
                     <ul
                         className={'dropdown__innhold dropdown__innhold'}
