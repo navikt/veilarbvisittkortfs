@@ -33,8 +33,8 @@ import FjernArbeidslisteModal from '../../arbeidsliste/fjern-arbeidsliste-modal'
 import ArbeidslisteModal from '../../arbeidsliste/arbeidsliste-modal';
 import HuskelappRedigereModal from '../../huskelapp/redigering/huskelapp-redigere-modal';
 import HuskelappRedigereMedArbeidslisteModal from '../../huskelapp/redigering/huskelapp-redigere-med-arbeidsliste-modal';
-import HuskelappVisningModal from '../../huskelapp/visning/huskelap-visning-modal';
-import HuskelappMedArbiedslisteVisningModal from '../../huskelapp/visning/huskelap-visning-med-arbiedsliste-modal';
+import HuskelappVisningModal from '../../huskelapp/visning/huskelapp-visning-modal';
+import HuskelappMedArbiedslisteVisningModal from '../../huskelapp/visning/huskelapp-visning-med-arbeidsliste-modal';
 import HuskelappFjernModal from '../../huskelapp/redigering/huskelapp-fjern-modal';
 
 export function VeilederverktoyModalController() {
