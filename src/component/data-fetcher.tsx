@@ -9,7 +9,7 @@ import { ifResponseHasData, isDefined } from '../util/utils';
 import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
 import './data-fetcher.less';
 import { isAnyLoading, isAnyLoadingOrNotStarted } from '../api/utils';
-import NavFrontendSpinner from 'nav-frontend-spinner';
+import { Loader } from '@navikt/ds-react';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 import { useFetchFeaturesFromOboUnleash } from '../api/obo-unleash';
 import { fetchErUtrullet } from '../api/veilarbvedtaksstotte';
@@ -46,6 +46,7 @@ export function DataFetcher(props: { children: any }) {
     const erUtrulletTilEnhetFetcher = useAxiosFetcher(fetchErUtrullet);
     const registreringDataFetcher = useAxiosFetcher(fetchRegistrering);
 
+    const behandlingsnummer = 'B643';
     const oppfolgingsEnhet = oppfolgingstatusFetcher.data?.oppfolgingsenhet.enhetId || '';
 
     useEffect(() => {
@@ -56,9 +57,9 @@ export function DataFetcher(props: { children: any }) {
             .fetch(brukerFnr)
             .then(ifResponseHasData(setGjeldendeEskaleringsvarsel))
             .catch();
-        vergeOgFullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setVergeOgFullmakt)).catch();
-        spraakTolkFetcher.fetch(brukerFnr).then(ifResponseHasData(setSpraakTolk)).catch();
-        personaliaFetcher.fetch(brukerFnr).then(ifResponseHasData(setPersonalia)).catch();
+        vergeOgFullmaktFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setVergeOgFullmakt)).catch();
+        spraakTolkFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setSpraakTolk)).catch();
+        personaliaFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setPersonalia)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr]);
 
@@ -115,7 +116,7 @@ export function DataFetcher(props: { children: any }) {
         ) ||
         (isDefined(erUtrulletTilEnhetFetcher.data) && isAnyLoading(registreringDataFetcher))
     ) {
-        return <NavFrontendSpinner className="visittkort-laster" type="L" />;
+        return <Loader className="visittkort-laster" size="xlarge" />;
     }
 
     return <>{props.children}</>;

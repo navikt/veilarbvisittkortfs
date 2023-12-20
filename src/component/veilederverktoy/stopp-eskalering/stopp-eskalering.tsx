@@ -1,6 +1,5 @@
 import React from 'react';
 import FormikModal from '../../components/formik/formik-modal';
-import { Normaltekst } from 'nav-frontend-typografi';
 import { Form } from 'formik';
 import FormikCheckBox from '../../components/formik/formik-checkbox';
 import BegrunnelseFooter from '../begrunnelseform/begrunnelse-form-footer';
@@ -11,6 +10,7 @@ import { useDataStore } from '../../../store/data-store';
 import { eskaleringVarselSendtEvent } from '../../../util/utils';
 import { stopEskalering } from '../../../api/veilarbdialog';
 import './stopp-eskalering.less';
+import { BodyShort } from '@navikt/ds-react';
 
 interface FormValues {
     begrunnelse: string;
@@ -64,9 +64,9 @@ function StoppEskalering() {
                             <FormikCheckBox name="skalSendeHendelse" label={'Send bruker en henvendelse'} />
                             {formikProps.values.skalSendeHendelse && (
                                 <>
-                                    <Normaltekst className="stopp-eskalering__tekst">
+                                    <BodyShort size="small" className="stopp-eskalering__tekst">
                                         Legg inn eller rediger tekst som du sender til brukeren.
-                                    </Normaltekst>
+                                    </BodyShort>
                                     <BegrunnelseTextArea
                                         tekstariaLabel="Se eksempel på tekst til brukeren under:"
                                         maxLength={500}
