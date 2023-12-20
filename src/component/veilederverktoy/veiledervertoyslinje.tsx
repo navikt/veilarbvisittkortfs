@@ -1,7 +1,6 @@
 import React from 'react';
 import './veilederverktoy.less';
 import Dropdown from '../components/dropdown/dropdown';
-import { ReactComponent as TannHjulIkon } from './tannhjul.svg';
 import StartRegistreringProsess from './start-registrering/start-registrering-prosess';
 import StartProsess from './prosess/start-prosess';
 import { useAppStore } from '../../store/app-store';
@@ -91,12 +90,7 @@ function Veilederverktoyslinje() {
             <Dropdown
                 metricName="dropdown-trykket"
                 ariaLabelledBy="veilederverkoy_span"
-                knappeTekst={
-                    <>
-                        <TannHjulIkon className="knapp-fss__icon" />{' '}
-                        <span id="veilederverkoy_span">Veilederverktøy</span>
-                    </>
-                }
+                knappeTekst="Veilederverktøy"
                 name="tildel veileder"
                 btnClassnames="knapp knapp--standard knapp-fss"
                 render={lukkDropdown => (

@@ -1,13 +1,13 @@
 import React from 'react';
 import cls from 'classnames';
-import { Knapp, KnappBaseProps } from 'nav-frontend-knapper';
 import './meny-knapp.less';
+import { Button, ButtonProps } from '@navikt/ds-react';
 
-export function MenyKnapp(props: KnappBaseProps) {
+export function MenyKnapp(props: ButtonProps) {
     const { children, className, ...rest } = props;
     return (
-        <Knapp className={cls('meny-knapp', className)} {...rest}>
+        <Button variant="tertiary" className={cls('meny-knapp', className)} {...rest}>
             {children}
-        </Knapp>
+        </Button>
     );
 }
