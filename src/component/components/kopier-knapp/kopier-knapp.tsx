@@ -1,17 +1,21 @@
 import React from 'react';
 import './kopier-knapp.less';
 
-import { CopyToClipboard } from '@navikt/ds-react-internal';
-import { BodyShort } from '@navikt/ds-react';
+import { CopyButton } from '@navikt/ds-react';
 
-export function KopierKnappTekst(props: { kopierTekst: string, visTekst: string }) {
+export function KopierKnappTekst(props: { kopierTekst: string; viseTekst: string }) {
     return (
-        <BodyShort as="div" size="small" className="kopier-knapp">
+        <div>
             {props.kopierTekst && (
-                <CopyToClipboard copyText={props.kopierTekst} popoverText="kopiert" size="xsmall" iconPosition="right">
-                    {props.visTekst}
-                </CopyToClipboard>
+                <CopyButton
+                    copyText={props.kopierTekst}
+                    text={props.viseTekst}
+                    activeText="kopiert"
+                    size="medium"
+                    iconPosition="right"
+                    className="copybutton"
+                />
             )}
-        </BodyShort>
+        </div>
     );
 }
