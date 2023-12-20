@@ -16,7 +16,7 @@ function StartProcess(props: StartProsessProps & ClickMetricProps) {
         setAvsluttOppfolgingOpptelt(false);
     }
     return (
-        <ProcessKnapp onClick={props.onClick} className="btn--mb1" metricName={props.metricName}>
+        <ProcessKnapp onClick={props.onClick} metricName={props.metricName}>
             {props.knappeTekst}
         </ProcessKnapp>
     );
