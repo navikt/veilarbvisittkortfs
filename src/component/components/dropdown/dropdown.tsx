@@ -69,7 +69,7 @@ function Dropdown(props: DropdownProps) {
         <div className="dropdown">
             <div className={btnCls(apen, className)} ref={loggNode}>
                 <Button
-                    variant="tertiary"
+                    variant="tertiary-neutral"
                     icon={<TannHjulIkon className="knapp-fss__icon" />}
                     ref={btnRef}
                     className={classNames('dropdown__btn', props.btnClassnames)}
