@@ -22,7 +22,7 @@ function HuskelappKnapp(props: HuskelappKnappProps) {
     };
 
     return (
-        <KnappFss className="huskelapp-knapp" onClick={onClick} hidden={props.hidden} htmlType={'button'}>
+        <KnappFss className="huskelapp-knapp" onClick={onClick} hidden={props.hidden}>
             {props.harHuskelapp ? <HuskelappIkon /> : <HuskelappInaktivIkon />}
         </KnappFss>
     );
