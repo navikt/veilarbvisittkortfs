@@ -77,6 +77,7 @@ function Dropdown(props: DropdownProps) {
                     aria-expanded={apen}
                     aria-controls={`${name}-dropdown__innhold`}
                     aria-labelledby={props.ariaLabelledBy}
+                    type="button"
                 >
                     {knappeTekst}
                 </Button>
