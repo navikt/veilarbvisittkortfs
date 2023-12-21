@@ -1,10 +1,10 @@
 import React from 'react';
 import withClickMetric from '../components/click-metric/click-metric';
-import KnappFss from '../components/knapp-fss/knapp-fss';
 import { trackAmplitude } from '../../amplitude/amplitude';
 import { ReactComponent as HuskelappInaktivIkon } from './ikon/huskelapp-inaktiv.svg';
 import { ReactComponent as HuskelappIkon } from './ikon/huskelapp.svg';
 import './huskelapp.less';
+import { Button } from '@navikt/ds-react';
 
 export interface HuskelappKnappProps {
     hidden: boolean;
@@ -22,9 +22,13 @@ function HuskelappKnapp(props: HuskelappKnappProps) {
     };
 
     return (
-        <KnappFss className="huskelapp-knapp" onClick={onClick} hidden={props.hidden}>
-            {props.harHuskelapp ? <HuskelappIkon /> : <HuskelappInaktivIkon />}
-        </KnappFss>
+        <Button
+            icon={props.harHuskelapp ? <HuskelappIkon /> : <HuskelappInaktivIkon />}
+            onClick={onClick}
+            hidden={props.hidden}
+            variant={'tertiary-neutral'}
+            size={'medium'}
+        ></Button>
     );
 }
 
