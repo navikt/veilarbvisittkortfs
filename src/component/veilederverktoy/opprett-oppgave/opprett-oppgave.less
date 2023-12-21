@@ -86,14 +86,12 @@
             background: #3e3832;
         }
     }
-}
 
-// TODO: Dette er en midlertidig workaround mens vi holder på å skrive oss over til nytt designsystem
-// Klassene under overrider styling fra navds-button/navds-label ved at vi "vinner" på CSS-spesifisitet.
-// Grunnen til overridene er at vi per dags dato har en egenutviklet dropdown-komponent.
-// Denne skal byttes ut med Dropdown/Combobox fra nytt designsystem, men inntil videre
-// må vi override noen få styles da vi allerede har tatt i bruk Button fra nytt designsystem.
-.velg-enhet-dropdown {
+    // TODO: Dette er en midlertidig workaround mens vi holder på å skrive oss over til nytt designsystem
+    // CSS-reglene under her overstyrer styling fra navds-button/navds-label ved at vi "vinner" på CSS-spesifisitet.
+    // Grunnen til overridene er at vi per dags dato har en egenutviklet dropdown-komponent.
+    // Denne skal byttes ut med Dropdown/Combobox fra nytt designsystem, men inntil videre
+    // må vi override noen få styles da vi allerede har tatt i bruk Button fra nytt designsystem.
     &__button.navds-button {
         justify-content: left;
     }
