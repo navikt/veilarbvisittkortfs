@@ -38,8 +38,8 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
         behandladeEnheter.find(enhet => enhet.enhetId === value) || behandladeEnheter[0];
 
     return (
-        <div className="skjemaelement">
-            <label className="skjemaelement__label">Enhet *</label>
+        <div className="skjemaelement navds-form-field navds-form-field--medium navds-date__field">
+            <label className="skjemaelement__label navds-form-field__label navds-label">Enhet *</label>
             {isLoading ? (
                 <div className="velgenhet-spinner">
                     <Loader size="large" className="skjemaelement" />
