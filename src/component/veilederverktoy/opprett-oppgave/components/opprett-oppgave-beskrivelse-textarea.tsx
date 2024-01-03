@@ -6,7 +6,7 @@ function OpprettOppgaveBeskrivelseTekstArea() {
     return (
         <FormikTekstArea
             name="beskrivelse"
-            label="Beskrivelse *"
+            label="Beskrivelse"
             validate={validerBeskrivelse(250)}
             maxLength={250}
             size="small"

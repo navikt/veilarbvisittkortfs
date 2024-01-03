@@ -54,7 +54,7 @@ function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: 
     return (
         <div className="skjemaelement navds-form-field navds-form-field--medium navds-date__field">
             <label className="skjemaelement__label navds-form-field__label navds-label navds-label--small">
-                Veileder
+                Veileder (valgfritt)
             </label>
             <Dropdown
                 name="Velg veileder dropdown"
