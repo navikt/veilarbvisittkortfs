@@ -12,7 +12,13 @@ interface TekstAreaProps {
 
 type OmitProps = 'onChange' | 'value' | 'feil' | 'onBlur' | 'label';
 
-function FormikTekstArea({ name, validate, label, ...textAreaProps }: TekstAreaProps & Omit<TextareaProps, OmitProps>) {
+function FormikTekstArea({
+    name,
+    validate,
+    label,
+    size = 'medium',
+    ...textAreaProps
+}: TekstAreaProps & Omit<TextareaProps, OmitProps>) {
     return (
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
@@ -26,6 +32,7 @@ function FormikTekstArea({ name, validate, label, ...textAreaProps }: TekstAreaP
                         value={field.value}
                         error={feil && feil.feilmelding}
                         label={label}
+                        size={size}
                         {...textAreaProps}
                     />
                 );

@@ -27,6 +27,7 @@ function FormikSelect({ name, validate, label, options, ...selectProps }: Formik
                         error={feil}
                         {...selectProps}
                         value={field.value}
+                        size="small"
                     >
                         {options.map(option => (
                             <option key={option.value} value={option.value}>

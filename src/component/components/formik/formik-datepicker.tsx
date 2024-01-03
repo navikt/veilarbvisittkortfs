@@ -8,10 +8,11 @@ interface FormikDatepickerProps {
     validate: (value: string) => string | undefined;
     label: string;
     ariaLabel: string;
+    size?: 'medium' | 'small';
     className?: string;
 }
 
-function FormikDatoVelger({ name, validate, label, ariaLabel, className }: FormikDatepickerProps) {
+function FormikDatoVelger({ name, validate, label, ariaLabel, size = 'medium', className }: FormikDatepickerProps) {
     const { inputProps, datepickerProps } = useDatepicker!({});
     return (
         <Field validate={validate} name={name} id={name}>
@@ -28,6 +29,7 @@ function FormikDatoVelger({ name, validate, label, ariaLabel, className }: Formi
                             onSelect={(date?: any) => setFieldValue(field.name, date)}
                         >
                             <DatePicker.Input
+                                size={size}
                                 label={label}
                                 {...{
                                     ...inputProps,

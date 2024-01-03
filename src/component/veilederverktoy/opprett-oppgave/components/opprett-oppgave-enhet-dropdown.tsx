@@ -39,7 +39,9 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
 
     return (
         <div className="skjemaelement navds-form-field navds-form-field--medium navds-date__field">
-            <label className="skjemaelement__label navds-form-field__label navds-label">Enhet *</label>
+            <label className="skjemaelement__label navds-form-field__label navds-label navds-label--small">
+                Enhet *
+            </label>
             {isLoading ? (
                 <div className="velgenhet-spinner">
                     <Loader size="large" className="skjemaelement" />
