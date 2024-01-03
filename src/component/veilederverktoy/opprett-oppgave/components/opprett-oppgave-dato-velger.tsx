@@ -15,7 +15,7 @@ function OpprettOppgaveVelgDatoer() {
                 name="tilDato"
                 validate={validerOppgaveDatoFelt}
                 label="Frist *"
-                ariaLabel="Datoen ppgaven er aktiv til"
+                ariaLabel="Datoen oppgaven er aktiv til"
             />
         </div>
     );
