@@ -42,7 +42,7 @@ function FormikDatoVelger({ name, validate, label, ariaLabel, size = 'medium', c
                                 }}
                             />
                         </DatePicker>
-                        {error && <ErrorMessage>{error}</ErrorMessage>}
+                        {error && <ErrorMessage size="small">{error}</ErrorMessage>}
                     </div>
                 );
             }}
