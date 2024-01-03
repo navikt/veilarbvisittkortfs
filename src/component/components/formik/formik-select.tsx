@@ -18,7 +18,7 @@ function FormikSelect({ name, validate, label, options, ...selectProps }: Formik
                 const feil = getErrors(form.errors, form.touched, name);
                 return (
                     <Select
-                        className="formik-textarea"
+                        className="formik-select"
                         id={name}
                         label={label}
                         onChange={form.handleChange}
