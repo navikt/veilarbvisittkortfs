@@ -37,8 +37,10 @@ function OppgaveInnerForm({
 
     return (
         <>
-            <OpprettOppgaveTypeSelector oppgaveTema={tema} />
-            <OpprettOppgavePrioritetSelector />
+            <div className="oppgave-type-og-prioritet-container">
+                <OpprettOppgaveTypeSelector oppgaveTema={tema} />
+                <OpprettOppgavePrioritetSelector />
+            </div>
             <OpprettOppgaveVelgDatoer />
             <div className="oppgave-enhet-container">
                 <OpprettOppgaveVelgEnhet value={enhetId} tema={tema} fnr={fnr} formikProps={formikProps} />
