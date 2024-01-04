@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import NavFrontendModal from 'nav-frontend-modal';
 import cls from 'classnames';
 import { Formik, FormikProps } from 'formik';
-import ModalHeader from '../modal/modal-header';
 import { useModalStore } from '../../../store/modal-store';
+import { Modal } from '@navikt/ds-react';
 
 interface FormikModalProps<Values> {
     initialValues: Values;
     handleSubmit: (values: Values) => void;
     validationSchema?: (values: Values) => void;
     className?: string;
-    contentLabel: string;
+    contentLabel?: string;
     render: (formikProps: FormikProps<Values>) => React.ReactNode;
     tilbakeTekst?: string;
     visConfirmDialog?: boolean;
@@ -47,17 +46,18 @@ function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalP
             onSubmit={values => props.handleSubmit(values)}
         >
             {formikProps => (
-                <NavFrontendModal
-                    className={cls('modal', props.className)}
-                    contentLabel={props.contentLabel}
-                    isOpen={props.isOpen || isOpen}
-                    onRequestClose={() => tilbake(formikProps)}
-                    closeButton={true}
-                    portalClassName="visittkortfs-modal"
+                <Modal
+                    className={cls('visittkortfs-modal', props.className)}
+                    open={props.isOpen || isOpen}
+                    onClose={() => tilbake(formikProps)}
+                    closeOnBackdropClick={true}
+                    header={{
+                        heading: props.tittel ?? '',
+                        closeButton: true
+                    }}
                 >
-                    <ModalHeader tittel={props.tittel} />
-                    {props.render(formikProps)}
-                </NavFrontendModal>
+                    <Modal.Body>{props.render(formikProps)}</Modal.Body>
+                </Modal>
             )}
         </Formik>
     );

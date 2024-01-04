@@ -13,13 +13,7 @@ export function FeilTildelingModal() {
     };
 
     return (
-        <VarselModal
-            isOpen={true}
-            contentLabel="Tildeling av veileder feilet"
-            closeButton={false}
-            type="FEIL"
-            onRequestClose={lukkModal}
-        >
+        <VarselModal isOpen={true} type="FEIL" onRequestClose={lukkModal}>
             <Heading size="medium" as="h2">
                 Handlingen kan ikke utføres
             </Heading>

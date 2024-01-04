@@ -38,7 +38,9 @@ export function AvsluttOppfolgingInfoText(props: {
 
     return (
         <>
-            <BodyShort size="small">{aktivMindreEnn28Dager}</BodyShort>
+            <BodyShort size="small" className="blokk-s">
+                {aktivMindreEnn28Dager}
+            </BodyShort>
             <HiddenIfAlertStripeAdvarselSolid hidden={!props.harUbehandledeDialoger && !harTiltak && !props.harYtelser}>
                 Du kan avslutte oppfølgingsperioden selv om:
                 <ul className="margin--0">

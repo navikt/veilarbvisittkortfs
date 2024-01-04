@@ -27,7 +27,7 @@ function AvsluttOppfolgingBekreft(props: AvsluttOppfolgingBekreftelseModalProps)
     }
 
     return (
-        <VarselModal contentLabel="Bruker kan ikke varsles" onRequestClose={hideModal} isOpen={true} type="ADVARSEL">
+        <VarselModal onRequestClose={hideModal} isOpen={true} type="ADVARSEL">
             <BodyShort size="small">Er du sikker på at du vil avslutte oppfølgingsperioden til {brukerNavn}?</BodyShort>
             <div className="modal-footer">
                 <Button

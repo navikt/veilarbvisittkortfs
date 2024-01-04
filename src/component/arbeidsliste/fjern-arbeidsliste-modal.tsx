@@ -8,7 +8,7 @@ import { selectSammensattNavn } from '../../util/selectors';
 import { ifResponseHasData } from '../../util/utils';
 import { logMetrikk } from '../../util/logger';
 import { trackAmplitude } from '../../amplitude/amplitude';
-import { BodyShort, Heading, Button } from '@navikt/ds-react';
+import { BodyShort, Heading, Button, Modal } from '@navikt/ds-react';
 
 function FjernArbeidslisteModal() {
     const { brukerFnr } = useAppStore();
@@ -29,7 +29,7 @@ function FjernArbeidslisteModal() {
     }
 
     return (
-        <VarselModal contentLabel="Fjern fra arbeidslisten" isOpen={true} onRequestClose={hideModal} type="ADVARSEL">
+        <VarselModal isOpen={true} onRequestClose={hideModal} type="ADVARSEL">
             <div className="modal-info-tekst blokk-s">
                 <Heading size="large" as="h1" className="modal-info-tekst__overskrift blokk-s">
                     Fjern fra arbeidsliste
@@ -40,20 +40,14 @@ function FjernArbeidslisteModal() {
                     weight="semibold"
                 >{`${brukerSammensattNavn}, ${brukerFnr}`}</BodyShort>
             </div>
-            <div className="knapper">
-                <Button
-                    variant="primary"
-                    size="small"
-                    type="submit"
-                    className="btn--mr1"
-                    onClick={handleSlettArbeidsListe}
-                >
+            <Modal.Footer>
+                <Button variant="primary" size="small" type="submit" onClick={handleSlettArbeidsListe}>
                     Bekreft
                 </Button>
                 <Button variant="secondary" size="small" type="button" onClick={hideModal}>
                     Avbryt
                 </Button>
-            </div>
+            </Modal.Footer>
         </VarselModal>
     );
 }

@@ -29,12 +29,7 @@ function StartDigitalOppfolging() {
 
     if (oppfolging?.reservasjonKRR) {
         return (
-            <VarselModal
-                type="ADVARSEL"
-                contentLabel="Brukeren er reservert i KRR"
-                isOpen={true}
-                onRequestClose={hideModal}
-            >
+            <VarselModal type="ADVARSEL" isOpen={true} onRequestClose={hideModal}>
                 <BodyShort size="small">
                     Brukeren er reservert i Kontakt- og reservasjonsregisteret og må selv fjerne reservasjonen for å få
                     digital oppfølging.
@@ -44,7 +39,7 @@ function StartDigitalOppfolging() {
     }
 
     const infoTekst = (
-        <Alert variant="warning">
+        <Alert variant="warning" className="blokk-s">
             Når du endrer til digital oppfølging, kan du ha dialog med brukeren i aktivitetsplanen.
         </Alert>
     );

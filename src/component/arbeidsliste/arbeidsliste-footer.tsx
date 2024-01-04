@@ -12,7 +12,7 @@ interface ArbeidslisteFooterProps {
 function ArbeidslisteFooter(props: ArbeidslisteFooterProps) {
     return (
         <div className="modal-footer">
-            <Button variant="primary" size="small" type="submit" className="btn--mr1">
+            <Button variant="primary" size="small" type="submit" className="bekreft-btn">
                 Lagre
             </Button>
             <Button variant="secondary" size="small" type="button" onClick={props.onRequestClose}>

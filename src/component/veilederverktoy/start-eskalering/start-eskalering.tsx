@@ -78,13 +78,7 @@ function StartEskalering() {
             : 'Du kan ikke sende varsel fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4 (for eksempel BankID).';
 
         return (
-            <VarselModal
-                className=""
-                contentLabel="Bruker kan ikke varsles"
-                onRequestClose={hideModal}
-                isOpen={true}
-                type="ADVARSEL"
-            >
+            <VarselModal onRequestClose={hideModal} isOpen={true} type="ADVARSEL">
                 {varselTekst}
             </VarselModal>
         );
