@@ -27,6 +27,7 @@ function RadioFilterForm<T>(props: RadioFilterFormProps<T>) {
                             key={`${value}-${radioName}`}
                             checked={value === props.selected}
                             onChange={e => props.changeSelected(e)}
+                            size="small"
                         >
                             {createLabel(o)}
                         </Radio>
