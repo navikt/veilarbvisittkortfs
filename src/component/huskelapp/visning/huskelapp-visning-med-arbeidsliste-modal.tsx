@@ -31,6 +31,7 @@ function HuskelappMedArbeidslisteVisningModal() {
             }}
             open={true}
             onClose={() => hideModal()}
+            width={'800px'}
         >
             <Modal.Body>
                 <div className={'huskelappmodal-med-arbeidsliste-innhold'}>
