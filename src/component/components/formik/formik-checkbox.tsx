@@ -13,7 +13,13 @@ function FormikCheckBox({ name, label }: FormikCheckboxProps) {
         <Field name={name}>
             {({ field, form }: FieldProps) => {
                 return (
-                    <Checkbox onChange={form.handleChange} onBlur={form.handleBlur} name={name} value={field.value}>
+                    <Checkbox
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
+                        name={name}
+                        value={field.value}
+                        size="small"
+                    >
                         {label}
                     </Checkbox>
                 );

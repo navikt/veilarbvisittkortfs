@@ -146,7 +146,7 @@ function Maltekstvelger() {
 
     const context = useFormikContext();
     return (
-        <Select label="Velg en mal" className="malvelger" onChange={onChange}>
+        <Select label="Velg en mal" className="malvelger" size="small" onChange={onChange}>
             <option value="">Velg en mal</option>
             <option value="dagpenger">Dagpenger: Stans og tidsbegrenset bortfall.</option>
             <option value="dagpenger_vesentlig_avvik_fra_oppleringsplanen">
