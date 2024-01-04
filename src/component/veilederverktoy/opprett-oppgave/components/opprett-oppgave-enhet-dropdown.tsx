@@ -6,7 +6,7 @@ import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import Dropdown from '../../../components/dropdown/dropdown';
 import { BehandlandeEnhet, hentBehandlendeEnheter, OppgaveTema } from '../../../../api/veilarboppgave';
 import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
-import { Loader } from '@navikt/ds-react';
+import { Skeleton } from '@navikt/ds-react';
 
 interface OpprettOppgaveVelgEnhetProps {
     tema: OrNothing<OppgaveTema>;
@@ -41,9 +41,12 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
         <div className="skjemaelement navds-form-field navds-form-field--medium navds-date__field">
             <label className="skjemaelement__label navds-form-field__label navds-label navds-label--small">Enhet</label>
             {isLoading ? (
-                <div className="velgenhet-spinner">
-                    <Loader size="large" className="skjemaelement" />
-                </div>
+                <Skeleton
+                    variant="rectangle"
+                    style={{ borderRadius: 'var(--a-border-radius-medium)', lineHeight: '1.333' }}
+                    height="2rem"
+                    width="12rem"
+                />
             ) : (
                 <Dropdown
                     name="Velg enhet dropdown"
