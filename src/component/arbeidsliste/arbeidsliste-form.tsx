@@ -20,23 +20,19 @@ interface ArbeidslisteFormProps {
     fnr: string;
 }
 
-function ArbeidslisteForm(props: ArbeidslisteFormProps) {
+function ArbeidslisteForm({ sistEndretAv, endringstidspunkt, navn, fnr }: ArbeidslisteFormProps) {
     return (
         <div className="arbeidsliste__bruker">
             <div className="blokk-s">
-                <Heading size="small" as="h2">{`${props.navn}, ${props.fnr}`}</Heading>
+                <Heading size="small" as="h2">{`${navn}, ${fnr}`}</Heading>
                 <FormikInput name="overskrift" label="Tittel" validate={validerArbeidslisteTittelFelt} />
                 <FormikTekstArea
                     name="kommentar"
                     label="Kommentar"
                     maxLength={500}
                     validate={validerArbeidslisteKommentarFelt}
+                    size="small"
                 />
-                {props.sistEndretAv && props.endringstidspunkt && (
-                    <Detail className="arbeidsliste--modal-redigering">
-                        {`Oppdatert ${toSimpleDateStr(props.endringstidspunkt)} av ${props.sistEndretAv.veilederId}`}
-                    </Detail>
-                )}
             </div>
             <div className="dato-kategori-wrapper">
                 <FormikDatoVelger
@@ -44,8 +40,14 @@ function ArbeidslisteForm(props: ArbeidslisteFormProps) {
                     validate={validerArbeidslisteDatoFelt}
                     label="Frist"
                     ariaLabel="Frist før arbeidslisten"
+                    size="small"
                 />
                 <ArbeidslistekategoriVisning name="kategori" />
+                {sistEndretAv && endringstidspunkt && (
+                    <Detail className="arbeidsliste--modal-redigering">
+                        {`Sist oppdatert ${toSimpleDateStr(endringstidspunkt)} av ${sistEndretAv.veilederId}`}
+                    </Detail>
+                )}
             </div>
         </div>
     );

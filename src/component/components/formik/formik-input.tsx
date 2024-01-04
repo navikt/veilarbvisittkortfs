@@ -27,6 +27,7 @@ function FormikInput({
                         name={name}
                         error={feil && feil.feilmelding}
                         value={field.value}
+                        size="small"
                         {...inputProps}
                     />
                 );
