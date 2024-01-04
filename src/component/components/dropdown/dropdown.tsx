@@ -66,37 +66,35 @@ function Dropdown(props: DropdownProps) {
 
     const { name, className, knappeTekst } = props;
     return (
-        <div className="dropdown">
-            <div className={btnCls(apen, className)} ref={loggNode}>
-                <Button
-                    variant="tertiary-neutral"
-                    icon={<TannHjulIkon className="knapp-fss__icon" />}
-                    ref={btnRef}
-                    className={classNames('dropdown__btn', props.btnClassnames)}
-                    onClick={toggleDropdown}
-                    aria-expanded={apen}
-                    aria-controls={`${name}-dropdown__innhold`}
-                    aria-labelledby={props.ariaLabelledBy}
-                    type="button"
+        <div className={btnCls(apen, className)} ref={loggNode}>
+            <Button
+                variant="tertiary-neutral"
+                icon={<TannHjulIkon className="knapp-fss__icon" />}
+                ref={btnRef}
+                className={classNames('dropdown__btn', props.btnClassnames)}
+                onClick={toggleDropdown}
+                aria-expanded={apen}
+                aria-controls={`${name}-dropdown__innhold`}
+                aria-labelledby={props.ariaLabelledBy}
+                type="button"
+            >
+                {knappeTekst}
+            </Button>
+            {apen && (
+                <ul
+                    className={'dropdown__innhold'}
+                    id={`${name}-dropdown__innhold`}
+                    onKeyDown={e => {
+                        if (harTrykktPaEsc(e)) {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            lukkDropdown();
+                        }
+                    }}
                 >
-                    {knappeTekst}
-                </Button>
-                {apen && (
-                    <ul
-                        className={'dropdown__innhold'}
-                        id={`${name}-dropdown__innhold`}
-                        onKeyDown={e => {
-                            if (harTrykktPaEsc(e)) {
-                                e.stopPropagation();
-                                e.preventDefault();
-                                lukkDropdown();
-                            }
-                        }}
-                    >
-                        {props.render(lukkDropdown)}
-                    </ul>
-                )}
-            </div>
+                    {props.render(lukkDropdown)}
+                </ul>
+            )}
         </div>
     );
 }
