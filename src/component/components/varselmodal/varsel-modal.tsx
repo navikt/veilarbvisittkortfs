@@ -3,7 +3,6 @@ import './varsel-modal.less';
 import { ReactComponent as AdvarselSirkelIkon } from './advarsel-sirkel.svg';
 import { ReactComponent as FeilSirkelIkon } from './feil-sirkel.svg';
 import { ReactComponent as SuccessSirkelIkon } from './ok-sirkel.svg';
-import classNames from 'classnames';
 import { Modal } from '@navikt/ds-react';
 
 type VarselModalType = 'ADVARSEL' | 'FEIL' | 'SUCCESS';
