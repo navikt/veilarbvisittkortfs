@@ -124,7 +124,6 @@ function Historikk() {
     ]);
 
     if (
-        true ||
         isAnyLoading(innstillingsHistorikkFetcher, oppgaveHistorikkFetcher, eskaleringsvarselHistorikkFetcher) ||
         veilederDataListeLoading
     ) {
