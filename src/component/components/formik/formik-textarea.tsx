@@ -1,7 +1,8 @@
 import React from 'react';
-import { Textarea, TextareaProps } from 'nav-frontend-skjema';
+import { Textarea, TextareaProps } from '@navikt/ds-react';
 import { Field, FieldProps } from 'formik';
 import { getErrors } from './formik-utils';
+import './formik.less';
 
 interface TekstAreaProps {
     name: string;
@@ -11,19 +12,27 @@ interface TekstAreaProps {
 
 type OmitProps = 'onChange' | 'value' | 'feil' | 'onBlur' | 'label';
 
-function FormikTekstArea({ name, validate, label, ...textAreaProps }: TekstAreaProps & Omit<TextareaProps, OmitProps>) {
+function FormikTekstArea({
+    name,
+    validate,
+    label,
+    size = 'medium',
+    ...textAreaProps
+}: TekstAreaProps & Omit<TextareaProps, OmitProps>) {
     return (
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
                 const feil = getErrors(form.errors, form.touched, name);
                 return (
                     <Textarea
+                        className="formik-textarea"
                         id={name}
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
                         value={field.value}
-                        feil={feil && feil.feilmelding}
+                        error={feil && feil.feilmelding}
                         label={label}
+                        size={size}
                         {...textAreaProps}
                     />
                 );

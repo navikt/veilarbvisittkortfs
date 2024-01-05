@@ -2,11 +2,6 @@
 
 .visittkortfs-modal {
     .opprett-oppgave {
-        .skjemaelement {
-            margin-bottom: 1rem;
-            margin-right: auto;
-        }
-
         &__undertittel {
             margin-bottom: 1rem;
         }
@@ -17,15 +12,20 @@
     margin-right: 9rem;
 }
 
+.oppgave-type-og-prioritet-container,
 .oppgave-dato-container,
 .oppgave-enhet-container {
+    margin-top: 1rem;
     display: flex;
-    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    row-gap: 1rem;
 }
 
 .velg-enhet-dropdown {
-    width: 11rem;
-    height: 2.385rem;
+    width: 12rem;
+    height: 2rem;
+    line-height: 0; // for å motvirke layout-shift frå Skeleton når komponent er ferdig lasta
 
     .sokfilter {
         padding: 0.5rem;

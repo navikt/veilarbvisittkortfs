@@ -1,5 +1,5 @@
 import React from 'react';
-import { Radio } from 'nav-frontend-skjema';
+import { Radio, RadioGroup } from '@navikt/ds-react';
 import './radio-filterform.less';
 
 export interface RadioFilterFormProps<T> {
@@ -16,22 +16,24 @@ function RadioFilterForm<T>(props: RadioFilterFormProps<T>) {
     const { data, createLabel, createValue, radioName } = props;
     return (
         <div className="radio-filterform">
-            <div className="radio-filterform__valg scrollbar">
+            <RadioGroup legend="tildel_veileder" hideLegend={true} className="radio-filterform__valg scrollbar">
                 {data.map(o => {
                     const value = createValue(o);
                     return (
                         <Radio
                             name={radioName}
-                            label={createLabel(o)}
                             value={value}
                             id={`${value}-${radioName}`}
                             key={`${value}-${radioName}`}
                             checked={value === props.selected}
                             onChange={e => props.changeSelected(e)}
-                        />
+                            size="small"
+                        >
+                            {createLabel(o)}
+                        </Radio>
                     );
                 })}
-            </div>
+            </RadioGroup>
         </div>
     );
 }

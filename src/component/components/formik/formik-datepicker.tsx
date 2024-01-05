@@ -1,19 +1,19 @@
 import React from 'react';
 import { Field, FieldProps, getIn } from 'formik';
-import { Datepicker } from 'nav-datovelger';
-import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
+import { ErrorMessage, DatePicker, useDatepicker } from '@navikt/ds-react';
 import classNames from 'classnames';
-import './datovelger.less';
 
 interface FormikDatepickerProps {
     name: string;
     validate: (value: string) => string | undefined;
     label: string;
     ariaLabel: string;
+    size?: 'medium' | 'small';
     className?: string;
 }
 
-function FormikDatoVelger({ name, validate, label, ariaLabel, className }: FormikDatepickerProps) {
+function FormikDatoVelger({ name, validate, label, ariaLabel, size = 'medium', className }: FormikDatepickerProps) {
+    const { inputProps, datepickerProps } = useDatepicker!({});
     return (
         <Field validate={validate} name={name} id={name}>
             {({ field, form: { errors, setFieldValue } }: FieldProps) => {
@@ -23,21 +23,26 @@ function FormikDatoVelger({ name, validate, label, ariaLabel, className }: Formi
                 });
                 return (
                     <div className={datePickerClassName}>
-                        <span className="skjemaelement__label">{label}</span>
-                        <Datepicker
-                            inputProps={
-                                {
-                                    id: name,
-                                    name,
-                                    placeholder: 'dd.mm.åååå',
-                                    'aria-label': ariaLabel
-                                } as any
-                            }
-                            inputId="fristDatovelger"
-                            onChange={(date: string) => setFieldValue(field.name, date)}
-                            value={field.value}
-                        />
-                        {error && <SkjemaelementFeilmelding>{error}</SkjemaelementFeilmelding>}
+                        <DatePicker
+                            {...datepickerProps}
+                            defaultValue={field.value}
+                            onSelect={(date?: any) => setFieldValue(field.name, date)}
+                        >
+                            <DatePicker.Input
+                                size={size}
+                                label={label}
+                                {...{
+                                    ...inputProps,
+                                    ...({
+                                        id: name,
+                                        name,
+                                        placeholder: 'dd.mm.åååå',
+                                        'aria-label': ariaLabel
+                                    } as any)
+                                }}
+                            />
+                        </DatePicker>
+                        {error && <ErrorMessage size="small">{error}</ErrorMessage>}
                     </div>
                 );
             }}

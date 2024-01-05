@@ -30,20 +30,26 @@
 .arbeidsliste__bruker {
     border-bottom: 1px solid @navGra40;
     margin-bottom: 1rem;
+    padding-bottom: 0.25rem;
 
     .blokk-s .skjemaelement {
         margin: 1rem 0;
     }
+
+    .arbeidsliste--modal-redigering {
+        margin-left: auto;
+        align-self: end;
+    }
 }
 
 .dato-kategori-wrapper {
-    display: grid;
-    grid-template-columns: 60% 40%;
+    margin-top: 1rem;
     margin-bottom: 0.5rem;
 
-    .datovelger {
-        margin: 0 0 auto 0;
-    }
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 3rem;
+    row-gap: 0.5rem;
 }
 
 .visittkortfs {
@@ -94,14 +100,14 @@
     }
 }
 
-.arbeidslistekategori {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto auto;
+.arbeidslistekategori .skjemaelement__label {
+    display: block;
+}
 
-    .skjemaelement__label {
-        grid-row: 1;
-    }
+.arbeidslistekategori__kategorialternativer {
+    margin-top: 0.2rem;
+    display: flex;
+    gap: 0.5rem;
 }
 
 .arbeidslistekategori__container {
@@ -113,7 +119,7 @@
     label {
         position: relative;
         cursor: pointer;
-        padding: 1rem 0.5rem 0.2rem;
+        padding: 0.6rem 0.5rem 0;
         border: 1px solid transparent;
     }
 
@@ -127,7 +133,7 @@
     }
 
     svg {
-        height: 25px;
+        height: 20px;
         width: auto;
     }
 
