@@ -8,7 +8,7 @@ import { selectSammensattNavn } from '../../util/selectors';
 import { ifResponseHasData } from '../../util/utils';
 import { logMetrikk } from '../../util/logger';
 import { trackAmplitude } from '../../amplitude/amplitude';
-import { BodyShort, Heading, Button, Modal } from '@navikt/ds-react';
+import { BodyShort, Heading, Button } from '@navikt/ds-react';
 
 function FjernArbeidslisteModal() {
     const { brukerFnr } = useAppStore();
