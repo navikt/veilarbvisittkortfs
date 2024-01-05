@@ -1,5 +1,3 @@
-@import '~nav-frontend-core/less/_variabler';
-
 .visittkortfs-modal {
     .opprett-oppgave {
         &__undertittel {
@@ -51,17 +49,17 @@
 
     &__button:focus {
         outline: 0;
-        box-shadow: 0 0 0 3px @fokusFarge;
+        box-shadow: 0 0 0 3px var(--a-border-focus);
     }
 
     .dropdown {
         &__innhold {
             position: absolute;
             z-index: 110;
-            border: 1px solid @navGra40;
+            border: 1px solid var(--a-border-default);
             top: ~'calc(100% - 14px)';
-            background-color: @white;
-            border-radius: 0 0 @border-radius-small @border-radius-small;
+            background-color: var(--a-bg-default);
+            border-radius: 0 0 var(--a-border-radius-small) var(--a-border-radius-small);
             width: 250px;
             padding: 0 0.5rem;
             right: auto;
@@ -117,7 +115,7 @@
 
     &__button.navds-button:focus {
         outline: 0;
-        box-shadow: 0 0 0 3px @fokusFarge;
+        box-shadow: 0 0 0 3px var(--a-border-focus);
     }
 
     .dropdown {
