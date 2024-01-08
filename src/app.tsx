@@ -7,7 +7,6 @@ import Tilbakelenke from './component/components/tilbakelenke/tilbakelenke';
 import StoreProvider from './store/store-provider';
 import { DataFetcher } from './component/data-fetcher';
 import { VeilederverktoyModalController } from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-modal-controller';
-import { ToastController } from './component/components/toast-controller';
 import './index.less';
 
 NavFrontendModal.setAppElement(document.getElementById('modal-a11y-wrapper'));
@@ -40,7 +39,6 @@ function App(props: AppProps) {
                     </div>
                 </DataFetcher>
                 <VeilederverktoyModalController />
-                <ToastController />
             </div>
         </StoreProvider>
     );
