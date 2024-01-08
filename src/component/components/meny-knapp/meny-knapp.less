@@ -1,9 +1,7 @@
-@import '~nav-frontend-core/less/_variabler';
-
 .visittkortfs {
     .meny-knapp {
         border: none;
-        color: @navMorkGra;
+        color: var(--a-text-default);
         font-weight: normal;
         text-transform: none;
         padding: 0 0.5rem;
@@ -13,7 +11,7 @@
     }
 
     .meny-knapp:hover {
-        background-color: @navMorkGra;
-        color: white;
+        background-color: var(--a-surface-inverted);
+        color: var(--a-text-on-inverted);
     }
 }

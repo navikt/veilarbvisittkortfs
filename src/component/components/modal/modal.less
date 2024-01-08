@@ -1,5 +1,3 @@
-@import '~nav-frontend-core/less/_variabler';
-
 .visittkortfs-modal {
     //SCOPE
     .blokk-xs {
@@ -30,7 +28,7 @@
 
         .modal {
             position: relative;
-            border: 1px solid @navGra40;
+            border: 1px solid var(--a-gray-400);
             background-color: #f4f4f4;
             outline: none;
             max-width: 50rem;
@@ -40,7 +38,7 @@
 
             .modal-header {
                 height: 4rem;
-                border-bottom: 1px solid @navGra40;
+                border-bottom: 1px solid var(--a-gray-400);
                 padding: 1.13rem 0;
                 margin: 0 2rem 1rem;
             }
@@ -51,7 +49,7 @@
 
                 .alertstripe--advarsel {
                     background-color: #ffe9cc;
-                    color: @navMorkGra;
+                    color: var(--a-text-default);
                 }
             }
 
@@ -76,7 +74,7 @@
 
             .tilbakeknapp:focus {
                 outline: none;
-                box-shadow: 0 0 0 3px @fokusFarge;
+                box-shadow: 0 0 0 3px var(--a-border-focus);
             }
         }
     }
@@ -94,6 +92,6 @@
     }
 
     .gra-border {
-        border-bottom: 1px solid @navGra40;
+        border-bottom: 1px solid var(--a-gray-400);
     }
 }
