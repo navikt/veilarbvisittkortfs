@@ -1,7 +1,5 @@
-@import '~nav-frontend-core/less/_variabler';
-
 .visittkortfs__tilbakelenke {
-    color: @navMorkGra;
+    color: var(--a-text-default);
     display: flex;
     align-items: center;
     padding: 0.5rem 0;
@@ -10,11 +8,11 @@
 }
 
 .visittkortfs__tilbakelenke:hover {
-    color: @navBla;
+    color: var(--a-text-action);
 }
 
 .visittkortfs__tilbakelenke:focus {
-    box-shadow: 0 0 0 3px @fokusFarge;
-    color: @fokusFarge;
+    box-shadow: 0 0 0 3px var(--a-border-focus);
+    color: var(--a-text-action);
     border-radius: 4px;
 }

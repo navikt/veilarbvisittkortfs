@@ -1,13 +1,9 @@
-@import (reference) '~nav-frontend-core/less/_variabler';
-@import (reference) '~nav-frontend-core/less/core';
-@import '~nav-frontend-core/less/_variabler';
-
 .visittkortfs,
 .visittkortfs-modal {
     .chevronline-mixin() {
         pointer-events: none; // gjør at en kan klikke igjennom denne (pilen), slik at select åpner seg
         content: '';
-        background: @navMorkGra;
+        background: var(--a-gray-900);
         height: 2px;
         width: 10px;
         border-radius: 10px;
@@ -43,28 +39,28 @@
             }
 
             &:hover {
-                color: white;
+                color: var(--a-white);
 
                 &:before {
-                    background: white;
+                    background: var(--a-white);
                 }
 
                 &:after {
-                    background: white;
+                    background: var(--a-white);
                 }
             }
         }
 
         .background-color-white {
-            background-color: white;
+            background-color: var(--a-white);
         }
 
         &__innhold {
             position: absolute;
             z-index: 110;
-            border: 1px solid @navMorkGra;
+            border: 1px solid var(--a-gray-900);
             top: ~'calc(100% + 5px)';
-            background-color: @white;
+            background-color: var(--a-white);
             width: 15rem;
             border-radius: 4px;
             right: 0;
