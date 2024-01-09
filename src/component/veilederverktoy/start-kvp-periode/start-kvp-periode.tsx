@@ -25,7 +25,7 @@ function StarKvpPeriode() {
     }
 
     const infoTekst = (
-        <BodyShort size="small" className="blokk-xs">
+        <BodyShort size="small">
             Når du klikker «Bekreft» vil bare veiledere i din enhet ha tilgang på dialoger, aktiviteter og mål som blir
             opprettet i KVP-perioden. Du må skrive en kommentar før du bekrefter.
         </BodyShort>
