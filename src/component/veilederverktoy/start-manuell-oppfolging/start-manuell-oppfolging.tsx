@@ -33,7 +33,7 @@ function StartManuellOppfolging() {
             isLoading={false}
             tittel="Endre til manuell oppfølging"
             infoTekst={
-                <Alert variant="warning" className="blokk-xxs">
+                <Alert variant="warning">
                     Når du endrer til manuell oppfølging, har du ikke lenger mulighet til å ha dialog med brukeren i
                     aktivitetsplanen.
                 </Alert>

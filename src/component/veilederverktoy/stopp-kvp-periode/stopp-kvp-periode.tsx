@@ -15,7 +15,7 @@ function StoppKvpPeriode() {
     const { showStoppKvpPeriodeKvitteringModal, showSpinnerModal, showErrorModal } = useModalStore();
 
     const infoTekst = (
-        <BodyShort size="small" className="blokk-xs">
+        <BodyShort size="small">
             KVP-perioden til brukeren er avsluttet. Veiledere i andre enheter har nå tilgang til dialoger, aktiviteter
             og mål som er opprettet før og etter KVP-perioden.
         </BodyShort>

@@ -24,15 +24,13 @@ function Kvittering({ tittel, alertStripeTekst, footer, onRequestClose }: Kvitte
             }}
             type="SUCCESS"
         >
-            <div className="blokk-xs">
-                <Heading size="medium" as="h2" className="modal-info-tekst__undertekst blokk-xs">
+            <>
+                <Heading size="medium" as="h2" className="modal-info-tekst__undertekst">
                     {tittel}
                 </Heading>
-                <BodyShort className="blokk-xs" size="small">
-                    {alertStripeTekst}
-                </BodyShort>
+                <BodyShort size="small">{alertStripeTekst}</BodyShort>
                 {!!footer && <BodyShort size="medium">{footer}</BodyShort>}
-            </div>
+            </>
         </VarselModal>
     );
 }
