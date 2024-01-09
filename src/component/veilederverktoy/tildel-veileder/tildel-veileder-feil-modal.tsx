@@ -21,7 +21,7 @@ export function FeilTildelingModal() {
                 Tildeling av veileder feilet. Det kan skyldes manglende tilgang til brukeren, at veilederen allerede er
                 tildelt brukeren, eller at brukeren ikke er under oppfølging.
             </BodyShort>
-            <Button variant="primary" size="small" className="knapp knapp--hoved feil-modal-knapp" onClick={lukkModal}>
+            <Button variant="primary" size="small" onClick={lukkModal}>
                 Ok
             </Button>
         </VarselModal>

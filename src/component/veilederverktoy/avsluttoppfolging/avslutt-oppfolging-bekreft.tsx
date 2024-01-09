@@ -34,7 +34,6 @@ function AvsluttOppfolgingBekreft(props: AvsluttOppfolgingBekreftelseModalProps)
                     variant="primary"
                     size="small"
                     type="submit"
-                    style={{ marginRight: '1rem' }}
                     onClick={handleSubmitAvsluttOppfolging}
                     spinner={false}
                 >
