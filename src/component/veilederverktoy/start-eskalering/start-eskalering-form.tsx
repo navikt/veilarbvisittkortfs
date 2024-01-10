@@ -32,7 +32,7 @@ function StartEskaleringForm<T extends StartEskaleringValues>(props: StartEskale
             visConfirmDialog={true}
             tittel={props.tittel}
             render={({ values }) => (
-                <div className="modal-innhold">
+                <div>
                     {props.infoTekst}
                     <div>
                         <Form>

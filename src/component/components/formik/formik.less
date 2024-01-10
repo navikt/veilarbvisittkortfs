@@ -1,0 +1,20 @@
+.visittkortfs, .visittkortfs-modal {
+    .formik-input {
+        margin-top: 1rem;
+        width: 40%;
+    }
+
+    .formik-textarea {
+        margin-top: 1rem;
+        max-width: 66ch;
+
+        // Midlertidig fiks som motvirkar 'position: absolute;' frå vedtaksstøttefs. 2024-01-09
+        .navds-textarea__counter {
+            position: inherit;
+        }
+    }
+
+    .formik-select {
+        width: fit-content;
+    }
+}

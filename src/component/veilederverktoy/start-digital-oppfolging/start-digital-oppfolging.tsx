@@ -1,5 +1,6 @@
 import React from 'react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
+import { Alert, BodyShort } from '@navikt/ds-react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
@@ -7,7 +8,6 @@ import { useModalStore } from '../../../store/modal-store';
 import { fetchOppfolging, settBrukerTilDigital } from '../../../api/veilarboppfolging';
 import { ifResponseHasData } from '../../../util/utils';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
-import {Alert, BodyShort} from "@navikt/ds-react";
 
 function StartDigitalOppfolging() {
     const { brukerFnr } = useAppStore();
@@ -29,13 +29,8 @@ function StartDigitalOppfolging() {
 
     if (oppfolging?.reservasjonKRR) {
         return (
-            <VarselModal
-                type="ADVARSEL"
-                contentLabel="Brukeren er reservert i KRR"
-                isOpen={true}
-                onRequestClose={hideModal}
-            >
-                <BodyShort>
+            <VarselModal type="ADVARSEL" isOpen={true} onRequestClose={hideModal}>
+                <BodyShort size="small">
                     Brukeren er reservert i Kontakt- og reservasjonsregisteret og må selv fjerne reservasjonen for å få
                     digital oppfølging.
                 </BodyShort>

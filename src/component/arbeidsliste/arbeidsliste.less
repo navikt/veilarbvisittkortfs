@@ -1,78 +1,67 @@
-
-.visittkortfs-modal {
-
-    .fjern--knapp {
-        margin-left: auto;
-
-        svg {
-            margin-right: 0.3rem;
-            margin-bottom: -0.1rem;
-        }
+.arbeidsliste-modal {
+    .nav-datovelger__kalenderPortal {
+        top: -245px;
+        left: 176px;
     }
 
-    .arbeidsliste-modal {
-        position: relative;
-        background-color: #f4f4f4;
-        outline: none;
-        padding: 0;
-        width: 100%;
+    .modal-footer {
+        display: flex;
 
-        .typo-undertittel {
-            margin-bottom: 0.5rem;
+        .bekreft-btn {
+            margin-right: 1rem;
         }
-    }
 
-    .arbeidsliste-alert {
-        margin-bottom: 0.5rem;
+        .fjern--knapp {
+            margin-left: auto;
+        }
     }
 }
 
 .arbeidsliste__bruker {
-    border-bottom: 1px solid var(--a-gray-400);
+    border-bottom: 1px solid var(--a-border-default);
     margin-bottom: 1rem;
+    padding-bottom: 0.25rem;
 
-    .blokk-s {
+    .skjemaelement {
         margin: 1rem 0;
+    }
 
-        > *:not(:last-child) {
-            margin-bottom: 10px;
-        }
+    .arbeidsliste--modal-redigering {
+        margin-left: auto;
+        align-self: end;
     }
 }
 
 .dato-kategori-wrapper {
-    display: grid;
-    grid-template-columns: 60% 40%;
+    margin-top: 1rem;
     margin-bottom: 0.5rem;
-
-    .datovelger {
-        margin: 0 0 auto 0;
-    }
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 3rem;
+    row-gap: 0.5rem;
 }
 
 .visittkortfs {
     .arbeidsliste-knapp {
-        padding: 0;
-        margin-left: 0.5rem;
-        margin-right: 0.5rem;
+        justify-content: center;
+        margin-top: 2px;
         border: none;
         width: 2rem;
-        height: 2rem;
 
         &__icon {
             width: 1.2rem;
-            height: 1.2rem;
+            height: 1.3rem;
         }
 
         .arbeidsliste-knapp__icon:first-child {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            stroke: var(--a-gray-900);
+            fill: none;
         }
     }
 
     .arbeidsliste-knapp:hover {
-        background-color: var(--a-gray-300);
+        background-color: var(--a-gray-900);
         border: none;
 
         svg {
@@ -86,12 +75,12 @@
         border: none;
 
         .icon--filled:first-child {
-            stroke: var(--a-blue-500);
-            fill: var(--a-blue-500);
+            stroke: var(--a-border-selected);
+            fill: var(--a-border-selected);
         }
 
         svg:first-child {
-            stroke: var(--a-gray-500);
+            stroke: var(--a-gray-900);
             fill: none;
         }
     }
@@ -101,14 +90,14 @@
     }
 }
 
-.arbeidslistekategori {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto auto;
+.arbeidslistekategori .skjemaelement__label {
+    display: block;
+}
 
-    .skjemaelement__label {
-        grid-row: 1;
-    }
+.arbeidslistekategori__kategorialternativer {
+    margin-top: 0.2rem;
+    display: flex;
+    gap: 0.5rem;
 }
 
 .arbeidslistekategori__container {
@@ -120,7 +109,7 @@
     label {
         position: relative;
         cursor: pointer;
-        padding: 1rem 0.5rem 0.2rem;
+        padding: 0.6rem 0.5rem 0;
         border: 1px solid transparent;
     }
 
@@ -134,7 +123,7 @@
     }
 
     svg {
-        height: 25px;
+        height: 20px;
         width: auto;
     }
 
@@ -178,6 +167,6 @@
 
     input[type='radio']:focus + label::before {
         outline: none;
-        box-shadow: 0 0 0 3px var(--a-blue-300);
+        box-shadow: 0 0 0 3px var(--a-border-focus);
     }
 }

@@ -1,6 +1,6 @@
-import { Radio } from '@navikt/ds-react';
 import { Field, FieldProps } from 'formik';
 import React from 'react';
+import { RadioGroup, Radio } from '@navikt/ds-react';
 
 interface FormikRadioFilterProps<T> {
     name: string;
@@ -28,11 +28,17 @@ function FormikRadioGroup<T>({
                 }
                 return (
                     <div className="visittkortfs-radio-filterform">
-                        <div className="radio-filterform__valg scrollbar">
+                        <RadioGroup
+                            className="radio-filterform__valg scrollbar"
+                            size="small"
+                            legend="Velg enhet"
+                            hideLegend={true}
+                        >
                             {data.map(o => {
                                 const value = createValue(o);
                                 return (
                                     <Radio
+                                        size="small"
                                         name={radioName}
                                         value={value}
                                         id={`${value}-${radioName}`}
@@ -41,10 +47,12 @@ function FormikRadioGroup<T>({
                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                                             form.setFieldValue(field.name, e.target.value)
                                         }
-                                    >{ createLabel(o) }</Radio>
+                                    >
+                                        {createLabel(o)}
+                                    </Radio>
                                 );
                             })}
-                        </div>
+                        </RadioGroup>
                     </div>
                 );
             }}

@@ -7,7 +7,7 @@ import { InnstillingHistorikkInnslag } from '../../../api/veilarboppfolging';
 import { OppgaveHistorikkInnslag } from '../../../api/veilarboppgave';
 import { EskaleringsvarselHistorikkInnslag } from '../../../api/veilarbdialog';
 import EskaleringsvarselHistorikkKomponent from './components/eskaleringsvarselHistorikk';
-import {BodyShort} from "@navikt/ds-react";
+import { BodyShort } from '@navikt/ds-react';
 
 type Historikk = InnstillingHistorikk | OppgaveHistorikk | EskaleringsvarselHistorikk;
 
@@ -111,7 +111,7 @@ function HistorikkVisning({
     );
 
     if (historikk.length === 0) {
-        return <BodyShort> Ingen historikk </BodyShort>;
+        return <BodyShort size="small">Ingen historikk</BodyShort>;
     }
 
     if (historikk.length === 1) {

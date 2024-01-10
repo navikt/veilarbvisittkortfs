@@ -52,12 +52,14 @@ function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: 
     const sorterteVeiledere = veilederListe.sort((a, b) => a.etternavn.localeCompare(b.etternavn));
 
     return (
-        <div className="skjemaelement">
-            <label className="skjemaelement__label">Veileder</label>
+        <div className="skjemaelement navds-form-field navds-form-field--medium navds-date__field">
+            <label className="skjemaelement__label navds-form-field__label navds-label navds-label--small">
+                Veileder (valgfritt)
+            </label>
             <Dropdown
                 name="Velg veileder dropdown"
                 knappeTekst={(valgtVeileder && valgtVeileder.navn) || ''}
-                className="skjemaelement velg-enhet-dropdown"
+                className="velg-enhet-dropdown"
                 btnClassnames="velg-enhet-dropdown__button"
                 render={lukkDropdown => (
                     <SokFilter data={sorterteVeiledere} label="" placeholder="Søk etter veileder">

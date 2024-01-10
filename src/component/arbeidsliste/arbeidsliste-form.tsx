@@ -10,7 +10,8 @@ import {
 } from '../../util/formik-validation';
 import { toSimpleDateStr } from '../../util/date-utils';
 import { OrNothing } from '../../util/type/utility-types';
-import { Heading, Ingress } from '@navikt/ds-react';
+import { Detail, Heading } from '@navikt/ds-react';
+import './arbeidsliste.less';
 
 interface ArbeidslisteFormProps {
     sistEndretAv?: OrNothing<{ veilederId: string }>;
@@ -19,32 +20,34 @@ interface ArbeidslisteFormProps {
     fnr: string;
 }
 
-function ArbeidslisteForm(props: ArbeidslisteFormProps) {
+function ArbeidslisteForm({ sistEndretAv, endringstidspunkt, navn, fnr }: ArbeidslisteFormProps) {
     return (
         <div className="arbeidsliste__bruker">
-            <div className="blokk-s">
-                <Heading size="medium" level="3">{`${props.navn}, ${props.fnr}`}</Heading>
-                <FormikInput name="overskrift" label="Tittel" validate={validerArbeidslisteTittelFelt} bredde="L" />
+            <>
+                <Heading size="small" as="h2">{`${navn}, ${fnr}`}</Heading>
+                <FormikInput name="overskrift" label="Tittel" validate={validerArbeidslisteTittelFelt} />
                 <FormikTekstArea
                     name="kommentar"
                     label="Kommentar"
                     maxLength={500}
                     validate={validerArbeidslisteKommentarFelt}
+                    size="small"
                 />
-                {props.sistEndretAv && props.endringstidspunkt && (
-                    <Ingress className="arbeidsliste--modal-redigering">
-                        {`Oppdatert ${toSimpleDateStr(props.endringstidspunkt)} av ${props.sistEndretAv.veilederId}`}
-                    </Ingress>
-                )}
-            </div>
+            </>
             <div className="dato-kategori-wrapper">
                 <FormikDatoVelger
                     name="frist"
                     validate={validerArbeidslisteDatoFelt}
                     label="Frist"
                     ariaLabel="Frist før arbeidslisten"
+                    size="small"
                 />
                 <ArbeidslistekategoriVisning name="kategori" />
+                {sistEndretAv && endringstidspunkt && (
+                    <Detail className="arbeidsliste--modal-redigering">
+                        {`Sist oppdatert ${toSimpleDateStr(endringstidspunkt)} av ${sistEndretAv.veilederId}`}
+                    </Detail>
+                )}
             </div>
         </div>
     );

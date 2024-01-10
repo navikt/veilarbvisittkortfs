@@ -1,7 +1,6 @@
 import React from 'react';
 import './veilederverktoy.less';
 import Dropdown from '../components/dropdown/dropdown';
-import { CogIcon } from '@navikt/aksel-icons';
 import StartRegistreringProsess from './start-registrering/start-registrering-prosess';
 import StartProsess from './prosess/start-prosess';
 import { useAppStore } from '../../store/app-store';
@@ -21,8 +20,6 @@ import {
     selectKanStoppeKVP,
     selectKanTildeleVeileder
 } from '../../util/selectors';
-
-import { Dropdown as AkselDropdown } from '@navikt/ds-react';
 import { doAll } from '../../util/utils';
 import { trackAmplitude } from '../../amplitude/amplitude';
 
@@ -93,124 +90,119 @@ function Veilederverktoyslinje() {
             <Dropdown
                 metricName="dropdown-trykket"
                 ariaLabelledBy="veilederverkoy_span"
-                knappeTekst={
-                    <>
-                        <CogIcon title="verktøyikon" className="knapp-fss__icon"/>
-                        <span id="veilederverkoy_span">Veilederverktøy</span>
-                    </>
-                }
+                knappeTekst="Veilederverktøy"
                 name="tildel veileder"
                 btnClassnames="knapp knapp--standard knapp-fss"
                 render={lukkDropdown => (
-                    <AkselDropdown.Menu.List>
+                    <>
                         {kanEndreArbeidsliste && (
-                            <AkselDropdown.Menu.List.Item>
+                            <li>
                                 <StartProsess
                                     knappeTekst="Rediger arbeidsliste"
                                     onClick={() => doAll(arbeidslisteKlikk, lukkDropdown)}
                                 />
-                            </AkselDropdown.Menu.List.Item>
+                            </li>
                         )}
                         {kanLagreArbeidsliste && (
-                            <AkselDropdown.Menu.List.Item>
+                            <li>
                                 <StartProsess
                                     knappeTekst="Legg i arbeidsliste"
                                     onClick={() => doAll(arbeidslisteKlikk, lukkDropdown)}
                                 />
-                            </AkselDropdown.Menu.List.Item>
+                            </li>
                         )}
                         {kanTildeleVeileder && (
-                            <AkselDropdown.Menu.List.Item>
+                            <li>
                                 <StartProsess
                                     metricName="tildel_veileder"
                                     knappeTekst="Tildel veileder"
                                     onClick={() => doAll(showTildelVeilederModal, lukkDropdown)}
                                 />
-                            </AkselDropdown.Menu.List.Item>
+                            </li>
                         )}
                         {kanStarteEskalering && (
-                            <AkselDropdown.Menu.List.Item>
+                            <li>
                                 <StartProsess
                                     knappeTekst="Send varsel"
                                     onClick={() => doAll(showStartEskaleringModal, lukkDropdown)}
                                     metricName="send_eskalering"
                                 />
-                            </AkselDropdown.Menu.List.Item>
+                            </li>
                         )}
                         {kanStoppeEskalering && (
-                            <AkselDropdown.Menu.List.Item>
+                            <li>
                                 <StartProsess
                                     knappeTekst="Deaktiver varsel"
                                     onClick={() => doAll(showStoppEskaleringModal, lukkDropdown)}
                                     metricName="deaktiver_esklaring"
                                 />
-                            </AkselDropdown.Menu.List.Item>
+                            </li>
                         )}
                         {kanRegistrere && (
-                            <AkselDropdown.Menu.List.Item>
+                            <li>
                                 <StartRegistreringProsess />
-                            </AkselDropdown.Menu.List.Item>
+                            </li>
                         )}
                         {kanStarteManuellOppfolging && (
-                            <AkselDropdown.Menu.List.Item>
+                            <li>
                                 <StartProsess
                                     knappeTekst="Endre til manuell oppfølging"
                                     onClick={() => doAll(showStartManuellOppfolgingModal, lukkDropdown)}
                                     metricName="manuell"
                                 />
-                            </AkselDropdown.Menu.List.Item>
+                            </li>
                         )}
                         {kanStarteDigitalOppfolging && (
-                            <AkselDropdown.Menu.List.Item>
+                            <li>
                                 <StartProsess
                                     knappeTekst="Endre til digital oppfølging"
                                     onClick={() => doAll(showStartDigitalOppfolgingModal, lukkDropdown)}
                                     metricName="digital"
                                 />
-                            </AkselDropdown.Menu.List.Item>
+                            </li>
                         )}
                         {kanStarteKVP && (
-                            <AkselDropdown.Menu.List.Item>
+                            <li>
                                 <StartProsess
                                     knappeTekst="Start KVP-periode"
                                     onClick={() => doAll(showStartKvpPeriodeModal, lukkDropdown)}
                                     metricName="start_kvp"
                                 />
-                            </AkselDropdown.Menu.List.Item>
+                            </li>
                         )}
                         {kanStoppeKVP && (
-                            <AkselDropdown.Menu.List.Item>
+                            <li>
                                 <StartProsess
                                     knappeTekst="Avslutt KVP-periode"
                                     onClick={() => doAll(showStoppKvpPeriodeModal, lukkDropdown)}
                                     metricName="stopp_kvp"
                                 />
-                            </AkselDropdown.Menu.List.Item>
+                            </li>
                         )}
-                        <AkselDropdown.Menu.List.Item>
+                        <li>
                             <StartProsess
                                 knappeTekst="Opprett Gosys-oppgave"
                                 onClick={() => doAll(showOpprettOppgaveModal, lukkDropdown)}
                                 metricName="gosys"
                             />
-                        </AkselDropdown.Menu.List.Item>
+                        </li>
                         {kanAvslutteOppfolging && (
-                            <AkselDropdown.Menu.List.Item>
+                            <li>
                                 <StartProsess
                                     knappeTekst="Avslutt oppfølging"
                                     onClick={() => doAll(showAvsluttOppfolgingModal, lukkDropdown)}
                                     metricName="avslutt_oppfolging"
                                 />
-                            </AkselDropdown.Menu.List.Item>
+                            </li>
                         )}
-                        <AkselDropdown.Menu.List.Item>
+                        <li>
                             <StartProsess
                                 knappeTekst="Vis historikk"
                                 onClick={() => doAll(showHistorikkModal, lukkDropdown)}
                                 metricName="historikk"
                             />
-                        </AkselDropdown.Menu.List.Item>
-                    </AkselDropdown.Menu.List>
+                        </li>
+                    </>
                 )}
             />
         </div>

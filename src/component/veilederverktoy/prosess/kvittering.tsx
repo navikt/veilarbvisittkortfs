@@ -1,7 +1,7 @@
 import React from 'react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { useModalStore } from '../../../store/modal-store';
-import {Ingress, BodyShort} from "@navikt/ds-react";
+import { BodyShort, Heading } from '@navikt/ds-react';
 
 interface KvitteringProps {
     tittel: string;
@@ -16,7 +16,6 @@ function Kvittering({ tittel, alertStripeTekst, footer, onRequestClose }: Kvitte
     return (
         <VarselModal
             isOpen={true}
-            contentLabel="Operasjon fullført"
             onRequestClose={() => {
                 hideModal();
                 if (onRequestClose) {
@@ -25,11 +24,13 @@ function Kvittering({ tittel, alertStripeTekst, footer, onRequestClose }: Kvitte
             }}
             type="SUCCESS"
         >
-            <div className="blokk-xs">
-                <Ingress className="modal-info-tekst__undertekst blokk-xs">{tittel}</Ingress>
-                <BodyShort className="blokk-xs">{alertStripeTekst}</BodyShort>
-                {!!footer && <div className="kvittering-footer">{footer}</div>}
-            </div>
+            <>
+                <Heading size="medium" as="h2" className="modal-info-tekst__undertekst">
+                    {tittel}
+                </Heading>
+                <BodyShort size="small">{alertStripeTekst}</BodyShort>
+                {!!footer && <BodyShort size="medium">{footer}</BodyShort>}
+            </>
         </VarselModal>
     );
 }

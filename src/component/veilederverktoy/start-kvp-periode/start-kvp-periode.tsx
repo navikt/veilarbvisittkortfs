@@ -5,7 +5,7 @@ import { useAppStore } from '../../../store/app-store';
 import { fetchOppfolging, startKvpOppfolging } from '../../../api/veilarboppfolging';
 import { ifResponseHasData } from '../../../util/utils';
 import { useDataStore } from '../../../store/data-store';
-import {BodyShort} from "@navikt/ds-react";
+import { BodyShort } from '@navikt/ds-react';
 
 function StarKvpPeriode() {
     const { brukerFnr } = useAppStore();
@@ -25,7 +25,7 @@ function StarKvpPeriode() {
     }
 
     const infoTekst = (
-        <BodyShort className="blokk-xs">
+        <BodyShort size="small">
             Når du klikker «Bekreft» vil bare veiledere i din enhet ha tilgang på dialoger, aktiviteter og mål som blir
             opprettet i KVP-perioden. Du må skrive en kommentar før du bekrefter.
         </BodyShort>

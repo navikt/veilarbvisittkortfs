@@ -1,7 +1,8 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
+import { Select, SelectProps } from '@navikt/ds-react';
 import { getErrors } from './formik-utils';
-import {Select, SelectProps} from "@navikt/ds-react";
+import './formik.less';
 
 interface FormikInputProps {
     name: string;
@@ -17,6 +18,7 @@ function FormikSelect({ name, validate, label, options, ...selectProps }: Formik
                 const feil = getErrors(form.errors, form.touched, name);
                 return (
                     <Select
+                        className="formik-select"
                         id={name}
                         label={label}
                         onChange={form.handleChange}
@@ -25,6 +27,7 @@ function FormikSelect({ name, validate, label, options, ...selectProps }: Formik
                         error={feil}
                         {...selectProps}
                         value={field.value}
+                        size="small"
                     >
                         {options.map(option => (
                             <option key={option.value} value={option.value}>

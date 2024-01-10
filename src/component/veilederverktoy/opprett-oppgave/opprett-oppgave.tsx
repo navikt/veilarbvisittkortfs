@@ -11,7 +11,7 @@ import './opprett-oppgave.less';
 import { todayReversedDateStr } from '../../../util/date-utils';
 import { OppgaveFormData, OppgaveTema, OppgaveType, opprettOppgave, PrioritetType } from '../../../api/veilarboppgave';
 import { OrNothing, StringOrNothing } from '../../../util/type/utility-types';
-import {Heading} from "@navikt/ds-react";
+import { Heading } from '@navikt/ds-react';
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
@@ -45,6 +45,7 @@ function OpprettOppgave() {
         veilederId: null,
         avsenderenhetId: enhetId
     };
+
     function lagreOppgave(formdata: OppgaveFormData) {
         showSpinnerModal();
 
@@ -54,6 +55,7 @@ function OpprettOppgave() {
             })
             .catch(showErrorModal);
     }
+
     if (!enhetId) {
         return null;
     }
@@ -66,8 +68,12 @@ function OpprettOppgave() {
             tittel="Opprett en Gosys-oppgave"
             className="opprett-oppgave"
             render={formikProps => (
-                <div className="modal-innhold">
-                    <Heading size="medium" level="2" className="opprett-oppgave__undertittel">{`Oppfølging av ${navn}`}</Heading>
+                <div>
+                    <Heading
+                        size="small"
+                        as="h2"
+                        className="opprett-oppgave__undertittel"
+                    >{`Oppfølging av ${navn}`}</Heading>
                     <Form>
                         <OpprettOppgaveTemaSelector />
                         <OppgaveInnerForm

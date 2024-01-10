@@ -1,42 +1,17 @@
 .veilarbvisittkortfs-varsel-modal {
-    .modal__overlay {
-        z-index: 2002;
+    overflow: visible;
+    text-align: center;
 
-        .ReactModal__Content {
-            overflow: visible;
-            width: 576px;
-            padding: 0 1rem;
-            text-align: center;
-            font-family: Source Sans Pro, Arial, sans-serif;
+    #varsel-ikon {
+        margin-top: -3rem; //placerar en ikon med størrelsen 64x64 i mitten
+        margin-left: 3rem;
+    }
 
-            #varsel-ikon {
-                margin-top: -2rem; //placerar en ikon med størrelsen 64x64 i mitten
-            }
-
-            .modal__innhold {
-                padding: 2rem 3rem;
-
-                .knapper {
-                    margin: auto 0;
-                    .knapp--hoved {
-                        margin-right: 1rem;
-                    }
-                }
-
-                .avslutt-oppfolging__ul {
-                    margin: 0;
-                    padding: 0;
-                    list-style-type: none;
-
-                    li {
-                        margin-top: 1rem;
-                    }
-                }
-            }
-
-            .modal__innhold > * {
-                margin-bottom: 0.5rem;
-            }
+    .modal-footer {
+        margin-top: 1rem;
+        .navds-button--primary {
+            margin-right: 1rem;
         }
     }
+
 }

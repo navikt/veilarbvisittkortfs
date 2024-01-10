@@ -60,6 +60,13 @@ export function opprettOppgave(fnr: string, oppgaveFormData: OppgaveFormData): A
     return axiosInstance.post(`/veilarboppgave/api/oppgave`, oppgaveFormData);
 }
 
-export function hentBehandlendeEnheter(tema: OppgaveTema, fnr: string): AxiosPromise<BehandlandeEnhet[]> {
-    return axiosInstance.post<BehandlandeEnhet[]>(`/veilarboppgave/api/v2/hent-enheter?tema=${tema}`, { fnr: fnr });
+export function hentBehandlendeEnheter(
+    tema: OppgaveTema,
+    fnr: string,
+    behandlingsnummer: string
+): AxiosPromise<BehandlandeEnhet[]> {
+    return axiosInstance.post<BehandlandeEnhet[]>(`/veilarboppgave/api/v2/hent-enheter?tema=${tema}`, {
+        fnr: fnr,
+        behandlingsnummer: behandlingsnummer
+    });
 }

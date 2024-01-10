@@ -37,8 +37,10 @@ function OppgaveInnerForm({
 
     return (
         <>
-            <OpprettOppgaveTypeSelector oppgaveTema={tema} />
-            <OpprettOppgavePrioritetSelector />
+            <div className="oppgave-type-og-prioritet-container">
+                <OpprettOppgaveTypeSelector oppgaveTema={tema} />
+                <OpprettOppgavePrioritetSelector />
+            </div>
             <OpprettOppgaveVelgDatoer />
             <div className="oppgave-enhet-container">
                 <OpprettOppgaveVelgEnhet value={enhetId} tema={tema} fnr={fnr} formikProps={formikProps} />
@@ -51,10 +53,10 @@ function OppgaveInnerForm({
             </div>
             <OpprettOppgaveBeskrivelseTekstArea />
             <HiddenIfDiv className="modal-footer" hidden={!tema}>
-                <Button variant="primary" className="btn--mr1" type="submit" spinner={false}>
+                <Button variant="primary" size="small" className="bekreft-btn" type="submit" spinner={false}>
                     Bekreft
                 </Button>
-                <Button variant="secondary" type="button" className="knapp" onClick={tilbake}>
+                <Button variant="secondary" size="small" onClick={tilbake}>
                     Avbryt
                 </Button>
             </HiddenIfDiv>

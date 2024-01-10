@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './sok-filter.less';
+import { TextField } from '@navikt/ds-react';
 import { useFocus } from '../../../util/hook/use-focus';
-import {TextField} from "@navikt/ds-react";
 
 interface SokFilterProps<T> {
     data: T[];
@@ -33,6 +33,7 @@ function SokFilter<T>(props: SokFilterProps<T>) {
                     label={props.label}
                     placeholder={props.placeholder}
                     value={query}
+                    size="small"
                     className="sokfilter__input"
                     onChange={e => changeQuery(e.target.value)}
                 />

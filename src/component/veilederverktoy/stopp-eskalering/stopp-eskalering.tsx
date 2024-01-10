@@ -10,7 +10,7 @@ import { useDataStore } from '../../../store/data-store';
 import { eskaleringVarselSendtEvent } from '../../../util/utils';
 import { stopEskalering } from '../../../api/veilarbdialog';
 import './stopp-eskalering.less';
-import {BodyShort, CheckboxGroup} from "@navikt/ds-react";
+import { BodyShort } from '@navikt/ds-react';
 
 interface FormValues {
     begrunnelse: string;
@@ -59,23 +59,21 @@ function StoppEskalering() {
             visConfirmDialog={false}
             render={formikProps => {
                 return (
-                    <div className="modal-innhold">
+                    <div>
                         <Form>
-                            <CheckboxGroup legend={"Fjern markering av varsel"} hideLegend>
-                                <FormikCheckBox name="skalSendeHendelse" label={'Send bruker en henvendelse'} />
-                                {formikProps.values.skalSendeHendelse && (
-                                    <>
-                                        <BodyShort className="stopp-eskalering__tekst">
-                                            Legg inn eller rediger tekst som du sender til brukeren.
-                                        </BodyShort>
-                                        <BegrunnelseTextArea
-                                            tekstariaLabel="Se eksempel på tekst til brukeren under:"
-                                            maxLength={500}
-                                        />
-                                    </>
-                                )}
-                                {/* TODO: isLoading: OppfolgingSelector.selectOppfolgingStatus(state)*/}
-                            </CheckboxGroup>
+                            <FormikCheckBox name="skalSendeHendelse" label={'Send bruker en henvendelse'} />
+                            {formikProps.values.skalSendeHendelse && (
+                                <>
+                                    <BodyShort size="small" className="stopp-eskalering__tekst">
+                                        Legg inn eller rediger tekst som du sender til brukeren.
+                                    </BodyShort>
+                                    <BegrunnelseTextArea
+                                        tekstariaLabel="Se eksempel på tekst til brukeren under:"
+                                        maxLength={500}
+                                    />
+                                </>
+                            )}
+                            {/* TODO: isLoading: OppfolgingSelector.selectOppfolgingStatus(state)*/}
                             <BegrunnelseFooter spinner={false} />
                         </Form>
                     </div>

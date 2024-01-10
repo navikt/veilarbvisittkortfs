@@ -8,12 +8,28 @@ import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { ifResponseHasData, isEmpty } from '../../../util/utils';
 import visibleIf from '../../components/visible-if';
 import { OrNothing } from '../../../util/type/utility-types';
-import {Tag, TagProps} from "@navikt/ds-react";
+import { Tag, TagProps } from '@navikt/ds-react';
 
-const Advarsel = visibleIf(({ children}: Omit<TagProps, 'variant'>) => <Tag variant="error" size="small" className="etikett">{ children }</Tag>);
-const Info = visibleIf(({ children }: Omit<TagProps, 'variant'>) => <Tag variant="info" size="small" className="etikett">{ children }</Tag>);
-const Fokus = visibleIf(({ children }: Omit<TagProps, 'variant'>) => <Tag variant="warning" size="small" className="etikett">{ children }</Tag>);
-const BaseDod = visibleIf(({ children }: TagProps) => <Tag   variant="neutral" size="small" className="etikett etikett--mork">{ children }</Tag>);
+const Advarsel = visibleIf(({ children }: Omit<TagProps, 'variant'>) => (
+    <Tag variant="error" size="small" className="etikett">
+        {children}
+    </Tag>
+));
+const Info = visibleIf(({ children }: Omit<TagProps, 'variant'>) => (
+    <Tag variant="info" size="small" className="etikett">
+        {children}
+    </Tag>
+));
+const Fokus = visibleIf(({ children }: Omit<TagProps, 'variant'>) => (
+    <Tag variant="warning" size="small" className="etikett">
+        {children}
+    </Tag>
+));
+const BaseDod = visibleIf(({ children }: Omit<TagProps, 'variant'>) => (
+    <Tag variant="neutral" size="small" className="etikett etikett--mork">
+        {children}
+    </Tag>
+));
 
 function erBrukerSykmeldt(oppfolging: OrNothing<OppfolgingStatus>): boolean {
     return !!oppfolging && oppfolging.formidlingsgruppe === 'IARBS' && oppfolging.servicegruppe === 'VURDI';
@@ -64,9 +80,7 @@ function Etiketter() {
 
     return (
         <div className="etikett-container">
-            <BaseDod visible={personalia?.dodsdato}>
-                Død
-            </BaseDod>
+            <BaseDod visible={personalia?.dodsdato}>Død</BaseDod>
             <Advarsel visible={personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>
             <Advarsel visible={personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
             <Advarsel visible={personalia?.egenAnsatt}>Skjermet</Advarsel>

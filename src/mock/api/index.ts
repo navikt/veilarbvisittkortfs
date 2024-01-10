@@ -1,15 +1,15 @@
-import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
+import { veilarbaktivitetHandlers } from './veilarbaktivitet';
+import { RequestHandler } from 'msw';
+import { veilarbpersonHandlers } from './veilarbperson';
 import { veilarbdialogHandlers } from './veilarbdialog';
 import { veilarboppfolgingHandlers } from './veilarboppfolging';
+import { veilarbveilederHandlers } from './veilarbveileder';
 import { veilarboppgaveHandlers } from './veilarboppgave';
-import { veilarbpersonHandlers } from './veilarbperson';
 import { veilarbpersonflatefsHandlers } from './veilarbpersonflatefs';
 import { veilarbportefoljeHandlers } from './veilarbportefolje';
 import { veilarbvedtaksstotteHandlers } from './veilarbvedtaksstotte';
-import { veilarbveilederHandlers } from './veilarbveileder';
-import { veilarbaktivitetHandlers } from './veilarbaktivitet';
 
-export const allHandlers: RequestHandlersList = [
+export const allHandlers: RequestHandler[] = [
     ...veilarbaktivitetHandlers,
     ...veilarbdialogHandlers,
     ...veilarboppfolgingHandlers,

@@ -18,7 +18,7 @@ function OpprettOppgaveTemaSelector() {
         { value: 'TILLEGGSTONAD', label: 'Tilleggsstønad' }
     ];
 
-    return <FormikSelect label="Legg inn hvilket tema oppgaven gjelder *" name="tema" options={temaOptions} />;
+    return <FormikSelect label="Legg inn hvilket tema oppgaven gjelder" name="tema" options={temaOptions} />;
 }
 
 export default OpprettOppgaveTemaSelector;

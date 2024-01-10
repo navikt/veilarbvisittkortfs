@@ -1,6 +1,7 @@
 import React, { MouseEvent } from 'react';
+
 import { useModalStore } from '../../../store/modal-store';
-import {Link} from "@navikt/ds-react";
+import { Link } from '@navikt/ds-react';
 
 interface Props {
     dialogId?: number;

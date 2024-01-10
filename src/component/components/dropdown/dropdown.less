@@ -1,10 +1,9 @@
-
 .visittkortfs,
 .visittkortfs-modal {
     .chevronline-mixin() {
         pointer-events: none; // gjør at en kan klikke igjennom denne (pilen), slik at select åpner seg
         content: '';
-        background: var(--a-gray-700);
+        background: var(--a-gray-900);
         height: 2px;
         width: 10px;
         border-radius: 10px;
@@ -17,11 +16,10 @@
         position: relative;
 
         &__btn {
-            background-color: var(--a-white);
             padding: 0.5rem 2rem 0.5rem 0.2rem;
             height: 2.5rem;
-            cursor: pointer;
             line-height: 1rem;
+            font-weight: normal;
 
             #veilederverkoy_span {
                 display: none;
@@ -30,24 +28,42 @@
             &:before {
                 .chevronline-mixin();
                 transform: translateX(3px) rotate(-45deg);
-                transition: transform 0.2s;
+                transition: transform 0.3s;
+                margin-top: 0.3rem;
             }
 
             &:after {
                 .chevronline-mixin();
                 transform: translateX(-3px) rotate(45deg);
-                transition: transform 0.2s;
+                transition: transform 0.3s;
+                margin-top: 0.3rem;
+            }
+
+            &:hover {
+                color: var(--a-white);
+
+                &:before {
+                    background: var(--a-white);
+                }
+
+                &:after {
+                    background: var(--a-white);
+                }
+            }
+
+            .navds-label {
+                font-weight: normal;
             }
         }
 
         .background-color-white {
-            background-color: white;
+            background-color: var(--a-white);
         }
 
         &__innhold {
             position: absolute;
             z-index: 110;
-            border: 1px solid var(--a-gray-500);
+            border: 1px solid var(--a-gray-900);
             top: ~'calc(100% + 5px)';
             background-color: var(--a-white);
             width: 15rem;
@@ -80,12 +96,4 @@
             }
         }
     }
-}
-
-.akseltoggle-override {
-    border: 0;
-    margin: 0;
-    max-height: 50px;
-    padding: 0.5rem 0 0.5rem 0.2rem;
-    background-color: transparent;
 }

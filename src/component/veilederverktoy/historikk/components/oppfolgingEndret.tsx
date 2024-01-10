@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { opprettetAvTekst } from './opprettet-av';
+import { Alert, BodyShort, Detail, Loader } from '@navikt/ds-react';
 import { hasAnyFailed, isAnyLoading } from '../../../../api/utils';
 import { toSimpleDateStr } from '../../../../util/date-utils';
 import { InnstillingHistorikkInnslag } from '../../../../api/veilarboppfolging';
 import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
 import { fetchEnhetNavn } from '../../../../api/veilarbveileder';
-import {Alert, BodyLong, BodyShort, Heading, Loader} from "@navikt/ds-react";
 
 export function OppfolgingEnhetEndret(props: {
     historikkElement: InnstillingHistorikkInnslag;
@@ -24,7 +24,7 @@ export function OppfolgingEnhetEndret(props: {
     }, [enhet]);
 
     if (isAnyLoading(enhetNavnFetcher)) {
-        return <Loader type="XL" />;
+        return <Loader size="2xlarge" />;
     } else if (hasAnyFailed(enhetNavnFetcher)) {
         return <Alert variant="error">Noe gikk galt</Alert>;
     } else if (!enhetNavn) {
@@ -36,12 +36,12 @@ export function OppfolgingEnhetEndret(props: {
         : `Ny oppfølgingsenhet ${enhet} ${enhetNavn}`;
 
     return (
-        <div className="historikk__elem blokk-xs" key={dato}>
-            <Heading level="2" size="medium">{props.erGjeldendeEnhet ? 'Gjeldende oppfølgingsenhet' : 'Oppfølgingsenhet endret'}</Heading>
-            <BodyShort>{begrunnelseTekst}</BodyShort>
-            <BodyLong>
-                {`${toSimpleDateStr(dato)} ${opprettetAvTekst(opprettetAv, opprettetAvBrukerId || '')}`}
-            </BodyLong>
+        <div className="historikk__elem" key={dato}>
+            <BodyShort size="small" weight="semibold">
+                {props.erGjeldendeEnhet ? 'Gjeldende oppfølgingsenhet' : 'Oppfølgingsenhet endret'}
+            </BodyShort>
+            <BodyShort size="small">{begrunnelseTekst}</BodyShort>
+            <Detail>{`${toSimpleDateStr(dato)} ${opprettetAvTekst(opprettetAv, opprettetAvBrukerId || '')}`}</Detail>
         </div>
     );
 }

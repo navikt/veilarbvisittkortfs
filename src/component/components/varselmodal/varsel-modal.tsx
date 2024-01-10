@@ -3,44 +3,36 @@ import './varsel-modal.less';
 import { ReactComponent as AdvarselSirkelIkon } from './advarsel-sirkel.svg';
 import { ReactComponent as FeilSirkelIkon } from './feil-sirkel.svg';
 import { ReactComponent as SuccessSirkelIkon } from './ok-sirkel.svg';
-import classNames from 'classnames';
-import Modal from '../modal/modal';
+import { Modal } from '@navikt/ds-react';
 
 type VarselModalType = 'ADVARSEL' | 'FEIL' | 'SUCCESS';
 
 interface VarselModalProps {
-    contentLabel: string;
     isOpen: boolean;
     onRequestClose: () => void;
-    closeTimeoutMS?: number;
-    closeButton?: boolean;
-    shouldCloseOnOverlayClick?: boolean;
     className?: string;
     type: VarselModalType;
 }
 
 export function VarselModal({
-    contentLabel,
     isOpen,
     onRequestClose,
     children,
-    closeTimeoutMS,
-    closeButton,
-    shouldCloseOnOverlayClick,
     className,
     type
 }: React.PropsWithChildren<VarselModalProps>) {
     return (
         <Modal
-            isOpen={isOpen}
-            contentLabel={contentLabel}
-            onRequestClose={onRequestClose}
-            // closeButton={closeButton}
+            open={isOpen}
+            onClose={onRequestClose}
             className="veilarbvisittkortfs-varsel-modal"
-            // shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
+            closeOnBackdropClick={true}
+            width="576px"
         >
-            {getIkon(type)}
-            <div className={classNames('modal__innhold', className)}>{children}</div>
+            <Modal.Header>{getIkon(type)}</Modal.Header>
+            <Modal.Body>
+                <div className={className}>{children}</div>
+            </Modal.Body>
         </Modal>
     );
 }

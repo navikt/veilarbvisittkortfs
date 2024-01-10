@@ -1,9 +1,8 @@
 import React from 'react';
-import { useAppStore } from '../../../../store/app-store';
 import { toSimpleDateStr } from '../../../../util/date-utils';
 import { EskaleringsvarselHistorikkInnslag } from '../../../../api/veilarbdialog';
 import LenkeTilDialog from '../../../components/dialoglenke/dialoglenke';
-import {BodyLong, Heading} from "@navikt/ds-react";
+import { BodyShort, Detail } from '@navikt/ds-react';
 
 interface EskaleringsvarselHistorikkKomponentProps {
     innslag: EskaleringsvarselHistorikkInnslag;
@@ -24,17 +23,17 @@ function EskaleringsvarselHistorikkKomponent({ innslag }: EskaleringsvarselHisto
             : `${begrunnelse} `;
 
     return (
-        <div className="historikk__elem blokk-xs">
-            <Heading level="2" size="medium">{overskrift}</Heading>
-            <BodyLong>
+        <div className="historikk__elem">
+            <BodyShort size="small" weight="semibold">
+                {overskrift}
+            </BodyShort>
+            <BodyShort size="small">
                 {begrunnelseTekst}
-                <LenkeTilDialog dialogId={innslag.tilhorendeDialogId}>
-                    Les mer i dialog
-                </LenkeTilDialog>
-            </BodyLong>
-            <BodyLong>{`${toSimpleDateStr(dato)} av ${utfortAv}${
+                <LenkeTilDialog dialogId={innslag.tilhorendeDialogId}>Les mer i dialog</LenkeTilDialog>
+            </BodyShort>
+            <Detail>{`${toSimpleDateStr(dato)} av ${utfortAv}${
                 utfortAvBrukerNavn ? ` (${utfortAvBrukerNavn})` : ''
-            }`}</BodyLong>
+            }`}</Detail>
         </div>
     );
 }

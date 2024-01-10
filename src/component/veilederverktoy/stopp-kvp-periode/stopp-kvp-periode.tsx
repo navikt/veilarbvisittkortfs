@@ -5,7 +5,7 @@ import { useModalStore } from '../../../store/modal-store';
 import { fetchOppfolging, stoppKvpOppfolging } from '../../../api/veilarboppfolging';
 import { ifResponseHasData } from '../../../util/utils';
 import { useDataStore } from '../../../store/data-store';
-import {BodyShort} from "@navikt/ds-react";
+import { BodyShort } from '@navikt/ds-react';
 
 const initialValues = { begrunnelse: '' };
 
@@ -15,7 +15,7 @@ function StoppKvpPeriode() {
     const { showStoppKvpPeriodeKvitteringModal, showSpinnerModal, showErrorModal } = useModalStore();
 
     const infoTekst = (
-        <BodyShort className="blokk-xs">
+        <BodyShort size="small">
             KVP-perioden til brukeren er avsluttet. Veiledere i andre enheter har nå tilgang til dialoger, aktiviteter
             og mål som er opprettet før og etter KVP-perioden.
         </BodyShort>

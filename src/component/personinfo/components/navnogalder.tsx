@@ -1,7 +1,7 @@
 import React from 'react';
 import { Personalia } from '../../../api/veilarbperson';
 import { OrNothing } from '../../../util/type/utility-types';
-import {Heading} from "@navikt/ds-react";
+import { Heading } from '@navikt/ds-react';
 
 export function kalkulerAlder(fodselsdato: Date): number {
     const diff = Date.now() - fodselsdato.getTime();
@@ -18,7 +18,7 @@ export function lagAlderTekst(personalia: OrNothing<Personalia>): string {
 
 function NavnOgAlder(props: { personalia: OrNothing<Personalia>; navn: string }) {
     const alderTekst = lagAlderTekst(props.personalia);
-    return <Heading level="3" size="xsmall">{`${props.navn} ${alderTekst}`}</Heading>;
+    return <Heading size="small" as="h2">{`${props.navn} ${alderTekst}`}</Heading>;
 }
 
 export default NavnOgAlder;

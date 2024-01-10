@@ -1,6 +1,5 @@
 import React from 'react';
 import { ReactComponentElement } from 'react';
-import '../arbeidsliste.less';
 
 interface ArbeidslistekategoriProps {
     value: string;

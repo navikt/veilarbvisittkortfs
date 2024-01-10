@@ -90,10 +90,16 @@ function TildelVeileder() {
                     )}
                 </SokFilter>
                 <div className="modal-footer">
-                    <Button variant="primary" className="btn--mr1" type="submit" disabled={!selectedVeilederId}>
+                    <Button
+                        variant="primary"
+                        size="small"
+                        className="bekreft-btn"
+                        type="submit"
+                        disabled={!selectedVeilederId}
+                    >
                         Velg
                     </Button>
-                    <Button variant="secondary" type="button" onClick={hideModal}>
+                    <Button variant="secondary" size="small" type="button" onClick={hideModal}>
                         Lukk
                     </Button>
                 </div>

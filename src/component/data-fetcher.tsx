@@ -9,8 +9,8 @@ import { ifResponseHasData } from '../util/utils';
 import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
 import './data-fetcher.less';
 import { isAnyLoadingOrNotStarted } from '../api/utils';
+import { Loader } from '@navikt/ds-react';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
-import {Loader} from "@navikt/ds-react";
 import { useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 
 export function DataFetcher(props: { children: any }) {
@@ -41,6 +41,7 @@ export function DataFetcher(props: { children: any }) {
     const spraakTolkFetcher = useAxiosFetcher(fetchSpraakTolk);
     const gjeldendeEskaleringsvarselFetcher = useAxiosFetcher(hentGjeldendeEskaleringsvarsel);
 
+    const behandlingsnummer = 'B643';
     const oppfolgingsEnhet = oppfolgingstatusFetcher.data?.oppfolgingsenhet.enhetId || '';
 
     useEffect(() => {
@@ -51,9 +52,9 @@ export function DataFetcher(props: { children: any }) {
             .fetch(brukerFnr)
             .then(ifResponseHasData(setGjeldendeEskaleringsvarsel))
             .catch();
-        vergeOgFullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setVergeOgFullmakt)).catch();
-        spraakTolkFetcher.fetch(brukerFnr).then(ifResponseHasData(setSpraakTolk)).catch();
-        personaliaFetcher.fetch(brukerFnr).then(ifResponseHasData(setPersonalia)).catch();
+        vergeOgFullmaktFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setVergeOgFullmakt)).catch();
+        spraakTolkFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setSpraakTolk)).catch();
+        personaliaFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setPersonalia)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr]);
 
@@ -91,7 +92,7 @@ export function DataFetcher(props: { children: any }) {
             // trenger ikke vente på vergeOgFullmaktFetcher eller spraakTolkFetcher
         )
     ) {
-        return <Loader className="visittkort-laster" type="L" />;
+        return <Loader className="visittkort-laster" size="xlarge" />;
     }
 
     return <>{props.children}</>;

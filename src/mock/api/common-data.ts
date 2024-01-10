@@ -14,4 +14,22 @@ function lagVeileder(): VeilederData {
     };
 }
 
-export const mockEnhetVeiledere: VeilederListe = { veilederListe: new Array(40).fill(0).map(() => lagVeileder()) };
+const veilederMedVeldigKortNavn: VeilederData = {
+    ident: 'Å123456',
+    navn: 'Jo Å',
+    fornavn: 'Jo',
+    etternavn: 'Å'
+};
+
+const veilederMedVeldigLangtNavn: VeilederData = {
+    ident: 'H123456',
+    navn: 'Albus Parsifal Ulfrik Brian Humlesnurr',
+    fornavn: 'Albus Parsifal Ulfrik Brian',
+    etternavn: 'Humlesnurr'
+};
+
+const mangeLikeVeiledere = new Array(40).fill(0).map(() => lagVeileder());
+
+export const mockEnhetVeiledere: VeilederListe = {
+    veilederListe: [veilederMedVeldigKortNavn, veilederMedVeldigLangtNavn, ...mangeLikeVeiledere]
+};
