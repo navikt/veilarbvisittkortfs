@@ -14,25 +14,11 @@ export default defineConfig(({ mode }) => {
         build: {
             manifest: 'asset-manifest.json',
             outDir: 'build',
-            sourcemap: true,
+            sourcemap: true
         },
-        plugins: [
-            react(),
-            svgr(),
-            // createHtmlPlugin({
-            //     minify: true,
-            //     inject: {
-            //         data: {
-            //             VITE_DEKORATOREN_URL: env.VITE_DEKORATOREN_URL,
-            //         },
-            //     },
-            // }),
-            // visualizer({
-            //     filename: 'bundle-stats.html',
-            // }),
-        ],
+        plugins: [react(), svgr()],
         server: {
-            port: 3000,
+            port: 3000
         }
     };
 });

@@ -1,5 +1,4 @@
 import { HiddenIfFlatKnapp } from '../components/hidden-if/hidden-if-knapp';
-import { ReactComponent as SlettIcon } from '../components/ikoner/slett.svg';
 import React from 'react';
 import { Button } from '@navikt/ds-react';
 
@@ -24,7 +23,6 @@ function ArbeidslisteFooter(props: ArbeidslisteFooterProps) {
                 onClick={props.slettArbeidsliste}
                 className="fjern--knapp"
             >
-                <SlettIcon />
                 <span>Fjern</span>
             </HiddenIfFlatKnapp>
         </div>
