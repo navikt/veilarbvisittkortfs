@@ -53,7 +53,7 @@ function OppgaveInnerForm({
             </div>
             <OpprettOppgaveBeskrivelseTekstArea />
             <HiddenIfDiv className="modal-footer" hidden={!tema}>
-                <Button variant="primary" size="small" className="bekreft-btn" type="submit" spinner={false}>
+                <Button variant="primary" size="small" className="bekreft-btn" type="submit">
                     Bekreft
                 </Button>
                 <Button variant="secondary" size="small" onClick={tilbake}>

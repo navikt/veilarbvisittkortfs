@@ -55,7 +55,6 @@ function StoppEskalering() {
             className="stopp-eskalering"
             initialValues={initialFormValues}
             handleSubmit={startStoppingAvEskalering}
-            contentLabel="Stopp begrunnelse"
             visConfirmDialog={false}
             render={formikProps => {
                 return (
