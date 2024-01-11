@@ -24,7 +24,7 @@ function FormikSelect({ name, validate, label, options, ...selectProps }: Formik
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
                         name={name}
-                        error={feil}
+                        error={feil && feil.feilmelding}
                         {...selectProps}
                         value={field.value}
                         size="small"

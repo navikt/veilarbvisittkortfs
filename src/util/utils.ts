@@ -12,9 +12,11 @@ export function visEmdashHvisNull(verdi: StringOrNothing) {
 export const APP_NAME = 'veilarbvisittkortfs';
 
 export function isDevelopment(): boolean {
+    //@ts-ignore
     return import.meta.env.MODE === 'development';
 }
 export function erProd(): boolean {
+    //@ts-ignore
     return import.meta.env.MODE === 'production';
 }
 
