@@ -26,7 +26,7 @@ const arbeidslisteEmptyValues = {
     kommentar: '',
     frist: '',
     kategori: KategoriModell.BLA
-} as ArbeidslisteformValues;
+};
 
 function ArbeidslisteModal() {
     const { brukerFnr } = useAppStore();
@@ -49,7 +49,7 @@ function ArbeidslisteModal() {
         kommentar: liste.kommentar ?? '',
         frist: liste.frist ? toReversedDateStr(liste.frist) : '',
         kategori: liste.kategori
-    } as ArbeidslisteformValues;
+    };
 
     const initalValues = liste.endringstidspunkt ? arbeidslisteValues : arbeidslisteEmptyValues;
 

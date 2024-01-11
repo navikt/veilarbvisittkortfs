@@ -21,7 +21,7 @@ export interface AppProps {
 function App(props: AppProps) {
     const enhet = props.enhet || '0000';
     return (
-        <Provider rootElement={document.getElementById('modal-a11y-wrapper')}>
+        <Provider>
             <StoreProvider
                 brukerFnr={props.fnr}
                 enhetId={enhet}

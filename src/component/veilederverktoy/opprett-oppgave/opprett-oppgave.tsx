@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from 'formik';
+import {Form} from 'formik';
 import OpprettOppgaveTemaSelector from './components/opprett-oppgave-tema-selector';
 import OppgaveInnerForm from './components/oppgave-inner-form';
 import FormikModal from '../../components/formik/formik-modal';
@@ -60,13 +60,13 @@ function OpprettOppgave() {
         return null;
     }
     return (
-        <FormikModal
+        <FormikModal<OpprettOppgaveFormValues>
             initialValues={opprettOppgaveInitialValues}
             handleSubmit={lagreOppgave}
             tittel="Opprett en Gosys-oppgave"
             className="opprett-oppgave"
             render={formikProps => (
-                <div>
+                <>
                     <Heading
                         size="small"
                         as="h2"
@@ -84,7 +84,7 @@ function OpprettOppgave() {
                             tilbake={hideModal}
                         />
                     </Form>
-                </div>
+                </>
             )}
         />
     );

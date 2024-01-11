@@ -58,7 +58,6 @@ function StoppEskalering() {
             visConfirmDialog={false}
             render={formikProps => {
                 return (
-                    <div>
                         <Form>
                             <FormikCheckBox name="skalSendeHendelse" label={'Send bruker en henvendelse'} />
                             {formikProps.values.skalSendeHendelse && (
@@ -75,7 +74,6 @@ function StoppEskalering() {
                             {/* TODO: isLoading: OppfolgingSelector.selectOppfolgingStatus(state)*/}
                             <BegrunnelseFooter spinner={false} />
                         </Form>
-                    </div>
                 );
             }}
         />
