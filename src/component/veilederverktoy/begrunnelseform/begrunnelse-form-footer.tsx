@@ -16,8 +16,7 @@ function BegrunnelseFooter(props: BegrunnelseFooterProps) {
                 variant="primary"
                 size="small"
                 type="submit"
-                spinner={props.spinner}
-                autoDisableVedSpinner={true}
+                loading={props.spinner}
                 className="bekreft-btn"
                 disabled={props.disabled}
             >

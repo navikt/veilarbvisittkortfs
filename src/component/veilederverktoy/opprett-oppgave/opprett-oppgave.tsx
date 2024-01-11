@@ -63,8 +63,6 @@ function OpprettOppgave() {
         <FormikModal
             initialValues={opprettOppgaveInitialValues}
             handleSubmit={lagreOppgave}
-            contentLabel="Opprett gosys oppgave"
-            tilbakeTekst="Tilbake"
             tittel="Opprett en Gosys-oppgave"
             className="opprett-oppgave"
             render={formikProps => (

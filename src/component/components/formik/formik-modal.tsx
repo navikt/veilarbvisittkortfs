@@ -9,9 +9,7 @@ interface FormikModalProps<Values> {
     handleSubmit: (values: Values) => void;
     validationSchema?: (values: Values) => void;
     className?: string;
-    contentLabel?: string;
     render: (formikProps: FormikProps<Values>) => React.ReactNode;
-    tilbakeTekst?: string;
     visConfirmDialog?: boolean;
     isOpen?: boolean;
     tittel?: string;
