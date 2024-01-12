@@ -32,11 +32,16 @@ const DatoVelger = ({ formikProps, ariaLabel, size, label, name }: DatoVelgerPro
         inputFormat: 'dd.MM.yyyy',
         onDateChange: (date?: any) => {
             setFieldValue(field.name, toReversedDateStr(date));
-        }
+        },
+
     } as UseDatepickerOptions);
 
     return (
-        <DatePicker {...datepickerProps}>
+        <DatePicker {...datepickerProps} onOpenToggle={() => {
+            // eslint-disable-next-line no-console
+            console.log("trigget at dayPicker skal åpnes")
+        }
+        }>
             <DatePicker.Input
                 size={size}
                 label={label}
