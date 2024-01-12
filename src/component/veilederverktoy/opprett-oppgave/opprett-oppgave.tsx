@@ -66,7 +66,7 @@ function OpprettOppgave() {
             tittel="Opprett en Gosys-oppgave"
             className="opprett-oppgave"
             render={formikProps => (
-                <>
+                <div>
                     <Heading
                         size="small"
                         as="h2"
@@ -84,7 +84,7 @@ function OpprettOppgave() {
                             tilbake={hideModal}
                         />
                     </Form>
-                </>
+                </div>
             )}
         />
     );
