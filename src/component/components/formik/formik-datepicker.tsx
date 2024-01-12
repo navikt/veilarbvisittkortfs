@@ -37,11 +37,7 @@ const DatoVelger = ({ formikProps, ariaLabel, size, label, name }: DatoVelgerPro
     } as UseDatepickerOptions);
 
     return (
-        <DatePicker {...datepickerProps} onOpenToggle={() => {
-            // eslint-disable-next-line no-console
-            console.log("trigget at dayPicker skal åpnes")
-        }
-        }>
+        <DatePicker {...datepickerProps} strategy="fixed">
             <DatePicker.Input
                 size={size}
                 label={label}
