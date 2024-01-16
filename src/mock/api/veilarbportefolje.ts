@@ -30,16 +30,18 @@ const mockTomArbeidsliste: Arbeidsliste = {
 const mockHuskelapp: Huskelapp = {
     huskelappId: 'e4c54511-7668-4b89-9436-9acfd85071ff',
     kommentar: 'Husk å ringe legen asap og noter det i møtereferat',
+    //frist: null,
     frist: new Date(2024, 4, 24),
     endretAv: 'Z12347',
     endretDato: new Date()
 };
 
+var harMigrertArbeidsliste = Math.random() < 0.5;
+
 export const veilarbportefoljeHandlers: RequestHandler[] = [
     http.post('/veilarbportefolje/api/v2/hent-arbeidsliste', async () => {
         await delay(defaultNetworkResponseDelay);
-        var showEmptyArbeidsliste = Math.random() < 0.5;
-        return HttpResponse.json(showEmptyArbeidsliste ? mockTomArbeidsliste : mockArbeidsliste);
+        return HttpResponse.json(harMigrertArbeidsliste ? mockTomArbeidsliste : mockArbeidsliste);
     }),
     http.post('/veilarbportefolje/api/v2/arbeidsliste', async ({ request }) => {
         const requestBody = (await request.json()) as ArbeidslisteformValues;
@@ -77,8 +79,7 @@ export const veilarbportefoljeHandlers: RequestHandler[] = [
     }),
     http.post('/veilarbportefolje/api/v1/hent-huskelapp-for-bruker', async () => {
         await delay(defaultNetworkResponseDelay);
-        var showEmptyHuskelap = Math.random() < 0.5;
-        return HttpResponse.json(showEmptyHuskelap ? {} : mockHuskelapp);
+        return HttpResponse.json(harMigrertArbeidsliste ? mockHuskelapp : {});
     }),
     http.post('/veilarbportefolje/api/v1/huskelapp', async () => {
         await delay(defaultNetworkResponseDelay);

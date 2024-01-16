@@ -12,13 +12,13 @@
         }
 
         .huskelapp-knapp:first-child {
-            stroke: @navMorkGra;
+            stroke: var(--a-gray-900);
             fill: none;
         }
     }
 
     .huskelapp-knapp:hover {
-        background-color: @navMorkGra;
+        background-color: var(--a-gray-900);
         border: none;
 
         svg {
@@ -32,12 +32,12 @@
         border: none;
 
         .icon--filled:first-child {
-            stroke: @navBla;
-            fill: @navBla;
+            stroke: var(--a-blue-500);
+            fill: var(--a-blue-500);
         }
 
         svg:first-child {
-            stroke: @navMorkGra;
+            stroke: var(--a-gray-900);
             fill: none;
         }
     }
@@ -96,26 +96,12 @@
         border-color: darken(rgba(249, 252, 204, 1), 10%) transparent;
     }
 
-    .frist-info {
-        background-color: var(--ac-alert-info-bg, var(--a-surface-info-subtle));
-        border: 1px solid var(--ac-alert-info-border, var(--a-border-info));
-        padding: var(--a-spacing-1) var(--a-spacing-2);
-        display: inline;
-        font-size: 16px;
-        border-radius: var(--a-border-radius-medium);
-
-        svg {
-            display: none;
-        }
-
-    }
-
     .arbeidslisteInnhold {
-        background-color: @navLysGra;
+        background-color: var(--a-gray-100);
         padding: 0.5rem;
         margin-bottom: 1rem;
         margin-left: 1.5rem;
-        border-radius: @border-radius-base;
+        border-radius: 4px;
 
         .font-xs {
             font-size: 14px;
@@ -179,20 +165,6 @@
         display: block;
         width: 0;
         border-color: darken(rgba(249, 252, 204, 1), 10%) transparent;
-    }
-
-    .frist-info {
-        background-color: var(--ac-alert-info-bg, var(--a-surface-info-subtle));
-        border: 1px solid var(--ac-alert-info-border, var(--a-border-info));
-        padding: var(--a-spacing-1) var(--a-spacing-2);
-        display: inline;
-        font-size: 16px;
-        border-radius: var(--a-border-radius-medium);
-
-        svg {
-            display: none;
-        }
-
     }
 
     .huskelapp-alert {
