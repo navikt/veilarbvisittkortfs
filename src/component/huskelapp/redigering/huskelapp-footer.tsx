@@ -12,7 +12,7 @@ function HuskelappFooter(props: ArbeidslisteFooterProps) {
             <Button
                 size={'small'}
                 variant={'secondary'}
-                htmlType="button"
+                type="button"
                 className="btn--mr1"
                 onClick={props.onRequestClose}
             >

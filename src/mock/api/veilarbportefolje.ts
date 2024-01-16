@@ -71,7 +71,7 @@ export const veilarbportefoljeHandlers: RequestHandler[] = [
             kategori: requestBody.kategori
         });
     }),
-    http.delete('/veilarbportefolje/api/arbeidsliste', async () => {
+    http.delete('/veilarbportefolje/api/v2/arbeidsliste', async () => {
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json(mockArbeidsliste);
     }),
@@ -79,5 +79,17 @@ export const veilarbportefoljeHandlers: RequestHandler[] = [
         await delay(defaultNetworkResponseDelay);
         var showEmptyHuskelap = Math.random() < 0.5;
         return HttpResponse.json(showEmptyHuskelap ? {} : mockHuskelapp);
+    }),
+    http.post('/veilarbportefolje/api/v1/huskelapp', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(mockHuskelapp);
+    }),
+    http.put('/veilarbportefolje/api/v1/huskelapp', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(mockHuskelapp);
+    }),
+    http.delete('/veilarbportefolje/api/v1/huskelapp', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json();
     })
 ];
