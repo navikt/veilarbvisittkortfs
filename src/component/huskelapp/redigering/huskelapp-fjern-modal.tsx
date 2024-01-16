@@ -34,7 +34,7 @@ function HuskelappFjernModal() {
     }
 
     return (
-        <VarselModal contentLabel="Fjern huskelapp" isOpen={true} onRequestClose={hideModal} type="ADVARSEL">
+        <VarselModal contentLabel="Fjern huskelapp" isOpen={true} onRequestClose={hideModal} type="ADVARSEL" shouldCloseOnOverlayClick={true}>
             <div className="modal-info-tekst blokk-s">
                 <Heading size="large" as="h1" className="modal-info-tekst__overskrift blokk-s">
                     Fjern huskelapp

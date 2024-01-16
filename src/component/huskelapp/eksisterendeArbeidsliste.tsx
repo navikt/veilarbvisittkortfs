@@ -20,7 +20,7 @@ export const EksisterendeArbeidsliste = ({ arbeidsliste, visFjernKnapp }: Props)
             </Heading>
             <Alert variant="info" className="huskelapp-alert" size={'small'}>
                 Når du <b>lagrer</b> huskelapp første gang vil eksisterende arbeidslisteinnhold på personen automatisk
-                slettes. Alt eksisterende arbeidslisteinnhold blir slettet <b>2. januar 2024.</b>
+                slettes. Alt eksisterende arbeidslisteinnhold blir slettet <b>{"< en dato for sletting >"}</b>
             </Alert>
             <BodyShort className="blokk-xxs" weight={'semibold'} size={'small'}>
                 {arbeidsliste?.overskrift}
