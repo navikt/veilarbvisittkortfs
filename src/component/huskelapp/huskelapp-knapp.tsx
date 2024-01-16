@@ -5,6 +5,7 @@ import { ReactComponent as HuskelappInaktivIkon } from './ikon/huskelapp-inaktiv
 import { ReactComponent as HuskelappIkon } from './ikon/huskelapp.svg';
 import './huskelapp.less';
 import { Button } from '@navikt/ds-react';
+import { CogIcon } from '@navikt/aksel-icons';
 
 export interface HuskelappKnappProps {
     hidden: boolean;
