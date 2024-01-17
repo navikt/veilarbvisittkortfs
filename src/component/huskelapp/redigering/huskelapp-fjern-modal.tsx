@@ -15,7 +15,7 @@ function HuskelappFjernModal() {
         logMetrikk('visittkort.metrikker.fjern_huskelapp');
         trackAmplitude({
             name: 'knapp klikket',
-            data: { knapptekst: 'Fjern huskelapp', effekt: 'Fjern huskelapp for bruker' }
+            data: { knapptekst: 'Arkivere huskelapp', effekt: 'Arkivere huskelapp for bruker' }
         });
         showSpinnerModal();
 
@@ -34,10 +34,16 @@ function HuskelappFjernModal() {
     }
 
     return (
-        <VarselModal contentLabel="Fjern huskelapp" isOpen={true} onRequestClose={hideModal} type="ADVARSEL" shouldCloseOnOverlayClick={true}>
+        <VarselModal
+            contentLabel="Arkivere huskelapp"
+            isOpen={true}
+            onRequestClose={hideModal}
+            type="ADVARSEL"
+            shouldCloseOnOverlayClick={true}
+        >
             <div className="modal-info-tekst blokk-s">
                 <Heading size="large" as="h1" className="modal-info-tekst__overskrift blokk-s">
-                    Fjern huskelapp
+                    Arkivere huskelapp
                 </Heading>
             </div>
             <div className="knapper">

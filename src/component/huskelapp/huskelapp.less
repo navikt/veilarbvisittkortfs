@@ -47,6 +47,29 @@
     }
 }
 
+.huskelapp-visning:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-width: 0 20px 20px 0;
+    border-style: solid;
+    background: white;
+    -webkit-box-shadow:
+        0 3px 9px rgba(0, 0, 0, 0.1),
+        -2px 5px 6px rgba(113, 92, 40, 0.1);
+    -moz-box-shadow:
+        0 3px 9px rgba(0, 0, 0, 0.1),
+        -2px 5px 6px rgba(0, 0, 0, 0.1);
+    box-shadow:
+        0 3px 9px rgba(0, 0, 0, 0.1),
+        -2px 5px 6px rgba(0, 0, 0, 0.1);
+    /* Firefox 3.0 damage limitation */
+    display: block;
+    width: 0;
+    border-color: darken(rgba(249, 252, 204, 1), 10%) transparent;
+}
+
 .huskelappmodal-med-arbeidsliste-innhold {
     display: grid;
     grid-auto-flow: column;
@@ -60,7 +83,8 @@
         margin-bottom: 0.6rem;
     }
 
-    .huskelapp-innhold, .arbeidslisteInnhold {
+    .huskelapp-innhold,
+    .arbeidslisteInnhold {
         margin-top: 0.6rem;
     }
 
@@ -75,25 +99,8 @@
         overflow: hidden;
 
         .navds-body-short {
-            margin-top: var(--a-spacing-3)
+            margin-top: var(--a-spacing-3);
         }
-    }
-
-    .huskelapp-visning:before {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        border-width: 0 18px 18px 0;
-        border-style: solid;
-        background: white;
-        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3), -1px 1px 1px rgba(0, 0, 0, 0.2);
-        -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3), -1px 1px 1px rgba(0, 0, 0, 0.2);
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3), -1px 1px 1px rgba(0, 0, 0, 0.2);
-        /* Firefox 3.0 damage limitation */
-        display: block;
-        width: 0;
-        border-color: darken(rgba(249, 252, 204, 1), 10%) transparent;
     }
 
     .arbeidslisteInnhold {
@@ -124,7 +131,6 @@
 }
 
 .huskelappmodal-innhold {
-
     max-width: 340px;
 
     .nav-datovelger__kalenderPortal {
@@ -146,25 +152,8 @@
         overflow: hidden;
 
         .navds-body-short {
-            margin-top: var(--a-spacing-3)
+            margin-top: var(--a-spacing-3);
         }
-    }
-
-    .huskelapp-visning:before {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        border-width: 0 18px 18px 0;
-        border-style: solid;
-        background: white;
-        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3), -1px 1px 1px rgba(0, 0, 0, 0.2);
-        -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3), -1px 1px 1px rgba(0, 0, 0, 0.2);
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3), -1px 1px 1px rgba(0, 0, 0, 0.2);
-        /* Firefox 3.0 damage limitation */
-        display: block;
-        width: 0;
-        border-color: darken(rgba(249, 252, 204, 1), 10%) transparent;
     }
 
     .huskelapp-alert {
@@ -179,13 +168,4 @@
     button {
         margin-left: 0.5rem;
     }
-
 }
-
-
-
-
-
-
-
-

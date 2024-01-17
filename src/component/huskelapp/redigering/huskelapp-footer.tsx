@@ -18,7 +18,7 @@ function HuskelappFooter(props: ArbeidslisteFooterProps) {
             >
                 Avbryt
             </Button>
-            <Button size={'small'} variant={'primary'} htmlType="submit" form={'huskelapp-form'}>
+            <Button size={'small'} variant={'primary'} htmlType="submit" form={'huskelapp-form'} tabIndex={0}>
                 Lagre
             </Button>
         </div>

@@ -18,7 +18,13 @@ function HuskelappMedArbeidslisteFooter(props: ArbeidslisteFooterProps) {
             >
                 Avbryt
             </Button>
-            <Button size={'small'} variant={'primary'} form={'huskelapp-form'} onClick={props.lagHuskelapp}>
+            <Button
+                size={'small'}
+                variant={'primary'}
+                form={'huskelapp-form'}
+                onClick={props.lagHuskelapp}
+                tabIndex={0}
+            >
                 Lag huskelapp
             </Button>
         </div>
