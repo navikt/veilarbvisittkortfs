@@ -18,16 +18,11 @@ function HuskelappFooter(props: ArbeidslisteFooterProps) {
                 className="btn--mr1"
                 onClick={props.slettHuskelapp}
                 icon={<CheckIcon aria-hidden />}
+                tabIndex={0}
             >
                 Marker som ferdig
             </Button>
-            <Button
-                size={'small'}
-                variant={'primary'}
-                form={'huskelapp-form'}
-                onClick={props.endreHuskelapp}
-                tabIndex={0}
-            >
+            <Button size={'small'} variant={'primary'} form={'huskelapp-form'} onClick={props.endreHuskelapp}>
                 Endre
             </Button>
         </div>
