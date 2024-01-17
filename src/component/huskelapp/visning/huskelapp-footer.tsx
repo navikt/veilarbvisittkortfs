@@ -19,6 +19,7 @@ function HuskelappFooter(props: ArbeidslisteFooterProps) {
                 onClick={props.slettHuskelapp}
                 icon={<CheckIcon aria-hidden />}
                 tabIndex={0}
+                autoFocus={true}
             >
                 Marker som ferdig
             </Button>

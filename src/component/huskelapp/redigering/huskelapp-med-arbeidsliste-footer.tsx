@@ -18,7 +18,14 @@ function HuskelappMedArbeidslisteFooter(props: ArbeidslisteFooterProps) {
             >
                 Avbryt
             </Button>
-            <Button size={'small'} variant={'primary'} htmlType="submit" form={'huskelapp-form'} tabIndex={0}>
+            <Button
+                size={'small'}
+                variant={'primary'}
+                htmlType="submit"
+                form={'huskelapp-form'}
+                tabIndex={0}
+                autoFocus={true}
+            >
                 Lagre og slett eksisterende
             </Button>
         </div>

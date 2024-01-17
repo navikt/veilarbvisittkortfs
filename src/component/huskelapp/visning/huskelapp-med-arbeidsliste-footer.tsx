@@ -24,6 +24,7 @@ function HuskelappMedArbeidslisteFooter(props: ArbeidslisteFooterProps) {
                 form={'huskelapp-form'}
                 onClick={props.lagHuskelapp}
                 tabIndex={0}
+                autoFocus={true}
             >
                 Lag huskelapp
             </Button>
