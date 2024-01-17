@@ -23,17 +23,15 @@ interface ArbeidslisteFormProps {
 function ArbeidslisteForm({ sistEndretAv, endringstidspunkt, navn, fnr }: ArbeidslisteFormProps) {
     return (
         <div className="arbeidsliste__bruker">
-            <>
-                <Heading size="small" as="h2">{`${navn}, ${fnr}`}</Heading>
-                <FormikInput name="overskrift" label="Tittel" validate={validerArbeidslisteTittelFelt} />
-                <FormikTekstArea
-                    name="kommentar"
-                    label="Kommentar"
-                    maxLength={500}
-                    validate={validerArbeidslisteKommentarFelt}
-                    size="small"
-                />
-            </>
+            <Heading size="small" as="h2">{`${navn}, ${fnr}`}</Heading>
+            <FormikInput name="overskrift" label="Tittel" validate={validerArbeidslisteTittelFelt} />
+            <FormikTekstArea
+                name="kommentar"
+                label="Kommentar"
+                maxLength={500}
+                validate={validerArbeidslisteKommentarFelt}
+                size="small"
+            />
             <div className="dato-kategori-wrapper">
                 <FormikDatoVelger
                     name="frist"

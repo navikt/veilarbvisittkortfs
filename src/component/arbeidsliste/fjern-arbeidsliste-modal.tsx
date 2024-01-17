@@ -30,12 +30,10 @@ function FjernArbeidslisteModal() {
 
     return (
         <VarselModal isOpen={true} onRequestClose={hideModal} type="ADVARSEL">
-            <>
-                <Heading size="large" as="h1">
-                    Fjern fra arbeidsliste
-                </Heading>
-                <BodyShort size="small" weight="semibold">{`${brukerSammensattNavn}, ${brukerFnr}`}</BodyShort>
-            </>
+            <Heading size="large" as="h1">
+                Fjern fra arbeidsliste
+            </Heading>
+            <BodyShort size="small" weight="semibold">{`${brukerSammensattNavn}, ${brukerFnr}`}</BodyShort>
             <div className="modal-footer">
                 <Button variant="primary" size="small" type="submit" onClick={handleSlettArbeidsListe}>
                     Bekreft
