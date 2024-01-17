@@ -30,7 +30,7 @@ const DatoVelger = ({ formikProps, ariaLabel, size, label, name }: DatoVelgerPro
         defaultSelected: field.value ? new Date(field.value) : undefined,
         inputFormat: 'dd.MM.yyyy',
         onDateChange: (date?: any) => {
-            setFieldValue(field.name, toReversedDateStr(date));
+            setFieldValue(field.name, date ? toReversedDateStr(date) : null);
         }
     });
 
