@@ -35,9 +35,11 @@ function HuskelappVisningModal() {
                 <div className={'huskelappmodal-innhold'}>
                     <div className={'huskelapp-innhold'}>
                         <div className="huskelapp-visning">
-                            <BodyShort as="div" size="small" weight={'semibold'}>
-                                {huskelapp?.frist && `Frist: ${toSimpleDateStr(huskelapp!.frist!)}`}
-                            </BodyShort>
+                            {huskelapp?.frist && (
+                                <BodyShort as="div" size="small" weight={'semibold'}>
+                                    {`Frist: ${toSimpleDateStr(huskelapp!.frist!)}`}
+                                </BodyShort>
+                            )}
                             <BodyShort as="div" size="small">
                                 {huskelapp!.kommentar}
                             </BodyShort>
