@@ -27,10 +27,9 @@ export function VarselModal({
             onClose={onRequestClose}
             className="veilarbvisittkortfs-varsel-modal"
             closeOnBackdropClick={true}
-            width="576px"
         >
             <Modal.Header>{getIkon(type)}</Modal.Header>
-            <Modal.Body>
+            <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
                 <div className={className}>{children}</div>
             </Modal.Body>
         </Modal>
