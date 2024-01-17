@@ -95,10 +95,10 @@ function PersonInfo() {
                     onClick={klikkShowHuskelapp}
                     harHuskelapp={!erHuskelappTom}
                 />
-                <KopierKnappTekst kopierTekst={brukerFnr} visTekst={`F.nr.: ${brukerFnr}`} />
+                <KopierKnappTekst kopierTekst={brukerFnr} viseTekst={`F.nr.: ${brukerFnr}`} />
                 {<Label>/</Label>}
                 {uformattertTelefon && (
-                    <KopierKnappTekst kopierTekst={telefon.replace(/\s/g, '')} visTekst={`Tlf.: ${telefon}`} />
+                    <KopierKnappTekst kopierTekst={telefon.replace(/\s/g, '')} viseTekst={`Tlf.: ${telefon}`} />
                 )}
                 {!uformattertTelefon && <Label className="uten-telefon">Tlf.: -</Label>}
             </div>
