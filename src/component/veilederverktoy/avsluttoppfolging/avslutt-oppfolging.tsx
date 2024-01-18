@@ -58,12 +58,7 @@ function AvsluttOppfolging() {
             }
         }
         return (
-            <VarselModal
-                contentLabel="Oppfølgingsperioden for brukeren kan ikke avsluttes"
-                isOpen={true}
-                onRequestClose={hideModal}
-                type="ADVARSEL"
-            >
+            <VarselModal isOpen={true} onRequestClose={hideModal} type="ADVARSEL">
                 Du kan ikke avslutte oppfølgingsperioden fordi:
                 <ul className="avslutt-oppfolging__ul">
                     {(avslutningStatus?.underOppfolging || !avslutningStatus?.erIserv) && (

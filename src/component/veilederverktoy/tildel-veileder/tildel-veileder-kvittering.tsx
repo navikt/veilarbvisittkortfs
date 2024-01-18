@@ -11,7 +11,7 @@ export function TildelVeilederKvittering(props: TildelVeilederKvitteringProps) {
     const { hideModal } = useModalStore();
 
     return (
-        <VarselModal isOpen={true} onRequestClose={hideModal} contentLabel="Vellykket tildeling" type="SUCCESS">
+        <VarselModal isOpen={true} onRequestClose={hideModal} type="SUCCESS">
             <Heading size="large" as="h1">
                 Tildel veileder
             </Heading>

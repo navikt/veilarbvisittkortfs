@@ -165,7 +165,7 @@ function Historikk() {
 
     return (
         <VeilederVerktoyModal className="historikk__modal" tittel="Historikk">
-            <div className="prosess blokk-s">
+            <div className="prosess">
                 <HistorikkVisning
                     innstillingHistorikk={innstillingHistorikk}
                     oppgaveHistorikk={oppgaveHistorikk}

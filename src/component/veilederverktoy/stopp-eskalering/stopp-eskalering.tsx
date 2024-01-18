@@ -55,11 +55,10 @@ function StoppEskalering() {
             className="stopp-eskalering"
             initialValues={initialFormValues}
             handleSubmit={startStoppingAvEskalering}
-            contentLabel="Stopp begrunnelse"
             visConfirmDialog={false}
             render={formikProps => {
                 return (
-                    <div className="modal-innhold">
+                    <div>
                         <Form>
                             <FormikCheckBox name="skalSendeHendelse" label={'Send bruker en henvendelse'} />
                             {formikProps.values.skalSendeHendelse && (

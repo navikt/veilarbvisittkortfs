@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Textarea, TextareaProps } from '@navikt/ds-react';
 import { Field, FieldProps } from 'formik';
 import { getErrors } from './formik-utils';
@@ -19,12 +19,14 @@ function FormikTekstArea({
     size = 'medium',
     ...textAreaProps
 }: TekstAreaProps & Omit<TextareaProps, OmitProps>) {
-    const [skalSkjules, setSkalSkjules] = useState(true);
-    useEffect(() => {
-        setSkalSkjules(false);
-    }, [])
+    const [skjulTextAreaMensKomponentenLaster, setSkjulTextAreaMensKomponentenLaster] = useState(true);
 
-    if(skalSkjules) {
+    // Ting vi gjer for å unngå resize-feil frå designsystemet
+    useEffect(() => {
+        setSkjulTextAreaMensKomponentenLaster(false);
+    }, []);
+
+    if (skjulTextAreaMensKomponentenLaster) {
         return null;
     }
 

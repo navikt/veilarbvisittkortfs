@@ -19,4 +19,11 @@
             height: 1.5rem;
         }
     }
+
+    /* Fiks som sikrar at lukk-knapp ikkje overlappar med overskrifterne i modalar
+     * (Trur dette er naudsynt grunna ting frå veilarbpersonflate som blør inn,
+     * men har ikkje prioritert å dobbeltsjekke det. 2024-01-18 */
+    .navds-modal .navds-modal__header h1 {
+        margin-right: 3rem;
+    }
 }

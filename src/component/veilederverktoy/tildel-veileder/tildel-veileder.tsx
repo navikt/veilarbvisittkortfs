@@ -93,7 +93,7 @@ function TildelVeileder() {
                     <Button
                         variant="primary"
                         size="small"
-                        className="btn--mr1"
+                        className="bekreft-btn"
                         type="submit"
                         disabled={!selectedVeilederId}
                     >

@@ -28,11 +28,10 @@ function StartEskaleringForm<T extends StartEskaleringValues>(props: StartEskale
         <FormikModal
             initialValues={props.initialValues}
             handleSubmit={props.handleSubmit}
-            contentLabel=""
             visConfirmDialog={true}
             tittel={props.tittel}
             render={({ values }) => (
-                <div className="modal-innhold">
+                <div>
                     {props.infoTekst}
                     <div>
                         <Form>
