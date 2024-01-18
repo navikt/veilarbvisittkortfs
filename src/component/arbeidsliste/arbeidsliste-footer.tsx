@@ -1,6 +1,6 @@
-import { HiddenIfFlatKnapp } from '../components/hidden-if/hidden-if-knapp';
 import React from 'react';
 import { Button } from '@navikt/ds-react';
+import { TrashIcon } from '@navikt/aksel-icons';
 
 interface ArbeidslisteFooterProps {
     onRequestClose: () => void;
@@ -17,14 +17,18 @@ function ArbeidslisteFooter(props: ArbeidslisteFooterProps) {
             <Button variant="secondary" size="small" type="button" onClick={props.onRequestClose}>
                 Avbryt
             </Button>
-            <HiddenIfFlatKnapp
-                type="button"
-                hidden={!props.kanFjerneArbeidsliste}
-                onClick={props.slettArbeidsliste}
-                className="fjern--knapp"
-            >
-                <span>Fjern</span>
-            </HiddenIfFlatKnapp>
+            {props.kanFjerneArbeidsliste && (
+                <Button
+                    type="button"
+                    onClick={props.slettArbeidsliste}
+                    icon={<TrashIcon />}
+                    variant="tertiary"
+                    size="small"
+                    className="fjern--knapp"
+                >
+                    Fjern
+                </Button>
+            )}
         </div>
     );
 }

@@ -1,17 +1,24 @@
 .veilarbvisittkortfs-varsel-modal {
-    overflow: visible;
+    overflow: visible; // Gjer at ikonet ikkje vert kutta av kanten på modalen
     text-align: center;
 
+    .veilarbvisittkortfs-varsel-modal-body {
+        p {
+            text-align: start;
+            max-width: 66ch; // Unngår at tekstlinjer vert ubehageleg lange å lese
+        }
+    }
+
     #varsel-ikon {
-        margin-top: -3rem; //placerar en ikon med størrelsen 64x64 i mitten
-        margin-left: 3rem;
+        margin-top: -3rem; // placerar en ikon med størrelsen 64x64 i mitten
+        margin-left: 3rem; // Tilsvarar breidda av lukk-knappen til modalen som også bur i header (2024-01-17)
     }
 
     .modal-footer {
         margin-top: 1rem;
+
         .navds-button--primary {
             margin-right: 1rem;
         }
     }
-
 }

@@ -18,8 +18,9 @@
 }
 
 .veilederverktoy-modal {
+    min-width: min(25rem, 92vw); // Set ei minimumsbreidd, men let modalen krympe utan overflow på små skjermar
+
     .tildel-veileder__form {
-        min-width: 400px;
         .radio-filterform {
             border-bottom: 1px solid var(--a-gray-900);
         }
@@ -36,6 +37,7 @@
 
     .modal-footer {
         margin-top: 1rem;
+
         .bekreft-btn {
             margin-right: 1rem;
         }
