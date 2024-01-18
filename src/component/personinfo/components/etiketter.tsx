@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDataStore } from '../../../store/data-store';
-import { useAppStore } from '../../../store/app-store';
 import './etiketter.less';
-import { fetchRegistrering, InnsatsgruppeType } from '../../../api/veilarbperson';
 import { OppfolgingStatus } from '../../../api/veilarboppfolging';
-import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
-import { ifResponseHasData, isEmpty } from '../../../util/utils';
+import { isEmpty } from '../../../util/utils';
 import visibleIf from '../../components/visible-if';
 import { OrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
@@ -52,31 +49,17 @@ function manglerVedtak(oppfolging: OrNothing<OppfolgingStatus>): boolean {
 }
 
 function Etiketter() {
-    const { brukerFnr } = useAppStore();
     const {
         gjeldendeEskaleringsvarsel,
         oppfolgingsstatus,
         oppfolging,
         personalia,
         vergeOgFullmakt,
-        spraakTolk
+        spraakTolk,
+        registreringData
     } = useDataStore();
 
-    const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>(null);
-
-    const registreringFetcher = useAxiosFetcher(fetchRegistrering);
-
-    const pilot_toggle = false;
-    useEffect(() => {
-        if (brukerFnr && pilot_toggle) {
-            registreringFetcher.fetch(brukerFnr).then(
-                ifResponseHasData(data => {
-                    setInnsatsgruppe(data.registrering.profilering?.innsatsgruppe);
-                })
-            );
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [brukerFnr]);
+    const innsatsgruppe = registreringData?.registrering?.profilering?.innsatsgruppe ?? null;
 
     return (
         <div className="etikett-container">

@@ -5,7 +5,7 @@ import { veilarbdialogHandlers } from './veilarbdialog';
 import { veilarboppfolgingHandlers } from './veilarboppfolging';
 import { veilarbveilederHandlers } from './veilarbveileder';
 import { veilarboppgaveHandlers } from './veilarboppgave';
-import { veilarbpersonflatefsHandlers } from './veilarbpersonflatefs';
+import { oboUnleashHandlers } from './obo-unleash';
 import { veilarbportefoljeHandlers } from './veilarbportefolje';
 import { veilarbvedtaksstotteHandlers } from './veilarbvedtaksstotte';
 
@@ -15,7 +15,7 @@ export const allHandlers: RequestHandler[] = [
     ...veilarboppfolgingHandlers,
     ...veilarboppgaveHandlers,
     ...veilarbpersonHandlers,
-    ...veilarbpersonflatefsHandlers,
+    ...oboUnleashHandlers,
     ...veilarbportefoljeHandlers,
     ...veilarbvedtaksstotteHandlers,
     ...veilarbveilederHandlers

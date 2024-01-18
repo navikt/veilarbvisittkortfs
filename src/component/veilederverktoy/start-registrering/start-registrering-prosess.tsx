@@ -5,7 +5,7 @@ import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { kanRegistreresEllerReaktiveres } from '../../../util/selectors';
 import { StringOrNothing } from '../../../util/type/utility-types';
-import { BRUK_GAMMEL_ARBEIDSREGISTRERING_URL } from '../../../api/veilarbpersonflatefs';
+import { BRUK_GAMMEL_ARBEIDSREGISTRERING_URL } from '../../../api/obo-unleash';
 
 //@todo: check with arbeidssokerregistrering if they can fetch fnr from modiacontext holder
 function byggRegistreringUrl(fnr: string, enhet: StringOrNothing, bruk_gammel_arbeidsregistrerings_url: boolean) {
