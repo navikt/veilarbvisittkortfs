@@ -64,12 +64,10 @@ function PersonInfo() {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.huskelapp-ikon');
         if (erArbeidslisteTom && erHuskelappTom) {
             showHuskelappRedigereModal();
-        } else if (erArbeidslisteTom && !erHuskelappTom) {
-            showHuskelappModal();
         } else if (!erArbeidslisteTom && erHuskelappTom) {
             showHuskelappMedArbeidslisteModal();
-        } else if (!erArbeidslisteTom && !erHuskelappTom) {
-            showHuskelappRedigereModal();
+        } else {
+            showHuskelappModal();
         }
     };
     const uformattertTelefon: StringOrNothing = selectTelefonnummer(personalia);
@@ -93,7 +91,7 @@ function PersonInfo() {
                         )
                     }
                     onClick={klikkShowHuskelapp}
-                    harHuskelapp={!erHuskelappTom}
+                    harHuskelappEllerArbeidsliste={!erHuskelappTom || !erArbeidslisteTom}
                 />
                 <KopierKnappTekst kopierTekst={brukerFnr} viseTekst={`F.nr.: ${brukerFnr}`} />
                 {<Label>/</Label>}

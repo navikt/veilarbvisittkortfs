@@ -75,13 +75,10 @@ function Veilederverktoyslinje() {
     const kanEndreArbeidsliste = selectKanRedigereArbeidsliste(arbeidsliste);
     const kanTildeleVeileder = selectKanTildeleVeileder(oppfolging, tilgangTilBrukersKontor);
     const kanOppretteHuskelapp =
-        selectKanOppretteHuskelapp(innloggetVeileder, oppfolgingsstatus) &&
-        !huskelapp?.huskelappId &&
-        features[HUSKELAPP];
+        selectKanOppretteHuskelapp(innloggetVeileder, oppfolgingsstatus) && !huskelapp?.huskelappId;
     const kanRedigereHuskelapp =
         selectKanRedigereHuskelapp(innloggetVeileder, oppfolgingsstatus, tilgangTilBrukersKontor) &&
-        !!huskelapp?.huskelappId &&
-        features[HUSKELAPP];
+        !!huskelapp?.huskelappId;
 
     if (!visVeilederVerktoy) {
         return null;
@@ -131,7 +128,7 @@ function Veilederverktoyslinje() {
                 btnClassnames="knapp knapp--standard knapp-fss"
                 render={lukkDropdown => (
                     <>
-                        {kanEndreArbeidsliste && (
+                        {kanEndreArbeidsliste && !features[HUSKELAPP] && (
                             <li>
                                 <StartProsess
                                     knappeTekst="Rediger arbeidsliste"
@@ -139,7 +136,7 @@ function Veilederverktoyslinje() {
                                 />
                             </li>
                         )}
-                        {kanLagreArbeidsliste && (
+                        {kanLagreArbeidsliste && !features[HUSKELAPP] && (
                             <li>
                                 <StartProsess
                                     knappeTekst="Legg i arbeidsliste"
@@ -147,7 +144,7 @@ function Veilederverktoyslinje() {
                                 />
                             </li>
                         )}
-                        {kanRedigereHuskelapp && (
+                        {features[HUSKELAPP] && (kanRedigereHuskelapp || kanEndreArbeidsliste) && (
                             <li>
                                 <StartProsess
                                     knappeTekst="Vis huskelapp"
@@ -155,7 +152,7 @@ function Veilederverktoyslinje() {
                                 />
                             </li>
                         )}
-                        {kanOppretteHuskelapp && (
+                        {features[HUSKELAPP] && kanOppretteHuskelapp && !kanEndreArbeidsliste && (
                             <li>
                                 <StartProsess
                                     knappeTekst="Lag huskelapp"

@@ -9,7 +9,7 @@ import { Button } from '@navikt/ds-react';
 export interface HuskelappKnappProps {
     hidden: boolean;
     onClick: () => void;
-    harHuskelapp: boolean;
+    harHuskelappEllerArbeidsliste: boolean;
 }
 
 function HuskelappKnapp(props: HuskelappKnappProps) {
@@ -23,7 +23,7 @@ function HuskelappKnapp(props: HuskelappKnappProps) {
 
     return (
         <Button
-            icon={props.harHuskelapp ? <HuskelappIkon /> : <HuskelappInaktivIkon />}
+            icon={props.harHuskelappEllerArbeidsliste ? <HuskelappIkon /> : <HuskelappInaktivIkon />}
             onClick={onClick}
             hidden={props.hidden}
             variant={'tertiary-neutral'}

@@ -36,11 +36,10 @@ const mockHuskelapp: Huskelapp = {
     endretDato: new Date()
 };
 
-var harMigrertArbeidsliste = Math.random() < 0.5;
-
 export const veilarbportefoljeHandlers: RequestHandler[] = [
     http.post('/veilarbportefolje/api/v2/hent-arbeidsliste', async () => {
         await delay(defaultNetworkResponseDelay);
+        var harMigrertArbeidsliste = Math.random() < 0.5;
         return HttpResponse.json(harMigrertArbeidsliste ? mockTomArbeidsliste : mockArbeidsliste);
     }),
     http.post('/veilarbportefolje/api/v2/arbeidsliste', async ({ request }) => {
@@ -79,6 +78,7 @@ export const veilarbportefoljeHandlers: RequestHandler[] = [
     }),
     http.post('/veilarbportefolje/api/v1/hent-huskelapp-for-bruker', async () => {
         await delay(defaultNetworkResponseDelay);
+        var harMigrertArbeidsliste = Math.random() < 0.5;
         return HttpResponse.json(harMigrertArbeidsliste ? mockHuskelapp : {});
     }),
     http.post('/veilarbportefolje/api/v1/huskelapp', async () => {
