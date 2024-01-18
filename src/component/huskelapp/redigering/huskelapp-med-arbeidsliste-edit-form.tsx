@@ -29,9 +29,7 @@ export function HuskelappMedArbeidslisteEditForm(formValues: HuskelappMedArbeids
                         <HuskelappForm />
                     </Form>
                 </div>
-                <div className={'arbeidslisteInnhold'}>
-                    <EksisterendeArbeidsliste arbeidsliste={formValues.arbeidsliste} visFjernKnapp={false} />
-                </div>
+                <EksisterendeArbeidsliste arbeidsliste={formValues.arbeidsliste} visFjernKnapp={false} />
             </div>
             <HuskelappMedArbeidslisteFooter
                 onRequestClose={formValues.onRequestClose}

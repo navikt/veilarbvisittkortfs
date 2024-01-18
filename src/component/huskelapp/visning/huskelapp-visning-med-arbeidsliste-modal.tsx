@@ -41,9 +41,7 @@ function HuskelappMedArbeidslisteVisningModal() {
                         </Heading>
                         <HuskelappInformasjonsmelding />
                     </div>
-                    <div className={'arbeidslisteInnhold'}>
-                        <EksisterendeArbeidsliste arbeidsliste={arbeidsliste} visFjernKnapp={true} />
-                    </div>
+                    <EksisterendeArbeidsliste arbeidsliste={arbeidsliste} visFjernKnapp={true} />
                 </div>
                 <HuskelappMedArbeidslisteFooter lagHuskelapp={lagHuskelappKlikk} onRequestClose={() => hideModal()} />
             </Modal.Body>

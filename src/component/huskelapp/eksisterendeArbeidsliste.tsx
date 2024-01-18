@@ -14,27 +14,27 @@ interface Props {
 export const EksisterendeArbeidsliste = ({ arbeidsliste, visFjernKnapp }: Props) => {
     const { showFjernArbeidslisteModal } = useModalStore();
     return (
-        <div>
-            <Heading size={'small'} as="h2">
+        <div className="arbeidslisteInnhold">
+            <Heading size="small" as="h2">
                 Eksisterende arbeidslisteinnhold
             </Heading>
-            <Alert variant="info" className="huskelapp-alert" size={'small'}>
+            <Alert variant="info" className="huskelapp-alert" size="small">
                 Når du <b>lagrer</b> huskelapp første gang vil eksisterende arbeidslisteinnhold på personen automatisk
                 slettes. Alt eksisterende arbeidslisteinnhold blir slettet <b>{"< en dato for sletting >"}</b>
             </Alert>
-            <BodyShort className="margin-bottom-xxs" weight={'semibold'} size={'small'}>
+            <BodyShort className="margin-bottom-xxs" weight={'semibold'} size="small">
                 {arbeidsliste?.overskrift}
             </BodyShort>
-            <BodyShort className="margin-bottom-xxs font-xs" size={'small'}>
-                <i>Arbeidsliste frist: {toSimpleDateStr(arbeidsliste?.frist ?? new Date())}</i>
+            <BodyShort className="margin-bottom-xxs font-xs" size="small">
+                <i>Arbeidsliste frist: {toSimpleDateStr(arbeidsliste?.frist ?? "Ingen frist satt")}</i>
             </BodyShort>
-            <BodyLong size={'small'} className="margin-bottom-xxs font-xs">
+            <BodyLong size="small" className="margin-bottom-xxs font-xs">
                 {arbeidsliste?.kommentar}
             </BodyLong>
-            <BodyShort size={'small'} className="margin-bottom-xxs font-xs">
+            <BodyShort size="small" className="margin-bottom-xxs font-xs">
                 <i>
-                    Oppdatert {toSimpleDateStr(arbeidsliste?.endringstidspunkt ?? new Date())} av{' '}
-                    {arbeidsliste?.sistEndretAv?.veilederId}
+                    {`Oppdatert ${arbeidsliste?.endringstidspunkt ? toSimpleDateStr(arbeidsliste.endringstidspunkt) : "ukjent"}`}
+                    {arbeidsliste?.sistEndretAv?.veilederId && ` av ${arbeidsliste.sistEndretAv.veilederId}`}
                 </i>
             </BodyShort>
 
@@ -42,7 +42,7 @@ export const EksisterendeArbeidsliste = ({ arbeidsliste, visFjernKnapp }: Props)
                 <Button
                     onClick={() => showFjernArbeidslisteModal()}
                     size="xsmall"
-                    variant="primary"
+                    variant="primary-neutral"
                     icon={<TrashIcon aria-hidden />}
                 >
                     <span>Slett</span>
