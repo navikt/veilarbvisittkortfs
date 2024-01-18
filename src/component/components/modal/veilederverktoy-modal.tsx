@@ -17,7 +17,6 @@ function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
             className={classNames('veilederverktoy-modal', props.className)}
             open={true}
             onClose={hideModal}
-            closeOnBackdropClick={true}
             header={{
                 heading: props.tittel,
                 closeButton: true

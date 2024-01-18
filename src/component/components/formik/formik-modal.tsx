@@ -48,7 +48,6 @@ function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalP
                     className={cls('visittkortfs-modal', props.className)}
                     open={props.isOpen || isOpen}
                     onClose={() => tilbake(formikProps)}
-                    closeOnBackdropClick={true}
                     header={{
                         heading: props.tittel ?? '',
                         closeButton: true
