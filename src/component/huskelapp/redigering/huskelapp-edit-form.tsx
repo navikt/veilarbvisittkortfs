@@ -2,12 +2,11 @@ import { Heading } from '@navikt/ds-react';
 import { HuskelappInformasjonsmelding } from '../huskelapp-informasjonsmelding';
 import { Form } from 'formik';
 import HuskelappForm from './huskelapp-form';
-import HuskelappFooter from './huskelapp-footer';
+import { HuskelappFooter } from '../huskelapp-footer';
 import React from 'react';
 
 interface HuskelappMedArbeidslisteFormProps {
     onRequestClose: () => void;
-    slettHuskelapp: () => void;
 }
 
 export function HuskelappEditForm(formValues: HuskelappMedArbeidslisteFormProps) {
@@ -24,7 +23,7 @@ export function HuskelappEditForm(formValues: HuskelappMedArbeidslisteFormProps)
                     </Form>
                 </div>
             </div>
-            <HuskelappFooter onRequestClose={formValues.onRequestClose} slettHuskelapp={formValues.slettHuskelapp} />
+            <HuskelappFooter typePrimaryBtn="submit" textPrimaryBtn="Lagre" onRequestClose={formValues.onRequestClose} />
         </>
     );
 }

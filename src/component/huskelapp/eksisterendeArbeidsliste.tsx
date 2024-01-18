@@ -45,7 +45,7 @@ export const EksisterendeArbeidsliste = ({ arbeidsliste, visFjernKnapp }: Props)
                     variant="primary-neutral"
                     icon={<TrashIcon aria-hidden />}
                 >
-                    <span>Slett</span>
+                    Slett
                 </Button>
             )}
         </div>

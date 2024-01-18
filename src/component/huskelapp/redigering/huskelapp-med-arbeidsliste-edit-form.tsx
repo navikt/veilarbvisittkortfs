@@ -6,11 +6,10 @@ import { EksisterendeArbeidsliste } from '../eksisterendeArbeidsliste';
 import React from 'react';
 import { OrNothing } from '../../../util/type/utility-types';
 import { Arbeidsliste } from '../../../api/veilarbportefolje';
-import HuskelappMedArbeidslisteFooter from './huskelapp-med-arbeidsliste-footer';
+import { HuskelappFooter } from "../huskelapp-footer";
 
 interface HuskelappMedArbeidslisteFormProps {
     onRequestClose: () => void;
-    slettHuskelapp: () => void;
     huskelapFrist?: OrNothing<Date>;
     huskelapInnhold?: OrNothing<String>;
     arbeidsliste: Arbeidsliste;
@@ -31,9 +30,10 @@ export function HuskelappMedArbeidslisteEditForm(formValues: HuskelappMedArbeids
                 </div>
                 <EksisterendeArbeidsliste arbeidsliste={formValues.arbeidsliste} visFjernKnapp={false} />
             </div>
-            <HuskelappMedArbeidslisteFooter
+            <HuskelappFooter
                 onRequestClose={formValues.onRequestClose}
-                slettHuskelapp={formValues.slettHuskelapp}
+                typePrimaryBtn="submit"
+                textPrimaryBtn="Lagre og slett eksisterende"
             />
         </>
     );

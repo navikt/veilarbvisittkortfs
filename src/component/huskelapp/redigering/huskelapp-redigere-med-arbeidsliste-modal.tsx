@@ -6,7 +6,6 @@ import {
     lagreHuskelapp,
     redigerHuskelapp,
     slettArbeidsliste,
-    slettHuskelapp
 } from '../../../api/veilarbportefolje';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
@@ -118,7 +117,6 @@ function HuskelappRedigereModal() {
                     <Modal.Body>
                         <HuskelappMedArbeidslisteEditForm
                             onRequestClose={() => onRequestClose(formikProps)}
-                            slettHuskelapp={() => slettHuskelapp(huskelapp!.huskelappId!)}
                             arbeidsliste={arbeidsliste!}
                         />
                     </Modal.Body>

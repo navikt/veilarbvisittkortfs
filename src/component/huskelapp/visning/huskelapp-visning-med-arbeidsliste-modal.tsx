@@ -6,7 +6,7 @@ import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { HuskelappInformasjonsmelding } from '../huskelapp-informasjonsmelding';
 import { EksisterendeArbeidsliste } from '../eksisterendeArbeidsliste';
-import HuskelappMedArbeidslisteFooter from './huskelapp-med-arbeidsliste-footer';
+import { HuskelappFooter } from '../huskelapp-footer';
 import { trackAmplitude } from '../../../amplitude/amplitude';
 
 function HuskelappMedArbeidslisteVisningModal() {
@@ -43,7 +43,7 @@ function HuskelappMedArbeidslisteVisningModal() {
                     </div>
                     <EksisterendeArbeidsliste arbeidsliste={arbeidsliste} visFjernKnapp={true} />
                 </div>
-                <HuskelappMedArbeidslisteFooter lagHuskelapp={lagHuskelappKlikk} onRequestClose={() => hideModal()} />
+                <HuskelappFooter typePrimaryBtn="button" textPrimaryBtn="Lag huskelapp" onActionClick={lagHuskelappKlikk}  onRequestClose={() => hideModal()} />
             </Modal.Body>
         </Modal>
     );

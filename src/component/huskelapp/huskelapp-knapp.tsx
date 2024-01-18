@@ -26,8 +26,8 @@ function HuskelappKnapp(props: HuskelappKnappProps) {
             icon={props.harHuskelappEllerArbeidsliste ? <HuskelappIkon /> : <HuskelappInaktivIkon />}
             onClick={onClick}
             hidden={props.hidden}
-            variant={'tertiary-neutral'}
-            size={'medium'}
+            variant="tertiary-neutral"
+            size="medium"
         />
     );
 }
