@@ -3,7 +3,6 @@ import { Field, FieldProps, getIn } from 'formik';
 import { ErrorMessage, DatePicker, useDatepicker } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { toReversedDateStr } from '../../../util/date-utils';
-import {UseDatepickerOptions} from "@navikt/ds-react/src/date/hooks/useDatepicker";
 
 interface FormikDatepickerProps {
     name: string;
@@ -17,7 +16,7 @@ interface FormikDatepickerProps {
 interface DatoVelgerProps {
     formikProps: FieldProps;
     ariaLabel: string;
-    size: "medium" | "small";
+    size: string;
     label: string;
     name: string;
 }
@@ -31,13 +30,12 @@ const DatoVelger = ({ formikProps, ariaLabel, size, label, name }: DatoVelgerPro
         defaultSelected: field.value ? new Date(field.value) : undefined,
         inputFormat: 'dd.MM.yyyy',
         onDateChange: (date?: any) => {
-            setFieldValue(field.name, toReversedDateStr(date));
-        },
-
-    } as UseDatepickerOptions);
+            setFieldValue(field.name, date ? toReversedDateStr(date) : null);
+        }
+    });
 
     return (
-        <DatePicker {...datepickerProps} strategy="fixed">
+        <DatePicker {...datepickerProps}>
             <DatePicker.Input
                 size={size}
                 label={label}

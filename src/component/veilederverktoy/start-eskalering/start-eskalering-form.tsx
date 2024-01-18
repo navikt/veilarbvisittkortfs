@@ -31,8 +31,9 @@ function StartEskaleringForm<T extends StartEskaleringValues>(props: StartEskale
             visConfirmDialog={true}
             tittel={props.tittel}
             render={({ values }) => (
-                <>
-                        {props.infoTekst}
+                <div>
+                    {props.infoTekst}
+                    <div>
                         <Form>
                             <Maltekstvelger />
                             <BegrunnelseTextArea
@@ -45,7 +46,8 @@ function StartEskaleringForm<T extends StartEskaleringValues>(props: StartEskale
                                 disabled={values.type === props.initialValues.type}
                             />
                         </Form>
-                </>
+                    </div>
+                </div>
             )}
         />
     );
