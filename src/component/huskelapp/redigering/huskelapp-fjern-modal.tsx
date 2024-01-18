@@ -37,10 +37,10 @@ function HuskelappFjernModal() {
         <VarselModal isOpen={true} onRequestClose={hideModal} type="ADVARSEL">
             <div className="modal-info-tekst blokk-s">
                 <Heading size="large" as="h1" className="modal-info-tekst__overskrift blokk-s">
-                    Arkivere huskelapp
+                    Marker huskelapp som ferdig
                 </Heading>
             </div>
-            <div className="knapper">
+            <div className="modal-footer">
                 <Button
                     variant="primary"
                     size="small"

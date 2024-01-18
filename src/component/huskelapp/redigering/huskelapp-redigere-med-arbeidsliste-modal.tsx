@@ -114,7 +114,6 @@ function HuskelappRedigereModal() {
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
                     width={'800px'}
-                    closeOnBackdropClick={true}
                 >
                     <Modal.Body>
                         <HuskelappMedArbeidslisteEditForm

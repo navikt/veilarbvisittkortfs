@@ -113,7 +113,6 @@ function HuskelappRedigereModal() {
                     }}
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
-                    closeOnBackdropClick={true}
                 >
                     <Modal.Body>
                         <HuskelappEditForm

@@ -29,7 +29,6 @@ function HuskelappVisningModal() {
             }}
             open={true}
             onClose={() => hideModal()}
-            closeOnBackdropClick={true}
         >
             <Modal.Body>
                 <div className={'huskelappmodal-innhold'}>
