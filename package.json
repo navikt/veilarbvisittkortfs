@@ -5,7 +5,7 @@
   "scripts": {
     "start": "vite",
     "build": "vite build --base=https://veilarbvisittkortfs.intern.nav.no",
-    "build:dev": "vite build --base=https://veilarbvisittkortfs.intern.dev.nav.no",
+    "build:dev": "tsc && vite build --base=https://veilarbvisittkortfs.intern.dev.nav.no",
     "dev": "vite serve",
     "test": "echo not implemented",
     "preview": "vite preview",
