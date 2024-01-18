@@ -34,13 +34,7 @@ function HuskelappFjernModal() {
     }
 
     return (
-        <VarselModal
-            contentLabel="Arkivere huskelapp"
-            isOpen={true}
-            onRequestClose={hideModal}
-            type="ADVARSEL"
-            shouldCloseOnOverlayClick={true}
-        >
+        <VarselModal isOpen={true} onRequestClose={hideModal} type="ADVARSEL">
             <div className="modal-info-tekst blokk-s">
                 <Heading size="large" as="h1" className="modal-info-tekst__overskrift blokk-s">
                     Arkivere huskelapp
