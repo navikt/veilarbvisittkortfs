@@ -30,8 +30,8 @@ const mockTomArbeidsliste: Arbeidsliste = {
 const mockHuskelapp: Huskelapp = {
     huskelappId: 'e4c54511-7668-4b89-9436-9acfd85071ff',
     kommentar: 'Husk å ringe legen asap og noter det i møtereferat Husk å ringe legen asap og noter det i møterefera',
-    //frist: null,
-    frist: new Date(2024, 4, 24),
+    frist: null,
+    //frist: new Date(2024, 4, 24),
     endretAv: 'Z12347',
     endretDato: new Date()
 };
