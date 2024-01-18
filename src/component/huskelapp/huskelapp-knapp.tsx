@@ -28,7 +28,7 @@ function HuskelappKnapp(props: HuskelappKnappProps) {
             hidden={props.hidden}
             variant={'tertiary-neutral'}
             size={'medium'}
-        ></Button>
+        />
     );
 }
 

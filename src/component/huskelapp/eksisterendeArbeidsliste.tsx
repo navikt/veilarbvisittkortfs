@@ -22,16 +22,16 @@ export const EksisterendeArbeidsliste = ({ arbeidsliste, visFjernKnapp }: Props)
                 Når du <b>lagrer</b> huskelapp første gang vil eksisterende arbeidslisteinnhold på personen automatisk
                 slettes. Alt eksisterende arbeidslisteinnhold blir slettet <b>{"< en dato for sletting >"}</b>
             </Alert>
-            <BodyShort className="blokk-xxs" weight={'semibold'} size={'small'}>
+            <BodyShort className="margin-bottom-xxs" weight={'semibold'} size={'small'}>
                 {arbeidsliste?.overskrift}
             </BodyShort>
-            <BodyShort className="blokk-xxs font-xs" size={'small'}>
+            <BodyShort className="margin-bottom-xxs font-xs" size={'small'}>
                 <i>Arbeidsliste frist: {toSimpleDateStr(arbeidsliste?.frist ?? new Date())}</i>
             </BodyShort>
-            <BodyLong size={'small'} className="blokk-xxs font-xs">
+            <BodyLong size={'small'} className="margin-bottom-xxs font-xs">
                 {arbeidsliste?.kommentar}
             </BodyLong>
-            <BodyShort size={'small'} className="blokk-xxs font-xs">
+            <BodyShort size={'small'} className="margin-bottom-xxs font-xs">
                 <i>
                     Oppdatert {toSimpleDateStr(arbeidsliste?.endringstidspunkt ?? new Date())} av{' '}
                     {arbeidsliste?.sistEndretAv?.veilederId}
