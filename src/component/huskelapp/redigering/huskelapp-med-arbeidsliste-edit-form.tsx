@@ -18,13 +18,13 @@ interface HuskelappMedArbeidslisteFormProps {
 export function HuskelappMedArbeidslisteEditForm(formValues: HuskelappMedArbeidslisteFormProps) {
     return (
         <>
-            <div className={'huskelappmodal-med-arbeidsliste-innhold'}>
-                <div className={'huskelapp-innhold'}>
-                    <Heading size={'medium'} visuallyHidden={true}>
+            <div className="huskelappmodal-med-arbeidsliste-innhold">
+                <div>
+                    <Heading size="medium" visuallyHidden={true}>
                         Huskelappinnhold
                     </Heading>
                     <HuskelappInformasjonsmelding />
-                    <Form id={'huskelapp-form'}>
+                    <Form id="huskelapp-form">
                         <HuskelappForm />
                     </Form>
                 </div>

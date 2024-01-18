@@ -1,5 +1,6 @@
 .visittkortfs {
     .huskelapp-visning:before {
+        max-width: 300px;
         content: '';
         position: absolute;
         top: 0;
@@ -20,6 +21,7 @@
     }
 
     .huskelapp-visning {
+        max-width: 300px;
         position: relative;
         background: var(--a-limegreen-100);
         margin-bottom: var(--a-spacing-10);
@@ -41,16 +43,12 @@
     .arbeidslisteInnhold {
         background-color: var(--a-gray-100);
         padding: 0.5rem;
-        margin: 0.6rem 0.6rem 1rem 1.5rem;
+        margin: 0 0.6rem 1rem 1.5rem;
         border-radius: 4px;
 
         .font-xs {
             font-size: 14px;
             line-height: var(--a-font-line-height-medium);
-        }
-
-        .margin-bottom-xxs {
-            margin-bottom: 0.5rem
         }
 
         .huskelapp-alert {
@@ -63,19 +61,6 @@
         display: grid;
         grid-auto-flow: column;
         grid-template-columns: 284px 1fr;
-
-        .huskelapp-innhold {
-            margin-top: 0.6rem;
-            margin-bottom: 0.6rem;
-        }
-    }
-
-    .huskelappmodal-innhold {
-        max-width: 340px;
-
-        .huskelapp-innhold {
-            margin-bottom: 0.6rem;
-        }
     }
 
     .huskelapp-modal-footer {
@@ -85,6 +70,14 @@
         button {
             margin-left: 0.5rem;
         }
+    }
+
+    .margin-bottom-s {
+        margin-bottom: 1.3rem
+    }
+
+    .margin-bottom-xxs {
+        margin-bottom: 0.5rem
     }
 
 }

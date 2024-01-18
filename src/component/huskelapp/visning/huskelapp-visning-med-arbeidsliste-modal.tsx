@@ -9,7 +9,7 @@ import { EksisterendeArbeidsliste } from '../eksisterendeArbeidsliste';
 import { HuskelappFooter } from '../huskelapp-footer';
 import { trackAmplitude } from '../../../amplitude/amplitude';
 
-function HuskelappMedArbeidslisteVisningModal() {
+export const HuskelappMedArbeidslisteVisningModal = () => {
     const { hideModal, showHuskelappRedigereMedArbeidslisteModal } = useModalStore();
 
     const { arbeidsliste } = useDataStore();
@@ -34,8 +34,8 @@ function HuskelappMedArbeidslisteVisningModal() {
             width={'800px'}
         >
             <Modal.Body>
-                <div className={'huskelappmodal-med-arbeidsliste-innhold'}>
-                    <div className={'huskelapp-innhold'}>
+                <div className="huskelappmodal-med-arbeidsliste-innhold">
+                    <div>
                         <Heading size={'medium'} visuallyHidden={true}>
                             Huskelappinnhold
                         </Heading>
@@ -48,5 +48,3 @@ function HuskelappMedArbeidslisteVisningModal() {
         </Modal>
     );
 }
-
-export default HuskelappMedArbeidslisteVisningModal;

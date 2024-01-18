@@ -112,6 +112,7 @@ function HuskelappRedigereModal() {
                     }}
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
+                    width={"400px"}
                 >
                     <Modal.Body>
                         <HuskelappEditForm

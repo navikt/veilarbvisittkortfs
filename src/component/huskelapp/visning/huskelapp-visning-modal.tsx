@@ -31,22 +31,18 @@ function HuskelappVisningModal() {
             onClose={() => hideModal()}
         >
             <Modal.Body>
-                <div className={'huskelappmodal-innhold'}>
-                    <div className={'huskelapp-innhold'}>
-                        <div className="huskelapp-visning">
-                            <BodyShort as="div" size="small" weight={'semibold'}>
-                                {huskelapp?.frist ? `Frist: ${toSimpleDateStr(huskelapp!.frist!)}` : 'Ingen frist satt'}
-                            </BodyShort>
-                            <BodyShort as="div" size="small">
-                                {huskelapp!.kommentar}
-                            </BodyShort>
-                            <BodyShort as="div" size="small">
-                                <i>
-                                    Endret {toSimpleDateStr(huskelapp!.endretDato!)} av {huskelapp!.endretAv}
-                                </i>
-                            </BodyShort>
-                        </div>
-                    </div>
+                <div className="huskelapp-visning">
+                    <BodyShort as="div" size="small" weight={'semibold'}>
+                        {huskelapp?.frist ? `Frist: ${toSimpleDateStr(huskelapp!.frist!)}` : 'Ingen frist satt'}
+                    </BodyShort>
+                    <BodyShort as="div" size="small">
+                        {huskelapp!.kommentar}
+                    </BodyShort>
+                    <BodyShort as="div" size="small">
+                        <i>
+                            Endret {toSimpleDateStr(huskelapp!.endretDato!)} av {huskelapp!.endretAv}
+                        </i>
+                    </BodyShort>
                 </div>
                 <HuskelappFooter
                     endreHuskelapp={endreHuskelappKlikk}
