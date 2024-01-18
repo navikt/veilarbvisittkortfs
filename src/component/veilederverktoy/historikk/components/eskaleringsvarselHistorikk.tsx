@@ -23,7 +23,7 @@ function EskaleringsvarselHistorikkKomponent({ innslag }: EskaleringsvarselHisto
             : `${begrunnelse} `;
 
     return (
-        <div className="historikk__elem blokk-xs">
+        <div className="historikk__elem">
             <BodyShort size="small" weight="semibold">
                 {overskrift}
             </BodyShort>

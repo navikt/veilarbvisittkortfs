@@ -1,13 +1,12 @@
 import React from 'react';
-import Modal from './modal';
-import ModalHeader from './modal-header';
 import classNames from 'classnames';
 import { useModalStore } from '../../../store/modal-store';
+import { Modal } from '@navikt/ds-react';
 
 interface VeilederVerktoyModalProps {
     children: React.ReactNode;
     className?: string;
-    tittel?: string;
+    tittel: string;
 }
 
 function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
@@ -16,12 +15,15 @@ function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
     return (
         <Modal
             className={classNames('veilederverktoy-modal', props.className)}
-            isOpen={true}
-            onRequestClose={hideModal}
-            contentLabel="veilederverktoy"
+            open={true}
+            onClose={hideModal}
+            closeOnBackdropClick={true}
+            header={{
+                heading: props.tittel,
+                closeButton: true
+            }}
         >
-            <ModalHeader tittel={props.tittel} />
-            <div className="modal-innhold">{props.children}</div>
+            <Modal.Body>{props.children}</Modal.Body>
         </Modal>
     );
 }

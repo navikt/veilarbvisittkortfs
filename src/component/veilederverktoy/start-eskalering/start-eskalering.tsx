@@ -78,13 +78,7 @@ function StartEskalering() {
             : 'Du kan ikke sende varsel fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4 (for eksempel BankID).';
 
         return (
-            <VarselModal
-                className=""
-                contentLabel="Bruker kan ikke varsles"
-                onRequestClose={hideModal}
-                isOpen={true}
-                type="ADVARSEL"
-            >
+            <VarselModal onRequestClose={hideModal} isOpen={true} type="ADVARSEL">
                 {varselTekst}
             </VarselModal>
         );
@@ -100,12 +94,12 @@ function StartEskalering() {
             isLoading={false}
             infoTekst={
                 <>
-                    <BodyShort size="small" className="blokk-xs">
+                    <BodyShort size="small">
                         Når du sender forhåndsvarsel må du huske å være tydelig på hvilken oppgave som skal gjennomføre,
                         og hvilken frist personen får for tilbakemelding. Personen får en brukernotifikasjon på ditt nav
                         med teksten: Viktig oppgave. NAV vurderer å stanse pengene dine. Se hva du må gjøre.
                     </BodyShort>
-                    <BodyShort size="small" className="blokk-xs">
+                    <BodyShort size="small">
                         Ved å klikke på brukernotifikasjon, kommer personen direkte inn i riktig dialog der
                         forhåndsvarslet ligger.
                     </BodyShort>

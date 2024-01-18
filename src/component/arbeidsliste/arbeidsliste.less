@@ -1,27 +1,14 @@
-.visittkortfs-modal {
-    .fjern--knapp {
-        margin-left: auto;
+.arbeidsliste-modal {
+    .modal-footer {
+        display: flex;
 
-        svg {
-            margin-right: 0.3rem;
-            margin-bottom: -0.1rem;
+        .bekreft-btn {
+            margin-right: 1rem;
         }
-    }
 
-    .arbeidsliste-modal {
-        position: relative;
-        background-color: #f4f4f4;
-        outline: none;
-        padding: 0;
-        width: 100%;
-
-        .typo-undertittel {
-            margin-bottom: 0.5rem;
+        .fjern--knapp {
+            margin-left: auto;
         }
-    }
-
-    .arbeidsliste-alert {
-        margin-bottom: 0.5rem;
     }
 }
 
@@ -30,7 +17,7 @@
     margin-bottom: 1rem;
     padding-bottom: 0.25rem;
 
-    .blokk-s .skjemaelement {
+    .skjemaelement {
         margin: 1rem 0;
     }
 
@@ -43,11 +30,15 @@
 .dato-kategori-wrapper {
     margin-top: 1rem;
     margin-bottom: 0.5rem;
-
     display: flex;
     flex-wrap: wrap;
     column-gap: 3rem;
     row-gap: 0.5rem;
+
+    .skjemaelement.datovelger {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 }
 
 .visittkortfs {

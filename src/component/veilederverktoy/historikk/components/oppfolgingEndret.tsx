@@ -36,7 +36,7 @@ export function OppfolgingEnhetEndret(props: {
         : `Ny oppfølgingsenhet ${enhet} ${enhetNavn}`;
 
     return (
-        <div className="historikk__elem blokk-xs" key={dato}>
+        <div className="historikk__elem" key={dato}>
             <BodyShort size="small" weight="semibold">
                 {props.erGjeldendeEnhet ? 'Gjeldende oppfølgingsenhet' : 'Oppfølgingsenhet endret'}
             </BodyShort>

@@ -26,17 +26,16 @@ function BegrunnelseForm<T extends BegrunnelseValues>(props: BegrunnelseFormProp
         <FormikModal
             initialValues={props.initialValues}
             handleSubmit={props.handleSubmit}
-            contentLabel=""
             visConfirmDialog={true}
             tittel={props.tittel}
             render={() => (
-                <div className="modal-innhold">
+                <>
                     {props.infoTekst}
                     <Form>
                         <BegrunnelseTextArea tekstariaLabel={props.tekstariaLabel} maxLength={props.maxLength} />
                         <BegrunnelseFooter spinner={props.isLoading} />
                     </Form>
-                </div>
+                </>
             )}
         />
     );

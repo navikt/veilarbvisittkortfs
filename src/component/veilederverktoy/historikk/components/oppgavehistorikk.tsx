@@ -25,7 +25,7 @@ const oppgaveTypetekst = {
 function OppgaveHistorikkKomponent({ oppgaveHistorikk }: OwnProps) {
     const { oppgaveTema, oppgaveType } = oppgaveHistorikk;
     return (
-        <div className="historikk__elem blokk-xs">
+        <div className="historikk__elem">
             <BodyShort size="small" weight="semibold">
                 Gosys-oppgave opprettet
             </BodyShort>

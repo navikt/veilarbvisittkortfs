@@ -1,15 +1,12 @@
 import React from 'react';
 import PersonInfo from './component/personinfo/personinfo';
 import Veilederverktoyslinje from './component/veilederverktoy/veiledervertoyslinje';
-import NavFrontendModal from 'nav-frontend-modal';
 import Etiketter from './component/personinfo/components/etiketter';
 import Tilbakelenke from './component/components/tilbakelenke/tilbakelenke';
 import StoreProvider from './store/store-provider';
 import { DataFetcher } from './component/data-fetcher';
 import { VeilederverktoyModalController } from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-modal-controller';
 import './index.less';
-
-NavFrontendModal.setAppElement(document.getElementById('modal-a11y-wrapper'));
 
 export interface AppProps {
     fnr: string;
