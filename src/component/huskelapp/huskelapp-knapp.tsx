@@ -13,6 +13,9 @@ export interface HuskelappKnappProps {
 }
 
 function HuskelappKnapp(props: HuskelappKnappProps) {
+    if(props.hidden) {
+        return null;
+    }
     const onClick = () => {
         trackAmplitude({
             name: 'navigere',
@@ -25,7 +28,6 @@ function HuskelappKnapp(props: HuskelappKnappProps) {
         <Button
             icon={props.harHuskelappEllerArbeidsliste ? <HuskelappIkon /> : <HuskelappInaktivIkon />}
             onClick={onClick}
-            hidden={props.hidden}
             variant="tertiary-neutral"
             size="medium"
         />

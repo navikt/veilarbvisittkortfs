@@ -86,7 +86,7 @@ function PersonInfo() {
                 <HuskelappKnapp
                     hidden={
                         !(
-                            ((!huskelapp && kanOppretteHuskelapp) || (huskelapp && kanRedigereHuskelapp)) &&
+                            ((erHuskelappTom && kanOppretteHuskelapp) || (erArbeidslisteTom && kanLeggeIArbeidsliste) || (!erHuskelappTom && kanRedigereHuskelapp) || (!erArbeidslisteTom && kanRedigereArbeidsliste)) &&
                             features[HUSKELAPP]
                         )
                     }
