@@ -1,5 +1,6 @@
 import React from 'react';
 import './veilederverktoy.less';
+import '../components/knapp-fss/knapp-fss.less';
 import Dropdown from '../components/dropdown/dropdown';
 import StartRegistreringProsess from './start-registrering/start-registrering-prosess';
 import StartProsess from './prosess/start-prosess';
