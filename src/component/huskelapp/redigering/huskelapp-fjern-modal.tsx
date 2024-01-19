@@ -36,8 +36,9 @@ function HuskelappFjernModal() {
     return (
         <VarselModal isOpen={true} onRequestClose={hideModal} type="ADVARSEL">
             <Heading size="large" as="h1" className="margin-bottom-s">
-                Marker huskelapp som ferdig
+                Slett huskelapp
             </Heading>
+            Huskelappen slettes, men kan utleveres ved innsynsbegjæring innenfor oppfølgingsperioden.
             <div className="modal-footer">
                 <Button
                     variant="primary"
@@ -46,7 +47,7 @@ function HuskelappFjernModal() {
                     className="btn--mr1"
                     onClick={handleSlettHuskelapp}
                 >
-                    Bekreft
+                    Slett
                 </Button>
                 <Button variant="secondary" size="small" type="button" onClick={hideModal}>
                     Avbryt

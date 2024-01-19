@@ -1,6 +1,7 @@
-import {Button} from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import React from 'react';
 import CheckIcon from '@navikt/ds-react/esm/form/combobox/FilteredOptions/CheckIcon';
+import { TrashIcon } from '@navikt/aksel-icons';
 
 interface ArbeidslisteFooterProps {
     onRequestClose: () => void;
@@ -12,15 +13,15 @@ export const HuskelappFooter = (props: ArbeidslisteFooterProps) => (
     <div className="huskelapp-modal-footer">
         <Button
             size="small"
-            variant="secondary"
+            variant="tertiary"
             type="button"
             className="btn--mr1"
             onClick={props.slettHuskelapp}
-            icon={<CheckIcon aria-hidden/>}
+            icon={<TrashIcon aria-hidden />}
             tabIndex={0}
             autoFocus={true}
         >
-            Marker som ferdig
+            Slett
         </Button>
         <Button size="small" variant="primary" form="huskelapp-form" onClick={props.endreHuskelapp}>
             Endre

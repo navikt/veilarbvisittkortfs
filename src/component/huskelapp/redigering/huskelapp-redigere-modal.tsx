@@ -26,7 +26,7 @@ const huskelappEmptyValues = {
 
 function HuskelappRedigereModal() {
     const { brukerFnr, enhetId } = useAppStore();
-    const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
+    const { hideModal, showSpinnerModal, showErrorModal, showHuskelappModal } = useModalStore();
     const { huskelapp, setHuskelapp, setArbeidsliste } = useDataStore();
 
     const erIRedigeringModus = huskelapp?.endretDato;
@@ -81,7 +81,7 @@ function HuskelappRedigereModal() {
                 .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
                 .then(res => res.data)
                 .then(setHuskelapp)
-                .then(hideModal)
+                .then(showHuskelappModal)
                 .catch(showErrorModal);
         } else {
             lagreHuskelapp({
@@ -93,7 +93,7 @@ function HuskelappRedigereModal() {
                 .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
                 .then(res => res.data)
                 .then(setHuskelapp)
-                .then(hideModal)
+                .then(showHuskelappModal)
                 .catch(showErrorModal);
             slettArbeidsliste(brukerFnr)
                 .then(res => res.data)
@@ -112,12 +112,10 @@ function HuskelappRedigereModal() {
                     }}
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
-                    width={"400px"}
+                    width={'400px'}
                 >
                     <Modal.Body>
-                        <HuskelappEditForm
-                            onRequestClose={() => onRequestClose(formikProps)}
-                        />
+                        <HuskelappEditForm onRequestClose={() => onRequestClose(formikProps)} />
                     </Modal.Body>
                 </Modal>
             )}
