@@ -1,6 +1,5 @@
 import { Button } from '@navikt/ds-react';
 import React from 'react';
-import CheckIcon from '@navikt/ds-react/esm/form/combobox/FilteredOptions/CheckIcon';
 import { TrashIcon } from '@navikt/aksel-icons';
 
 interface ArbeidslisteFooterProps {
