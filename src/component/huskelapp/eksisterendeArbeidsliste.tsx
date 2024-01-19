@@ -44,7 +44,7 @@ export const EksisterendeArbeidsliste = ({ arbeidsliste, visFjernKnapp }: Props)
                     <Button
                         onClick={() => setIsSlettmodalOpen(true)}
                         size="xsmall"
-                        variant="primary-neutral"
+                        variant="tertiary"
                         icon={<TrashIcon aria-hidden />}
                     >
                         Slett
