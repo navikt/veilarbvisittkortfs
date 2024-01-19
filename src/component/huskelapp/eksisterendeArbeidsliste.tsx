@@ -2,9 +2,10 @@ import { Alert, BodyLong, BodyShort, Button, Heading } from '@navikt/ds-react';
 import * as React from 'react';
 import { Arbeidsliste } from '../../api/veilarbportefolje';
 import { toSimpleDateStr } from '../../util/date-utils';
-import { useModalStore } from '../../store/modal-store';
 import './huskelapp.less';
 import { TrashIcon } from '@navikt/aksel-icons';
+import {useState} from "react";
+import {SlettEksisterendeArbeidslisteInnholdVarselModal} from "./SlettEksisterendeArbeidslisteInnholdVarselModal";
 
 interface Props {
     arbeidsliste: Arbeidsliste | undefined;
@@ -12,7 +13,7 @@ interface Props {
 }
 
 export const EksisterendeArbeidsliste = ({ arbeidsliste, visFjernKnapp }: Props) => {
-    const { showFjernArbeidslisteModal } = useModalStore();
+    const [isSlettmodalOpen, setIsSlettmodalOpen] = useState(false);
     return (
         <div className="arbeidslisteInnhold">
             <Heading size="small" as="h2">
@@ -39,14 +40,20 @@ export const EksisterendeArbeidsliste = ({ arbeidsliste, visFjernKnapp }: Props)
             </BodyShort>
 
             {visFjernKnapp && (
-                <Button
-                    onClick={() => showFjernArbeidslisteModal()}
-                    size="xsmall"
-                    variant="primary-neutral"
-                    icon={<TrashIcon aria-hidden />}
-                >
-                    Slett
-                </Button>
+                <>
+                    <Button
+                        onClick={() => setIsSlettmodalOpen(true)}
+                        size="xsmall"
+                        variant="primary-neutral"
+                        icon={<TrashIcon aria-hidden />}
+                    >
+                        Slett
+                    </Button>
+                    <SlettEksisterendeArbeidslisteInnholdVarselModal
+                        onCloseRequest={() => setIsSlettmodalOpen(false)}
+                        isOpen={isSlettmodalOpen}
+                    />
+                </>
             )}
         </div>
     );
