@@ -3,8 +3,7 @@ import { useModalStore } from '../../../store/modal-store';
 import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
 import { slettHuskelapp } from '../../../api/veilarbportefolje';
-import { VarselModal } from '../../components/varselmodal/varsel-modal';
-import { Button, Heading } from '@navikt/ds-react';
+import {Button, Heading, Modal} from '@navikt/ds-react';
 import React from 'react';
 
 function HuskelappFjernModal() {
@@ -34,16 +33,20 @@ function HuskelappFjernModal() {
     }
 
     return (
-        <VarselModal isOpen={true} onRequestClose={hideModal} type="ADVARSEL">
-            <Heading size="large" as="h1" className="margin-bottom-s">
-                Slett huskelapp
-            </Heading>
-            Huskelappen slettes, men kan utleveres ved innsynsbegjæring innenfor oppfølgingsperioden.
-            <div className="modal-footer">
+        <Modal open={true} onClose={hideModal}>
+            <Modal.Header>
+                <Heading size="medium" as="h1" className="margin-bottom-s">
+                    Slett huskelapp
+                </Heading>
+            </Modal.Header>
+            <Modal.Body>
+                Huskelappen slettes, men kan utleveres ved innsynsbegjæring innenfor oppfølgingsperioden.
+            </Modal.Body>
+            <Modal.Footer>
                 <Button
                     variant="primary"
                     size="small"
-                    type="submit"
+                    type="button"
                     className="btn--mr1"
                     onClick={handleSlettHuskelapp}
                 >
@@ -52,8 +55,8 @@ function HuskelappFjernModal() {
                 <Button variant="secondary" size="small" type="button" onClick={hideModal}>
                     Avbryt
                 </Button>
-            </div>
-        </VarselModal>
+            </Modal.Footer>
+        </Modal>
     );
 }
 
