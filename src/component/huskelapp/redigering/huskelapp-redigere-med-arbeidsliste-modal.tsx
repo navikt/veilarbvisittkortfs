@@ -1,12 +1,6 @@
 import React from 'react';
 import { Formik, FormikProps } from 'formik';
-import {
-    fetchHuskelapp,
-    HuskelappformValues,
-    lagreHuskelapp,
-    redigerHuskelapp,
-    slettArbeidsliste,
-} from '../../../api/veilarbportefolje';
+import { fetchHuskelapp, HuskelappformValues, lagreHuskelapp, slettArbeidsliste } from '../../../api/veilarbportefolje';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
@@ -15,7 +9,6 @@ import { trackAmplitude } from '../../../amplitude/amplitude';
 import '../huskelapp.less';
 import { Modal } from '@navikt/ds-react';
 import { ReactComponent as HuskelappIkon } from '../ikon/huskelapp.svg';
-import { toReversedDateStr } from '../../../util/date-utils';
 import { HuskelappMedArbeidslisteEditForm } from './huskelapp-med-arbeidsliste-edit-form';
 
 const huskelappEmptyValues = {
@@ -26,18 +19,8 @@ const huskelappEmptyValues = {
 
 function HuskelappRedigereModal() {
     const { brukerFnr, enhetId } = useAppStore();
-    const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
-    const { huskelapp, setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
-
-    const erIRedigeringModus = huskelapp?.endretDato;
-
-    const huskelappValues: HuskelappformValues = {
-        huskelappId: huskelapp?.huskelappId ? huskelapp.huskelappId : null,
-        kommentar: huskelapp?.kommentar ?? '',
-        frist: huskelapp?.frist ? toReversedDateStr(huskelapp.frist) : ''
-    };
-
-    const initalValues: HuskelappformValues = huskelapp?.endretDato ? huskelappValues : huskelappEmptyValues;
+    const { hideModal, showSpinnerModal, showErrorModal, showHuskelappModal } = useModalStore();
+    const { setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
 
     function onRequestClose(formikProps: FormikProps<HuskelappformValues>) {
         const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
@@ -50,7 +33,7 @@ function HuskelappRedigereModal() {
 
     function handleSubmit(values: HuskelappformValues) {
         logMetrikk('veilarbvisittkortfs.metrikker.huskelapp', {
-            leggtil: !erIRedigeringModus,
+            leggtil: true,
             applikasjon: 'visittkort'
         });
 
@@ -58,7 +41,7 @@ function HuskelappRedigereModal() {
             {
                 name: 'skjema fullført',
                 data: {
-                    skjemanavn: erIRedigeringModus ? 'Rediger huskelapp' : 'Opprett huskelapp',
+                    skjemanavn: 'Opprett huskelapp',
                     skjemaId: 'veilarbvisittkortfs-huskelapp'
                 }
             },
@@ -70,39 +53,24 @@ function HuskelappRedigereModal() {
 
         showSpinnerModal();
 
-        if (erIRedigeringModus) {
-            redigerHuskelapp({
-                huskelappId: values.huskelappId ? values.huskelappId : null,
-                kommentar: values.kommentar ? values.kommentar : null,
-                frist: values.frist ? values.frist : null,
-                brukerFnr: brukerFnr,
-                enhetId: enhetId
-            })
-                .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
-                .then(res => res.data)
-                .then(setHuskelapp)
-                .then(hideModal)
-                .catch(showErrorModal);
-        } else {
-            lagreHuskelapp({
-                kommentar: values.kommentar ? values.kommentar : null,
-                frist: values.frist ? values.frist : null,
-                brukerFnr: brukerFnr,
-                enhetId: enhetId
-            })
-                .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
-                .then(res => res.data)
-                .then(setHuskelapp)
-                .then(hideModal)
-                .catch(showErrorModal);
-            slettArbeidsliste(brukerFnr)
-                .then(res => res.data)
-                .then(setArbeidsliste);
-        }
+        lagreHuskelapp({
+            kommentar: values.kommentar ? values.kommentar : null,
+            frist: values.frist ? values.frist : null,
+            brukerFnr: brukerFnr,
+            enhetId: enhetId
+        })
+            .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
+            .then(res => res.data)
+            .then(setHuskelapp)
+            .then(showHuskelappModal)
+            .catch(showErrorModal);
+        slettArbeidsliste(brukerFnr)
+            .then(res => res.data)
+            .then(setArbeidsliste);
     }
 
     return (
-        <Formik key={brukerFnr} initialValues={initalValues} onSubmit={handleSubmit}>
+        <Formik key={brukerFnr} initialValues={huskelappEmptyValues} onSubmit={handleSubmit}>
             {formikProps => (
                 <Modal
                     header={{
