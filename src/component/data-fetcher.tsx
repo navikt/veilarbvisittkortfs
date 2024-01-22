@@ -11,7 +11,7 @@ import './data-fetcher.less';
 import { isAnyLoadingOrNotStarted } from '../api/utils';
 import { Loader } from '@navikt/ds-react';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
-import { HUSKELAPP, useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
+import { useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 
 export function DataFetcher(props: { children: any }) {
     const { brukerFnr, visVeilederVerktoy } = useAppStore();
@@ -28,7 +28,6 @@ export function DataFetcher(props: { children: any }) {
         setSpraakTolk,
         setGjeldendeEskaleringsvarsel,
         setHuskelapp,
-        features
     } = useDataStore();
 
     const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
@@ -73,16 +72,16 @@ export function DataFetcher(props: { children: any }) {
 
         if (visVeilederVerktoy && harTilgang && underOppfolging) {
             arbeidslisteFetcher.fetch(brukerFnr).then(ifResponseHasData(setArbeidsliste)).catch();
+            if(oppfolgingsEnhet) {
+                huskelappFetcher.fetch(brukerFnr, oppfolgingsEnhet).then(ifResponseHasData(setHuskelapp)).catch()
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [visVeilederVerktoy, tilgangTilBrukersKontorFetcher, oppfolgingFetcher.data]);
+    }, [visVeilederVerktoy, tilgangTilBrukersKontorFetcher, oppfolgingFetcher.data, oppfolgingstatusFetcher.data]);
 
     useEffect(() => {
         if (oppfolgingsEnhet) {
             veilederePaEnhetFetcher.fetch(oppfolgingsEnhet).then(ifResponseHasData(setVeilederePaEnhet)).catch();
-            if (features[HUSKELAPP]) {
-                huskelappFetcher.fetch(brukerFnr, oppfolgingsEnhet).then(ifResponseHasData(setHuskelapp)).catch();
-            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [oppfolgingstatusFetcher]);
