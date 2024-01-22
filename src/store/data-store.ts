@@ -2,7 +2,7 @@ import constate from 'constate';
 import { useState } from 'react';
 import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { HarBruktNivaa4Type, Personalia, SpraakTolk, VergeOgFullmakt } from '../api/veilarbperson';
-import { Arbeidsliste } from '../api/veilarbportefolje';
+import { Arbeidsliste, Huskelapp } from '../api/veilarbportefolje';
 import { VeilederData, VeilederListe } from '../api/veilarbveileder';
 import { GjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 import { OboUnleashFeatures } from '../api/veilarbpersonflatefs';
@@ -20,6 +20,7 @@ export const [DataStore, useDataStore] = constate(() => {
     const [harBruktNivaa4, setHarBruktNivaa4] = useState<HarBruktNivaa4Type>();
     const [features, setFeatures] = useState<OboUnleashFeatures>(placeholder);
     const [arbeidsliste, setArbeidsliste] = useState<Arbeidsliste>();
+    const [huskelapp, setHuskelapp] = useState<Huskelapp>();
     const [veilederePaEnhet, setVeilederePaEnhet] = useState<VeilederListe>();
     const [gjeldendeEskaleringsvarsel, setGjeldendeEskaleringsvarsel] = useState<GjeldendeEskaleringsvarsel | null>(
         null
@@ -43,6 +44,8 @@ export const [DataStore, useDataStore] = constate(() => {
         setFeatures,
         arbeidsliste,
         setArbeidsliste,
+        huskelapp,
+        setHuskelapp,
         veilederePaEnhet,
         setVeilederePaEnhet,
         vergeOgFullmakt,

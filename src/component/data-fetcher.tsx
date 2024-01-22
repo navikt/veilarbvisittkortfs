@@ -4,7 +4,7 @@ import { useAppStore } from '../store/app-store';
 import { fetchOppfolging, fetchOppfolgingsstatus, fetchTilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { fetchPersonalia, fetchSpraakTolk, fetchVergeOgFullmakt } from '../api/veilarbperson';
 import { fetchInnloggetVeileder, fetchVeilederePaEnhet } from '../api/veilarbveileder';
-import { fetchArbeidsliste } from '../api/veilarbportefolje';
+import { fetchArbeidsliste, fetchHuskelapp } from '../api/veilarbportefolje';
 import { ifResponseHasData } from '../util/utils';
 import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
 import './data-fetcher.less';
@@ -26,7 +26,8 @@ export function DataFetcher(props: { children: any }) {
         setFeatures,
         setVergeOgFullmakt,
         setSpraakTolk,
-        setGjeldendeEskaleringsvarsel
+        setGjeldendeEskaleringsvarsel,
+        setHuskelapp
     } = useDataStore();
 
     const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
@@ -40,6 +41,7 @@ export function DataFetcher(props: { children: any }) {
     const vergeOgFullmaktFetcher = useAxiosFetcher(fetchVergeOgFullmakt);
     const spraakTolkFetcher = useAxiosFetcher(fetchSpraakTolk);
     const gjeldendeEskaleringsvarselFetcher = useAxiosFetcher(hentGjeldendeEskaleringsvarsel);
+    const huskelappFetcher = useAxiosFetcher(fetchHuskelapp);
 
     const behandlingsnummer = 'B643';
     const oppfolgingsEnhet = oppfolgingstatusFetcher.data?.oppfolgingsenhet.enhetId || '';
@@ -77,6 +79,7 @@ export function DataFetcher(props: { children: any }) {
     useEffect(() => {
         if (oppfolgingsEnhet) {
             veilederePaEnhetFetcher.fetch(oppfolgingsEnhet).then(ifResponseHasData(setVeilederePaEnhet)).catch();
+            huskelappFetcher.fetch(brukerFnr, oppfolgingsEnhet).then(ifResponseHasData(setHuskelapp)).catch();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [oppfolgingstatusFetcher]);
