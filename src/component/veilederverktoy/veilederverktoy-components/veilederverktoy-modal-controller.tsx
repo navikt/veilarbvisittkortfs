@@ -34,7 +34,6 @@ import ArbeidslisteModal from '../../arbeidsliste/arbeidsliste-modal';
 import HuskelappRedigereModal from '../../huskelapp/redigering/huskelapp-redigere-modal';
 import HuskelappRedigereMedArbeidslisteModal from '../../huskelapp/redigering/huskelapp-redigere-med-arbeidsliste-modal';
 import HuskelappVisningModal from '../../huskelapp/visning/huskelapp-visning-modal';
-import {HuskelappMedArbeidslisteVisningModal} from '../../huskelapp/visning/huskelapp-visning-med-arbeidsliste-modal';
 import HuskelappFjernModal from '../../huskelapp/redigering/huskelapp-fjern-modal';
 
 export function VeilederverktoyModalController() {
@@ -109,8 +108,6 @@ export function VeilederverktoyModalController() {
             return <HuskelappRedigereModal />;
         case ModalType.HUSKELAPP_REDIGERE_MED_ARBEIDSLISTE:
             return <HuskelappRedigereMedArbeidslisteModal />;
-        case ModalType.HUSKELAPP_MED_ARBEIDSLISTE:
-            return <HuskelappMedArbeidslisteVisningModal />;
         case ModalType.FJERN_HUSKELAPP:
             return <HuskelappFjernModal />;
         default:
