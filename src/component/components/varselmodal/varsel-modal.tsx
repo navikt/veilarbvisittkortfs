@@ -26,7 +26,6 @@ export function VarselModal({
             open={isOpen}
             onClose={onRequestClose}
             className="veilarbvisittkortfs-varsel-modal"
-            closeOnBackdropClick={true}
         >
             <Modal.Header>{getIkon(type)}</Modal.Header>
             <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
