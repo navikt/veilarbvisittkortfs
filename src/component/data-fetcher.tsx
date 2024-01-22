@@ -11,7 +11,7 @@ import './data-fetcher.less';
 import { isAnyLoadingOrNotStarted } from '../api/utils';
 import { Loader } from '@navikt/ds-react';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
-import { useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
+import { HUSKELAPP, useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 
 export function DataFetcher(props: { children: any }) {
     const { brukerFnr, visVeilederVerktoy } = useAppStore();
@@ -27,7 +27,8 @@ export function DataFetcher(props: { children: any }) {
         setVergeOgFullmakt,
         setSpraakTolk,
         setGjeldendeEskaleringsvarsel,
-        setHuskelapp
+        setHuskelapp,
+        features
     } = useDataStore();
 
     const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
@@ -79,7 +80,9 @@ export function DataFetcher(props: { children: any }) {
     useEffect(() => {
         if (oppfolgingsEnhet) {
             veilederePaEnhetFetcher.fetch(oppfolgingsEnhet).then(ifResponseHasData(setVeilederePaEnhet)).catch();
-            huskelappFetcher.fetch(brukerFnr, oppfolgingsEnhet).then(ifResponseHasData(setHuskelapp)).catch();
+            if (features[HUSKELAPP]) {
+                huskelappFetcher.fetch(brukerFnr, oppfolgingsEnhet).then(ifResponseHasData(setHuskelapp)).catch();
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [oppfolgingstatusFetcher]);
