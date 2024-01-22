@@ -1,7 +1,7 @@
 import '../huskelapp.less';
 import { Heading, Modal } from '@navikt/ds-react';
 import React from 'react';
-import { ReactComponent as HuskelappIkon } from '../ikon/huskelapp.svg';
+import HuskelappIkon from '../ikon/huskelapp.svg?react';
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { HuskelappInformasjonsmelding } from '../huskelapp-informasjonsmelding';
@@ -43,8 +43,13 @@ export const HuskelappMedArbeidslisteVisningModal = () => {
                     </div>
                     <EksisterendeArbeidsliste arbeidsliste={arbeidsliste} visFjernKnapp={true} />
                 </div>
-                <HuskelappFooter typePrimaryBtn="button" textPrimaryBtn="Lag huskelapp" onActionClick={lagHuskelappKlikk}  onRequestClose={() => hideModal()} />
+                <HuskelappFooter
+                    typePrimaryBtn="button"
+                    textPrimaryBtn="Lag huskelapp"
+                    onActionClick={lagHuskelappKlikk}
+                    onRequestClose={() => hideModal()}
+                />
             </Modal.Body>
         </Modal>
     );
-}
+};
