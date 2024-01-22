@@ -110,10 +110,9 @@ export function fetchTilgangTilBrukersKontor(fnr: string): AxiosPromise<TilgangT
 }
 
 export function fetchInstillingsHistorikk(fnr: string): AxiosPromise<InnstillingHistorikkInnslag[]> {
-    return axiosInstance.post<InnstillingHistorikkInnslag[]>(
-        `/veilarboppfolging/api/v3/hent-instillingshistorikk`,
-        { fnr: fnr }
-    );
+    return axiosInstance.post<InnstillingHistorikkInnslag[]>(`/veilarboppfolging/api/v3/hent-instillingshistorikk`, {
+        fnr: fnr
+    });
 }
 
 export function fetchAvsluttOppfolgingStatus(fnr: string): AxiosPromise<AvslutningStatus> {
@@ -149,6 +148,7 @@ export function stoppKvpOppfolging(fnr: string, begrunnelse: string): AxiosPromi
         begrunnelse
     });
 }
+
 export function avsluttOppfolging(fnr: string, begrunnelse: string, veilederId: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/v2/oppfolging/avslutt`, {
         fnr,

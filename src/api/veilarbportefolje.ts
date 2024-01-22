@@ -15,6 +15,14 @@ export interface Arbeidsliste {
     veilederId?: StringOrNothing;
 }
 
+export interface Huskelapp {
+    huskelappId: StringOrNothing;
+    frist: OrNothing<Date>;
+    kommentar: StringOrNothing;
+    endretDato: OrNothing<Date>;
+    endretAv: StringOrNothing;
+}
+
 export enum KategoriModell {
     BLA = 'BLA',
     GRONN = 'GRONN',
@@ -28,6 +36,26 @@ export interface ArbeidslisteformValues {
     frist: StringOrNothing;
     overskrift: StringOrNothing | null;
     kategori: KategoriModell | null;
+}
+
+export interface HuskelappformValues {
+    huskelappId: StringOrNothing;
+    kommentar: StringOrNothing;
+    frist: StringOrNothing;
+}
+
+export interface HuskelappLagreValues {
+    brukerFnr: StringOrNothing;
+    kommentar: StringOrNothing;
+    frist: StringOrNothing;
+    enhetId: StringOrNothing;
+}
+export interface HuskelappRedigerValues {
+    huskelappId: StringOrNothing;
+    brukerFnr: StringOrNothing;
+    kommentar: StringOrNothing;
+    frist: StringOrNothing;
+    enhetId: StringOrNothing;
 }
 
 export function fetchArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
@@ -44,4 +72,20 @@ export function redigerArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformV
 
 export function slettArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
     return axiosInstance.delete(`/veilarbportefolje/api/v2/arbeidsliste`, { data: { fnr: fnr } });
+}
+
+export function fetchHuskelapp(fnr: string, enhetId: string): AxiosPromise<Huskelapp> {
+    return axiosInstance.post(`/veilarbportefolje/api/v1/hent-huskelapp-for-bruker`, { fnr: fnr, enhetId: enhetId });
+}
+
+export function lagreHuskelapp(huskelappformValues: HuskelappLagreValues): AxiosPromise<String> {
+    return axiosInstance.post(`/veilarbportefolje/api/v1/huskelapp`, huskelappformValues);
+}
+
+export function redigerHuskelapp(huskelappformValues: HuskelappRedigerValues): AxiosPromise {
+    return axiosInstance.put(`/veilarbportefolje/api/v1/huskelapp`, huskelappformValues);
+}
+
+export function slettHuskelapp(huskelappId: string): AxiosPromise<String> {
+    return axiosInstance.delete(`/veilarbportefolje/api/v1/huskelapp`, { data: { huskelappId: huskelappId } });
 }

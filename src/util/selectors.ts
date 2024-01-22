@@ -2,7 +2,7 @@ import { storeForbokstaver } from './utils';
 import { Dialog, GjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { Personalia } from '../api/veilarbperson';
-import { Arbeidsliste } from '../api/veilarbportefolje';
+import { Arbeidsliste, Huskelapp } from '../api/veilarbportefolje';
 import { VeilederData } from '../api/veilarbveileder';
 import { OrNothing, StringOrNothing } from './type/utility-types';
 
@@ -46,6 +46,31 @@ export function kanFjerneArbeidsliste(
     innloggetVeilederId: OrNothing<string>
 ): boolean {
     return !!arbeidsliste.endringstidspunkt && !!innloggetVeilederId && oppfolging?.veilederId === innloggetVeilederId;
+}
+
+export function selectKanOppretteHuskelapp(
+    innloggetVeileder: OrNothing<VeilederData>,
+    oppfolgingsstatus: OrNothing<OppfolgingStatus>
+): boolean {
+    if (!innloggetVeileder || !oppfolgingsstatus) return false;
+    return oppfolgingsstatus.veilederId === innloggetVeileder.ident;
+}
+
+export function selectKanRedigereHuskelapp(
+    innloggetVeileder: OrNothing<VeilederData>,
+    oppfolgingsstatus: OrNothing<OppfolgingStatus>,
+    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
+): boolean {
+    if (!innloggetVeileder || !oppfolgingsstatus || !tilgangTilBrukersKontor) return false;
+    return tilgangTilBrukersKontor.tilgangTilBrukersKontor;
+}
+
+export function kanFjerneHuskelapp(
+    huskelapp: Huskelapp,
+    oppfolging: OrNothing<Oppfolging>,
+    innloggetVeilederId: OrNothing<string>
+): boolean {
+    return !!huskelapp.endretDato && !!innloggetVeilederId && oppfolging?.veilederId === innloggetVeilederId;
 }
 
 export function selectKanSendeEskaleringsVarsel(

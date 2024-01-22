@@ -19,7 +19,7 @@ function FormikTekstArea({
     size = 'medium',
     ...textAreaProps
 }: TekstAreaProps & Omit<TextareaProps, OmitProps>) {
-    const [skjulTextAreaMensKomponentenLaster, setSkjulTextAreaMensKomponentenLaster] = useState(true)
+    const [skjulTextAreaMensKomponentenLaster, setSkjulTextAreaMensKomponentenLaster] = useState(true);
 
     // Ting vi gjer for å unngå resize-feil frå designsystemet
     useEffect(() => {

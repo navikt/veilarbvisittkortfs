@@ -1,10 +1,10 @@
 import React from 'react';
 import ArbeidslistekategoriVisning from './arbeidslistekategori-visning';
 import withClickMetric from '../components/click-metric/click-metric';
-import KnappFss from '../components/knapp-fss/knapp-fss';
 import { useDataStore } from '../../store/data-store';
 import { KategoriModell } from '../../api/veilarbportefolje';
 import { trackAmplitude } from '../../amplitude/amplitude';
+import { Button } from '@navikt/ds-react';
 
 export interface ArbeidslisteKnappProps {
     hidden: boolean;
@@ -14,6 +14,10 @@ export interface ArbeidslisteKnappProps {
 
 function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
     const { arbeidsliste } = useDataStore();
+
+    if(props.hidden) {
+        return null;
+    }
 
     const kategori = arbeidsliste?.kategori || KategoriModell.TOM;
 
@@ -26,9 +30,13 @@ function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
     };
 
     return (
-        <KnappFss className="arbeidsliste-knapp" onClick={onClick} hidden={props.hidden}>
-            <ArbeidslistekategoriVisning kategori={kategori} />
-        </KnappFss>
+        <Button
+            icon={<ArbeidslistekategoriVisning kategori={kategori} />}
+            className="arbeidsliste-knapp"
+            onClick={onClick}
+            variant={'tertiary-neutral'}
+            size={'medium'}
+        />
     );
 }
 

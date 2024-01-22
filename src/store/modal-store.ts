@@ -31,7 +31,12 @@ export enum ModalType {
     STOPP_ESKALERING_KVITTERING,
     HISTORIKK,
     FEIL_I_VEILEDERVERKTOY,
-    SPINNER
+    SPINNER,
+    HUSKELAPP,
+    FJERN_HUSKELAPP,
+    HUSKELAPP_REDIGERE,
+    HUSKELAPP_MED_ARBEIDSLISTE,
+    HUSKELAPP_REDIGERE_MED_ARBEIDSLISTE
 }
 
 export interface ModalState {
@@ -135,6 +140,26 @@ export const [ModalStore, useModalStore] = constate(() => {
         showModal(ModalType.FJERN_ARBEIDSLISTE);
     }
 
+    function showHuskelappModal() {
+        showModal(ModalType.HUSKELAPP);
+    }
+
+    function showHuskelappMedArbeidslisteModal() {
+        showModal(ModalType.HUSKELAPP_MED_ARBEIDSLISTE);
+    }
+
+    function showHuskelappRedigereModal() {
+        showModal(ModalType.HUSKELAPP_REDIGERE);
+    }
+
+    function showHuskelappRedigereMedArbeidslisteModal() {
+        showModal(ModalType.HUSKELAPP_REDIGERE_MED_ARBEIDSLISTE);
+    }
+
+    function showFjernHuskelappModal() {
+        showModal(ModalType.FJERN_HUSKELAPP);
+    }
+
     function showStartEskaleringKvitteringModal() {
         showModal(ModalType.START_ESKALERING_KVITTERING);
     }
@@ -178,6 +203,11 @@ export const [ModalStore, useModalStore] = constate(() => {
         showStoppKvpPeriodeModal,
         showOpprettOppgaveModal,
         showAvsluttOppfolgingModal,
-        showHistorikkModal
+        showHistorikkModal,
+        showHuskelappModal,
+        showFjernHuskelappModal,
+        showHuskelappRedigereModal,
+        showHuskelappMedArbeidslisteModal,
+        showHuskelappRedigereMedArbeidslisteModal
     };
 });
