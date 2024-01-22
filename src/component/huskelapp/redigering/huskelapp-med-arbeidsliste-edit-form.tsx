@@ -6,7 +6,7 @@ import { EksisterendeArbeidsliste } from '../eksisterendeArbeidsliste';
 import React from 'react';
 import { OrNothing } from '../../../util/type/utility-types';
 import { Arbeidsliste } from '../../../api/veilarbportefolje';
-import { HuskelappFooter } from "../huskelapp-footer";
+import { HuskelappFooter } from '../huskelapp-footer';
 
 interface HuskelappMedArbeidslisteFormProps {
     onRequestClose: () => void;
@@ -28,7 +28,7 @@ export function HuskelappMedArbeidslisteEditForm(formValues: HuskelappMedArbeids
                         <HuskelappForm />
                     </Form>
                 </div>
-                <EksisterendeArbeidsliste arbeidsliste={formValues.arbeidsliste} visFjernKnapp={true} />
+                <EksisterendeArbeidsliste arbeidsliste={formValues.arbeidsliste} />
             </div>
             <HuskelappFooter
                 onRequestClose={formValues.onRequestClose}
