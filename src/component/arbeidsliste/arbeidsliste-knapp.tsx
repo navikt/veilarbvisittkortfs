@@ -15,6 +15,10 @@ export interface ArbeidslisteKnappProps {
 function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
     const { arbeidsliste } = useDataStore();
 
+    if(props.hidden) {
+        return null;
+    }
+
     const kategori = arbeidsliste?.kategori || KategoriModell.TOM;
 
     const onClick = () => {
@@ -30,10 +34,9 @@ function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
             icon={<ArbeidslistekategoriVisning kategori={kategori} />}
             className="arbeidsliste-knapp"
             onClick={onClick}
-            hidden={props.hidden}
             variant={'tertiary-neutral'}
             size={'medium'}
-        ></Button>
+        />
     );
 }
 
