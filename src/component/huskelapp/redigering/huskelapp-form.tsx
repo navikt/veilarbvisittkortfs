@@ -5,11 +5,7 @@ import { validerFristFelt, validerHuskelappKommentarFelt } from '../../../util/f
 import { Alert } from '@navikt/ds-react';
 import { useDataStore } from '../../../store/data-store';
 
-interface Props {
-    visManglerFristOgKommentarHuskelapp: boolean;
-}
-
-export function HuskelappForm(props: Props) {
+export function HuskelappForm() {
     const { visFeilHuskelapp, setVisFeilHuskelapp } = useDataStore();
 
     return (

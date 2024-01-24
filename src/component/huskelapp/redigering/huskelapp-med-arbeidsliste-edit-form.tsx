@@ -26,7 +26,7 @@ export function HuskelappMedArbeidslisteEditForm(formValues: HuskelappMedArbeids
                     </Heading>
                     <HuskelappInformasjonsmelding />
                     <Form id="huskelapp-form">
-                        <HuskelappForm visManglerFristOgKommentarHuskelapp={formValues.manglerFristOgKommentar} />
+                        <HuskelappForm />
                     </Form>
                 </div>
                 <EksisterendeArbeidsliste arbeidsliste={formValues.arbeidsliste} />

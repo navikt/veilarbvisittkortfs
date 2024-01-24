@@ -7,7 +7,6 @@ import React from 'react';
 
 interface HuskelappMedArbeidslisteFormProps {
     onRequestClose: () => void;
-    visManglerFristOgKommentarHuskelapp: boolean;
 }
 
 export const HuskelappEditForm = (formValues: HuskelappMedArbeidslisteFormProps) => (
@@ -17,7 +16,7 @@ export const HuskelappEditForm = (formValues: HuskelappMedArbeidslisteFormProps)
         </Heading>
         <HuskelappInformasjonsmelding />
         <Form id="huskelapp-form">
-            <HuskelappForm visManglerFristOgKommentarHuskelapp={formValues.visManglerFristOgKommentarHuskelapp} />
+            <HuskelappForm />
         </Form>
         <HuskelappFooter typePrimaryBtn="submit" textPrimaryBtn="Lagre" onRequestClose={formValues.onRequestClose} />
     </>
