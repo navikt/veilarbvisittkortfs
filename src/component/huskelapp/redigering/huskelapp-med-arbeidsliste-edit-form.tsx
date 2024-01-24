@@ -13,6 +13,7 @@ interface HuskelappMedArbeidslisteFormProps {
     huskelapFrist?: OrNothing<Date>;
     huskelapInnhold?: OrNothing<String>;
     arbeidsliste: Arbeidsliste;
+    manglerFristOgKommentar: boolean;
 }
 
 export function HuskelappMedArbeidslisteEditForm(formValues: HuskelappMedArbeidslisteFormProps) {
@@ -25,7 +26,7 @@ export function HuskelappMedArbeidslisteEditForm(formValues: HuskelappMedArbeids
                     </Heading>
                     <HuskelappInformasjonsmelding />
                     <Form id="huskelapp-form">
-                        <HuskelappForm />
+                        <HuskelappForm visManglerFristOgKommentarHuskelapp={formValues.manglerFristOgKommentar} />
                     </Form>
                 </div>
                 <EksisterendeArbeidsliste arbeidsliste={formValues.arbeidsliste} />

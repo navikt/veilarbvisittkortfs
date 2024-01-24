@@ -21,6 +21,7 @@ export const [DataStore, useDataStore] = constate(() => {
     const [features, setFeatures] = useState<OboUnleashFeatures>(placeholder);
     const [arbeidsliste, setArbeidsliste] = useState<Arbeidsliste>();
     const [huskelapp, setHuskelapp] = useState<Huskelapp>();
+    const [visFeilHuskelapp, setVisFeilHuskelapp] = useState<boolean>(false);
     const [veilederePaEnhet, setVeilederePaEnhet] = useState<VeilederListe>();
     const [gjeldendeEskaleringsvarsel, setGjeldendeEskaleringsvarsel] = useState<GjeldendeEskaleringsvarsel | null>(
         null
@@ -46,6 +47,8 @@ export const [DataStore, useDataStore] = constate(() => {
         setArbeidsliste,
         huskelapp,
         setHuskelapp,
+        visFeilHuskelapp,
+        setVisFeilHuskelapp,
         veilederePaEnhet,
         setVeilederePaEnhet,
         vergeOgFullmakt,

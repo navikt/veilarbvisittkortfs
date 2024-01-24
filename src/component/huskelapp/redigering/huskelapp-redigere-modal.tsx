@@ -27,7 +27,7 @@ const huskelappEmptyValues = {
 function HuskelappRedigereModal() {
     const { brukerFnr, enhetId } = useAppStore();
     const { hideModal, showSpinnerModal, showErrorModal, showHuskelappModal } = useModalStore();
-    const { huskelapp, setHuskelapp, setArbeidsliste } = useDataStore();
+    const { huskelapp, setHuskelapp, setArbeidsliste, visFeilHuskelapp, setVisFeilHuskelapp } = useDataStore();
 
     const erIRedigeringModus = huskelapp?.endretDato;
 
@@ -49,6 +49,10 @@ function HuskelappRedigereModal() {
     }
 
     function handleSubmit(values: HuskelappformValues) {
+        if ((values.frist === null || values.frist === '') && (values.kommentar === null || values.kommentar === '')) {
+            setVisFeilHuskelapp(true);
+            return;
+        }
         logMetrikk('veilarbvisittkortfs.metrikker.huskelapp', {
             leggtil: !erIRedigeringModus,
             applikasjon: 'visittkort'
@@ -115,7 +119,10 @@ function HuskelappRedigereModal() {
                     width={'400px'}
                 >
                     <Modal.Body>
-                        <HuskelappEditForm onRequestClose={() => onRequestClose(formikProps)} />
+                        <HuskelappEditForm
+                            onRequestClose={() => onRequestClose(formikProps)}
+                            visManglerFristOgKommentarHuskelapp={visFeilHuskelapp}
+                        />
                     </Modal.Body>
                 </Modal>
             )}

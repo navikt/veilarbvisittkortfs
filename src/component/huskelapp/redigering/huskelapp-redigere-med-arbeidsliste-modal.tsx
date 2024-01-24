@@ -20,7 +20,7 @@ const huskelappEmptyValues = {
 function HuskelappRedigereModal() {
     const { brukerFnr, enhetId } = useAppStore();
     const { hideModal, showSpinnerModal, showErrorModal, showHuskelappModal } = useModalStore();
-    const { setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
+    const { setHuskelapp, arbeidsliste, setArbeidsliste, visFeilHuskelapp, setVisFeilHuskelapp } = useDataStore();
 
     function onRequestClose(formikProps: FormikProps<HuskelappformValues>) {
         const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
@@ -32,6 +32,10 @@ function HuskelappRedigereModal() {
     }
 
     function handleSubmit(values: HuskelappformValues) {
+        if ((values.frist === null || values.frist === '') && (values.kommentar === null || values.kommentar === '')) {
+            setVisFeilHuskelapp(true);
+            return;
+        }
         logMetrikk('veilarbvisittkortfs.metrikker.huskelapp', {
             leggtil: true,
             applikasjon: 'visittkort'
@@ -86,6 +90,7 @@ function HuskelappRedigereModal() {
                         <HuskelappMedArbeidslisteEditForm
                             onRequestClose={() => onRequestClose(formikProps)}
                             arbeidsliste={arbeidsliste!}
+                            manglerFristOgKommentar={visFeilHuskelapp}
                         />
                     </Modal.Body>
                 </Modal>
