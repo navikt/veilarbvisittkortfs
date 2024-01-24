@@ -1,9 +1,9 @@
 import React from 'react';
 import FormikTekstArea from '../../components/formik/formik-textarea';
-import FormikDatoVelger from '../../components/formik/formik-datepicker';
 import { validerFristFelt, validerHuskelappKommentarFelt } from '../../../util/formik-validation';
 import { Alert } from '@navikt/ds-react';
 import { useDataStore } from '../../../store/data-store';
+import FormikDatoVelgerHuskelapp from '../../components/formik/formik-datepicker-huskelapp';
 
 export function HuskelappForm() {
     const { visFeilHuskelapp, setVisFeilHuskelapp } = useDataStore();
@@ -23,7 +23,12 @@ export function HuskelappForm() {
                 className="margin-bottom-s"
                 onChangeCapture={() => setVisFeilHuskelapp(false)}
             />
-            <FormikDatoVelger name="frist" validate={validerFristFelt} label="Frist" ariaLabel="Frist for huskelapp" />
+            <FormikDatoVelgerHuskelapp
+                name="frist"
+                validate={validerFristFelt}
+                label="Frist"
+                ariaLabel="Frist for huskelapp"
+            />
         </>
     );
 }
