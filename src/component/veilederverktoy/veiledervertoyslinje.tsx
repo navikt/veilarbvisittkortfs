@@ -53,7 +53,7 @@ function Veilederverktoyslinje() {
         showHistorikkModal,
         showHuskelappRedigereModal,
         showHuskelappModal,
-        showHuskelappMedArbeidslisteModal
+        showHuskelappRedigereMedArbeidslisteModal
     } = useModalStore();
 
     const kanStarteEskalering = selectKanSendeEskaleringsVarsel(
@@ -113,7 +113,7 @@ function Veilederverktoyslinje() {
         if (!harArbeidsliste && harHuskelapp) {
             return showHuskelappModal();
         } else if (harArbeidsliste && !harHuskelapp) {
-            return showHuskelappMedArbeidslisteModal();
+            return showHuskelappRedigereMedArbeidslisteModal();
         }
 
         return showHuskelappRedigereModal();

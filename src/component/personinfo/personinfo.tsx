@@ -37,7 +37,7 @@ function PersonInfo() {
         showArbeidslisteModal,
         showHuskelappRedigereModal,
         showHuskelappModal,
-        showHuskelappMedArbeidslisteModal
+        showHuskelappRedigereMedArbeidslisteModal,
     } = useModalStore();
 
     const arbeidslisteikon = arbeidsliste?.kategori;
@@ -65,7 +65,7 @@ function PersonInfo() {
         if (erArbeidslisteTom && erHuskelappTom) {
             showHuskelappRedigereModal();
         } else if (!erArbeidslisteTom && erHuskelappTom) {
-            showHuskelappMedArbeidslisteModal();
+            showHuskelappRedigereMedArbeidslisteModal();
         } else {
             showHuskelappModal();
         }
