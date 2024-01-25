@@ -1,34 +1,30 @@
 import React from 'react';
 import FormikTekstArea from '../../components/formik/formik-textarea';
 import { validerFristFelt, validerHuskelappKommentarFelt } from '../../../util/formik-validation';
-import { Alert } from '@navikt/ds-react';
-import { useDataStore } from '../../../store/data-store';
-import FormikDatoVelgerHuskelapp from '../../components/formik/formik-datepicker-huskelapp';
+import { ErrorMessage, useFormikContext } from 'formik';
+import FormikDatoVelger from '../../components/formik/formik-datepicker';
+import '../huskelapp.less';
 
 export function HuskelappForm() {
-    const { visFeilHuskelapp, setVisFeilHuskelapp } = useDataStore();
+    const { errors } = useFormikContext();
 
     return (
         <>
-            {visFeilHuskelapp && (
-                <Alert inline variant="error">
-                    Du må legge til enten frist eller kommentar for å kunne lagre huskelappen
-                </Alert>
-            )}
             <FormikTekstArea
                 name="kommentar"
                 label=""
                 maxLength={100}
                 validate={validerHuskelappKommentarFelt}
                 className="margin-bottom-s"
-                onChangeCapture={() => setVisFeilHuskelapp(false)}
             />
-            <FormikDatoVelgerHuskelapp
-                name="frist"
-                validate={validerFristFelt}
-                label="Frist"
-                ariaLabel="Frist for huskelapp"
-            />
+
+            <FormikDatoVelger name="frist" validate={validerFristFelt} label="Frist" ariaLabel="Frist for huskelapp" />
+            {errors && (
+                <div className="feilmelding-kommentar-eller-frist">
+                    {' '}
+                    <ErrorMessage name="huskelappId" />{' '}
+                </div>
+            )}
         </>
     );
 }

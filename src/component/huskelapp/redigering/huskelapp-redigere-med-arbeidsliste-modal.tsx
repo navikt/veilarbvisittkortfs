@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikBag, FormikProps } from 'formik';
 import { fetchHuskelapp, HuskelappformValues, lagreHuskelapp, slettArbeidsliste } from '../../../api/veilarbportefolje';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
@@ -20,7 +20,7 @@ const huskelappEmptyValues = {
 function HuskelappRedigereModal() {
     const { brukerFnr, enhetId } = useAppStore();
     const { hideModal, showSpinnerModal, showErrorModal, showHuskelappModal } = useModalStore();
-    const { setHuskelapp, arbeidsliste, setArbeidsliste, visFeilHuskelapp, setVisFeilHuskelapp } = useDataStore();
+    const { setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
 
     function onRequestClose(formikProps: FormikProps<HuskelappformValues>) {
         const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
@@ -28,14 +28,12 @@ function HuskelappRedigereModal() {
             hideModal();
             logMetrikk('veilarbvisittkortfs.metrikker.huskelapp.avbryt');
             formikProps.resetForm();
-            setVisFeilHuskelapp(false);
         }
     }
 
-    function handleSubmit(values: HuskelappformValues) {
+    function handleSubmit(values: HuskelappformValues, formikFunctions: FormikBag<any, any>) {
         if ((values.frist === null || values.frist === '') && (values.kommentar === null || values.kommentar === '')) {
-            setVisFeilHuskelapp(true);
-            return;
+            return formikFunctions.setErrors({ huskelappId: 'Du har feil nå' });
         }
         logMetrikk('veilarbvisittkortfs.metrikker.huskelapp', {
             leggtil: true,
@@ -91,7 +89,6 @@ function HuskelappRedigereModal() {
                         <HuskelappMedArbeidslisteEditForm
                             onRequestClose={() => onRequestClose(formikProps)}
                             arbeidsliste={arbeidsliste!}
-                            manglerFristOgKommentar={visFeilHuskelapp}
                         />
                     </Modal.Body>
                 </Modal>

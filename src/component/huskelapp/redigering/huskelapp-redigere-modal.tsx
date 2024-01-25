@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikBag, FormikProps } from 'formik';
 import {
     fetchHuskelapp,
     HuskelappformValues,
@@ -27,7 +27,7 @@ const huskelappEmptyValues = {
 function HuskelappRedigereModal() {
     const { brukerFnr, enhetId } = useAppStore();
     const { hideModal, showSpinnerModal, showErrorModal, showHuskelappModal } = useModalStore();
-    const { huskelapp, setHuskelapp, setArbeidsliste, setVisFeilHuskelapp } = useDataStore();
+    const { huskelapp, setHuskelapp, setArbeidsliste } = useDataStore();
 
     const erIRedigeringModus = huskelapp?.endretDato;
 
@@ -45,14 +45,15 @@ function HuskelappRedigereModal() {
             hideModal();
             logMetrikk('veilarbvisittkortfs.metrikker.huskelapp.avbryt');
             formikProps.resetForm();
-            setVisFeilHuskelapp(false);
+            //setVisFeilHuskelapp(false);
         }
     }
 
-    function handleSubmit(values: HuskelappformValues) {
+    function handleSubmit(values: HuskelappformValues, formikFunctions: FormikBag<any, any>) {
         if ((values.frist === null || values.frist === '') && (values.kommentar === null || values.kommentar === '')) {
-            setVisFeilHuskelapp(true);
-            return;
+            return formikFunctions.setErrors({
+                huskelappId: 'Du må legge til enten frist eller kommentar for å kunne lagre huskelappen'
+            });
         }
         logMetrikk('veilarbvisittkortfs.metrikker.huskelapp', {
             leggtil: !erIRedigeringModus,
@@ -107,7 +108,7 @@ function HuskelappRedigereModal() {
     }
 
     return (
-        <Formik key={brukerFnr} initialValues={initalValues} onSubmit={handleSubmit}>
+        <Formik key={brukerFnr} initialValues={initalValues} onSubmit={handleSubmit} validateOnBlur={false}>
             {formikProps => (
                 <Modal
                     header={{
