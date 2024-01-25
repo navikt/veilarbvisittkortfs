@@ -75,7 +75,7 @@ function HuskelappRedigereModal() {
     }
 
     return (
-        <Formik key={brukerFnr} initialValues={huskelappEmptyValues} onSubmit={handleSubmit}>
+        <Formik key={brukerFnr} initialValues={huskelappEmptyValues} onSubmit={handleSubmit} validateOnBlur={false}>
             {formikProps => (
                 <Modal
                     header={{
