@@ -33,7 +33,9 @@ function HuskelappRedigereModal() {
 
     function handleSubmit(values: HuskelappformValues, formikFunctions: FormikBag<any, any>) {
         if ((values.frist === null || values.frist === '') && (values.kommentar === null || values.kommentar === '')) {
-            return formikFunctions.setErrors({ huskelappId: 'Du har feil nå' });
+            return formikFunctions.setErrors({
+                huskelappId: 'Du må legge til enten frist eller kommentar for å kunne lagre huskelappen'
+            });
         }
         logMetrikk('veilarbvisittkortfs.metrikker.huskelapp', {
             leggtil: true,
