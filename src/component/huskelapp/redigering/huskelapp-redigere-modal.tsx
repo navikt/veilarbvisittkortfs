@@ -45,7 +45,6 @@ function HuskelappRedigereModal() {
             hideModal();
             logMetrikk('veilarbvisittkortfs.metrikker.huskelapp.avbryt');
             formikProps.resetForm();
-            //setVisFeilHuskelapp(false);
         }
     }
 
