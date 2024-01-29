@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikBag, FormikProps } from 'formik';
 import {
     fetchHuskelapp,
     HuskelappformValues,
@@ -17,6 +17,7 @@ import { Modal } from '@navikt/ds-react';
 import { ReactComponent as HuskelappIkon } from '../ikon/huskelapp.svg';
 import { toReversedDateStr } from '../../../util/date-utils';
 import { HuskelappEditForm } from './huskelapp-edit-form';
+import { HuskelappMedArbeidslisteEditForm } from './huskelapp-med-arbeidsliste-edit-form';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -24,10 +25,14 @@ const huskelappEmptyValues = {
     frist: ''
 };
 
-function HuskelappRedigereModal() {
+export interface HuskelappModalProps {
+    medArbeidsliste: boolean;
+}
+
+function HuskelappRedigereModal({ medArbeidsliste }: HuskelappModalProps) {
     const { brukerFnr, enhetId } = useAppStore();
     const { hideModal, showSpinnerModal, showErrorModal, showHuskelappModal } = useModalStore();
-    const { huskelapp, setHuskelapp, setArbeidsliste } = useDataStore();
+    const { huskelapp, setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
 
     const erIRedigeringModus = huskelapp?.endretDato;
 
@@ -48,7 +53,13 @@ function HuskelappRedigereModal() {
         }
     }
 
-    function handleSubmit(values: HuskelappformValues) {
+    function handleSubmit(values: HuskelappformValues, formikFunctions: FormikBag<any, any>) {
+        if ((values.frist === null || values.frist === '') && (values.kommentar === null || values.kommentar === '')) {
+            return formikFunctions.setErrors({
+                frist: 'Du må legge til enten frist eller kommentar for å kunne lagre huskelappen',
+                kommentar: 'Du må legge til enten frist eller kommentar for å kunne lagre huskelappen'
+            });
+        }
         logMetrikk('veilarbvisittkortfs.metrikker.huskelapp', {
             leggtil: !erIRedigeringModus,
             applikasjon: 'visittkort'
@@ -102,7 +113,7 @@ function HuskelappRedigereModal() {
     }
 
     return (
-        <Formik key={brukerFnr} initialValues={initalValues} onSubmit={handleSubmit}>
+        <Formik key={brukerFnr} initialValues={initalValues} onSubmit={handleSubmit} validateOnBlur={false}>
             {formikProps => (
                 <Modal
                     header={{
@@ -112,10 +123,16 @@ function HuskelappRedigereModal() {
                     }}
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
-                    width={'400px'}
+                    width={medArbeidsliste ? '800px' : '400px'}
                 >
                     <Modal.Body>
-                        <HuskelappEditForm onRequestClose={() => onRequestClose(formikProps)} />
+                        {medArbeidsliste && (
+                            <HuskelappMedArbeidslisteEditForm
+                                onRequestClose={() => onRequestClose(formikProps)}
+                                arbeidsliste={arbeidsliste!}
+                            />
+                        )}
+                        {!medArbeidsliste && <HuskelappEditForm onRequestClose={() => onRequestClose(formikProps)} />}
                     </Modal.Body>
                 </Modal>
             )}
