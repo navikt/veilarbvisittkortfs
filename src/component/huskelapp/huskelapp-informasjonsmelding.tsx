@@ -19,7 +19,7 @@ export const HuskelappInformasjonsmelding = () => (
                     });
                 }}
             >
-                Les mer om hvordan bruke huskelapp på Navet <ExternalLinkIcon fr="0" />
+                Les mer om hvordan bruke huskelapp på Navet <ExternalLinkIcon />
             </Link>
         </b>
     </Alert>

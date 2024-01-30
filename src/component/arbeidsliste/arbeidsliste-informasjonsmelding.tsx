@@ -21,7 +21,7 @@ export const ArbeidslisteInformasjonsmelding = () => (
                     });
                 }}
             >
-                Les mer om hvordan bruke arbeidslisten på Navet <ExternalLinkIcon fr="0" />
+                Les mer om hvordan bruke arbeidslisten på Navet <ExternalLinkIcon />
             </Link>
         </b>
     </Alert>
