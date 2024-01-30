@@ -1,7 +1,6 @@
 import React from 'react';
 import './veilederverktoy.less';
 import '../components/knapp-fss/knapp-fss.less';
-import Dropdown from '../components/dropdown/dropdown';
 import StartRegistreringProsess from './start-registrering/start-registrering-prosess';
 import StartProsess from './prosess/start-prosess';
 import { useAppStore } from '../../store/app-store';
@@ -26,6 +25,7 @@ import {
 import { doAll } from '../../util/utils';
 import { trackAmplitude } from '../../amplitude/amplitude';
 import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
+import DropdownMeny from './dropdown-meny/dropdown-meny';
 
 function Veilederverktoyslinje() {
     const { visVeilederVerktoy } = useAppStore();
@@ -121,7 +121,7 @@ function Veilederverktoyslinje() {
 
     return (
         <div className="veilederverktoy-dropdown">
-            <Dropdown
+            <DropdownMeny
                 metricName="dropdown-trykket"
                 ariaLabelledBy="veilederverkoy_span"
                 knappeTekst="Veilederverktøy"

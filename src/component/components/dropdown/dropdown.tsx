@@ -5,7 +5,6 @@ import withClickMetric from '../click-metric/click-metric';
 import hiddenIf from '../hidden-if/hidden-if';
 import { useDocumentEventListner } from '../../../util/hook/use-event-listner';
 import { Button } from '@navikt/ds-react';
-import { CogIcon } from '@navikt/aksel-icons';
 
 /* tslint:disable */
 const btnCls = (erApen: boolean, className: string | undefined) =>
@@ -69,7 +68,6 @@ function Dropdown(props: DropdownProps) {
         <div className={btnCls(apen, className)} ref={loggNode}>
             <Button
                 variant="tertiary-neutral"
-                icon={<CogIcon className="knapp-fss__icon" />}
                 ref={btnRef}
                 className={classNames('dropdown__btn', props.btnClassnames)}
                 onClick={toggleDropdown}

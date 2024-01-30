@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import './dropdown-meny.less';
 import { useDocumentEventListner } from '../../../util/hook/use-event-listner';
 import { Button } from '@navikt/ds-react';
-import { ReactComponent as TannHjulIkon } from '../../veilederverktoy/tannhjul.svg';
+import { CogIcon } from '@navikt/aksel-icons';
 import withClickMetric from '../../components/click-metric/click-metric';
 import hiddenIf from '../../components/hidden-if/hidden-if';
 
@@ -69,7 +69,7 @@ function DropdownMeny(props: DropdownMenyProps) {
         <div className={btnCls(apen, className)} ref={loggNode}>
             <Button
                 variant="tertiary-neutral"
-                icon={<TannHjulIkon className="knapp-fss__icon" />}
+                icon={<CogIcon className="knapp-fss__icon" />}
                 ref={btnRef}
                 className={classNames('dropdownmeny__btn', props.btnClassnames)}
                 onClick={toggleDropdown}
