@@ -101,7 +101,14 @@ function Etiketter() {
             >
                 Reservert KRR
             </Fokus>
-            <Fokus visible={oppfolging?.registrertKRR && !oppfolging?.kanVarsles}>
+            <Fokus
+                visible={
+                    oppfolging?.registrertKRR &&
+                    !oppfolging?.kanVarsles &&
+                    !oppfolging.manuell &&
+                    !oppfolging?.reservasjonKRR
+                }
+            >
                 Utdatert kontaktinformasjon i KRR
             </Fokus>
             <Fokus visible={oppfolging?.inaktivIArena}>Inaktivert</Fokus>
