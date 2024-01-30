@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import { Navspa } from '@navikt/navspa';
 import { isLocalDevelopment } from './util/utils';

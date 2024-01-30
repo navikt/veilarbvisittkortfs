@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
 import './etiketter.less';

@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { useModalStore } from '../../../store/modal-store';
 import { BodyShort, Heading } from '@navikt/ds-react';
@@ -6,7 +6,7 @@ import { BodyShort, Heading } from '@navikt/ds-react';
 interface KvitteringProps {
     tittel: string;
     alertStripeTekst: string;
-    footer?: React.ReactNode;
+    footer?: ReactNode;
     onRequestClose?: () => void;
 }
 

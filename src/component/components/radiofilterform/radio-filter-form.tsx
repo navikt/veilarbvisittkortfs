@@ -1,4 +1,4 @@
-import React from 'react';
+import { ChangeEvent } from 'react';
 import { Radio, RadioGroup } from '@navikt/ds-react';
 import './radio-filterform.less';
 
@@ -9,7 +9,7 @@ export interface RadioFilterFormProps<T> {
     radioName: string;
     fjernNullstill?: boolean;
     selected: string;
-    changeSelected: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    changeSelected: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 function RadioFilterForm<T>(props: RadioFilterFormProps<T>) {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { AvsluttOppfolgingInfoText } from './components/avslutt-oppfolging-info-text';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';

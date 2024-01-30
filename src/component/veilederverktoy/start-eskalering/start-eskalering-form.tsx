@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import FormikModal from '../../components/formik/formik-modal';
 import { Form, FormikProps } from 'formik';
 import Maltekstvelger from './maltekstvelger';
@@ -16,8 +16,8 @@ interface OwnProps<T extends StartEskaleringValues> {
     tekstariaLabel: string;
     isLoading: boolean;
     tittel?: string;
-    infoTekst?: React.ReactNode;
-    render?: (formikProps: FormikProps<T>) => React.ReactNode;
+    infoTekst?: ReactNode;
+    render?: (formikProps: FormikProps<T>) => ReactNode;
     maxLength?: number;
 }
 

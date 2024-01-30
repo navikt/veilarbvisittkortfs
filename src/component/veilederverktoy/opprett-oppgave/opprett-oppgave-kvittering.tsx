@@ -1,4 +1,3 @@
-import React from 'react';
 import Kvittering from '../prosess/kvittering';
 import { OppgaveTema, OppgaveType } from '../../../api/veilarboppgave';
 import { OrNothing } from '../../../util/type/utility-types';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { VarselModal } from '../components/varselmodal/varsel-modal';
 import { slettArbeidsliste } from '../../api/veilarbportefolje';
 import { useModalStore } from '../../store/modal-store';

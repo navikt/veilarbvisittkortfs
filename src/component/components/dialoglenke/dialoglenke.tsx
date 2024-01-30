@@ -1,12 +1,11 @@
-import React, { MouseEvent } from 'react';
-
+import { MouseEvent, ReactNode } from 'react';
 import { useModalStore } from '../../../store/modal-store';
 import { Link } from '@navikt/ds-react';
 
 interface Props {
     dialogId?: number;
     className?: string;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 function LenkeTilDialog({ dialogId, className, children }: Props) {

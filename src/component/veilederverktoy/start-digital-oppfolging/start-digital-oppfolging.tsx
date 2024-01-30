@@ -1,4 +1,3 @@
-import React from 'react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { Alert, BodyShort } from '@navikt/ds-react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';

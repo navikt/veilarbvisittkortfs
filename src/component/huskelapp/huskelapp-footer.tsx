@@ -1,4 +1,3 @@
-import React from 'react';
 import {Button} from '@navikt/ds-react';
 
 interface Props {

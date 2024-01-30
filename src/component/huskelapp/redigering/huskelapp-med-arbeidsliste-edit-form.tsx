@@ -3,7 +3,6 @@ import { HuskelappInformasjonsmelding } from '../huskelapp-informasjonsmelding';
 import { Form } from 'formik';
 import HuskelappForm from './huskelapp-form';
 import { EksisterendeArbeidsliste } from '../eksisterendeArbeidsliste';
-import React from 'react';
 import { OrNothing } from '../../../util/type/utility-types';
 import { Arbeidsliste } from '../../../api/veilarbportefolje';
 import { HuskelappFooter } from '../huskelapp-footer';

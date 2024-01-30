@@ -1,4 +1,3 @@
-import React from 'react';
 import PersonInfo from './component/personinfo/personinfo';
 import Veilederverktoyslinje from './component/veilederverktoy/veiledervertoyslinje';
 import Etiketter from './component/personinfo/components/etiketter';

@@ -1,4 +1,4 @@
-import React from 'react';
+import { PropsWithChildren } from 'react';
 import './varsel-modal.less';
 import { ReactComponent as AdvarselSirkelIkon } from './advarsel-sirkel.svg';
 import { ReactComponent as FeilSirkelIkon } from './feil-sirkel.svg';
@@ -20,7 +20,7 @@ export function VarselModal({
     children,
     className,
     type
-}: React.PropsWithChildren<VarselModalProps>) {
+}: PropsWithChildren<VarselModalProps>) {
     return (
         <Modal
             open={isOpen}

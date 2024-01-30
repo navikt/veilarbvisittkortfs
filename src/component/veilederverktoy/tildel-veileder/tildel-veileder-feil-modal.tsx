@@ -1,4 +1,3 @@
-import React from 'react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { logMetrikk } from '../../../util/logger';
 import { useModalStore } from '../../../store/modal-store';

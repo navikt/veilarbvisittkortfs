@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
 import { BodyShort, Loader } from '@navikt/ds-react';
 import { fetchHarUtkast } from '../../../../api/veilarbvedtaksstotte';

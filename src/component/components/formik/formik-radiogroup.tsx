@@ -1,5 +1,5 @@
+import { ChangeEvent } from 'react';
 import { Field, FieldProps } from 'formik';
-import React from 'react';
 import { RadioGroup, Radio } from '@navikt/ds-react';
 
 interface FormikRadioFilterProps<T> {
@@ -44,7 +44,7 @@ function FormikRadioGroup<T>({
                                         id={`${value}-${radioName}`}
                                         key={`${value}-${radioName}`}
                                         checked={field.value === value}
-                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
                                             form.setFieldValue(field.name, e.target.value)
                                         }
                                     >

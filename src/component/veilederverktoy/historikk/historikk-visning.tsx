@@ -1,6 +1,6 @@
+import { ReactElement } from 'react';
 import OppgaveHistorikkKomponent from './components/oppgavehistorikk';
 import InnstillingsHistorikkKomponent from './components/innstillingshistorikk';
-import React from 'react';
 import { OppfolgingEnhetEndret } from './components/oppfolgingEndret';
 import dayjs from 'dayjs';
 import { InnstillingHistorikkInnslag } from '../../../api/veilarboppfolging';
@@ -36,7 +36,7 @@ function mapTilKomponent(
     historikk: Historikk,
     indeks: number,
     indeksForNyesteEnhetEndring: number
-): React.ReactElement {
+): ReactElement {
     if (erInnstillingshistorikk(historikk)) {
         if (historikk.innslag.type === 'OPPFOLGINGSENHET_ENDRET') {
             return (

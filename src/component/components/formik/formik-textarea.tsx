@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Textarea, TextareaProps } from '@navikt/ds-react';
 import { Field, FieldProps } from 'formik';
 import { getErrors } from './formik-utils';

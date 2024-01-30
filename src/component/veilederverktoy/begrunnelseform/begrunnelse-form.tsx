@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import BegrunnelseFooter from './begrunnelse-form-footer';
 import FormikModal from '../../components/formik/formik-modal';
 import { Form, FormikProps } from 'formik';
@@ -14,8 +14,8 @@ interface OwnProps<T extends BegrunnelseValues> {
     tekstariaLabel: string;
     isLoading: boolean;
     tittel?: string;
-    infoTekst?: React.ReactNode;
-    render?: (formikProps: FormikProps<T>) => React.ReactNode;
+    infoTekst?: ReactNode;
+    render?: (formikProps: FormikProps<T>) => ReactNode;
     maxLength?: number;
 }
 

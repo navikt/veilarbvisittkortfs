@@ -1,4 +1,3 @@
-import React from 'react';
 import { Form } from 'formik';
 import OpprettOppgaveTemaSelector from './components/opprett-oppgave-tema-selector';
 import OppgaveInnerForm from './components/oppgave-inner-form';

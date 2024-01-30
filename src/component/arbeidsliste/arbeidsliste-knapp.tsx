@@ -1,4 +1,3 @@
-import React from 'react';
 import ArbeidslistekategoriVisning from './arbeidslistekategori-visning';
 import withClickMetric from '../components/click-metric/click-metric';
 import { useDataStore } from '../../store/data-store';

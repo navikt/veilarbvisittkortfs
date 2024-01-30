@@ -1,5 +1,4 @@
 import FormikSelect from '../../../components/formik/formik-select';
-import React from 'react';
 import { OppgaveTema, OppgaveType } from '../../../../api/veilarboppgave';
 import { OrNothing } from '../../../../util/type/utility-types';
 

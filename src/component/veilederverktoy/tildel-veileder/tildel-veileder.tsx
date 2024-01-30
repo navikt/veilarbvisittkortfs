@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { ChangeEvent, FormEvent, useMemo, useState } from 'react';
 import SokFilter from '../../components/sokfilter/sok-filter';
 import RadioFilterForm from '../../components/radiofilterform/radio-filter-form';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
@@ -28,7 +28,7 @@ function TildelVeileder() {
         });
     }, [veilederePaEnhet?.veilederListe, innloggetVeileder]);
 
-    const handleSubmitTildelVeileder = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmitTildelVeileder = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         document
@@ -72,7 +72,7 @@ function TildelVeileder() {
     return (
         <VeilederVerktoyModal tittel="Tildel veileder">
             <form
-                onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmitTildelVeileder(event)}
+                onSubmit={(event: FormEvent<HTMLFormElement>) => handleSubmitTildelVeileder(event)}
                 className="tildel-veileder__form"
             >
                 <SokFilter data={sorterteVeiledere} label="" placeholder="Søk navn eller NAV-ident">
@@ -83,7 +83,7 @@ function TildelVeileder() {
                             createValue={(veileder: VeilederData) => veileder.ident}
                             radioName="tildel-veileder"
                             selected={selectedVeilederId}
-                            changeSelected={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            changeSelected={(e: ChangeEvent<HTMLInputElement>) =>
                                 setSelectedVeilederId(e.target.value)
                             }
                         />
