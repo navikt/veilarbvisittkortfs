@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Navspa } from '@navikt/navspa';
 import { isLocalDevelopment } from './util/utils';
 import * as dayjs from 'dayjs';
@@ -12,14 +12,16 @@ Navspa.eksporter('veilarbvisittkortfs', App);
 
 if (isLocalDevelopment()) {
     const { worker } = require('./mock');
+    const container = document.getElementById('veilarbvisittkortfs-root');
+    const root = createRoot(container!);
 
     worker
         .start({ serviceWorker: { url: process.env.PUBLIC_URL + '/mockServiceWorker.js' } })
-        .then(() =>
-            ReactDOM.render(
-                <App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />,
-                document.getElementById('veilarbvisittkortfs-root')
-            )
+        .then(() => {
+                root.render(
+                    <App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />
+                );
+            }
         )
         .catch((e: Error) => {
             // eslint-disable-next-line no-console
