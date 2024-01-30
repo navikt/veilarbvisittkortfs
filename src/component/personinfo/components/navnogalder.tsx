@@ -1,4 +1,3 @@
-import React from 'react';
 import { Personalia } from '../../../api/veilarbperson';
 import { OrNothing } from '../../../util/type/utility-types';
 import { Heading } from '@navikt/ds-react';

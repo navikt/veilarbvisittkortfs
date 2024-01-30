@@ -1,4 +1,3 @@
-import React from 'react';
 import OpprettOppgaveTypeSelector from './opprett-oppgave-type-selector';
 import OpprettOppgavePrioritetSelector from './opprett-oppgave-prioritet-selector';
 import OpprettOppgaveVelgDatoer from './opprett-oppgave-dato-velger';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import cls from 'classnames';
 import { Formik, FormikProps, FormikValues } from 'formik';
 import { useModalStore } from '../../../store/modal-store';
@@ -9,7 +9,7 @@ interface FormikModalProps<Values> {
     handleSubmit: (values: Values) => void;
     validationSchema?: (values: Values) => void;
     className?: string;
-    render: (formikProps: FormikProps<Values>) => React.ReactNode;
+    render: (formikProps: FormikProps<Values>) => ReactNode;
     visConfirmDialog?: boolean;
     isOpen?: boolean;
     tittel?: string;

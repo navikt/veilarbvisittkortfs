@@ -1,4 +1,3 @@
-import React from 'react';
 import FormikTekstArea from '../../components/formik/formik-textarea';
 import { validerFristFelt, validerHuskelappKommentarFelt } from '../../../util/formik-validation';
 import FormikDatoVelger from '../../components/formik/formik-datepicker';

@@ -1,4 +1,3 @@
-import React from 'react';
 import Kvittering from '../prosess/kvittering';
 
 function StoppKVPKvittering() {

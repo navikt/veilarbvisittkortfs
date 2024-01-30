@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Alert, Link } from '@navikt/ds-react';
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import { trackAmplitude } from '../../amplitude/amplitude';

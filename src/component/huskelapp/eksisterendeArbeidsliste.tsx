@@ -1,5 +1,4 @@
 import { Alert, BodyLong, BodyShort, Button, Heading } from '@navikt/ds-react';
-import * as React from 'react';
 import { Arbeidsliste } from '../../api/veilarbportefolje';
 import { toSimpleDateStr } from '../../util/date-utils';
 import './huskelapp.less';

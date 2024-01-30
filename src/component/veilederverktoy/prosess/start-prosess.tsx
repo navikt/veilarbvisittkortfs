@@ -1,4 +1,3 @@
-import React from 'react';
 import withClickMetric, { ClickMetricProps } from '../../components/click-metric/click-metric';
 import { MenyKnapp } from '../../components/meny-knapp/meny-knapp';
 import { useAppStore } from '../../../store/app-store';

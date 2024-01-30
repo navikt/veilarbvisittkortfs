@@ -1,4 +1,3 @@
-import React from 'react';
 import Kvittering from '../prosess/kvittering';
 import { formaterDatoKortManed } from '../../../util/date-utils';
 

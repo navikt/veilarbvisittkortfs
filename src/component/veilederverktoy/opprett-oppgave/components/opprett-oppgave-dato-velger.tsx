@@ -1,4 +1,3 @@
-import React from 'react';
 import { validerOppgaveDatoFelt } from '../../../../util/formik-validation';
 import FormikDatoVelger from '../../../components/formik/formik-datepicker';
 

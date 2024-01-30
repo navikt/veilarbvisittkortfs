@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Heading, Modal } from '@navikt/ds-react';
 import { logMetrikk } from '../../util/logger';
 import { trackAmplitude } from '../../amplitude/amplitude';

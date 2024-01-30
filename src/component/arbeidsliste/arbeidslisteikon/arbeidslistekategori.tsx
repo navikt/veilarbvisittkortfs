@@ -1,12 +1,11 @@
-import React from 'react';
-import { ReactComponentElement } from 'react';
+import { ChangeEvent, ReactComponentElement } from 'react';
 
 interface ArbeidslistekategoriProps {
     value: string;
     arbeidslisteikon: ReactComponentElement<any>;
     name: string;
     checked: boolean;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     title?: string;
 }
 

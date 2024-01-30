@@ -1,4 +1,3 @@
-import React from 'react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { useModalStore } from '../../../store/modal-store';
 import { BodyShort, Heading } from '@navikt/ds-react';

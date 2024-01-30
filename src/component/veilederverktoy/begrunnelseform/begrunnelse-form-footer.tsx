@@ -1,4 +1,3 @@
-import React from 'react';
 import { useModalStore } from '../../../store/modal-store';
 import { Button } from '@navikt/ds-react';
 import './begrunnelse-form.less';

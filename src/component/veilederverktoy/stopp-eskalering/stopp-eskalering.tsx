@@ -1,4 +1,3 @@
-import React from 'react';
 import FormikModal from '../../components/formik/formik-modal';
 import { Form } from 'formik';
 import FormikCheckBox from '../../components/formik/formik-checkbox';

@@ -1,4 +1,3 @@
-import React from 'react';
 import KvinneIkon from './kvinne.svg';
 import MannIkon from './mann.svg';
 import visibleIf from '../../components/visible-if';

@@ -1,5 +1,4 @@
 import FormikTekstArea from '../../../components/formik/formik-textarea';
-import React from 'react';
 import { validerBeskrivelse } from '../../../../util/formik-validation';
 
 function OpprettOppgaveBeskrivelseTekstArea() {

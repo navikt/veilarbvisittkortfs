@@ -1,4 +1,3 @@
-import React from 'react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { useModalStore } from '../../../store/modal-store';
 import { useAppStore } from '../../../store/app-store';

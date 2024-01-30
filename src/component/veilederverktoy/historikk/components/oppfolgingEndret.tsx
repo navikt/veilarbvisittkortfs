@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { opprettetAvTekst } from './opprettet-av';
 import { Alert, BodyShort, Detail, Loader } from '@navikt/ds-react';
 import { hasAnyFailed, isAnyLoading } from '../../../../api/utils';

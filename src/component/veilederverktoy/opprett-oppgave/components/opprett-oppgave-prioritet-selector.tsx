@@ -1,4 +1,3 @@
-import React from 'react';
 import FormikSelect from '../../../components/formik/formik-select';
 import { PrioritetType } from '../../../../api/veilarboppgave';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { Alert } from '@navikt/ds-react';
 import { useAppStore } from '../../../store/app-store';

@@ -1,4 +1,4 @@
-import React from 'react';
+import { ComponentType } from 'react';
 import { logMetrikk } from '../../../util/logger';
 
 export interface ClickMetricProps {
@@ -29,8 +29,8 @@ const handleClickMetricWrapperClicked = (
 };
 
 export default function withClickMetric<PROPS extends OnClickProps>(
-    Component: React.ComponentType<PROPS>
-): React.ComponentType<PROPS & ClickMetricProps> {
+    Component: ComponentType<PROPS>
+): ComponentType<PROPS & ClickMetricProps> {
     return (props: PROPS & ClickMetricProps) => {
         const { onClick, metricName, tags, fields, ...rest } = props as any; // tslint:disable-line
         return <Component onClick={handleClickMetricWrapperClicked(metricName, tags, fields, onClick)} {...rest} />;

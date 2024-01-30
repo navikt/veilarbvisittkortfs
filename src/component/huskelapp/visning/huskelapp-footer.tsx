@@ -1,5 +1,4 @@
 import { Button, Modal } from '@navikt/ds-react';
-import React from 'react';
 import { TrashIcon } from '@navikt/aksel-icons';
 
 interface ArbeidslisteFooterProps {
