@@ -101,11 +101,21 @@ function Etiketter() {
             >
                 Reservert KRR
             </Fokus>
+            <Fokus
+                visible={
+                    oppfolging?.registrertKRR &&
+                    !oppfolging?.kanVarsles &&
+                    !oppfolging.manuell &&
+                    !oppfolging?.reservasjonKRR
+                }
+            >
+                Utdatert i KRR
+            </Fokus>
             <Fokus visible={oppfolging?.inaktivIArena}>Inaktivert</Fokus>
             <Fokus visible={!oppfolging?.underOppfolging}>Ikke under oppfølging</Fokus>
             <Fokus visible={gjeldendeEskaleringsvarsel}>Varsel</Fokus>
             <Fokus
-                visible={!oppfolging?.reservasjonKRR && !oppfolging?.manuell && !oppfolging?.kanVarsles}
+                visible={oppfolging?.registrertKRR === false}
                 title="Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret og kan ikke varsles. Du kan derfor ikke samhandle digitalt med brukeren. "
             >
                 Ikke registrert KRR
