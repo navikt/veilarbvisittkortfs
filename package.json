@@ -52,7 +52,7 @@
     "devDependencies": {
         "@craco/craco": "^7.1.0",
         "@types/classnames": "^2.3.1",
-        "@types/node": "^14.14.22",
+        "@types/node": "^20.11.10",
         "@types/react": "17.0.75",
         "@types/react-dom": "17.0.25",
         "craco-less": "^3.0.1",
