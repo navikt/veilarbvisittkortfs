@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import cls from 'classnames';
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikProps, FormikValues } from 'formik';
 import { useModalStore } from '../../../store/modal-store';
 import { Modal } from '@navikt/ds-react';
 
@@ -15,7 +15,7 @@ interface FormikModalProps<Values> {
     tittel?: string;
 }
 
-function FormikModal<Values>({ visConfirmDialog = true, ...props }: FormikModalProps<Values>) {
+function FormikModal<Values extends FormikValues>({ visConfirmDialog = true, ...props }: FormikModalProps<Values>) {
     const { hideModal } = useModalStore();
     const [isOpen, setIsOpen] = useState(true);
 
