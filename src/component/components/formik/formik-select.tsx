@@ -15,6 +15,7 @@ function FormikSelect({ name, validate, label, options, ...selectProps }: Formik
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {
                 const feil = getErrors(form.errors, form.touched, name);
+
                 return (
                     <Select
                         className="formik-select"
@@ -23,7 +24,7 @@ function FormikSelect({ name, validate, label, options, ...selectProps }: Formik
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
                         name={name}
-                        error={feil && feil.feilmelding}
+                        error={feil?.feilmelding}
                         {...selectProps}
                         value={field.value}
                         size="small"
