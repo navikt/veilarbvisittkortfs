@@ -1,4 +1,3 @@
-import React from 'react';
 import './veilederverktoy.less';
 import '../components/knapp-fss/knapp-fss.less';
 import StartRegistreringProsess from './start-registrering/start-registrering-prosess';

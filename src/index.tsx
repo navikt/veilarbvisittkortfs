@@ -1,4 +1,4 @@
-import React from 'react';
+import ReactDOM from 'react-dom';
 import { Navspa } from '@navikt/navspa';
 import { isDevelopment } from './util/utils';
 import * as dayjs from 'dayjs';

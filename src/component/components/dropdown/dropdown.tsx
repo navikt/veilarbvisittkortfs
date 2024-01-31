@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { KeyboardEvent, ReactNode, useRef, useState } from 'react';
 import classNames from 'classnames';
 import './dropdown.less';
 import withClickMetric from '../click-metric/click-metric';
@@ -15,8 +15,8 @@ const btnCls = (erApen: boolean, className: string | undefined) =>
 interface DropdownProps {
     apen?: boolean;
     name: string;
-    knappeTekst: React.ReactNode;
-    render: (lukkDropdown: () => void) => React.ReactNode;
+    knappeTekst: ReactNode;
+    render: (lukkDropdown: () => void) => ReactNode;
     className?: string;
     onLukk?: () => void;
     onClick?: () => void;
@@ -24,7 +24,7 @@ interface DropdownProps {
     ariaLabelledBy?: string;
 }
 
-function harTrykktPaEsc(e: React.KeyboardEvent) {
+function harTrykktPaEsc(e: KeyboardEvent) {
     return e.keyCode === 27;
 }
 

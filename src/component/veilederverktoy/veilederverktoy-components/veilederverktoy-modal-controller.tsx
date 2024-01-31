@@ -1,4 +1,3 @@
-import React from 'react';
 import StartEskalering from '../start-eskalering/start-eskalering';
 import StartEskaleringKvittering from '../start-eskalering/start-eskalering-kvittering';
 import StarManuellOppfolging from '../start-manuell-oppfolging/start-manuell-oppfolging';

@@ -1,7 +1,7 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import visibleIf from './visible-if';
 
-function VisibleIfDiv(props: { children: React.ReactNode; className: string }) {
+function VisibleIfDiv(props: { children: ReactNode; className: string }) {
     return <div {...props}>{props.children}</div>;
 }
 

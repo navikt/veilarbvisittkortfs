@@ -1,4 +1,3 @@
-import React from 'react';
 import { Form, Formik, FormikProps } from 'formik';
 import ArbeidslisteForm from './arbeidsliste-form';
 import ArbeidslisteFooter from './arbeidsliste-footer';

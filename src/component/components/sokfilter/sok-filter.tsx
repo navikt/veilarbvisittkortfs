@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import './sok-filter.less';
 import { TextField } from '@navikt/ds-react';
 import { useFocus } from '../../../util/hook/use-focus';
 
 interface SokFilterProps<T> {
     data: T[];
-    children: (filteredData: T[]) => React.ReactNode;
+    children: (filteredData: T[]) => ReactNode;
     label: string;
     placeholder: string;
     limitSize?: number;

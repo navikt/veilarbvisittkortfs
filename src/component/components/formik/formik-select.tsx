@@ -1,4 +1,3 @@
-import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { Select, SelectProps } from '@navikt/ds-react';
 import { getErrors } from './formik-utils';

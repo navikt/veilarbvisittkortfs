@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Kvittering from '../prosess/kvittering';
 import { logMetrikk } from '../../../util/logger';
 import { useAppStore } from '../../../store/app-store';

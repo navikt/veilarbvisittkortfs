@@ -1,4 +1,3 @@
-import React from 'react';
 import { toSimpleDateStr } from '../../../../util/date-utils';
 import { EskaleringsvarselHistorikkInnslag } from '../../../../api/veilarbdialog';
 import LenkeTilDialog from '../../../components/dialoglenke/dialoglenke';

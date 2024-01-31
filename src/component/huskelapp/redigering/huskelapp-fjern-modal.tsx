@@ -4,7 +4,6 @@ import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
 import { slettHuskelapp } from '../../../api/veilarbportefolje';
 import {Button, Heading, Modal} from '@navikt/ds-react';
-import React from 'react';
 
 function HuskelappFjernModal() {
     const { huskelapp, setHuskelapp } = useDataStore();

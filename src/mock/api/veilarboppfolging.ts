@@ -109,6 +109,7 @@ const mockOppfolging: Oppfolging = {
     reservasjonKRR: true,
     manuell: true,
     underOppfolging: true,
+    registrertKRR: false,
     underKvp: true,
     oppfolgingUtgang: '2019-03-28T11:12:40.973+01:00',
     kanStarteOppfolging: true,

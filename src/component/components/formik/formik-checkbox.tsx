@@ -1,11 +1,11 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import { Field, FieldProps } from 'formik';
 import { Checkbox } from '@navikt/ds-react';
 
 interface FormikCheckboxProps {
     name: string;
     validate?: (value: string) => string | undefined;
-    label: React.ReactNode;
+    label: ReactNode;
 }
 
 function FormikCheckBox({ name, label }: FormikCheckboxProps) {

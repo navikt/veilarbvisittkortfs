@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactElement } from 'react';
 import { Field, FieldProps } from 'formik';
 import { TextField, TextFieldProps } from '@navikt/ds-react';
 import { getErrors } from './formik-utils';
@@ -14,7 +14,7 @@ function FormikInput({
     name,
     validate,
     ...inputProps
-}: FormikInputProps & TextFieldProps): React.ReactElement<FieldProps & TextFieldProps> {
+}: FormikInputProps & TextFieldProps): ReactElement<FieldProps & TextFieldProps> {
     return (
         <Field validate={validate} name={name}>
             {({ field, form }: FieldProps) => {

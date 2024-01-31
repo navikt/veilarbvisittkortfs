@@ -3,7 +3,6 @@ import { HuskelappInformasjonsmelding } from '../huskelapp-informasjonsmelding';
 import { Form } from 'formik';
 import HuskelappForm from './huskelapp-form';
 import { HuskelappFooter } from '../huskelapp-footer';
-import React from 'react';
 
 interface HuskelappMedArbeidslisteFormProps {
     onRequestClose: () => void;

@@ -1,4 +1,3 @@
-import React from 'react';
 import { validerBeskrivelse, validerBeskrivelse500TegnFelt } from '../../../util/formik-validation';
 import FormikTekstArea from '../../components/formik/formik-textarea';
 

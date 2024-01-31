@@ -1,4 +1,3 @@
-import React from 'react';
 import { erITestMiljo } from '../../../util/utils';
 import { logMetrikk } from '../../../util/logger';
 import { useAppStore } from '../../../store/app-store';

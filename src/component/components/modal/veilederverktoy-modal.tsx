@@ -1,10 +1,10 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import classNames from 'classnames';
 import { useModalStore } from '../../../store/modal-store';
 import { Modal } from '@navikt/ds-react';
 
 interface VeilederVerktoyModalProps {
-    children: React.ReactNode;
+    children: ReactNode;
     className?: string;
     tittel: string;
 }

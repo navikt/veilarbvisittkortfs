@@ -1,4 +1,3 @@
-import React from 'react';
 import './laster-modal.less';
 import { Loader, Modal } from '@navikt/ds-react';
 

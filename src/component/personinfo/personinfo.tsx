@@ -1,4 +1,3 @@
-import React from 'react';
 import NavnOgAlder from './components/navnogalder';
 import KjonnIkon from './components/kjonn-ikon';
 import ArbeidslisteKnapp from '../arbeidsliste/arbeidsliste-knapp';

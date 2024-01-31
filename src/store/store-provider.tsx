@@ -1,10 +1,10 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import { DataStore } from './data-store';
 import { ModalStore } from './modal-store';
 import { AppStore, AppStoreInitialValues } from './app-store';
 
 interface StoreProviderProps extends AppStoreInitialValues {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 const StoreProvider = (props: StoreProviderProps) => {

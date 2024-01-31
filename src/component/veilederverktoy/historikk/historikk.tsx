@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import HistorikkVisning from './historikk-visning';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';

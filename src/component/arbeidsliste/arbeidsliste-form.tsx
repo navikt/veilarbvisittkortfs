@@ -1,4 +1,3 @@
-import React from 'react';
 import FormikInput from '../components/formik/formik-input';
 import FormikTekstArea from '../components/formik/formik-textarea';
 import FormikDatoVelger from '../components/formik/formik-datepicker';

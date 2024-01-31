@@ -1,4 +1,3 @@
-import React from 'react';
 import { Field, FieldProps, getIn } from 'formik';
 import { ErrorMessage, DatePicker, useDatepicker } from '@navikt/ds-react';
 import classNames from 'classnames';

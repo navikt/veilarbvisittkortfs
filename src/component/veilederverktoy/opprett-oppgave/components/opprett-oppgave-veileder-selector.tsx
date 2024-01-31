@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import SokFilter from '../../../components/sokfilter/sok-filter';
 import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
 import Dropdown from '../../../components/dropdown/dropdown';

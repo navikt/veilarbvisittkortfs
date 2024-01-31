@@ -1,4 +1,3 @@
-import React from 'react';
 import { Formik, FormikBag, FormikProps } from 'formik';
 import {
     fetchHuskelapp,

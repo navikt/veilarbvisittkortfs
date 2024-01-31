@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import { ChangeEvent } from 'react';
 import { useFormikContext } from 'formik';
 import { Select } from '@navikt/ds-react';
 import './maltekstvelger.less';

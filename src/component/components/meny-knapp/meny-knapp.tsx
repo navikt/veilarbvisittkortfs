@@ -1,4 +1,3 @@
-import React from 'react';
 import cls from 'classnames';
 import './meny-knapp.less';
 import { Button, ButtonProps } from '@navikt/ds-react';

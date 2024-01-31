@@ -1,4 +1,3 @@
-import React from 'react';
 import { opprettetAvTekst } from './opprettet-av';
 import { toSimpleDateStr } from '../../../../util/date-utils';
 import { OppgaveHistorikkInnslag } from '../../../../api/veilarboppgave';
