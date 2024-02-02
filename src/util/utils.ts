@@ -15,7 +15,7 @@ export function isLocalDevelopment(): boolean {
     return import.meta.env.DEV;
 }
 
-export const erProd: boolean = import.meta.env.PROD;
+export const erProd = () => (import.meta.env.PROD);
 
 export function ifResponseHasData<T>(
     callback: (data: T) => void
