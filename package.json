@@ -3,10 +3,11 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "start": "cross-env REACT_APP_MOCK=true craco start",
-        "build:dev": "cross-env REACT_APP_DEPLOYMENT_ENV=development craco build",
-        "build:prod": "cross-env REACT_APP_DEPLOYMENT_ENV=production craco build",
-        "build:mock": "cross-env PUBLIC_URL=/veilarbvisittkortfs REACT_APP_MOCK=true craco build",
+        "start": "vite",
+        "build": "tsc && vite build",
+        "build:prod": "tsc && vite build --base=https://veilarbvisittkortfs.intern.nav.no",
+        "build:dev": "tsc && vite build --base=https://veilarbvisittkortfs.intern.dev.nav.no",
+        "serve": "vite preview",
         "test": "echo not implemented",
         "prettier": "prettier --write 'src/**/*.ts{,x}'",
         "lint": "eslint src"
