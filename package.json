@@ -11,7 +11,8 @@
         "serve": "vite preview",
         "test": "echo not implemented",
         "prettier": "prettier --write 'src/**/*.ts{,x}'",
-        "lint": "eslint src"
+        "lint": "eslint src",
+        "tsc": "tsc"
     },
     "browserslist": [
         ">0.2%",
