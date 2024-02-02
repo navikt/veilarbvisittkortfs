@@ -16,7 +16,7 @@ if (isLocalDevelopment()) {
     const root = createRoot(container!);
 
     worker
-        .start({ serviceWorker: { url: process.env.PUBLIC_URL + '/mockServiceWorker.js' } })
+        .start({ serviceWorker: { url: import.meta.env.BASE_URL + '/mockServiceWorker.js' } })
         .then(() => {
                 root.render(
                     <App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />
