@@ -1,8 +1,10 @@
-import { ReactComponent as ArbeidslisteikonBla } from './arbeidslisteikon/arbeidslisteikon_bla.svg';
-import { ReactComponent as ArbeidslisteikonLilla } from './arbeidslisteikon/arbeidslisteikon_lilla.svg';
-import { ReactComponent as ArbeidslisteikonGronn } from './arbeidslisteikon/arbeidslisteikon_gronn.svg';
-import { ReactComponent as ArbeidslisteikonGul } from './arbeidslisteikon/arbeidslisteikon_gul.svg';
-import { ReactComponent as ArbeidslisteIkon } from './arbeidslisteikon/arbeidslisteikon_linje.svg';
+/// <reference types="vite-plugin-svgr/client" />
+
+import ArbeidslisteikonBla from './arbeidslisteikon/arbeidslisteikon_bla.svg?react';
+import ArbeidslisteikonLilla from './arbeidslisteikon/arbeidslisteikon_lilla.svg?react';
+import ArbeidslisteikonGronn from './arbeidslisteikon/arbeidslisteikon_gronn.svg?react';
+import ArbeidslisteikonGul from './arbeidslisteikon/arbeidslisteikon_gul.svg?react';
+import ArbeidslisteIkon from './arbeidslisteikon/arbeidslisteikon_linje.svg?react';
 import { KategoriModell } from '../../api/veilarbportefolje';
 
 interface ArbeidslistekategoriProps {

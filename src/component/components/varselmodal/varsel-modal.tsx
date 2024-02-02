@@ -1,8 +1,10 @@
+/// <reference types="vite-plugin-svgr/client" />
+
 import { PropsWithChildren } from 'react';
 import './varsel-modal.less';
-import { ReactComponent as AdvarselSirkelIkon } from './advarsel-sirkel.svg';
-import { ReactComponent as FeilSirkelIkon } from './feil-sirkel.svg';
-import { ReactComponent as SuccessSirkelIkon } from './ok-sirkel.svg';
+import AdvarselSirkelIkon from './advarsel-sirkel.svg?react';
+import FeilSirkelIkon from './feil-sirkel.svg?react';
+import SuccessSirkelIkon from './ok-sirkel.svg?react';
 import { Modal } from '@navikt/ds-react';
 
 type VarselModalType = 'ADVARSEL' | 'FEIL' | 'SUCCESS';
@@ -15,12 +17,12 @@ interface VarselModalProps {
 }
 
 export function VarselModal({
-    isOpen,
-    onRequestClose,
-    children,
-    className,
-    type
-}: PropsWithChildren<VarselModalProps>) {
+                                isOpen,
+                                onRequestClose,
+                                children,
+                                className,
+                                type
+                            }: PropsWithChildren<VarselModalProps>) {
     return (
         <Modal
             open={isOpen}
