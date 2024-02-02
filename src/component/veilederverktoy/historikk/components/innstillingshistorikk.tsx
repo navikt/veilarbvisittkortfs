@@ -1,6 +1,6 @@
 import { opprettetAvTekst } from './opprettet-av';
 import { toSimpleDateStr } from '../../../../util/date-utils';
-import { InnstillingHistorikkInnslag } from '../../../../api/veilarboppfolging';
+import { InnstillingHistorikkInnslag, InnstillingsHistorikkType } from '../../../../api/veilarboppfolging';
 import LenkeTilDialog from '../../../components/dialoglenke/dialoglenke';
 import { BodyShort, Detail } from '@navikt/ds-react';
 
@@ -10,15 +10,20 @@ interface InnstillingHistorikkKomponentProps {
 
 const ESKALERING_MAX_LENGTH = 120;
 
-const typeTilTekst = {
+type InnstillingsHistorikkTypeTilTekst = {
+    [key in InnstillingsHistorikkType | 'ESKALERING_STARTET' | 'ESKALERING_STOPPET']: string
+}
+
+const typeTilTekst: InnstillingsHistorikkTypeTilTekst = {
     SATT_TIL_DIGITAL: 'Endret til digital oppfølging',
     SATT_TIL_MANUELL: 'Endret til manuell oppfølging',
     AVSLUTTET_OPPFOLGINGSPERIODE: 'Oppfølgingsperioden ble avsluttet',
-    ESKALERING_STARTET: 'Varsel sendt',
-    ESKALERING_STOPPET: 'Varsel deaktivert',
     KVP_STARTET: 'Kvalifiseringsprogram startet',
     KVP_STOPPET: 'Kvalifiseringsprogram avsluttet',
-    VEILEDER_TILORDNET: 'Tildelt veileder'
+    VEILEDER_TILORDNET: 'Tildelt veileder',
+    ESKALERING_STARTET: 'Varsel sendt', // TODO Typefiksing: Dette alternativet ikkje eigentleg gyldig som input i komponenten - Ingrid, 2024-02-02
+    ESKALERING_STOPPET: 'Varsel deaktivert', // TODO Typefiksing: Dette alternativet ikkje eigentleg gyldig som input i komponenten - Ingrid, 2024-02-02
+    OPPFOLGINGSENHET_ENDRET: 'Oppfølgingsenhet endret'
 };
 
 function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHistorikkKomponentProps) {
