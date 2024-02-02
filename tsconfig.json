@@ -2,12 +2,10 @@
   "compilerOptions": {
     "outDir": "build/dist",
     "module": "esnext",
-    "target": "es5",
+    "target": "ESNext",
     "lib": [
-      "es2017",
-      "es7",
-      "dom",
-      "es2016.array.include"
+      "esnext",
+      "dom"
     ],
     "sourceMap": true,
     "allowJs": true,
@@ -28,14 +26,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "types": ["vite/client"]
   },
   "exclude": [
     "node_modules",
     "build",
     "scripts",
     "acceptance-tests",
-    "webpack",
     "jest",
     "src/setupTests.ts"
   ],
