@@ -1,5 +1,3 @@
-/// <reference types="vite-plugin-svgr/client" />
-
 import '../huskelapp.less';
 import { useModalStore } from '../../../store/modal-store';
 import { BodyShort, Modal } from '@navikt/ds-react';

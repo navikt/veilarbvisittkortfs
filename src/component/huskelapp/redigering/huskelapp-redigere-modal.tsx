@@ -1,5 +1,3 @@
-/// <reference types="vite-plugin-svgr/client" />
-
 import { Formik, FormikBag, FormikProps } from 'formik';
 import {
     fetchHuskelapp,

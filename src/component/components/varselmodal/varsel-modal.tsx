@@ -1,5 +1,3 @@
-/// <reference types="vite-plugin-svgr/client" />
-
 import { PropsWithChildren } from 'react';
 import './varsel-modal.less';
 import AdvarselSirkelIkon from './advarsel-sirkel.svg?react';

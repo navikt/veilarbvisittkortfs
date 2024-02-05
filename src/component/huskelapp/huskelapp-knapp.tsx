@@ -1,5 +1,3 @@
-/// <reference types="vite-plugin-svgr/client" />
-
 import withClickMetric from '../components/click-metric/click-metric';
 import { trackAmplitude } from '../../amplitude/amplitude';
 import  HuskelappInaktivIkon from './ikon/huskelapp-inaktiv.svg?react';

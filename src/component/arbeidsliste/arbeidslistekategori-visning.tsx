@@ -1,5 +1,3 @@
-/// <reference types="vite-plugin-svgr/client" />
-
 import ArbeidslisteikonBla from './arbeidslisteikon/arbeidslisteikon_bla.svg?react';
 import ArbeidslisteikonLilla from './arbeidslisteikon/arbeidslisteikon_lilla.svg?react';
 import ArbeidslisteikonGronn from './arbeidslisteikon/arbeidslisteikon_gronn.svg?react';

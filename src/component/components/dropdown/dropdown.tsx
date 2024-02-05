@@ -1,5 +1,3 @@
-/// <reference types="vite-plugin-svgr/client" />
-
 import { KeyboardEvent, ReactNode, useRef, useState } from 'react';
 import classNames from 'classnames';
 import './dropdown.less';
