@@ -13,7 +13,7 @@ import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
 import '../huskelapp.less';
 import { Modal } from '@navikt/ds-react';
-import { ReactComponent as HuskelappIkon } from '../ikon/huskelapp.svg';
+import HuskelappIkon from '../ikon/huskelapp.svg?react';
 import { toReversedDateStr } from '../../../util/date-utils';
 import { HuskelappEditForm } from './huskelapp-edit-form';
 import { HuskelappMedArbeidslisteEditForm } from './huskelapp-med-arbeidsliste-edit-form';

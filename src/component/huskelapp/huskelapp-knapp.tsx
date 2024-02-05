@@ -1,7 +1,7 @@
 import withClickMetric from '../components/click-metric/click-metric';
 import { trackAmplitude } from '../../amplitude/amplitude';
-import { ReactComponent as HuskelappInaktivIkon } from './ikon/huskelapp-inaktiv.svg';
-import { ReactComponent as HuskelappIkon } from './ikon/huskelapp.svg';
+import  HuskelappInaktivIkon from './ikon/huskelapp-inaktiv.svg?react';
+import  HuskelappIkon from './ikon/huskelapp.svg?react';
 import './huskelapp.less';
 import { Button } from '@navikt/ds-react';
 

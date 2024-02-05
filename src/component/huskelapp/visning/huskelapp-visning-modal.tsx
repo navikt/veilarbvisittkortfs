@@ -1,7 +1,7 @@
 import '../huskelapp.less';
 import { useModalStore } from '../../../store/modal-store';
 import { BodyShort, Modal } from '@navikt/ds-react';
-import { ReactComponent as HuskelappIkon } from '../ikon/huskelapp.svg';
+import HuskelappIkon from '../ikon/huskelapp.svg?react';
 import { HuskelappFooter } from './huskelapp-footer';
 import { useDataStore } from '../../../store/data-store';
 import { toSimpleDateStr } from '../../../util/date-utils';

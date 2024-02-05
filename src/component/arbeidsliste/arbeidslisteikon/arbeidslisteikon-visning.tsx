@@ -1,7 +1,7 @@
-import { ReactComponent as ArbeidslisteikonBla } from './/arbeidslisteikon_bla.svg';
-import { ReactComponent as ArbeidslisteikonLilla } from './arbeidslisteikon_lilla.svg';
-import { ReactComponent as ArbeidslisteikonGronn } from './/arbeidslisteikon_gronn.svg';
-import { ReactComponent as ArbeidslisteikonGul } from './/arbeidslisteikon_gul.svg';
+import ArbeidslisteikonBla from './arbeidslisteikon_bla.svg?react';
+import ArbeidslisteikonLilla from './arbeidslisteikon_lilla.svg?react';
+import ArbeidslisteikonGronn from './arbeidslisteikon_gronn.svg?react';
+import ArbeidslisteikonGul from './arbeidslisteikon_gul.svg?react';
 import { Field } from 'formik';
 import Arbeidslistekategori from './arbeidslistekategori';
 import { FieldProps } from 'formik/dist/Field';

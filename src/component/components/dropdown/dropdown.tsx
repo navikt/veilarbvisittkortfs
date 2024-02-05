@@ -5,7 +5,7 @@ import withClickMetric from '../click-metric/click-metric';
 import hiddenIf from '../hidden-if/hidden-if';
 import { useDocumentEventListner } from '../../../util/hook/use-event-listner';
 import { Button } from '@navikt/ds-react';
-import { ReactComponent as TannHjulIkon } from '../../veilederverktoy/tannhjul.svg';
+import TannHjulIkon from '../../veilederverktoy/tannhjul.svg?react';
 
 /* tslint:disable */
 const btnCls = (erApen: boolean, className: string | undefined) =>

@@ -11,12 +11,11 @@ dayjs.locale('nb');
 Navspa.eksporter('veilarbvisittkortfs', App);
 
 if (isLocalDevelopment()) {
-    const { worker } = require('./mock');
+    const { worker } = await import('./mock');
     const container = document.getElementById('veilarbvisittkortfs-root');
     const root = createRoot(container!);
 
-    worker
-        .start({ serviceWorker: { url: process.env.PUBLIC_URL + '/mockServiceWorker.js' } })
+    worker.start()
         .then(() => {
                 root.render(
                     <App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />
