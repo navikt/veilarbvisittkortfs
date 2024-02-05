@@ -23,6 +23,8 @@ jobs:
               run: npm ci --legacy-peer-deps
             - name: Build mock application
               run: npm run build:mock
+              env:
+                PUBLIC_URL: /veilarbvisittkortfs
             - name: Update GitHub pages
               uses: softprops/action-gh-release@v1
               with:

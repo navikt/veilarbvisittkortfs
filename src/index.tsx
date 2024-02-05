@@ -20,6 +20,8 @@ if (isLocalDevelopment()) {
                 root.render(
                     <App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />
                 );
+                // eslint-disable-next-line no-console
+                console.log('Bruker mock-data i applikasjonen');
             }
         )
         .catch((e: Error) => {
