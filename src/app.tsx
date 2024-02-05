@@ -34,7 +34,7 @@ function App(props: AppProps) {
                         {!props.skjulEtiketter && <Etiketter />}
                         <Veilederverktoyslinje />
                     </div>
-                    {!erProd() && <span style={{color: "blueviolet"}}>.</span>}
+                    {isLocalDevelopment() && <span style={{color: "blueviolet"}}>.</span>}
                 </DataFetcher>
                 <VeilederverktoyModalController />
             </div>
