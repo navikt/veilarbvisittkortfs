@@ -6,7 +6,6 @@ import StoreProvider from './store/store-provider';
 import { DataFetcher } from './component/data-fetcher';
 import { VeilederverktoyModalController } from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-modal-controller';
 import './index.less';
-import { erProd, isLocalDevelopment } from './util/utils';
 
 export interface AppProps {
     fnr: string;
@@ -34,7 +33,6 @@ function App(props: AppProps) {
                         {!props.skjulEtiketter && <Etiketter />}
                         <Veilederverktoyslinje />
                     </div>
-                    {isLocalDevelopment() && <span style={{color: "blueviolet"}}>.</span>}
                 </DataFetcher>
                 <VeilederverktoyModalController />
             </div>
