@@ -9,5 +9,10 @@ export default defineConfig({
     server: {
         open: true,
         port: 3042
+    },
+    build: {
+        manifest: 'asset-manifest.json',
+        outDir: 'build',
+        sourcemap: true
     }
 });
