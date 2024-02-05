@@ -7,7 +7,7 @@
         "start": "vite",
         "build": "tsc && vite build",
         "build:prod": "tsc && vite build --base=https://veilarbvisittkortfs.intern.nav.no",
-        "build:dev": "tsc && vite build --base=https://veilarbvisittkortfs.intern.dev.nav.no",
+        "build:dev": "tsc && NODE_ENV=development vite build --base=https://veilarbvisittkortfs.intern.dev.nav.no",
         "serve": "vite preview",
         "test": "echo not implemented",
         "prettier": "prettier --write 'src/**/*.ts{,x}'",
