@@ -11,6 +11,7 @@ export default defineConfig({
         port: 3042
     },
     build: {
+        target: 'esnext',
         manifest: 'asset-manifest.json',
         outDir: 'build',
         sourcemap: true
