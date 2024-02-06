@@ -4,9 +4,10 @@
     "type": "module",
     "private": true,
     "scripts": {
-        "start": "vite",
+        "start": "vite --mode mock",
         "build": "tsc && vite build",
         "build:dev": "tsc && NODE_ENV=development vite build",
+        "build:mock": "tsc && vite build --mode mock",
         "serve": "vite preview",
         "test": "echo not implemented",
         "prettier": "prettier --write 'src/**/*.ts{,x}'",

@@ -11,21 +11,24 @@ dayjs.locale('nb');
 Navspa.eksporter('veilarbvisittkortfs', App);
 
 if (isLocalDevelopment()) {
-    const { worker } = await import('./mock');
     const container = document.getElementById('veilarbvisittkortfs-root');
     const root = createRoot(container!);
 
-    worker.start()
-        .then(() => {
-                root.render(
-                    <App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />
-                );
-            }
-        )
-        .catch((e: Error) => {
-            // eslint-disable-next-line no-console
-            console.error('Unable to setup mocked API endpoints', e);
-        });
+    import('./mock').then(({ worker }) => {
+        return worker.start()
+            .then(() => {
+                    root.render(
+                        <App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />
+                    );
+                    // eslint-disable-next-line no-console
+                    console.log('Bruker mock-data i applikasjonen');
+                }
+            )
+            .catch((e: Error) => {
+                // eslint-disable-next-line no-console
+                console.error('Unable to setup mocked API endpoints', e);
+            });
+    });
 } else {
     initAmplitude();
 }
