@@ -7,7 +7,7 @@
         "start": "vite",
         "build": "tsc && vite build",
         "build:dev": "tsc && NODE_ENV=development vite build",
-        "build:mock": "tsc && NODE_MODE=mock vite build",
+        "build:mock": "tsc && vite build --mode mock",
         "serve": "vite preview",
         "test": "echo not implemented",
         "prettier": "prettier --write 'src/**/*.ts{,x}'",
