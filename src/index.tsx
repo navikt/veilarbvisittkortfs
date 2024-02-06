@@ -11,11 +11,17 @@ dayjs.locale('nb');
 Navspa.eksporter('veilarbvisittkortfs', App);
 
 if (isLocalDevelopment()) {
-    const container = document.getElementById('veilarbvisittkortfs-root');
+    renderMockApp();
+} else {
+    initAmplitude();
+}
+
+function renderMockApp() {
+  const container = document.getElementById('veilarbvisittkortfs-root');
     const root = createRoot(container!);
 
     import('./mock').then(({ worker }) => {
-        return worker.start()
+        return worker.start({ serviceWorker: { url: `${import.meta.env.BASE_URL}mockServiceWorker.js` } })
             .then(() => {
                     root.render(
                         <App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />
@@ -29,6 +35,4 @@ if (isLocalDevelopment()) {
                 console.error('Unable to setup mocked API endpoints', e);
             });
     });
-} else {
-    initAmplitude();
 }
