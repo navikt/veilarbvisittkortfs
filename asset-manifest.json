@@ -1,0 +1,21 @@
+{
+  "index.html": {
+    "css": [
+      "assets/index-3qMMQiRZ.css"
+    ],
+    "dynamicImports": [
+      "src/mock/index.ts"
+    ],
+    "file": "assets/index-dnc9frhD.js",
+    "isEntry": true,
+    "src": "index.html"
+  },
+  "src/mock/index.ts": {
+    "file": "assets/index-sRFdxlmZ.js",
+    "imports": [
+      "index.html"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/mock/index.ts"
+  }
+}
