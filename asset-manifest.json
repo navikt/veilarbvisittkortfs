@@ -1,35 +1,21 @@
 {
-  "files": {
-    "main.css": "/veilarbvisittkortfs/static/css/main.1b55133d.chunk.css",
-    "main.js": "/veilarbvisittkortfs/static/js/main.078498d1.chunk.js",
-    "main.js.map": "/veilarbvisittkortfs/static/js/main.078498d1.chunk.js.map",
-    "runtime-main.js": "/veilarbvisittkortfs/static/js/runtime-main.4701006c.js",
-    "runtime-main.js.map": "/veilarbvisittkortfs/static/js/runtime-main.4701006c.js.map",
-    "static/css/2.f1f76003.chunk.css": "/veilarbvisittkortfs/static/css/2.f1f76003.chunk.css",
-    "static/js/2.1c7c11ca.chunk.js": "/veilarbvisittkortfs/static/js/2.1c7c11ca.chunk.js",
-    "static/js/2.1c7c11ca.chunk.js.map": "/veilarbvisittkortfs/static/js/2.1c7c11ca.chunk.js.map",
-    "index.html": "/veilarbvisittkortfs/index.html",
-    "static/css/2.f1f76003.chunk.css.map": "/veilarbvisittkortfs/static/css/2.f1f76003.chunk.css.map",
-    "static/css/main.1b55133d.chunk.css.map": "/veilarbvisittkortfs/static/css/main.1b55133d.chunk.css.map",
-    "static/js/2.1c7c11ca.chunk.js.LICENSE.txt": "/veilarbvisittkortfs/static/js/2.1c7c11ca.chunk.js.LICENSE.txt",
-    "static/media/advarsel-sirkel.42c46a6d.svg": "/veilarbvisittkortfs/static/media/advarsel-sirkel.42c46a6d.svg",
-    "static/media/arbeidslisteikon_bla.2e831f4a.svg": "/veilarbvisittkortfs/static/media/arbeidslisteikon_bla.2e831f4a.svg",
-    "static/media/arbeidslisteikon_gronn.15f551e0.svg": "/veilarbvisittkortfs/static/media/arbeidslisteikon_gronn.15f551e0.svg",
-    "static/media/arbeidslisteikon_gul.88974c5f.svg": "/veilarbvisittkortfs/static/media/arbeidslisteikon_gul.88974c5f.svg",
-    "static/media/arbeidslisteikon_lilla.eff38818.svg": "/veilarbvisittkortfs/static/media/arbeidslisteikon_lilla.eff38818.svg",
-    "static/media/arbeidslisteikon_linje.b3a07a72.svg": "/veilarbvisittkortfs/static/media/arbeidslisteikon_linje.b3a07a72.svg",
-    "static/media/feil-sirkel.6fbdadfa.svg": "/veilarbvisittkortfs/static/media/feil-sirkel.6fbdadfa.svg",
-    "static/media/kvinne.943b327b.svg": "/veilarbvisittkortfs/static/media/kvinne.943b327b.svg",
-    "static/media/mann.c4c53819.svg": "/veilarbvisittkortfs/static/media/mann.c4c53819.svg",
-    "static/media/ok-sirkel.88c79ec3.svg": "/veilarbvisittkortfs/static/media/ok-sirkel.88c79ec3.svg",
-    "static/media/slett.0318c861.svg": "/veilarbvisittkortfs/static/media/slett.0318c861.svg",
-    "static/media/tannhjul.16574857.svg": "/veilarbvisittkortfs/static/media/tannhjul.16574857.svg"
+  "index.html": {
+    "css": [
+      "assets/index-3qMMQiRZ.css"
+    ],
+    "dynamicImports": [
+      "src/mock/index.ts"
+    ],
+    "file": "assets/index-dnc9frhD.js",
+    "isEntry": true,
+    "src": "index.html"
   },
-  "entrypoints": [
-    "static/js/runtime-main.4701006c.js",
-    "static/css/2.f1f76003.chunk.css",
-    "static/js/2.1c7c11ca.chunk.js",
-    "static/css/main.1b55133d.chunk.css",
-    "static/js/main.078498d1.chunk.js"
-  ]
+  "src/mock/index.ts": {
+    "file": "assets/index-sRFdxlmZ.js",
+    "imports": [
+      "index.html"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/mock/index.ts"
+  }
 }
