@@ -36,7 +36,7 @@ function PersonInfo() {
         showArbeidslisteModal,
         showHuskelappRedigereModal,
         showHuskelappModal,
-        showHuskelappRedigereMedArbeidslisteModal,
+        showHuskelappRedigereMedArbeidslisteModal
     } = useModalStore();
 
     const arbeidslisteikon = arbeidsliste?.kategori;
@@ -58,6 +58,13 @@ function PersonInfo() {
 
     const erArbeidslisteTom = arbeidsliste?.sistEndretAv == null;
     const erHuskelappTom = huskelapp?.huskelappId == null;
+
+    const visHuskelappknapp =
+        features[HUSKELAPP] &&
+        ((erHuskelappTom && kanOppretteHuskelapp) ||
+            (erArbeidslisteTom && kanLeggeIArbeidsliste) ||
+            (!erHuskelappTom && kanRedigereHuskelapp) ||
+            (!erArbeidslisteTom && kanRedigereArbeidsliste));
 
     const klikkShowHuskelapp = () => {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.huskelapp-ikon');
@@ -83,12 +90,7 @@ function PersonInfo() {
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
                 <HuskelappKnapp
-                    hidden={
-                        !(
-                            ((erHuskelappTom && kanOppretteHuskelapp) || (erArbeidslisteTom && kanLeggeIArbeidsliste) || (!erHuskelappTom && kanRedigereHuskelapp) || (!erArbeidslisteTom && kanRedigereArbeidsliste)) &&
-                            features[HUSKELAPP]
-                        )
-                    }
+                    hidden={!visHuskelappknapp}
                     onClick={klikkShowHuskelapp}
                     harHuskelappEllerArbeidsliste={!erHuskelappTom || !erArbeidslisteTom}
                 />
