@@ -13,13 +13,11 @@ concurrency:
   group: poao_frontend_container_prod
   cancel-in-progress: true
 
-env:
-  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-
 jobs:
   deploy-prod:
     runs-on: ubuntu-latest
-
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - name: deploy gcp prod
