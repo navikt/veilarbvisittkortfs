@@ -60,12 +60,12 @@ export const SlettArbeidsliste = () => {
                             Avbryt
                         </Button>
                         <Button
-                            icon={visLoader && <Loader size="xsmall" />}
                             iconPosition="right"
                             variant="secondary"
                             size="small"
                             type="button"
                             onClick={handleSlettArbeidsListe}
+                            loading={visLoader}
                         >
                             Ja, slett arbeidslista
                         </Button>
