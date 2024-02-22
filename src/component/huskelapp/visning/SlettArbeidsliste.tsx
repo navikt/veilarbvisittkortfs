@@ -1,4 +1,4 @@
-import { BodyShort, Button, Heading, Loader } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
 import { TrashIcon } from '@navikt/aksel-icons';
 import { useState } from 'react';
 import { useAppStore } from '../../../store/app-store';
@@ -10,8 +10,8 @@ import { ifResponseHasData } from '../../../util/utils';
 
 export const SlettArbeidsliste = () => {
     const [visSlettebekreftelse, setVisSlettebekreftelse] = useState(false);
-    const [visLoader, setVisLoader] = useState(false);
-    const [visFeilmelding, setVisFeilmelding] = useState(false); // TODO finn ut korleis vi kan vise feilmelding
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
     const { brukerFnr } = useAppStore();
     const { setArbeidsliste } = useDataStore();
@@ -22,21 +22,29 @@ export const SlettArbeidsliste = () => {
             name: 'knapp klikket',
             data: { knapptekst: 'Fjern arbeidsliste', effekt: 'Fjern bruker fra arbeidslista' }
         });
-        setVisLoader(true);
+        setLoading(true);
 
         // TODO fiks at hovud-modalen oppdaterar seg slik at den ikkje viser Eksisterende arbeidslisteinnhold meir
         slettArbeidsliste(brukerFnr)
             .then(ifResponseHasData(setArbeidsliste))
-            .then(() => setVisLoader(false))
-            .catch(() => setVisFeilmelding(true))
+            .then(() => setLoading(false))
+            .catch(() => setError(true))
             .then(() => setVisSlettebekreftelse(false));
     };
 
     return (
         <>
+            {error && (
+                <Alert variant="error" size="small" className="sletting-av-arbeidsliste-feilet">
+                    Noe gikk galt ved sletting av arbeidslista.
+                </Alert>
+            )}
             {!visSlettebekreftelse && (
                 <Button
-                    onClick={() => setVisSlettebekreftelse(true)}
+                    onClick={() => {
+                        setVisSlettebekreftelse(true);
+                        setError(false);
+                    }}
                     size="xsmall"
                     variant="tertiary"
                     icon={<TrashIcon aria-hidden />}
@@ -60,12 +68,11 @@ export const SlettArbeidsliste = () => {
                             Avbryt
                         </Button>
                         <Button
-                            iconPosition="right"
+                            loading={loading}
                             variant="secondary"
                             size="small"
                             type="button"
                             onClick={handleSlettArbeidsListe}
-                            loading={visLoader}
                         >
                             Ja, slett arbeidslista
                         </Button>
