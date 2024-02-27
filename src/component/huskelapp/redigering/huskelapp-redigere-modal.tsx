@@ -122,7 +122,7 @@ function HuskelappRedigereModal({ medArbeidsliste }: HuskelappModalProps) {
                     }}
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
-                    width={medArbeidsliste ? '800px' : '400px'}
+                    width={medArbeidsliste ? '50rem' : '25rem'}
                 >
                     <Modal.Body>
                         {medArbeidsliste && (
