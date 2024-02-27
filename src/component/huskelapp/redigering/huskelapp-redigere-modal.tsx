@@ -132,7 +132,7 @@ function HuskelappRedigereModal({ medArbeidsliste }: HuskelappModalProps) {
                                 arbeidsliste={arbeidsliste!}
                             />
                         )}
-                        {!medArbeidsliste && <HuskelappEditForm onRequestClose={() => onRequestClose(formikProps)} />}
+                        {!medArbeidsliste && <HuskelappEditForm />}
                     </Modal.Body>
                     <Modal.Footer>
                         <HuskelappFooter

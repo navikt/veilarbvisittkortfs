@@ -3,11 +3,7 @@ import { HuskelappInformasjonsmelding } from '../huskelapp-informasjonsmelding';
 import { Form } from 'formik';
 import HuskelappForm from './huskelapp-form';
 
-interface HuskelappMedArbeidslisteFormProps {
-    onRequestClose: () => void;
-}
-
-export const HuskelappEditForm = (formValues: HuskelappMedArbeidslisteFormProps) => (
+export const HuskelappEditForm = () => (
     <>
         <Heading size="medium" visuallyHidden={true}>
             Huskelappinnhold
