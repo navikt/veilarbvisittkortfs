@@ -4,7 +4,7 @@ import { Form } from 'formik';
 import HuskelappForm from './huskelapp-form';
 
 export const HuskelappEditForm = () => (
-    <>
+    <div>
         <Heading size="medium" visuallyHidden={true}>
             Huskelappinnhold
         </Heading>
@@ -12,5 +12,5 @@ export const HuskelappEditForm = () => (
         <Form id="huskelapp-form">
             <HuskelappForm />
         </Form>
-    </>
+    </div>
 );
