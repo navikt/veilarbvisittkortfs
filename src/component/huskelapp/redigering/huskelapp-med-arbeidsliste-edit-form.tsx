@@ -29,11 +29,7 @@ export function HuskelappMedArbeidslisteEditForm(formValues: HuskelappMedArbeids
                 </div>
                 <EksisterendeArbeidsliste arbeidsliste={formValues.arbeidsliste} />
             </div>
-            <HuskelappFooter
-                onRequestClose={formValues.onRequestClose}
-                typePrimaryBtn="submit"
-                textPrimaryBtn="Lagre og slett eksisterende"
-            />
+            <HuskelappFooter onRequestClose={formValues.onRequestClose} textPrimaryBtn="Lagre og slett eksisterende" />
         </>
     );
 }

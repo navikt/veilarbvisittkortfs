@@ -17,6 +17,6 @@ export const HuskelappEditForm = (formValues: HuskelappMedArbeidslisteFormProps)
         <Form id="huskelapp-form">
             <HuskelappForm />
         </Form>
-        <HuskelappFooter typePrimaryBtn="submit" textPrimaryBtn="Lagre" onRequestClose={formValues.onRequestClose} />
+        <HuskelappFooter textPrimaryBtn="Lagre" onRequestClose={formValues.onRequestClose} />
     </>
 );
