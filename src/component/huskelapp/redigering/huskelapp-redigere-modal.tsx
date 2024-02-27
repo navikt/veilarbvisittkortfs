@@ -16,7 +16,7 @@ import { Modal } from '@navikt/ds-react';
 import HuskelappIkon from '../ikon/huskelapp.svg?react';
 import { toReversedDateStr } from '../../../util/date-utils';
 import { HuskelappMedArbeidslisteEditForm } from './huskelapp-med-arbeidsliste-edit-form';
-import { HuskelappFooter } from '../huskelapp-footer';
+import { RedigerHuskelappFooter } from './rediger-huskelapp-footer';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -124,7 +124,7 @@ function HuskelappRedigereModal() {
                         <HuskelappMedArbeidslisteEditForm arbeidsliste={arbeidsliste} />
                     </Modal.Body>
                     <Modal.Footer>
-                        <HuskelappFooter
+                        <RedigerHuskelappFooter
                             onRequestClose={() => onRequestClose(formikProps)}
                             textPrimaryBtn={erArbeidslisteTom ? 'Lagre' : 'Lagre og slett eksisterende'}
                         />

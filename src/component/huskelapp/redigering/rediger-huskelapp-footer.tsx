@@ -5,7 +5,7 @@ interface Props {
     textPrimaryBtn: string;
 }
 
-export const HuskelappFooter = ({ onRequestClose, textPrimaryBtn }: Props) => (
+export const RedigerHuskelappFooter = ({ onRequestClose, textPrimaryBtn }: Props) => (
     <>
         <Button size="small" variant="primary" form="huskelapp-form" type="submit" tabIndex={0} autoFocus={true}>
             {textPrimaryBtn}

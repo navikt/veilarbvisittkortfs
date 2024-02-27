@@ -1,4 +1,4 @@
-import { EksisterendeArbeidsliste } from '../eksisterendeArbeidsliste';
+import { EksisterendeArbeidsliste } from './eksisterendeArbeidsliste';
 import { Arbeidsliste } from '../../../api/veilarbportefolje';
 import { HuskelappEditForm } from './huskelapp-edit-form';
 
