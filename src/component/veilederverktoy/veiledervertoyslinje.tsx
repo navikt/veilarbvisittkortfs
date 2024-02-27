@@ -107,15 +107,16 @@ function Veilederverktoyslinje() {
             }
         });
 
-        const harHuskelapp = !!huskelapp?.huskelappId;
-        const harArbeidsliste = !!arbeidsliste?.sistEndretAv;
-        if (!harArbeidsliste && harHuskelapp) {
-            return showHuskelappModal();
-        } else if (harArbeidsliste && !harHuskelapp) {
-            return showHuskelappRedigereMedArbeidslisteModal();
-        }
+        const erArbeidslisteTom = arbeidsliste?.sistEndretAv == null;
+        const erHuskelappTom = huskelapp?.huskelappId == null;
 
-        return showHuskelappRedigereModal();
+        if (erArbeidslisteTom && erHuskelappTom) {
+            showHuskelappRedigereModal();
+        } else if (!erArbeidslisteTom && erHuskelappTom) {
+            showHuskelappRedigereMedArbeidslisteModal();
+        } else {
+            showHuskelappModal();
+        }
     };
 
     return (
