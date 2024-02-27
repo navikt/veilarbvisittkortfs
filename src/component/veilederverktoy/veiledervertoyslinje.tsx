@@ -51,8 +51,7 @@ function Veilederverktoyslinje() {
         showAvsluttOppfolgingModal,
         showHistorikkModal,
         showHuskelappRedigereModal,
-        showHuskelappModal,
-        showHuskelappRedigereMedArbeidslisteModal
+        showHuskelappModal
     } = useModalStore();
 
     const kanStarteEskalering = selectKanSendeEskaleringsVarsel(
@@ -107,13 +106,9 @@ function Veilederverktoyslinje() {
             }
         });
 
-        const erArbeidslisteTom = arbeidsliste?.sistEndretAv == null;
         const erHuskelappTom = huskelapp?.huskelappId == null;
-
-        if (erArbeidslisteTom && erHuskelappTom) {
+        if (erHuskelappTom) {
             showHuskelappRedigereModal();
-        } else if (!erArbeidslisteTom && erHuskelappTom) {
-            showHuskelappRedigereMedArbeidslisteModal();
         } else {
             showHuskelappModal();
         }

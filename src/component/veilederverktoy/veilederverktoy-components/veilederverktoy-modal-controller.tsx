@@ -104,8 +104,6 @@ export function VeilederverktoyModalController() {
             return <HuskelappVisningModal />;
         case ModalType.HUSKELAPP_REDIGERE:
             return <HuskelappRedigereModal />;
-        case ModalType.HUSKELAPP_REDIGERE_MED_ARBEIDSLISTE:
-            return <HuskelappRedigereModal />;
         case ModalType.FJERN_HUSKELAPP:
             return <HuskelappFjernModal />;
         default:
