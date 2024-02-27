@@ -15,7 +15,6 @@ import '../huskelapp.less';
 import { Modal } from '@navikt/ds-react';
 import HuskelappIkon from '../ikon/huskelapp.svg?react';
 import { toReversedDateStr } from '../../../util/date-utils';
-import { HuskelappEditForm } from './huskelapp-edit-form';
 import { HuskelappMedArbeidslisteEditForm } from './huskelapp-med-arbeidsliste-edit-form';
 import { HuskelappFooter } from '../huskelapp-footer';
 
@@ -123,7 +122,6 @@ function HuskelappRedigereModal({ medArbeidsliste }: HuskelappModalProps) {
                     }}
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
-                    width={medArbeidsliste ? '50rem' : '25rem'}
                 >
                     <Modal.Body className="huskelapp-modal-body">
                         <HuskelappMedArbeidslisteEditForm

@@ -40,11 +40,26 @@
         margin-bottom: 0.6rem;
     }
 
-    .arbeidslisteInnhold {
+    .huskelapp-modal-body {
+        padding-bottom: 0;
+        overflow: visible; // Gjer at focus-stylinga ikkje vert kutta sjølv om padding-bottom er 0.
+
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .rediger-huskelapp {
+        flex-basis: 17.75rem;
+        flex-grow: 1;
+        max-width: 26rem;
+    }
+
+    .arbeidsliste-innhold {
+        flex: 10 17.75rem;
+
         background-color: var(--a-gray-100);
         padding: 0.5rem;
-        margin-left: 1.5rem;
-        margin-right: 0.6rem;
         border-radius: var(--a-border-radius-medium);
 
         .font-xs {
@@ -55,18 +70,6 @@
         .huskelapp-alert {
             margin-top: 0.6rem;
         }
-    }
-
-
-    .huskelappmodal-med-arbeidsliste-innhold {
-        display: grid;
-        grid-auto-flow: column;
-        grid-template-columns: 17.75rem 1fr;
-    }
-
-    .huskelapp-modal-body {
-        padding-bottom: 0;
-        overflow: visible; // Gjer at focus-stylinga ikkje vert kutta sjølv om padding-bottom er 0.
     }
 
     .margin-bottom-s {

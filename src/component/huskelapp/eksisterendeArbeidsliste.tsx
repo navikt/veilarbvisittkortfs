@@ -13,7 +13,7 @@ interface Props {
 export const EksisterendeArbeidsliste = ({ arbeidsliste }: Props) => {
     const [isSlettmodalOpen, setIsSlettmodalOpen] = useState(false);
     return (
-        <div className="arbeidslisteInnhold">
+        <div className="arbeidsliste-innhold">
             <Heading size="small" as="h2">
                 Eksisterende arbeidslisteinnhold
             </Heading>
