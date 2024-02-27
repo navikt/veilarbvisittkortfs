@@ -24,15 +24,12 @@ const huskelappEmptyValues = {
     frist: ''
 };
 
-export interface HuskelappModalProps {
-    medArbeidsliste: boolean;
-}
-
-function HuskelappRedigereModal({ medArbeidsliste }: HuskelappModalProps) {
+function HuskelappRedigereModal() {
     const { brukerFnr, enhetId } = useAppStore();
     const { hideModal, showSpinnerModal, showErrorModal, showHuskelappModal } = useModalStore();
     const { huskelapp, setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
 
+    const erArbeidslisteTom = arbeidsliste?.sistEndretAv == null;
     const erIRedigeringModus = huskelapp?.endretDato;
 
     const huskelappValues: HuskelappformValues = {
@@ -124,15 +121,12 @@ function HuskelappRedigereModal({ medArbeidsliste }: HuskelappModalProps) {
                     onClose={() => onRequestClose(formikProps)}
                 >
                     <Modal.Body className="huskelapp-modal-body">
-                        <HuskelappMedArbeidslisteEditForm
-                            medArbeidsliste={medArbeidsliste}
-                            arbeidsliste={arbeidsliste!}
-                        />
+                        <HuskelappMedArbeidslisteEditForm arbeidsliste={arbeidsliste} />
                     </Modal.Body>
                     <Modal.Footer>
                         <HuskelappFooter
                             onRequestClose={() => onRequestClose(formikProps)}
-                            textPrimaryBtn={medArbeidsliste ? 'Lagre og slett eksisterende' : 'Lagre'}
+                            textPrimaryBtn={erArbeidslisteTom ? 'Lagre' : 'Lagre og slett eksisterende'}
                         />
                     </Modal.Footer>
                 </Modal>

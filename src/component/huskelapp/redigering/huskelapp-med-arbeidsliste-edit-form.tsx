@@ -3,16 +3,17 @@ import { Arbeidsliste } from '../../../api/veilarbportefolje';
 import { HuskelappEditForm } from './huskelapp-edit-form';
 
 interface HuskelappMedArbeidslisteFormProps {
-    arbeidsliste: Arbeidsliste;
-    medArbeidsliste: boolean;
+    arbeidsliste?: Arbeidsliste;
 }
 
-export function HuskelappMedArbeidslisteEditForm({ arbeidsliste, medArbeidsliste }: HuskelappMedArbeidslisteFormProps) {
+export function HuskelappMedArbeidslisteEditForm({ arbeidsliste }: HuskelappMedArbeidslisteFormProps) {
+    const erArbeidslisteTom = arbeidsliste?.sistEndretAv == null;
+
     return (
         <>
             <HuskelappEditForm />
 
-            {medArbeidsliste && <EksisterendeArbeidsliste arbeidsliste={arbeidsliste} />}
+            {!erArbeidslisteTom && <EksisterendeArbeidsliste arbeidsliste={arbeidsliste} />}
         </>
     );
 }
