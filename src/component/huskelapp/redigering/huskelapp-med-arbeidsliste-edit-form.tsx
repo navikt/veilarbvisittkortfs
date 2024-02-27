@@ -4,13 +4,15 @@ import { HuskelappEditForm } from './huskelapp-edit-form';
 
 interface HuskelappMedArbeidslisteFormProps {
     arbeidsliste: Arbeidsliste;
+    medArbeidsliste: boolean;
 }
 
-export function HuskelappMedArbeidslisteEditForm({ arbeidsliste }: HuskelappMedArbeidslisteFormProps) {
+export function HuskelappMedArbeidslisteEditForm({ arbeidsliste, medArbeidsliste }: HuskelappMedArbeidslisteFormProps) {
     return (
-        <div className="huskelappmodal-med-arbeidsliste-innhold">
+        <>
             <HuskelappEditForm />
-            <EksisterendeArbeidsliste arbeidsliste={arbeidsliste} />
-        </div>
+
+            {medArbeidsliste && <EksisterendeArbeidsliste arbeidsliste={arbeidsliste} />}
+        </>
     );
 }

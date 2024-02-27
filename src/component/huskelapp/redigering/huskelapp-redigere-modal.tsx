@@ -126,8 +126,10 @@ function HuskelappRedigereModal({ medArbeidsliste }: HuskelappModalProps) {
                     width={medArbeidsliste ? '50rem' : '25rem'}
                 >
                     <Modal.Body className="huskelapp-modal-body">
-                        {medArbeidsliste && <HuskelappMedArbeidslisteEditForm arbeidsliste={arbeidsliste!} />}
-                        {!medArbeidsliste && <HuskelappEditForm />}
+                        <HuskelappMedArbeidslisteEditForm
+                            medArbeidsliste={medArbeidsliste}
+                            arbeidsliste={arbeidsliste!}
+                        />
                     </Modal.Body>
                     <Modal.Footer>
                         <HuskelappFooter
