@@ -26,7 +26,7 @@ import { doAll } from '../../util/utils';
 import { trackAmplitude } from '../../amplitude/amplitude';
 import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
 
-function Veilederverktoyslinje() {
+function Veilederverktoylinje() {
     const { visVeilederVerktoy } = useAppStore();
     const {
         oppfolging,
@@ -254,4 +254,4 @@ function Veilederverktoyslinje() {
     );
 }
 
-export default Veilederverktoyslinje;
+export default Veilederverktoylinje;
