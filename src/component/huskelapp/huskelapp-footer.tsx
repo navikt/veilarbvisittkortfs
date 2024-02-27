@@ -7,10 +7,7 @@ interface Props {
 }
 
 export const HuskelappFooter = ({ onRequestClose, onActionClick, textPrimaryBtn }: Props) => (
-    <div className="huskelapp-modal-footer">
-        <Button size="small" variant="secondary" type="button" onClick={onRequestClose}>
-            Avbryt
-        </Button>
+    <>
         <Button
             size="small"
             variant="primary"
@@ -22,5 +19,8 @@ export const HuskelappFooter = ({ onRequestClose, onActionClick, textPrimaryBtn 
         >
             {textPrimaryBtn}
         </Button>
-    </div>
+        <Button size="small" variant="secondary" type="button" onClick={onRequestClose}>
+            Avbryt
+        </Button>
+    </>
 );

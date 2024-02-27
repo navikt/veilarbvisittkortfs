@@ -17,6 +17,7 @@ import HuskelappIkon from '../ikon/huskelapp.svg?react';
 import { toReversedDateStr } from '../../../util/date-utils';
 import { HuskelappEditForm } from './huskelapp-edit-form';
 import { HuskelappMedArbeidslisteEditForm } from './huskelapp-med-arbeidsliste-edit-form';
+import { HuskelappFooter } from '../huskelapp-footer';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -124,7 +125,7 @@ function HuskelappRedigereModal({ medArbeidsliste }: HuskelappModalProps) {
                     onClose={() => onRequestClose(formikProps)}
                     width={medArbeidsliste ? '50rem' : '25rem'}
                 >
-                    <Modal.Body>
+                    <Modal.Body className="huskelapp-modal-body">
                         {medArbeidsliste && (
                             <HuskelappMedArbeidslisteEditForm
                                 onRequestClose={() => onRequestClose(formikProps)}
@@ -133,6 +134,12 @@ function HuskelappRedigereModal({ medArbeidsliste }: HuskelappModalProps) {
                         )}
                         {!medArbeidsliste && <HuskelappEditForm onRequestClose={() => onRequestClose(formikProps)} />}
                     </Modal.Body>
+                    <Modal.Footer>
+                        <HuskelappFooter
+                            onRequestClose={() => onRequestClose(formikProps)}
+                            textPrimaryBtn={medArbeidsliste ? 'Lagre og slett eksisterende' : 'Lagre'}
+                        />
+                    </Modal.Footer>
                 </Modal>
             )}
         </Formik>
