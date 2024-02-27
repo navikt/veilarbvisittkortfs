@@ -15,8 +15,9 @@ import '../huskelapp.less';
 import { Modal } from '@navikt/ds-react';
 import HuskelappIkon from '../ikon/huskelapp.svg?react';
 import { toReversedDateStr } from '../../../util/date-utils';
-import { HuskelappMedArbeidslisteEditForm } from './huskelapp-med-arbeidsliste-edit-form';
 import { RedigerHuskelappFooter } from './rediger-huskelapp-footer';
+import { HuskelappEditForm } from './huskelapp-edit-form';
+import { EksisterendeArbeidsliste } from './eksisterendeArbeidsliste';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -29,7 +30,9 @@ function HuskelappRedigereModal() {
     const { hideModal, showSpinnerModal, showErrorModal, showHuskelappModal } = useModalStore();
     const { huskelapp, setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
 
-    const erArbeidslisteTom = arbeidsliste?.sistEndretAv == null;
+    const erArbeidslistaTom =
+        arbeidsliste?.sistEndretAv == null ||
+        (!arbeidsliste?.overskrift && !arbeidsliste?.kommentar && !arbeidsliste?.frist);
     const erIRedigeringModus = huskelapp?.endretDato;
 
     const huskelappValues: HuskelappformValues = {
@@ -121,12 +124,13 @@ function HuskelappRedigereModal() {
                     onClose={() => onRequestClose(formikProps)}
                 >
                     <Modal.Body className="huskelapp-modal-body">
-                        <HuskelappMedArbeidslisteEditForm arbeidsliste={arbeidsliste} />
+                        <HuskelappEditForm />
+                        {!erArbeidslistaTom && <EksisterendeArbeidsliste arbeidsliste={arbeidsliste} />}
                     </Modal.Body>
                     <Modal.Footer>
                         <RedigerHuskelappFooter
                             onRequestClose={() => onRequestClose(formikProps)}
-                            textPrimaryBtn={erArbeidslisteTom ? 'Lagre' : 'Lagre og slett eksisterende'}
+                            textPrimaryBtn={erArbeidslistaTom ? 'Lagre' : 'Lagre og slett eksisterende'}
                         />
                     </Modal.Footer>
                 </Modal>
