@@ -1,7 +1,9 @@
 import { Heading } from '@navikt/ds-react';
 import { HuskelappInformasjonsmelding } from '../huskelapp-informasjonsmelding';
 import { Form } from 'formik';
-import HuskelappForm from './huskelapp-form';
+import FormikTekstArea from '../../components/formik/formik-textarea';
+import { validerFristFelt, validerHuskelappKommentarFelt } from '../../../util/formik-validation';
+import FormikDatoVelger from '../../components/formik/formik-datepicker';
 
 export const HuskelappEditForm = () => (
     <div className="rediger-huskelapp">
@@ -10,7 +12,21 @@ export const HuskelappEditForm = () => (
         </Heading>
         <HuskelappInformasjonsmelding />
         <Form id="huskelapp-form">
-            <HuskelappForm />
+            <FormikTekstArea
+                name="kommentar"
+                label=""
+                maxLength={100}
+                validate={validerHuskelappKommentarFelt}
+                className="margin-bottom-s"
+                size="medium"
+            />
+            <FormikDatoVelger
+                className="navds-form-field"
+                name="frist"
+                validate={validerFristFelt}
+                label="Frist"
+                ariaLabel="Frist for huskelapp"
+            />
         </Form>
     </div>
 );
