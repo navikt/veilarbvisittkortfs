@@ -22,13 +22,18 @@
         padding: 0.5rem;
         border-radius: var(--a-border-radius-medium);
 
-        .font-xs {
-            font-size: var(--a-font-size-small);
-            line-height: var(--a-font-line-height-medium);
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: 0.5rem;
+
+        h3 {
+            font-size: var(--a-font-size-medium); // 1rem, overskriv ds-styling for xsmall (1.5rem)
         }
 
-        .huskelapp-alert {
-            margin-top: 0.6rem;
+        p {
+            font-size: var(--a-font-size-small);
+            line-height: var(--a-font-line-height-medium);
         }
 
         .slett-arbeidsliste-container {
@@ -55,10 +60,6 @@
 
     .margin-bottom-s {
         margin-bottom: 1.3rem;
-    }
-
-    .margin-bottom-xxs {
-        margin-bottom: 0.5rem;
     }
 
     .huskelapp-alert {
