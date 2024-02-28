@@ -24,7 +24,6 @@ export const SlettArbeidsliste = () => {
         });
         setLoading(true);
 
-        // TODO fiks at hovud-modalen oppdaterar seg slik at den ikkje viser Eksisterende arbeidslisteinnhold meir
         slettArbeidsliste(brukerFnr)
             .then(ifResponseHasData(setArbeidsliste))
             .then(() => setLoading(false))
