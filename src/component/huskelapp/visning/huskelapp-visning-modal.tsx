@@ -1,8 +1,8 @@
 import './huskelapp-visning.less';
 import { useModalStore } from '../../../store/modal-store';
-import { BodyShort, Modal } from '@navikt/ds-react';
+import { BodyShort, Button, Modal } from '@navikt/ds-react';
+import { TrashIcon } from '@navikt/aksel-icons';
 import HuskelappIkon from '../ikon/huskelapp.svg?react';
-import { HuskelappFooter } from './huskelapp-footer';
 import { useDataStore } from '../../../store/data-store';
 import { toSimpleDateStr } from '../../../util/date-utils';
 import { trackAmplitude } from '../../../amplitude/amplitude';
@@ -19,7 +19,15 @@ function HuskelappVisningModal() {
         showHuskelappRedigereModal();
     };
 
-    if (!huskelapp) return null; // TODO burde vi heller vise ei feilmelding? I praksis vil vi alltid ha huskelapp når vi skal vise huskelapp.
+    if (!huskelapp) {
+        /* TODO Burde vi heller vise ei ordentleg feilmelding til frontend om det ikkje er nokon huskelapp å vise?
+         *      Dette skal i teorien ikke kunne skje fordi vi sjekker hvilken modal som skal vises basert på
+         *      om vi har huskelapp eller ikke. */
+
+        // eslint-disable-next-line no-console
+        console.warn('Oisann, her prøver noen å åpne huskelapp uten at det finnes noen huskelapp å åpne.');
+        return null;
+    }
 
     return (
         <Modal
@@ -46,11 +54,20 @@ function HuskelappVisningModal() {
                     )}
                 </div>
             </Modal.Body>
-            <HuskelappFooter
-                endreHuskelapp={endreHuskelappKlikk}
-                onRequestClose={() => hideModal()}
-                slettHuskelapp={() => showFjernHuskelappModal()}
-            />
+            <Modal.Footer>
+                <Button onClick={endreHuskelappKlikk} size="small" variant="primary" form="huskelapp-form">
+                    Endre
+                </Button>
+                <Button
+                    onClick={showFjernHuskelappModal}
+                    icon={<TrashIcon aria-hidden />}
+                    size="small"
+                    variant="secondary"
+                    type="button"
+                >
+                    Slett
+                </Button>
+            </Modal.Footer>
         </Modal>
     );
 }
