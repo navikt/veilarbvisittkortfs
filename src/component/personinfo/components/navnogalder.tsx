@@ -17,7 +17,7 @@ export function lagAlderTekst(personalia: OrNothing<Personalia>): string {
 
 function NavnOgAlder(props: { personalia: OrNothing<Personalia>; navn: string }) {
     const alderTekst = lagAlderTekst(props.personalia);
-    return <Heading size="small" as="h2">{`${props.navn} ${alderTekst}`}</Heading>;
+    return <Heading size="small" level="2">{`${props.navn} ${alderTekst}`}</Heading>;
 }
 
 export default NavnOgAlder;

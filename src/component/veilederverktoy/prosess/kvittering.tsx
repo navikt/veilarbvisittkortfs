@@ -24,7 +24,7 @@ function Kvittering({ tittel, alertStripeTekst, footer, onRequestClose }: Kvitte
             }}
             type="SUCCESS"
         >
-            <Heading size="medium" as="h2" className="modal-info-tekst__undertekst">
+            <Heading size="medium" level="2" className="modal-info-tekst__undertekst">
                 {tittel}
             </Heading>
             <BodyShort size="small">{alertStripeTekst}</BodyShort>

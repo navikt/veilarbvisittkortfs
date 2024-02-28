@@ -68,7 +68,7 @@ function OpprettOppgave() {
                 <div>
                     <Heading
                         size="small"
-                        as="h2"
+                        level="2"
                         className="opprett-oppgave__undertittel"
                     >{`Oppfølging av ${navn}`}</Heading>
                     <Form>

@@ -13,7 +13,7 @@ export function FeilTildelingModal() {
 
     return (
         <VarselModal isOpen={true} type="FEIL" onRequestClose={lukkModal}>
-            <Heading size="medium" as="h2">
+            <Heading size="medium" level="2">
                 Handlingen kan ikke utføres
             </Heading>
             <BodyShort size="small" className="feil-modal-normaltekst">

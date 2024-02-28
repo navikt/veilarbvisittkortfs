@@ -22,7 +22,7 @@ interface ArbeidslisteFormProps {
 function ArbeidslisteForm({ sistEndretAv, endringstidspunkt, navn, fnr }: ArbeidslisteFormProps) {
     return (
         <div className="arbeidsliste__bruker">
-            <Heading size="small" as="h2">{`${navn}, ${fnr}`}</Heading>
+            <Heading size="small" level="2">{`${navn}, ${fnr}`}</Heading>
             <FormikInput name="overskrift" label="Tittel" validate={validerArbeidslisteTittelFelt} />
             <FormikTekstArea
                 name="kommentar"

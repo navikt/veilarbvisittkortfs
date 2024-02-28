@@ -29,7 +29,7 @@ function FjernArbeidslisteModal() {
 
     return (
         <VarselModal isOpen={true} onRequestClose={hideModal} type="ADVARSEL">
-            <Heading size="large" as="h1">
+            <Heading size="large" level="1">
                 Fjern fra arbeidsliste
             </Heading>
             <BodyShort size="small" weight="semibold">{`${brukerSammensattNavn}, ${brukerFnr}`}</BodyShort>
