@@ -11,7 +11,7 @@ import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
 import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
-import '../huskelapp.less';
+import './huskelapp-redigering.less';
 import { Modal } from '@navikt/ds-react';
 import HuskelappIkon from '../ikon/huskelapp.svg?react';
 import { toReversedDateStr } from '../../../util/date-utils';

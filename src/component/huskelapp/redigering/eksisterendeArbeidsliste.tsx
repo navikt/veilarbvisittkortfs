@@ -1,7 +1,7 @@
 import { Alert, BodyLong, BodyShort, Heading } from '@navikt/ds-react';
 import { Arbeidsliste } from '../../../api/veilarbportefolje';
 import { toSimpleDateStr } from '../../../util/date-utils';
-import '../huskelapp.less';
+import './huskelapp-redigering.less';
 import { SlettArbeidsliste } from './huskelapp-slett-arbeidsliste';
 
 interface Props {
