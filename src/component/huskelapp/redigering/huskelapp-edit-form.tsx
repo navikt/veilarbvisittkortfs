@@ -18,7 +18,7 @@ export const HuskelappEditForm = () => (
                 maxLength={100}
                 validate={validerHuskelappKommentarFelt}
                 className="margin-bottom-s"
-                size="medium"
+                size="small"
             />
             <FormikDatoVelger
                 className="navds-form-field"
@@ -26,6 +26,7 @@ export const HuskelappEditForm = () => (
                 validate={validerFristFelt}
                 label="Frist"
                 ariaLabel="Frist for huskelapp"
+                size="small"
             />
         </Form>
     </div>
