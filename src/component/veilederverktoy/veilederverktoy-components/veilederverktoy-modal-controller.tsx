@@ -32,7 +32,7 @@ import FjernArbeidslisteModal from '../../arbeidsliste/fjern-arbeidsliste-modal'
 import ArbeidslisteModal from '../../arbeidsliste/arbeidsliste-modal';
 import HuskelappRedigereModal from '../../huskelapp/redigering/huskelapp-redigere-modal';
 import HuskelappVisningModal from '../../huskelapp/visning/huskelapp-visning-modal';
-import HuskelappFjernModal from '../../huskelapp/redigering/huskelapp-fjern-modal';
+import HuskelappFjernModal from '../../huskelapp/visning/huskelapp-fjern-modal';
 
 export function VeilederverktoyModalController() {
     const { activeModalState } = useModalStore();
