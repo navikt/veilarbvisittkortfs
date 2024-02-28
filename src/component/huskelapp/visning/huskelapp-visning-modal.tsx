@@ -19,6 +19,8 @@ function HuskelappVisningModal() {
         showHuskelappRedigereModal();
     };
 
+    if (!huskelapp) return null; // TODO burde vi heller vise ei feilmelding? I praksis vil vi alltid ha huskelapp når vi skal vise huskelapp.
+
     return (
         <Modal
             header={{
@@ -32,14 +34,16 @@ function HuskelappVisningModal() {
             <Modal.Body className="huskelapp-visning-modal-body">
                 <div className="huskelapp-visning">
                     <BodyShort size="small" weight={'semibold'}>
-                        {huskelapp?.frist ? `Frist: ${toSimpleDateStr(huskelapp!.frist!)}` : 'Ingen frist satt'}
+                        {huskelapp.frist ? `Frist: ${toSimpleDateStr(huskelapp!.frist!)}` : 'Ingen frist satt'}
                     </BodyShort>
-                    <BodyShort size="small">{huskelapp!.kommentar}</BodyShort>
-                    <BodyShort size="small">
-                        <i>
-                            Endret {toSimpleDateStr(huskelapp!.endretDato!)} av {huskelapp!.endretAv}
-                        </i>
-                    </BodyShort>
+                    {huskelapp.kommentar && <BodyShort size="small">{huskelapp.kommentar}</BodyShort>}
+                    {huskelapp.endretDato && (
+                        <BodyShort size="small">
+                            <i>
+                                Endret {toSimpleDateStr(huskelapp.endretDato)} av {huskelapp.endretAv}
+                            </i>
+                        </BodyShort>
+                    )}
                 </div>
             </Modal.Body>
             <HuskelappFooter
