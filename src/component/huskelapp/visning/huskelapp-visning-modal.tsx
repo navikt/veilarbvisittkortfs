@@ -32,7 +32,7 @@ function HuskelappVisningModal() {
             onClose={() => hideModal()}
         >
             <Modal.Body className="huskelapp-visning-modal-body">
-                <div className="huskelapp-visning">
+                <div className="huskelapp-innhold huskelapp-effekt-styling">
                     <BodyShort size="small" weight={'semibold'}>
                         {huskelapp.frist ? `Frist: ${toSimpleDateStr(huskelapp!.frist!)}` : 'Ingen frist satt'}
                     </BodyShort>
