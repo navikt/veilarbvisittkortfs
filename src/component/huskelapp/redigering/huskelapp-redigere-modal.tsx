@@ -128,7 +128,7 @@ function HuskelappRedigereModal() {
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
                 >
-                    <Modal.Body className="huskelapp-modal-body">
+                    <Modal.Body className="rediger-huskelapp-modal-body">
                         <HuskelappEditForm />
                         {!erArbeidslistaTom && <EksisterendeArbeidsliste arbeidsliste={arbeidsliste} />}
                     </Modal.Body>

@@ -6,7 +6,7 @@ import { validerFristFelt, validerHuskelappKommentarFelt } from '../../../util/f
 import FormikDatoVelger from '../../components/formik/formik-datepicker';
 
 export const HuskelappEditForm = () => (
-    <div className="rediger-huskelapp">
+    <div className="rediger-huskelapp-skjema">
         <Heading size="medium" visuallyHidden={true}>
             Huskelappinnhold
         </Heading>

@@ -52,7 +52,7 @@ export const SlettArbeidsliste = () => {
                 </Button>
             )}
             {visSlettebekreftelse && (
-                <div className="slettArbeidslisteContainer">
+                <div className="slett-arbeidsliste-container">
                     <Heading size="xsmall" level="3">
                         Er du sikker på at du vil slette eksisterende innhold?
                     </Heading>
