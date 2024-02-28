@@ -1,17 +1,14 @@
-import { Alert, BodyLong, BodyShort, Button, Heading } from '@navikt/ds-react';
+import { Alert, BodyLong, BodyShort, Heading } from '@navikt/ds-react';
 import { Arbeidsliste } from '../../../api/veilarbportefolje';
 import { toSimpleDateStr } from '../../../util/date-utils';
 import '../huskelapp.less';
-import { TrashIcon } from '@navikt/aksel-icons';
-import { useState } from 'react';
-import { SlettEksisterendeArbeidslisteInnholdVarselModal } from '../SlettEksisterendeArbeidslisteInnholdVarselModal';
+import { SlettArbeidsliste } from './huskelapp-slett-arbeidsliste';
 
 interface Props {
     arbeidsliste: Arbeidsliste | undefined;
 }
 
 export const EksisterendeArbeidsliste = ({ arbeidsliste }: Props) => {
-    const [isSlettmodalOpen, setIsSlettmodalOpen] = useState(false);
     return (
         <div className="arbeidsliste-innhold">
             <Heading size="small" as="h2">
@@ -38,18 +35,7 @@ export const EksisterendeArbeidsliste = ({ arbeidsliste }: Props) => {
                     {arbeidsliste?.sistEndretAv?.veilederId && ` av ${arbeidsliste.sistEndretAv.veilederId}`}
                 </i>
             </BodyShort>
-            <Button
-                onClick={() => setIsSlettmodalOpen(true)}
-                size="xsmall"
-                variant="tertiary"
-                icon={<TrashIcon aria-hidden />}
-            >
-                Slett
-            </Button>
-            <SlettEksisterendeArbeidslisteInnholdVarselModal
-                onCloseRequest={() => setIsSlettmodalOpen(false)}
-                isOpen={isSlettmodalOpen}
-            />
+            <SlettArbeidsliste />
         </div>
     );
 };
