@@ -26,7 +26,7 @@ import { doAll } from '../../util/utils';
 import { trackAmplitude } from '../../amplitude/amplitude';
 import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
 
-function Veilederverktoyslinje() {
+function Veilederverktoylinje() {
     const { visVeilederVerktoy } = useAppStore();
     const {
         oppfolging,
@@ -51,8 +51,7 @@ function Veilederverktoyslinje() {
         showAvsluttOppfolgingModal,
         showHistorikkModal,
         showHuskelappRedigereModal,
-        showHuskelappModal,
-        showHuskelappRedigereMedArbeidslisteModal
+        showHuskelappModal
     } = useModalStore();
 
     const kanStarteEskalering = selectKanSendeEskaleringsVarsel(
@@ -107,15 +106,12 @@ function Veilederverktoyslinje() {
             }
         });
 
-        const harHuskelapp = !!huskelapp?.huskelappId;
-        const harArbeidsliste = !!arbeidsliste?.sistEndretAv;
-        if (!harArbeidsliste && harHuskelapp) {
-            return showHuskelappModal();
-        } else if (harArbeidsliste && !harHuskelapp) {
-            return showHuskelappRedigereMedArbeidslisteModal();
+        const erHuskelappTom = huskelapp?.huskelappId == null;
+        if (erHuskelappTom) {
+            showHuskelappRedigereModal();
+        } else {
+            showHuskelappModal();
         }
-
-        return showHuskelappRedigereModal();
     };
 
     return (
@@ -258,4 +254,4 @@ function Veilederverktoyslinje() {
     );
 }
 
-export default Veilederverktoyslinje;
+export default Veilederverktoylinje;

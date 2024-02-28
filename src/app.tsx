@@ -1,5 +1,5 @@
 import PersonInfo from './component/personinfo/personinfo';
-import Veilederverktoyslinje from './component/veilederverktoy/veiledervertoyslinje';
+import Veilederverktoylinje from './component/veilederverktoy/veilederverktoylinje';
 import Etiketter from './component/personinfo/components/etiketter';
 import Tilbakelenke from './component/components/tilbakelenke/tilbakelenke';
 import StoreProvider from './store/store-provider';
@@ -31,7 +31,7 @@ function App(props: AppProps) {
                     <div className="visittkortfs__container">
                         <PersonInfo />
                         {!props.skjulEtiketter && <Etiketter />}
-                        <Veilederverktoyslinje />
+                        <Veilederverktoylinje />
                     </div>
                 </DataFetcher>
                 <VeilederverktoyModalController />

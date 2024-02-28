@@ -2,14 +2,9 @@ import { Heading } from '@navikt/ds-react';
 import { HuskelappInformasjonsmelding } from '../huskelapp-informasjonsmelding';
 import { Form } from 'formik';
 import HuskelappForm from './huskelapp-form';
-import { HuskelappFooter } from '../huskelapp-footer';
 
-interface HuskelappMedArbeidslisteFormProps {
-    onRequestClose: () => void;
-}
-
-export const HuskelappEditForm = (formValues: HuskelappMedArbeidslisteFormProps) => (
-    <>
+export const HuskelappEditForm = () => (
+    <div className="rediger-huskelapp">
         <Heading size="medium" visuallyHidden={true}>
             Huskelappinnhold
         </Heading>
@@ -17,6 +12,5 @@ export const HuskelappEditForm = (formValues: HuskelappMedArbeidslisteFormProps)
         <Form id="huskelapp-form">
             <HuskelappForm />
         </Form>
-        <HuskelappFooter typePrimaryBtn="submit" textPrimaryBtn="Lagre" onRequestClose={formValues.onRequestClose} />
-    </>
+    </div>
 );

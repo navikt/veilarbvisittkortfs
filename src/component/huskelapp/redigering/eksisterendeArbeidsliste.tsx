@@ -1,10 +1,10 @@
 import { Alert, BodyLong, BodyShort, Button, Heading } from '@navikt/ds-react';
-import { Arbeidsliste } from '../../api/veilarbportefolje';
-import { toSimpleDateStr } from '../../util/date-utils';
-import './huskelapp.less';
+import { Arbeidsliste } from '../../../api/veilarbportefolje';
+import { toSimpleDateStr } from '../../../util/date-utils';
+import '../huskelapp.less';
 import { TrashIcon } from '@navikt/aksel-icons';
 import { useState } from 'react';
-import { SlettEksisterendeArbeidslisteInnholdVarselModal } from './SlettEksisterendeArbeidslisteInnholdVarselModal';
+import { SlettEksisterendeArbeidslisteInnholdVarselModal } from '../SlettEksisterendeArbeidslisteInnholdVarselModal';
 
 interface Props {
     arbeidsliste: Arbeidsliste | undefined;
@@ -13,7 +13,7 @@ interface Props {
 export const EksisterendeArbeidsliste = ({ arbeidsliste }: Props) => {
     const [isSlettmodalOpen, setIsSlettmodalOpen] = useState(false);
     return (
-        <div className="arbeidslisteInnhold">
+        <div className="arbeidsliste-innhold">
             <Heading size="small" as="h2">
                 Eksisterende arbeidslisteinnhold
             </Heading>
