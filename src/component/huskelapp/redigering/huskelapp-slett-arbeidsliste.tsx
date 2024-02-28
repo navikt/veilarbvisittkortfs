@@ -53,7 +53,7 @@ export const SlettArbeidsliste = () => {
             )}
             {visSlettebekreftelse && (
                 <div className="slettArbeidslisteContainer">
-                    <Heading size="xsmall" as="h3">
+                    <Heading size="xsmall" level="3">
                         Er du sikker på at du vil slette eksisterende innhold?
                     </Heading>
                     <BodyShort size="small">Dette vil slette tittel, kommentar og frist for denne brukeren.</BodyShort>
