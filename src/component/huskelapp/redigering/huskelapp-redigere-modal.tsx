@@ -93,6 +93,11 @@ function HuskelappRedigereModal() {
                 .then(setHuskelapp)
                 .then(showHuskelappModal)
                 .catch(showErrorModal);
+            if (!erArbeidslistaTom) {
+                slettArbeidsliste(brukerFnr)
+                    .then(res => res.data)
+                    .then(setArbeidsliste);
+            }
         } else {
             lagreHuskelapp({
                 kommentar: values.kommentar ? values.kommentar : null,
