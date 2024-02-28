@@ -31,13 +31,11 @@ function HuskelappVisningModal() {
         >
             <Modal.Body className="huskelapp-visning-modal-body">
                 <div className="huskelapp-visning">
-                    <BodyShort as="div" size="small" weight={'semibold'}>
+                    <BodyShort size="small" weight={'semibold'}>
                         {huskelapp?.frist ? `Frist: ${toSimpleDateStr(huskelapp!.frist!)}` : 'Ingen frist satt'}
                     </BodyShort>
-                    <BodyShort as="div" size="small">
-                        {huskelapp!.kommentar}
-                    </BodyShort>
-                    <BodyShort as="div" size="small">
+                    <BodyShort size="small">{huskelapp!.kommentar}</BodyShort>
+                    <BodyShort size="small">
                         <i>
                             Endret {toSimpleDateStr(huskelapp!.endretDato!)} av {huskelapp!.endretAv}
                         </i>
