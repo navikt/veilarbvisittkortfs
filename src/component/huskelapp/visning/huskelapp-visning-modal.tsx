@@ -1,4 +1,4 @@
-import '../huskelapp.less';
+import './huskelapp-visning.less';
 import { useModalStore } from '../../../store/modal-store';
 import { BodyShort, Modal } from '@navikt/ds-react';
 import HuskelappIkon from '../ikon/huskelapp.svg?react';

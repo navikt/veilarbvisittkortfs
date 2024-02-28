@@ -34,7 +34,7 @@ function HuskelappFjernModal() {
     return (
         <Modal open={true} onClose={hideModal} width="small">
             <Modal.Header>
-                <Heading size="medium" as="h1" className="margin-bottom-s">
+                <Heading size="medium" level="1">
                     Slett huskelapp
                 </Heading>
             </Modal.Header>
