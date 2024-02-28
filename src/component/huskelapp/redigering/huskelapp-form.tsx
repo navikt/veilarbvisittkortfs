@@ -15,7 +15,7 @@ export function HuskelappForm() {
                 size="medium"
             />
             <FormikDatoVelger
-                className="navds-form-field margin-bottom-xxs"
+                className="navds-form-field"
                 name="frist"
                 validate={validerFristFelt}
                 label="Frist"

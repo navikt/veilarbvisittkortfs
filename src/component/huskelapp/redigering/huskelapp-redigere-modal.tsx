@@ -15,8 +15,9 @@ import '../huskelapp.less';
 import { Modal } from '@navikt/ds-react';
 import HuskelappIkon from '../ikon/huskelapp.svg?react';
 import { toReversedDateStr } from '../../../util/date-utils';
+import { RedigerHuskelappFooter } from './rediger-huskelapp-footer';
 import { HuskelappEditForm } from './huskelapp-edit-form';
-import { HuskelappMedArbeidslisteEditForm } from './huskelapp-med-arbeidsliste-edit-form';
+import { EksisterendeArbeidsliste } from './eksisterendeArbeidsliste';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -24,15 +25,14 @@ const huskelappEmptyValues = {
     frist: ''
 };
 
-export interface HuskelappModalProps {
-    medArbeidsliste: boolean;
-}
-
-function HuskelappRedigereModal({ medArbeidsliste }: HuskelappModalProps) {
+function HuskelappRedigereModal() {
     const { brukerFnr, enhetId } = useAppStore();
     const { hideModal, showSpinnerModal, showErrorModal, showHuskelappModal } = useModalStore();
     const { huskelapp, setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
 
+    const erArbeidslistaTom =
+        arbeidsliste?.sistEndretAv == null ||
+        (!arbeidsliste?.overskrift && !arbeidsliste?.kommentar && !arbeidsliste?.frist);
     const erIRedigeringModus = huskelapp?.endretDato;
 
     const huskelappValues: HuskelappformValues = {
@@ -122,17 +122,17 @@ function HuskelappRedigereModal({ medArbeidsliste }: HuskelappModalProps) {
                     }}
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
-                    width={medArbeidsliste ? '800px' : '400px'}
                 >
-                    <Modal.Body>
-                        {medArbeidsliste && (
-                            <HuskelappMedArbeidslisteEditForm
-                                onRequestClose={() => onRequestClose(formikProps)}
-                                arbeidsliste={arbeidsliste!}
-                            />
-                        )}
-                        {!medArbeidsliste && <HuskelappEditForm onRequestClose={() => onRequestClose(formikProps)} />}
+                    <Modal.Body className="huskelapp-modal-body">
+                        <HuskelappEditForm />
+                        {!erArbeidslistaTom && <EksisterendeArbeidsliste arbeidsliste={arbeidsliste} />}
                     </Modal.Body>
+                    <Modal.Footer>
+                        <RedigerHuskelappFooter
+                            onRequestClose={() => onRequestClose(formikProps)}
+                            textPrimaryBtn={erArbeidslistaTom ? 'Lagre' : 'Lagre og slett eksisterende'}
+                        />
+                    </Modal.Footer>
                 </Modal>
             )}
         </Formik>

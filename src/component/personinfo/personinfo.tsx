@@ -32,12 +32,7 @@ function PersonInfo() {
         features,
         tilgangTilBrukersKontor
     } = useDataStore();
-    const {
-        showArbeidslisteModal,
-        showHuskelappRedigereModal,
-        showHuskelappModal,
-        showHuskelappRedigereMedArbeidslisteModal
-    } = useModalStore();
+    const { showArbeidslisteModal, showHuskelappRedigereModal, showHuskelappModal } = useModalStore();
 
     const arbeidslisteikon = arbeidsliste?.kategori;
 
@@ -68,10 +63,8 @@ function PersonInfo() {
 
     const klikkShowHuskelapp = () => {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.huskelapp-ikon');
-        if (erArbeidslisteTom && erHuskelappTom) {
+        if (erHuskelappTom) {
             showHuskelappRedigereModal();
-        } else if (!erArbeidslisteTom && erHuskelappTom) {
-            showHuskelappRedigereMedArbeidslisteModal();
         } else {
             showHuskelappModal();
         }

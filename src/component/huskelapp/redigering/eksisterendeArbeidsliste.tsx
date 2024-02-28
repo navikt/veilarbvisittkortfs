@@ -1,8 +1,8 @@
 import { Alert, BodyLong, BodyShort, Heading } from '@navikt/ds-react';
-import { Arbeidsliste } from '../../api/veilarbportefolje';
-import { toSimpleDateStr } from '../../util/date-utils';
-import './huskelapp.less';
-import { SlettArbeidsliste } from './redigering/huskelapp-slett-arbeidsliste';
+import { Arbeidsliste } from '../../../api/veilarbportefolje';
+import { toSimpleDateStr } from '../../../util/date-utils';
+import '../huskelapp.less';
+import { SlettArbeidsliste } from './huskelapp-slett-arbeidsliste';
 
 interface Props {
     arbeidsliste: Arbeidsliste | undefined;
@@ -10,7 +10,7 @@ interface Props {
 
 export const EksisterendeArbeidsliste = ({ arbeidsliste }: Props) => {
     return (
-        <div className="arbeidslisteInnhold">
+        <div className="arbeidsliste-innhold">
             <Heading size="small" as="h2">
                 Eksisterende arbeidslisteinnhold
             </Heading>
