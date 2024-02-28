@@ -14,10 +14,10 @@ export const HuskelappEditForm = () => (
         <Form id="huskelapp-form">
             <FormikTekstArea
                 name="kommentar"
-                label=""
+                label="Huskelapp"
+                hideLabel={true}
                 maxLength={100}
                 validate={validerHuskelappKommentarFelt}
-                className="margin-bottom-s"
                 size="small"
             />
             <FormikDatoVelger

@@ -12,8 +12,15 @@
         flex-basis: 17.75rem;
         flex-grow: 1;
         max-width: 26rem;
-    }
 
+        display: flex;
+        flex-direction: column;
+        gap: 1.125rem;
+
+        form >:not(:last-child) {
+            margin-bottom: 1.125rem;
+        }
+    }
 
     .arbeidsliste-innhold {
         flex: 10 17.75rem;
@@ -58,11 +65,4 @@
         }
     }
 
-    .margin-bottom-s {
-        margin-bottom: 1.3rem;
-    }
-
-    .huskelapp-alert {
-        margin-bottom: 0.6rem;
-    }
 }
