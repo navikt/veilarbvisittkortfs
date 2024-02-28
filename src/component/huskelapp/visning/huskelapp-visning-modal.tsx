@@ -29,7 +29,7 @@ function HuskelappVisningModal() {
             open={true}
             onClose={() => hideModal()}
         >
-            <Modal.Body>
+            <Modal.Body className="huskelapp-visning-modal-body">
                 <div className="huskelapp-visning">
                     <BodyShort as="div" size="small" weight={'semibold'}>
                         {huskelapp?.frist ? `Frist: ${toSimpleDateStr(huskelapp!.frist!)}` : 'Ingen frist satt'}
@@ -43,12 +43,12 @@ function HuskelappVisningModal() {
                         </i>
                     </BodyShort>
                 </div>
-                <HuskelappFooter
-                    endreHuskelapp={endreHuskelappKlikk}
-                    onRequestClose={() => hideModal()}
-                    slettHuskelapp={() => showFjernHuskelappModal()}
-                />
             </Modal.Body>
+            <HuskelappFooter
+                endreHuskelapp={endreHuskelappKlikk}
+                onRequestClose={() => hideModal()}
+                slettHuskelapp={() => showFjernHuskelappModal()}
+            />
         </Modal>
     );
 }
