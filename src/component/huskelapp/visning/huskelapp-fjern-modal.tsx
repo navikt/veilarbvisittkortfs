@@ -3,7 +3,7 @@ import { useModalStore } from '../../../store/modal-store';
 import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
 import { slettHuskelapp } from '../../../api/veilarbportefolje';
-import {Button, Heading, Modal} from '@navikt/ds-react';
+import { Button, Heading, Modal } from '@navikt/ds-react';
 
 function HuskelappFjernModal() {
     const { huskelapp, setHuskelapp } = useDataStore();
@@ -32,9 +32,9 @@ function HuskelappFjernModal() {
     }
 
     return (
-        <Modal open={true} onClose={hideModal}>
+        <Modal open={true} onClose={hideModal} width="small">
             <Modal.Header>
-                <Heading size="medium" as="h1" className="margin-bottom-s">
+                <Heading size="medium" level="1">
                     Slett huskelapp
                 </Heading>
             </Modal.Header>

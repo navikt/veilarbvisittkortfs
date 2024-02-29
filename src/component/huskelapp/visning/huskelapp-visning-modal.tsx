@@ -1,8 +1,8 @@
-import '../huskelapp.less';
+import './huskelapp-visning.less';
 import { useModalStore } from '../../../store/modal-store';
-import { BodyShort, Modal } from '@navikt/ds-react';
+import { BodyShort, Button, Modal } from '@navikt/ds-react';
+import { TrashIcon } from '@navikt/aksel-icons';
 import HuskelappIkon from '../ikon/huskelapp.svg?react';
-import { HuskelappFooter } from './huskelapp-footer';
 import { useDataStore } from '../../../store/data-store';
 import { toSimpleDateStr } from '../../../util/date-utils';
 import { trackAmplitude } from '../../../amplitude/amplitude';
@@ -19,6 +19,16 @@ function HuskelappVisningModal() {
         showHuskelappRedigereModal();
     };
 
+    if (!huskelapp) {
+        /* TODO Burde vi heller vise ei ordentleg feilmelding til frontend om det ikkje er nokon huskelapp å vise?
+         *      Dette skal i teorien ikke kunne skje fordi vi sjekker hvilken modal som skal vises basert på
+         *      om vi har huskelapp eller ikke. */
+
+        // eslint-disable-next-line no-console
+        console.warn('Oisann, her prøver noen å åpne huskelapp uten at det finnes noen huskelapp å åpne.');
+        return null;
+    }
+
     return (
         <Modal
             header={{
@@ -29,26 +39,35 @@ function HuskelappVisningModal() {
             open={true}
             onClose={() => hideModal()}
         >
-            <Modal.Body>
-                <div className="huskelapp-visning">
-                    <BodyShort as="div" size="small" weight={'semibold'}>
-                        {huskelapp?.frist ? `Frist: ${toSimpleDateStr(huskelapp!.frist!)}` : 'Ingen frist satt'}
+            <Modal.Body className="huskelapp-visning-modal-body">
+                <div className="huskelapp-innhold huskelapp-effekt-styling">
+                    <BodyShort size="small" weight={'semibold'}>
+                        {huskelapp.frist ? `Frist: ${toSimpleDateStr(huskelapp!.frist!)}` : 'Ingen frist satt'}
                     </BodyShort>
-                    <BodyShort as="div" size="small">
-                        {huskelapp!.kommentar}
-                    </BodyShort>
-                    <BodyShort as="div" size="small">
-                        <i>
-                            Endret {toSimpleDateStr(huskelapp!.endretDato!)} av {huskelapp!.endretAv}
-                        </i>
-                    </BodyShort>
+                    {huskelapp.kommentar && <BodyShort size="small">{huskelapp.kommentar}</BodyShort>}
+                    {huskelapp.endretDato && (
+                        <BodyShort size="small">
+                            <i>
+                                Endret {toSimpleDateStr(huskelapp.endretDato)} av {huskelapp.endretAv}
+                            </i>
+                        </BodyShort>
+                    )}
                 </div>
-                <HuskelappFooter
-                    endreHuskelapp={endreHuskelappKlikk}
-                    onRequestClose={() => hideModal()}
-                    slettHuskelapp={() => showFjernHuskelappModal()}
-                />
             </Modal.Body>
+            <Modal.Footer>
+                <Button onClick={endreHuskelappKlikk} size="small" variant="primary" form="huskelapp-form">
+                    Endre
+                </Button>
+                <Button
+                    onClick={showFjernHuskelappModal}
+                    icon={<TrashIcon aria-hidden />}
+                    size="small"
+                    variant="secondary"
+                    type="button"
+                >
+                    Slett
+                </Button>
+            </Modal.Footer>
         </Modal>
     );
 }
