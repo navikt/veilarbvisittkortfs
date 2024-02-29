@@ -1,17 +1,17 @@
 {
   "index.html": {
     "css": [
-      "assets/index-5wc2bVrk.css"
+      "assets/index-UBD41RmM.css"
     ],
     "dynamicImports": [
       "src/mock/index.ts"
     ],
-    "file": "assets/index-Fktny04y.js",
+    "file": "assets/index-EbyL20zG.js",
     "isEntry": true,
     "src": "index.html"
   },
   "src/mock/index.ts": {
-    "file": "assets/index-uf0DaMlS.js",
+    "file": "assets/index-h0os4Zfg.js",
     "imports": [
       "index.html"
     ],
