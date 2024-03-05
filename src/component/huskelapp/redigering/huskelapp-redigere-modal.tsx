@@ -127,6 +127,7 @@ function HuskelappRedigereModal() {
                     }}
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
+                    className="rediger-huskelapp-modal"
                 >
                     <Modal.Body className="rediger-huskelapp-modal-body">
                         <HuskelappEditForm />
