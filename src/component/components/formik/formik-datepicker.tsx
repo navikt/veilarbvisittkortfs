@@ -63,7 +63,7 @@ const FormikDatoVelger = ({ name, validate, label, ariaLabel, size = 'medium', c
             return (
                 <div className={datePickerClassName}>
                     <DatoVelger formikProps={formProps} ariaLabel={ariaLabel} size={size} label={label} name={name} />
-                    {error && <ErrorMessage size="medium">{error}</ErrorMessage>}
+                    {error && <ErrorMessage size={size}>{error}</ErrorMessage>}
                 </div>
             );
         }}
