@@ -6,10 +6,11 @@ import HuskelappIkon from '../ikon/huskelapp.svg?react';
 import { useDataStore } from '../../../store/data-store';
 import { toSimpleDateStr } from '../../../util/date-utils';
 import { trackAmplitude } from '../../../amplitude/amplitude';
+import { kanFjerneHuskelapp } from '../../../util/selectors';
 
 function HuskelappVisningModal() {
     const { hideModal, showHuskelappRedigereModal, showFjernHuskelappModal } = useModalStore();
-    const { huskelapp } = useDataStore();
+    const { huskelapp, innloggetVeileder, oppfolging } = useDataStore();
 
     const endreHuskelappKlikk = () => {
         trackAmplitude({
@@ -19,15 +20,22 @@ function HuskelappVisningModal() {
         showHuskelappRedigereModal();
     };
 
+    /* TODO Burde vi ha noko ordentleg feilhandtering her i staden for berre å ikkje vise noko
+     *   dersom vi manglar huskelapp eller innlogga veileder?
+     *  Dette skal i teorien ikkje kunne skje fordi vi sjekkar kva modal som skal visast basert på
+     *   om vi har huskelapp eller ikkje og om innlogga brukar jobbar på same kontor som oppfølgande veileder. */
     if (!huskelapp) {
-        /* TODO Burde vi heller vise ei ordentleg feilmelding til frontend om det ikkje er nokon huskelapp å vise?
-         *      Dette skal i teorien ikke kunne skje fordi vi sjekker hvilken modal som skal vises basert på
-         *      om vi har huskelapp eller ikke. */
-
         // eslint-disable-next-line no-console
         console.warn('Oisann, her prøver noen å åpne huskelapp uten at det finnes noen huskelapp å åpne.');
         return null;
     }
+    if (!innloggetVeileder) {
+        // eslint-disable-next-line no-console
+        console.warn('Oisann, her prøver noen å åpne huskelapp uten at vi får tak i innlogget veileder.');
+        return null;
+    }
+
+    const veilederKanSletteHuskelapp = kanFjerneHuskelapp(huskelapp, oppfolging, innloggetVeileder.ident);
 
     return (
         <Modal
@@ -58,15 +66,17 @@ function HuskelappVisningModal() {
                 <Button onClick={endreHuskelappKlikk} size="small" variant="primary" form="huskelapp-form">
                     Endre
                 </Button>
-                <Button
-                    onClick={showFjernHuskelappModal}
-                    icon={<TrashIcon aria-hidden />}
-                    size="small"
-                    variant="secondary"
-                    type="button"
-                >
-                    Slett
-                </Button>
+                {veilederKanSletteHuskelapp && (
+                    <Button
+                        onClick={showFjernHuskelappModal}
+                        icon={<TrashIcon aria-hidden />}
+                        size="small"
+                        variant="secondary"
+                        type="button"
+                    >
+                        Slett
+                    </Button>
+                )}
             </Modal.Footer>
         </Modal>
     );
