@@ -34,7 +34,7 @@
         "@amplitude/analytics-browser": "2.5.3",
         "@navikt/aksel-icons": "5.18.3",
         "@navikt/ds-css": "5.18.3",
-        "@navikt/ds-react": "5.18.3",
+        "@navikt/ds-react": "6.2.0",
         "@navikt/navspa": "6.0.1",
         "axios": "1.6.8",
         "classnames": "2.5.1",
