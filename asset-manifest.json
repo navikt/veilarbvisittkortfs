@@ -1,21 +1,21 @@
 {
   "index.html": {
-    "css": [
-      "assets/index-WfnNZQYU.css"
-    ],
+    "file": "assets/index-CdWAPMnH.js",
+    "src": "index.html",
+    "isEntry": true,
     "dynamicImports": [
       "src/mock/index.ts"
     ],
-    "file": "assets/index-CbEHiy6A.js",
-    "isEntry": true,
-    "src": "index.html"
+    "css": [
+      "assets/index-BZ-c1lBh.css"
+    ]
   },
   "src/mock/index.ts": {
-    "file": "assets/index-CoZAe78x.js",
+    "file": "assets/index-CnSnYZrg.js",
+    "src": "src/mock/index.ts",
+    "isDynamicEntry": true,
     "imports": [
       "index.html"
-    ],
-    "isDynamicEntry": true,
-    "src": "src/mock/index.ts"
+    ]
   }
 }
