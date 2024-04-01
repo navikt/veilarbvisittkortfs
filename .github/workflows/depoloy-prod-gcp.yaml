@@ -39,7 +39,7 @@ jobs:
             - name: Upload files to GCS
               run: gsutil -m rsync -r build gs://veilarbvisittkortfs-prod
             - name: Create release
-              uses: softprops/action-gh-release@v1
+              uses: softprops/action-gh-release@v2
               with:
                 name: Release to prod
                 target_commitish: master
