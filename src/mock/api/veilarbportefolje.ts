@@ -27,6 +27,18 @@ const mockTomArbeidsliste: Arbeidsliste = {
     kategori: null
 };
 
+const mockTomArbeidslisteMedFargekategori: Arbeidsliste = {
+    arbeidslisteAktiv: null,
+    endringstidspunkt: null,
+    frist: null,
+    harVeilederTilgang: false,
+    isOppfolgendeVeileder: false,
+    kommentar: null,
+    overskrift: null,
+    sistEndretAv: null,
+    kategori: KategoriModell.GUL
+};
+
 const mockHuskelapp: Huskelapp = {
     huskelappId: 'e4c54511-7668-4b89-9436-9acfd85071ff',
     kommentar:
@@ -73,8 +85,14 @@ export const veilarbportefoljeHandlers: RequestHandler[] = [
             kategori: requestBody.kategori
         });
     }),
-    http.delete('/veilarbportefolje/api/v2/arbeidsliste', async () => {
+    http.delete('/veilarbportefolje/api/v2/arbeidsliste', async ({ request }) => {
+        const url = new URL(request.url);
+        const slettFargekategori = url.searchParams.get('slettFargekategori');
         await delay(defaultNetworkResponseDelay);
+
+        if (slettFargekategori === 'false') {
+            return HttpResponse.json(mockTomArbeidslisteMedFargekategori);
+        }
         return HttpResponse.json(mockTomArbeidsliste);
     }),
     http.post('/veilarbportefolje/api/v1/hent-huskelapp-for-bruker', async () => {
