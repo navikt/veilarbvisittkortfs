@@ -27,7 +27,7 @@
     "lint-staged": {
         "src/**/*.{ts,tsx}": [
             "prettier --write",
-            "eslint src --config eslint.config.lintstaged.js"
+            "eslint --config eslint.config.lintstaged.js"
         ]
     },
     "dependencies": {
