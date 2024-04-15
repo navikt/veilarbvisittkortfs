@@ -1,6 +1,0 @@
-{
-  "rules": {
-    "no-debugger": "warn",
-    "no-console": "warn"
-  }
-}
