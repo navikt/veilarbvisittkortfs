@@ -75,7 +75,7 @@ function PersonInfo() {
     return (
         <div className="personinfo">
             <KjonnIkon visible={personalia?.kjonn} kjonn={personalia?.kjonn as string} />
-            <NavnOgAlder navn={navn} personalia={personalia} />
+            <NavnOgAlder fodselsdato={personalia?.fodselsdato as string} navn={navn} />
             <div className="arbeidsliste">
                 <ArbeidslisteKnapp
                     hidden={!(kanLeggeIArbeidsliste || kanRedigereArbeidsliste)}
