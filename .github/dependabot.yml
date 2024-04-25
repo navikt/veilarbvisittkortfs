@@ -8,10 +8,34 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/.github/workflows"
     schedule:
-      # Check for updates to GitHub Actions every weekday
-      interval: "monthly"
+      interval: "weekly"
 
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+    groups:
+      aksel-dependencies:
+        patterns:
+          - '@navikt/aksel*'
+          - '@navikt/ds*'
+      react-dependencies:
+        patterns:
+          - '@types/react'
+          - '@types/react-dom'
+          - 'react'
+          - 'react-dom'
+      eslint:
+        patterns:
+          - 'eslint*'
+          - 'globals'
+          - 'typescript-eslint'
+      workflow-tools:
+        patterns:
+          - 'husky'
+          - 'lint-staged'
+      testing:
+        patterns:
+          - '@testing-library/react'
+          - 'jsdom'
+          - 'vitest'
