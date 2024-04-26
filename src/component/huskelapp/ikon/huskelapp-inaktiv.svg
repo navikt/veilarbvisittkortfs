@@ -1,4 +1,5 @@
-<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-labelledby="title-id" role="img">
+    <title id="title-id">Ny huskelapp</title>
     <rect x="1" y="1" width="18" height="18" rx="3" stroke="#020C1C" stroke-opacity="0.68" stroke-width="2"
           stroke-dasharray="4 4"/>
     <path fill-rule="evenodd" clip-rule="evenodd"
