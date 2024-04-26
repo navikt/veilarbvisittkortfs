@@ -3,8 +3,13 @@ import { OrNothing } from '../../../util/type/utility-types';
 import { Heading } from '@navikt/ds-react';
 
 export function kalkulerAlder(fodselsdato: Date): number {
-    const diff = Date.now() - fodselsdato.getTime();
-    return new Date(diff).getUTCFullYear() - 1970;
+    const iDag = new Date();
+    const alder = iDag.getFullYear() - fodselsdato.getFullYear();
+    const maned = iDag.getMonth() - fodselsdato.getMonth();
+    if (maned < 0 || (maned === 0 && iDag.getDate() < fodselsdato.getDate())) {
+        return alder - 1;
+    }
+    return alder;
 }
 
 export function lagAlderTekst(personalia: OrNothing<Personalia>): string {
@@ -12,7 +17,7 @@ export function lagAlderTekst(personalia: OrNothing<Personalia>): string {
         return '';
     }
     const alder = kalkulerAlder(new Date(personalia.fodselsdato));
-    return `(${alder} år)`;
+    return `(${alder} år)`;
 }
 
 function NavnOgAlder(props: { personalia: OrNothing<Personalia>; navn: string }) {

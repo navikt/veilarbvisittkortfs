@@ -8,8 +8,8 @@ import {
     SpraakTolk,
     VergeOgFullmakt
 } from '../../api/veilarbperson';
-import {defaultNetworkResponseDelay} from '../config';
-import {delay, http, HttpResponse, RequestHandler} from 'msw';
+import { defaultNetworkResponseDelay } from '../config';
+import { delay, http, HttpResponse, RequestHandler } from 'msw';
 
 const mockHarBruktNivaa4: HarBruktNivaa4Type = {
     harbruktnivaa4: false
