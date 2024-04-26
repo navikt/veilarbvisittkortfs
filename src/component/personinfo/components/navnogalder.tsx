@@ -1,5 +1,3 @@
-import { Personalia } from '../../../api/veilarbperson';
-import { OrNothing } from '../../../util/type/utility-types';
 import { Heading } from '@navikt/ds-react';
 
 export function kalkulerAlder(fodselsdato: Date): number {
@@ -12,17 +10,9 @@ export function kalkulerAlder(fodselsdato: Date): number {
     return alder;
 }
 
-export function lagAlderTekst(personalia: OrNothing<Personalia>): string {
-    if (!personalia || !personalia.fodselsdato) {
-        return '';
-    }
-    const alder = kalkulerAlder(new Date(personalia.fodselsdato));
-    return `(${alder} år)`;
-}
-
-function NavnOgAlder(props: { personalia: OrNothing<Personalia>; navn: string }) {
-    const alderTekst = lagAlderTekst(props.personalia);
-    return <Heading size="small" level="2">{`${props.navn} ${alderTekst}`}</Heading>;
+function NavnOgAlder({ fodselsdato, navn }: { fodselsdato: string | undefined; navn: string }) {
+    const alder = fodselsdato ? kalkulerAlder(new Date(fodselsdato)) : '';
+    return <Heading size="small" level="2">{`${navn} (${alder} år)`}</Heading>;
 }
 
 export default NavnOgAlder;
