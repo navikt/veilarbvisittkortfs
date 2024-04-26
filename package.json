@@ -31,7 +31,7 @@
         ]
     },
     "dependencies": {
-        "@amplitude/analytics-browser": "2.5.3",
+        "@amplitude/analytics-browser": "2.6.2",
         "@navikt/aksel-icons": "5.18.3",
         "@navikt/ds-css": "5.18.3",
         "@navikt/ds-react": "5.18.3",
@@ -57,7 +57,7 @@
         "husky": "9.0.11",
         "less": "4.2.0",
         "lint-staged": "15.2.2",
-        "msw": "2.2.8",
+        "msw": "2.2.14",
         "prettier": "3.2.5",
         "typescript": "5.4.2",
         "typescript-eslint": "7.6.0",
