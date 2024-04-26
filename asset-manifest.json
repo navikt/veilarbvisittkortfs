@@ -1,6 +1,6 @@
 {
   "index.html": {
-    "file": "assets/index-VEykUT61.js",
+    "file": "assets/index-Dg6y0phZ.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
@@ -12,7 +12,7 @@
     ]
   },
   "src/mock/index.ts": {
-    "file": "assets/index-Bzf5GOan.js",
+    "file": "assets/index-XHBKQDhG.js",
     "name": "index",
     "src": "src/mock/index.ts",
     "isDynamicEntry": true,
