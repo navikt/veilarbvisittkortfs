@@ -29,13 +29,7 @@ function AvsluttOppfolgingBekreft(props: AvsluttOppfolgingBekreftelseModalProps)
         <VarselModal onRequestClose={hideModal} isOpen={true} type="ADVARSEL">
             <BodyShort size="small">Er du sikker på at du vil avslutte oppfølgingsperioden til {brukerNavn}?</BodyShort>
             <div className="modal-footer">
-                <Button
-                    variant="primary"
-                    size="small"
-                    type="submit"
-                    onClick={handleSubmitAvsluttOppfolging}
-                    spinner={false}
-                >
+                <Button variant="primary" size="small" type="submit" onClick={handleSubmitAvsluttOppfolging}>
                     Bekreft
                 </Button>
                 <Button variant="secondary" size="small" onClick={hideModal}>

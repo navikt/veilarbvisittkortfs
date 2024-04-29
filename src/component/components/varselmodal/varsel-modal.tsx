@@ -10,27 +10,19 @@ type VarselModalType = 'ADVARSEL' | 'FEIL' | 'SUCCESS';
 interface VarselModalProps {
     isOpen: boolean;
     onRequestClose: () => void;
-    className?: string;
     type: VarselModalType;
 }
 
-export function VarselModal({
-                                isOpen,
-                                onRequestClose,
-                                children,
-                                className,
-                                type
-                            }: PropsWithChildren<VarselModalProps>) {
+export function VarselModal({ isOpen, onRequestClose, children, type }: PropsWithChildren<VarselModalProps>) {
     return (
         <Modal
             open={isOpen}
             onClose={onRequestClose}
             className="veilarbvisittkortfs-varsel-modal"
+            aria-label="Varselmodal"
         >
             <Modal.Header>{getIkon(type)}</Modal.Header>
-            <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
-                <div className={className}>{children}</div>
-            </Modal.Body>
+            <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">{children}</Modal.Body>
         </Modal>
     );
 }
