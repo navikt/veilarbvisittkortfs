@@ -7,18 +7,16 @@ import FormikDatoVelger from '../../components/formik/formik-datepicker';
 
 export const HuskelappEditForm = () => (
     <div className="rediger-huskelapp-skjema">
-        <Heading size="medium" visuallyHidden={true}>
-            Huskelappinnhold
-        </Heading>
-        <HuskelappInformasjonsmelding />
-        <Form id="huskelapp-form">
+        <Heading size="small">Ny huskelapp</Heading>
+
+        <Form id="huskelapp-form" className="arbeidsliste-innhold-tekst">
             <FormikTekstArea
                 name="kommentar"
                 label="Huskelapp"
                 hideLabel={true}
-                maxLength={100}
+                maxLength={200}
                 validate={validerHuskelappKommentarFelt}
-                size="small"
+                size="medium"
             />
             <FormikDatoVelger
                 className="navds-form-field"
@@ -29,5 +27,6 @@ export const HuskelappEditForm = () => (
                 size="small"
             />
         </Form>
+        <HuskelappInformasjonsmelding />
     </div>
 );

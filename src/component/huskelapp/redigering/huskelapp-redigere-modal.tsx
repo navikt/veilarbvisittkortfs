@@ -17,7 +17,8 @@ import HuskelappIkon from '../ikon/huskelapp.svg?react';
 import { toReversedDateStr } from '../../../util/date-utils';
 import { RedigerHuskelappFooter } from './rediger-huskelapp-footer';
 import { HuskelappEditForm } from './huskelapp-edit-form';
-import { EksisterendeArbeidsliste } from './eksisterendeArbeidsliste';
+import { GammelArbeidsliste } from './gammelArbeidsliste';
+import { ArrowRightIcon } from '@navikt/aksel-icons';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -51,7 +52,7 @@ function HuskelappRedigereModal() {
             formikProps.resetForm();
         }
     }
-
+    //eslint-disable-next-line
     function handleSubmit(values: HuskelappformValues, formikFunctions: FormikBag<any, any>) {
         if ((values.frist === null || values.frist === '') && (values.kommentar === null || values.kommentar === '')) {
             return formikFunctions.setErrors({
@@ -122,7 +123,7 @@ function HuskelappRedigereModal() {
                 <Modal
                     header={{
                         icon: <HuskelappIkon aria-hidden />,
-                        heading: 'Huskelapp',
+                        heading: !erArbeidslistaTom ? 'Overfør fra gammel arbeidsliste til ny huskelapp' : 'Huskelapp',
                         size: 'small'
                     }}
                     open={true}
@@ -130,8 +131,15 @@ function HuskelappRedigereModal() {
                     className="rediger-huskelapp-modal"
                 >
                     <Modal.Body className="rediger-huskelapp-modal-body">
+                        {!erArbeidslistaTom && <GammelArbeidsliste arbeidsliste={arbeidsliste} />}
+                        <div>
+                            <ArrowRightIcon
+                                title="pil mot høyre"
+                                fontSize="3rem"
+                                className="rediger-huskelapp-modal-pil"
+                            />
+                        </div>
                         <HuskelappEditForm />
-                        {!erArbeidslistaTom && <EksisterendeArbeidsliste arbeidsliste={arbeidsliste} />}
                     </Modal.Body>
                     <Modal.Footer>
                         <RedigerHuskelappFooter

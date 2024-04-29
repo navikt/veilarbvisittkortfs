@@ -48,7 +48,7 @@ export const SlettArbeidsliste = () => {
                     variant="tertiary"
                     icon={<TrashIcon aria-hidden />}
                 >
-                    Slett
+                    Slett gammel uten å lage ny huskelapp
                 </Button>
             )}
             {visSlettebekreftelse && (

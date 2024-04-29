@@ -10,11 +10,17 @@
             flex-wrap: wrap;
             gap: 1.5rem;
         }
+        .rediger-huskelapp-modal-pil {
+            position: relative;
+            top: calc(50% - 10px);
+        }
 
         .rediger-huskelapp-skjema {
             flex-basis: 17.75rem;
             flex-grow: 1;
             max-width: 26rem;
+            padding:  0 1.5rem 0 1.5rem;
+            background-color: rgb(249, 252, 204);
 
             display: flex;
             flex-direction: column;
@@ -27,7 +33,7 @@
 
         .arbeidsliste-innhold {
             flex: 10 18rem;
-            max-width: 60ch;
+            max-width: 40ch;
 
             background-color: var(--a-grayalpha-100);
             padding: 0.5rem;
@@ -68,5 +74,9 @@
                 margin-bottom: 16px;
             }
         }
+    }
+    .arbeidsliste-innhold-tekst {
+        background-color: var(--a-bg-default);
+        padding:  0 1rem 0.75rem 1rem;
     }
 }
