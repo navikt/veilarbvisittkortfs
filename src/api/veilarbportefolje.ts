@@ -67,9 +67,19 @@ export interface EndreFargekategoriResponse {
 export interface Fargekategori {
     id: string;
     fnr: string;
-    fargekategoriVerdi: string;
+    fargekategoriVerdi: FargekategoriModell;
     sistEndret: Date;
     endretAv: { veilederId: string };
+}
+
+export enum FargekategoriModell {
+    FARGEKATEGORI_A = 'FARGEKATEGORI_A',
+    FARGEKATEGORI_B = 'FARGEKATEGORI_B',
+    FARGEKATEGORI_C = 'FARGEKATEGORI_C',
+    FARGEKATEGORI_D = 'FARGEKATEGORI_D',
+    FARGEKATEGORI_E = 'FARGEKATEGORI_E',
+    FARGEKATEGORI_F = 'FARGEKATEGORI_F',
+    INGEN_KATEGORI = 'INGEN_KATEGORI'
 }
 
 export function fetchArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
