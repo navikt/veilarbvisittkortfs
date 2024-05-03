@@ -146,6 +146,7 @@ function HuskelappRedigereModal() {
                             onRequestClose={() => onRequestClose(formikProps)}
                             textPrimaryBtn={erArbeidslistaTom ? 'Lagre' : 'Lagre og slett eksisterende'}
                         />
+                        {!erArbeidslistaTom && <SlettArbeidsliste />}
                     </Modal.Footer>
                 </Modal>
             )}

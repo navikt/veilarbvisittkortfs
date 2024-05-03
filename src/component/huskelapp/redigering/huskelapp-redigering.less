@@ -10,6 +10,11 @@
             flex-wrap: wrap;
             gap: 1.5rem;
         }
+
+        .navds-modal__footer {
+            align-items: end; // Dytter knappene til bunnen når bekreftelsesmeldingen vises
+        }
+
         .rediger-huskelapp-modal-pil {
             position: relative;
             top: calc(50% - 10px);
@@ -58,15 +63,17 @@
             }
         }
 
-                .knappevalg {
-                    display: flex;
-                    gap: 0.5rem;
-                }
+        #slett-arbeidsliste__knappevalg {
+            margin-top: var(--a-spacing-2);
+            display: flex;
+            gap: 0.5rem;
+            button {
+                margin: 0;
             }
+        }
 
-            .sletting-av-arbeidsliste-feilet {
-                margin-bottom: 16px;
-            }
+        .sletting-av-arbeidsliste-feilet {
+            margin-bottom: var(--a-spacing-4);
         }
     }
     .arbeidsliste-innhold-tekst {

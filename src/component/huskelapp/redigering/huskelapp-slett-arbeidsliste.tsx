@@ -44,20 +44,20 @@ export const SlettArbeidsliste = () => {
                         setVisSlettebekreftelse(true);
                         setError(false);
                     }}
-                    size="xsmall"
+                    size="small"
                     variant="tertiary"
                     icon={<TrashIcon aria-hidden />}
                 >
-                    Slett gammel uten å lage ny huskelapp
+                    Slett gammel arbeidsliste uten å lage ny huskelapp
                 </Button>
             )}
             {visSlettebekreftelse && (
-                <div className="slett-arbeidsliste-container">
+                <div>
                     <Heading size="xsmall" level="3">
                         Er du sikker på at du vil slette eksisterende innhold?
                     </Heading>
                     <BodyShort size="small">Dette vil slette tittel, kommentar og frist for denne brukeren.</BodyShort>
-                    <div className="knappevalg">
+                    <div id="slett-arbeidsliste__knappevalg">
                         <Button
                             variant="tertiary"
                             size="small"
