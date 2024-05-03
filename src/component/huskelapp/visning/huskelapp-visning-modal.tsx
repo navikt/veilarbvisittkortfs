@@ -46,6 +46,7 @@ function HuskelappVisningModal() {
             }}
             open={true}
             onClose={() => hideModal()}
+            closeOnBackdropClick={true}
         >
             <Modal.Body className="huskelapp-visning-modal-body">
                 <div className="huskelapp-innhold huskelapp-effekt-styling">

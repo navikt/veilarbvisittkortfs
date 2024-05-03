@@ -132,6 +132,7 @@ function HuskelappRedigereModal() {
                     }}
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
+                    closeOnBackdropClick={true}
                     className="rediger-huskelapp-modal"
                 >
                     <Modal.Body className="rediger-huskelapp-modal-body">
