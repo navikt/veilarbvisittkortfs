@@ -113,6 +113,7 @@ function ArbeidslisteModal() {
                     className="arbeidsliste-modal"
                     onClose={() => onRequestClose(formikProps)}
                     open={true}
+                    closeOnBackdropClick={true}
                     header={{
                         heading: modalTittel,
                         closeButton: true

@@ -18,6 +18,7 @@ export function VarselModal({ isOpen, onRequestClose, children, type }: PropsWit
         <Modal
             open={isOpen}
             onClose={onRequestClose}
+            closeOnBackdropClick={true}
             className="veilarbvisittkortfs-varsel-modal"
             aria-label="Varselmodal"
         >
