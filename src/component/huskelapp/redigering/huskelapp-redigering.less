@@ -36,16 +36,15 @@
             max-width: 40ch;
 
             background-color: var(--a-grayalpha-100);
-            padding: 0.5rem;
+            padding: 1rem;
             border-radius: var(--a-border-radius-medium);
 
             display: flex;
             flex-direction: column;
-            align-items: start;
             gap: 0.5rem;
 
             h3 {
-                font-size: var(--a-font-size-medium); // 1rem, overskriv ds-styling for xsmall (1.5rem)
+                font-size: var(--a-font-size-medium); // 1rem, overskriv ds-styling for xsmall (1.125rem)
             }
 
             p {
@@ -53,16 +52,11 @@
                 line-height: var(--a-font-line-height-medium);
             }
 
-            .slett-arbeidsliste-container {
-                margin-bottom: 12px;
-                margin-top: 16px;
-                background: var(--a-bg-default);
-                padding: 8px 8px 12px;
-                border-radius: var(--a-border-radius-medium);
-
+            .arbeidsliste-innhold-frist {
                 display: flex;
-                flex-direction: column;
-                gap: 16px;
+                align-items: center;
+            }
+        }
 
                 .knappevalg {
                     display: flex;
@@ -77,6 +71,6 @@
     }
     .arbeidsliste-innhold-tekst {
         background-color: var(--a-bg-default);
-        padding:  0 1rem 0.75rem 1rem;
+        padding: 0 0.5rem 1rem 0.5rem;
     }
 }
