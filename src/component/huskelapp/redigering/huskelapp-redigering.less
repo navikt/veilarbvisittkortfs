@@ -1,6 +1,9 @@
 .visittkortfs {
     .rediger-huskelapp-modal {
-        max-width: min(60rem, 100% - 2rem); // max 60rem, men unngå at modalen treff kantane av vindauget på små skjermar
+        max-width: min(
+            60rem,
+            100% - 2rem
+        ); // max 60rem, men unngå at modalen treff kantane av vindauget på små skjermar
 
         .rediger-huskelapp-modal-body {
             padding-bottom: 0;
@@ -8,7 +11,7 @@
 
             display: flex;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 0.5rem;
         }
 
         .navds-modal__footer {
@@ -16,23 +19,36 @@
         }
 
         .rediger-huskelapp-modal-pil {
-            position: relative;
-            top: calc(50% - 10px);
+            margin: auto;
+            font-size: 3rem;
         }
 
         .rediger-huskelapp-skjema {
             flex-basis: 17.75rem;
             flex-grow: 1;
             max-width: 26rem;
-            padding:  0 1.5rem 0 1.5rem;
-            background-color: rgb(249, 252, 204);
+            padding: var(--a-spacing-4);
+            background-color: var(--a-limegreen-100);
 
             display: flex;
             flex-direction: column;
-            gap: 1.125rem;
+            gap: 1rem;
 
             form > :not(:last-child) {
                 margin-bottom: 1.125rem;
+            }
+
+            &::before {
+                /*flippen i top høyre*/
+                content: '';
+                position: absolute;
+                top: 0;
+                right: var(--a-spacing-6);
+                background: white;
+                border-width: 0 20px 20px 0;
+                border-style: solid;
+                border-color: hsl(64, 89%, 84%) transparent;
+                box-shadow: -3px 4px 5px 0 rgba(0, 0, 0, 0.1);
             }
         }
 

@@ -11,7 +11,6 @@ import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
 import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
-import './huskelapp-redigering.less';
 import { Modal } from '@navikt/ds-react';
 import HuskelappIkon from '../ikon/huskelapp.svg?react';
 import { toReversedDateStr } from '../../../util/date-utils';
@@ -19,6 +18,8 @@ import { RedigerHuskelappFooter } from './rediger-huskelapp-footer';
 import { HuskelappEditForm } from './huskelapp-edit-form';
 import { GammelArbeidsliste } from './gammelArbeidsliste';
 import { ArrowRightIcon } from '@navikt/aksel-icons';
+import { SlettArbeidsliste } from './huskelapp-slett-arbeidsliste';
+import './huskelapp-redigering.less';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -52,8 +53,11 @@ function HuskelappRedigereModal() {
             formikProps.resetForm();
         }
     }
-    //eslint-disable-next-line
-    function handleSubmit(values: HuskelappformValues, formikFunctions: FormikBag<any, any>) {
+
+    function handleSubmit(
+        values: HuskelappformValues,
+        formikFunctions: FormikBag<FormikProps<HuskelappformValues>, HuskelappformValues>
+    ) {
         if ((values.frist === null || values.frist === '') && (values.kommentar === null || values.kommentar === '')) {
             return formikFunctions.setErrors({
                 frist: 'Du må legge til enten frist eller kommentar for å kunne lagre huskelappen',
@@ -123,7 +127,7 @@ function HuskelappRedigereModal() {
                 <Modal
                     header={{
                         icon: <HuskelappIkon aria-hidden />,
-                        heading: !erArbeidslistaTom ? 'Overfør fra gammel arbeidsliste til ny huskelapp' : 'Huskelapp',
+                        heading: !erArbeidslistaTom ? 'Bytt fra gammel arbeidsliste til ny huskelapp' : 'Huskelapp',
                         size: 'small'
                     }}
                     open={true}
@@ -131,20 +135,18 @@ function HuskelappRedigereModal() {
                     className="rediger-huskelapp-modal"
                 >
                     <Modal.Body className="rediger-huskelapp-modal-body">
-                        {!erArbeidslistaTom && <GammelArbeidsliste arbeidsliste={arbeidsliste} />}
-                        <div>
-                            <ArrowRightIcon
-                                title="pil mot høyre"
-                                fontSize="3rem"
-                                className="rediger-huskelapp-modal-pil"
-                            />
-                        </div>
-                        <HuskelappEditForm />
+                        {!erArbeidslistaTom && (
+                            <>
+                                <GammelArbeidsliste arbeidsliste={arbeidsliste} />
+                                <ArrowRightIcon title="Pil mot høyre" className="rediger-huskelapp-modal-pil" />
+                            </>
+                        )}
+                        <HuskelappEditForm erArbeidslistaTom={erArbeidslistaTom} />
                     </Modal.Body>
                     <Modal.Footer>
                         <RedigerHuskelappFooter
                             onRequestClose={() => onRequestClose(formikProps)}
-                            textPrimaryBtn={erArbeidslistaTom ? 'Lagre' : 'Lagre og slett eksisterende'}
+                            textPrimaryBtn={erArbeidslistaTom ? 'Lagre' : 'Lagre ny huskelapp og slett arbeidsliste'}
                         />
                         {!erArbeidslistaTom && <SlettArbeidsliste />}
                     </Modal.Footer>

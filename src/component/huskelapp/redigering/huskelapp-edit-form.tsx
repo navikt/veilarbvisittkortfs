@@ -1,30 +1,29 @@
-import { Heading } from '@navikt/ds-react';
 import { HuskelappInformasjonsmelding } from '../huskelapp-informasjonsmelding';
 import { Form } from 'formik';
 import FormikTekstArea from '../../components/formik/formik-textarea';
 import { validerFristFelt, validerHuskelappKommentarFelt } from '../../../util/formik-validation';
 import FormikDatoVelger from '../../components/formik/formik-datepicker';
+import { Heading } from '@navikt/ds-react';
 
-export const HuskelappEditForm = () => (
+export const HuskelappEditForm = ({ erArbeidslistaTom }: { erArbeidslistaTom: boolean }) => (
     <div className="rediger-huskelapp-skjema">
-        <Heading size="small">Ny huskelapp</Heading>
+        {!erArbeidslistaTom && <Heading size="small">Ny huskelapp</Heading>}
 
         <Form id="huskelapp-form" className="arbeidsliste-innhold-tekst">
             <FormikTekstArea
                 name="kommentar"
-                label="Huskelapp"
-                hideLabel={true}
+                label="Tekst"
+                size="small"
                 maxLength={200}
                 validate={validerHuskelappKommentarFelt}
-                size="medium"
             />
             <FormikDatoVelger
-                className="navds-form-field"
                 name="frist"
-                validate={validerFristFelt}
                 label="Frist"
-                ariaLabel="Frist for huskelapp"
                 size="small"
+                validate={validerFristFelt}
+                ariaLabel="Frist for huskelapp"
+                className="navds-form-field"
             />
         </Form>
         <HuskelappInformasjonsmelding />
