@@ -1,47 +1,19 @@
 import { AxiosPromise, AxiosResponse } from 'axios';
 import { axiosInstance } from './utils';
 import { StringOrNothing } from '../util/type/utility-types';
-
-export enum Egenskaper {
-    ESKALERINGSVARSEL,
-    PARAGRAF8
-}
-
-type Avsender = 'VEILEDER' | 'BRUKER';
-
-interface Henvendelse {
-    avsender: Avsender;
-    avsenderId: string;
-    dialogId: string;
-    id: string;
-    lest: boolean;
-    sendt: string; //TODO DATO
-    tekst: string;
-}
+import {
+    dialogerQuery,
+    DialogerResponse,
+    stansVarselQuery,
+    StansVarselResponse,
+    veilarbdialogGraphqlQuery
+} from './veilarbdialogGraphql';
 
 export interface Dialog {
-    aktvitetId: StringOrNothing;
-    egenskaper: Egenskaper[];
-    erLestAvBruker: boolean;
     ferdigBehandlet: boolean;
-    henvendelser: Henvendelse[];
     historisk: boolean;
     id: string;
-    lest: boolean;
-    lestAvBrukerTidspunkt: StringOrNothing;
-    opprettetDato: string;
-    overskrift: string;
-    sisteDato: string;
-    sisteTekst: string;
     venterPaSvar: boolean;
-}
-
-export interface HenvendelseData {
-    begrunnelse: string;
-    egenskaper: Egenskaper[];
-    overskrift?: string;
-    tekst: string;
-    dialogId?: string;
 }
 
 export interface StartEskaleringRequest {
@@ -80,28 +52,24 @@ export interface EskaleringsvarselHistorikkInnslag {
     avsluttetBegrunnelse: string | null;
 }
 
-export function oppdaterFerdigbehandlet(
-    dialogId: string,
-    erFerdigbehandlet: boolean,
-    fnr: string
-): Promise<AxiosResponse> {
-    return axiosInstance.put(`/veilarbdialog/api/dialog/${dialogId}/ferdigbehandlet/${erFerdigbehandlet}?fnr=${fnr}`);
-}
-
-export function oppdaterVenterPaSvar(dialogId: string, venterPaSvar: boolean, fnr: string): AxiosPromise {
-    return axiosInstance.put(`/veilarbdialog/api/dialog/${dialogId}/venter_pa_svar/${venterPaSvar}?fnr=${fnr}`);
-}
+export const veilarbDialogGraphqlEndpoint = '/veilarbdialog/graphql';
 
 export function fetchDialoger(fnr: string): AxiosPromise<Dialog[]> {
-    return axiosInstance.get<Dialog[]>(`/veilarbdialog/api/dialog?fnr=${fnr}`);
-}
-
-export function nyHenvendelse(fnr: string, henvendelse: HenvendelseData): AxiosPromise<Dialog> {
-    return axiosInstance.post(`/veilarbdialog/api/dialog?fnr=${fnr}`, henvendelse);
+    return axiosInstance
+        .post(veilarbDialogGraphqlEndpoint, veilarbdialogGraphqlQuery(fnr, dialogerQuery))
+        .then((res: AxiosResponse<DialogerResponse>) => ({
+            ...res,
+            data: res.data.data.dialoger
+        }));
 }
 
 export function hentGjeldendeEskaleringsvarsel(fnr: string): AxiosPromise<GjeldendeEskaleringsvarsel> {
-    return axiosInstance.get(`/veilarbdialog/api/eskaleringsvarsel/gjeldende?fnr=${fnr}`);
+    return axiosInstance
+        .post(veilarbDialogGraphqlEndpoint, veilarbdialogGraphqlQuery(fnr, stansVarselQuery))
+        .then((res: AxiosResponse<StansVarselResponse>) => ({
+            ...res,
+            data: res.data.data.stansVarsel
+        }));
 }
 
 export function hentEskaleringsvarselHistorikk(fnr: string): AxiosPromise<EskaleringsvarselHistorikkInnslag[]> {
