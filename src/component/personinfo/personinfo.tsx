@@ -81,7 +81,7 @@ function PersonInfo() {
             <NavnOgAlder fodselsdato={personalia?.fodselsdato as string} navn={navn} />
             <div className="arbeidsliste">
                 <ArbeidslisteKnapp
-                    hidden={!(kanLeggeIArbeidsliste || kanRedigereArbeidsliste)}
+                    hidden={!(kanLeggeIArbeidsliste || kanRedigereArbeidsliste) || features[HUSKELAPP]}
                     onClick={klikkShowArbeidslisteModal}
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />

@@ -65,11 +65,7 @@ export interface EndreFargekategoriResponse {
 }
 
 export interface Fargekategori {
-    id: string;
-    fnr: string;
     fargekategoriVerdi: FargekategoriModell;
-    sistEndret: Date;
-    endretAv: { veilederId: string };
 }
 
 export enum FargekategoriModell {
