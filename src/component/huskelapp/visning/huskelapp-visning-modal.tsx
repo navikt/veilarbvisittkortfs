@@ -1,6 +1,6 @@
 import './huskelapp-visning.less';
 import { useModalStore } from '../../../store/modal-store';
-import { BodyShort, Button, Modal } from '@navikt/ds-react';
+import { BodyShort, Button, Detail, Heading, Modal } from '@navikt/ds-react';
 import { TrashIcon } from '@navikt/aksel-icons';
 import HuskelappIkon from '../ikon/huskelapp.svg?react';
 import { useDataStore } from '../../../store/data-store';
@@ -49,18 +49,18 @@ function HuskelappVisningModal() {
         >
             <Modal.Body className="huskelapp-visning-modal-body">
                 <div className="huskelapp-innhold huskelapp-effekt-styling">
-                    <BodyShort size="small" weight={'semibold'}>
+                    <Heading level="2" size="xsmall" spacing>
                         {huskelapp.frist ? `Frist: ${toSimpleDateStr(huskelapp!.frist!)}` : 'Ingen frist satt'}
-                    </BodyShort>
+                    </Heading>
                     {huskelapp.kommentar && <BodyShort size="small">{huskelapp.kommentar}</BodyShort>}
-                    {huskelapp.endretDato && (
-                        <BodyShort size="small">
-                            <i>
-                                Endret {toSimpleDateStr(huskelapp.endretDato)} av {huskelapp.endretAv}
-                            </i>
-                        </BodyShort>
-                    )}
                 </div>
+                {huskelapp.endretDato && (
+                    <Detail className="huskelapp-visning-modal__endret-av">
+                        <i>
+                            Endret {toSimpleDateStr(huskelapp.endretDato)} av {huskelapp.endretAv}
+                        </i>
+                    </Detail>
+                )}
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={endreHuskelappKlikk} size="small" variant="primary" form="huskelapp-form">

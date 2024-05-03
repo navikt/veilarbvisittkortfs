@@ -1,48 +1,35 @@
 .visittkortfs {
     .huskelapp-visning-modal-body {
-        padding-bottom: 0.25rem;
+        padding-bottom: 0;
 
         .huskelapp-innhold {
             display: flex;
             flex-direction: column;
-            padding: var(--a-spacing-3) var(--a-spacing-5);
-
-            .navds-body-short {
-                margin-top: var(--a-spacing-3);
-            }
+            padding: var(--a-spacing-4);
         }
 
         .huskelapp-effekt-styling {
-            margin-right: var(--a-spacing-8);
-            background: var(--a-limegreen-100);
-            width: 18.75rem; // 300px
-
             position: relative;
-            overflow: hidden; // skjular skuggen bak hjørnet av postitlappen
+            max-width: 24rem;
+            background-color: var(--a-limegreen-100);
+            word-wrap: break-word;
         }
 
-        // Hjørnet på "postit-lappen"
         .huskelapp-effekt-styling::before {
+            /*flippen i top høyre*/
             content: '';
             position: absolute;
             top: 0;
             right: 0;
+            background: white;
             border-width: 0 20px 20px 0;
             border-style: solid;
-            background: white;
-            -webkit-box-shadow:
-                0 3px 9px rgba(0, 0, 0, 0.1),
-                -2px 5px 6px rgba(113, 92, 40, 0.1);
-            -moz-box-shadow:
-                0 3px 9px rgba(0, 0, 0, 0.1),
-                -2px 5px 6px rgba(0, 0, 0, 0.1);
-            box-shadow:
-                0 3px 9px rgba(0, 0, 0, 0.1),
-                -2px 5px 6px rgba(0, 0, 0, 0.1);
-            /* Firefox 3.0 damage limitation */
-            display: block;
-            width: 0;
-            border-color: darken(rgba(249, 252, 204, 1), 10%) transparent;
+            border-color: hsl(64, 89%, 84%) transparent;
+            box-shadow: -3px 4px 5px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .huskelapp-visning-modal__endret-av {
+            margin-top: var(--a-spacing-2);
         }
     }
 }
