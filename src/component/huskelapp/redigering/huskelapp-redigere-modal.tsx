@@ -52,6 +52,7 @@ function HuskelappRedigereModal() {
         }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function handleSubmit(values: HuskelappformValues, formikFunctions: FormikBag<any, any>) {
         if ((values.frist === null || values.frist === '') && (values.kommentar === null || values.kommentar === '')) {
             return formikFunctions.setErrors({
@@ -127,6 +128,7 @@ function HuskelappRedigereModal() {
                     }}
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
+                    closeOnBackdropClick={true}
                     className="rediger-huskelapp-modal"
                 >
                     <Modal.Body className="rediger-huskelapp-modal-body">
