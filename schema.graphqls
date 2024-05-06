@@ -1,0 +1,81 @@
+type Query {
+    dialoger(fnr: String!, bareMedAktiviteter: Boolean = false): [DialogDTO],
+    stansVarsel(fnr: String!): GjeldendeEskaleringsvarselDto
+    kladder(fnr: String!): [Kladd]
+    stansVarselHistorikk(fnr: String!): [EskaleringsvarselDto]
+}
+
+type Kladd {
+    dialogId: String,
+    aktivitetId: String,
+    overskrift: String,
+    tekst: String
+}
+
+type GjeldendeEskaleringsvarselDto {
+    id: Int,
+    tilhorendeDialogId: Int,
+    opprettetAv: String,
+    opprettetDato: ZonedDateTime,
+    opprettetBegrunnelse: String
+}
+
+type EskaleringsvarselDto {
+    # Holder det enkelt foreløpig men duplisering av felter
+    id: Int,
+    tilhorendeDialogId: Int,
+    opprettetAv: String,
+    opprettetDato: ZonedDateTime,
+    opprettetBegrunnelse: String,
+
+    avsluttetDato: ZonedDateTime,
+    avsluttetAv: String,
+    avsluttetBegrunnelse: String
+}
+
+scalar Date
+
+scalar ZonedDateTime
+
+enum Egenskap {
+    ESKALERINGSVARSEL
+    PARAGRAF8
+}
+
+enum Avsender {
+    BRUKER
+    VEILEDER
+}
+
+type HenvendelseDTO {
+    id: String
+    dialogId: String
+    avsender: Avsender
+    avsenderId: String
+    sendt: Date
+    lest: Boolean
+    viktig: Boolean
+    tekst: String
+}
+
+type DialogDTO {
+    id: String
+    aktivitetId: String
+    overskrift: String
+    sisteTekst: String
+    sisteDato: Date
+    opprettetDato: Date
+    historisk: Boolean
+    lest: Boolean #// lest av brukertype som gjør kall
+
+    #    // veileder-felter
+    venterPaSvar: Boolean
+    ferdigBehandlet: Boolean
+    lestAvBrukerTidspunkt: Date
+    erLestAvBruker: Boolean
+
+    oppfolgingsperiode: String
+
+    henvendelser: [HenvendelseDTO]
+    egenskaper: [Egenskap]
+}

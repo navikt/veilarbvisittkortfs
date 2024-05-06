@@ -23,6 +23,17 @@ export const dialogerQuery = `
     }
 `;
 
+export const stansVarselHistorikkQuery = `
+    query($fnr: String!) {
+            stansVarselHistorikk(fnr: $fnr) {
+                ferdigBehandlet,
+                historisk,
+                id,
+                venterPaSvar
+            }
+        }
+`;
+
 interface GraphqlError {
     message: string;
 }
