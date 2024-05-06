@@ -1,4 +1,4 @@
-import { Dialog, GjeldendeEskaleringsvarsel } from './veilarbdialog';
+import { Dialog, EskaleringsvarselHistorikkInnslag, GjeldendeEskaleringsvarsel } from './veilarbdialog';
 
 export const stansVarselQuery = `
     query($fnr: String!) {
@@ -26,10 +26,14 @@ export const dialogerQuery = `
 export const stansVarselHistorikkQuery = `
     query($fnr: String!) {
             stansVarselHistorikk(fnr: $fnr) {
-                ferdigBehandlet,
-                historisk,
                 id,
-                venterPaSvar
+                tilhorendeDialogId,
+                opprettetAv,
+                opprettetDato,
+                opprettetBegrunnelse
+                avsluttetAv,
+                avsluttetDato,
+                avsluttetBegrunnelse
             }
         }
 `;
@@ -44,6 +48,9 @@ interface GraphqlResponse<T> {
 }
 export type DialogerResponse = GraphqlResponse<{ dialoger: Dialog[] }>;
 export type StansVarselResponse = GraphqlResponse<{ stansVarsel: GjeldendeEskaleringsvarsel }>;
+export type StansVarselHistorikkResponse = GraphqlResponse<{
+    stansVarselHistorikk: EskaleringsvarselHistorikkInnslag[];
+}>;
 
 export const veilarbdialogGraphqlQuery = (fnr: string, query: string) => {
     return {
