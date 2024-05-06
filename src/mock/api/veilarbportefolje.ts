@@ -39,7 +39,7 @@ const mockHuskelapp: Huskelapp = {
 export const veilarbportefoljeHandlers: RequestHandler[] = [
     http.post('/veilarbportefolje/api/v2/hent-arbeidsliste', async () => {
         await delay(defaultNetworkResponseDelay);
-        var harMigrertArbeidsliste = Math.random() < 0.5;
+        const harMigrertArbeidsliste = Math.random() < 0.5;
         return HttpResponse.json(harMigrertArbeidsliste ? mockTomArbeidsliste : mockArbeidsliste);
     }),
     http.post('/veilarbportefolje/api/v2/arbeidsliste', async ({ request }) => {
@@ -78,7 +78,7 @@ export const veilarbportefoljeHandlers: RequestHandler[] = [
     }),
     http.post('/veilarbportefolje/api/v1/hent-huskelapp-for-bruker', async () => {
         await delay(defaultNetworkResponseDelay);
-        var harMigrertArbeidsliste = Math.random() < 0.5;
+        const harMigrertArbeidsliste = Math.random() < 0.5;
         return HttpResponse.json(harMigrertArbeidsliste ? mockHuskelapp : {});
     }),
     http.post('/veilarbportefolje/api/v1/huskelapp', async () => {
@@ -92,5 +92,25 @@ export const veilarbportefoljeHandlers: RequestHandler[] = [
     http.delete('/veilarbportefolje/api/v1/huskelapp', async () => {
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json();
+    }),
+    http.post('/veilarbportefolje/api/v1/hent-fargekategori', async ({ request }) => {
+        const requestBody = (await request.json()) as { fnr: string };
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json({
+            id: 'uu-1-d',
+            fnr: requestBody.fnr,
+            fargekategoriVerdi: 'FARGEKATEGORI_C',
+            sistEndret: new Date().toISOString(),
+            endretAv: { veilederId: 'Z12345' }
+        });
+    }),
+    http.put('/veilarbportefolje/api/v1/fargekategorier', async ({ request }) => {
+        const requestBody = (await request.json()) as { fargekategoriVerdi: string; fnr: string[] };
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json({
+            data: [requestBody.fnr],
+            errors: [],
+            fargekategoriVerdi: requestBody.fargekategoriVerdi
+        });
     })
 ];

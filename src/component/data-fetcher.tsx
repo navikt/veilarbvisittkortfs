@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDataStore } from '../store/data-store';
 import { useAppStore } from '../store/app-store';
 import { fetchOppfolging, fetchOppfolgingsstatus, fetchTilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { fetchPersonalia, fetchSpraakTolk, fetchVergeOgFullmakt } from '../api/veilarbperson';
 import { fetchInnloggetVeileder, fetchVeilederePaEnhet } from '../api/veilarbveileder';
-import { fetchArbeidsliste, fetchHuskelapp } from '../api/veilarbportefolje';
+import { fetchArbeidsliste, fetchFargekategori, fetchHuskelapp } from '../api/veilarbportefolje';
 import { ifResponseHasData } from '../util/utils';
 import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
 import './data-fetcher.less';
@@ -13,7 +13,7 @@ import { Loader } from '@navikt/ds-react';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 import { HUSKELAPP, useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 
-export function DataFetcher(props: { children: any }) {
+export function DataFetcher(props: { children: React.ReactNode }) {
     const { brukerFnr, visVeilederVerktoy } = useAppStore();
     const {
         setOppfolgingsstatus,
@@ -28,6 +28,7 @@ export function DataFetcher(props: { children: any }) {
         setSpraakTolk,
         setGjeldendeEskaleringsvarsel,
         setHuskelapp,
+        setFargekategori,
         features
     } = useDataStore();
 
@@ -43,6 +44,7 @@ export function DataFetcher(props: { children: any }) {
     const spraakTolkFetcher = useAxiosFetcher(fetchSpraakTolk);
     const gjeldendeEskaleringsvarselFetcher = useAxiosFetcher(hentGjeldendeEskaleringsvarsel);
     const huskelappFetcher = useAxiosFetcher(fetchHuskelapp);
+    const fargekategoriFetcher = useAxiosFetcher(fetchFargekategori);
 
     const behandlingsnummer = 'B643';
     const oppfolgingsEnhet = oppfolgingstatusFetcher.data?.oppfolgingsenhet.enhetId || '';
@@ -75,6 +77,7 @@ export function DataFetcher(props: { children: any }) {
             arbeidslisteFetcher.fetch(brukerFnr).then(ifResponseHasData(setArbeidsliste)).catch();
             if (features[HUSKELAPP] && oppfolgingsEnhet) {
                 huskelappFetcher.fetch(brukerFnr, oppfolgingsEnhet).then(ifResponseHasData(setHuskelapp)).catch();
+                fargekategoriFetcher.fetch(brukerFnr).then(ifResponseHasData(setFargekategori)).catch();
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
