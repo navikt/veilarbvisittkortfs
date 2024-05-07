@@ -93,5 +93,25 @@ export const veilarbportefoljeHandlers: RequestHandler[] = [
     http.delete('/veilarbportefolje/api/v1/huskelapp', async () => {
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json();
+    }),
+    http.post('/veilarbportefolje/api/v1/hent-fargekategori', async ({ request }) => {
+        const requestBody = (await request.json()) as { fnr: string };
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json({
+            id: 'uu-1-d',
+            fnr: requestBody.fnr,
+            fargekategoriVerdi: 'FARGEKATEGORI_C',
+            sistEndret: new Date().toISOString(),
+            endretAv: { veilederId: 'Z12345' }
+        });
+    }),
+    http.put('/veilarbportefolje/api/v1/fargekategorier', async ({ request }) => {
+        const requestBody = (await request.json()) as { fargekategoriVerdi: string; fnr: string[] };
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json({
+            data: [requestBody.fnr],
+            errors: [],
+            fargekategoriVerdi: requestBody.fargekategoriVerdi
+        });
     })
 ];
