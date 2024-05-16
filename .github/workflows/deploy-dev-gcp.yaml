@@ -8,6 +8,10 @@ env:
     CI: true
     TZ: Europe/Amsterdam
 
+permissions:
+  contents: 'read'
+  id-token: 'write'
+
 jobs:
     deploy-dev:
         name: Deploy application to dev
