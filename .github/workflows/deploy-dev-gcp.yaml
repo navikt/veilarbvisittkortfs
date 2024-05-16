@@ -36,3 +36,12 @@ jobs:
               uses: google-github-actions/setup-gcloud@v2
             - name: Upload files to GCS
               run: gsutil -m rsync -r build gs://veilarbvisittkortfs-dev
+            - name: Upload to CDN
+              uses: nais/deploy/actions/cdn-upload/v2
+              with:
+                team: pto
+                source: ./build/
+                destination: /veilarbvisittkortfs-dev/
+                no_cache_paths: veilarbvisittkortfs-dev/build/asset-manifest.json
+                project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+                identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
