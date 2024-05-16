@@ -7,9 +7,12 @@ on:
 env:
     CI: true
     TZ: Europe/Amsterdam
+
 permissions:
+  id-token: 'write'
   contents: write
   pages: write
+
 jobs:
     deploy-prod:
         name: Deploy application to prod
