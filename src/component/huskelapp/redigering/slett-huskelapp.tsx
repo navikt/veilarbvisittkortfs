@@ -4,7 +4,11 @@ import { useModalStore } from '../../../store/modal-store';
 import { kanFjerneHuskelapp } from '../../../util/selectors';
 import { useDataStore } from '../../../store/data-store';
 
-export const SlettHuskelapp = () => {
+interface Props {
+    variant?: 'primary' | 'secondary' | 'tertiary' | 'danger';
+}
+
+export const SlettHuskelapp = ({ variant = 'secondary' }: Props) => {
     const { showFjernHuskelappModal } = useModalStore();
     const { huskelapp, innloggetVeileder, oppfolging } = useDataStore();
 
@@ -24,7 +28,7 @@ export const SlettHuskelapp = () => {
             onClick={showFjernHuskelappModal}
             icon={<TrashIcon aria-hidden />}
             size="small"
-            variant="secondary"
+            variant={variant}
             type="button"
         >
             Slett

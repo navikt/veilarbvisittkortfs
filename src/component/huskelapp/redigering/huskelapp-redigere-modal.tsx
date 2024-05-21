@@ -18,6 +18,7 @@ import { toReversedDateStr } from '../../../util/date-utils';
 import { HuskelappEditForm } from './huskelapp-edit-form';
 import { GammelArbeidsliste } from './gammelArbeidsliste';
 import { SlettArbeidsliste } from './huskelapp-slett-arbeidsliste';
+import { SlettHuskelapp } from './slett-huskelapp';
 import './huskelapp-redigering.less';
 
 const huskelappEmptyValues = {
@@ -35,6 +36,7 @@ function HuskelappRedigereModal() {
         arbeidsliste?.sistEndretAv == null ||
         (!arbeidsliste?.overskrift && !arbeidsliste?.kommentar && !arbeidsliste?.frist);
     const erIRedigeringModus = huskelapp?.endretDato;
+    const erHuskelappTom = huskelapp?.huskelappId == null;
 
     const huskelappValues: HuskelappformValues = {
         huskelappId: huskelapp?.huskelappId ? huskelapp.huskelappId : null,
@@ -156,6 +158,7 @@ function HuskelappRedigereModal() {
                             Avbryt
                         </Button>
                         {!erArbeidslistaTom && <SlettArbeidsliste />}
+                        {erArbeidslistaTom && !erHuskelappTom && <SlettHuskelapp variant="tertiary" />}
                     </Modal.Footer>
                 </Modal>
             )}
