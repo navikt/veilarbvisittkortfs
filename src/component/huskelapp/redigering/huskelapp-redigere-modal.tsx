@@ -1,4 +1,6 @@
 import { Formik, FormikBag, FormikProps } from 'formik';
+import { Button, Modal } from '@navikt/ds-react';
+import { ArrowRightIcon } from '@navikt/aksel-icons';
 import {
     fetchHuskelapp,
     HuskelappformValues,
@@ -11,13 +13,10 @@ import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
 import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
-import { Modal } from '@navikt/ds-react';
 import HuskelappIkon from '../ikon/huskelapp.svg?react';
 import { toReversedDateStr } from '../../../util/date-utils';
-import { RedigerHuskelappFooter } from './rediger-huskelapp-footer';
 import { HuskelappEditForm } from './huskelapp-edit-form';
 import { GammelArbeidsliste } from './gammelArbeidsliste';
-import { ArrowRightIcon } from '@navikt/aksel-icons';
 import { SlettArbeidsliste } from './huskelapp-slett-arbeidsliste';
 import './huskelapp-redigering.less';
 
@@ -145,10 +144,17 @@ function HuskelappRedigereModal() {
                         <HuskelappEditForm erArbeidslistaTom={erArbeidslistaTom} />
                     </Modal.Body>
                     <Modal.Footer>
-                        <RedigerHuskelappFooter
-                            onRequestClose={() => onRequestClose(formikProps)}
-                            textPrimaryBtn={erArbeidslistaTom ? 'Lagre' : 'Lagre ny huskelapp og slett arbeidsliste'}
-                        />
+                        <Button size="small" variant="primary" form="huskelapp-form" type="submit">
+                            {erArbeidslistaTom ? 'Lagre' : 'Lagre ny huskelapp og slett arbeidsliste'}
+                        </Button>
+                        <Button
+                            size="small"
+                            variant="secondary"
+                            type="button"
+                            onClick={() => onRequestClose(formikProps)}
+                        >
+                            Avbryt
+                        </Button>
                         {!erArbeidslistaTom && <SlettArbeidsliste />}
                     </Modal.Footer>
                 </Modal>
