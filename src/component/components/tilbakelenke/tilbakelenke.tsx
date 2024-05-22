@@ -22,6 +22,8 @@ function getTilbakeUrl(tilbakeTilFlate: string, enhet?: string): string {
         return `/${tilbakeTilFlate}/tilbake${enhetParam}`;
     } else if (tilbakeTilFlate === '') {
         return `./${enhetParam}`;
+    } else if (tilbakeTilFlate.startsWith('http')) {
+        return `${tilbakeTilFlate}/${enhetParam}`;
     }
     return `/${tilbakeTilFlate}/${enhetParam}`;
 }
