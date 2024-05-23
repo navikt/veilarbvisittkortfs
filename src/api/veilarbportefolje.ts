@@ -94,6 +94,12 @@ export function slettArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
     return axiosInstance.delete(`/veilarbportefolje/api/v2/arbeidsliste`, { data: { fnr: fnr } });
 }
 
+export function slettArbeidslisteMenIkkeFargekategori(fnr: string): AxiosPromise<Arbeidsliste> {
+    return axiosInstance.delete(`/veilarbportefolje/api/v2/arbeidsliste?slettFargekategori=false`, {
+        data: { fnr: fnr }
+    });
+}
+
 export function fetchHuskelapp(fnr: string, enhetId: string): AxiosPromise<Huskelapp> {
     return axiosInstance.post(`/veilarbportefolje/api/v1/hent-huskelapp-for-bruker`, { fnr: fnr, enhetId: enhetId });
 }
