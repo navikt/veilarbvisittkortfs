@@ -94,7 +94,7 @@ export function slettArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
     return axiosInstance.delete(`/veilarbportefolje/api/v2/arbeidsliste`, { data: { fnr: fnr } });
 }
 
-export function slettArbeidslisteUtenFargekategori(fnr: string): AxiosPromise<Arbeidsliste> {
+export function slettArbeidslisteMenIkkeFargekategori(fnr: string): AxiosPromise<Arbeidsliste> {
     return axiosInstance.delete(`/veilarbportefolje/api/v2/arbeidsliste?slettFargekategori=false`, {
         data: { fnr: fnr }
     });

@@ -5,7 +5,7 @@ import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
-import { slettArbeidslisteUtenFargekategori } from '../../../api/veilarbportefolje';
+import { slettArbeidslisteMenIkkeFargekategori } from '../../../api/veilarbportefolje';
 import { ifResponseHasData } from '../../../util/utils';
 
 export const SlettArbeidsliste = () => {
@@ -24,7 +24,7 @@ export const SlettArbeidsliste = () => {
         });
         setLoading(true);
 
-        slettArbeidslisteUtenFargekategori(brukerFnr)
+        slettArbeidslisteMenIkkeFargekategori(brukerFnr)
             .then(ifResponseHasData(setArbeidsliste))
             .then(() => setLoading(false))
             .catch(() => setError(true))

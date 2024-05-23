@@ -6,8 +6,7 @@ import {
     HuskelappformValues,
     lagreHuskelapp,
     redigerHuskelapp,
-    slettArbeidsliste,
-    slettArbeidslisteUtenFargekategori
+    slettArbeidslisteMenIkkeFargekategori
 } from '../../../api/veilarbportefolje';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
@@ -101,7 +100,7 @@ function HuskelappRedigereModal() {
                 .then(showHuskelappModal)
                 .catch(showErrorModal);
             if (!erArbeidslistaTom) {
-                slettArbeidslisteUtenFargekategori(brukerFnr)
+                slettArbeidslisteMenIkkeFargekategori(brukerFnr)
                     .then(res => res.data)
                     .then(setArbeidsliste);
             }
@@ -117,7 +116,7 @@ function HuskelappRedigereModal() {
                 .then(setHuskelapp)
                 .then(showHuskelappModal)
                 .catch(showErrorModal);
-            slettArbeidslisteUtenFargekategori(brukerFnr)
+            slettArbeidslisteMenIkkeFargekategori(brukerFnr)
                 .then(res => res.data)
                 .then(setArbeidsliste);
         }
