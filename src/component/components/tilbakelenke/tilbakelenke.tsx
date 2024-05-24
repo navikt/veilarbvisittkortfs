@@ -23,7 +23,7 @@ function getTilbakeUrl(tilbakeTilFlate: string, enhet?: string): string {
     } else if (tilbakeTilFlate === '') {
         return `./${enhetParam}`;
     } else if (tilbakeTilFlate.startsWith('https')) {
-        return `${tilbakeTilFlate}/${enhetParam}`;
+        return `${tilbakeTilFlate}${enhetParam}`;
     }
     return `/${tilbakeTilFlate}/${enhetParam}`;
 }
