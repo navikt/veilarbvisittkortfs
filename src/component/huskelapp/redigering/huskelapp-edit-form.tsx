@@ -1,12 +1,13 @@
-import { HuskelappInformasjonsmelding } from '../huskelapp-informasjonsmelding';
 import { Form } from 'formik';
+import { Heading } from '@navikt/ds-react';
+import { HuskelappInformasjonsmelding } from '../huskelapp-informasjonsmelding';
 import FormikTekstArea from '../../components/formik/formik-textarea';
 import { validerFristFelt, validerHuskelappKommentarFelt } from '../../../util/formik-validation';
 import FormikDatoVelger from '../../components/formik/formik-datepicker';
-import { Heading } from '@navikt/ds-react';
+import './../huskelapp-postitstyling.less';
 
 export const HuskelappEditForm = ({ erArbeidslistaTom }: { erArbeidslistaTom: boolean }) => (
-    <div className="ny-huskelapp">
+    <div className="ny-huskelapp huskelapp-postitstyling">
         {!erArbeidslistaTom && <Heading size="small">Ny huskelapp</Heading>}
 
         <Form id="huskelapp-form" className="rediger-huskelapp-skjema">
