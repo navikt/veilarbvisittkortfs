@@ -23,7 +23,7 @@
             font-size: 3rem;
         }
 
-        .rediger-huskelapp-skjema {
+        .ny-huskelapp {
             flex-basis: 17.75rem;
             flex-grow: 1;
             max-width: 26rem;
@@ -36,6 +36,13 @@
 
             form > :not(:last-child) {
                 margin-bottom: 1.125rem;
+            }
+
+            .rediger-huskelapp-skjema {
+                background-color: var(--a-bg-default);
+                padding-left: var(--a-spacing-2);
+                padding-right: var(--a-spacing-2);
+                padding-bottom: var(--a-spacing-4); // 4rem
             }
 
             &::before {
@@ -96,4 +103,5 @@
         background-color: var(--a-bg-default);
         padding: var(--a-spacing-2);
     }
+
 }

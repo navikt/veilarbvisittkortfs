@@ -6,10 +6,10 @@ import FormikDatoVelger from '../../components/formik/formik-datepicker';
 import { Heading } from '@navikt/ds-react';
 
 export const HuskelappEditForm = ({ erArbeidslistaTom }: { erArbeidslistaTom: boolean }) => (
-    <div className="rediger-huskelapp-skjema">
+    <div className="ny-huskelapp">
         {!erArbeidslistaTom && <Heading size="small">Ny huskelapp</Heading>}
 
-        <Form id="huskelapp-form" className="arbeidsliste-innhold-tekst">
+        <Form id="huskelapp-form" className="rediger-huskelapp-skjema">
             <FormikTekstArea
                 name="kommentar"
                 label="Tekst"
