@@ -14,7 +14,7 @@
             gap: 0.5rem;
         }
 
-        .navds-modal__footer {
+        .rediger-huskelapp-modal-footer {
             align-items: end; // Dytter knappene til bunnen når bekreftelsesmeldingen vises
         }
 
@@ -23,12 +23,11 @@
             font-size: 3rem;
         }
 
-        .rediger-huskelapp-skjema {
+        .ny-huskelapp {
             flex-basis: 17.75rem;
             flex-grow: 1;
             max-width: 26rem;
             padding: var(--a-spacing-4);
-            background-color: var(--a-limegreen-100);
 
             display: flex;
             flex-direction: column;
@@ -38,17 +37,11 @@
                 margin-bottom: 1.125rem;
             }
 
-            &::before {
-                /*flippen i top høyre*/
-                content: '';
-                position: absolute;
-                top: 0;
-                right: var(--a-spacing-6);
-                background: white;
-                border-width: 0 20px 20px 0;
-                border-style: solid;
-                border-color: hsl(64, 89%, 84%) transparent;
-                box-shadow: -3px 4px 5px 0 rgba(0, 0, 0, 0.1);
+            .rediger-huskelapp-skjema {
+                background-color: var(--a-bg-default);
+                padding-left: var(--a-spacing-2);
+                padding-right: var(--a-spacing-2);
+                padding-bottom: var(--a-spacing-4); // 4rem
             }
         }
 
@@ -94,6 +87,7 @@
     }
     .arbeidsliste-innhold-tekst {
         background-color: var(--a-bg-default);
-        padding: 0 0.5rem 1rem 0.5rem;
+        padding: var(--a-spacing-2);
+        word-break: break-word;
     }
 }
