@@ -77,6 +77,19 @@ export enum FargekategoriModell {
     FARGEKATEGORI_F = 'FARGEKATEGORI_F',
     INGEN_KATEGORI = 'INGEN_KATEGORI'
 }
+type UtvidetFargekategoriModell = {
+    key: FargekategoriModell;
+    beskrivelse: string;
+};
+export const utvidetFargekategoriModell: UtvidetFargekategoriModell[] = [
+    { key: FargekategoriModell.FARGEKATEGORI_A, beskrivelse: 'Kategori blå (vimpel)' },
+    { key: FargekategoriModell.FARGEKATEGORI_B, beskrivelse: 'Kategori grønn (trekant)' },
+    { key: FargekategoriModell.FARGEKATEGORI_C, beskrivelse: 'Kategori gul (sirkel)' },
+    { key: FargekategoriModell.FARGEKATEGORI_D, beskrivelse: 'Kategori lilla (firkant)' },
+    { key: FargekategoriModell.FARGEKATEGORI_E, beskrivelse: 'Kategori lyseblå (femkant)' },
+    { key: FargekategoriModell.FARGEKATEGORI_F, beskrivelse: 'Kategori oransje (diamant)' },
+    { key: FargekategoriModell.INGEN_KATEGORI, beskrivelse: 'Ingen fargekategori' }
+];
 
 export function fetchArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
     return axiosInstance.post<Arbeidsliste>(`/veilarbportefolje/api/v2/hent-arbeidsliste`, { fnr: fnr });
