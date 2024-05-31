@@ -5,6 +5,7 @@ import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
 import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
 import {
+    selectKanEndreFargekategori,
     selectKanLeggeIArbeidsListe,
     selectKanOppretteHuskelapp,
     selectKanRedigereArbeidsliste,
@@ -20,6 +21,7 @@ import { StringOrNothing } from '../../util/type/utility-types';
 import { Label } from '@navikt/ds-react';
 import HuskelappKnapp from '../huskelapp/huskelapp-knapp';
 import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
+import { Fargekategoriknapp } from '../fargekategori/fargekategoriknapp';
 
 function PersonInfo() {
     const { brukerFnr } = useAppStore();
@@ -45,6 +47,7 @@ function PersonInfo() {
         oppfolgingsstatus,
         tilgangTilBrukersKontor
     );
+    const kanEndreFargekategori = selectKanEndreFargekategori(innloggetVeileder, oppfolgingsstatus);
 
     const klikkShowArbeidslisteModal = () => {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
@@ -78,10 +81,11 @@ function PersonInfo() {
             <NavnOgAlder fodselsdato={personalia?.fodselsdato as string} navn={navn} />
             <div className="arbeidsliste">
                 <ArbeidslisteKnapp
-                    hidden={!(kanLeggeIArbeidsliste || kanRedigereArbeidsliste)}
+                    hidden={!(kanLeggeIArbeidsliste || kanRedigereArbeidsliste) || features[HUSKELAPP]}
                     onClick={klikkShowArbeidslisteModal}
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
+                <Fargekategoriknapp hidden={!(features[HUSKELAPP] && kanEndreFargekategori)} />
                 <HuskelappKnapp
                     hidden={!visHuskelappknapp}
                     onClick={klikkShowHuskelapp}

@@ -5,7 +5,7 @@ import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
-import { slettArbeidsliste } from '../../../api/veilarbportefolje';
+import { slettArbeidslisteMenIkkeFargekategori } from '../../../api/veilarbportefolje';
 import { ifResponseHasData } from '../../../util/utils';
 
 export const SlettArbeidsliste = () => {
@@ -24,7 +24,7 @@ export const SlettArbeidsliste = () => {
         });
         setLoading(true);
 
-        slettArbeidsliste(brukerFnr)
+        slettArbeidslisteMenIkkeFargekategori(brukerFnr)
             .then(ifResponseHasData(setArbeidsliste))
             .then(() => setLoading(false))
             .catch(() => setError(true))
@@ -44,20 +44,20 @@ export const SlettArbeidsliste = () => {
                         setVisSlettebekreftelse(true);
                         setError(false);
                     }}
-                    size="xsmall"
+                    size="small"
                     variant="tertiary"
                     icon={<TrashIcon aria-hidden />}
                 >
-                    Slett
+                    Slett gammel arbeidsliste uten å lage ny huskelapp
                 </Button>
             )}
             {visSlettebekreftelse && (
-                <div className="slett-arbeidsliste-container">
+                <div>
                     <Heading size="xsmall" level="3">
                         Er du sikker på at du vil slette eksisterende innhold?
                     </Heading>
                     <BodyShort size="small">Dette vil slette tittel, kommentar og frist for denne brukeren.</BodyShort>
-                    <div className="knappevalg">
+                    <div id="slett-arbeidsliste__knappevalg">
                         <Button
                             variant="tertiary"
                             size="small"

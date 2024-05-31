@@ -10,6 +10,7 @@ spec:
   port: 8080
   ingresses:
     - https://veilarbvisittkortfs.intern.dev.nav.no
+    - https://veilarbvisittkortfs.ansatt.dev.nav.no
   liveness:
     path: /internal/alive
     initialDelay: 10

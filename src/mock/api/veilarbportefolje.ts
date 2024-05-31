@@ -27,9 +27,22 @@ const mockTomArbeidsliste: Arbeidsliste = {
     kategori: null
 };
 
+const mockTomArbeidslisteMedFargekategori: Arbeidsliste = {
+    arbeidslisteAktiv: null,
+    endringstidspunkt: null,
+    frist: null,
+    harVeilederTilgang: false,
+    isOppfolgendeVeileder: false,
+    kommentar: null,
+    overskrift: null,
+    sistEndretAv: null,
+    kategori: KategoriModell.GUL
+};
+
 const mockHuskelapp: Huskelapp = {
     huskelappId: 'e4c54511-7668-4b89-9436-9acfd85071ff',
-    kommentar: 'Husk å ringe legen asap og noter det i møtereferat Husk å ringe legen asap og noter det i møterefera',
+    kommentar:
+        'Husk å ringe legen asap og noter det i møtereferat Husk å ringe legen asap og noter det i møtereferat Husk å ringe legen asap og noter det i møtereferat Husk å ringe legen asap og noter det i møterefe',
     frist: null,
     //frist: new Date(2024, 4, 24),
     endretAv: 'Z12347',
@@ -39,7 +52,7 @@ const mockHuskelapp: Huskelapp = {
 export const veilarbportefoljeHandlers: RequestHandler[] = [
     http.post('/veilarbportefolje/api/v2/hent-arbeidsliste', async () => {
         await delay(defaultNetworkResponseDelay);
-        var harMigrertArbeidsliste = Math.random() < 0.5;
+        const harMigrertArbeidsliste = Math.random() < 0.5;
         return HttpResponse.json(harMigrertArbeidsliste ? mockTomArbeidsliste : mockArbeidsliste);
     }),
     http.post('/veilarbportefolje/api/v2/arbeidsliste', async ({ request }) => {
@@ -72,13 +85,19 @@ export const veilarbportefoljeHandlers: RequestHandler[] = [
             kategori: requestBody.kategori
         });
     }),
-    http.delete('/veilarbportefolje/api/v2/arbeidsliste', async () => {
+    http.delete('/veilarbportefolje/api/v2/arbeidsliste', async ({ request }) => {
+        const url = new URL(request.url);
+        const slettFargekategori = url.searchParams.get('slettFargekategori');
         await delay(defaultNetworkResponseDelay);
+
+        if (slettFargekategori === 'false') {
+            return HttpResponse.json(mockTomArbeidslisteMedFargekategori);
+        }
         return HttpResponse.json(mockTomArbeidsliste);
     }),
     http.post('/veilarbportefolje/api/v1/hent-huskelapp-for-bruker', async () => {
         await delay(defaultNetworkResponseDelay);
-        var harMigrertArbeidsliste = Math.random() < 0.5;
+        const harMigrertArbeidsliste = Math.random() < 0.5;
         return HttpResponse.json(harMigrertArbeidsliste ? mockHuskelapp : {});
     }),
     http.post('/veilarbportefolje/api/v1/huskelapp', async () => {
@@ -92,5 +111,25 @@ export const veilarbportefoljeHandlers: RequestHandler[] = [
     http.delete('/veilarbportefolje/api/v1/huskelapp', async () => {
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json();
+    }),
+    http.post('/veilarbportefolje/api/v1/hent-fargekategori', async ({ request }) => {
+        const requestBody = (await request.json()) as { fnr: string };
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json({
+            id: 'uu-1-d',
+            fnr: requestBody.fnr,
+            fargekategoriVerdi: 'FARGEKATEGORI_C',
+            sistEndret: new Date().toISOString(),
+            endretAv: { veilederId: 'Z12345' }
+        });
+    }),
+    http.put('/veilarbportefolje/api/v1/fargekategorier', async ({ request }) => {
+        const requestBody = (await request.json()) as { fargekategoriVerdi: string; fnr: string[] };
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json({
+            data: [requestBody.fnr],
+            errors: [],
+            fargekategoriVerdi: requestBody.fargekategoriVerdi
+        });
     })
 ];

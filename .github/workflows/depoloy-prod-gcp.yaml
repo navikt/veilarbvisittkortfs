@@ -7,9 +7,12 @@ on:
 env:
     CI: true
     TZ: Europe/Amsterdam
+
 permissions:
+  id-token: 'write'
   contents: write
   pages: write
+
 jobs:
     deploy-prod:
         name: Deploy application to prod
@@ -45,3 +48,12 @@ jobs:
                 target_commitish: master
                 tag_name: release/prod@${{ github.sha }}
                 prerelease: false
+            - name: Upload to CDN
+              uses: nais/deploy/actions/cdn-upload/v2@master
+              with:
+                team: poao
+                source: ./build/
+                destination: /veilarbvisittkortfs-prod/
+                no_cache_paths: veilarbvisittkortfs-prod/build/asset-manifest.json
+                project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+                identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}

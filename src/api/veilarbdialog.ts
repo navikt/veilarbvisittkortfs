@@ -4,6 +4,8 @@ import { StringOrNothing } from '../util/type/utility-types';
 import {
     dialogerQuery,
     DialogerResponse,
+    stansVarselHistorikkQuery,
+    StansVarselHistorikkResponse,
     stansVarselQuery,
     StansVarselResponse,
     veilarbdialogGraphqlQuery
@@ -73,7 +75,12 @@ export function hentGjeldendeEskaleringsvarsel(fnr: string): AxiosPromise<Gjelde
 }
 
 export function hentEskaleringsvarselHistorikk(fnr: string): AxiosPromise<EskaleringsvarselHistorikkInnslag[]> {
-    return axiosInstance.get(`/veilarbdialog/api/eskaleringsvarsel/historikk?fnr=${fnr}`);
+    return axiosInstance
+        .post(veilarbDialogGraphqlEndpoint, veilarbdialogGraphqlQuery(fnr, stansVarselHistorikkQuery))
+        .then((res: AxiosResponse<StansVarselHistorikkResponse>) => ({
+            ...res,
+            data: res.data.data.stansVarselHistorikk
+        }));
 }
 
 export function startEskalering(startEskaleringRequest: StartEskaleringRequest): AxiosPromise {

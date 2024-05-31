@@ -1,5 +1,5 @@
 import { Field, FieldProps, getIn } from 'formik';
-import { ErrorMessage, DatePicker, useDatepicker } from '@navikt/ds-react';
+import { ErrorMessage, DatePicker, useDatepicker, DateInputProps } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { toReversedDateStr } from '../../../util/date-utils';
 
@@ -8,14 +8,14 @@ interface FormikDatepickerProps {
     validate: (value: string) => string | undefined;
     label: string;
     ariaLabel: string;
-    size?: 'medium' | 'small';
+    size?: DateInputProps['size'];
     className?: string;
 }
 
 interface DatoVelgerProps {
     formikProps: FieldProps;
     ariaLabel: string;
-    size: string;
+    size: DateInputProps['size'];
     label: string;
     name: string;
 }
@@ -28,26 +28,22 @@ const DatoVelger = ({ formikProps, ariaLabel, size, label, name }: DatoVelgerPro
     const { inputProps, datepickerProps } = useDatepicker({
         defaultSelected: field.value ? new Date(field.value) : undefined,
         inputFormat: 'dd.MM.yyyy',
-        onDateChange: (date?: any) => {
+        onDateChange: (date?: Date) => {
             setFieldValue(field.name, date ? toReversedDateStr(date) : null);
         }
     });
 
+    const datepickerInputProps = {
+        ...inputProps,
+        id: name,
+        name,
+        placeholder: 'dd.mm.åååå',
+        'aria-label': ariaLabel
+    };
+
     return (
         <DatePicker {...datepickerProps}>
-            <DatePicker.Input
-                size={size}
-                label={label}
-                {...{
-                    ...inputProps,
-                    ...({
-                        id: name,
-                        name,
-                        placeholder: 'dd.mm.åååå',
-                        'aria-label': ariaLabel
-                    } as any)
-                }}
-            />
+            <DatePicker.Input size={size} label={label} {...datepickerInputProps} />
         </DatePicker>
     );
 };

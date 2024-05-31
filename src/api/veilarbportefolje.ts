@@ -58,6 +58,26 @@ export interface HuskelappRedigerValues {
     enhetId: StringOrNothing;
 }
 
+export interface EndreFargekategoriResponse {
+    data: string[];
+    errors: string[];
+    fargekategoriVerdi: string;
+}
+
+export interface Fargekategori {
+    fargekategoriVerdi: FargekategoriModell;
+}
+
+export enum FargekategoriModell {
+    FARGEKATEGORI_A = 'FARGEKATEGORI_A',
+    FARGEKATEGORI_B = 'FARGEKATEGORI_B',
+    FARGEKATEGORI_C = 'FARGEKATEGORI_C',
+    FARGEKATEGORI_D = 'FARGEKATEGORI_D',
+    FARGEKATEGORI_E = 'FARGEKATEGORI_E',
+    FARGEKATEGORI_F = 'FARGEKATEGORI_F',
+    INGEN_KATEGORI = 'INGEN_KATEGORI'
+}
+
 export function fetchArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
     return axiosInstance.post<Arbeidsliste>(`/veilarbportefolje/api/v2/hent-arbeidsliste`, { fnr: fnr });
 }
@@ -74,11 +94,17 @@ export function slettArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
     return axiosInstance.delete(`/veilarbportefolje/api/v2/arbeidsliste`, { data: { fnr: fnr } });
 }
 
+export function slettArbeidslisteMenIkkeFargekategori(fnr: string): AxiosPromise<Arbeidsliste> {
+    return axiosInstance.delete(`/veilarbportefolje/api/v2/arbeidsliste?slettFargekategori=false`, {
+        data: { fnr: fnr }
+    });
+}
+
 export function fetchHuskelapp(fnr: string, enhetId: string): AxiosPromise<Huskelapp> {
     return axiosInstance.post(`/veilarbportefolje/api/v1/hent-huskelapp-for-bruker`, { fnr: fnr, enhetId: enhetId });
 }
 
-export function lagreHuskelapp(huskelappformValues: HuskelappLagreValues): AxiosPromise<String> {
+export function lagreHuskelapp(huskelappformValues: HuskelappLagreValues): AxiosPromise<string> {
     return axiosInstance.post(`/veilarbportefolje/api/v1/huskelapp`, huskelappformValues);
 }
 
@@ -86,6 +112,14 @@ export function redigerHuskelapp(huskelappformValues: HuskelappRedigerValues): A
     return axiosInstance.put(`/veilarbportefolje/api/v1/huskelapp`, huskelappformValues);
 }
 
-export function slettHuskelapp(huskelappId: string): AxiosPromise<String> {
+export function slettHuskelapp(huskelappId: string): AxiosPromise<string> {
     return axiosInstance.delete(`/veilarbportefolje/api/v1/huskelapp`, { data: { huskelappId: huskelappId } });
+}
+
+export function endreFargekategori(fargekategoriVerdi: string, fnr: string): AxiosPromise<EndreFargekategoriResponse> {
+    return axiosInstance.put('/veilarbportefolje/api/v1/fargekategorier', { fargekategoriVerdi, fnr: [fnr] });
+}
+
+export function fetchFargekategori(fnr: string): AxiosPromise<Fargekategori> {
+    return axiosInstance.post('/veilarbportefolje/api/v1/hent-fargekategori', { fnr });
 }
