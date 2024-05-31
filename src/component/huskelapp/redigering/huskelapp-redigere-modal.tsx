@@ -145,7 +145,7 @@ function HuskelappRedigereModal() {
                         )}
                         <HuskelappEditForm erArbeidslistaTom={erArbeidslistaTom} />
                     </Modal.Body>
-                    <Modal.Footer>
+                    <Modal.Footer className="rediger-huskelapp-modal-footer">
                         <Button size="small" variant="primary" form="huskelapp-form" type="submit">
                             {erArbeidslistaTom ? 'Lagre' : 'Lagre ny huskelapp og slett arbeidsliste'}
                         </Button>

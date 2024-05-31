@@ -1,11 +1,12 @@
-import './huskelapp-visning.less';
-import { useModalStore } from '../../../store/modal-store';
 import { BodyShort, Button, Detail, Heading, Modal } from '@navikt/ds-react';
 import HuskelappIkon from '../ikon/huskelapp.svg?react';
+import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { toSimpleDateStr } from '../../../util/date-utils';
 import { trackAmplitude } from '../../../amplitude/amplitude';
 import { SlettHuskelapp } from '../redigering/slett-huskelapp';
+import './../huskelapp-postitstyling.less';
+import './huskelapp-visning.less';
 
 function HuskelappVisningModal() {
     const { hideModal, showHuskelappRedigereModal } = useModalStore();
@@ -41,7 +42,7 @@ function HuskelappVisningModal() {
             closeOnBackdropClick={true}
         >
             <Modal.Body className="huskelapp-visning-modal-body">
-                <div className="huskelapp-innhold huskelapp-effekt-styling">
+                <div className="huskelapp-innhold huskelapp-postitstyling">
                     <Heading level="2" size="xsmall" spacing>
                         {huskelapp.frist ? `Frist: ${toSimpleDateStr(huskelapp!.frist!)}` : 'Ingen frist satt'}
                     </Heading>
