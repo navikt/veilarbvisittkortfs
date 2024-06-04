@@ -4,7 +4,7 @@ import { Alert, Button, Popover } from '@navikt/ds-react';
 import { useAppStore } from '../../store/app-store';
 import { mapfargekategoriToIkon } from './mapfargekategoriToIkon';
 import { trackAmplitude } from '../../amplitude/amplitude';
-import { endreFargekategori, Fargekategori, FargekategoriModell } from '../../api/veilarbportefolje';
+import { endreFargekategori, Fargekategori, FargekategoriModell, Fargekategorinavn } from '../../api/veilarbportefolje';
 
 interface Props {
     buttonRef: React.RefObject<HTMLButtonElement>;
@@ -45,6 +45,7 @@ export const FargekategoriPopover = ({ buttonRef, isOpen, setIsOpen, setFargekat
                 size="small"
                 variant="tertiary"
                 icon={mapfargekategoriToIkon(fargekategori)}
+                title={Fargekategorinavn[fargekategori]}
                 onClick={() => onClick(fargekategori)}
             />
         );
