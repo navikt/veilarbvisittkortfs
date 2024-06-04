@@ -1,5 +1,5 @@
 import { BodyShort, Button, Detail, Heading, Modal } from '@navikt/ds-react';
-import HuskelappIkon from '../ikon/huskelapp.svg?react';
+import HuskelappIkon from '../ikon/Huskelappikon_bakgrunnsfarge.svg?react';
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { toSimpleDateStr } from '../../../util/date-utils';

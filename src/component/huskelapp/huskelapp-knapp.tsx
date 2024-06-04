@@ -1,7 +1,7 @@
 import withClickMetric from '../components/click-metric/click-metric';
 import { trackAmplitude } from '../../amplitude/amplitude';
-import HuskelappInaktivIkon from './ikon/huskelapp-inaktiv.svg?react';
-import HuskelappIkon from './ikon/huskelapp.svg?react';
+import HuskelappInaktivIkon from './ikon/Huskelappikon_stiplet.svg?react';
+import HuskelappIkon from './ikon/Huskelappikon_bakgrunnsfarge.svg?react';
 import { Button } from '@navikt/ds-react';
 
 export interface HuskelappKnappProps {
@@ -24,10 +24,10 @@ function HuskelappKnapp(props: HuskelappKnappProps) {
 
     return (
         <Button
+            variant="tertiary"
             icon={props.harHuskelappEllerArbeidsliste ? <HuskelappIkon /> : <HuskelappInaktivIkon />}
+            title={props.harHuskelappEllerArbeidsliste ? 'Endre huskelapp' : 'Opprett huskelapp'}
             onClick={onClick}
-            variant="tertiary-neutral"
-            size="medium"
         />
     );
 }

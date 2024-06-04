@@ -13,7 +13,7 @@ import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
 import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
-import HuskelappIkon from '../ikon/huskelapp.svg?react';
+import HuskelappIkon from '../ikon/Huskelappikon_bakgrunnsfarge.svg?react';
 import { toReversedDateStr } from '../../../util/date-utils';
 import { HuskelappEditForm } from './huskelapp-edit-form';
 import { GammelArbeidsliste } from './gammelArbeidsliste';

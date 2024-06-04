@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDataStore } from '../../store/data-store';
-import { Button } from '@navikt/ds-react';
 import { mapfargekategoriToIkon } from './mapfargekategoriToIkon';
 import { FargekategoriPopover } from './fargekategori-popover';
+import { Fargekategorinavn } from '../../api/veilarbportefolje';
+import { Button } from '@navikt/ds-react';
 
 interface Props {
     hidden: boolean;
@@ -20,12 +21,16 @@ export const Fargekategoriknapp = ({ hidden }: Props) => {
     return (
         <>
             <Button
-                ref={buttonRef}
+                variant="tertiary"
                 icon={mapfargekategoriToIkon(fargekategori?.fargekategoriVerdi ?? null)}
-                className="fargekategori-knapp"
+                title={
+                    (fargekategori?.fargekategoriVerdi
+                        ? Fargekategorinavn[fargekategori.fargekategoriVerdi]
+                        : 'Ingen kategori') + ': endre'
+                }
+                ref={buttonRef}
                 onClick={() => setIsPopoverOpen(true)}
-                variant="tertiary-neutral"
-                size="medium"
+                className="fargekategori-knapp"
                 aria-expanded={isPopoverOpen}
             />
             <FargekategoriPopover

@@ -14,7 +14,7 @@ export interface ArbeidslisteKnappProps {
 function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
     const { arbeidsliste } = useDataStore();
 
-    if(props.hidden) {
+    if (props.hidden) {
         return null;
     }
 
@@ -33,8 +33,7 @@ function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
             icon={<ArbeidslistekategoriVisning kategori={kategori} />}
             className="arbeidsliste-knapp"
             onClick={onClick}
-            variant={'tertiary-neutral'}
-            size={'medium'}
+            variant="tertiary"
         />
     );
 }
