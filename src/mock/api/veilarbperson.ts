@@ -2,6 +2,7 @@
 // import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import {
     HarBruktNivaa4Type,
+    OpplysningerOmArbeidssoekerMedProfilering,
     Personalia,
     PersonaliaTelefon,
     RegistreringData,
@@ -110,6 +111,25 @@ const mockRegistrering: RegistreringData = {
     }
 };
 
+const mockOpplysningerOmArbeidssoekerMedProfilering: OpplysningerOmArbeidssoekerMedProfilering = {
+    profilering: {
+        profileringId: 'profilering-id-123',
+        periodeId: 'periode-id-123',
+        opplysningerOmArbeidssoekerId: 'opplysninger-om-arbeidssoeker-id-123',
+        sendtInnAv: {
+            tidspunkt: '2021-03-02T13:00:42',
+            utfoertAv: {
+                type: 'SLUTTBRUKER'
+            },
+            kilde: '',
+            aarsak: ''
+        },
+        profilertTil: 'OPPGITT_HINDRINGER',
+        jobbetSammenhengendeSeksAvTolvSisteManeder: true,
+        alder: 24
+    }
+};
+
 export const veilarbpersonHandlers: RequestHandler[] = [
     http.post('/veilarbperson/api/v3/person/hent-registrering', async () => {
         await delay(defaultNetworkResponseDelay);
@@ -135,5 +155,10 @@ export const veilarbpersonHandlers: RequestHandler[] = [
         await delay(defaultNetworkResponseDelay);
 
         return HttpResponse.json(mockSpraakTolk);
+    }),
+    http.post('/veilarbperson/api/v3/person/hent-siste-opplysninger-om-arbeidssoeker-med-profilering', async () => {
+        await delay(defaultNetworkResponseDelay);
+
+        return HttpResponse.json(mockOpplysningerOmArbeidssoekerMedProfilering);
     })
 ];

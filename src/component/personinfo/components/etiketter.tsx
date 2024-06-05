@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
 import './etiketter.less';
-import { fetchRegistrering, InnsatsgruppeType } from '../../../api/veilarbperson';
+import { fetchOpplysningerOmArbeidssoekerMedProfilering, Profilering } from '../../../api/veilarbperson';
 import { OppfolgingStatus } from '../../../api/veilarboppfolging';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { ifResponseHasData, isEmpty } from '../../../util/utils';
@@ -53,25 +53,19 @@ function manglerVedtak(oppfolging: OrNothing<OppfolgingStatus>): boolean {
 
 function Etiketter() {
     const { brukerFnr } = useAppStore();
-    const {
-        gjeldendeEskaleringsvarsel,
-        oppfolgingsstatus,
-        oppfolging,
-        personalia,
-        vergeOgFullmakt,
-        spraakTolk
-    } = useDataStore();
+    const { gjeldendeEskaleringsvarsel, oppfolgingsstatus, oppfolging, personalia, vergeOgFullmakt, spraakTolk } =
+        useDataStore();
 
-    const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>(null);
+    const [profilering, setProfilering] = useState<OrNothing<Profilering>>(null);
 
-    const registreringFetcher = useAxiosFetcher(fetchRegistrering);
+    const opplysningerOmArbeidssoekerFetcher = useAxiosFetcher(fetchOpplysningerOmArbeidssoekerMedProfilering);
 
     const pilot_toggle = false;
     useEffect(() => {
         if (brukerFnr && pilot_toggle) {
-            registreringFetcher.fetch(brukerFnr).then(
+            opplysningerOmArbeidssoekerFetcher.fetch(brukerFnr).then(
                 ifResponseHasData(data => {
-                    setInnsatsgruppe(data.registrering.profilering?.innsatsgruppe);
+                    setProfilering(data.profilering);
                 })
             );
         }
@@ -120,16 +114,20 @@ function Etiketter() {
             >
                 Ikke registrert KRR
             </Fokus>
-            <Info visible={trengerVurdering(oppfolgingsstatus) && !innsatsgruppe}>Trenger vurdering</Info>
-            <Info visible={trengerAEV(oppfolgingsstatus) && !innsatsgruppe}>Behov for AEV</Info>
+            <Info visible={trengerVurdering(oppfolgingsstatus) && !profilering?.profilertTil}>Trenger vurdering</Info>
+            <Info visible={trengerAEV(oppfolgingsstatus) && !profilering?.profilertTil}>Behov for AEV</Info>
             <Info visible={erBrukerSykmeldt(oppfolgingsstatus)}>Sykmeldt</Info>
-            <Info visible={innsatsgruppe === 'STANDARD_INNSATS' && manglerVedtak(oppfolgingsstatus)}>
+            <Info visible={profilering?.profilertTil === 'ANTATT_GODE_MULIGHETER' && manglerVedtak(oppfolgingsstatus)}>
                 Antatt gode muligheter
             </Info>
-            <Info visible={innsatsgruppe === 'SITUASJONSBESTEMT_INNSATS' && manglerVedtak(oppfolgingsstatus)}>
+            <Info
+                visible={
+                    profilering?.profilertTil === 'ANTATT_BEHOV_FOR_VEILEDNING' && manglerVedtak(oppfolgingsstatus)
+                }
+            >
                 Antatt behov for veiledning
             </Info>
-            <Info visible={innsatsgruppe === 'BEHOV_FOR_ARBEIDSEVNEVURDERING' && manglerVedtak(oppfolgingsstatus)}>
+            <Info visible={profilering?.profilertTil === 'OPPGITT_HINDRINGER' && manglerVedtak(oppfolgingsstatus)}>
                 Oppgitt hindringer
             </Info>
         </div>

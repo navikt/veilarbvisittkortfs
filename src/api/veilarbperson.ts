@@ -90,8 +90,68 @@ export interface RegistreringData {
             jobbetSammenhengendeSeksAvTolvSisteManeder: boolean;
             innsatsgruppe: InnsatsgruppeType;
         };
-        manueltRegistrertAv: {} | null;
+        manueltRegistrertAv: object | null;
     };
+}
+
+export type OpplysningerOmArbeidssoker = {
+    opplysningerOmArbeidssoekerId: string;
+    periodeId: string;
+    sendtInnAv: {
+        tidspunkt: string;
+        utfoertAv: {
+            type: string;
+            id: string;
+        };
+        kilde: string;
+        aarsak: string;
+    };
+    utdanning: {
+        nus: string;
+        bestaatt: string;
+        godkjent: string;
+    };
+    helse: {
+        helsetilstandHindrerArbeid: string;
+    };
+    annet: {
+        andreForholdHindrerArbeid: string;
+    };
+    jobbsituasjon: Jobbsituasjon[];
+};
+
+type Jobbsituasjon = {
+    beskrivelse: string;
+    detaljer: {
+        gjelder_fra_dato_iso8601?: string;
+        gjelder_til_dato_iso8601?: string;
+        stilling?: string;
+        stilling_styrk08?: string;
+        prosent?: string;
+        siste_dag_med_loenn_iso8601?: string;
+        siste_arbeidsdag_iso8601?: string;
+    };
+};
+
+export type Profilering = {
+    profileringId: string;
+    periodeId: string;
+    opplysningerOmArbeidssoekerId: string;
+    sendtInnAv: {
+        tidspunkt: string;
+        utfoertAv: {
+            type: string;
+        };
+        kilde: string;
+        aarsak: string;
+    };
+    profilertTil: string;
+    jobbetSammenhengendeSeksAvTolvSisteManeder: boolean;
+    alder: number;
+};
+export interface OpplysningerOmArbeidssoekerMedProfilering {
+    opplysningerOmArbeidssoeker?: OpplysningerOmArbeidssoker;
+    profilering: Profilering;
 }
 
 export function fetchPersonalia(fnr: string, behandlingsnummer: string): AxiosPromise<Personalia> {
@@ -124,6 +184,17 @@ export function fetchRegistrering(fnr: string): AxiosPromise<RegistreringData> {
     return axiosInstance.post<RegistreringData>(`/veilarbperson/api/v3/person/hent-registrering`, {
         fnr: fnr
     } as PersonRequest);
+}
+
+export function fetchOpplysningerOmArbeidssoekerMedProfilering(
+    fnr: string
+): AxiosPromise<OpplysningerOmArbeidssoekerMedProfilering> {
+    return axiosInstance.post<OpplysningerOmArbeidssoekerMedProfilering>(
+        `/veilarbperson/api/v3/person/hent-siste-opplysninger-om-arbeidssoeker-med-profilering`,
+        {
+            fnr: fnr
+        } as PersonRequest
+    );
 }
 
 export function sendEventTilVeilarbperson(event: FrontendEvent): AxiosPromise<void> {
