@@ -98,12 +98,14 @@ function HuskelappRedigereModal() {
                 .then(res => res.data)
                 .then(setHuskelapp)
                 .then(showHuskelappModal)
+                .then(() => {
+                    if (!erArbeidslistaTom) {
+                        slettArbeidslisteMenIkkeFargekategori(brukerFnr)
+                            .then(res => res.data)
+                            .then(setArbeidsliste);
+                    }
+                })
                 .catch(showErrorModal);
-            if (!erArbeidslistaTom) {
-                slettArbeidslisteMenIkkeFargekategori(brukerFnr)
-                    .then(res => res.data)
-                    .then(setArbeidsliste);
-            }
         } else {
             lagreHuskelapp({
                 kommentar: values.kommentar ? values.kommentar : null,
@@ -115,10 +117,12 @@ function HuskelappRedigereModal() {
                 .then(res => res.data)
                 .then(setHuskelapp)
                 .then(showHuskelappModal)
+                .then(() => {
+                    slettArbeidslisteMenIkkeFargekategori(brukerFnr)
+                        .then(res => res.data)
+                        .then(setArbeidsliste);
+                })
                 .catch(showErrorModal);
-            slettArbeidslisteMenIkkeFargekategori(brukerFnr)
-                .then(res => res.data)
-                .then(setArbeidsliste);
         }
     }
 
