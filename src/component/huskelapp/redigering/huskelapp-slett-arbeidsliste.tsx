@@ -8,7 +8,11 @@ import { trackAmplitude } from '../../../amplitude/amplitude';
 import { slettArbeidslisteMenIkkeFargekategori } from '../../../api/veilarbportefolje';
 import { ifResponseHasData } from '../../../util/utils';
 
-export const SlettArbeidsliste = () => {
+interface SlettArbeidslisteProps {
+    lukkModal: () => void;
+}
+
+export const SlettArbeidsliste = ({ lukkModal }: SlettArbeidslisteProps) => {
     const [visSlettebekreftelse, setVisSlettebekreftelse] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
@@ -16,7 +20,7 @@ export const SlettArbeidsliste = () => {
     const { brukerFnr } = useAppStore();
     const { setArbeidsliste } = useDataStore();
 
-    const handleSlettArbeidsListe = () => {
+    const slettArbeidsListe = () => {
         logMetrikk('visittkort.metrikker.fjern_arbeidsliste');
         trackAmplitude({
             name: 'knapp klikket',
@@ -28,7 +32,8 @@ export const SlettArbeidsliste = () => {
             .then(ifResponseHasData(setArbeidsliste))
             .then(() => setLoading(false))
             .catch(() => setError(true))
-            .then(() => setVisSlettebekreftelse(false));
+            .then(() => setVisSlettebekreftelse(false))
+            .then(() => lukkModal());
     };
 
     return (
@@ -71,7 +76,7 @@ export const SlettArbeidsliste = () => {
                             variant="secondary"
                             size="small"
                             type="button"
-                            onClick={handleSlettArbeidsListe}
+                            onClick={slettArbeidsListe}
                         >
                             Ja, slett arbeidslista
                         </Button>
