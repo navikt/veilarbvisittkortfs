@@ -9,7 +9,7 @@ import { defaultNetworkResponseDelay } from '../config';
 import { delay, http, HttpResponse, RequestHandler } from 'msw';
 
 const mockAvslutningStatus: AvslutningStatus = {
-    kanAvslutte: false,
+    kanAvslutte: true,
     harYtelser: false,
     underOppfolging: true,
     inaktiveringsDato: null,
@@ -19,7 +19,7 @@ const mockAvslutningStatus: AvslutningStatus = {
 };
 
 const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
-    kanAvslutte: true,
+    kanAvslutte: false,
     harYtelser: false,
     underOppfolging: false,
     inaktiveringsDato: null,

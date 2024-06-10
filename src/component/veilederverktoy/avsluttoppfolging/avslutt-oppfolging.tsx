@@ -60,7 +60,7 @@ function AvsluttOppfolging() {
         return (
             <VarselModal isOpen={true} onRequestClose={hideModal} type="ADVARSEL">
                 Du kan ikke avslutte oppfølgingsperioden fordi:
-                <ul className="margin--0">
+                <ul>
                     {(avslutningStatus?.underOppfolging || !avslutningStatus?.erIserv) && (
                         <li>Brukeren har aktiv status i Arena.</li>
                     )}
