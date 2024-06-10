@@ -9,21 +9,23 @@ import { defaultNetworkResponseDelay } from '../config';
 import { delay, http, HttpResponse, RequestHandler } from 'msw';
 
 const mockAvslutningStatus: AvslutningStatus = {
-    kanAvslutte: true,
+    kanAvslutte: false,
     harYtelser: false,
     underOppfolging: true,
     inaktiveringsDato: null,
     underKvp: false,
-    erIserv: false
+    erIserv: true,
+    harAktiveTiltaksdeltakelser: true
 };
 
 const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
-    kanAvslutte: false,
+    kanAvslutte: true,
     harYtelser: false,
     underOppfolging: false,
     inaktiveringsDato: null,
     underKvp: false,
-    erIserv: false
+    erIserv: false,
+    harAktiveTiltaksdeltakelser: false
 };
 
 const mockInnstillingsHistorikk: InnstillingHistorikkInnslag[] = [

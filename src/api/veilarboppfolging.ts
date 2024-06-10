@@ -1,6 +1,6 @@
-import {AxiosPromise} from 'axios';
-import {axiosInstance} from './utils';
-import {OrNothing, StringOrNothing} from '../util/type/utility-types';
+import { AxiosPromise } from 'axios';
+import { axiosInstance } from './utils';
+import { OrNothing, StringOrNothing } from '../util/type/utility-types';
 
 export type Formidlingsgruppe = 'ARBS' | 'IARBS' | 'ISERV' | 'PARBS' | 'RARBS';
 export type Servicegruppe = 'BKART' | 'IVURD' | 'OPPFI' | 'VARIG' | 'VURDI' | 'VURDU';
@@ -24,6 +24,7 @@ export interface AvslutningStatus {
     underKvp: boolean;
     underOppfolging: boolean;
     erIserv: boolean;
+    harAktiveTiltaksdeltakelser: boolean;
 }
 
 export interface OppfolgingsPerioder {
@@ -32,7 +33,7 @@ export interface OppfolgingsPerioder {
     startDato: string;
     sluttDato?: string;
     begrunnelse: string;
-    kvpPerioder: any[];
+    kvpPerioder: any[]; // eslint-disable-line
 }
 
 export interface Oppfolging {
@@ -95,7 +96,7 @@ export interface InnstillingHistorikkInnslag {
 }
 
 export function fetchOppfolging(fnr: string): AxiosPromise<Oppfolging> {
-    return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/hent-status`, {fnr: fnr});
+    return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/hent-status`, { fnr: fnr });
 }
 
 export function fetchOppfolgingsstatus(fnr: string): AxiosPromise<OppfolgingStatus> {
@@ -117,7 +118,7 @@ export function fetchInstillingsHistorikk(fnr: string): AxiosPromise<Innstilling
 }
 
 export function fetchAvsluttOppfolgingStatus(fnr: string): AxiosPromise<AvslutningStatus> {
-    return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/hent-avslutning-status`, {fnr: fnr});
+    return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/hent-avslutning-status`, { fnr: fnr });
 }
 
 export function settBrukerTilDigital(fnr: string, veilederId: string, begrunnelse: string): AxiosPromise {
@@ -150,7 +151,11 @@ export function stoppKvpOppfolging(fnr: string, begrunnelse: string): AxiosPromi
     });
 }
 
-export function avsluttOppfolging(fnr: string, begrunnelse: string, veilederId: string): AxiosPromise {
+export function avsluttOppfolging(
+    fnr: string,
+    begrunnelse: string,
+    veilederId: string
+): AxiosPromise<AvslutningStatus> {
     return axiosInstance.post(`/veilarboppfolging/api/v2/oppfolging/avslutt`, {
         fnr,
         begrunnelse,
