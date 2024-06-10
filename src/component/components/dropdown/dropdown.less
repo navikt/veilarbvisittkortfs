@@ -4,11 +4,11 @@
         pointer-events: none; // gjør at en kan klikke igjennom denne (pilen), slik at select åpner seg
         content: '';
         background: var(--a-gray-900);
-        height: calc(2/16 * 1rem); /* 2px */
-        width: calc(10/16 * 1rem); /* 10px */
-        border-radius: 10px;
+        height: 0.125rem;
+        width: 0.625rem;
+        border-radius: 0.625rem;
         right: 0.6rem;
-        top: 15px;
+        top: 1rem;
         position: absolute;
     }
 
@@ -25,18 +25,20 @@
                 display: none;
             }
 
+            /* Høgre halvdel av chevron (lukka) */
             &:before {
                 .chevronline-mixin();
-                transform: translateX(3px) rotate(-45deg);
+                transform: translateX(0.1875rem) rotate(-45deg);
                 transition: transform 0.3s;
-                margin-top: 0.3rem;
+                margin-top: 0.2rem;
             }
 
+            /* Venstre halvdel av chevron (lukka) */
             &:after {
                 .chevronline-mixin();
-                transform: translateX(-3px) rotate(45deg);
+                transform: translateX(-0.1875rem) rotate(45deg);
                 transition: transform 0.3s;
-                margin-top: 0.3rem;
+                margin-top: 0.2rem;
             }
 
             &:hover {
@@ -73,17 +75,26 @@
 
         &--apen {
             .dropdown__btn {
+                /* Høgre halvdel av chevron (open) */
                 &:before {
-                    transform: translateX(3px) rotate(45deg);
+                    transform: translateX(0.1875rem) rotate(45deg);
                     transition: transform 0.3s;
                 }
 
+                /* Venstre halvdel av chevron (open) */
                 &:after {
-                    transform: translateX(-3px) rotate(-45deg);
+                    transform: translateX(-0.1875rem) rotate(-45deg);
                     transition: transform 0.3s;
                 }
             }
         }
+    }
+
+    /* Gjer at chevron vert midstilt også når inputen er liten
+     *   Vi bruker same komponent i Veilederverktøy og i Enhet/Veileder-dropdownar. Dei har ulik skriftstorleik,
+     *   så chevron treng ulik margin-top i dei to bruksområda */
+    .skjemaelement .dropdown__btn:after, .skjemaelement .dropdown__btn:before {
+        margin-top: 0;
     }
 
     @media (min-width: 1300px) {
