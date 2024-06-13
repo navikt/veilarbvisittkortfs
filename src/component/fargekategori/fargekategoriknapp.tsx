@@ -14,21 +14,23 @@ export const Fargekategoriknapp = ({ disabled }: Props) => {
     const { fargekategori, setFargekategori } = useDataStore();
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
-    return (
+    const titletekst = fargekategori?.fargekategoriVerdi
+        ? 'Kategori ' + Fargekategorinavn[fargekategori.fargekategoriVerdi]
+        : 'Ingen kategori';
+
+    return disabled ? (
+        <div id="fargekategori--knapp" title={titletekst}>
+            {mapfargekategoriToIkon(fargekategori?.fargekategoriVerdi ?? null)}
+        </div>
+    ) : (
         <>
             <Button
                 variant="tertiary"
                 icon={mapfargekategoriToIkon(fargekategori?.fargekategoriVerdi ?? null)}
-                title={
-                    (fargekategori?.fargekategoriVerdi
-                        ? Fargekategorinavn[fargekategori.fargekategoriVerdi]
-                        : 'Ingen kategori') + ': endre'
-                }
+                title={titletekst + ': endre'}
                 ref={buttonRef}
                 onClick={() => setIsPopoverOpen(true)}
-                className="fargekategori-knapp"
                 aria-expanded={isPopoverOpen}
-                disabled={disabled}
             />
             <FargekategoriPopover
                 buttonRef={buttonRef}
