@@ -45,7 +45,7 @@ function HuskelappFjernModal() {
                 </Heading>
             </Modal.Header>
             <Modal.Body>
-                Huskelappen slettes, men kan utleveres ved innsynsbegjæring innenfor oppfølgingsperioden.
+                Huskelappen slettes, men kan utleveres hvis personen ber om innsyn i løpet av denne oppfølgingsperioden.
             </Modal.Body>
             <Modal.Footer>
                 <Button
