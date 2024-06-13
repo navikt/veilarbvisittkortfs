@@ -6,17 +6,13 @@ import { Fargekategorinavn } from '../../api/veilarbportefolje';
 import { Button } from '@navikt/ds-react';
 
 interface Props {
-    hidden: boolean;
+    disabled: boolean;
 }
 
-export const Fargekategoriknapp = ({ hidden }: Props) => {
+export const Fargekategoriknapp = ({ disabled }: Props) => {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const { fargekategori, setFargekategori } = useDataStore();
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-
-    if (hidden) {
-        return null;
-    }
 
     return (
         <>
@@ -32,6 +28,7 @@ export const Fargekategoriknapp = ({ hidden }: Props) => {
                 onClick={() => setIsPopoverOpen(true)}
                 className="fargekategori-knapp"
                 aria-expanded={isPopoverOpen}
+                disabled={disabled}
             />
             <FargekategoriPopover
                 buttonRef={buttonRef}
