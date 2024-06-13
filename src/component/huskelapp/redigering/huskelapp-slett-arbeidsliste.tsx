@@ -36,9 +36,11 @@ export const SlettArbeidsliste = () => {
             {error && (
                 <Alert variant="error" size="small" className="sletting-av-arbeidsliste-feilet">
                     Noe gikk galt ved sletting av arbeidslista.
+                    <br />
+                    Avbryt og prøv igjen senere.
                 </Alert>
             )}
-            {!visSlettebekreftelse && (
+            {!visSlettebekreftelse && !error && (
                 <Button
                     onClick={() => {
                         setVisSlettebekreftelse(true);
@@ -54,9 +56,9 @@ export const SlettArbeidsliste = () => {
             {visSlettebekreftelse && (
                 <div>
                     <Heading size="xsmall" level="3">
-                        Er du sikker på at du vil slette eksisterende innhold?
+                        Er du sikker på at du vil slette gammel arbeidsliste?
                     </Heading>
-                    <BodyShort size="small">Dette vil slette tittel, kommentar og frist for denne brukeren.</BodyShort>
+                    <BodyShort size="small">Dette vil slette tittel, kommentar og frist for denne personen.</BodyShort>
                     <div id="slett-arbeidsliste__knappevalg">
                         <Button
                             variant="tertiary"
