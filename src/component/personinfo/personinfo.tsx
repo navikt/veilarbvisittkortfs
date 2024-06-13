@@ -85,7 +85,9 @@ function PersonInfo() {
                     onClick={klikkShowArbeidslisteModal}
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
-                <Fargekategoriknapp hidden={!(features[HUSKELAPP] && kanEndreFargekategori)} />
+                {features[HUSKELAPP] && !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor && (
+                    <Fargekategoriknapp disabled={!kanEndreFargekategori} />
+                )}
                 <HuskelappKnapp
                     hidden={!visHuskelappknapp}
                     onClick={klikkShowHuskelapp}
