@@ -2,14 +2,14 @@ import { Formik, FormikBag, FormikProps } from 'formik';
 import { Button, Modal } from '@navikt/ds-react';
 import { ArrowRightIcon } from '@navikt/aksel-icons';
 import {
-    fetchHuskelapp,
     HuskelappformValues,
     lagreHuskelapp,
     redigerHuskelapp,
-    slettArbeidslisteMenIkkeFargekategori
+    slettArbeidslisteMenIkkeFargekategori,
+    useArbeidsliste,
+    useHuskelapp
 } from '../../../api/veilarbportefolje';
 import { useAppStore } from '../../../store/app-store';
-import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
 import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
@@ -30,7 +30,8 @@ const huskelappEmptyValues = {
 function HuskelappRedigereModal() {
     const { brukerFnr, enhetId } = useAppStore();
     const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
-    const { huskelapp, setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
+    const { data: arbeidsliste, mutate: setArbeidsliste } = useArbeidsliste(brukerFnr);
+    const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr, enhetId);
 
     const erArbeidslistaTom =
         arbeidsliste?.sistEndretAv == null ||
@@ -94,9 +95,7 @@ function HuskelappRedigereModal() {
                 brukerFnr: brukerFnr,
                 enhetId: enhetId
             })
-                .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
-                .then(res => res.data)
-                .then(setHuskelapp)
+                .then(() => setHuskelapp())
                 .then(hideModal)
                 .catch(showErrorModal);
             if (!erArbeidslistaTom) {
@@ -111,9 +110,7 @@ function HuskelappRedigereModal() {
                 brukerFnr: brukerFnr,
                 enhetId: enhetId
             })
-                .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
-                .then(res => res.data)
-                .then(setHuskelapp)
+                .then(() => setHuskelapp())
                 .then(() => {
                     slettArbeidslisteMenIkkeFargekategori(brukerFnr)
                         .then(res => res.data)

@@ -1,5 +1,6 @@
+import useSWR from 'swr';
 import { AxiosPromise } from 'axios';
-import { axiosInstance } from './utils';
+import { axiosInstance, ErrorMessage, fetchWithPost, swrOptions } from './utils';
 import { OrNothing, StringOrNothing } from '../util/type/utility-types';
 
 export interface Arbeidsliste {
@@ -13,6 +14,7 @@ export interface Arbeidsliste {
     sistEndretAv: OrNothing<{ veilederId: string }>;
     kategori: KategoriModell | null;
     veilederId?: StringOrNothing;
+    navkontorForArbeidsliste: StringOrNothing;
 }
 
 export interface Huskelapp {
@@ -21,6 +23,7 @@ export interface Huskelapp {
     kommentar: StringOrNothing;
     endretDato: OrNothing<Date>;
     endretAv: StringOrNothing;
+    enhetId: StringOrNothing;
 }
 
 export enum KategoriModell {
@@ -50,6 +53,7 @@ export interface HuskelappLagreValues {
     frist: StringOrNothing;
     enhetId: StringOrNothing;
 }
+
 export interface HuskelappRedigerValues {
     huskelappId: StringOrNothing;
     brukerFnr: StringOrNothing;
@@ -66,6 +70,7 @@ export interface EndreFargekategoriResponse {
 
 export interface Fargekategori {
     fargekategoriVerdi: FargekategoriModell;
+    enhetId: StringOrNothing;
 }
 
 export enum FargekategoriModell {
@@ -88,10 +93,6 @@ export enum Fargekategorinavn {
     INGEN_KATEGORI = 'Ingen kategori'
 }
 
-export function fetchArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
-    return axiosInstance.post<Arbeidsliste>(`/veilarbportefolje/api/v2/hent-arbeidsliste`, { fnr: fnr });
-}
-
 export function lagreArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformValues): AxiosPromise {
     return axiosInstance.post(`/veilarbportefolje/api/v2/arbeidsliste`, { ...{ fnr: fnr }, ...arbeidsliste });
 }
@@ -110,10 +111,6 @@ export function slettArbeidslisteMenIkkeFargekategori(fnr: string): AxiosPromise
     });
 }
 
-export function fetchHuskelapp(fnr: string, enhetId: string): AxiosPromise<Huskelapp> {
-    return axiosInstance.post(`/veilarbportefolje/api/v1/hent-huskelapp-for-bruker`, { fnr: fnr, enhetId: enhetId });
-}
-
 export function lagreHuskelapp(huskelappformValues: HuskelappLagreValues): AxiosPromise<string> {
     return axiosInstance.post(`/veilarbportefolje/api/v1/huskelapp`, huskelappformValues);
 }
@@ -130,6 +127,42 @@ export function endreFargekategori(fargekategoriVerdi: string, fnr: string): Axi
     return axiosInstance.put('/veilarbportefolje/api/v1/fargekategorier', { fargekategoriVerdi, fnr: [fnr] });
 }
 
-export function fetchFargekategori(fnr: string): AxiosPromise<Fargekategori> {
-    return axiosInstance.post('/veilarbportefolje/api/v1/hent-fargekategori', { fnr });
+export function useErUfordeltBruker(fnr: string, enhetId?: string) {
+    const url = '/veilarbportefolje/api/v1/hent-er-bruker-ufordelt';
+    const { data, error, isLoading } = useSWR<boolean, ErrorMessage>(
+        fnr && enhetId ? url : null,
+        () => fetchWithPost(url, { fnr: fnr ?? null, enhetId: enhetId }),
+        swrOptions
+    );
+    return { data, isLoading, error };
+}
+
+export function useHuskelapp(fnr: string, enhetId?: string) {
+    const url = '/veilarbportefolje/api/v1/hent-huskelapp-for-bruker';
+    const { data, error, isLoading, mutate } = useSWR<Huskelapp, ErrorMessage>(
+        fnr && enhetId ? url : null,
+        () => fetchWithPost(url, { fnr: fnr, enhetId: enhetId }),
+        swrOptions
+    );
+    return { data, isLoading, error, mutate };
+}
+
+export function useArbeidsliste(fnr: string) {
+    const url = '/veilarbportefolje/api/v2/hent-arbeidsliste';
+    const { data, error, isLoading, mutate } = useSWR<Arbeidsliste, ErrorMessage>(
+        fnr ? url : null,
+        () => fetchWithPost(url, { fnr: fnr }),
+        swrOptions
+    );
+    return { data, isLoading, error, mutate };
+}
+
+export function useFargekategori(fnr: string) {
+    const url = '/veilarbportefolje/api/v1/hent-fargekategori';
+    const { data, error, isLoading, mutate } = useSWR<Fargekategori, ErrorMessage>(
+        fnr ? url : null,
+        () => fetchWithPost(url, { fnr: fnr }),
+        swrOptions
+    );
+    return { data, isLoading, error, mutate };
 }

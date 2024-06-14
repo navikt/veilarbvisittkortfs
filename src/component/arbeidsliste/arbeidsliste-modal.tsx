@@ -7,7 +7,8 @@ import {
     ArbeidslisteformValues,
     KategoriModell,
     lagreArbeidsliste,
-    redigerArbeidsliste
+    redigerArbeidsliste,
+    useArbeidsliste
 } from '../../api/veilarbportefolje';
 import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
@@ -30,7 +31,8 @@ const arbeidslisteEmptyValues = {
 function ArbeidslisteModal() {
     const { brukerFnr } = useAppStore();
     const { hideModal, showSpinnerModal, showErrorModal, showFjernArbeidslisteModal } = useModalStore();
-    const { arbeidsliste, oppfolging, innloggetVeileder, personalia, setArbeidsliste } = useDataStore();
+    const { oppfolging, innloggetVeileder, personalia } = useDataStore();
+    const { data: arbeidsliste, mutate: setArbeidsliste } = useArbeidsliste(brukerFnr);
 
     const liste = arbeidsliste as Arbeidsliste;
 

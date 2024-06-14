@@ -1,5 +1,6 @@
+import useSWR from 'swr';
 import { AxiosPromise } from 'axios';
-import { axiosInstance } from './utils';
+import { axiosInstance, ErrorMessage, fetchWithPost, swrOptions } from './utils';
 import { OrNothing, StringOrNothing } from '../util/type/utility-types';
 
 export type Formidlingsgruppe = 'ARBS' | 'IARBS' | 'ISERV' | 'PARBS' | 'RARBS';
@@ -99,18 +100,6 @@ export function fetchOppfolging(fnr: string): AxiosPromise<Oppfolging> {
     return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/hent-status`, { fnr: fnr });
 }
 
-export function fetchOppfolgingsstatus(fnr: string): AxiosPromise<OppfolgingStatus> {
-    return axiosInstance.post<OppfolgingStatus>(`/veilarboppfolging/api/v2/person/hent-oppfolgingsstatus`, {
-        fnr: fnr
-    });
-}
-
-export function fetchTilgangTilBrukersKontor(fnr: string): AxiosPromise<TilgangTilBrukersKontor> {
-    return axiosInstance.post<TilgangTilBrukersKontor>(`/veilarboppfolging/api/v3/oppfolging/hent-veilederTilgang`, {
-        fnr: fnr
-    });
-}
-
 export function fetchInstillingsHistorikk(fnr: string): AxiosPromise<InnstillingHistorikkInnslag[]> {
     return axiosInstance.post<InnstillingHistorikkInnslag[]>(`/veilarboppfolging/api/v3/hent-instillingshistorikk`, {
         fnr: fnr
@@ -167,4 +156,24 @@ export function tildelTilVeileder(
     tilordninger: TildelVeilederData[]
 ): AxiosPromise<{ resultat: string; feilendeTilordninger: TildelVeilederData[] }> {
     return axiosInstance.post(`/veilarboppfolging/api/tilordneveileder`, tilordninger);
+}
+
+export function useOppfolgingsstatus(fnr: string) {
+    const url = '/veilarboppfolging/api/v2/person/hent-oppfolgingsstatus';
+    const { data, error, isLoading, mutate } = useSWR<OppfolgingStatus, ErrorMessage>(
+        fnr ? url : null,
+        () => fetchWithPost(url, { fnr: fnr }),
+        swrOptions
+    );
+    return { data, isLoading, error, mutate };
+}
+
+export function useTilgangTilBrukersKontor(fnr: string) {
+    const url = '/veilarboppfolging/api/v3/oppfolging/hent-veilederTilgang';
+    const { data, error, isLoading } = useSWR<TilgangTilBrukersKontor, ErrorMessage>(
+        fnr ? url : null,
+        () => fetchWithPost(url, { fnr: fnr }),
+        swrOptions
+    );
+    return { data, isLoading, error };
 }

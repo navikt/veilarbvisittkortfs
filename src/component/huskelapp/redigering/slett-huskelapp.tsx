@@ -3,14 +3,18 @@ import { TrashIcon } from '@navikt/aksel-icons';
 import { useModalStore } from '../../../store/modal-store';
 import { kanFjerneHuskelapp } from '../../../util/selectors';
 import { useDataStore } from '../../../store/data-store';
+import { useHuskelapp } from '../../../api/veilarbportefolje';
+import { useAppStore } from '../../../store/app-store';
 
 interface Props {
     variant?: 'primary' | 'secondary' | 'tertiary' | 'danger';
 }
 
 export const SlettHuskelapp = ({ variant = 'secondary' }: Props) => {
+    const { brukerFnr, enhetId } = useAppStore();
     const { showFjernHuskelappModal } = useModalStore();
-    const { huskelapp, innloggetVeileder, oppfolging } = useDataStore();
+    const { innloggetVeileder, oppfolging } = useDataStore();
+    const { data: huskelapp } = useHuskelapp(brukerFnr, enhetId);
 
     if (!huskelapp || !innloggetVeileder) {
         // Vi manglar data for å bestemme om slettknappen kan visast

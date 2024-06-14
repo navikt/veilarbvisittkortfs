@@ -6,7 +6,7 @@ import { useAppStore } from '../../../store/app-store';
 import { lagVeilederSammensattNavn } from '../../../util/selectors';
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
-import { Oppfolging, OppfolgingStatus, tildelTilVeileder } from '../../../api/veilarboppfolging';
+import { Oppfolging, OppfolgingStatus, tildelTilVeileder, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
 import { VeilederData } from '../../../api/veilarbveileder';
 import './tildel-veileder.less';
 import { Button } from '@navikt/ds-react';
@@ -14,7 +14,8 @@ import { Button } from '@navikt/ds-react';
 function TildelVeileder() {
     const { brukerFnr } = useAppStore();
     const { showTildelVeilederKvitteringModal, showTildelVeilederFeiletModal, hideModal } = useModalStore();
-    const { veilederePaEnhet, oppfolging, setOppfolging, setOppfolgingsstatus, innloggetVeileder } = useDataStore();
+    const { mutate: setOppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
+    const { veilederePaEnhet, oppfolging, setOppfolging, innloggetVeileder } = useDataStore();
     const [selectedVeilederId, setSelectedVeilederId] = useState('');
     const fraVeileder = oppfolging?.veilederId;
 
@@ -49,14 +50,14 @@ function TildelVeileder() {
 
                 // Oppdater med ny veileder
                 setOppfolging(
-                    prevOppfolging => ({ ...(prevOppfolging || {}), veilederId: selectedVeilederId } as Oppfolging)
+                    prevOppfolging => ({ ...(prevOppfolging || {}), veilederId: selectedVeilederId }) as Oppfolging
                 );
                 setOppfolgingsstatus(
                     prevOppfolgingStatus =>
                         ({
                             ...(prevOppfolgingStatus || {}),
                             veilederId: selectedVeilederId
-                        } as OppfolgingStatus)
+                        }) as OppfolgingStatus
                 );
 
                 const veilederNavn =
@@ -83,9 +84,7 @@ function TildelVeileder() {
                             createValue={(veileder: VeilederData) => veileder.ident}
                             radioName="tildel-veileder"
                             selected={selectedVeilederId}
-                            changeSelected={(e: ChangeEvent<HTMLInputElement>) =>
-                                setSelectedVeilederId(e.target.value)
-                            }
+                            changeSelected={(e: ChangeEvent<HTMLInputElement>) => setSelectedVeilederId(e.target.value)}
                         />
                     )}
                 </SokFilter>

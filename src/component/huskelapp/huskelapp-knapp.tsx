@@ -5,13 +5,14 @@ import HuskelappIkon from './ikon/Huskelappikon_bakgrunnsfarge.svg?react';
 import { Button } from '@navikt/ds-react';
 
 export interface HuskelappKnappProps {
-    hidden: boolean;
     onClick: () => void;
     harHuskelappEllerArbeidsliste: boolean;
+    isLoading: boolean;
+    skalVises: boolean;
 }
 
 function HuskelappKnapp(props: HuskelappKnappProps) {
-    if (props.hidden) {
+    if (!props.skalVises && !props.isLoading) {
         return null;
     }
     const onClick = () => {
@@ -28,6 +29,7 @@ function HuskelappKnapp(props: HuskelappKnappProps) {
             icon={props.harHuskelappEllerArbeidsliste ? <HuskelappIkon /> : <HuskelappInaktivIkon />}
             title={props.harHuskelappEllerArbeidsliste ? 'Endre huskelapp' : 'Opprett huskelapp'}
             onClick={onClick}
+            loading={props.isLoading}
         />
     );
 }

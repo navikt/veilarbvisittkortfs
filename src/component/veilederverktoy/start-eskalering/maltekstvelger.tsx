@@ -4,9 +4,10 @@ import { Select } from '@navikt/ds-react';
 import './maltekstvelger.less';
 
 /* TODO Legg til typesikring på denne
-*   For eksempel ved å opprette eit objekt med nøklar og visningstekster for select'en,
-*   og bruke nøklane som nøkkeltype i malTekster
-*           - Ingrid, 2024-02-02 */
+ *   For eksempel ved å opprette eit objekt med nøklar og visningstekster for select'en,
+ *   og bruke nøklane som nøkkeltype i malTekster
+ *           - Ingrid, 2024-02-02 */
+// eslint-disable-next-line
 const malTekster: any = {
     dagpenger:
         'NAV vurderer å stanse dagpengene dine, eller stanse utbetalingene dine i en periode, fordi du ikke har fulgt opp pliktene dine som arbeidssøker.\n' +

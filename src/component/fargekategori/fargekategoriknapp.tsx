@@ -1,28 +1,28 @@
-import { useRef, useState } from 'react';
-import { useDataStore } from '../../store/data-store';
+import React, { useRef, useState } from 'react';
 import { mapfargekategoriToIkon } from './mapfargekategoriToIkon';
 import { FargekategoriPopover } from './fargekategori-popover';
-import { Fargekategorinavn } from '../../api/veilarbportefolje';
+import { Fargekategorinavn, useFargekategori } from '../../api/veilarbportefolje';
 import { Button } from '@navikt/ds-react';
+import { useAppStore } from '../../store/app-store';
 
 interface Props {
-    disabled: boolean;
+    isLoading: boolean;
+    skalVises: boolean;
 }
 
-export const Fargekategoriknapp = ({ disabled }: Props) => {
+export const Fargekategoriknapp = ({ isLoading, skalVises }: Props) => {
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const { fargekategori, setFargekategori } = useDataStore();
+    const { brukerFnr } = useAppStore();
+    const { data: fargekategori, mutate: setFargekategori } = useFargekategori(brukerFnr);
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-
+    if (!skalVises && !isLoading) {
+        return null;
+    }
     const titletekst = fargekategori?.fargekategoriVerdi
         ? 'Kategori ' + Fargekategorinavn[fargekategori.fargekategoriVerdi].toLowerCase()
         : 'Ingen kategori';
 
-    return disabled ? (
-        <div id="fargekategori--knapp" title={titletekst}>
-            {mapfargekategoriToIkon(fargekategori?.fargekategoriVerdi ?? null)}
-        </div>
-    ) : (
+    return (
         <>
             <Button
                 variant="tertiary"
@@ -31,6 +31,7 @@ export const Fargekategoriknapp = ({ disabled }: Props) => {
                 ref={buttonRef}
                 onClick={() => setIsPopoverOpen(!isPopoverOpen)}
                 aria-expanded={isPopoverOpen}
+                loading={isLoading}
             />
             <FargekategoriPopover
                 buttonRef={buttonRef}
