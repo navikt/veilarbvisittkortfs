@@ -29,7 +29,7 @@ const huskelappEmptyValues = {
 
 function HuskelappRedigereModal() {
     const { brukerFnr, enhetId } = useAppStore();
-    const { hideModal, showSpinnerModal, showErrorModal, showHuskelappModal } = useModalStore();
+    const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
     const { huskelapp, setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
 
     const erArbeidslistaTom =
@@ -97,13 +97,15 @@ function HuskelappRedigereModal() {
                 .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
                 .then(res => res.data)
                 .then(setHuskelapp)
-                .then(showHuskelappModal)
+                .then(hideModal)
+                .then(() => {
+                    if (!erArbeidslistaTom) {
+                        slettArbeidslisteMenIkkeFargekategori(brukerFnr)
+                            .then(res => res.data)
+                            .then(setArbeidsliste);
+                    }
+                })
                 .catch(showErrorModal);
-            if (!erArbeidslistaTom) {
-                slettArbeidslisteMenIkkeFargekategori(brukerFnr)
-                    .then(res => res.data)
-                    .then(setArbeidsliste);
-            }
         } else {
             lagreHuskelapp({
                 kommentar: values.kommentar ? values.kommentar : null,
@@ -114,11 +116,13 @@ function HuskelappRedigereModal() {
                 .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
                 .then(res => res.data)
                 .then(setHuskelapp)
-                .then(showHuskelappModal)
+                .then(hideModal)
+                .then(() => {
+                    slettArbeidslisteMenIkkeFargekategori(brukerFnr)
+                        .then(res => res.data)
+                        .then(setArbeidsliste);
+                })
                 .catch(showErrorModal);
-            slettArbeidslisteMenIkkeFargekategori(brukerFnr)
-                .then(res => res.data)
-                .then(setArbeidsliste);
         }
     }
 
@@ -157,7 +161,7 @@ function HuskelappRedigereModal() {
                         >
                             Avbryt
                         </Button>
-                        {!erArbeidslistaTom && <SlettArbeidsliste />}
+                        {!erArbeidslistaTom && <SlettArbeidsliste lukkModal={() => onRequestClose(formikProps)} />}
                         {erArbeidslistaTom && !erHuskelappTom && <SlettHuskelapp variant="tertiary" />}
                     </Modal.Footer>
                 </Modal>
