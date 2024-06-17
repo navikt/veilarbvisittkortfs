@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDataStore } from '../store/data-store';
 import { useAppStore } from '../store/app-store';
 import { fetchOppfolging, fetchOppfolgingsstatus, fetchTilgangTilBrukersKontor } from '../api/veilarboppfolging';
-import { fetchPersonalia, fetchSpraakTolk, fetchVergeOgFullmakt } from '../api/veilarbperson';
+import { fetchFullmakt, fetchPersonalia, fetchSpraakTolk, fetchVergeOgFullmakt } from '../api/veilarbperson';
 import { fetchInnloggetVeileder, fetchVeilederePaEnhet } from '../api/veilarbveileder';
 import { fetchArbeidsliste, fetchFargekategori, fetchHuskelapp } from '../api/veilarbportefolje';
 import { ifResponseHasData } from '../util/utils';
@@ -11,7 +11,7 @@ import './data-fetcher.less';
 import { isAnyLoadingOrNotStarted } from '../api/utils';
 import { Loader } from '@navikt/ds-react';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
-import { HUSKELAPP, useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
+import { HUSKELAPP, REPRFULLMAKT, useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 
 export function DataFetcher(props: { children: React.ReactNode }) {
     const { brukerFnr, visVeilederVerktoy } = useAppStore();
@@ -29,6 +29,7 @@ export function DataFetcher(props: { children: React.ReactNode }) {
         setGjeldendeEskaleringsvarsel,
         setHuskelapp,
         setFargekategori,
+        setFullmakt,
         features
     } = useDataStore();
 
@@ -41,6 +42,7 @@ export function DataFetcher(props: { children: React.ReactNode }) {
     const arbeidslisteFetcher = useAxiosFetcher(fetchArbeidsliste);
     const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
     const vergeOgFullmaktFetcher = useAxiosFetcher(fetchVergeOgFullmakt);
+    const fullmaktFetcher = useAxiosFetcher(fetchFullmakt);
     const spraakTolkFetcher = useAxiosFetcher(fetchSpraakTolk);
     const gjeldendeEskaleringsvarselFetcher = useAxiosFetcher(hentGjeldendeEskaleringsvarsel);
     const huskelappFetcher = useAxiosFetcher(fetchHuskelapp);
@@ -58,6 +60,9 @@ export function DataFetcher(props: { children: React.ReactNode }) {
             .then(ifResponseHasData(setGjeldendeEskaleringsvarsel))
             .catch();
         vergeOgFullmaktFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setVergeOgFullmakt)).catch();
+        if (features[REPRFULLMAKT]) {
+            fullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setFullmakt)).catch();
+        }
         spraakTolkFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setSpraakTolk)).catch();
         personaliaFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setPersonalia)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -59,6 +59,7 @@ function Etiketter() {
         oppfolging,
         personalia,
         vergeOgFullmakt,
+        fullmakt,
         spraakTolk
     } = useDataStore();
 
@@ -86,6 +87,7 @@ function Etiketter() {
             <Advarsel visible={personalia?.egenAnsatt}>Skjermet</Advarsel>
             <Fokus visible={!isEmpty(vergeOgFullmakt?.vergemaalEllerFremtidsfullmakt)}>Vergemål</Fokus>
             <Fokus visible={!isEmpty(vergeOgFullmakt?.fullmakt)}>Fullmakt</Fokus>
+            <Fokus visible={!isEmpty(fullmakt)}>Repr Fullmakt</Fokus>
             <Fokus visible={spraakTolk?.tegnspraak}>Tegnspråktolk</Fokus>
             <Fokus visible={spraakTolk?.talespraak}>Språktolk</Fokus>
             <Fokus visible={oppfolging?.underKvp}>KVP</Fokus>

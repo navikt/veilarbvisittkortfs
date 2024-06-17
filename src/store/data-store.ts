@@ -1,7 +1,13 @@
 import constate from 'constate';
 import { useState } from 'react';
 import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/veilarboppfolging';
-import { HarBruktNivaa4Type, Personalia, SpraakTolk, VergeOgFullmakt } from '../api/veilarbperson';
+import {
+    HarBruktNivaa4Type,
+    Personalia,
+    RepresentasjonFullmakt,
+    SpraakTolk,
+    VergeOgFullmakt
+} from '../api/veilarbperson';
 import { Arbeidsliste, Fargekategori, Huskelapp } from '../api/veilarbportefolje';
 import { VeilederData, VeilederListe } from '../api/veilarbveileder';
 import { GjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
@@ -15,6 +21,7 @@ export const [DataStore, useDataStore] = constate(() => {
     const [innloggetVeileder, setInnloggetVeileder] = useState<VeilederData>();
     const [personalia, setPersonalia] = useState<Personalia>();
     const [vergeOgFullmakt, setVergeOgFullmakt] = useState<VergeOgFullmakt>();
+    const [fullmakt, setFullmakt] = useState<RepresentasjonFullmakt[]>();
     const [spraakTolk, setSpraakTolk] = useState<SpraakTolk>();
     const [tilgangTilBrukersKontor, setTilgangTilBrukersKontor] = useState<TilgangTilBrukersKontor>();
     const [harBruktNivaa4, setHarBruktNivaa4] = useState<HarBruktNivaa4Type>();
@@ -51,6 +58,8 @@ export const [DataStore, useDataStore] = constate(() => {
         setVeilederePaEnhet,
         vergeOgFullmakt,
         setVergeOgFullmakt,
+        fullmakt,
+        setFullmakt,
         spraakTolk,
         setSpraakTolk,
         gjeldendeEskaleringsvarsel,

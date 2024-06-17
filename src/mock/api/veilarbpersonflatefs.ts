@@ -1,10 +1,16 @@
-import { BRUK_GAMMEL_ARBEIDSREGISTRERING_URL, HUSKELAPP, OboUnleashFeatures } from '../../api/veilarbpersonflatefs';
+import {
+    BRUK_GAMMEL_ARBEIDSREGISTRERING_URL,
+    HUSKELAPP,
+    OboUnleashFeatures,
+    REPRFULLMAKT
+} from '../../api/veilarbpersonflatefs';
 import { defaultNetworkResponseDelay } from '../config';
 import { delay, http, HttpResponse, RequestHandler } from 'msw';
 
 const mockFeatures: OboUnleashFeatures = {
     [BRUK_GAMMEL_ARBEIDSREGISTRERING_URL]: true,
-    [HUSKELAPP]: false
+    [HUSKELAPP]: false,
+    [REPRFULLMAKT]: true
 };
 
 export const veilarbpersonflatefsHandlers: RequestHandler[] = [
