@@ -114,11 +114,14 @@ function HuskelappRedigereModal() {
                 .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
                 .then(res => res.data)
                 .then(setHuskelapp)
+                .then(() => {
+                    slettArbeidslisteMenIkkeFargekategori(brukerFnr)
+                        .then(res => res.data)
+                        .then(setArbeidsliste)
+                        .catch(showErrorModal);
+                })
                 .then(showHuskelappModal)
                 .catch(showErrorModal);
-            slettArbeidslisteMenIkkeFargekategori(brukerFnr)
-                .then(res => res.data)
-                .then(setArbeidsliste);
         }
     }
 
