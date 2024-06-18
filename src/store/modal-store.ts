@@ -32,6 +32,7 @@ export enum ModalType {
     HISTORIKK,
     FEIL_I_VEILEDERVERKTOY,
     SPINNER,
+    HUSKELAPP,
     FJERN_HUSKELAPP,
     HUSKELAPP_REDIGERE
 }
@@ -137,6 +138,10 @@ export const [ModalStore, useModalStore] = constate(() => {
         showModal(ModalType.FJERN_ARBEIDSLISTE);
     }
 
+    function showHuskelappModal() {
+        showModal(ModalType.HUSKELAPP);
+    }
+
     function showHuskelappRedigereModal() {
         showModal(ModalType.HUSKELAPP_REDIGERE);
     }
@@ -189,6 +194,7 @@ export const [ModalStore, useModalStore] = constate(() => {
         showOpprettOppgaveModal,
         showAvsluttOppfolgingModal,
         showHistorikkModal,
+        showHuskelappModal,
         showFjernHuskelappModal,
         showHuskelappRedigereModal
     };

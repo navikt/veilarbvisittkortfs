@@ -50,7 +50,8 @@ function Veilederverktoylinje() {
         showOpprettOppgaveModal,
         showAvsluttOppfolgingModal,
         showHistorikkModal,
-        showHuskelappRedigereModal
+        showHuskelappRedigereModal,
+        showHuskelappModal
     } = useModalStore();
 
     const kanStarteEskalering = selectKanSendeEskaleringsVarsel(
@@ -104,7 +105,13 @@ function Veilederverktoylinje() {
                 destinasjon: 'huskelapp'
             }
         });
-        showHuskelappRedigereModal();
+
+        const erHuskelappTom = huskelapp?.huskelappId == null;
+        if (erHuskelappTom) {
+            showHuskelappRedigereModal();
+        } else {
+            showHuskelappModal();
+        }
     };
 
     return (
