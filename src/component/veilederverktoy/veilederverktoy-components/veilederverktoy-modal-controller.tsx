@@ -31,7 +31,6 @@ import { ModalType, useModalStore } from '../../../store/modal-store';
 import FjernArbeidslisteModal from '../../arbeidsliste/fjern-arbeidsliste-modal';
 import ArbeidslisteModal from '../../arbeidsliste/arbeidsliste-modal';
 import HuskelappRedigereModal from '../../huskelapp/redigering/huskelapp-redigere-modal';
-import HuskelappVisningModal from '../../huskelapp/visning/huskelapp-visning-modal';
 import HuskelappFjernModal from '../../huskelapp/visning/huskelapp-fjern-modal';
 
 export function VeilederverktoyModalController() {
@@ -100,8 +99,6 @@ export function VeilederverktoyModalController() {
             return <FeilModal />;
         case ModalType.SPINNER:
             return <LasterModal />;
-        case ModalType.HUSKELAPP:
-            return <HuskelappVisningModal />;
         case ModalType.HUSKELAPP_REDIGERE:
             return <HuskelappRedigereModal />;
         case ModalType.FJERN_HUSKELAPP:
