@@ -120,7 +120,7 @@ function HuskelappRedigereModal() {
                         .then(setArbeidsliste)
                         .catch(showErrorModal);
                 })
-                .then(showHuskelappModal)
+                .then(hideModal)
                 .catch(showErrorModal);
         }
     }
