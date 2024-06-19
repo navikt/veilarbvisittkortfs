@@ -29,7 +29,7 @@ const huskelappEmptyValues = {
 
 function HuskelappRedigereModal() {
     const { brukerFnr, enhetId } = useAppStore();
-    const { hideModal, showSpinnerModal, showErrorModal, showHuskelappModal } = useModalStore();
+    const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
     const { huskelapp, setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
 
     const erArbeidslistaTom =
@@ -97,7 +97,7 @@ function HuskelappRedigereModal() {
                 .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
                 .then(res => res.data)
                 .then(setHuskelapp)
-                .then(showHuskelappModal)
+                .then(hideModal)
                 .catch(showErrorModal);
             if (!erArbeidslistaTom) {
                 slettArbeidslisteMenIkkeFargekategori(brukerFnr)
@@ -120,7 +120,7 @@ function HuskelappRedigereModal() {
                         .then(setArbeidsliste)
                         .catch(showErrorModal);
                 })
-                .then(showHuskelappModal)
+                .then(hideModal)
                 .catch(showErrorModal);
         }
     }
