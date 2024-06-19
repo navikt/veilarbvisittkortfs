@@ -66,11 +66,7 @@ function PersonInfo() {
 
     const klikkShowHuskelapp = () => {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.huskelapp-ikon');
-        if (erHuskelappTom) {
-            showHuskelappRedigereModal();
-        } else {
-            showHuskelappRedigereModal();
-        }
+        showHuskelappRedigereModal();
     };
     const uformattertTelefon: StringOrNothing = selectTelefonnummer(personalia);
     const telefon: string = formaterTelefonnummer(uformattertTelefon);
