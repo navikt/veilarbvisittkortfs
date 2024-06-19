@@ -50,10 +50,11 @@ export function kanFjerneArbeidsliste(
 
 export function selectKanEndreFargekategori(
     innloggetVeileder: OrNothing<VeilederData>,
-    oppfolgingsstatus: OrNothing<OppfolgingStatus>
+    oppfolgingsstatus: OrNothing<OppfolgingStatus>,
+    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
 ): boolean {
-    if (!innloggetVeileder || !oppfolgingsstatus) return false;
-    return oppfolgingsstatus.veilederId === innloggetVeileder.ident;
+    if (!innloggetVeileder || !oppfolgingsstatus || !tilgangTilBrukersKontor) return false;
+    return tilgangTilBrukersKontor.tilgangTilBrukersKontor;
 }
 
 export function selectKanOppretteHuskelapp(

@@ -47,7 +47,11 @@ function PersonInfo() {
         oppfolgingsstatus,
         tilgangTilBrukersKontor
     );
-    const kanEndreFargekategori = selectKanEndreFargekategori(innloggetVeileder, oppfolgingsstatus);
+    const kanEndreFargekategori = selectKanEndreFargekategori(
+        innloggetVeileder,
+        oppfolgingsstatus,
+        tilgangTilBrukersKontor
+    );
 
     const klikkShowArbeidslisteModal = () => {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
