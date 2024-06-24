@@ -11,9 +11,16 @@ interface VarselModalProps {
     isOpen: boolean;
     onRequestClose: () => void;
     type: VarselModalType;
+    inkluderIkon?: boolean;
 }
 
-export function VarselModal({ isOpen, onRequestClose, children, type }: PropsWithChildren<VarselModalProps>) {
+export function VarselModal({
+    isOpen,
+    onRequestClose,
+    children,
+    type,
+    inkluderIkon = true
+}: PropsWithChildren<VarselModalProps>) {
     return (
         <Modal
             open={isOpen}
@@ -22,7 +29,7 @@ export function VarselModal({ isOpen, onRequestClose, children, type }: PropsWit
             className="veilarbvisittkortfs-varsel-modal"
             aria-label="Varselmodal"
         >
-            <Modal.Header>{getIkon(type)}</Modal.Header>
+            {inkluderIkon && <Modal.Header>{getIkon(type)}</Modal.Header>}
             <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">{children}</Modal.Body>
         </Modal>
     );
