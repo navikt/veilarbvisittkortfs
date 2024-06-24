@@ -7,17 +7,13 @@ import { useAppStore } from '../../store/app-store';
 
 interface Props {
     isLoading: boolean;
-    skalVises: boolean;
 }
 
-export const Fargekategoriknapp = ({ isLoading, skalVises }: Props) => {
+export const Fargekategoriknapp = ({ isLoading }: Props) => {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const { brukerFnr } = useAppStore();
     const { data: fargekategori, mutate: setFargekategori } = useFargekategori(brukerFnr);
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-    if (!skalVises && !isLoading) {
-        return null;
-    }
     const titletekst = fargekategori?.fargekategoriVerdi
         ? 'Kategori ' + Fargekategorinavn[fargekategori.fargekategoriVerdi].toLowerCase()
         : 'Ingen kategori';

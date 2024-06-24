@@ -136,10 +136,6 @@ export const veilarbportefoljeHandlers: RequestHandler[] = [
             fargekategoriVerdi: requestBody.fargekategoriVerdi
         });
     }),
-    http.post(`/veilarbportefolje/api/v1/hent-har-veileder-tilgang-til-enhet`, async () => {
-        await delay(defaultNetworkResponseDelay);
-        return HttpResponse.json(true);
-    }),
     http.post(`/veilarbportefolje/api/v1/hent-er-bruker-ufordelt`, async () => {
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json(false);

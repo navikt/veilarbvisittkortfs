@@ -12,10 +12,10 @@ export function visEmdashHvisNull(verdi: StringOrNothing) {
 export const APP_NAME = 'veilarbvisittkortfs';
 
 export function isLocalDevelopment(): boolean {
-    return import.meta.env.MODE === 'mock';
+    return import.meta.env.MODE === "mock";
 }
 
-export const erProd = () => import.meta.env.PROD;
+export const erProd = () => (import.meta.env.PROD);
 
 export function ifResponseHasData<T>(
     callback: (data: T) => void
@@ -42,7 +42,6 @@ export function storeForbokstaver(tekster: string[]): string {
         .join(' ');
 }
 
-// eslint-disable-next-line
 export function isEmpty(array: undefined | any[]): boolean {
     return !array || array.length === 0;
 }
@@ -60,12 +59,10 @@ export function eskaleringVarselSendtEvent() {
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
-// eslint-disable-next-line
 export function filterUnique(array: any[]): any[] {
     return Array.from(new Set(array));
 }
 
-// eslint-disable-next-line
 export function isDefined(subject: any): boolean {
     return subject !== undefined && subject !== null;
 }

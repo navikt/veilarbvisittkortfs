@@ -32,7 +32,11 @@ interface HistorikkVisningProps {
     eskaleringsvarselHistorikk: EskaleringsvarselHistorikkInnslag[];
 }
 
-function mapTilKomponent(historikk: Historikk, indeks: number, indeksForNyesteEnhetEndring: number): ReactElement {
+function mapTilKomponent(
+    historikk: Historikk,
+    indeks: number,
+    indeksForNyesteEnhetEndring: number
+): ReactElement {
     if (erInnstillingshistorikk(historikk)) {
         if (historikk.innslag.type === 'OPPFOLGINGSENHET_ENDRET') {
             return (

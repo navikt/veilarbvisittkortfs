@@ -31,8 +31,8 @@ function StartRegistreringProsess() {
     const brukerType = oppfolging?.erSykmeldtMedArbeidsgiver
         ? 'erSykemeldtMedArbeidsgiver'
         : oppfolging?.kanReaktiveres
-          ? 'kanReaktiveres'
-          : 'kanIkkeReaktiveres';
+        ? 'kanReaktiveres'
+        : 'kanIkkeReaktiveres';
 
     const brukerTekst = () => {
         switch (brukerType) {

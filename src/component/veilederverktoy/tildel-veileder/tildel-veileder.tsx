@@ -98,13 +98,13 @@ function TildelVeileder() {
             >
                 <Modal.Header>
                     <Heading size="medium" level="2">
-                        Arbeidslistenotat, huskelapp og kategori blir slettet
+                        Arbeidslistenotat, huskelapp og/eller kategori blir slettet
                     </Heading>
                 </Modal.Header>
                 <Modal.Body>
                     <BodyShort size="medium">
-                        Arbeidslistenotat, huskelapp og kategori for bruker med fødselsnummer {brukerFnr} ble opprettet
-                        på en annen enhet, og vil bli slettet ved tildeling av ny veileder
+                        Arbeidslistenotat, huskelapp og/eller kategori for bruker med fødselsnummer {brukerFnr} ble
+                        opprettet på en annen enhet, og vil bli slettet ved tildeling av ny veileder
                     </BodyShort>
                     <BodyShort size="medium" className="sporsmal-likevel-tidele">
                         Ønsker du likevel å tildele veilederen til bruker?
@@ -129,7 +129,7 @@ function TildelVeileder() {
                             setVisAdvarselOmSletting(false);
                         }}
                     >
-                        Avbryt tildeling for den aktuelle brukeren
+                        Avbryt tildeling
                     </Button>
                 </Modal.Footer>
             </Modal>

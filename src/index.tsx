@@ -17,17 +17,19 @@ if (isLocalDevelopment()) {
 }
 
 function renderMockApp() {
-    const container = document.getElementById('veilarbvisittkortfs-root');
+  const container = document.getElementById('veilarbvisittkortfs-root');
     const root = createRoot(container!);
 
     import('./mock').then(({ worker }) => {
-        return worker
-            .start({ serviceWorker: { url: `${import.meta.env.BASE_URL}mockServiceWorker.js` } })
+        return worker.start({ serviceWorker: { url: `${import.meta.env.BASE_URL}mockServiceWorker.js` } })
             .then(() => {
-                root.render(<App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />);
-                // eslint-disable-next-line no-console
-                console.log('Bruker mock-data i applikasjonen');
-            })
+                    root.render(
+                        <App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />
+                    );
+                    // eslint-disable-next-line no-console
+                    console.log('Bruker mock-data i applikasjonen');
+                }
+            )
             .catch((e: Error) => {
                 // eslint-disable-next-line no-console
                 console.error('Unable to setup mocked API endpoints', e);

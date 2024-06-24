@@ -28,7 +28,6 @@ export const harTilgangTilHuskelappEllerFargekategori = (
     if (erBrukerUfordelt) {
         return false;
     }
-
     return harVeileder && innloggetVeilederHarTilgangTilBrukersKontor && tilgangTilOpprettetEnhet;
 };
 

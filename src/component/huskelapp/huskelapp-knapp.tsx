@@ -8,13 +8,9 @@ export interface HuskelappKnappProps {
     onClick: () => void;
     harHuskelappEllerArbeidsliste: boolean;
     isLoading: boolean;
-    skalVises: boolean;
 }
 
 function HuskelappKnapp(props: HuskelappKnappProps) {
-    if (!props.skalVises && !props.isLoading) {
-        return null;
-    }
     const onClick = () => {
         trackAmplitude({
             name: 'navigere',

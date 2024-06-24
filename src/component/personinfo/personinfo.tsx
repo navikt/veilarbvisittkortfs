@@ -123,30 +123,24 @@ function PersonInfo() {
             <NavnOgAlder fodselsdato={personalia?.fodselsdato as string} navn={navn} />
             <div className="arbeidsliste">
                 {dataForHuskelappOgFargekategoriHasErrors && (
-                    <Alert variant="error" inline>
-                        Det oppstod feil ved huskelapp og kategori
+                    <Alert variant="warning" size="small">
+                        Feil i huskelapp/kategori
                     </Alert>
                 )}
                 <>
                     <ArbeidslisteKnapp hidden={features[HUSKELAPP]} onClick={klikkShowArbeidslisteModal} />
-                    <Fargekategoriknapp
-                        skalVises={
-                            !dataForHuskelappOgFargekategoriHasErrors &&
-                            !isLoadingDataForHuskelappOgFargekategori &&
-                            sjekkHarTilgangTilHuskelappEllerFargekategori
-                        }
-                        isLoading={isLoadingDataForHuskelappOgFargekategori}
-                    />
-                    <HuskelappKnapp
-                        skalVises={
-                            !dataForHuskelappOgFargekategoriHasErrors &&
-                            !isLoadingDataForHuskelappOgFargekategori &&
-                            sjekkHarTilgangTilHuskelappEllerFargekategori
-                        }
-                        isLoading={isLoadingDataForHuskelappOgFargekategori}
-                        onClick={klikkShowHuskelapp}
-                        harHuskelappEllerArbeidsliste={!erHuskelappTom || !erArbeidslisteTom}
-                    />
+                    {(isLoadingDataForHuskelappOgFargekategori ||
+                        (!dataForHuskelappOgFargekategoriHasErrors &&
+                            sjekkHarTilgangTilHuskelappEllerFargekategori)) && (
+                        <>
+                            <Fargekategoriknapp isLoading={isLoadingDataForHuskelappOgFargekategori} />
+                            <HuskelappKnapp
+                                isLoading={isLoadingDataForHuskelappOgFargekategori}
+                                onClick={klikkShowHuskelapp}
+                                harHuskelappEllerArbeidsliste={!erHuskelappTom || !erArbeidslisteTom}
+                            />
+                        </>
+                    )}
                 </>
                 <KopierKnappTekst kopierTekst={brukerFnr} viseTekst={`F.nr.: ${brukerFnr}`} />
                 {<Label>/</Label>}
