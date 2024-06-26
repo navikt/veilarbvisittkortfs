@@ -11,7 +11,7 @@ import './data-fetcher.less';
 import { isAnyLoadingOrNotStarted } from '../api/utils';
 import { Loader } from '@navikt/ds-react';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
-import { HUSKELAPP, REPRFULLMAKT, useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
+import { HUSKELAPP, BRUK_NY_KILDE_TIL_FULLMAKT, useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 
 export function DataFetcher(props: { children: React.ReactNode }) {
     const { brukerFnr, visVeilederVerktoy } = useAppStore();
@@ -29,7 +29,7 @@ export function DataFetcher(props: { children: React.ReactNode }) {
         setGjeldendeEskaleringsvarsel,
         setHuskelapp,
         setFargekategori,
-        setFullmakt,
+        setFullmakter,
         features
     } = useDataStore();
 
@@ -60,8 +60,8 @@ export function DataFetcher(props: { children: React.ReactNode }) {
             .then(ifResponseHasData(setGjeldendeEskaleringsvarsel))
             .catch();
         vergeOgFullmaktFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setVergeOgFullmakt)).catch();
-        if (features[REPRFULLMAKT]) {
-            fullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setFullmakt)).catch();
+        if (features[BRUK_NY_KILDE_TIL_FULLMAKT]) {
+            fullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setFullmakter)).catch();
         }
         spraakTolkFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setSpraakTolk)).catch();
         personaliaFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setPersonalia)).catch();

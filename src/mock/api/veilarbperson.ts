@@ -100,31 +100,24 @@ const mockVergeOgFullmakt: VergeOgFullmakt = {
     ]
 };
 
-const mockRepresentasjonFullmakt: RepresentasjonFullmakt[] = [
-    {
-        fullmaktId: '1202',
-        registrert: '2024-06-04T07:45:36.770323Z',
-        registrertAv: '19827397213',
-        endretAv: null,
-        opphoert: false,
-        fullmaktsgiver: '19827397213',
-        fullmektig: '04877498455',
-        omraade: [
-            {
-                tema: 'OPP',
-                handling: [OmraadeHandlingType.LES, OmraadeHandlingType.SKRIV, OmraadeHandlingType.KOMMUNISER]
-            }
-        ],
-        gyldigFraOgMed: '2024-06-04',
-        gyldigTilOgMed: '2025-05-31',
-        opplysningsId: null,
-        endringsId: null,
-        status: null,
-        kilde: 'BRUKER SELV',
-        fullmaktsgiverNavn: 'SMAL ARK',
-        fullmektigsNavn: 'IDIOTSIKKER PERSILLE'
-    }
-];
+const mockRepresentasjonFullmakt: RepresentasjonFullmakt = {
+    fullmakt: [
+        {
+            fullmaktsgiver: '19827397213',
+            fullmektig: '04877498455',
+            omraade: [
+                {
+                    tema: 'OPP',
+                    handling: [OmraadeHandlingType.LES, OmraadeHandlingType.SKRIV, OmraadeHandlingType.KOMMUNISER]
+                }
+            ],
+            gyldigFraOgMed: '2024-06-04',
+            gyldigTilOgMed: '2025-05-31',
+            fullmaktsgiverNavn: 'SMAL ARK',
+            fullmektigsNavn: 'IDIOTSIKKER PERSILLE'
+        }
+    ]
+};
 
 const mockSpraakTolk: SpraakTolk = {
     tegnspraak: 'Norsk',

@@ -55,22 +55,17 @@ export interface VergeOgFullmakt {
 }
 
 export interface RepresentasjonFullmakt {
-    fullmaktId: StringOrNothing;
-    registrert: StringOrNothing;
-    registrertAv: StringOrNothing;
+    fullmakt: FullmaktData[];
+}
+
+export interface FullmaktData {
     fullmaktsgiver: StringOrNothing;
     fullmektig: StringOrNothing;
     omraade: OmraadeMedHandling[];
-    gyldigFraOgMed: string | null;
-    gyldigTilOgMed: string | null;
-    opplysningsId: StringOrNothing;
-    endringsId: StringOrNothing;
+    gyldigFraOgMed: StringOrNothing;
+    gyldigTilOgMed: StringOrNothing;
     fullmaktsgiverNavn: StringOrNothing;
     fullmektigsNavn: StringOrNothing;
-    opphoert: boolean;
-    kilde: StringOrNothing;
-    status: StringOrNothing;
-    endretAv: StringOrNothing;
 }
 
 export interface OmraadeMedHandling {
@@ -138,8 +133,8 @@ export function fetchVergeOgFullmakt(fnr: string, behandlingsnummer: string): Ax
     } as PdlRequest);
 }
 
-export function fetchFullmakt(fnr: string): AxiosPromise<RepresentasjonFullmakt[]> {
-    return axiosInstance.post<RepresentasjonFullmakt[]>(`/veilarbperson/api/v3/person/hent-representasjon-fullmakt`, {
+export function fetchFullmakt(fnr: string): AxiosPromise<RepresentasjonFullmakt> {
+    return axiosInstance.post<RepresentasjonFullmakt>(`/veilarbperson/api/v3/person/hent-representasjon-fullmakt`, {
         fnr: fnr
     } as PersonRequest);
 }

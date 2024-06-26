@@ -21,7 +21,7 @@ export const [DataStore, useDataStore] = constate(() => {
     const [innloggetVeileder, setInnloggetVeileder] = useState<VeilederData>();
     const [personalia, setPersonalia] = useState<Personalia>();
     const [vergeOgFullmakt, setVergeOgFullmakt] = useState<VergeOgFullmakt>();
-    const [fullmakt, setFullmakt] = useState<RepresentasjonFullmakt[]>();
+    const [fullmakter, setFullmakter] = useState<RepresentasjonFullmakt>();
     const [spraakTolk, setSpraakTolk] = useState<SpraakTolk>();
     const [tilgangTilBrukersKontor, setTilgangTilBrukersKontor] = useState<TilgangTilBrukersKontor>();
     const [harBruktNivaa4, setHarBruktNivaa4] = useState<HarBruktNivaa4Type>();
@@ -58,8 +58,8 @@ export const [DataStore, useDataStore] = constate(() => {
         setVeilederePaEnhet,
         vergeOgFullmakt,
         setVergeOgFullmakt,
-        fullmakt,
-        setFullmakt,
+        fullmakter,
+        setFullmakter,
         spraakTolk,
         setSpraakTolk,
         gjeldendeEskaleringsvarsel,
