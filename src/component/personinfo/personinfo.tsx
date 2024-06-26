@@ -34,7 +34,7 @@ function PersonInfo() {
         features,
         tilgangTilBrukersKontor
     } = useDataStore();
-    const { showArbeidslisteModal, showHuskelappRedigereModal, showHuskelappModal } = useModalStore();
+    const { showArbeidslisteModal, showHuskelappRedigereModal } = useModalStore();
 
     const arbeidslisteikon = arbeidsliste?.kategori;
 
@@ -66,11 +66,7 @@ function PersonInfo() {
 
     const klikkShowHuskelapp = () => {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.huskelapp-ikon');
-        if (erHuskelappTom) {
-            showHuskelappRedigereModal();
-        } else {
-            showHuskelappModal();
-        }
+        showHuskelappRedigereModal();
     };
     const uformattertTelefon: StringOrNothing = selectTelefonnummer(personalia);
     const telefon: string = formaterTelefonnummer(uformattertTelefon);
@@ -85,7 +81,9 @@ function PersonInfo() {
                     onClick={klikkShowArbeidslisteModal}
                     kanRedigereArbeidsliste={kanRedigereArbeidsliste}
                 />
-                <Fargekategoriknapp hidden={!(features[HUSKELAPP] && kanEndreFargekategori)} />
+                {features[HUSKELAPP] && !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor && (
+                    <Fargekategoriknapp disabled={!kanEndreFargekategori} />
+                )}
                 <HuskelappKnapp
                     hidden={!visHuskelappknapp}
                     onClick={klikkShowHuskelapp}

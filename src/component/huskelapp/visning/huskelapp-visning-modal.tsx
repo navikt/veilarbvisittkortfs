@@ -46,7 +46,11 @@ function HuskelappVisningModal() {
                     <Heading level="2" size="xsmall" spacing>
                         {huskelapp.frist ? `Frist: ${toSimpleDateStr(huskelapp!.frist!)}` : 'Ingen frist satt'}
                     </Heading>
-                    {huskelapp.kommentar && <BodyShort size="small">{huskelapp.kommentar}</BodyShort>}
+                    {huskelapp.kommentar && (
+                        <BodyShort size="small" className="huskelapp-innhold__kommentar">
+                            {huskelapp.kommentar}
+                        </BodyShort>
+                    )}
                 </div>
                 {huskelapp.endretDato && (
                     <Detail className="huskelapp-visning-modal__endret-av">
