@@ -93,7 +93,6 @@ function TildelVeileder() {
                 open={visAdvarselOmSletting}
                 onClose={() => setVisAdvarselOmSletting(false)}
                 closeOnBackdropClick={true}
-                className="advarsel-sletting-arbeidslista"
                 aria-label="Advarsel om sletting av arbeidsliste"
             >
                 <Modal.Header>
@@ -104,16 +103,16 @@ function TildelVeileder() {
                 <Modal.Body>
                     <BodyShort size="medium">
                         Arbeidslistenotat, huskelapp og/eller kategori for bruker med fødselsnummer {brukerFnr} ble
-                        opprettet på en annen enhet, og vil bli slettet ved tildeling av ny veileder
+                        opprettet på en annen enhet, og vil bli slettet ved tildeling av ny veileder.
                     </BodyShort>
-                    <BodyShort size="medium" className="sporsmal-likevel-tidele">
-                        Ønsker du likevel å tildele veilederen til bruker?
+                    <br />
+                    <BodyShort size="medium" weight="semibold" className="tildel-veileder-slette-advarsel">
+                        Ønsker du likevel å tildele veilederen?
                     </BodyShort>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button
                         type={'submit'}
-                        className="knapp"
                         size="medium"
                         onClick={() => {
                             handleSubmitTildelVeileder().then(() => setVisAdvarselOmSletting(false));
@@ -123,7 +122,6 @@ function TildelVeileder() {
                     </Button>
                     <Button
                         variant="tertiary"
-                        className="knapp-avbryt-tildeling"
                         size="medium"
                         onClick={() => {
                             setVisAdvarselOmSletting(false);

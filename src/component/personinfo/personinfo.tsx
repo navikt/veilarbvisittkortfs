@@ -76,7 +76,6 @@ function PersonInfo() {
         feilErIkke403(huskelappError) ||
         feilErIkke403(arbeidslisteError);
 
-    /* eslint-disable */
     if (dataForHuskelappOgFargekategoriHasErrors) {
         const errorMessages = [
             erUfordeltBrukerError && 'erUfordeltFeil: ' + erUfordeltBrukerError?.status,
@@ -88,20 +87,21 @@ function PersonInfo() {
         ]
             .filter(Boolean)
             .join(', ');
+        // eslint-disable-next-line no-console
         console.error(`Feil ved henting av data for huskelapp og fargekategori for: ${errorMessages}`);
     }
-    /* eslint-enable */
 
     const sjekkHarTilgangTilHuskelappEllerFargekategori =
+        !dataForHuskelappOgFargekategoriHasErrors &&
         !isLoadingDataForHuskelappOgFargekategori &&
         harTilgangTilHuskelappEllerFargekategori(
-            erUfordeltBruker!,
+            !!erUfordeltBruker,
             !!oppfolgingsstatus?.veilederId,
             !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor,
             sjekkOpprettetEnhetLikInnloggetEnhet(
-                huskelapp?.enhetId,
-                arbeidsliste?.navkontorForArbeidsliste,
-                fargekategori?.enhetId,
+                huskelapp ?? null,
+                arbeidsliste ?? null,
+                fargekategori ?? null,
                 enhetId
             )
         );
@@ -127,21 +127,17 @@ function PersonInfo() {
                         Feil i huskelapp/kategori
                     </Alert>
                 )}
-                <>
-                    <ArbeidslisteKnapp hidden={features[HUSKELAPP]} onClick={klikkShowArbeidslisteModal} />
-                    {(isLoadingDataForHuskelappOgFargekategori ||
-                        (!dataForHuskelappOgFargekategoriHasErrors &&
-                            sjekkHarTilgangTilHuskelappEllerFargekategori)) && (
-                        <>
-                            <Fargekategoriknapp isLoading={isLoadingDataForHuskelappOgFargekategori} />
-                            <HuskelappKnapp
-                                isLoading={isLoadingDataForHuskelappOgFargekategori}
-                                onClick={klikkShowHuskelapp}
-                                harHuskelappEllerArbeidsliste={!erHuskelappTom || !erArbeidslisteTom}
-                            />
-                        </>
-                    )}
-                </>
+                <ArbeidslisteKnapp hidden={features[HUSKELAPP]} onClick={klikkShowArbeidslisteModal} />
+                {(isLoadingDataForHuskelappOgFargekategori || sjekkHarTilgangTilHuskelappEllerFargekategori) && (
+                    <>
+                        <Fargekategoriknapp isLoading={isLoadingDataForHuskelappOgFargekategori} />
+                        <HuskelappKnapp
+                            isLoading={isLoadingDataForHuskelappOgFargekategori}
+                            onClick={klikkShowHuskelapp}
+                            harHuskelappEllerArbeidsliste={!erHuskelappTom || !erArbeidslisteTom}
+                        />
+                    </>
+                )}
                 <KopierKnappTekst kopierTekst={brukerFnr} viseTekst={`F.nr.: ${brukerFnr}`} />
                 {<Label>/</Label>}
                 {uformattertTelefon && (

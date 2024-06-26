@@ -97,7 +97,16 @@ function HuskelappRedigereModal() {
                 brukerFnr: brukerFnr,
                 enhetId: enhetId
             })
-                .then(() => setHuskelapp())
+                .then(() =>
+                    setHuskelapp({
+                        huskelappId: values.huskelappId ? values.huskelappId : null,
+                        kommentar: values.kommentar ? values.kommentar : null,
+                        frist: values.frist ? new Date(values.frist) : null,
+                        enhetId: enhetId,
+                        endretDato: new Date(),
+                        endretAv: innloggetVeileder?.ident
+                    })
+                )
                 .then(hideModal)
                 .catch(showErrorModal);
             if (!erArbeidslistaTom) {

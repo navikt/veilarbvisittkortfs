@@ -56,7 +56,7 @@ export const fetchWithPost = async (url: string, requestBody: RequestTypes) => {
         throw {
             error: new Error('Det har skjedd en feil ved henting av data.'),
             status: respons.status
-        };
+        } as ErrorMessage;
     }
     if (respons.status === 204) {
         return {
@@ -65,14 +65,7 @@ export const fetchWithPost = async (url: string, requestBody: RequestTypes) => {
         };
     }
 
-    try {
-        return respons.text().then(res => (!res ? null : JSON.parse(res)));
-    } catch (err) {
-        throw {
-            error: err,
-            status: null
-        };
-    }
+    return respons.text().then(res => (!res ? null : JSON.parse(res)));
 };
 
 export const swrOptions = {

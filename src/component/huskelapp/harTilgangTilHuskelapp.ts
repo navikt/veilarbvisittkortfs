@@ -1,22 +1,23 @@
 import { StringOrNothing } from '../../util/type/utility-types';
 import { ErrorMessage } from '../../api/utils';
+import { Arbeidsliste, Fargekategori, Huskelapp } from '../../api/veilarbportefolje';
 
 export const sjekkOpprettetEnhetLikInnloggetEnhet = (
-    huskelappEnhet: StringOrNothing,
-    arbeidslisteEnhet: StringOrNothing,
-    fargkategoriEnhet: StringOrNothing,
+    huskelapp: Huskelapp | null,
+    arbeidsliste: Arbeidsliste | null,
+    fargekategori: Fargekategori | null,
     innloggetEnhet: StringOrNothing
 ): boolean => {
-    if (huskelappEnhet != null) {
-        return huskelappEnhet === innloggetEnhet;
+    if (huskelapp?.enhetId != null) {
+        return huskelapp.enhetId === innloggetEnhet;
     }
-    if (arbeidslisteEnhet != null) {
-        return arbeidslisteEnhet === innloggetEnhet;
+    if (arbeidsliste?.navkontorForArbeidsliste != null) {
+        return arbeidsliste.navkontorForArbeidsliste === innloggetEnhet;
     }
-    if (fargkategoriEnhet != null) {
-        return fargkategoriEnhet === innloggetEnhet;
+    if (fargekategori?.enhetId != null) {
+        return fargekategori.enhetId === innloggetEnhet;
     }
-    return true;
+    return huskelapp != null && fargekategori != null && arbeidsliste != null;
 };
 
 export const harTilgangTilHuskelappEllerFargekategori = (
