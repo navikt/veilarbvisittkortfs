@@ -20,6 +20,7 @@ import { GammelArbeidsliste } from './gammelArbeidsliste';
 import { SlettArbeidsliste } from './huskelapp-slett-arbeidsliste';
 import { SlettHuskelapp } from './slett-huskelapp';
 import './huskelapp-redigering.less';
+import { useDataStore } from '../../../store/data-store';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -29,6 +30,7 @@ const huskelappEmptyValues = {
 
 function HuskelappRedigereModal() {
     const { brukerFnr, enhetId } = useAppStore();
+    const { innloggetVeileder } = useDataStore();
     const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
     const { data: arbeidsliste, mutate: setArbeidsliste } = useArbeidsliste(brukerFnr);
     const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr, enhetId);
@@ -110,7 +112,16 @@ function HuskelappRedigereModal() {
                 brukerFnr: brukerFnr,
                 enhetId: enhetId
             })
-                .then(() => setHuskelapp())
+                .then(() =>
+                    setHuskelapp({
+                        huskelappId: 'midlertidig',
+                        endretDato: new Date(),
+                        endretAv: innloggetVeileder?.ident,
+                        enhetId: enhetId,
+                        kommentar: values.kommentar ? values.kommentar : null,
+                        frist: values.frist ? new Date(values.frist) : null
+                    })
+                )
                 .then(() => {
                     slettArbeidslisteMenIkkeFargekategori(brukerFnr)
                         .then(res => res.data)
