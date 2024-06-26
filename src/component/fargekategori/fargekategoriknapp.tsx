@@ -15,7 +15,7 @@ export const Fargekategoriknapp = ({ disabled }: Props) => {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
     const titletekst = fargekategori?.fargekategoriVerdi
-        ? 'Kategori ' + Fargekategorinavn[fargekategori.fargekategoriVerdi]
+        ? 'Kategori ' + Fargekategorinavn[fargekategori.fargekategoriVerdi].toLowerCase()
         : 'Ingen kategori';
 
     return disabled ? (
@@ -29,7 +29,7 @@ export const Fargekategoriknapp = ({ disabled }: Props) => {
                 icon={mapfargekategoriToIkon(fargekategori?.fargekategoriVerdi ?? null)}
                 title={titletekst + ': endre'}
                 ref={buttonRef}
-                onClick={() => setIsPopoverOpen(true)}
+                onClick={() => setIsPopoverOpen(!isPopoverOpen)}
                 aria-expanded={isPopoverOpen}
             />
             <FargekategoriPopover
