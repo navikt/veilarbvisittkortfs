@@ -134,44 +134,42 @@ function HuskelappRedigereModal() {
     return (
         <Formik key={brukerFnr} initialValues={initalValues} onSubmit={handleSubmit} validateOnBlur={false}>
             {formikProps => (
-                <>
-                    <Modal
-                        header={{
-                            icon: <HuskelappIkon aria-hidden />,
-                            heading: !erArbeidslistaTom ? 'Bytt fra gammel arbeidsliste til ny huskelapp' : 'Huskelapp',
-                            size: 'small'
-                        }}
-                        open={true}
-                        onClose={() => onRequestClose(formikProps)}
-                        closeOnBackdropClick={true}
-                        className="rediger-huskelapp-modal"
-                    >
-                        <Modal.Body className="rediger-huskelapp-modal-body">
-                            {!erArbeidslistaTom && (
-                                <>
-                                    <GammelArbeidsliste arbeidsliste={arbeidsliste} />
-                                    <ArrowRightIcon title="Pil mot høyre" className="rediger-huskelapp-modal-pil" />
-                                </>
-                            )}
-                            <HuskelappEditForm endretAv={endretAv(huskelapp)} erArbeidslistaTom={erArbeidslistaTom} />
-                        </Modal.Body>
-                        <Modal.Footer className="rediger-huskelapp-modal-footer">
-                            <Button size="small" variant="primary" form="huskelapp-form" type="submit">
-                                {erArbeidslistaTom ? 'Lagre' : 'Lagre ny huskelapp og slett arbeidsliste'}
-                            </Button>
-                            <Button
-                                size="small"
-                                variant="secondary"
-                                type="button"
-                                onClick={() => onRequestClose(formikProps)}
-                            >
-                                Avbryt
-                            </Button>
-                            {!erArbeidslistaTom && <SlettArbeidsliste />}
-                            {erArbeidslistaTom && !erHuskelappTom && <SlettHuskelapp variant="tertiary" />}
-                        </Modal.Footer>
-                    </Modal>
-                </>
+                <Modal
+                    header={{
+                        icon: <HuskelappIkon aria-hidden />,
+                        heading: !erArbeidslistaTom ? 'Bytt fra gammel arbeidsliste til ny huskelapp' : 'Huskelapp',
+                        size: 'small'
+                    }}
+                    open={true}
+                    onClose={() => onRequestClose(formikProps)}
+                    closeOnBackdropClick={true}
+                    className="rediger-huskelapp-modal"
+                >
+                    <Modal.Body className="rediger-huskelapp-modal-body">
+                        {!erArbeidslistaTom && (
+                            <>
+                                <GammelArbeidsliste arbeidsliste={arbeidsliste} />
+                                <ArrowRightIcon title="Pil mot høyre" className="rediger-huskelapp-modal-pil" />
+                            </>
+                        )}
+                        <HuskelappEditForm endretAv={endretAv(huskelapp)} erArbeidslistaTom={erArbeidslistaTom} />
+                    </Modal.Body>
+                    <Modal.Footer className="rediger-huskelapp-modal-footer">
+                        <Button size="small" variant="primary" form="huskelapp-form" type="submit">
+                            {erArbeidslistaTom ? 'Lagre' : 'Lagre ny huskelapp og slett arbeidsliste'}
+                        </Button>
+                        <Button
+                            size="small"
+                            variant="secondary"
+                            type="button"
+                            onClick={() => onRequestClose(formikProps)}
+                        >
+                            Avbryt
+                        </Button>
+                        {!erArbeidslistaTom && <SlettArbeidsliste />}
+                        {erArbeidslistaTom && !erHuskelappTom && <SlettHuskelapp variant="tertiary" />}
+                    </Modal.Footer>
+                </Modal>
             )}
         </Formik>
     );
