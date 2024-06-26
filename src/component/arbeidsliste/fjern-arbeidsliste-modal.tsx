@@ -1,5 +1,5 @@
 import { VarselModal } from '../components/varselmodal/varsel-modal';
-import { slettArbeidsliste } from '../../api/veilarbportefolje';
+import { slettArbeidsliste, useArbeidsliste } from '../../api/veilarbportefolje';
 import { useModalStore } from '../../store/modal-store';
 import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
@@ -11,7 +11,9 @@ import { BodyShort, Heading, Button } from '@navikt/ds-react';
 
 function FjernArbeidslisteModal() {
     const { brukerFnr } = useAppStore();
-    const { setArbeidsliste, personalia } = useDataStore();
+    const { personalia } = useDataStore();
+    const { mutate: setArbeidsliste } = useArbeidsliste(brukerFnr);
+
     const { showSpinnerModal, showErrorModal, hideModal } = useModalStore();
 
     const brukerSammensattNavn = selectSammensattNavn(personalia);

@@ -12,7 +12,7 @@ export function FeilTildelingModal() {
     };
 
     return (
-        <VarselModal isOpen={true} type="FEIL" onRequestClose={lukkModal}>
+        <VarselModal isOpen={true} type="FEIL" onRequestClose={lukkModal} inkluderIkon={false}>
             <Heading size="medium" level="2">
                 Handlingen kan ikke utføres
             </Heading>

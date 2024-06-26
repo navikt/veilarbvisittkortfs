@@ -48,31 +48,6 @@ export function kanFjerneArbeidsliste(
     return !!arbeidsliste.endringstidspunkt && !!innloggetVeilederId && oppfolging?.veilederId === innloggetVeilederId;
 }
 
-export function selectKanEndreFargekategori(
-    innloggetVeileder: OrNothing<VeilederData>,
-    oppfolgingsstatus: OrNothing<OppfolgingStatus>
-): boolean {
-    if (!innloggetVeileder || !oppfolgingsstatus) return false;
-    return oppfolgingsstatus.veilederId === innloggetVeileder.ident;
-}
-
-export function selectKanOppretteHuskelapp(
-    innloggetVeileder: OrNothing<VeilederData>,
-    oppfolgingsstatus: OrNothing<OppfolgingStatus>
-): boolean {
-    if (!innloggetVeileder || !oppfolgingsstatus) return false;
-    return oppfolgingsstatus.veilederId === innloggetVeileder.ident;
-}
-
-export function selectKanRedigereHuskelapp(
-    innloggetVeileder: OrNothing<VeilederData>,
-    oppfolgingsstatus: OrNothing<OppfolgingStatus>,
-    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
-): boolean {
-    if (!innloggetVeileder || !oppfolgingsstatus || !tilgangTilBrukersKontor) return false;
-    return tilgangTilBrukersKontor.tilgangTilBrukersKontor;
-}
-
 export function kanFjerneHuskelapp(
     huskelapp: Huskelapp,
     oppfolging: OrNothing<Oppfolging>,
@@ -149,10 +124,6 @@ export function selectKanStoppeKVP(
 ): boolean {
     if (!oppfolging || !tilgangTilBrukersKontor) return false;
     return tilgangTilBrukersKontor.tilgangTilBrukersKontor && oppfolging.underOppfolging && oppfolging.underKvp;
-}
-
-export function selectKanEndreArbeidsliste(arbeidsliste?: Arbeidsliste): boolean {
-    return !!arbeidsliste?.endringstidspunkt && !!arbeidsliste?.harVeilederTilgang;
 }
 
 export function selectKanTildeleVeileder(

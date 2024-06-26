@@ -2,14 +2,14 @@ import { Formik, FormikBag, FormikProps } from 'formik';
 import { Button, Modal } from '@navikt/ds-react';
 import { ArrowRightIcon } from '@navikt/aksel-icons';
 import {
-    fetchHuskelapp,
     HuskelappformValues,
     lagreHuskelapp,
     redigerHuskelapp,
-    slettArbeidslisteMenIkkeFargekategori
+    slettArbeidslisteMenIkkeFargekategori,
+    useArbeidsliste,
+    useHuskelapp
 } from '../../../api/veilarbportefolje';
 import { useAppStore } from '../../../store/app-store';
-import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
 import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
@@ -20,6 +20,7 @@ import { GammelArbeidsliste } from './gammelArbeidsliste';
 import { SlettArbeidsliste } from './huskelapp-slett-arbeidsliste';
 import { SlettHuskelapp } from './slett-huskelapp';
 import './huskelapp-redigering.less';
+import { useDataStore } from '../../../store/data-store';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -29,8 +30,10 @@ const huskelappEmptyValues = {
 
 function HuskelappRedigereModal() {
     const { brukerFnr, enhetId } = useAppStore();
+    const { innloggetVeileder } = useDataStore();
     const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
-    const { huskelapp, setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
+    const { data: arbeidsliste, mutate: setArbeidsliste } = useArbeidsliste(brukerFnr);
+    const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr, enhetId);
 
     const erArbeidslistaTom =
         arbeidsliste?.sistEndretAv == null ||
@@ -94,9 +97,16 @@ function HuskelappRedigereModal() {
                 brukerFnr: brukerFnr,
                 enhetId: enhetId
             })
-                .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
-                .then(res => res.data)
-                .then(setHuskelapp)
+                .then(() =>
+                    setHuskelapp({
+                        huskelappId: values.huskelappId ? values.huskelappId : null,
+                        kommentar: values.kommentar ? values.kommentar : null,
+                        frist: values.frist ? new Date(values.frist) : null,
+                        enhetId: enhetId,
+                        endretDato: new Date(),
+                        endretAv: innloggetVeileder?.ident
+                    })
+                )
                 .then(hideModal)
                 .catch(showErrorModal);
             if (!erArbeidslistaTom) {
@@ -111,9 +121,16 @@ function HuskelappRedigereModal() {
                 brukerFnr: brukerFnr,
                 enhetId: enhetId
             })
-                .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
-                .then(res => res.data)
-                .then(setHuskelapp)
+                .then(() =>
+                    setHuskelapp({
+                        huskelappId: 'midlertidig',
+                        endretDato: new Date(),
+                        endretAv: innloggetVeileder?.ident,
+                        enhetId: enhetId,
+                        kommentar: values.kommentar ? values.kommentar : null,
+                        frist: values.frist ? new Date(values.frist) : null
+                    })
+                )
                 .then(() => {
                     slettArbeidslisteMenIkkeFargekategori(brukerFnr)
                         .then(res => res.data)

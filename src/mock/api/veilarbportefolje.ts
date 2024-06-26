@@ -12,7 +12,8 @@ const mockArbeidsliste: Arbeidsliste = {
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since  survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     overskrift: 'Her er tittelen daa!',
     sistEndretAv: { veilederId: 'Z12347' },
-    kategori: KategoriModell.GRONN
+    kategori: KategoriModell.GRONN,
+    navkontorForArbeidsliste: '1234'
 };
 
 const mockTomArbeidsliste: Arbeidsliste = {
@@ -24,7 +25,8 @@ const mockTomArbeidsliste: Arbeidsliste = {
     kommentar: null,
     overskrift: null,
     sistEndretAv: null,
-    kategori: null
+    kategori: null,
+    navkontorForArbeidsliste: null
 };
 
 const mockTomArbeidslisteMedFargekategori: Arbeidsliste = {
@@ -36,7 +38,8 @@ const mockTomArbeidslisteMedFargekategori: Arbeidsliste = {
     kommentar: null,
     overskrift: null,
     sistEndretAv: null,
-    kategori: KategoriModell.GUL
+    kategori: KategoriModell.GUL,
+    navkontorForArbeidsliste: '1234'
 };
 
 const mockHuskelapp: Huskelapp = {
@@ -46,7 +49,8 @@ const mockHuskelapp: Huskelapp = {
     frist: null,
     //frist: new Date(2024, 4, 24),
     endretAv: 'Z12347',
-    endretDato: new Date()
+    endretDato: new Date(),
+    enhetId: '1234'
 };
 
 export const veilarbportefoljeHandlers: RequestHandler[] = [
@@ -131,5 +135,9 @@ export const veilarbportefoljeHandlers: RequestHandler[] = [
             errors: [],
             fargekategoriVerdi: requestBody.fargekategoriVerdi
         });
+    }),
+    http.post(`/veilarbportefolje/api/v1/hent-er-bruker-ufordelt`, async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(false);
     })
 ];
