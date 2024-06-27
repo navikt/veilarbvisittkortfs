@@ -1,5 +1,3 @@
-// import { rest } from 'msw';
-// import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import {
     HarBruktNivaa4Type,
     Personalia,
@@ -7,7 +5,7 @@ import {
     RegistreringData,
     SpraakTolk,
     VergeOgFullmakt,
-    RepresentasjonFullmakt,
+    FullmaktDTO,
     OmraadeHandlingType
 } from '../../api/veilarbperson';
 import { defaultNetworkResponseDelay } from '../config';
@@ -100,7 +98,7 @@ const mockVergeOgFullmakt: VergeOgFullmakt = {
     ]
 };
 
-const mockRepresentasjonFullmakt: RepresentasjonFullmakt = {
+const mockFullmakt: FullmaktDTO = {
     fullmakt: [
         {
             fullmaktsgiver: '19827397213',
@@ -134,32 +132,26 @@ const mockRegistrering: RegistreringData = {
 export const veilarbpersonHandlers: RequestHandler[] = [
     http.post('/veilarbperson/api/v3/person/hent-registrering', async () => {
         await delay(defaultNetworkResponseDelay);
-
         return HttpResponse.json(mockRegistrering);
     }),
     http.get('/veilarbperson/api/person/:fnr/harNivaa4', async () => {
         await delay(defaultNetworkResponseDelay);
-
         return HttpResponse.json(mockHarBruktNivaa4);
     }),
     http.post('/veilarbperson/api/v3/hent-person', async () => {
         await delay(defaultNetworkResponseDelay);
-
         return HttpResponse.json(mockPersonaliaV2);
     }),
     http.post('/veilarbperson/api/v3/person/hent-vergeOgFullmakt', async () => {
         await delay(defaultNetworkResponseDelay);
-
         return HttpResponse.json(mockVergeOgFullmakt);
     }),
-    http.post('/veilarbperson/api/v3/person/hent-representasjon-fullmakt', async () => {
+    http.post('/veilarbperson/api/v3/person/hent-fullmakt', async () => {
         await delay(defaultNetworkResponseDelay);
-
-        return HttpResponse.json(mockRepresentasjonFullmakt);
+        return HttpResponse.json(mockFullmakt);
     }),
     http.post('/veilarbperson/api/v3/person/hent-tolk', async () => {
         await delay(defaultNetworkResponseDelay);
-
         return HttpResponse.json(mockSpraakTolk);
     })
 ];

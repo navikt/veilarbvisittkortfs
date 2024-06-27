@@ -54,7 +54,7 @@ export interface VergeOgFullmakt {
     fullmakt: Fullmakt[];
 }
 
-export interface RepresentasjonFullmakt {
+export interface FullmaktDTO {
     fullmakt: FullmaktData[];
 }
 
@@ -133,8 +133,8 @@ export function fetchVergeOgFullmakt(fnr: string, behandlingsnummer: string): Ax
     } as PdlRequest);
 }
 
-export function fetchFullmakt(fnr: string): AxiosPromise<RepresentasjonFullmakt> {
-    return axiosInstance.post<RepresentasjonFullmakt>(`/veilarbperson/api/v3/person/hent-representasjon-fullmakt`, {
+export function fetchFullmakt(fnr: string): AxiosPromise<FullmaktDTO> {
+    return axiosInstance.post<FullmaktDTO>(`/veilarbperson/api/v3/person/hent-fullmakt`, {
         fnr: fnr
     } as PersonRequest);
 }
