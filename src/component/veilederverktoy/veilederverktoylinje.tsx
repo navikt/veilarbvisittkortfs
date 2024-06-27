@@ -26,20 +26,20 @@ import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
 import {
     harTilgangTilHuskelappEllerFargekategori,
     feilErIkke403,
-    sjekkOpprettetEnhetLikInnloggetEnhet
+    feilErIkke404,
+    feilErIkke400
 } from '../huskelapp/harTilgangTilHuskelapp';
-import { useFargekategori, useArbeidsliste, useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
+import { useArbeidsliste, useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
 import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 
 function Veilederverktoylinje() {
-    const { visVeilederVerktoy, enhetId, brukerFnr } = useAppStore();
+    const { visVeilederVerktoy, brukerFnr } = useAppStore();
+    const { data: oppfolgingsstatus, error: oppfolgingsstatusError } = useOppfolgingsstatus(brukerFnr);
     const { data: arbeidsliste, error: arbeidslisteError } = useArbeidsliste(brukerFnr);
-    const { data: huskelapp, error: huskelappError } = useHuskelapp(brukerFnr, enhetId);
-    const { data: fargekategori, error: fargekategoriError } = useFargekategori(brukerFnr);
-    const { data: erUfordeltBruker, error: erUfordeltBrukerError } = useErUfordeltBruker(brukerFnr, enhetId);
+    const { data: huskelapp, error: huskelappError } = useHuskelapp(brukerFnr);
+    const { data: erUfordeltBruker, error: erUfordeltBrukerError } = useErUfordeltBruker(brukerFnr);
     const { data: tilgangTilBrukersKontor, error: tilgangTilBrukersKontorError } =
         useTilgangTilBrukersKontor(brukerFnr);
-    const { data: oppfolgingsstatus, error: oppfolgingsstatusError } = useOppfolgingsstatus(brukerFnr);
     const { oppfolging, innloggetVeileder, gjeldendeEskaleringsvarsel, features } = useDataStore();
     const {
         showArbeidslisteModal,
@@ -57,25 +57,18 @@ function Veilederverktoylinje() {
     } = useModalStore();
 
     const dataForHuskelappOgFargekategoriHasErrors =
-        feilErIkke403(fargekategoriError) ||
         feilErIkke403(arbeidslisteError) ||
-        feilErIkke403(huskelappError) ||
-        erUfordeltBrukerError ||
+        (feilErIkke403(huskelappError) && feilErIkke400(huskelappError)) ||
+        feilErIkke400(erUfordeltBrukerError) ||
         tilgangTilBrukersKontorError ||
-        oppfolgingsstatusError;
+        feilErIkke404(oppfolgingsstatusError);
 
     const sjekkHarTilgangTilHuskelappEllerFargekategori =
         !dataForHuskelappOgFargekategoriHasErrors &&
         harTilgangTilHuskelappEllerFargekategori(
-            !!erUfordeltBruker,
+            erUfordeltBruker === undefined ? true : erUfordeltBruker,
             !!oppfolgingsstatus?.veilederId,
-            !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor,
-            sjekkOpprettetEnhetLikInnloggetEnhet(
-                huskelapp ?? null,
-                arbeidsliste ?? null,
-                fargekategori ?? null,
-                enhetId
-            )
+            !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor
         );
     const kanStarteEskalering = selectKanSendeEskaleringsVarsel(
         oppfolging,
