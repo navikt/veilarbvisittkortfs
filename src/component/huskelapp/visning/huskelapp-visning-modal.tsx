@@ -10,9 +10,9 @@ import { useHuskelapp } from '../../../api/veilarbportefolje';
 import { useAppStore } from '../../../store/app-store';
 
 function HuskelappVisningModal() {
-    const { brukerFnr, enhetId } = useAppStore();
+    const { brukerFnr } = useAppStore();
     const { hideModal, showHuskelappRedigereModal } = useModalStore();
-    const { data: huskelapp } = useHuskelapp(brukerFnr, enhetId);
+    const { data: huskelapp } = useHuskelapp(brukerFnr);
 
     const endreHuskelappKlikk = () => {
         trackAmplitude({

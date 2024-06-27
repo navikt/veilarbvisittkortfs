@@ -11,10 +11,10 @@ interface Props {
 }
 
 export const SlettHuskelapp = ({ variant = 'secondary' }: Props) => {
-    const { brukerFnr, enhetId } = useAppStore();
+    const { brukerFnr } = useAppStore();
     const { showFjernHuskelappModal } = useModalStore();
     const { innloggetVeileder, oppfolging } = useDataStore();
-    const { data: huskelapp } = useHuskelapp(brukerFnr, enhetId);
+    const { data: huskelapp } = useHuskelapp(brukerFnr);
 
     if (!huskelapp || !innloggetVeileder) {
         // Vi manglar data for å bestemme om slettknappen kan visast

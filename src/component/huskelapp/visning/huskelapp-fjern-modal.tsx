@@ -6,8 +6,8 @@ import { Button, Heading, Modal } from '@navikt/ds-react';
 import { useAppStore } from '../../../store/app-store';
 
 function HuskelappFjernModal() {
-    const { brukerFnr, enhetId } = useAppStore();
-    const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr, enhetId);
+    const { brukerFnr } = useAppStore();
+    const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr);
     const { showSpinnerModal, showErrorModal, hideModal } = useModalStore();
 
     function handleSlettHuskelapp() {
