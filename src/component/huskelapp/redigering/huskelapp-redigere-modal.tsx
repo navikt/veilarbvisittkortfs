@@ -37,7 +37,7 @@ function HuskelappRedigereModal() {
     const { innloggetVeileder } = useDataStore();
     const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
     const { data: arbeidsliste, mutate: setArbeidsliste } = useArbeidsliste(brukerFnr);
-    const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr, enhetId);
+    const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr);
 
     const erArbeidslistaTom =
         arbeidsliste?.sistEndretAv == null ||
