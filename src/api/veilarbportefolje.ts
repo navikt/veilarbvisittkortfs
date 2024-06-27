@@ -129,12 +129,12 @@ export function endreFargekategori(fargekategoriVerdi: string, fnr: string): Axi
 
 export function useErUfordeltBruker(fnr: string) {
     const url = '/veilarbportefolje/api/v1/hent-er-bruker-ufordelt';
-    const { data, error, isLoading } = useSWR<boolean, ErrorMessage>(
+    const { data, error, isLoading, mutate } = useSWR<boolean, ErrorMessage>(
         fnr ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr ?? null }),
         swrOptions
     );
-    return { data, isLoading, error };
+    return { data, isLoading, error, mutate };
 }
 
 export function useHuskelapp(fnr: string) {
