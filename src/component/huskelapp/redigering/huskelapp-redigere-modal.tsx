@@ -1,5 +1,5 @@
 import { Formik, FormikBag, FormikProps } from 'formik';
-import { Button, Modal } from '@navikt/ds-react';
+import { Button, Heading, Modal } from '@navikt/ds-react';
 import { ArrowRightIcon } from '@navikt/aksel-icons';
 import {
     Huskelapp,
@@ -22,6 +22,9 @@ import { SlettArbeidsliste } from './huskelapp-slett-arbeidsliste';
 import { SlettHuskelapp } from './slett-huskelapp';
 import './huskelapp-redigering.less';
 import { useDataStore } from '../../../store/data-store';
+import { KopierKnappTekst } from '../../components/kopier-knapp/kopier-knapp';
+import { selectSammensattNavn } from '../../../util/selectors';
+import { Navn } from '../../personinfo/components/navnogalder';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -49,6 +52,9 @@ function HuskelappRedigereModal() {
     };
 
     const initalValues: HuskelappformValues = huskelapp?.endretDato ? huskelappValues : huskelappEmptyValues;
+    const modalNavn = erArbeidslistaTom ? 'Huskelapp' : 'Bytt fra gammel arbeidsliste til ny huskelapp';
+    const { personalia } = useDataStore();
+    const navn = selectSammensattNavn(personalia);
 
     function onRequestClose(formikProps: FormikProps<HuskelappformValues>) {
         const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
@@ -152,16 +158,22 @@ function HuskelappRedigereModal() {
         <Formik key={brukerFnr} initialValues={initalValues} onSubmit={handleSubmit} validateOnBlur={false}>
             {formikProps => (
                 <Modal
-                    header={{
-                        icon: <HuskelappIkon aria-hidden />,
-                        heading: !erArbeidslistaTom ? 'Bytt fra gammel arbeidsliste til ny huskelapp' : 'Huskelapp',
-                        size: 'small'
-                    }}
+                    aria-label={modalNavn}
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
                     closeOnBackdropClick={true}
                     className="rediger-huskelapp-modal"
                 >
+                    <Modal.Header>
+                        <div className="rediger-huskelapp-modal-header">
+                            <HuskelappIkon aria-hidden className="rediger-huskelapp-modal-header__ikon" />
+                            <Heading size="xsmall">{modalNavn}</Heading>
+                        </div>
+                        <div className="rediger-huskelapp-modal-header">
+                            <Navn navn={navn} />
+                            <KopierKnappTekst kopierTekst={brukerFnr} viseTekst={`F.nr.: ${brukerFnr}`} />
+                        </div>
+                    </Modal.Header>
                     <Modal.Body className="rediger-huskelapp-modal-body">
                         {!erArbeidslistaTom && (
                             <>
