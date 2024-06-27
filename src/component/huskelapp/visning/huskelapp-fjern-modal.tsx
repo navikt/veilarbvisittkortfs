@@ -1,12 +1,13 @@
-import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
 import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
-import { slettHuskelapp } from '../../../api/veilarbportefolje';
+import { slettHuskelapp, useHuskelapp } from '../../../api/veilarbportefolje';
 import { Button, Heading, Modal } from '@navikt/ds-react';
+import { useAppStore } from '../../../store/app-store';
 
 function HuskelappFjernModal() {
-    const { huskelapp, setHuskelapp } = useDataStore();
+    const { brukerFnr, enhetId } = useAppStore();
+    const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr, enhetId);
     const { showSpinnerModal, showErrorModal, hideModal } = useModalStore();
 
     function handleSlettHuskelapp() {
@@ -24,7 +25,8 @@ function HuskelappFjernModal() {
                     frist: null,
                     kommentar: null,
                     endretDato: null,
-                    endretAv: null
+                    endretAv: null,
+                    enhetId: null
                 })
             )
             .then(hideModal)

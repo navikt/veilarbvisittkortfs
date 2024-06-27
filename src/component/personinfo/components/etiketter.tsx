@@ -3,7 +3,7 @@ import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
 import './etiketter.less';
 import { fetchRegistrering, InnsatsgruppeType } from '../../../api/veilarbperson';
-import { OppfolgingStatus } from '../../../api/veilarboppfolging';
+import { OppfolgingStatus, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { ifResponseHasData, isEmpty } from '../../../util/utils';
 import visibleIf from '../../components/visible-if';
@@ -53,14 +53,8 @@ function manglerVedtak(oppfolging: OrNothing<OppfolgingStatus>): boolean {
 
 function Etiketter() {
     const { brukerFnr } = useAppStore();
-    const {
-        gjeldendeEskaleringsvarsel,
-        oppfolgingsstatus,
-        oppfolging,
-        personalia,
-        vergeOgFullmakt,
-        spraakTolk
-    } = useDataStore();
+    const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
+    const { gjeldendeEskaleringsvarsel, oppfolging, personalia, vergeOgFullmakt, spraakTolk } = useDataStore();
 
     const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>(null);
 

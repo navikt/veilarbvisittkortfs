@@ -1,16 +1,18 @@
 import { BodyShort, Button, Detail, Heading, Modal } from '@navikt/ds-react';
 import HuskelappIkon from '../ikon/Huskelappikon_bakgrunnsfarge.svg?react';
 import { useModalStore } from '../../../store/modal-store';
-import { useDataStore } from '../../../store/data-store';
 import { toSimpleDateStr } from '../../../util/date-utils';
 import { trackAmplitude } from '../../../amplitude/amplitude';
 import { SlettHuskelapp } from '../redigering/slett-huskelapp';
 import './../huskelapp-postitstyling.less';
 import './huskelapp-visning.less';
+import { useHuskelapp } from '../../../api/veilarbportefolje';
+import { useAppStore } from '../../../store/app-store';
 
 function HuskelappVisningModal() {
+    const { brukerFnr, enhetId } = useAppStore();
     const { hideModal, showHuskelappRedigereModal } = useModalStore();
-    const { huskelapp } = useDataStore();
+    const { data: huskelapp } = useHuskelapp(brukerFnr, enhetId);
 
     const endreHuskelappKlikk = () => {
         trackAmplitude({
