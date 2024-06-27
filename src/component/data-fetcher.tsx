@@ -76,7 +76,7 @@ export function DataFetcher(props: { children: React.ReactNode }) {
         if (visVeilederVerktoy && harTilgang && underOppfolging) {
             arbeidslisteFetcher.fetch(brukerFnr).then(ifResponseHasData(setArbeidsliste)).catch();
             if (features[HUSKELAPP] && oppfolgingsEnhet) {
-                huskelappFetcher.fetch(brukerFnr, oppfolgingsEnhet).then(ifResponseHasData(setHuskelapp)).catch();
+                huskelappFetcher.fetch(brukerFnr).then(ifResponseHasData(setHuskelapp)).catch();
                 fargekategoriFetcher.fetch(brukerFnr).then(ifResponseHasData(setFargekategori)).catch();
             }
         }

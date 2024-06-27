@@ -28,14 +28,14 @@ const huskelappEmptyValues = {
 };
 
 function HuskelappRedigereModal() {
-    const { brukerFnr, enhetId } = useAppStore();
+    const { brukerFnr } = useAppStore();
     const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
     const { huskelapp, setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
 
     const erArbeidslistaTom =
         arbeidsliste?.sistEndretAv == null ||
         (!arbeidsliste?.overskrift && !arbeidsliste?.kommentar && !arbeidsliste?.frist);
-    const erIRedigeringModus = huskelapp?.endretDato;
+    const erIRedigeringModus = huskelapp?.huskelappId;
     const erHuskelappTom = huskelapp?.huskelappId == null;
 
     const huskelappValues: HuskelappformValues = {
@@ -91,10 +91,9 @@ function HuskelappRedigereModal() {
                 huskelappId: values.huskelappId ? values.huskelappId : null,
                 kommentar: values.kommentar ? values.kommentar : null,
                 frist: values.frist ? values.frist : null,
-                brukerFnr: brukerFnr,
-                enhetId: enhetId
+                brukerFnr: brukerFnr
             })
-                .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
+                .then(() => fetchHuskelapp(brukerFnr.toString()))
                 .then(res => res.data)
                 .then(setHuskelapp)
                 .then(hideModal)
@@ -108,10 +107,9 @@ function HuskelappRedigereModal() {
             lagreHuskelapp({
                 kommentar: values.kommentar ? values.kommentar : null,
                 frist: values.frist ? values.frist : null,
-                brukerFnr: brukerFnr,
-                enhetId: enhetId
+                brukerFnr: brukerFnr
             })
-                .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
+                .then(() => fetchHuskelapp(brukerFnr.toString()))
                 .then(res => res.data)
                 .then(setHuskelapp)
                 .then(() => {

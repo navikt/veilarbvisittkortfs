@@ -48,14 +48,13 @@ export interface HuskelappLagreValues {
     brukerFnr: StringOrNothing;
     kommentar: StringOrNothing;
     frist: StringOrNothing;
-    enhetId: StringOrNothing;
 }
+
 export interface HuskelappRedigerValues {
     huskelappId: StringOrNothing;
     brukerFnr: StringOrNothing;
     kommentar: StringOrNothing;
     frist: StringOrNothing;
-    enhetId: StringOrNothing;
 }
 
 export interface EndreFargekategoriResponse {
@@ -110,8 +109,8 @@ export function slettArbeidslisteMenIkkeFargekategori(fnr: string): AxiosPromise
     });
 }
 
-export function fetchHuskelapp(fnr: string, enhetId: string): AxiosPromise<Huskelapp> {
-    return axiosInstance.post(`/veilarbportefolje/api/v1/hent-huskelapp-for-bruker`, { fnr: fnr, enhetId: enhetId });
+export function fetchHuskelapp(fnr: string): AxiosPromise<Huskelapp> {
+    return axiosInstance.post(`/veilarbportefolje/api/v1/hent-huskelapp-for-bruker`, { fnr: fnr });
 }
 
 export function lagreHuskelapp(huskelappformValues: HuskelappLagreValues): AxiosPromise<string> {
