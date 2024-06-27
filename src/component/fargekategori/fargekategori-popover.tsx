@@ -13,7 +13,7 @@ interface Props {
     setFargekategori: (fargekategori: Fargekategori) => void;
 }
 export const FargekategoriPopover = ({ buttonRef, isOpen, setIsOpen, setFargekategori }: Props) => {
-    const { brukerFnr } = useAppStore();
+    const { brukerFnr, enhetId } = useAppStore();
     const [error, setError] = useState<string>();
     const onClick = (kategoriVerdi: FargekategoriModell) => {
         trackAmplitude({
@@ -26,7 +26,10 @@ export const FargekategoriPopover = ({ buttonRef, isOpen, setIsOpen, setFargekat
         endreFargekategori(kategoriVerdi, brukerFnr)
             .then(res => res.data)
             .then(response =>
-                setFargekategori({ fargekategoriVerdi: response.fargekategoriVerdi as FargekategoriModell })
+                setFargekategori({
+                    fargekategoriVerdi: response.fargekategoriVerdi as FargekategoriModell,
+                    enhetId: enhetId
+                })
             )
             .then(() => setError(undefined))
             .then(() => setIsOpen(false))
