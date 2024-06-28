@@ -53,8 +53,7 @@ function Veilederverktoylinje() {
         showOpprettOppgaveModal,
         showAvsluttOppfolgingModal,
         showHistorikkModal,
-        showHuskelappRedigereModal,
-        showHuskelappModal
+        showHuskelappRedigereModal
     } = useModalStore();
 
     const dataForHuskelappOgFargekategoriHasErrors =
@@ -113,17 +112,11 @@ function Veilederverktoylinje() {
         trackAmplitude({
             name: 'navigere',
             data: {
-                lenketekst: `veiledervektoy-${huskelapp?.huskelappId ? 'lag-huskelapp' : 'vis-huskelapp'}`,
+                lenketekst: `veiledervektoy-${huskelapp?.huskelappId ? 'endre-huskelapp' : 'lag-huskelapp'}`,
                 destinasjon: 'huskelapp'
             }
         });
-
-        const erHuskelappTom = huskelapp?.huskelappId == null;
-        if (erHuskelappTom) {
-            showHuskelappRedigereModal();
-        } else {
-            showHuskelappModal();
-        }
+        showHuskelappRedigereModal();
     };
 
     return (
@@ -157,7 +150,7 @@ function Veilederverktoylinje() {
                                 {huskelapp?.huskelappId && features[HUSKELAPP] && (
                                     <li>
                                         <StartProsess
-                                            knappeTekst="Vis huskelapp"
+                                            knappeTekst="Rediger huskelapp"
                                             onClick={() => doAll(huskelappKlikk, lukkDropdown)}
                                         />
                                     </li>
