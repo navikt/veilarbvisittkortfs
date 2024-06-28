@@ -24,7 +24,6 @@ import './huskelapp-redigering.less';
 import { useDataStore } from '../../../store/data-store';
 import { KopierKnappTekst } from '../../components/kopier-knapp/kopier-knapp';
 import { selectSammensattNavn } from '../../../util/selectors';
-import { Navn } from '../../personinfo/components/navnogalder';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -170,7 +169,9 @@ function HuskelappRedigereModal() {
                             <Heading size="xsmall">{modalNavn}</Heading>
                         </div>
                         <div className="rediger-huskelapp-modal-header">
-                            <Navn navn={navn} />
+                            <Heading size="xsmall" level="3">
+                                {navn}
+                            </Heading>
                             <KopierKnappTekst kopierTekst={brukerFnr} viseTekst={`F.nr.: ${brukerFnr}`} />
                         </div>
                     </Modal.Header>

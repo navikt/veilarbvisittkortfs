@@ -9,9 +9,6 @@ export function kalkulerAlder(fodselsdato: Date): number {
     }
     return alder;
 }
-export function Navn({ navn }: { navn: string }) {
-    return <Heading size="xsmall" level="3">{`${navn}`}</Heading>;
-}
 
 function NavnOgAlder({ fodselsdato, navn }: { fodselsdato: string | undefined; navn: string }) {
     const alder = fodselsdato ? kalkulerAlder(new Date(fodselsdato)) : '';
