@@ -165,8 +165,10 @@ function HuskelappRedigereModal() {
                 >
                     <Modal.Header>
                         <div className="rediger-huskelapp-modal-header">
-                            <HuskelappIkon aria-hidden className="rediger-huskelapp-modal-header__ikon" />
-                            <Heading size="xsmall">{modalNavn}</Heading>
+                            <HuskelappIkon aria-hidden className="navds-modal__header-icon" />
+                            <Heading size="xsmall" className="rediger-huskelapp-modal-header-tekst">
+                                {modalNavn}
+                            </Heading>
                         </div>
                         <div className="rediger-huskelapp-modal-header">
                             <Heading size="xsmall" level="3">
