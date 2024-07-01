@@ -6,5 +6,5 @@ export function fetchHarUtkast(fnr: string): AxiosPromise<boolean> {
 }
 
 export function fetchErUtrullet(enhet: string): AxiosPromise<boolean> {
-    return axiosInstance.get<boolean>(`/veilarbvedtaksstotte/api/utrulling/erUtrullet?enhet=${enhet}`);
+    return axiosInstance.get<boolean>(`/veilarbvedtaksstotte/api/utrulling/erUtrullet?enhetId=${enhet}`);
 }
