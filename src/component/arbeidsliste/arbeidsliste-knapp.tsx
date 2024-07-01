@@ -11,8 +11,8 @@ export interface ArbeidslisteKnappProps {
 }
 
 function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
-    const { brukerFnr } = useAppStore();
-    const { data: arbeidsliste } = useArbeidsliste(brukerFnr);
+    const { brukerFnr, visVeilederVerktoy } = useAppStore();
+    const { data: arbeidsliste } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
 
     if (props.hidden) {
         return null;
