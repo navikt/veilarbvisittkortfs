@@ -16,17 +16,11 @@ export const SlettHuskelapp = ({ variant = 'secondary' }: Props) => {
     const { innloggetVeileder, oppfolging } = useDataStore();
     const { data: huskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);
 
-    if (!huskelapp || !innloggetVeileder) {
+    if (!huskelapp) {
         // Vi manglar data for å bestemme om slettknappen kan visast
         return null;
     }
-
-    const veilederKanSletteHuskelapp = kanFjerneHuskelapp(huskelapp, oppfolging, innloggetVeileder.ident);
-
-    if (!veilederKanSletteHuskelapp) {
-        return null;
-    }
-
+    kanFjerneHuskelapp(huskelapp, oppfolging, innloggetVeileder?.ident);
     return (
         <Button
             onClick={showFjernHuskelappModal}
