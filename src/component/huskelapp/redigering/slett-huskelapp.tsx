@@ -1,8 +1,6 @@
 import { Button } from '@navikt/ds-react';
 import { TrashIcon } from '@navikt/aksel-icons';
 import { useModalStore } from '../../../store/modal-store';
-import { kanFjerneHuskelapp } from '../../../util/selectors';
-import { useDataStore } from '../../../store/data-store';
 import { useHuskelapp } from '../../../api/veilarbportefolje';
 import { useAppStore } from '../../../store/app-store';
 
@@ -13,14 +11,12 @@ interface Props {
 export const SlettHuskelapp = ({ variant = 'secondary' }: Props) => {
     const { brukerFnr, visVeilederVerktoy } = useAppStore();
     const { showFjernHuskelappModal } = useModalStore();
-    const { innloggetVeileder, oppfolging } = useDataStore();
     const { data: huskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);
 
     if (!huskelapp) {
         // Vi manglar data for å bestemme om slettknappen kan visast
         return null;
     }
-    kanFjerneHuskelapp(huskelapp, oppfolging, innloggetVeileder?.ident);
     return (
         <Button
             onClick={showFjernHuskelappModal}
