@@ -52,7 +52,7 @@ export const createPOSToptions = (event: RequestTypes) => ({
 
 export const fetchWithPost = async (url: string, requestBody: RequestTypes) => {
     const respons = await fetch(url, createPOSToptions(requestBody));
-    if (respons.status >= 500) {
+    if (respons.status >= 400) {
         throw {
             error: new Error('Det har skjedd en feil ved henting av data.'),
             status: respons.status
@@ -71,5 +71,7 @@ export const fetchWithPost = async (url: string, requestBody: RequestTypes) => {
 export const swrOptions = {
     revalidateIfStale: true,
     revalidateOnFocus: false,
-    revalidateOnReconnect: false
+    revalidateOnReconnect: false,
+    errorRetryCount: 5,
+    errorRetryInterval: 15000
 };
