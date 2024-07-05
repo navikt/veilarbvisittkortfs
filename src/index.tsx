@@ -6,11 +6,11 @@ import 'dayjs/locale/nb';
 import App from './app';
 import { initAmplitude } from './amplitude/amplitude';
 
-export * from './app';
-
 dayjs.locale('nb');
 
 Navspa.eksporter('veilarbvisittkortfs', App);
+
+export const Visittkort = App;
 
 if (isLocalDevelopment()) {
     renderMockApp();
