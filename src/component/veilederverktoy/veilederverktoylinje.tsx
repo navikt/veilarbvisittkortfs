@@ -26,21 +26,24 @@ import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
 import {
     harTilgangTilHuskelappEllerFargekategori,
     feilErIkke403,
-    sjekkOpprettetEnhetLikInnloggetEnhet
+    feilErIkke404,
+    feilErIkke400
 } from '../huskelapp/harTilgangTilHuskelapp';
-import { useFargekategori, useArbeidsliste, useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
+import { useArbeidsliste, useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
 import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 
 function Veilederverktoylinje() {
-    const { visVeilederVerktoy, enhetId, brukerFnr } = useAppStore();
-    const { data: arbeidsliste, error: arbeidslisteError } = useArbeidsliste(brukerFnr);
-    const { data: huskelapp, error: huskelappError } = useHuskelapp(brukerFnr, enhetId);
-    const { data: fargekategori, error: fargekategoriError } = useFargekategori(brukerFnr);
-    const { data: erUfordeltBruker, error: erUfordeltBrukerError } = useErUfordeltBruker(brukerFnr, enhetId);
+    const { visVeilederVerktoy, brukerFnr } = useAppStore();
+    const { oppfolging, innloggetVeileder, gjeldendeEskaleringsvarsel, features } = useDataStore();
+    const { data: oppfolgingsstatus, error: oppfolgingsstatusError } = useOppfolgingsstatus(brukerFnr);
+    const { data: arbeidsliste, error: arbeidslisteError } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
+    const { data: huskelapp, error: huskelappError } = useHuskelapp(brukerFnr, visVeilederVerktoy);
+    const { data: erUfordeltBruker, error: erUfordeltBrukerError } = useErUfordeltBruker(
+        brukerFnr,
+        visVeilederVerktoy && oppfolging?.underOppfolging
+    );
     const { data: tilgangTilBrukersKontor, error: tilgangTilBrukersKontorError } =
         useTilgangTilBrukersKontor(brukerFnr);
-    const { data: oppfolgingsstatus, error: oppfolgingsstatusError } = useOppfolgingsstatus(brukerFnr);
-    const { oppfolging, innloggetVeileder, gjeldendeEskaleringsvarsel, features } = useDataStore();
     const {
         showArbeidslisteModal,
         showTildelVeilederModal,
@@ -53,30 +56,22 @@ function Veilederverktoylinje() {
         showOpprettOppgaveModal,
         showAvsluttOppfolgingModal,
         showHistorikkModal,
-        showHuskelappRedigereModal,
-        showHuskelappModal
+        showHuskelappRedigereModal
     } = useModalStore();
 
     const dataForHuskelappOgFargekategoriHasErrors =
-        feilErIkke403(fargekategoriError) ||
         feilErIkke403(arbeidslisteError) ||
-        feilErIkke403(huskelappError) ||
-        erUfordeltBrukerError ||
+        (feilErIkke403(huskelappError) && feilErIkke400(huskelappError)) ||
+        feilErIkke400(erUfordeltBrukerError) ||
         tilgangTilBrukersKontorError ||
-        oppfolgingsstatusError;
+        feilErIkke404(oppfolgingsstatusError);
 
     const sjekkHarTilgangTilHuskelappEllerFargekategori =
         !dataForHuskelappOgFargekategoriHasErrors &&
         harTilgangTilHuskelappEllerFargekategori(
-            !!erUfordeltBruker,
+            erUfordeltBruker === undefined ? true : erUfordeltBruker,
             !!oppfolgingsstatus?.veilederId,
-            !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor,
-            sjekkOpprettetEnhetLikInnloggetEnhet(
-                huskelapp ?? null,
-                arbeidsliste ?? null,
-                fargekategori ?? null,
-                enhetId
-            )
+            !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor
         );
     const kanStarteEskalering = selectKanSendeEskaleringsVarsel(
         oppfolging,
@@ -120,17 +115,11 @@ function Veilederverktoylinje() {
         trackAmplitude({
             name: 'navigere',
             data: {
-                lenketekst: `veiledervektoy-${huskelapp?.huskelappId ? 'lag-huskelapp' : 'vis-huskelapp'}`,
+                lenketekst: `veiledervektoy-${huskelapp?.huskelappId ? 'endre-huskelapp' : 'lag-huskelapp'}`,
                 destinasjon: 'huskelapp'
             }
         });
-
-        const erHuskelappTom = huskelapp?.huskelappId == null;
-        if (erHuskelappTom) {
-            showHuskelappRedigereModal();
-        } else {
-            showHuskelappModal();
-        }
+        showHuskelappRedigereModal();
     };
 
     return (
@@ -164,7 +153,7 @@ function Veilederverktoylinje() {
                                 {huskelapp?.huskelappId && features[HUSKELAPP] && (
                                     <li>
                                         <StartProsess
-                                            knappeTekst="Vis huskelapp"
+                                            knappeTekst="Rediger huskelapp"
                                             onClick={() => doAll(huskelappKlikk, lukkDropdown)}
                                         />
                                     </li>

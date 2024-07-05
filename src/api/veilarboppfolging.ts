@@ -161,7 +161,7 @@ export function tildelTilVeileder(
 export function useOppfolgingsstatus(fnr: string) {
     const url = '/veilarboppfolging/api/v2/person/hent-oppfolgingsstatus';
     const { data, error, isLoading, mutate } = useSWR<OppfolgingStatus, ErrorMessage>(
-        fnr ? url : null,
+        fnr ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr }),
         swrOptions
     );
@@ -171,7 +171,7 @@ export function useOppfolgingsstatus(fnr: string) {
 export function useTilgangTilBrukersKontor(fnr: string) {
     const url = '/veilarboppfolging/api/v3/oppfolging/hent-veilederTilgang';
     const { data, error, isLoading } = useSWR<TilgangTilBrukersKontor, ErrorMessage>(
-        fnr ? url : null,
+        fnr ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr }),
         swrOptions
     );

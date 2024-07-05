@@ -71,5 +71,7 @@ export const fetchWithPost = async (url: string, requestBody: RequestTypes) => {
 export const swrOptions = {
     revalidateIfStale: true,
     revalidateOnFocus: false,
-    revalidateOnReconnect: false
+    revalidateOnReconnect: false,
+    errorRetryCount: 5,
+    errorRetryInterval: 15000
 };

@@ -127,40 +127,40 @@ export function endreFargekategori(fargekategoriVerdi: string, fnr: string): Axi
     return axiosInstance.put('/veilarbportefolje/api/v1/fargekategorier', { fargekategoriVerdi, fnr: [fnr] });
 }
 
-export function useErUfordeltBruker(fnr: string, enhetId?: string) {
+export function useErUfordeltBruker(fnr: string, skalHenteData: boolean = true) {
     const url = '/veilarbportefolje/api/v1/hent-er-bruker-ufordelt';
-    const { data, error, isLoading } = useSWR<boolean, ErrorMessage>(
-        fnr && enhetId ? url : null,
-        () => fetchWithPost(url, { fnr: fnr ?? null, enhetId: enhetId }),
-        swrOptions
-    );
-    return { data, isLoading, error };
-}
-
-export function useHuskelapp(fnr: string, enhetId?: string) {
-    const url = '/veilarbportefolje/api/v1/hent-huskelapp-for-bruker';
-    const { data, error, isLoading, mutate } = useSWR<Huskelapp, ErrorMessage>(
-        fnr && enhetId ? url : null,
-        () => fetchWithPost(url, { fnr: fnr, enhetId: enhetId }),
+    const { data, error, isLoading, mutate } = useSWR<boolean, ErrorMessage>(
+        skalHenteData && fnr ? `${url}/${fnr}` : null,
+        () => fetchWithPost(url, { fnr: fnr ?? null }),
         swrOptions
     );
     return { data, isLoading, error, mutate };
 }
 
-export function useArbeidsliste(fnr: string) {
-    const url = '/veilarbportefolje/api/v2/hent-arbeidsliste';
-    const { data, error, isLoading, mutate } = useSWR<Arbeidsliste, ErrorMessage>(
-        fnr ? url : null,
+export function useHuskelapp(fnr: string, skalHenteData: boolean = true) {
+    const url = '/veilarbportefolje/api/v1/hent-huskelapp-for-bruker';
+    const { data, error, isLoading, mutate } = useSWR<Huskelapp, ErrorMessage>(
+        skalHenteData && fnr ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr }),
         swrOptions
     );
     return { data, isLoading, error, mutate };
 }
 
-export function useFargekategori(fnr: string) {
+export function useArbeidsliste(fnr: string, skalHenteData: boolean = true) {
+    const url = '/veilarbportefolje/api/v2/hent-arbeidsliste';
+    const { data, error, isLoading, mutate } = useSWR<Arbeidsliste, ErrorMessage>(
+        skalHenteData && fnr ? `${url}/${fnr}` : null,
+        () => fetchWithPost(url, { fnr: fnr }),
+        swrOptions
+    );
+    return { data, isLoading, error, mutate };
+}
+
+export function useFargekategori(fnr: string, skalHenteData: boolean = true) {
     const url = '/veilarbportefolje/api/v1/hent-fargekategori';
     const { data, error, isLoading, mutate } = useSWR<Fargekategori, ErrorMessage>(
-        fnr ? url : null,
+        skalHenteData && fnr ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr }),
         swrOptions
     );

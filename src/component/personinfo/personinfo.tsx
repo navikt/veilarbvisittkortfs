@@ -15,44 +15,43 @@ import HuskelappKnapp from '../huskelapp/huskelapp-knapp';
 import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
 import { Fargekategoriknapp } from '../fargekategori/fargekategoriknapp';
 import {
+    feilErIkke400,
     feilErIkke403,
-    harTilgangTilHuskelappEllerFargekategori,
-    sjekkOpprettetEnhetLikInnloggetEnhet
+    feilErIkke404,
+    harTilgangTilHuskelappEllerFargekategori
 } from '../huskelapp/harTilgangTilHuskelapp';
-import { useArbeidsliste, useErUfordeltBruker, useFargekategori, useHuskelapp } from '../../api/veilarbportefolje';
+import { useArbeidsliste, useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
 import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 
 function PersonInfo() {
-    const { brukerFnr, enhetId } = useAppStore();
-    const { personalia, features } = useDataStore();
+    const { brukerFnr, visVeilederVerktoy } = useAppStore();
+    const { personalia, features, oppfolging } = useDataStore();
     const { showArbeidslisteModal, showHuskelappRedigereModal } = useModalStore();
-
-    const {
-        data: arbeidsliste,
-        isLoading: arbeidslisteIsLoading,
-        error: arbeidslisteError
-    } = useArbeidsliste(brukerFnr);
-    const { data: huskelapp, isLoading: huskelappIsLoading, error: huskelappError } = useHuskelapp(brukerFnr, enhetId);
-    const {
-        data: fargekategori,
-        isLoading: fargekategoriIsLoading,
-        error: fargekategoriError
-    } = useFargekategori(brukerFnr);
-    const {
-        data: erUfordeltBruker,
-        isLoading: erUfordeltBrukerIsLoading,
-        error: erUfordeltBrukerError
-    } = useErUfordeltBruker(brukerFnr, enhetId);
-    const {
-        data: tilgangTilBrukersKontor,
-        isLoading: tilgangTilBrukersKontorIsLoading,
-        error: tilgangTilBrukersKontorError
-    } = useTilgangTilBrukersKontor(brukerFnr);
     const {
         data: oppfolgingsstatus,
         isLoading: oppfolgingsstatusIsLoading,
         error: oppfolgingsstatusError
     } = useOppfolgingsstatus(brukerFnr);
+    const {
+        data: arbeidsliste,
+        isLoading: arbeidslisteIsLoading,
+        error: arbeidslisteError
+    } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
+    const {
+        data: huskelapp,
+        isLoading: huskelappIsLoading,
+        error: huskelappError
+    } = useHuskelapp(brukerFnr, visVeilederVerktoy);
+    const {
+        data: erUfordeltBruker,
+        isLoading: erUfordeltBrukerIsLoading,
+        error: erUfordeltBrukerError
+    } = useErUfordeltBruker(brukerFnr, visVeilederVerktoy && oppfolging?.underOppfolging);
+    const {
+        data: tilgangTilBrukersKontor,
+        isLoading: tilgangTilBrukersKontorIsLoading,
+        error: tilgangTilBrukersKontorError
+    } = useTilgangTilBrukersKontor(brukerFnr);
 
     const erArbeidslisteTom = arbeidsliste?.sistEndretAv == null;
     const erHuskelappTom = huskelapp?.huskelappId == null;
@@ -64,24 +63,21 @@ function PersonInfo() {
         erUfordeltBrukerIsLoading ||
         oppfolgingsstatusIsLoading ||
         tilgangTilBrukersKontorIsLoading ||
-        fargekategoriIsLoading ||
         huskelappIsLoading ||
         arbeidslisteIsLoading;
 
     const dataForHuskelappOgFargekategoriHasErrors =
-        erUfordeltBrukerError ||
-        oppfolgingsstatusError ||
+        feilErIkke400(erUfordeltBrukerError) ||
+        feilErIkke404(oppfolgingsstatusError) ||
         tilgangTilBrukersKontorError ||
-        feilErIkke403(fargekategoriError) ||
-        feilErIkke403(huskelappError) ||
+        (feilErIkke403(huskelappError) && feilErIkke400(huskelappError)) ||
         feilErIkke403(arbeidslisteError);
 
     if (dataForHuskelappOgFargekategoriHasErrors) {
         const errorMessages = [
-            erUfordeltBrukerError && 'erUfordeltFeil: ' + erUfordeltBrukerError?.status,
-            oppfolgingsstatusError && 'oppfolgingsstatusFeil: ' + oppfolgingsstatusError?.status,
+            feilErIkke400(erUfordeltBrukerError) && 'erUfordeltFeil: ' + erUfordeltBrukerError?.status,
+            feilErIkke404(oppfolgingsstatusError) && 'oppfolgingsstatusFeil: ' + oppfolgingsstatusError?.status,
             tilgangTilBrukersKontorError && 'tilgangTilBrukersKontorFeil: ' + tilgangTilBrukersKontorError?.status,
-            feilErIkke403(fargekategoriError) && 'fargekategoriFeil: ' + fargekategoriError?.status,
             feilErIkke403(huskelappError) && 'huskelappFeil: ' + huskelappError?.status,
             feilErIkke403(arbeidslisteError) && 'arbeidslisteFeil: ' + arbeidslisteError?.status
         ]
@@ -95,15 +91,9 @@ function PersonInfo() {
         !dataForHuskelappOgFargekategoriHasErrors &&
         !isLoadingDataForHuskelappOgFargekategori &&
         harTilgangTilHuskelappEllerFargekategori(
-            !!erUfordeltBruker,
+            erUfordeltBruker === undefined ? true : erUfordeltBruker,
             !!oppfolgingsstatus?.veilederId,
-            !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor,
-            sjekkOpprettetEnhetLikInnloggetEnhet(
-                huskelapp ?? null,
-                arbeidsliste ?? null,
-                fargekategori ?? null,
-                enhetId
-            )
+            !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor
         );
     const klikkShowArbeidslisteModal = () => {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });

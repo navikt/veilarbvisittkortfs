@@ -39,14 +39,14 @@ export enum ModalType {
 
 export interface ModalState {
     type: ModalType;
-    props?: {};
+    props?: object;
 }
 
 // Denne storen blir brukt av <VeilederverktoyModalController/> for å sette hvilken dialog som skal vises
 export const [ModalStore, useModalStore] = constate(() => {
     const [activeModalState, setActiveModalState] = useState<ModalState>();
 
-    function showModal(type: ModalType, props?: {}) {
+    function showModal(type: ModalType, props?: object) {
         setActiveModalState({ type, props });
     }
 
@@ -138,10 +138,6 @@ export const [ModalStore, useModalStore] = constate(() => {
         showModal(ModalType.FJERN_ARBEIDSLISTE);
     }
 
-    function showHuskelappModal() {
-        showModal(ModalType.HUSKELAPP);
-    }
-
     function showHuskelappRedigereModal() {
         showModal(ModalType.HUSKELAPP_REDIGERE);
     }
@@ -194,7 +190,6 @@ export const [ModalStore, useModalStore] = constate(() => {
         showOpprettOppgaveModal,
         showAvsluttOppfolgingModal,
         showHistorikkModal,
-        showHuskelappModal,
         showFjernHuskelappModal,
         showHuskelappRedigereModal
     };

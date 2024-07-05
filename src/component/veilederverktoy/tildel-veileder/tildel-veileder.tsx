@@ -13,13 +13,13 @@ import { BodyShort, Button, Heading, Modal } from '@navikt/ds-react';
 import { useArbeidsliste, useFargekategori, useHuskelapp } from '../../../api/veilarbportefolje';
 
 function TildelVeileder() {
-    const { brukerFnr, enhetId } = useAppStore();
-    const { data: arbeidsliste } = useArbeidsliste(brukerFnr);
-    const { data: huskelapp } = useHuskelapp(brukerFnr, enhetId);
-    const { data: fargekategori } = useFargekategori(brukerFnr);
+    const { brukerFnr, visVeilederVerktoy } = useAppStore();
+    const { data: arbeidsliste } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
+    const { data: huskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);
+    const { data: fargekategori } = useFargekategori(brukerFnr, visVeilederVerktoy);
     const { showTildelVeilederKvitteringModal, showTildelVeilederFeiletModal, hideModal } = useModalStore();
     const [visAdvarselOmSletting, setVisAdvarselOmSletting] = useState<boolean>(false);
-    const { mutate: setOppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
+    const { data: oppfolgingstatus, mutate: setOppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { veilederePaEnhet, oppfolging, setOppfolging, innloggetVeileder } = useDataStore();
     const [selectedVeilederId, setSelectedVeilederId] = useState('');
     const fraVeileder = oppfolging?.veilederId;
@@ -76,9 +76,10 @@ function TildelVeileder() {
             .forEach(elem => ((elem as HTMLInputElement).checked = false));
 
         const brukerHarHuskelappFargekategoriEllerArbeidslisteSomVilBliSlettet =
-            (huskelapp && huskelapp?.enhetId !== enhetId) ||
-            (arbeidsliste?.arbeidslisteAktiv && arbeidsliste?.navkontorForArbeidsliste !== enhetId) ||
-            (fargekategori && fargekategori?.enhetId !== enhetId);
+            (huskelapp && huskelapp?.enhetId !== oppfolgingstatus?.oppfolgingsenhet?.enhetId) ||
+            (arbeidsliste?.arbeidslisteAktiv &&
+                arbeidsliste?.navkontorForArbeidsliste !== oppfolgingstatus?.oppfolgingsenhet?.enhetId) ||
+            (fargekategori && fargekategori?.enhetId !== oppfolgingstatus?.oppfolgingsenhet?.enhetId);
 
         if (brukerHarHuskelappFargekategoriEllerArbeidslisteSomVilBliSlettet) {
             setVisAdvarselOmSletting(true);
