@@ -1,25 +1,29 @@
 import { Formik, FormikBag, FormikProps } from 'formik';
-import { Button, Modal } from '@navikt/ds-react';
+import { Button, Heading, Modal } from '@navikt/ds-react';
 import { ArrowRightIcon } from '@navikt/aksel-icons';
 import {
-    fetchHuskelapp,
+    Huskelapp,
     HuskelappformValues,
     lagreHuskelapp,
     redigerHuskelapp,
-    slettArbeidslisteMenIkkeFargekategori
+    slettArbeidslisteMenIkkeFargekategori,
+    useArbeidsliste,
+    useHuskelapp
 } from '../../../api/veilarbportefolje';
 import { useAppStore } from '../../../store/app-store';
-import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
 import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
 import HuskelappIkon from '../ikon/Huskelappikon_bakgrunnsfarge.svg?react';
-import { toReversedDateStr } from '../../../util/date-utils';
+import { toReversedDateStr, toSimpleDateStr } from '../../../util/date-utils';
 import { HuskelappEditForm } from './huskelapp-edit-form';
 import { GammelArbeidsliste } from './gammelArbeidsliste';
 import { SlettArbeidsliste } from './huskelapp-slett-arbeidsliste';
 import { SlettHuskelapp } from './slett-huskelapp';
 import './huskelapp-redigering.less';
+import { useDataStore } from '../../../store/data-store';
+import { KopierKnappTekst } from '../../components/kopier-knapp/kopier-knapp';
+import { selectSammensattNavn } from '../../../util/selectors';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -28,9 +32,11 @@ const huskelappEmptyValues = {
 };
 
 function HuskelappRedigereModal() {
-    const { brukerFnr, enhetId } = useAppStore();
-    const { hideModal, showSpinnerModal, showErrorModal, showHuskelappModal } = useModalStore();
-    const { huskelapp, setHuskelapp, arbeidsliste, setArbeidsliste } = useDataStore();
+    const { brukerFnr, visVeilederVerktoy, enhetId } = useAppStore();
+    const { innloggetVeileder } = useDataStore();
+    const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
+    const { data: arbeidsliste, mutate: setArbeidsliste } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
+    const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);
 
     const erArbeidslistaTom =
         arbeidsliste?.sistEndretAv == null ||
@@ -45,6 +51,9 @@ function HuskelappRedigereModal() {
     };
 
     const initalValues: HuskelappformValues = huskelapp?.endretDato ? huskelappValues : huskelappEmptyValues;
+    const modalNavn = erArbeidslistaTom ? 'Huskelapp' : 'Bytt fra gammel arbeidsliste til ny huskelapp';
+    const { personalia } = useDataStore();
+    const navn = selectSammensattNavn(personalia);
 
     function onRequestClose(formikProps: FormikProps<HuskelappformValues>) {
         const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
@@ -55,6 +64,11 @@ function HuskelappRedigereModal() {
         }
     }
 
+    function endretAv(huskelapp: Huskelapp | undefined): string {
+        if (huskelapp?.endretAv && huskelapp?.endretAv?.length > 0)
+            return `Endret ${toSimpleDateStr(huskelapp?.endretDato?.toString())} av ${huskelapp?.endretAv}`;
+        return '';
+    }
     function handleSubmit(
         values: HuskelappformValues,
         formikFunctions: FormikBag<FormikProps<HuskelappformValues>, HuskelappformValues>
@@ -94,10 +108,17 @@ function HuskelappRedigereModal() {
                 brukerFnr: brukerFnr,
                 enhetId: enhetId
             })
-                .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
-                .then(res => res.data)
-                .then(setHuskelapp)
-                .then(showHuskelappModal)
+                .then(() =>
+                    setHuskelapp({
+                        huskelappId: values.huskelappId ? values.huskelappId : null,
+                        kommentar: values.kommentar ? values.kommentar : null,
+                        frist: values.frist ? new Date(values.frist) : null,
+                        enhetId: enhetId,
+                        endretDato: new Date(),
+                        endretAv: innloggetVeileder?.ident
+                    })
+                )
+                .then(hideModal)
                 .catch(showErrorModal);
             if (!erArbeidslistaTom) {
                 slettArbeidslisteMenIkkeFargekategori(brukerFnr)
@@ -111,14 +132,24 @@ function HuskelappRedigereModal() {
                 brukerFnr: brukerFnr,
                 enhetId: enhetId
             })
-                .then(() => fetchHuskelapp(brukerFnr.toString(), enhetId ?? ''))
-                .then(res => res.data)
-                .then(setHuskelapp)
-                .then(showHuskelappModal)
+                .then(() =>
+                    setHuskelapp({
+                        huskelappId: 'midlertidig',
+                        endretDato: new Date(),
+                        endretAv: innloggetVeileder?.ident,
+                        enhetId: enhetId,
+                        kommentar: values.kommentar ? values.kommentar : null,
+                        frist: values.frist ? new Date(values.frist) : null
+                    })
+                )
+                .then(() => {
+                    slettArbeidslisteMenIkkeFargekategori(brukerFnr)
+                        .then(res => res.data)
+                        .then(setArbeidsliste)
+                        .catch(showErrorModal);
+                })
+                .then(hideModal)
                 .catch(showErrorModal);
-            slettArbeidslisteMenIkkeFargekategori(brukerFnr)
-                .then(res => res.data)
-                .then(setArbeidsliste);
         }
     }
 
@@ -126,16 +157,26 @@ function HuskelappRedigereModal() {
         <Formik key={brukerFnr} initialValues={initalValues} onSubmit={handleSubmit} validateOnBlur={false}>
             {formikProps => (
                 <Modal
-                    header={{
-                        icon: <HuskelappIkon aria-hidden />,
-                        heading: !erArbeidslistaTom ? 'Bytt fra gammel arbeidsliste til ny huskelapp' : 'Huskelapp',
-                        size: 'small'
-                    }}
+                    aria-label={modalNavn}
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
                     closeOnBackdropClick={true}
                     className="rediger-huskelapp-modal"
                 >
+                    <Modal.Header>
+                        <div className="rediger-huskelapp-modal-header">
+                            <HuskelappIkon aria-hidden className="navds-modal__header-icon" />
+                            <Heading size="xsmall" className="rediger-huskelapp-modal-header-tekst">
+                                {modalNavn}
+                            </Heading>
+                        </div>
+                        <div className="rediger-huskelapp-modal-header">
+                            <Heading size="xsmall" level="3">
+                                {navn}
+                            </Heading>
+                            <KopierKnappTekst kopierTekst={brukerFnr} viseTekst={`F.nr.: ${brukerFnr}`} />
+                        </div>
+                    </Modal.Header>
                     <Modal.Body className="rediger-huskelapp-modal-body">
                         {!erArbeidslistaTom && (
                             <>
@@ -143,7 +184,7 @@ function HuskelappRedigereModal() {
                                 <ArrowRightIcon title="Pil mot høyre" className="rediger-huskelapp-modal-pil" />
                             </>
                         )}
-                        <HuskelappEditForm erArbeidslistaTom={erArbeidslistaTom} />
+                        <HuskelappEditForm endretAv={endretAv(huskelapp)} erArbeidslistaTom={erArbeidslistaTom} />
                     </Modal.Body>
                     <Modal.Footer className="rediger-huskelapp-modal-footer">
                         <Button size="small" variant="primary" form="huskelapp-form" type="submit">

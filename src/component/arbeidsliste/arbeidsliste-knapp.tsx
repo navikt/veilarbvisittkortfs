@@ -1,18 +1,18 @@
 import ArbeidslistekategoriVisning from './arbeidslistekategori-visning';
 import withClickMetric from '../components/click-metric/click-metric';
-import { useDataStore } from '../../store/data-store';
-import { KategoriModell } from '../../api/veilarbportefolje';
+import { KategoriModell, useArbeidsliste } from '../../api/veilarbportefolje';
 import { trackAmplitude } from '../../amplitude/amplitude';
 import { Button } from '@navikt/ds-react';
+import { useAppStore } from '../../store/app-store';
 
 export interface ArbeidslisteKnappProps {
     hidden: boolean;
     onClick: () => void;
-    kanRedigereArbeidsliste: boolean;
 }
 
 function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
-    const { arbeidsliste } = useDataStore();
+    const { brukerFnr, visVeilederVerktoy } = useAppStore();
+    const { data: arbeidsliste } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
 
     if (props.hidden) {
         return null;

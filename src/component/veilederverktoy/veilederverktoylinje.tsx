@@ -11,9 +11,7 @@ import {
     kanRegistreresEllerReaktiveres,
     selectKanAvslutteOppfolging,
     selectKanLeggeIArbeidsListe,
-    selectKanOppretteHuskelapp,
     selectKanRedigereArbeidsliste,
-    selectKanRedigereHuskelapp,
     selectKanSendeEskaleringsVarsel,
     selectKanStarteDigitalOppfolging,
     selectKanStarteKVP,
@@ -25,19 +23,27 @@ import {
 import { doAll } from '../../util/utils';
 import { trackAmplitude } from '../../amplitude/amplitude';
 import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
+import {
+    harTilgangTilHuskelappEllerFargekategori,
+    feilErIkke403,
+    feilErIkke404,
+    feilErIkke400
+} from '../huskelapp/harTilgangTilHuskelapp';
+import { useArbeidsliste, useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
+import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 
 function Veilederverktoylinje() {
-    const { visVeilederVerktoy } = useAppStore();
-    const {
-        oppfolging,
-        tilgangTilBrukersKontor,
-        innloggetVeileder,
-        arbeidsliste,
-        oppfolgingsstatus,
-        gjeldendeEskaleringsvarsel,
-        huskelapp,
-        features
-    } = useDataStore();
+    const { visVeilederVerktoy, brukerFnr } = useAppStore();
+    const { oppfolging, innloggetVeileder, gjeldendeEskaleringsvarsel, features } = useDataStore();
+    const { data: oppfolgingsstatus, error: oppfolgingsstatusError } = useOppfolgingsstatus(brukerFnr);
+    const { data: arbeidsliste, error: arbeidslisteError } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
+    const { data: huskelapp, error: huskelappError } = useHuskelapp(brukerFnr, visVeilederVerktoy);
+    const { data: erUfordeltBruker, error: erUfordeltBrukerError } = useErUfordeltBruker(
+        brukerFnr,
+        visVeilederVerktoy && oppfolging?.underOppfolging
+    );
+    const { data: tilgangTilBrukersKontor, error: tilgangTilBrukersKontorError } =
+        useTilgangTilBrukersKontor(brukerFnr);
     const {
         showArbeidslisteModal,
         showTildelVeilederModal,
@@ -50,10 +56,23 @@ function Veilederverktoylinje() {
         showOpprettOppgaveModal,
         showAvsluttOppfolgingModal,
         showHistorikkModal,
-        showHuskelappRedigereModal,
-        showHuskelappModal
+        showHuskelappRedigereModal
     } = useModalStore();
 
+    const dataForHuskelappOgFargekategoriHasErrors =
+        feilErIkke403(arbeidslisteError) ||
+        (feilErIkke403(huskelappError) && feilErIkke400(huskelappError)) ||
+        feilErIkke400(erUfordeltBrukerError) ||
+        tilgangTilBrukersKontorError ||
+        feilErIkke404(oppfolgingsstatusError);
+
+    const sjekkHarTilgangTilHuskelappEllerFargekategori =
+        !dataForHuskelappOgFargekategoriHasErrors &&
+        harTilgangTilHuskelappEllerFargekategori(
+            erUfordeltBruker === undefined ? true : erUfordeltBruker,
+            !!oppfolgingsstatus?.veilederId,
+            !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor
+        );
     const kanStarteEskalering = selectKanSendeEskaleringsVarsel(
         oppfolging,
         gjeldendeEskaleringsvarsel,
@@ -73,11 +92,6 @@ function Veilederverktoylinje() {
     const kanLagreArbeidsliste = selectKanLeggeIArbeidsListe(innloggetVeileder, oppfolgingsstatus, arbeidsliste);
     const kanEndreArbeidsliste = selectKanRedigereArbeidsliste(arbeidsliste);
     const kanTildeleVeileder = selectKanTildeleVeileder(oppfolging, tilgangTilBrukersKontor);
-    const kanOppretteHuskelapp =
-        selectKanOppretteHuskelapp(innloggetVeileder, oppfolgingsstatus) && !huskelapp?.huskelappId;
-    const kanRedigereHuskelapp =
-        selectKanRedigereHuskelapp(innloggetVeileder, oppfolgingsstatus, tilgangTilBrukersKontor) &&
-        !!huskelapp?.huskelappId;
 
     if (!visVeilederVerktoy) {
         return null;
@@ -101,17 +115,11 @@ function Veilederverktoylinje() {
         trackAmplitude({
             name: 'navigere',
             data: {
-                lenketekst: `veiledervektoy-${kanOppretteHuskelapp ? 'lag-huskelapp' : 'vis-huskelapp'}`,
+                lenketekst: `veiledervektoy-${huskelapp?.huskelappId ? 'endre-huskelapp' : 'lag-huskelapp'}`,
                 destinasjon: 'huskelapp'
             }
         });
-
-        const erHuskelappTom = huskelapp?.huskelappId == null;
-        if (erHuskelappTom) {
-            showHuskelappRedigereModal();
-        } else {
-            showHuskelappModal();
-        }
+        showHuskelappRedigereModal();
     };
 
     return (
@@ -124,37 +132,41 @@ function Veilederverktoylinje() {
                 btnClassnames="knapp knapp--standard knapp-fss"
                 render={lukkDropdown => (
                     <>
-                        {kanEndreArbeidsliste && !features[HUSKELAPP] && (
-                            <li>
-                                <StartProsess
-                                    knappeTekst="Rediger arbeidsliste"
-                                    onClick={() => doAll(arbeidslisteKlikk, lukkDropdown)}
-                                />
-                            </li>
-                        )}
-                        {kanLagreArbeidsliste && !features[HUSKELAPP] && (
-                            <li>
-                                <StartProsess
-                                    knappeTekst="Legg i arbeidsliste"
-                                    onClick={() => doAll(arbeidslisteKlikk, lukkDropdown)}
-                                />
-                            </li>
-                        )}
-                        {features[HUSKELAPP] && (kanRedigereHuskelapp || kanEndreArbeidsliste) && (
-                            <li>
-                                <StartProsess
-                                    knappeTekst="Vis huskelapp"
-                                    onClick={() => doAll(huskelappKlikk, lukkDropdown)}
-                                />
-                            </li>
-                        )}
-                        {features[HUSKELAPP] && kanOppretteHuskelapp && !kanEndreArbeidsliste && (
-                            <li>
-                                <StartProsess
-                                    knappeTekst="Lag huskelapp"
-                                    onClick={() => doAll(huskelappKlikk, lukkDropdown)}
-                                />
-                            </li>
+                        {sjekkHarTilgangTilHuskelappEllerFargekategori && (
+                            <>
+                                {kanEndreArbeidsliste && !features[HUSKELAPP] && (
+                                    <li>
+                                        <StartProsess
+                                            knappeTekst="Rediger arbeidsliste"
+                                            onClick={() => doAll(arbeidslisteKlikk, lukkDropdown)}
+                                        />
+                                    </li>
+                                )}
+                                {kanLagreArbeidsliste && !features[HUSKELAPP] && (
+                                    <li>
+                                        <StartProsess
+                                            knappeTekst="Legg i arbeidsliste"
+                                            onClick={() => doAll(arbeidslisteKlikk, lukkDropdown)}
+                                        />
+                                    </li>
+                                )}
+                                {huskelapp?.huskelappId && features[HUSKELAPP] && (
+                                    <li>
+                                        <StartProsess
+                                            knappeTekst="Rediger huskelapp"
+                                            onClick={() => doAll(huskelappKlikk, lukkDropdown)}
+                                        />
+                                    </li>
+                                )}
+                                {huskelapp === null && features[HUSKELAPP] && (
+                                    <li>
+                                        <StartProsess
+                                            knappeTekst="Lag huskelapp"
+                                            onClick={() => doAll(huskelappKlikk, lukkDropdown)}
+                                        />
+                                    </li>
+                                )}
+                            </>
                         )}
                         {kanTildeleVeileder && (
                             <li>
