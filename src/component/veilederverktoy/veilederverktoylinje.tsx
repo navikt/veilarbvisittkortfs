@@ -23,27 +23,20 @@ import {
 import { doAll } from '../../util/utils';
 import { trackAmplitude } from '../../amplitude/amplitude';
 import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
-import {
-    harTilgangTilHuskelappEllerFargekategori,
-    feilErIkke403,
-    feilErIkke404,
-    feilErIkke400
-} from '../huskelapp/harTilgangTilHuskelapp';
+import { harTilgangTilHuskelappEllerFargekategori } from '../huskelapp/harTilgangTilHuskelapp';
 import { useArbeidsliste, useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
 import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 
 function Veilederverktoylinje() {
     const { visVeilederVerktoy, brukerFnr } = useAppStore();
     const { oppfolging, innloggetVeileder, gjeldendeEskaleringsvarsel, features } = useDataStore();
-    const { data: oppfolgingsstatus, error: oppfolgingsstatusError } = useOppfolgingsstatus(brukerFnr);
-    const { data: arbeidsliste, error: arbeidslisteError } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
-    const { data: huskelapp, error: huskelappError } = useHuskelapp(brukerFnr, visVeilederVerktoy);
-    const { data: erUfordeltBruker, error: erUfordeltBrukerError } = useErUfordeltBruker(
+    const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
+    const { data: erUfordeltBruker } = useErUfordeltBruker(
         brukerFnr,
         visVeilederVerktoy && oppfolging?.underOppfolging
     );
-    const { data: tilgangTilBrukersKontor, error: tilgangTilBrukersKontorError } =
-        useTilgangTilBrukersKontor(brukerFnr);
+    const { data: tilgangTilBrukersKontor } = useTilgangTilBrukersKontor(brukerFnr);
+
     const {
         showArbeidslisteModal,
         showTildelVeilederModal,
@@ -59,20 +52,22 @@ function Veilederverktoylinje() {
         showHuskelappRedigereModal
     } = useModalStore();
 
-    const dataForHuskelappOgFargekategoriHasErrors =
-        feilErIkke403(arbeidslisteError) ||
-        (feilErIkke403(huskelappError) && feilErIkke400(huskelappError)) ||
-        feilErIkke400(erUfordeltBrukerError) ||
-        tilgangTilBrukersKontorError ||
-        feilErIkke404(oppfolgingsstatusError);
+    const sjekkHarTilgangTilHuskelappEllerFargekategori = harTilgangTilHuskelappEllerFargekategori(
+        erUfordeltBruker === undefined ? true : erUfordeltBruker,
+        !!oppfolgingsstatus?.veilederId,
+        !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor
+    );
 
-    const sjekkHarTilgangTilHuskelappEllerFargekategori =
-        !dataForHuskelappOgFargekategoriHasErrors &&
-        harTilgangTilHuskelappEllerFargekategori(
-            erUfordeltBruker === undefined ? true : erUfordeltBruker,
-            !!oppfolgingsstatus?.veilederId,
-            !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor
-        );
+    const { data: arbeidsliste } = useArbeidsliste(
+        brukerFnr,
+        visVeilederVerktoy && sjekkHarTilgangTilHuskelappEllerFargekategori
+    );
+
+    const { data: huskelapp } = useHuskelapp(
+        brukerFnr,
+        visVeilederVerktoy && sjekkHarTilgangTilHuskelappEllerFargekategori
+    );
+
     const kanStarteEskalering = selectKanSendeEskaleringsVarsel(
         oppfolging,
         gjeldendeEskaleringsvarsel,

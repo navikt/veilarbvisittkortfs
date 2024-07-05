@@ -4,6 +4,7 @@ import { KategoriModell, useArbeidsliste } from '../../api/veilarbportefolje';
 import { trackAmplitude } from '../../amplitude/amplitude';
 import { Button } from '@navikt/ds-react';
 import { useAppStore } from '../../store/app-store';
+import { logMetrikk } from '../../util/logger';
 
 export interface ArbeidslisteKnappProps {
     hidden: boolean;
@@ -17,14 +18,15 @@ function ArbeidslisteKnapp(props: ArbeidslisteKnappProps) {
     if (props.hidden) {
         return null;
     }
-
     const kategori = arbeidsliste?.kategori || KategoriModell.TOM;
+    const arbeidslisteikon = arbeidsliste?.kategori;
 
     const onClick = () => {
         trackAmplitude({
             name: 'navigere',
             data: { lenketekst: 'visittkort-fargekategori-ikon', destinasjon: 'arbeidslista' }
         });
+        logMetrikk('veilarbvisittkortfs.metrikker.visittkort.arbeidsliste-ikon', { kategori: arbeidslisteikon });
         props.onClick();
     };
 
