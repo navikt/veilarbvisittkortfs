@@ -13,10 +13,10 @@ import { BodyShort, Button, Heading, Modal } from '@navikt/ds-react';
 import { useArbeidsliste, useFargekategori, useHuskelapp } from '../../../api/veilarbportefolje';
 
 function TildelVeileder() {
-    const { brukerFnr } = useAppStore();
-    const { data: arbeidsliste } = useArbeidsliste(brukerFnr);
-    const { data: huskelapp } = useHuskelapp(brukerFnr);
-    const { data: fargekategori } = useFargekategori(brukerFnr);
+    const { brukerFnr, visVeilederVerktoy } = useAppStore();
+    const { data: arbeidsliste } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
+    const { data: huskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);
+    const { data: fargekategori } = useFargekategori(brukerFnr, visVeilederVerktoy);
     const { showTildelVeilederKvitteringModal, showTildelVeilederFeiletModal, hideModal } = useModalStore();
     const [visAdvarselOmSletting, setVisAdvarselOmSletting] = useState<boolean>(false);
     const { data: oppfolgingstatus, mutate: setOppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);

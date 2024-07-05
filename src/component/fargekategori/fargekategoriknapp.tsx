@@ -11,8 +11,8 @@ interface Props {
 
 export const Fargekategoriknapp = ({ isLoading }: Props) => {
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const { brukerFnr } = useAppStore();
-    const { data: fargekategori, mutate: setFargekategori } = useFargekategori(brukerFnr);
+    const { brukerFnr, visVeilederVerktoy } = useAppStore();
+    const { data: fargekategori, mutate: setFargekategori } = useFargekategori(brukerFnr, visVeilederVerktoy);
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const titletekst = fargekategori?.fargekategoriVerdi
         ? 'Kategori ' + Fargekategorinavn[fargekategori.fargekategoriVerdi].toLowerCase()

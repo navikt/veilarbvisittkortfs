@@ -32,11 +32,11 @@ const huskelappEmptyValues = {
 };
 
 function HuskelappRedigereModal() {
-    const { brukerFnr, enhetId } = useAppStore();
+    const { brukerFnr, visVeilederVerktoy, enhetId } = useAppStore();
     const { innloggetVeileder } = useDataStore();
     const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
-    const { data: arbeidsliste, mutate: setArbeidsliste } = useArbeidsliste(brukerFnr);
-    const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr);
+    const { data: arbeidsliste, mutate: setArbeidsliste } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
+    const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);
 
     const erArbeidslistaTom =
         arbeidsliste?.sistEndretAv == null ||

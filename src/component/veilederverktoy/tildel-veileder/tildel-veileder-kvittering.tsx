@@ -9,9 +9,9 @@ export interface TildelVeilederKvitteringProps {
 }
 
 export function TildelVeilederKvittering(props: TildelVeilederKvitteringProps) {
-    const { brukerFnr } = useAppStore();
+    const { brukerFnr, visVeilederVerktoy } = useAppStore();
     const { hideModal } = useModalStore();
-    const { mutate: setUfordeltbruker } = useErUfordeltBruker(brukerFnr);
+    const { mutate: setUfordeltbruker } = useErUfordeltBruker(brukerFnr, visVeilederVerktoy);
 
     return (
         <VarselModal isOpen={true} onRequestClose={hideModal} type="SUCCESS" inkluderIkon={false}>
