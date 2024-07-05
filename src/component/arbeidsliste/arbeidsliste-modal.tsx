@@ -29,10 +29,10 @@ const arbeidslisteEmptyValues = {
 };
 
 function ArbeidslisteModal() {
-    const { brukerFnr } = useAppStore();
+    const { brukerFnr, visVeilederVerktoy } = useAppStore();
     const { hideModal, showSpinnerModal, showErrorModal, showFjernArbeidslisteModal } = useModalStore();
     const { oppfolging, innloggetVeileder, personalia } = useDataStore();
-    const { data: arbeidsliste, mutate: setArbeidsliste } = useArbeidsliste(brukerFnr);
+    const { data: arbeidsliste, mutate: setArbeidsliste } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
 
     const liste = arbeidsliste as Arbeidsliste;
 

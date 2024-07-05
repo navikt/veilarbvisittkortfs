@@ -13,7 +13,7 @@ import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 import { useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 
 export function DataFetcher(props: { children: React.ReactNode }) {
-    const { brukerFnr } = useAppStore();
+    const { brukerFnr, visVeilederVerktoy } = useAppStore();
     const {
         setOppfolging,
         setInnloggetVeileder,
@@ -40,15 +40,17 @@ export function DataFetcher(props: { children: React.ReactNode }) {
 
     useEffect(() => {
         oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging)).catch();
-        gjeldendeEskaleringsvarselFetcher
-            .fetch(brukerFnr)
-            .then(ifResponseHasData(setGjeldendeEskaleringsvarsel))
-            .catch();
+        if (visVeilederVerktoy) {
+            gjeldendeEskaleringsvarselFetcher
+                .fetch(brukerFnr)
+                .then(ifResponseHasData(setGjeldendeEskaleringsvarsel))
+                .catch();
+        }
         vergeOgFullmaktFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setVergeOgFullmakt)).catch();
         spraakTolkFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setSpraakTolk)).catch();
         personaliaFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setPersonalia)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [brukerFnr]);
+    }, [brukerFnr, visVeilederVerktoy]);
 
     useEffect(() => {
         innloggetVeilederFetcher.fetch().then(ifResponseHasData(setInnloggetVeileder)).catch();
@@ -57,11 +59,11 @@ export function DataFetcher(props: { children: React.ReactNode }) {
     }, []);
 
     useEffect(() => {
-        if (oppfolgingsEnhet) {
+        if (visVeilederVerktoy && oppfolgingsEnhet) {
             veilederePaEnhetFetcher.fetch(oppfolgingsEnhet).then(ifResponseHasData(setVeilederePaEnhet)).catch();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [oppfolgingsstatus]);
+    }, [oppfolgingsstatus, visVeilederVerktoy]);
 
     if (
         oppfolgingsstatusIsLoading ||

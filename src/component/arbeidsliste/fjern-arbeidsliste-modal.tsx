@@ -10,9 +10,9 @@ import { trackAmplitude } from '../../amplitude/amplitude';
 import { BodyShort, Heading, Button } from '@navikt/ds-react';
 
 function FjernArbeidslisteModal() {
-    const { brukerFnr } = useAppStore();
+    const { brukerFnr, visVeilederVerktoy } = useAppStore();
     const { personalia } = useDataStore();
-    const { mutate: setArbeidsliste } = useArbeidsliste(brukerFnr);
+    const { mutate: setArbeidsliste } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
 
     const { showSpinnerModal, showErrorModal, hideModal } = useModalStore();
 
