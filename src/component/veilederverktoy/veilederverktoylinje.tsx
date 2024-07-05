@@ -3,10 +3,10 @@ import '../components/knapp-fss/knapp-fss.less';
 import Dropdown from '../components/dropdown/dropdown';
 import StartRegistreringProsess from './start-registrering/start-registrering-prosess';
 import StartProsess from './prosess/start-prosess';
-import { useAppStore } from '../../store/app-store';
-import { logMetrikk } from '../../util/logger';
-import { useModalStore } from '../../store/modal-store';
-import { useDataStore } from '../../store/data-store';
+import {useAppStore} from '../../store/app-store';
+import {logMetrikk} from '../../util/logger';
+import {useModalStore} from '../../store/modal-store';
+import {useDataStore} from '../../store/data-store';
 import {
     kanRegistreresEllerReaktiveres,
     selectKanAvslutteOppfolging,
@@ -20,30 +20,24 @@ import {
     selectKanStoppeKVP,
     selectKanTildeleVeileder
 } from '../../util/selectors';
-import { doAll } from '../../util/utils';
-import { trackAmplitude } from '../../amplitude/amplitude';
-import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
-import {
-    harTilgangTilHuskelappEllerFargekategori,
-    feilErIkke403,
-    feilErIkke404,
-    feilErIkke400
-} from '../huskelapp/harTilgangTilHuskelapp';
-import { useArbeidsliste, useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
-import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
+import {doAll} from '../../util/utils';
+import {trackAmplitude} from '../../amplitude/amplitude';
+import {HUSKELAPP} from '../../api/veilarbpersonflatefs';
+import {harTilgangTilHuskelappEllerFargekategori} from '../huskelapp/harTilgangTilHuskelapp';
+import {useArbeidsliste, useErUfordeltBruker, useHuskelapp} from '../../api/veilarbportefolje';
+import {useOppfolgingsstatus, useTilgangTilBrukersKontor} from '../../api/veilarboppfolging';
 
 function Veilederverktoylinje() {
-    const { visVeilederVerktoy, brukerFnr } = useAppStore();
-    const { oppfolging, innloggetVeileder, gjeldendeEskaleringsvarsel, features } = useDataStore();
-    const { data: oppfolgingsstatus, error: oppfolgingsstatusError } = useOppfolgingsstatus(brukerFnr);
-    const { data: arbeidsliste, error: arbeidslisteError } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
-    const { data: huskelapp, error: huskelappError } = useHuskelapp(brukerFnr, visVeilederVerktoy);
-    const { data: erUfordeltBruker, error: erUfordeltBrukerError } = useErUfordeltBruker(
+    const {visVeilederVerktoy, brukerFnr} = useAppStore();
+    const {oppfolging, innloggetVeileder, gjeldendeEskaleringsvarsel, features} = useDataStore();
+    const {data: oppfolgingsstatus} = useOppfolgingsstatus(brukerFnr);
+    const {data: erUfordeltBruker} = useErUfordeltBruker(
         brukerFnr,
         visVeilederVerktoy && oppfolging?.underOppfolging
     );
-    const { data: tilgangTilBrukersKontor, error: tilgangTilBrukersKontorError } =
+    const {data: tilgangTilBrukersKontor} =
         useTilgangTilBrukersKontor(brukerFnr);
+
     const {
         showArbeidslisteModal,
         showTildelVeilederModal,
@@ -59,20 +53,20 @@ function Veilederverktoylinje() {
         showHuskelappRedigereModal
     } = useModalStore();
 
-    const dataForHuskelappOgFargekategoriHasErrors =
-        feilErIkke403(arbeidslisteError) ||
-        (feilErIkke403(huskelappError) && feilErIkke400(huskelappError)) ||
-        feilErIkke400(erUfordeltBrukerError) ||
-        tilgangTilBrukersKontorError ||
-        feilErIkke404(oppfolgingsstatusError);
+    const sjekkHarTilgangTilHuskelappEllerFargekategori = harTilgangTilHuskelappEllerFargekategori(
+        erUfordeltBruker === undefined ? true : erUfordeltBruker,
+        !!oppfolgingsstatus?.veilederId,
+        !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor
+    );
 
-    const sjekkHarTilgangTilHuskelappEllerFargekategori =
-        !dataForHuskelappOgFargekategoriHasErrors &&
-        harTilgangTilHuskelappEllerFargekategori(
-            erUfordeltBruker === undefined ? true : erUfordeltBruker,
-            !!oppfolgingsstatus?.veilederId,
-            !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor
-        );
+    const {
+        data: arbeidsliste
+    } = useArbeidsliste(brukerFnr, visVeilederVerktoy && sjekkHarTilgangTilHuskelappEllerFargekategori);
+
+    const {
+        data: huskelapp
+    } = useHuskelapp(brukerFnr, visVeilederVerktoy && sjekkHarTilgangTilHuskelappEllerFargekategori);
+
     const kanStarteEskalering = selectKanSendeEskaleringsVarsel(
         oppfolging,
         gjeldendeEskaleringsvarsel,
@@ -89,13 +83,27 @@ function Veilederverktoylinje() {
     const kanStarteKVP = selectKanStarteKVP(oppfolging, tilgangTilBrukersKontor);
     const kanStoppeKVP = selectKanStoppeKVP(oppfolging, tilgangTilBrukersKontor);
     const kanRegistrere = kanRegistreresEllerReaktiveres(oppfolging);
-    const kanLagreArbeidsliste = selectKanLeggeIArbeidsListe(innloggetVeileder, oppfolgingsstatus, arbeidsliste);
-    const kanEndreArbeidsliste = selectKanRedigereArbeidsliste(arbeidsliste);
     const kanTildeleVeileder = selectKanTildeleVeileder(oppfolging, tilgangTilBrukersKontor);
 
     if (!visVeilederVerktoy) {
         return null;
     }
+
+    const kanLagreArbeidsliste = selectKanLeggeIArbeidsListe(innloggetVeileder, oppfolgingsstatus, arbeidsliste);
+    const kanEndreArbeidsliste = selectKanRedigereArbeidsliste(arbeidsliste);
+
+    const huskelappKlikk = () => {
+        if (huskelapp != null) {
+            trackAmplitude({
+                name: 'navigere',
+                data: {
+                    lenketekst: `veiledervektoy-${huskelapp?.huskelappId ? 'endre-huskelapp' : 'lag-huskelapp'}`,
+                    destinasjon: 'huskelapp'
+                }
+            });
+            showHuskelappRedigereModal();
+        }
+    };
 
     const arbeidslisteKlikk = () => {
         logMetrikk('veilarbvisittkortfs.metrikker.veilederverktoy.arbeidsliste', {
@@ -109,17 +117,6 @@ function Veilederverktoylinje() {
             }
         });
         showArbeidslisteModal();
-    };
-
-    const huskelappKlikk = () => {
-        trackAmplitude({
-            name: 'navigere',
-            data: {
-                lenketekst: `veiledervektoy-${huskelapp?.huskelappId ? 'endre-huskelapp' : 'lag-huskelapp'}`,
-                destinasjon: 'huskelapp'
-            }
-        });
-        showHuskelappRedigereModal();
     };
 
     return (
@@ -197,7 +194,7 @@ function Veilederverktoylinje() {
                         )}
                         {kanRegistrere && (
                             <li>
-                                <StartRegistreringProsess />
+                                <StartRegistreringProsess/>
                             </li>
                         )}
                         {kanStarteManuellOppfolging && (

@@ -15,7 +15,11 @@ export interface HuskelappKnappProps {
 function HuskelappKnapp(props: HuskelappKnappProps) {
     const { data: arbeidsliste, error: arbeidslisteError } = useArbeidsliste(props.brukerFnr, props.visVeilederVerktoy);
 
-    const { data: huskelapp, error: huskelappError } = useHuskelapp(props.brukerFnr, props.visVeilederVerktoy);
+    const {
+        data: huskelapp,
+        isLoading: huskelappIsLoading,
+        error: huskelappError
+    } = useHuskelapp(props.brukerFnr, props.visVeilederVerktoy);
 
     const erArbeidslisteTom = arbeidsliste?.sistEndretAv == null;
     const erHuskelappTom = huskelapp?.huskelappId == null;
@@ -39,12 +43,15 @@ function HuskelappKnapp(props: HuskelappKnappProps) {
                     Feil i huskelapp
                 </Alert>
             )}
-            <Button
-                variant="tertiary"
-                icon={harHuskelappEllerArbeidsliste ? <HuskelappIkon /> : <HuskelappInaktivIkon />}
-                title={harHuskelappEllerArbeidsliste ? 'Endre huskelapp' : 'Opprett huskelapp'}
-                onClick={onClick}
-            />
+            {!hasError && (
+                <Button
+                    variant="tertiary"
+                    icon={harHuskelappEllerArbeidsliste ? <HuskelappIkon /> : <HuskelappInaktivIkon />}
+                    title={harHuskelappEllerArbeidsliste ? 'Endre huskelapp' : 'Opprett huskelapp'}
+                    onClick={onClick}
+                    loading={huskelappIsLoading}
+                />
+            )}
         </>
     );
 }

@@ -12,6 +12,7 @@ export const Fargekategoriknapp = () => {
     const {
         data: fargekategori,
         mutate: setFargekategori,
+        isLoading: fargekategoriIsLoading,
         error: fargekategoriError
     } = useFargekategori(brukerFnr, visVeilederVerktoy);
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -37,6 +38,7 @@ export const Fargekategoriknapp = () => {
                         ref={buttonRef}
                         onClick={() => setIsPopoverOpen(!isPopoverOpen)}
                         aria-expanded={isPopoverOpen}
+                        loading={fargekategoriIsLoading}
                     />
                     <FargekategoriPopover
                         buttonRef={buttonRef}
