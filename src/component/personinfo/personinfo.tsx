@@ -24,8 +24,8 @@ import { useArbeidsliste, useErUfordeltBruker, useHuskelapp } from '../../api/ve
 import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 
 function PersonInfo() {
-    const { brukerFnr } = useAppStore();
-    const { personalia, features } = useDataStore();
+    const { brukerFnr, visVeilederVerktoy } = useAppStore();
+    const { personalia, features, oppfolging } = useDataStore();
     const { showArbeidslisteModal, showHuskelappRedigereModal } = useModalStore();
     const {
         data: oppfolgingsstatus,
@@ -36,13 +36,17 @@ function PersonInfo() {
         data: arbeidsliste,
         isLoading: arbeidslisteIsLoading,
         error: arbeidslisteError
-    } = useArbeidsliste(brukerFnr);
-    const { data: huskelapp, isLoading: huskelappIsLoading, error: huskelappError } = useHuskelapp(brukerFnr);
+    } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
+    const {
+        data: huskelapp,
+        isLoading: huskelappIsLoading,
+        error: huskelappError
+    } = useHuskelapp(brukerFnr, visVeilederVerktoy);
     const {
         data: erUfordeltBruker,
         isLoading: erUfordeltBrukerIsLoading,
         error: erUfordeltBrukerError
-    } = useErUfordeltBruker(brukerFnr);
+    } = useErUfordeltBruker(brukerFnr, visVeilederVerktoy && oppfolging?.underOppfolging);
     const {
         data: tilgangTilBrukersKontor,
         isLoading: tilgangTilBrukersKontorIsLoading,

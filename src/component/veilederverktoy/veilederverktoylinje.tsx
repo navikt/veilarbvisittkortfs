@@ -34,13 +34,16 @@ import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veil
 
 function Veilederverktoylinje() {
     const { visVeilederVerktoy, brukerFnr } = useAppStore();
+    const { oppfolging, innloggetVeileder, gjeldendeEskaleringsvarsel, features } = useDataStore();
     const { data: oppfolgingsstatus, error: oppfolgingsstatusError } = useOppfolgingsstatus(brukerFnr);
-    const { data: arbeidsliste, error: arbeidslisteError } = useArbeidsliste(brukerFnr);
-    const { data: huskelapp, error: huskelappError } = useHuskelapp(brukerFnr);
-    const { data: erUfordeltBruker, error: erUfordeltBrukerError } = useErUfordeltBruker(brukerFnr);
+    const { data: arbeidsliste, error: arbeidslisteError } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
+    const { data: huskelapp, error: huskelappError } = useHuskelapp(brukerFnr, visVeilederVerktoy);
+    const { data: erUfordeltBruker, error: erUfordeltBrukerError } = useErUfordeltBruker(
+        brukerFnr,
+        visVeilederVerktoy && oppfolging?.underOppfolging
+    );
     const { data: tilgangTilBrukersKontor, error: tilgangTilBrukersKontorError } =
         useTilgangTilBrukersKontor(brukerFnr);
-    const { oppfolging, innloggetVeileder, gjeldendeEskaleringsvarsel, features } = useDataStore();
     const {
         showArbeidslisteModal,
         showTildelVeilederModal,
