@@ -9,7 +9,7 @@ import { delay, http, HttpResponse, RequestHandler } from 'msw';
 
 const mockFeatures: OboUnleashFeatures = {
     [BRUK_GAMMEL_ARBEIDSREGISTRERING_URL]: true,
-    [HUSKELAPP]: false,
+    [HUSKELAPP]: true,
     [BRUK_NY_KILDE_TIL_FULLMAKT]: true
 };
 

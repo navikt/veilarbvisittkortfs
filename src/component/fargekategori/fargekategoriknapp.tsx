@@ -1,43 +1,53 @@
-import { useRef, useState } from 'react';
-import { useDataStore } from '../../store/data-store';
+import React, { useRef, useState } from 'react';
 import { mapfargekategoriToIkon } from './mapfargekategoriToIkon';
 import { FargekategoriPopover } from './fargekategori-popover';
-import { Fargekategorinavn } from '../../api/veilarbportefolje';
-import { Button } from '@navikt/ds-react';
+import { Fargekategorinavn, useFargekategori } from '../../api/veilarbportefolje';
+import { Alert, Button } from '@navikt/ds-react';
+import { useAppStore } from '../../store/app-store';
+import { feilErIkke400, feilErIkke403 } from '../huskelapp/harTilgangTilHuskelapp';
 
-interface Props {
-    disabled: boolean;
-}
-
-export const Fargekategoriknapp = ({ disabled }: Props) => {
+export const Fargekategoriknapp = () => {
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const { fargekategori, setFargekategori } = useDataStore();
+    const { brukerFnr, visVeilederVerktoy } = useAppStore();
+    const {
+        data: fargekategori,
+        mutate: setFargekategori,
+        isLoading: fargekategoriIsLoading,
+        error: fargekategoriError
+    } = useFargekategori(brukerFnr, visVeilederVerktoy);
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-
     const titletekst = fargekategori?.fargekategoriVerdi
-        ? 'Kategori ' + Fargekategorinavn[fargekategori.fargekategoriVerdi]
+        ? 'Kategori ' + Fargekategorinavn[fargekategori.fargekategoriVerdi].toLowerCase()
         : 'Ingen kategori';
 
-    return disabled ? (
-        <div id="fargekategori--knapp" title={titletekst}>
-            {mapfargekategoriToIkon(fargekategori?.fargekategoriVerdi ?? null)}
-        </div>
-    ) : (
+    const hasError = feilErIkke403(fargekategoriError) && feilErIkke400(fargekategoriError);
+
+    return (
         <>
-            <Button
-                variant="tertiary"
-                icon={mapfargekategoriToIkon(fargekategori?.fargekategoriVerdi ?? null)}
-                title={titletekst + ': endre'}
-                ref={buttonRef}
-                onClick={() => setIsPopoverOpen(true)}
-                aria-expanded={isPopoverOpen}
-            />
-            <FargekategoriPopover
-                buttonRef={buttonRef}
-                isOpen={isPopoverOpen}
-                setIsOpen={setIsPopoverOpen}
-                setFargekategori={setFargekategori}
-            />
+            {hasError && (
+                <Alert variant="warning" size="small">
+                    Feil i fargekategori
+                </Alert>
+            )}
+            {!hasError && (
+                <>
+                    <Button
+                        variant="tertiary"
+                        icon={mapfargekategoriToIkon(fargekategori?.fargekategoriVerdi ?? null)}
+                        title={titletekst + ': endre'}
+                        ref={buttonRef}
+                        onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+                        aria-expanded={isPopoverOpen}
+                        loading={fargekategoriIsLoading}
+                    />
+                    <FargekategoriPopover
+                        buttonRef={buttonRef}
+                        isOpen={isPopoverOpen}
+                        setIsOpen={setIsPopoverOpen}
+                        setFargekategori={setFargekategori}
+                    />
+                </>
+            )}
         </>
     );
 };

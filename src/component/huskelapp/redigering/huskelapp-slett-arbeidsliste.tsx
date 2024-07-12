@@ -2,10 +2,9 @@ import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
 import { TrashIcon } from '@navikt/aksel-icons';
 import { useState } from 'react';
 import { useAppStore } from '../../../store/app-store';
-import { useDataStore } from '../../../store/data-store';
 import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
-import { slettArbeidslisteMenIkkeFargekategori } from '../../../api/veilarbportefolje';
+import { slettArbeidslisteMenIkkeFargekategori, useArbeidsliste } from '../../../api/veilarbportefolje';
 import { ifResponseHasData } from '../../../util/utils';
 
 export const SlettArbeidsliste = () => {
@@ -14,7 +13,7 @@ export const SlettArbeidsliste = () => {
     const [error, setError] = useState(false);
 
     const { brukerFnr } = useAppStore();
-    const { setArbeidsliste } = useDataStore();
+    const { mutate: setArbeidsliste } = useArbeidsliste(brukerFnr);
 
     const handleSlettArbeidsListe = () => {
         logMetrikk('visittkort.metrikker.fjern_arbeidsliste');
