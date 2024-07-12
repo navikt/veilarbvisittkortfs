@@ -84,9 +84,7 @@ function Etiketter() {
             {!features[BRUK_NY_KILDE_TIL_FULLMAKT] && (
                 <Fokus visible={!isEmpty(vergeOgFullmakt?.fullmakt)}>Fullmakt</Fokus>
             )}
-            {features[BRUK_NY_KILDE_TIL_FULLMAKT] && (
-                <Fokus visible={!isEmpty(fullmakt?.fullmakt)}>Representasjon Fullmakt</Fokus>
-            )}
+            {features[BRUK_NY_KILDE_TIL_FULLMAKT] && <Fokus visible={!isEmpty(fullmakt?.fullmakt)}>Fullmakt</Fokus>}
             <Fokus visible={spraakTolk?.tegnspraak}>Tegnspråktolk</Fokus>
             <Fokus visible={spraakTolk?.talespraak}>Språktolk</Fokus>
             <Fokus visible={oppfolging?.underKvp}>KVP</Fokus>
