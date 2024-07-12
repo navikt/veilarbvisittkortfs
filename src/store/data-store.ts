@@ -13,7 +13,7 @@ export const [DataStore, useDataStore] = constate(() => {
     const [innloggetVeileder, setInnloggetVeileder] = useState<VeilederData>();
     const [personalia, setPersonalia] = useState<Personalia>();
     const [vergeOgFullmakt, setVergeOgFullmakt] = useState<VergeOgFullmakt>();
-    const [fullmakter, setFullmakter] = useState<FullmaktDTO>();
+    const [fullmakt, setFullmakt] = useState<FullmaktDTO>();
     const [spraakTolk, setSpraakTolk] = useState<SpraakTolk>();
     const [harBruktNivaa4, setHarBruktNivaa4] = useState<HarBruktNivaa4Type>();
     const [features, setFeatures] = useState<OboUnleashFeatures>(placeholder);
@@ -38,8 +38,8 @@ export const [DataStore, useDataStore] = constate(() => {
         setVeilederePaEnhet,
         vergeOgFullmakt,
         setVergeOgFullmakt,
-        fullmakter,
-        setFullmakter,
+        fullmakt,
+        setFullmakt,
         spraakTolk,
         setSpraakTolk,
         gjeldendeEskaleringsvarsel,

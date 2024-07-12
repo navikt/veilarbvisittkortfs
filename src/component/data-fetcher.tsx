@@ -23,7 +23,7 @@ export function DataFetcher(props: { children: React.ReactNode }) {
         setVergeOgFullmakt,
         setSpraakTolk,
         setGjeldendeEskaleringsvarsel,
-        setFullmakter,
+        setFullmakt,
         features
     } = useDataStore();
 
@@ -50,13 +50,12 @@ export function DataFetcher(props: { children: React.ReactNode }) {
                 .catch();
         }
         vergeOgFullmaktFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setVergeOgFullmakt)).catch();
-        if (features[BRUK_NY_KILDE_TIL_FULLMAKT]) {
-            fullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setFullmakter)).catch();
-        }
+        features[BRUK_NY_KILDE_TIL_FULLMAKT] &&
+            fullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setFullmakt)).catch();
         spraakTolkFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setSpraakTolk)).catch();
         personaliaFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setPersonalia)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [brukerFnr, visVeilederVerktoy]);
+    }, [brukerFnr, visVeilederVerktoy, features]);
 
     useEffect(() => {
         innloggetVeilederFetcher.fetch().then(ifResponseHasData(setInnloggetVeileder)).catch();

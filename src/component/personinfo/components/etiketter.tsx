@@ -9,6 +9,7 @@ import { ifResponseHasData, isEmpty } from '../../../util/utils';
 import visibleIf from '../../components/visible-if';
 import { OrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
+import { BRUK_NY_KILDE_TIL_FULLMAKT } from '../../../api/veilarbpersonflatefs';
 
 const Advarsel = visibleIf(({ children }: Omit<TagProps, 'variant'>) => (
     <Tag variant="error" size="small" className="etikett">
@@ -54,7 +55,7 @@ function manglerVedtak(oppfolging: OrNothing<OppfolgingStatus>): boolean {
 function Etiketter() {
     const { brukerFnr } = useAppStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
-    const { gjeldendeEskaleringsvarsel, oppfolging, personalia, vergeOgFullmakt, fullmakter, spraakTolk } =
+    const { gjeldendeEskaleringsvarsel, oppfolging, personalia, vergeOgFullmakt, fullmakt, spraakTolk, features } =
         useDataStore();
 
     const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>(null);
@@ -80,8 +81,12 @@ function Etiketter() {
             <Advarsel visible={personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
             <Advarsel visible={personalia?.egenAnsatt}>Skjermet</Advarsel>
             <Fokus visible={!isEmpty(vergeOgFullmakt?.vergemaalEllerFremtidsfullmakt)}>Vergemål</Fokus>
-            <Fokus visible={!isEmpty(vergeOgFullmakt?.fullmakt)}>Fullmakt</Fokus>
-            <Fokus visible={!isEmpty(fullmakter?.fullmakt)}>Repr Fullmakt</Fokus>
+            {!features[BRUK_NY_KILDE_TIL_FULLMAKT] && (
+                <Fokus visible={!isEmpty(vergeOgFullmakt?.fullmakt)}>Fullmakt</Fokus>
+            )}
+            {features[BRUK_NY_KILDE_TIL_FULLMAKT] && (
+                <Fokus visible={!isEmpty(fullmakt?.fullmakt)}>Representasjon Fullmakt</Fokus>
+            )}
             <Fokus visible={spraakTolk?.tegnspraak}>Tegnspråktolk</Fokus>
             <Fokus visible={spraakTolk?.talespraak}>Språktolk</Fokus>
             <Fokus visible={oppfolging?.underKvp}>KVP</Fokus>

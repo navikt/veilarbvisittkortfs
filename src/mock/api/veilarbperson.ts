@@ -105,7 +105,7 @@ const mockFullmakt: FullmaktDTO = {
             fullmektig: '04877498455',
             omraade: [
                 {
-                    tema: 'OPP',
+                    tema: 'Oppfølging',
                     handling: [OmraadeHandlingType.LES, OmraadeHandlingType.SKRIV, OmraadeHandlingType.KOMMUNISER]
                 }
             ],
