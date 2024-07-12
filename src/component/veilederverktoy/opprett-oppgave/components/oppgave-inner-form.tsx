@@ -47,7 +47,7 @@ function OppgaveInnerForm({
                     tema={tema}
                     veilederId={veilederId}
                     formikProps={formikProps}
-                    enhetId={enhetId ? enhetId : avsenderenhetId}
+                    enhetId={enhetId || avsenderenhetId}
                 />
             </div>
             <OpprettOppgaveBeskrivelseTekstArea />
