@@ -11,8 +11,8 @@ interface InnstillingHistorikkKomponentProps {
 const ESKALERING_MAX_LENGTH = 120;
 
 type InnstillingsHistorikkTypeTilTekst = {
-    [key in InnstillingsHistorikkType | 'ESKALERING_STARTET' | 'ESKALERING_STOPPET']: string
-}
+    [key in InnstillingsHistorikkType | 'ESKALERING_STARTET' | 'ESKALERING_STOPPET']: string;
+};
 
 const typeTilTekst: InnstillingsHistorikkTypeTilTekst = {
     SATT_TIL_DIGITAL: 'Endret til digital oppfølging',
@@ -29,7 +29,7 @@ const typeTilTekst: InnstillingsHistorikkTypeTilTekst = {
 function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHistorikkKomponentProps) {
     const { type, begrunnelse, dialogId } = innstillingsHistorikk;
 
-    let begrunnelseTekst =
+    const begrunnelseTekst =
         begrunnelse && begrunnelse.length > ESKALERING_MAX_LENGTH
             ? `${begrunnelse.substring(0, ESKALERING_MAX_LENGTH)}... `
             : `${begrunnelse} `;
