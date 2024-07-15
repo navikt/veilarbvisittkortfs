@@ -46,7 +46,7 @@
         "swr": "^2.2.5"
     },
     "devDependencies": {
-        "@eslint/js": "9.4.0",
+        "@eslint/js": "9.7.0",
         "@testing-library/react": "16.0.0",
         "@types/node": "20.14.1",
         "@types/react": "18.3.3",
