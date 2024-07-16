@@ -17,6 +17,24 @@
         .rediger-huskelapp-modal-header-tekst {
             margin-left: 0.3rem;
         }
+
+        .rediger-huskelapp-modal-personinfo {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            column-gap: 0.5rem;
+            row-gap: 0.1rem;
+
+            /* I oversikten er (nesten) all tekst 0.875rem, så vi etterliknar det på personinfoen her også.
+             * Ikonet får likevel vere stort (tilsvarar 20px) */
+            p, button span {
+                font-size: var(--a-font-size-small);
+            }
+            svg {
+                font-size: var(--a-font-size-xlarge);
+            }
+        }
+
         .rediger-huskelapp-modal-body {
             padding-bottom: 0;
             overflow: visible; // Gjer at focus-stylinga ikkje vert kutta sjølv om padding-bottom er 0.
