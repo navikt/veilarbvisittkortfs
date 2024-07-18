@@ -7,11 +7,6 @@ import withClickMetric from '../../../../components/click-metric/click-metric';
 import hiddenIf from '../../../../components/hidden-if/hidden-if';
 import './select-med-sok.less';
 
-const btnCls = (erApen: boolean) =>
-    classNames('velg-enhet-dropdown', 'select-med-sok', {
-        'select-med-sok--apen': erApen
-    });
-
 interface SelectMedSokProps {
     apen?: boolean;
     name: string;
@@ -64,7 +59,10 @@ function SelectMedSok(props: SelectMedSokProps) {
 
     const { name, knappeTekst } = props;
     return (
-        <div className={btnCls(apen)} ref={loggNode}>
+        <div
+            className={classNames('velg-enhet-dropdown', 'select-med-sok', { 'select-med-sok--apen': apen })}
+            ref={loggNode}
+        >
             <Button
                 variant="tertiary-neutral"
                 icon={<TannHjulIkon className="knapp-fss__icon" />}
