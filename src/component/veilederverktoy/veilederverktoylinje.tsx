@@ -121,7 +121,6 @@ function Veilederverktoylinje() {
         <div className="veilederverktoy-dropdown">
             <VeilederverktoyDropdown
                 metricName="dropdown-trykket"
-                ariaLabelledBy="veilederverkoy_span"
                 knappeTekst="Veilederverktøy"
                 name="tildel veileder"
                 btnClassnames="knapp knapp--standard knapp-fss"

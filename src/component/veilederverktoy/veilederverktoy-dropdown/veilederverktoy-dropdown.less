@@ -1,5 +1,4 @@
-.visittkortfs,
-.visittkortfs-modal {
+.visittkortfs {
     .chevronline-mixin() {
         pointer-events: none; // gjør at en kan klikke igjennom denne (pilen), slik at select åpner seg
         content: '';
@@ -18,12 +17,8 @@
         &__btn {
             padding: 0.5rem 2rem 0.5rem 0.2rem;
             height: 2.5rem;
-            line-height: 1rem;
+            line-height: 1rem; // trur denne eigentleg kan bort
             font-weight: normal;
-
-            #veilederverkoy_span {
-                display: none;
-            }
 
             // Høgre halvdel av chevron (lukka)
             &:before {
@@ -62,7 +57,7 @@
             position: absolute;
             z-index: 110;
             border: 1px solid var(--a-gray-900);
-            top: ~'calc(100% + 5px)';
+            top: calc(100% + 5px);
             background-color: var(--a-white);
             width: 15rem;
             border-radius: 4px;
@@ -88,11 +83,6 @@
         @media (min-width: 1300px) {
             .veilederverktoy-dropdown__btn {
                 width: 15rem;
-
-                #veilederverkoy_span {
-                    margin-right: 3rem;
-                    display: inline-block;
-                }
             }
         }
     }
