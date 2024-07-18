@@ -13,44 +13,24 @@
     }
 
     .select-med-sok {
-        position: relative;
-
-        // nytt
-        width: 12rem;
-        height: 2rem;
+        position: relative; // for plassering av chevron
         line-height: 0; // for å motvirke layout-shift frå Skeleton når komponent er ferdig lasta
 
-        .sokfilter {
-            padding: 0.5rem;
-
-            &__input {
-                height: 2rem;
-            }
-        }
-
         &__btn {
-            padding: 0.5rem 2rem 0.5rem 0.2rem;
-            height: 2.5rem;
-            line-height: 1rem;
-            font-weight: normal;
+            width: 12rem;
+            height: 2rem;
+            line-height: 1rem; // trur denne eigentleg kan bort
+            padding: 0.45rem;
 
-            // nytt
-            border-radius: 4px;
-            text-align: left;
             border: 1px solid var(--a-border-default);
+            background-color: white;
+
+            justify-content: left; /* Overskriv button-styling frå designsystemet */
+
+            // Ellipsis-stylinga har ikkje fungert på ei stund. - Ingrid, 2024-07-18
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-
-            // nytt (dobbeltselector)
-            width: inherit;
-            height: inherit;
-            padding: 0.45rem;
-            background-color: white;
-
-            #veilederverkoy_span {
-                display: none;
-            }
 
             &:before {
                 .chevronline-mixin();
@@ -67,100 +47,41 @@
             }
 
             &:hover {
-                color: var(--a-white);
-
-                // nytt
                 border: 1px solid var(--a-border-action);
-                color: #3e3832;
-
-                &:before {
-                    background: var(--a-white);
-
-                    // nytt
-                    background: #3e3832;
-                }
-
-                &:after {
-                    background: var(--a-white);
-
-                    // nytt
-                    background: #3e3832;
-                }
             }
 
-            &:active:hover {
-                background-color: white;
+            // Overskriv designsystemet slik at knappen ikkje vert svart når ein trykkar på den
+            &:active:hover, &:active {
+                background-color: var(--a-bg-default);
+                color: var(--a-text-default);
             }
 
-            /* (Kommentar frå 21. desember 2023 av slovrid) */
-            // TODO: Dette er en midlertidig workaround mens vi holder på å skrive oss over til nytt designsystem
-            // CSS-reglene under her overstyrer styling fra navds-button/navds-label ved at vi "vinner" på CSS-spesifisitet.
-            // Grunnen til overridene er at vi per dags dato har en egenutviklet dropdown-komponent.
-            // Denne skal byttes ut med Dropdown/Combobox fra nytt designsystem, men inntil videre
-            // må vi override noen få styles da vi allerede har tatt i bruk Button fra nytt designsystem.
-            &.navds-button {
-                justify-content: left;
-
-                border-radius: 4px;
-                text-align: left;
-                border: 1px solid var(--a-border-default);
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-
-                // dobbeltselector
-                width: inherit;
-                height: inherit;
-                padding: 0.45rem;
-                background-color: white;
-
-                &:hover {
-                    border: 1px solid var(--a-border-action);
-                    color: #3e3832;
-
-                    &:after {
-                        background: #3e3832;
-                    }
-                    &:before {
-                        background: #3e3832;
-                    }
-                }
-
-                &:focus {
-                    outline: 0;
-                    box-shadow: 0 0 0 3px var(--a-border-focus);
-                }
+            // Unngår dobbel fokuslinje rundt knappen
+            &:focus {
+                outline: 0;
+                box-shadow: 0 0 0 3px var(--a-border-focus);
             }
 
-           .navds-label {
+            .navds-label {
                 font-weight: normal;
                 font-size: 1rem;
             }
-
         }
 
         &__innhold {
             position: absolute;
-            z-index: 110;
-            border: 1px solid var(--a-gray-900);
-            top: ~'calc(100% + 5px)';
-            background-color: var(--a-white);
-            width: 15rem;
-            border-radius: 4px;
-            right: 0;
+            top: calc(100% - 14px);
 
-            // nytt (dobbelselector)
-            position: absolute;
             z-index: 110;
+
+            width: 15.5rem;
             border: 1px solid var(--a-border-default);
-            top: ~'calc(100% - 14px)';
-            background-color: var(--a-bg-default);
             border-radius: 0 0 var(--a-border-radius-small) var(--a-border-radius-small);
-            width: 250px;
+            background-color: var(--a-bg-default);
             padding: 0 0.5rem;
-            right: auto;
         }
 
+        // Snur chevron når "select" er open
         &--apen {
             .select-med-sok__btn {
                 &:before {
@@ -171,17 +92,6 @@
                 &:after {
                     transform: translateX(-3px) rotate(-45deg);
                     transition: transform 0.3s;
-                }
-            }
-        }
-
-        @media (min-width: 1300px) {
-            .select-med-sok__btn {
-                width: 15rem;
-
-                #veilederverkoy_span {
-                    margin-right: 3rem;
-                    display: inline-block;
                 }
             }
         }
