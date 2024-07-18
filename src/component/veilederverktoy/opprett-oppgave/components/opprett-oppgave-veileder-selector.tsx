@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
+import { FormikProps } from 'formik';
 import SokFilter from '../../../components/sokfilter/sok-filter';
 import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
-import Dropdown from '../../../components/dropdown/dropdown';
-import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import { useDataStore } from '../../../../store/data-store';
 import { fetchVeilederePaEnhet, VeilederData } from '../../../../api/veilarbveileder';
@@ -10,6 +9,7 @@ import { OppgaveTema } from '../../../../api/veilarboppgave';
 import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
 import { ifResponseHasData } from '../../../../util/utils';
 import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
+import SelectMedSok from './select-med-sok/select-med-sok';
 
 interface OpprettOppgaveVelgVeilederProps {
     veilederId: StringOrNothing;
@@ -53,10 +53,11 @@ function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: 
 
     return (
         <div className="skjemaelement navds-form-field navds-form-field--medium navds-date__field">
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label className="skjemaelement__label navds-form-field__label navds-label navds-label--small">
                 Veileder (valgfritt)
             </label>
-            <Dropdown
+            <SelectMedSok
                 name="Velg veileder dropdown"
                 knappeTekst={(valgtVeileder && valgtVeileder.navn) || ''}
                 className="velg-enhet-dropdown"

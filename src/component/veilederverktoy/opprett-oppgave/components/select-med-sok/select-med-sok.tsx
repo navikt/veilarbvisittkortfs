@@ -1,19 +1,19 @@
 import { KeyboardEvent, ReactNode, useRef, useState } from 'react';
 import classNames from 'classnames';
-import './dropdown.less';
-import withClickMetric from '../click-metric/click-metric';
-import hiddenIf from '../hidden-if/hidden-if';
-import { useDocumentEventListner } from '../../../util/hook/use-event-listner';
 import { Button } from '@navikt/ds-react';
-import TannHjulIkon from '../../veilederverktoy/tannhjul.svg?react';
+import TannHjulIkon from '../../../tannhjul.svg?react';
+import { useDocumentEventListner } from '../../../../../util/hook/use-event-listner';
+import withClickMetric from '../../../../components/click-metric/click-metric';
+import hiddenIf from '../../../../components/hidden-if/hidden-if';
+import './select-med-sok.less';
 
 /* tslint:disable */
 const btnCls = (erApen: boolean, className: string | undefined) =>
-    classNames('dropdown', className, {
-        'dropdown--apen': erApen
+    classNames('select-med-sok', className, {
+        'select-med-sok--apen': erApen
     });
 
-interface DropdownProps {
+interface SelectMedSokProps {
     apen?: boolean;
     name: string;
     knappeTekst: ReactNode;
@@ -29,7 +29,7 @@ function harTrykktPaEsc(e: KeyboardEvent) {
     return e.keyCode === 27;
 }
 
-function Dropdown(props: DropdownProps) {
+function SelectMedSok(props: SelectMedSokProps) {
     const [apen, setApen] = useState(props.apen || false);
     const btnRef = useRef<HTMLButtonElement>(null);
     const loggNode = useRef<HTMLDivElement>(null);
@@ -43,6 +43,7 @@ function Dropdown(props: DropdownProps) {
         }
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const eventHandler = (e: any) => {
         if (loggNode.current && !loggNode.current.contains(e.target)) {
             lukkDropdown();
@@ -71,19 +72,20 @@ function Dropdown(props: DropdownProps) {
                 variant="tertiary-neutral"
                 icon={<TannHjulIkon className="knapp-fss__icon" />}
                 ref={btnRef}
-                className={classNames('dropdown__btn', props.btnClassnames)}
+                className={classNames('select-med-sok__btn', props.btnClassnames)}
                 onClick={toggleDropdown}
                 aria-expanded={apen}
-                aria-controls={`${name}-dropdown__innhold`}
+                aria-controls={`${name}-select-med-sok__innhold`}
                 aria-labelledby={props.ariaLabelledBy}
                 type="button"
             >
                 {knappeTekst}
             </Button>
             {apen && (
+                // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
                 <ul
-                    className={'dropdown__innhold'}
-                    id={`${name}-dropdown__innhold`}
+                    className={'select-med-sok__innhold'}
+                    id={`${name}-select-med-sok__innhold`}
                     onKeyDown={e => {
                         if (harTrykktPaEsc(e)) {
                             e.stopPropagation();
@@ -99,4 +101,4 @@ function Dropdown(props: DropdownProps) {
     );
 }
 
-export default withClickMetric(hiddenIf(Dropdown));
+export default withClickMetric(hiddenIf(SelectMedSok));
