@@ -1,0 +1,95 @@
+.visittkortfs,
+.visittkortfs-modal {
+    .chevronline-mixin() {
+        pointer-events: none; // gjør at en kan klikke igjennom denne (pilen), slik at select åpner seg
+        content: '';
+        background: var(--a-gray-900);
+        height: 2px;
+        width: 10px;
+        border-radius: 10px;
+        right: 0.6rem;
+        top: 15px;
+        position: absolute;
+    }
+
+    .veilederverktoy-dropdown {
+        position: relative;
+
+        &__btn {
+            padding: 0.5rem 2rem 0.5rem 0.2rem;
+            height: 2.5rem;
+            line-height: 1rem;
+            font-weight: normal;
+
+            #veilederverkoy_span {
+                display: none;
+            }
+
+            &:before {
+                .chevronline-mixin();
+                transform: translateX(3px) rotate(-45deg);
+                transition: transform 0.3s;
+                margin-top: 0.3rem;
+            }
+
+            &:after {
+                .chevronline-mixin();
+                transform: translateX(-3px) rotate(45deg);
+                transition: transform 0.3s;
+                margin-top: 0.3rem;
+            }
+
+            &:hover {
+                color: var(--a-white);
+
+                &:before {
+                    background: var(--a-white);
+                }
+
+                &:after {
+                    background: var(--a-white);
+                }
+            }
+
+            .navds-label {
+                font-weight: normal;
+            }
+        }
+
+        &__innhold {
+            position: absolute;
+            z-index: 110;
+            border: 1px solid var(--a-gray-900);
+            top: ~'calc(100% + 5px)';
+            background-color: var(--a-white);
+            width: 15rem;
+            border-radius: 4px;
+            right: 0;
+        }
+
+        &--apen {
+            .veilederverktoy-dropdown__btn {
+                &:before {
+                    transform: translateX(3px) rotate(45deg);
+                    transition: transform 0.3s;
+                }
+
+                &:after {
+                    transform: translateX(-3px) rotate(-45deg);
+                    transition: transform 0.3s;
+                }
+            }
+        }
+
+        @media (min-width: 1300px) {
+            .veilederverktoy-dropdown__btn {
+                width: 15rem;
+
+                #veilederverkoy_span {
+                    margin-right: 3rem;
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}

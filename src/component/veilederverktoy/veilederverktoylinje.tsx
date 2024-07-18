@@ -1,6 +1,6 @@
 import './veilederverktoy.less';
 import '../components/knapp-fss/knapp-fss.less';
-import Dropdown from '../components/dropdown/dropdown';
+import VeilederverktoyDropdown from './veilederverktoy-dropdown/veilederverktoy-dropdown';
 import StartRegistreringProsess from './start-registrering/start-registrering-prosess';
 import StartProsess from './prosess/start-prosess';
 import { useAppStore } from '../../store/app-store';
@@ -119,7 +119,7 @@ function Veilederverktoylinje() {
 
     return (
         <div className="veilederverktoy-dropdown">
-            <Dropdown
+            <VeilederverktoyDropdown
                 metricName="dropdown-trykket"
                 ariaLabelledBy="veilederverkoy_span"
                 knappeTekst="Veilederverktøy"
