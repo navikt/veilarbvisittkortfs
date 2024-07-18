@@ -123,7 +123,6 @@ function Veilederverktoylinje() {
                 metricName="dropdown-trykket"
                 knappeTekst="Veilederverktøy"
                 name="tildel veileder"
-                btnClassnames="knapp knapp--standard knapp-fss"
                 render={lukkDropdown => (
                     <>
                         {sjekkHarTilgangTilHuskelappEllerFargekategori && (

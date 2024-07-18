@@ -1,37 +1,31 @@
 import { KeyboardEvent, ReactNode, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { Button } from '@navikt/ds-react';
-import TannHjulIkon from '../../../tannhjul.svg?react';
 import { useDocumentEventListner } from '../../../../../util/hook/use-event-listner';
 import withClickMetric from '../../../../components/click-metric/click-metric';
 import hiddenIf from '../../../../components/hidden-if/hidden-if';
 import './select-med-sok.less';
 
 interface SelectMedSokProps {
-    apen?: boolean;
     name: string;
     knappeTekst: ReactNode;
     render: (lukkDropdown: () => void) => ReactNode;
-    onLukk?: () => void;
     onClick?: () => void;
-    ariaLabelledBy?: string;
 }
 
 function harTrykktPaEsc(e: KeyboardEvent) {
     return e.keyCode === 27;
 }
 
-function SelectMedSok(props: SelectMedSokProps) {
-    const [apen, setApen] = useState(props.apen || false);
+function SelectMedSok({ name, knappeTekst, render, onClick }: SelectMedSokProps) {
+    const [apen, setApen] = useState(false);
     const btnRef = useRef<HTMLButtonElement>(null);
     const loggNode = useRef<HTMLDivElement>(null);
-    const { onLukk } = props;
 
     const lukkDropdown = () => {
         if (apen) {
             setApen(false);
             btnRef.current && btnRef.current.focus();
-            onLukk && onLukk();
         }
     };
 
@@ -52,26 +46,20 @@ function SelectMedSok(props: SelectMedSokProps) {
         if (apen) {
             lukkDropdown();
         } else {
-            props.onClick && props.onClick();
+            onClick?.();
             apneDropdown();
         }
     }
 
-    const { name, knappeTekst } = props;
     return (
-        <div
-            className={classNames('velg-enhet-dropdown', 'select-med-sok', { 'select-med-sok--apen': apen })}
-            ref={loggNode}
-        >
+        <div className={classNames('select-med-sok', { 'select-med-sok--apen': apen })} ref={loggNode}>
             <Button
                 variant="tertiary-neutral"
-                icon={<TannHjulIkon className="knapp-fss__icon" />}
                 ref={btnRef}
-                className={classNames('select-med-sok__btn', 'velg-enhet-dropdown__button')}
+                className="select-med-sok__btn"
                 onClick={toggleDropdown}
                 aria-expanded={apen}
                 aria-controls={`${name}-select-med-sok__innhold`}
-                aria-labelledby={props.ariaLabelledBy}
                 type="button"
             >
                 {knappeTekst}
@@ -89,7 +77,7 @@ function SelectMedSok(props: SelectMedSokProps) {
                         }
                     }}
                 >
-                    {props.render(lukkDropdown)}
+                    {render(lukkDropdown)}
                 </ul>
             )}
         </div>
