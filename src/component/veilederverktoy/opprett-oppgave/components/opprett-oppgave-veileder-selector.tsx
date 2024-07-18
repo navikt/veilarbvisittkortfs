@@ -60,8 +60,6 @@ function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: 
             <SelectMedSok
                 name="Velg veileder dropdown"
                 knappeTekst={(valgtVeileder && valgtVeileder.navn) || ''}
-                className="velg-enhet-dropdown"
-                btnClassnames="velg-enhet-dropdown__button"
                 render={lukkDropdown => (
                     <SokFilter data={sorterteVeiledere} label="" placeholder="Søk etter veileder">
                         {data => (

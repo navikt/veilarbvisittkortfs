@@ -7,9 +7,8 @@ import withClickMetric from '../../../../components/click-metric/click-metric';
 import hiddenIf from '../../../../components/hidden-if/hidden-if';
 import './select-med-sok.less';
 
-/* tslint:disable */
-const btnCls = (erApen: boolean, className: string | undefined) =>
-    classNames('select-med-sok', className, {
+const btnCls = (erApen: boolean) =>
+    classNames('velg-enhet-dropdown', 'select-med-sok', {
         'select-med-sok--apen': erApen
     });
 
@@ -18,10 +17,8 @@ interface SelectMedSokProps {
     name: string;
     knappeTekst: ReactNode;
     render: (lukkDropdown: () => void) => ReactNode;
-    className?: string;
     onLukk?: () => void;
     onClick?: () => void;
-    btnClassnames?: string;
     ariaLabelledBy?: string;
 }
 
@@ -65,14 +62,14 @@ function SelectMedSok(props: SelectMedSokProps) {
         }
     }
 
-    const { name, className, knappeTekst } = props;
+    const { name, knappeTekst } = props;
     return (
-        <div className={btnCls(apen, className)} ref={loggNode}>
+        <div className={btnCls(apen)} ref={loggNode}>
             <Button
                 variant="tertiary-neutral"
                 icon={<TannHjulIkon className="knapp-fss__icon" />}
                 ref={btnRef}
-                className={classNames('select-med-sok__btn', props.btnClassnames)}
+                className={classNames('select-med-sok__btn', 'velg-enhet-dropdown__button')}
                 onClick={toggleDropdown}
                 aria-expanded={apen}
                 aria-controls={`${name}-select-med-sok__innhold`}

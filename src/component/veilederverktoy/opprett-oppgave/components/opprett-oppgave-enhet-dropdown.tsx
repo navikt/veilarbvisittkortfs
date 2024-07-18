@@ -52,8 +52,6 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
                 <SelectMedSok
                     name="Velg enhet dropdown"
                     knappeTekst={`${valgtEnhet.enhetId} ${valgtEnhet.navn}`}
-                    className="velg-enhet-dropdown"
-                    btnClassnames="velg-enhet-dropdown__button"
                     render={lukkDropdown => (
                         <SokFilter data={behandladeEnheter} label="" placeholder="Søk etter enhet">
                             {data => (
