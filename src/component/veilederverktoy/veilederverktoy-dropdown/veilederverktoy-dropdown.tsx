@@ -59,9 +59,9 @@ function VeilederverktoyDropdown({ name, knappeTekst, render, onClick }: Dropdow
         >
             <Button
                 variant="tertiary-neutral"
-                icon={<TannHjulIkon className="knapp-fss__icon" />}
+                icon={<TannHjulIkon className="veilederverktoy-ikon" />}
                 ref={btnRef}
-                className="veilederverktoy-dropdown__btn knapp knapp--standard knapp-fss"
+                className="veilederverktoy-dropdown__btn"
                 onClick={toggleDropdown}
                 aria-expanded={apen}
                 aria-controls={`${name}-veilederverktoy-dropdown__innhold`}

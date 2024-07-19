@@ -1,5 +1,3 @@
-import './veilederverktoy.less';
-import '../components/knapp-fss/knapp-fss.less';
 import VeilederverktoyDropdown from './veilederverktoy-dropdown/veilederverktoy-dropdown';
 import StartRegistreringProsess from './start-registrering/start-registrering-prosess';
 import StartProsess from './prosess/start-prosess';
@@ -26,6 +24,7 @@ import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
 import { harTilgangTilHuskelappEllerFargekategori } from '../huskelapp/harTilgangTilHuskelapp';
 import { useArbeidsliste, useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
 import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
+import './veilederverktoy.less';
 
 function Veilederverktoylinje() {
     const { visVeilederVerktoy, brukerFnr } = useAppStore();

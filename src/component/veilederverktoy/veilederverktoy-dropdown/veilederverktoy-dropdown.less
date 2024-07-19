@@ -17,8 +17,16 @@
         &__btn {
             padding: 0.5rem 2rem 0.5rem 0.2rem;
             height: 2.5rem;
-            line-height: 1rem; // trur denne eigentleg kan bort
-            font-weight: normal;
+            line-height: 1rem;
+
+            // Motverker knappestyling frå designsystemet
+            border: 1px solid var(--a-gray-900);
+            justify-content: left;
+            background-color: var(--a-bg-default);
+
+            .veilederverktoy-ikon {
+                stroke: var(--a-gray-900);
+            }
 
             // Høgre halvdel av chevron (lukka)
             &:before {
@@ -38,6 +46,7 @@
 
             &:hover {
                 color: var(--a-white);
+                background-color: var(--a-gray-900);
 
                 &:before {
                     background: var(--a-white);
@@ -46,8 +55,19 @@
                 &:after {
                     background: var(--a-white);
                 }
+
+                .veilederverktoy-ikon {
+                    stroke: var(--a-white);
+                }
             }
 
+            // Unngår dobbel fokuslinje rundt knappen
+            &:focus {
+                outline: 0;
+                box-shadow: 0 0 0 3px var(--a-border-focus);
+            }
+
+            // Motverker knappestyling frå designsystemet
             .navds-label {
                 font-weight: normal;
             }
