@@ -1,4 +1,4 @@
-import { KeyboardEvent, ReactNode, useRef, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { Button } from '@navikt/ds-react';
 import { useDocumentEventListner } from '../../../../../util/hook/use-event-listner';
@@ -13,41 +13,33 @@ interface SelectMedSokProps {
     onClick?: () => void;
 }
 
-function harTrykktPaEsc(e: KeyboardEvent) {
-    return e.keyCode === 27;
-}
-
 function SelectMedSok({ name, knappeTekst, render, onClick }: SelectMedSokProps) {
     const [apen, setApen] = useState(false);
     const btnRef = useRef<HTMLButtonElement>(null);
     const loggNode = useRef<HTMLDivElement>(null);
 
-    const lukkDropdown = () => {
+    const lukkSelect = () => {
         if (apen) {
             setApen(false);
-            btnRef.current && btnRef.current.focus();
+            btnRef.current?.focus();
         }
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const eventHandler = (e: any) => {
         if (loggNode.current && !loggNode.current.contains(e.target)) {
-            lukkDropdown();
+            lukkSelect();
         }
     };
 
     useDocumentEventListner('click', eventHandler);
 
-    function apneDropdown() {
-        setApen(true);
-    }
-
-    function toggleDropdown() {
+    function toggleSelect() {
         if (apen) {
-            lukkDropdown();
+            lukkSelect();
         } else {
             onClick?.();
-            apneDropdown();
+            setApen(true);
         }
     }
 
@@ -57,7 +49,7 @@ function SelectMedSok({ name, knappeTekst, render, onClick }: SelectMedSokProps)
                 variant="tertiary-neutral"
                 ref={btnRef}
                 className="select-med-sok__btn"
-                onClick={toggleDropdown}
+                onClick={toggleSelect}
                 aria-expanded={apen}
                 aria-controls={`${name}-select-med-sok__innhold`}
                 type="button"
@@ -65,19 +57,8 @@ function SelectMedSok({ name, knappeTekst, render, onClick }: SelectMedSokProps)
                 {knappeTekst}
             </Button>
             {apen && (
-                // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-                <ul
-                    className={'select-med-sok__innhold'}
-                    id={`${name}-select-med-sok__innhold`}
-                    onKeyDown={e => {
-                        if (harTrykktPaEsc(e)) {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            lukkDropdown();
-                        }
-                    }}
-                >
-                    {render(lukkDropdown)}
+                <ul className={'select-med-sok__innhold'} id={`${name}-select-med-sok__innhold`}>
+                    {render(lukkSelect)}
                 </ul>
             )}
         </div>

@@ -1,4 +1,4 @@
-import { KeyboardEvent, ReactNode, useRef, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { Button } from '@navikt/ds-react';
 import './veilederverktoy-dropdown.less';
@@ -14,10 +14,6 @@ interface DropdownProps {
     onClick?: () => void;
 }
 
-function harTrykktPaEsc(e: KeyboardEvent) {
-    return e.keyCode === 27;
-}
-
 function VeilederverktoyDropdown({ name, knappeTekst, render, onClick }: DropdownProps) {
     const [apen, setApen] = useState(false);
     const btnRef = useRef<HTMLButtonElement>(null);
@@ -26,9 +22,18 @@ function VeilederverktoyDropdown({ name, knappeTekst, render, onClick }: Dropdow
     const lukkDropdown = () => {
         if (apen) {
             setApen(false);
-            btnRef.current && btnRef.current.focus();
+            btnRef.current?.focus();
         }
     };
+
+    function toggleDropdown() {
+        if (apen) {
+            lukkDropdown();
+        } else {
+            onClick?.();
+            setApen(true);
+        }
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const eventHandler = (e: any) => {
@@ -38,19 +43,6 @@ function VeilederverktoyDropdown({ name, knappeTekst, render, onClick }: Dropdow
     };
 
     useDocumentEventListner('click', eventHandler);
-
-    function apneDropdown() {
-        setApen(true);
-    }
-
-    function toggleDropdown() {
-        if (apen) {
-            lukkDropdown();
-        } else {
-            onClick?.();
-            apneDropdown();
-        }
-    }
 
     return (
         <div
@@ -70,18 +62,7 @@ function VeilederverktoyDropdown({ name, knappeTekst, render, onClick }: Dropdow
                 {knappeTekst}
             </Button>
             {apen && (
-                // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-                <ul
-                    className={'veilederverktoy-dropdown__innhold'}
-                    id={`${name}-veilederverktoy-dropdown__innhold`}
-                    onKeyDown={e => {
-                        if (harTrykktPaEsc(e)) {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            lukkDropdown();
-                        }
-                    }}
-                >
+                <ul className={'veilederverktoy-dropdown__innhold'} id={`${name}-veilederverktoy-dropdown__innhold`}>
                     {render(lukkDropdown)}
                 </ul>
             )}
