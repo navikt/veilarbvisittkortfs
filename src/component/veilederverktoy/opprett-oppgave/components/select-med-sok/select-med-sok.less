@@ -1,0 +1,100 @@
+.visittkortfs {
+    .chevronline-mixin() {
+        pointer-events: none; // gjør at en kan klikke igjennom denne (pilen), slik at select åpner seg
+        content: '';
+        background: var(--a-gray-900);
+        height: 0.125rem;
+        width: 0.625rem;
+        border-radius: 0.625rem;
+        right: 0.6rem;
+        top: 1rem;
+        position: absolute;
+    }
+
+    .select-med-sok {
+        position: relative; // for plassering av chevron
+        line-height: 0; // for å motvirke layout-shift frå Skeleton når komponent er ferdig lasta
+
+        &__btn {
+            width: 12rem;
+            height: 2rem;
+            line-height: 1rem; // trur denne eigentleg kan bort
+            padding: 0.45rem;
+
+            border: 1px solid var(--a-border-default);
+            background-color: white;
+
+            justify-content: left; /* Overskriv button-styling frå designsystemet */
+
+            // Ellipsis-stylinga har ikkje fungert på ei stund. - Ingrid, 2024-07-18
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+            // Høgre halvdel av chevron (lukka)
+            &:before {
+                .chevronline-mixin();
+                transform: translateX(0.1875rem) rotate(-45deg);
+                transition: transform 0.3s;
+            }
+
+            // Venstre halvdel av chevron (lukka)
+            &:after {
+                .chevronline-mixin();
+                transform: translateX(-0.1875rem) rotate(45deg);
+                transition: transform 0.3s;
+            }
+
+            &:hover {
+                border: 1px solid var(--a-border-action);
+            }
+
+            // Overskriv designsystemet slik at knappen ikkje vert svart når ein trykkar på den
+            &:active:hover, &:active {
+                background-color: var(--a-bg-default);
+                color: var(--a-text-default);
+            }
+
+            // Unngår dobbel fokuslinje rundt knappen
+            &:focus {
+                outline: 0;
+                box-shadow: 0 0 0 3px var(--a-border-focus);
+            }
+
+            .navds-label {
+                font-weight: normal;
+                font-size: 1rem;
+            }
+        }
+
+        &__innhold {
+            position: absolute;
+            top: calc(100% - 14px);
+
+            z-index: 110;
+
+            width: 15.5rem;
+            border: 1px solid var(--a-border-default);
+            border-radius: 0 0 var(--a-border-radius-small) var(--a-border-radius-small);
+            background-color: var(--a-bg-default);
+            padding: 0 0.5rem;
+        }
+
+        // Snur chevron når "select" er open
+        &--apen {
+            .select-med-sok__btn {
+                // Høgre halvdel av chevron (open)
+                &:before {
+                    transform: translateX(0.1875rem) rotate(45deg);
+                    transition: transform 0.3s;
+                }
+
+                // Venstre halvdel av chevron (open)
+                &:after {
+                    transform: translateX(-0.1875rem) rotate(-45deg);
+                    transition: transform 0.3s;
+                }
+            }
+        }
+    }
+}

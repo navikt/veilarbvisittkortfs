@@ -1,6 +1,4 @@
-import './veilederverktoy.less';
-import '../components/knapp-fss/knapp-fss.less';
-import Dropdown from '../components/dropdown/dropdown';
+import VeilederverktoyDropdown from './veilederverktoy-dropdown/veilederverktoy-dropdown';
 import StartRegistreringProsess from './start-registrering/start-registrering-prosess';
 import StartProsess from './prosess/start-prosess';
 import { useAppStore } from '../../store/app-store';
@@ -26,6 +24,7 @@ import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
 import { harTilgangTilHuskelappEllerFargekategori } from '../huskelapp/harTilgangTilHuskelapp';
 import { useArbeidsliste, useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
 import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
+import './veilederverktoy.less';
 
 function Veilederverktoylinje() {
     const { visVeilederVerktoy, brukerFnr } = useAppStore();
@@ -119,12 +118,10 @@ function Veilederverktoylinje() {
 
     return (
         <div className="veilederverktoy-dropdown">
-            <Dropdown
+            <VeilederverktoyDropdown
                 metricName="dropdown-trykket"
-                ariaLabelledBy="veilederverkoy_span"
                 knappeTekst="Veilederverktøy"
                 name="tildel veileder"
-                btnClassnames="knapp knapp--standard knapp-fss"
                 render={lukkDropdown => (
                     <>
                         {sjekkHarTilgangTilHuskelappEllerFargekategori && (
