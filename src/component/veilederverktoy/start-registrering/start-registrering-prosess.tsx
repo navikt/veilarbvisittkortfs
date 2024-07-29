@@ -31,8 +31,8 @@ function StartRegistreringProsess() {
     const brukerType = oppfolging?.erSykmeldtMedArbeidsgiver
         ? 'erSykemeldtMedArbeidsgiver'
         : oppfolging?.kanReaktiveres
-        ? 'kanReaktiveres'
-        : 'kanIkkeReaktiveres';
+          ? 'kanReaktiveres'
+          : 'kanIkkeReaktiveres';
 
     const brukerTekst = () => {
         switch (brukerType) {
@@ -48,13 +48,15 @@ function StartRegistreringProsess() {
     };
 
     return (
-        <a
-            href={byggRegistreringUrl(brukerFnr, enhetId, features[BRUK_GAMMEL_ARBEIDSREGISTRERING_URL])}
-            className="knapp meny-knapp btn--mb1"
-            onClick={() => logMetrikk('veilarbvisittkortfs.metrikker.registrering', {}, { brukerType: brukerType })}
-        >
-            {brukerTekst()}
-        </a>
+        <li>
+            <a
+                href={byggRegistreringUrl(brukerFnr, enhetId, features[BRUK_GAMMEL_ARBEIDSREGISTRERING_URL])}
+                className="knapp meny-knapp btn--mb1"
+                onClick={() => logMetrikk('veilarbvisittkortfs.metrikker.registrering', {}, { brukerType: brukerType })}
+            >
+                {brukerTekst()}
+            </a>
+        </li>
     );
 }
 
