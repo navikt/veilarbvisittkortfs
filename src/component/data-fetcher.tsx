@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDataStore } from '../store/data-store';
 import { useAppStore } from '../store/app-store';
 import { fetchOppfolging, useOppfolgingsstatus } from '../api/veilarboppfolging';
-import { fetchPersonalia, fetchSpraakTolk, fetchVergeOgFullmakt } from '../api/veilarbperson';
+import { fetchFullmakt, fetchPersonalia, fetchSpraakTolk, fetchVergeOgFullmakt } from '../api/veilarbperson';
 import { fetchInnloggetVeileder, fetchVeilederePaEnhet } from '../api/veilarbveileder';
 import { ifResponseHasData } from '../util/utils';
 import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
@@ -10,7 +10,7 @@ import './data-fetcher.less';
 import { isAnyLoadingOrNotStarted } from '../api/utils';
 import { Loader } from '@navikt/ds-react';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
-import { useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
+import { BRUK_NY_KILDE_TIL_FULLMAKT, useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 
 export function DataFetcher(props: { children: React.ReactNode }) {
     const { brukerFnr, visVeilederVerktoy } = useAppStore();
@@ -22,7 +22,9 @@ export function DataFetcher(props: { children: React.ReactNode }) {
         setFeatures,
         setVergeOgFullmakt,
         setSpraakTolk,
-        setGjeldendeEskaleringsvarsel
+        setGjeldendeEskaleringsvarsel,
+        setFullmakt,
+        features
     } = useDataStore();
 
     const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
@@ -31,6 +33,7 @@ export function DataFetcher(props: { children: React.ReactNode }) {
     const personaliaFetcher = useAxiosFetcher(fetchPersonalia);
     const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
     const vergeOgFullmaktFetcher = useAxiosFetcher(fetchVergeOgFullmakt);
+    const fullmaktFetcher = useAxiosFetcher(fetchFullmakt);
     const spraakTolkFetcher = useAxiosFetcher(fetchSpraakTolk);
     const gjeldendeEskaleringsvarselFetcher = useAxiosFetcher(hentGjeldendeEskaleringsvarsel);
     const { data: oppfolgingsstatus, isLoading: oppfolgingsstatusIsLoading } = useOppfolgingsstatus(brukerFnr);
@@ -47,10 +50,12 @@ export function DataFetcher(props: { children: React.ReactNode }) {
                 .catch();
         }
         vergeOgFullmaktFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setVergeOgFullmakt)).catch();
+        features[BRUK_NY_KILDE_TIL_FULLMAKT] &&
+            fullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setFullmakt)).catch();
         spraakTolkFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setSpraakTolk)).catch();
         personaliaFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setPersonalia)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [brukerFnr, visVeilederVerktoy]);
+    }, [brukerFnr, visVeilederVerktoy, features]);
 
     useEffect(() => {
         innloggetVeilederFetcher.fetch().then(ifResponseHasData(setInnloggetVeileder)).catch();

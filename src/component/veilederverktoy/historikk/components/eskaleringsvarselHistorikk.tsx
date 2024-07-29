@@ -16,7 +16,7 @@ function EskaleringsvarselHistorikkKomponent({ innslag }: EskaleringsvarselHisto
     const begrunnelse = innslag.avsluttetBegrunnelse || innslag.opprettetBegrunnelse;
     const overskrift = innslag.avsluttetDato != null ? 'Varsel deaktivert' : 'Varsel sendt';
 
-    let begrunnelseTekst =
+    const begrunnelseTekst =
         begrunnelse && begrunnelse.length > ESKALERING_MAX_LENGTH
             ? `${begrunnelse.substring(0, ESKALERING_MAX_LENGTH)}... `
             : `${begrunnelse} `;

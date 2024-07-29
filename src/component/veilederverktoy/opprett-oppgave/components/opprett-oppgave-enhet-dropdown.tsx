@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
+import { FormikProps } from 'formik';
+import { Skeleton } from '@navikt/ds-react';
 import SokFilter from '../../../components/sokfilter/sok-filter';
 import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
-import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
-import Dropdown from '../../../components/dropdown/dropdown';
 import { BehandlandeEnhet, hentBehandlendeEnheter, OppgaveTema } from '../../../../api/veilarboppgave';
 import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
-import { Skeleton } from '@navikt/ds-react';
+import SelectMedSok from './select-med-sok/select-med-sok';
 
 interface OpprettOppgaveVelgEnhetProps {
     tema: OrNothing<OppgaveTema>;
@@ -39,6 +39,7 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
 
     return (
         <div className="skjemaelement navds-form-field navds-form-field--medium navds-date__field">
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label className="skjemaelement__label navds-form-field__label navds-label navds-label--small">Enhet</label>
             {isLoading ? (
                 <Skeleton
@@ -48,11 +49,9 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
                     width="12rem"
                 />
             ) : (
-                <Dropdown
+                <SelectMedSok
                     name="Velg enhet dropdown"
                     knappeTekst={`${valgtEnhet.enhetId} ${valgtEnhet.navn}`}
-                    className="velg-enhet-dropdown"
-                    btnClassnames="velg-enhet-dropdown__button"
                     render={lukkDropdown => (
                         <SokFilter data={behandladeEnheter} label="" placeholder="Søk etter enhet">
                             {data => (
