@@ -1,4 +1,4 @@
-import { ReactNode, useRef, useState } from 'react';
+import { ReactNode, useRef } from 'react';
 import classNames from 'classnames';
 import { Button } from '@navikt/ds-react';
 import { useDocumentEventListner } from '../../../util/hook/use-event-listner';
@@ -8,21 +8,16 @@ import hiddenIf from '../../components/hidden-if/hidden-if';
 import './veilederverktoy-dropdown.less';
 
 interface DropdownProps {
+    apen: boolean;
+    setApen: (apen: boolean) => void;
+    lukkDropdown: () => void;
+    btnRef: React.RefObject<HTMLButtonElement>;
     render: (lukkDropdown: () => void) => ReactNode;
     onClick?: () => void;
 }
 
-function VeilederverktoyDropdown({ render, onClick }: DropdownProps) {
-    const [apen, setApen] = useState(false);
-    const btnRef = useRef<HTMLButtonElement>(null);
+function VeilederverktoyDropdown({ apen, setApen, lukkDropdown, btnRef, render, onClick }: DropdownProps) {
     const loggNode = useRef<HTMLDivElement>(null);
-
-    const lukkDropdown = () => {
-        if (apen) {
-            setApen(false);
-            btnRef.current?.focus();
-        }
-    };
 
     function toggleDropdown() {
         if (apen) {

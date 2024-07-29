@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import VeilederverktoyDropdown from './veilederverktoy-dropdown/veilederverktoy-dropdown';
 import StartRegistreringProsess from './start-registrering/start-registrering-prosess';
 import StartProsess from './prosess/start-prosess';
@@ -27,6 +28,9 @@ import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veil
 import './veilederverktoy.less';
 
 function Veilederverktoylinje() {
+    const [dropdownApen, setDropdownApen] = useState(false);
+    const dropdownBtnRef = useRef<HTMLButtonElement>(null);
+
     const { visVeilederVerktoy, brukerFnr } = useAppStore();
     const { oppfolging, innloggetVeileder, gjeldendeEskaleringsvarsel, features } = useDataStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
@@ -116,9 +120,20 @@ function Veilederverktoylinje() {
         showHuskelappRedigereModal();
     };
 
+    const lukkDropdown = () => {
+        if (dropdownApen) {
+            setDropdownApen(false);
+            dropdownBtnRef.current?.focus();
+        }
+    };
+
     return (
         <div className="veilederverktoy-dropdown">
             <VeilederverktoyDropdown
+                apen={dropdownApen}
+                setApen={setDropdownApen}
+                lukkDropdown={lukkDropdown}
+                btnRef={dropdownBtnRef}
                 metricName="dropdown-trykket"
                 render={(lukkDropdown: () => void) => (
                     <>
