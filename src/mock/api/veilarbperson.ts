@@ -1,12 +1,12 @@
-// import { rest } from 'msw';
-// import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import {
     HarBruktNivaa4Type,
     Personalia,
     PersonaliaTelefon,
     RegistreringData,
     SpraakTolk,
-    VergeOgFullmakt
+    VergeOgFullmakt,
+    FullmaktDTO,
+    OmraadeHandlingType
 } from '../../api/veilarbperson';
 import { defaultNetworkResponseDelay } from '../config';
 import { delay, http, HttpResponse, RequestHandler } from 'msw';
@@ -98,6 +98,25 @@ const mockVergeOgFullmakt: VergeOgFullmakt = {
     ]
 };
 
+const mockFullmakt: FullmaktDTO = {
+    fullmakt: [
+        {
+            fullmaktsgiver: '19827397213',
+            fullmektig: '04877498455',
+            omraade: [
+                {
+                    tema: 'Oppfølging',
+                    handling: [OmraadeHandlingType.LES, OmraadeHandlingType.SKRIV, OmraadeHandlingType.KOMMUNISER]
+                }
+            ],
+            gyldigFraOgMed: '2024-06-04',
+            gyldigTilOgMed: '2025-05-31',
+            fullmaktsgiverNavn: 'SMAL ARK',
+            fullmektigsNavn: 'IDIOTSIKKER PERSILLE'
+        }
+    ]
+};
+
 const mockSpraakTolk: SpraakTolk = {
     tegnspraak: 'Norsk',
     talespraak: 'Engelsk'
@@ -113,27 +132,26 @@ const mockRegistrering: RegistreringData = {
 export const veilarbpersonHandlers: RequestHandler[] = [
     http.post('/veilarbperson/api/v3/person/hent-registrering', async () => {
         await delay(defaultNetworkResponseDelay);
-
         return HttpResponse.json(mockRegistrering);
     }),
     http.get('/veilarbperson/api/person/:fnr/harNivaa4', async () => {
         await delay(defaultNetworkResponseDelay);
-
         return HttpResponse.json(mockHarBruktNivaa4);
     }),
     http.post('/veilarbperson/api/v3/hent-person', async () => {
         await delay(defaultNetworkResponseDelay);
-
         return HttpResponse.json(mockPersonaliaV2);
     }),
     http.post('/veilarbperson/api/v3/person/hent-vergeOgFullmakt', async () => {
         await delay(defaultNetworkResponseDelay);
-
         return HttpResponse.json(mockVergeOgFullmakt);
+    }),
+    http.post('/veilarbperson/api/v3/person/hent-fullmakt', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(mockFullmakt);
     }),
     http.post('/veilarbperson/api/v3/person/hent-tolk', async () => {
         await delay(defaultNetworkResponseDelay);
-
         return HttpResponse.json(mockSpraakTolk);
     })
 ];

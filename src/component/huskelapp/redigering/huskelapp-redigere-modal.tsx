@@ -1,5 +1,5 @@
 import { Formik, FormikBag, FormikProps } from 'formik';
-import { Button, Heading, Modal } from '@navikt/ds-react';
+import { BodyShort, Button, CopyButton, Heading, Modal } from '@navikt/ds-react';
 import { ArrowRightIcon } from '@navikt/aksel-icons';
 import {
     Huskelapp,
@@ -22,7 +22,6 @@ import { SlettArbeidsliste } from './huskelapp-slett-arbeidsliste';
 import { SlettHuskelapp } from './slett-huskelapp';
 import './huskelapp-redigering.less';
 import { useDataStore } from '../../../store/data-store';
-import { KopierKnappTekst } from '../../components/kopier-knapp/kopier-knapp';
 import { selectSammensattNavn } from '../../../util/selectors';
 
 const huskelappEmptyValues = {
@@ -166,15 +165,22 @@ function HuskelappRedigereModal() {
                     <Modal.Header>
                         <div className="rediger-huskelapp-modal-header">
                             <HuskelappIkon aria-hidden className="navds-modal__header-icon" />
-                            <Heading size="xsmall" className="rediger-huskelapp-modal-header-tekst">
+                            <Heading size="small" className="rediger-huskelapp-modal-header-tekst">
                                 {modalNavn}
                             </Heading>
                         </div>
-                        <div className="rediger-huskelapp-modal-header">
-                            <Heading size="xsmall" level="3">
+                        <div className="rediger-huskelapp-modal-personinfo">
+                            <BodyShort weight="semibold" size="small">
                                 {navn}
-                            </Heading>
-                            <KopierKnappTekst kopierTekst={brukerFnr} viseTekst={`F.nr.: ${brukerFnr}`} />
+                            </BodyShort>
+                            <CopyButton
+                                copyText={brukerFnr}
+                                text={`F.nr.: ${brukerFnr}`}
+                                activeText="Kopiert!"
+                                size="xsmall"
+                                iconPosition="right"
+                                className="copybutton"
+                            />
                         </div>
                     </Modal.Header>
                     <Modal.Body className="rediger-huskelapp-modal-body">

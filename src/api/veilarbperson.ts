@@ -54,6 +54,31 @@ export interface VergeOgFullmakt {
     fullmakt: Fullmakt[];
 }
 
+export interface FullmaktDTO {
+    fullmakt: FullmaktData[];
+}
+
+export interface FullmaktData {
+    fullmaktsgiver: StringOrNothing;
+    fullmektig: StringOrNothing;
+    omraade: OmraadeMedHandling[];
+    gyldigFraOgMed: StringOrNothing;
+    gyldigTilOgMed: StringOrNothing;
+    fullmaktsgiverNavn: StringOrNothing;
+    fullmektigsNavn: StringOrNothing;
+}
+
+export interface OmraadeMedHandling {
+    tema: StringOrNothing;
+    handling: OmraadeHandlingType[];
+}
+
+export enum OmraadeHandlingType {
+    LES = 'LES',
+    KOMMUNISER = 'KOMMUNISER',
+    SKRIV = 'SKRIV'
+}
+
 export interface SpraakTolk {
     tegnspraak: StringOrNothing;
     talespraak: StringOrNothing;
@@ -90,7 +115,7 @@ export interface RegistreringData {
             jobbetSammenhengendeSeksAvTolvSisteManeder: boolean;
             innsatsgruppe: InnsatsgruppeType;
         };
-        manueltRegistrertAv: {} | null;
+        manueltRegistrertAv: object | null;
     };
 }
 
@@ -106,6 +131,12 @@ export function fetchVergeOgFullmakt(fnr: string, behandlingsnummer: string): Ax
         fnr: fnr,
         behandlingsnummer: behandlingsnummer
     } as PdlRequest);
+}
+
+export function fetchFullmakt(fnr: string): AxiosPromise<FullmaktDTO> {
+    return axiosInstance.post<FullmaktDTO>(`/veilarbperson/api/v3/person/hent-fullmakt`, {
+        fnr: fnr
+    } as PersonRequest);
 }
 
 export function fetchSpraakTolk(fnr: string, behandlingsnummer: string): AxiosPromise<SpraakTolk> {
