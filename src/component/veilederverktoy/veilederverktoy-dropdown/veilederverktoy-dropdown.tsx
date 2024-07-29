@@ -12,11 +12,11 @@ interface DropdownProps {
     setApen: (apen: boolean) => void;
     lukkDropdown: () => void;
     btnRef: React.RefObject<HTMLButtonElement>;
-    render: (lukkDropdown: () => void) => ReactNode;
     onClick?: () => void;
+    children: ReactNode;
 }
 
-function VeilederverktoyDropdown({ apen, setApen, lukkDropdown, btnRef, render, onClick }: DropdownProps) {
+function VeilederverktoyDropdown({ apen, setApen, lukkDropdown, btnRef, onClick, children }: DropdownProps) {
     const loggNode = useRef<HTMLDivElement>(null);
 
     function toggleDropdown() {
@@ -59,7 +59,7 @@ function VeilederverktoyDropdown({ apen, setApen, lukkDropdown, btnRef, render, 
                     className="veilederverktoy-dropdown__innhold"
                     id="tildel-veileder-veilederverktoy-dropdown__innhold"
                 >
-                    {render(lukkDropdown)}
+                    {children}
                 </ul>
             )}
         </div>
