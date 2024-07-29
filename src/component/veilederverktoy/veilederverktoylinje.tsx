@@ -120,9 +120,7 @@ function Veilederverktoylinje() {
         <div className="veilederverktoy-dropdown">
             <VeilederverktoyDropdown
                 metricName="dropdown-trykket"
-                knappeTekst="Veilederverktøy"
-                name="tildel veileder"
-                render={lukkDropdown => (
+                render={(lukkDropdown: () => void) => (
                     <>
                         {sjekkHarTilgangTilHuskelappEllerFargekategori && (
                             <>

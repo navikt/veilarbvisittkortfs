@@ -1,20 +1,18 @@
 import { ReactNode, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { Button } from '@navikt/ds-react';
-import './veilederverktoy-dropdown.less';
 import { useDocumentEventListner } from '../../../util/hook/use-event-listner';
 import TannHjulIkon from '../../veilederverktoy/tannhjul.svg?react';
 import withClickMetric from '../../components/click-metric/click-metric';
 import hiddenIf from '../../components/hidden-if/hidden-if';
+import './veilederverktoy-dropdown.less';
 
 interface DropdownProps {
-    name: string;
-    knappeTekst: ReactNode;
     render: (lukkDropdown: () => void) => ReactNode;
     onClick?: () => void;
 }
 
-function VeilederverktoyDropdown({ name, knappeTekst, render, onClick }: DropdownProps) {
+function VeilederverktoyDropdown({ render, onClick }: DropdownProps) {
     const [apen, setApen] = useState(false);
     const btnRef = useRef<HTMLButtonElement>(null);
     const loggNode = useRef<HTMLDivElement>(null);
@@ -51,18 +49,21 @@ function VeilederverktoyDropdown({ name, knappeTekst, render, onClick }: Dropdow
         >
             <Button
                 variant="tertiary-neutral"
-                icon={<TannHjulIkon className="veilederverktoy-ikon" />}
+                icon={<TannHjulIkon className="veilederverktoy-ikon" aria-hidden={true} />}
                 ref={btnRef}
                 className="veilederverktoy-dropdown__btn"
                 onClick={toggleDropdown}
                 aria-expanded={apen}
-                aria-controls={`${name}-veilederverktoy-dropdown__innhold`}
+                aria-controls="tildel-veileder-veilederverktoy-dropdown__innhold"
                 type="button"
             >
-                {knappeTekst}
+                Veilederverktøy
             </Button>
             {apen && (
-                <ul className={'veilederverktoy-dropdown__innhold'} id={`${name}-veilederverktoy-dropdown__innhold`}>
+                <ul
+                    className="veilederverktoy-dropdown__innhold"
+                    id="tildel-veileder-veilederverktoy-dropdown__innhold"
+                >
                     {render(lukkDropdown)}
                 </ul>
             )}
