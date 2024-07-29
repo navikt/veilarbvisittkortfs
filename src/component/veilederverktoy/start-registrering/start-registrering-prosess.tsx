@@ -28,14 +28,19 @@ function StartRegistreringProsess() {
     if (!kanRegistreres) {
         return null;
     }
-    const brukerType = oppfolging?.erSykmeldtMedArbeidsgiver
-        ? 'erSykemeldtMedArbeidsgiver'
-        : oppfolging?.kanReaktiveres
-          ? 'kanReaktiveres'
-          : 'kanIkkeReaktiveres';
+
+    const brukerType = () => {
+        if (oppfolging?.erSykmeldtMedArbeidsgiver) {
+            return 'erSykemeldtMedArbeidsgiver';
+        }
+        if (oppfolging?.kanReaktiveres) {
+            return 'kanReaktiveres';
+        }
+        return 'kanIkkeReaktiveres';
+    };
 
     const brukerTekst = () => {
-        switch (brukerType) {
+        switch (brukerType()) {
             case 'erSykemeldtMedArbeidsgiver':
                 return 'Start oppfølging';
             case 'kanReaktiveres':
