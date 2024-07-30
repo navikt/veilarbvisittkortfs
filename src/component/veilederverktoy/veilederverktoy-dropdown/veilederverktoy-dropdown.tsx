@@ -1,30 +1,23 @@
-import { ReactNode, useRef, useState } from 'react';
+import { ReactNode, useRef } from 'react';
 import classNames from 'classnames';
 import { Button } from '@navikt/ds-react';
-import './veilederverktoy-dropdown.less';
 import { useDocumentEventListner } from '../../../util/hook/use-event-listner';
 import TannHjulIkon from '../../veilederverktoy/tannhjul.svg?react';
 import withClickMetric from '../../components/click-metric/click-metric';
 import hiddenIf from '../../components/hidden-if/hidden-if';
+import './veilederverktoy-dropdown.less';
 
 interface DropdownProps {
-    name: string;
-    knappeTekst: ReactNode;
-    render: (lukkDropdown: () => void) => ReactNode;
+    apen: boolean;
+    setApen: (apen: boolean) => void;
+    lukkDropdown: () => void;
+    btnRef: React.RefObject<HTMLButtonElement>;
     onClick?: () => void;
+    children: ReactNode;
 }
 
-function VeilederverktoyDropdown({ name, knappeTekst, render, onClick }: DropdownProps) {
-    const [apen, setApen] = useState(false);
-    const btnRef = useRef<HTMLButtonElement>(null);
+function VeilederverktoyDropdown({ apen, setApen, lukkDropdown, btnRef, onClick, children }: DropdownProps) {
     const loggNode = useRef<HTMLDivElement>(null);
-
-    const lukkDropdown = () => {
-        if (apen) {
-            setApen(false);
-            btnRef.current?.focus();
-        }
-    };
 
     function toggleDropdown() {
         if (apen) {
@@ -51,19 +44,22 @@ function VeilederverktoyDropdown({ name, knappeTekst, render, onClick }: Dropdow
         >
             <Button
                 variant="tertiary-neutral"
-                icon={<TannHjulIkon className="veilederverktoy-ikon" />}
+                icon={<TannHjulIkon className="veilederverktoy-ikon" aria-hidden={true} />}
                 ref={btnRef}
                 className="veilederverktoy-dropdown__btn"
                 onClick={toggleDropdown}
                 aria-expanded={apen}
-                aria-controls={`${name}-veilederverktoy-dropdown__innhold`}
+                aria-controls="tildel-veileder-veilederverktoy-dropdown__innhold"
                 type="button"
             >
-                {knappeTekst}
+                Veilederverktøy
             </Button>
             {apen && (
-                <ul className={'veilederverktoy-dropdown__innhold'} id={`${name}-veilederverktoy-dropdown__innhold`}>
-                    {render(lukkDropdown)}
+                <ul
+                    className="veilederverktoy-dropdown__innhold"
+                    id="tildel-veileder-veilederverktoy-dropdown__innhold"
+                >
+                    {children}
                 </ul>
             )}
         </div>
