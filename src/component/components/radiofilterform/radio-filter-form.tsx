@@ -2,18 +2,16 @@ import { ChangeEvent } from 'react';
 import { Radio, RadioGroup } from '@navikt/ds-react';
 import './radio-filterform.less';
 
-export interface RadioFilterFormProps<T> {
+interface Props<T> {
     data: T[];
     createLabel: (foo: T) => string;
     createValue: (foo: T) => string;
     radioName: string;
-    fjernNullstill?: boolean;
     selected: string;
     changeSelected: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-function RadioFilterForm<T>(props: RadioFilterFormProps<T>) {
-    const { data, createLabel, createValue, radioName } = props;
+function RadioFilterForm<T>({ data, createLabel, createValue, radioName, selected, changeSelected }: Props<T>) {
     return (
         <div className="radio-filterform">
             <RadioGroup legend="tildel_veileder" hideLegend={true} className="radio-filterform__valg scrollbar">
@@ -25,8 +23,8 @@ function RadioFilterForm<T>(props: RadioFilterFormProps<T>) {
                             value={value}
                             id={`${value}-${radioName}`}
                             key={`${value}-${radioName}`}
-                            checked={value === props.selected}
-                            onChange={e => props.changeSelected(e)}
+                            checked={value === selected}
+                            onChange={e => changeSelected(e)}
                             size="small"
                         >
                             {createLabel(o)}

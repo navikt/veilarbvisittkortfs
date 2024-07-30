@@ -6,13 +6,14 @@ import { validerFristFelt, validerHuskelappKommentarFelt } from '../../../util/f
 import FormikDatoVelger from '../../components/formik/formik-datepicker';
 import './../huskelapp-postitstyling.less';
 
-export interface HuskelappEditFormProps {
+interface Props {
     endretAv: string;
     erArbeidslistaTom: boolean;
 }
-export const HuskelappEditForm = (props: HuskelappEditFormProps) => (
+
+export const HuskelappEditForm = ({ endretAv, erArbeidslistaTom }: Props) => (
     <div className="ny-huskelapp huskelapp-postitstyling">
-        {!props.erArbeidslistaTom && <Heading size="small">Ny huskelapp</Heading>}
+        {!erArbeidslistaTom && <Heading size="small">Ny huskelapp</Heading>}
 
         <Form id="huskelapp-form" className="rediger-huskelapp-skjema">
             <FormikTekstArea
@@ -31,9 +32,9 @@ export const HuskelappEditForm = (props: HuskelappEditFormProps) => (
                 className="navds-form-field"
             />
         </Form>
-        {props.endretAv.length > 0 && (
+        {endretAv.length > 0 && (
             <Detail>
-                <i>{props.endretAv}</i>
+                <i>{endretAv}</i>
             </Detail>
         )}
         <HuskelappInformasjonsmelding />
