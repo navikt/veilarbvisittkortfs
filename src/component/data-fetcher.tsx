@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Loader } from '@navikt/ds-react';
 import { useDataStore } from '../store/data-store';
 import { useAppStore } from '../store/app-store';
 import { fetchOppfolging, useOppfolgingsstatus } from '../api/veilarboppfolging';
@@ -6,13 +7,16 @@ import { fetchFullmakt, fetchPersonalia, fetchSpraakTolk, fetchVergeOgFullmakt }
 import { fetchInnloggetVeileder, fetchVeilederePaEnhet } from '../api/veilarbveileder';
 import { ifResponseHasData } from '../util/utils';
 import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
-import './data-fetcher.less';
 import { isAnyLoadingOrNotStarted } from '../api/utils';
-import { Loader } from '@navikt/ds-react';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 import { BRUK_NY_KILDE_TIL_FULLMAKT, useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
+import './data-fetcher.less';
 
-export function DataFetcher(props: { children: React.ReactNode }) {
+interface Props {
+    children: React.ReactNode;
+}
+
+export function DataFetcher({ children }: Props) {
     const { brukerFnr, visVeilederVerktoy } = useAppStore();
     const {
         setOppfolging,
@@ -83,5 +87,5 @@ export function DataFetcher(props: { children: React.ReactNode }) {
         return <Loader className="visittkort-laster" size="xlarge" />;
     }
 
-    return <>{props.children}</>;
+    return <>{children}</>;
 }

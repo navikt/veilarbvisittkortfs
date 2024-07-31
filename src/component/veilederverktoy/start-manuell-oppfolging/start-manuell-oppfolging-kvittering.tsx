@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import Kvittering from '../prosess/kvittering';
 import { Alert } from '@navikt/ds-react';
+import Kvittering from '../prosess/kvittering';
 import { logMetrikk } from '../../../util/logger';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
@@ -11,7 +11,7 @@ export interface StartManuellOppfolgingKvitteringProps {
     begrunnelse: string;
 }
 
-function StartManuellOppfolgingKvittering(props: StartManuellOppfolgingKvitteringProps) {
+function StartManuellOppfolgingKvittering({ begrunnelse }: StartManuellOppfolgingKvitteringProps) {
     const { brukerFnr } = useAppStore();
     const { oppfolging } = useDataStore();
 
@@ -42,7 +42,7 @@ function StartManuellOppfolgingKvittering(props: StartManuellOppfolgingKvitterin
     return (
         <Kvittering
             tittel="Endre til manuell oppfølging"
-            alertStripeTekst={`Endring til manuell oppfølging er gjennomført. Begrunnelse: ${props.begrunnelse}`}
+            alertStripeTekst={`Endring til manuell oppfølging er gjennomført. Begrunnelse: ${begrunnelse}`}
             footer={
                 <Alert variant="warning">
                     Brukere som ikke kan legge inn CV og jobbprofil selv skal få hjelp til dette.
