@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
+import { Form } from 'formik';
 import BegrunnelseFooter from './begrunnelse-form-footer';
 import FormikModal from '../../components/formik/formik-modal';
-import { Form, FormikProps } from 'formik';
 import { BegrunnelseTextArea } from './begrunnelse-textarea';
 
 export interface BegrunnelseValues {
@@ -12,28 +12,35 @@ interface OwnProps<T extends BegrunnelseValues> {
     initialValues: T;
     handleSubmit: (values: T) => void;
     tekstariaLabel: string;
+    tittel: string;
+    infoTekst: ReactNode;
     isLoading: boolean;
-    tittel?: string;
-    infoTekst?: ReactNode;
-    render?: (formikProps: FormikProps<T>) => ReactNode;
     maxLength?: number;
 }
 
 type BegrunnelseFormProps<T extends BegrunnelseValues> = OwnProps<T>;
 
-function BegrunnelseForm<T extends BegrunnelseValues>(props: BegrunnelseFormProps<T>) {
+function BegrunnelseForm<T extends BegrunnelseValues>({
+    initialValues,
+    handleSubmit,
+    tekstariaLabel,
+    tittel,
+    infoTekst,
+    isLoading,
+    maxLength
+}: BegrunnelseFormProps<T>) {
     return (
         <FormikModal
-            initialValues={props.initialValues}
-            handleSubmit={props.handleSubmit}
+            initialValues={initialValues}
+            handleSubmit={handleSubmit}
             visConfirmDialog={true}
-            tittel={props.tittel}
+            tittel={tittel}
             render={() => (
                 <>
-                    {props.infoTekst}
+                    {infoTekst}
                     <Form>
-                        <BegrunnelseTextArea tekstariaLabel={props.tekstariaLabel} maxLength={props.maxLength} />
-                        <BegrunnelseFooter spinner={props.isLoading} />
+                        <BegrunnelseTextArea tekstariaLabel={tekstariaLabel} maxLength={maxLength} />
+                        <BegrunnelseFooter spinner={isLoading} />
                     </Form>
                 </>
             )}

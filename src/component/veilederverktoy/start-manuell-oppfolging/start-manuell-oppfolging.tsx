@@ -1,5 +1,5 @@
-import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { Alert } from '@navikt/ds-react';
+import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
@@ -29,7 +29,6 @@ function StartManuellOppfolging() {
             initialValues={{ begrunnelse: '' }}
             handleSubmit={settBrukerTilManuellOppfolging}
             tekstariaLabel="Skriv en begrunnelse for hvorfor brukeren trenger manuell oppfølging"
-            isLoading={false}
             tittel="Endre til manuell oppfølging"
             infoTekst={
                 <Alert variant="warning">
@@ -37,6 +36,7 @@ function StartManuellOppfolging() {
                     aktivitetsplanen.
                 </Alert>
             }
+            isLoading={false}
         />
     );
 }
