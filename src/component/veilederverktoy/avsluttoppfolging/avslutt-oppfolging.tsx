@@ -82,7 +82,6 @@ function AvsluttOppfolging() {
             infoTekst={
                 <AvsluttOppfolgingInfoText
                     visVarselDersom14aUtkastEksisterer={nyVedtakslosningUtrullet}
-                    avslutningStatus={avslutningStatus}
                     datoErInnenFor28DagerSiden={datoErInnenFor28DagerSiden}
                     harUbehandledeDialoger={harUbehandledeDialoger}
                     fnr={brukerFnr}
