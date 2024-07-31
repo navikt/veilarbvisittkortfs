@@ -1,4 +1,5 @@
 import { Form } from 'formik';
+import { Heading } from '@navikt/ds-react';
 import OpprettOppgaveTemaSelector from './components/opprett-oppgave-tema-selector';
 import OppgaveInnerForm from './components/oppgave-inner-form';
 import FormikModal from '../../components/formik/formik-modal';
@@ -6,11 +7,10 @@ import { useModalStore } from '../../../store/modal-store';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
-import './opprett-oppgave.less';
 import { todayReversedDateStr } from '../../../util/date-utils';
 import { OppgaveFormData, OppgaveTema, OppgaveType, opprettOppgave, PrioritetType } from '../../../api/veilarboppgave';
 import { OrNothing, StringOrNothing } from '../../../util/type/utility-types';
-import { Heading } from '@navikt/ds-react';
+import './opprett-oppgave.less';
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;

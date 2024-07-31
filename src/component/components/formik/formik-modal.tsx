@@ -1,21 +1,26 @@
 import { ReactNode, useState } from 'react';
 import cls from 'classnames';
 import { Formik, FormikProps, FormikValues } from 'formik';
-import { useModalStore } from '../../../store/modal-store';
 import { Modal } from '@navikt/ds-react';
+import { useModalStore } from '../../../store/modal-store';
 
 interface FormikModalProps<Values> {
     initialValues: Values;
     handleSubmit: (values: Values) => void;
-    validationSchema?: (values: Values) => void;
-    className?: string;
+    tittel: string;
     render: (formikProps: FormikProps<Values>) => ReactNode;
     visConfirmDialog?: boolean;
-    isOpen?: boolean;
-    tittel?: string;
+    className?: string;
 }
 
-function FormikModal<Values extends FormikValues>({ visConfirmDialog = true, ...props }: FormikModalProps<Values>) {
+function FormikModal<Values extends FormikValues>({
+    initialValues,
+    handleSubmit,
+    tittel,
+    render,
+    visConfirmDialog = true,
+    className
+}: FormikModalProps<Values>) {
     const { hideModal } = useModalStore();
     const [isOpen, setIsOpen] = useState(true);
 
@@ -38,23 +43,19 @@ function FormikModal<Values extends FormikValues>({ visConfirmDialog = true, ...
     };
 
     return (
-        <Formik
-            initialValues={props.initialValues}
-            validationSchema={props.validationSchema}
-            onSubmit={values => props.handleSubmit(values)}
-        >
+        <Formik initialValues={initialValues} onSubmit={values => handleSubmit(values)}>
             {formikProps => (
                 <Modal
-                    className={cls('visittkortfs-modal', props.className)}
-                    open={props.isOpen || isOpen}
+                    className={cls('visittkortfs-modal', className)}
+                    open={isOpen}
                     onClose={() => tilbake(formikProps)}
                     closeOnBackdropClick={true}
                     header={{
-                        heading: props.tittel ?? '',
+                        heading: tittel,
                         closeButton: true
                     }}
                 >
-                    <Modal.Body>{props.render(formikProps)}</Modal.Body>
+                    <Modal.Body>{render(formikProps)}</Modal.Body>
                 </Modal>
             )}
         </Formik>

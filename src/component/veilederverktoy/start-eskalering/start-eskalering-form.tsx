@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import { Form } from 'formik';
+import { BodyShort } from '@navikt/ds-react';
 import FormikModal from '../../components/formik/formik-modal';
-import { Form, FormikProps } from 'formik';
 import Maltekstvelger from './maltekstvelger';
 import { BegrunnelseTextArea } from '../begrunnelseform/begrunnelse-textarea';
 import BegrunnelseFooter from '../begrunnelseform/begrunnelse-form-footer';
@@ -13,38 +13,41 @@ export interface StartEskaleringValues {
 interface OwnProps<T extends StartEskaleringValues> {
     initialValues: T;
     handleSubmit: (values: T) => void;
-    tekstariaLabel: string;
-    isLoading: boolean;
-    tittel?: string;
-    infoTekst?: ReactNode;
-    render?: (formikProps: FormikProps<T>) => ReactNode;
-    maxLength?: number;
 }
 
 type StartEskaleringFormProps<T extends StartEskaleringValues> = OwnProps<T>;
 
-function StartEskaleringForm<T extends StartEskaleringValues>(props: StartEskaleringFormProps<T>) {
+function StartEskaleringForm<T extends StartEskaleringValues>({
+    initialValues,
+    handleSubmit
+}: StartEskaleringFormProps<T>) {
     return (
         <FormikModal
-            initialValues={props.initialValues}
-            handleSubmit={props.handleSubmit}
+            initialValues={initialValues}
+            handleSubmit={handleSubmit}
             visConfirmDialog={true}
-            tittel={props.tittel}
+            tittel="Send varsel om mulig stans"
             render={({ values }) => (
                 <div>
-                    {props.infoTekst}
+                    <BodyShort size="small">
+                        Når du sender forhåndsvarsel må du huske å være tydelig på hvilken oppgave som skal gjennomføre,
+                        og hvilken frist personen får for tilbakemelding. Personen får en brukernotifikasjon på ditt nav
+                        med teksten: Viktig oppgave. NAV vurderer å stanse pengene dine. Se hva du må gjøre.
+                    </BodyShort>
+                    <BodyShort size="small">
+                        Ved å klikke på brukernotifikasjon, kommer personen direkte inn i riktig dialog der
+                        forhåndsvarslet ligger.
+                    </BodyShort>
+
                     <div>
                         <Form>
                             <Maltekstvelger />
                             <BegrunnelseTextArea
-                                tekstariaLabel={props.tekstariaLabel}
-                                maxLength={props.maxLength}
-                                hidden={values.type === props.initialValues.type}
+                                tekstariaLabel="Rediger teksten under slik at den passer."
+                                maxLength={5000}
+                                hidden={values.type === initialValues.type}
                             />
-                            <BegrunnelseFooter
-                                spinner={props.isLoading}
-                                disabled={values.type === props.initialValues.type}
-                            />
+                            <BegrunnelseFooter spinner={false} disabled={values.type === initialValues.type} />
                         </Form>
                     </div>
                 </div>

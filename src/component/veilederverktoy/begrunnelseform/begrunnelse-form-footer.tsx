@@ -1,23 +1,24 @@
-import { useModalStore } from '../../../store/modal-store';
 import { Button } from '@navikt/ds-react';
+import { useModalStore } from '../../../store/modal-store';
 import './begrunnelse-form.less';
 
-interface BegrunnelseFooterProps {
+interface Props {
     spinner: boolean;
     disabled?: boolean;
 }
 
-function BegrunnelseFooter(props: BegrunnelseFooterProps) {
+function BegrunnelseFooter({ spinner, disabled }: Props) {
     const { hideModal } = useModalStore();
+
     return (
         <div className="begrunnelse-form-footer">
             <Button
                 variant="primary"
                 size="small"
                 type="submit"
-                loading={props.spinner}
+                loading={spinner}
                 className="bekreft-btn"
-                disabled={props.disabled}
+                disabled={disabled}
             >
                 Bekreft
             </Button>

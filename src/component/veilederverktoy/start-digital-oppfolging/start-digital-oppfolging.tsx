@@ -1,5 +1,5 @@
-import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { Alert, BodyShort } from '@navikt/ds-react';
+import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
@@ -37,19 +37,17 @@ function StartDigitalOppfolging() {
         );
     }
 
-    const infoTekst = (
-        <Alert variant="warning">
-            Når du endrer til digital oppfølging, kan du ha dialog med brukeren i aktivitetsplanen.
-        </Alert>
-    );
-
     return (
         <BegrunnelseForm
             initialValues={{ begrunnelse: '' }}
             handleSubmit={startDigitalOppgfolging}
             tekstariaLabel="Skriv en begrunnelse for hvorfor brukeren nå kan få digital oppfølging"
             tittel="Endre til digital oppfølging"
-            infoTekst={infoTekst}
+            infoTekst={
+                <Alert variant="warning">
+                    Når du endrer til digital oppfølging, kan du ha dialog med brukeren i aktivitetsplanen.
+                </Alert>
+            }
             isLoading={false}
         />
     );
