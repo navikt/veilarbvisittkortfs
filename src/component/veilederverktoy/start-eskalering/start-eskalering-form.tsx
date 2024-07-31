@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
 import { Form } from 'formik';
+import { BodyShort } from '@navikt/ds-react';
 import FormikModal from '../../components/formik/formik-modal';
 import Maltekstvelger from './maltekstvelger';
 import { BegrunnelseTextArea } from '../begrunnelseform/begrunnelse-textarea';
@@ -13,42 +13,41 @@ export interface StartEskaleringValues {
 interface OwnProps<T extends StartEskaleringValues> {
     initialValues: T;
     handleSubmit: (values: T) => void;
-    tekstariaLabel: string;
-    isLoading: boolean;
-    tittel?: string;
-    infoTekst?: ReactNode;
-    maxLength?: number;
 }
 
 type StartEskaleringFormProps<T extends StartEskaleringValues> = OwnProps<T>;
 
 function StartEskaleringForm<T extends StartEskaleringValues>({
     initialValues,
-    handleSubmit,
-    tekstariaLabel,
-    isLoading,
-    tittel,
-    infoTekst,
-    maxLength
+    handleSubmit
 }: StartEskaleringFormProps<T>) {
     return (
         <FormikModal
             initialValues={initialValues}
             handleSubmit={handleSubmit}
             visConfirmDialog={true}
-            tittel={tittel}
+            tittel="Send varsel om mulig stans"
             render={({ values }) => (
                 <div>
-                    {infoTekst}
+                    <BodyShort size="small">
+                        Når du sender forhåndsvarsel må du huske å være tydelig på hvilken oppgave som skal gjennomføre,
+                        og hvilken frist personen får for tilbakemelding. Personen får en brukernotifikasjon på ditt nav
+                        med teksten: Viktig oppgave. NAV vurderer å stanse pengene dine. Se hva du må gjøre.
+                    </BodyShort>
+                    <BodyShort size="small">
+                        Ved å klikke på brukernotifikasjon, kommer personen direkte inn i riktig dialog der
+                        forhåndsvarslet ligger.
+                    </BodyShort>
+
                     <div>
                         <Form>
                             <Maltekstvelger />
                             <BegrunnelseTextArea
-                                tekstariaLabel={tekstariaLabel}
-                                maxLength={maxLength}
+                                tekstariaLabel="Rediger teksten under slik at den passer."
+                                maxLength={5000}
                                 hidden={values.type === initialValues.type}
                             />
-                            <BegrunnelseFooter spinner={isLoading} disabled={values.type === initialValues.type} />
+                            <BegrunnelseFooter spinner={false} disabled={values.type === initialValues.type} />
                         </Form>
                     </div>
                 </div>
