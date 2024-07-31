@@ -128,111 +128,106 @@ function Veilederverktoylinje() {
     };
 
     return (
-        <div className="veilederverktoy-dropdown">
-            <VeilederverktoyDropdown
-                apen={dropdownApen}
-                setApen={setDropdownApen}
-                lukkDropdown={lukkDropdown}
-                btnRef={dropdownBtnRef}
-                metricName="dropdown-trykket"
-            >
-                {sjekkHarTilgangTilHuskelappEllerFargekategori && (
-                    <>
-                        {kanEndreArbeidsliste && !features[HUSKELAPP] && (
-                            <StartProsess
-                                knappeTekst="Rediger arbeidsliste"
-                                onClick={() => doAll(arbeidslisteKlikk, lukkDropdown)}
-                            />
-                        )}
-                        {kanLagreArbeidsliste && !features[HUSKELAPP] && (
-                            <StartProsess
-                                knappeTekst="Legg i arbeidsliste"
-                                onClick={() => doAll(arbeidslisteKlikk, lukkDropdown)}
-                            />
-                        )}
-                        {huskelapp?.huskelappId && features[HUSKELAPP] && (
-                            <StartProsess
-                                knappeTekst="Rediger huskelapp"
-                                onClick={() => doAll(huskelappKlikk, lukkDropdown)}
-                            />
-                        )}
-                        {huskelapp === null && features[HUSKELAPP] && (
-                            <StartProsess
-                                knappeTekst="Lag huskelapp"
-                                onClick={() => doAll(huskelappKlikk, lukkDropdown)}
-                            />
-                        )}
-                    </>
-                )}
-                {kanTildeleVeileder && (
-                    <StartProsess
-                        metricName="tildel_veileder"
-                        knappeTekst="Tildel veileder"
-                        onClick={() => doAll(showTildelVeilederModal, lukkDropdown)}
-                    />
-                )}
-                {kanStarteEskalering && (
-                    <StartProsess
-                        knappeTekst="Send varsel"
-                        onClick={() => doAll(showStartEskaleringModal, lukkDropdown)}
-                        metricName="send_eskalering"
-                    />
-                )}
-                {kanStoppeEskalering && (
-                    <StartProsess
-                        knappeTekst="Deaktiver varsel"
-                        onClick={() => doAll(showStoppEskaleringModal, lukkDropdown)}
-                        metricName="deaktiver_esklaring"
-                    />
-                )}
-                {kanRegistrere && <StartRegistreringProsess />}
-                {kanStarteManuellOppfolging && (
-                    <StartProsess
-                        knappeTekst="Endre til manuell oppfølging"
-                        onClick={() => doAll(showStartManuellOppfolgingModal, lukkDropdown)}
-                        metricName="manuell"
-                    />
-                )}
-                {kanStarteDigitalOppfolging && (
-                    <StartProsess
-                        knappeTekst="Endre til digital oppfølging"
-                        onClick={() => doAll(showStartDigitalOppfolgingModal, lukkDropdown)}
-                        metricName="digital"
-                    />
-                )}
-                {kanStarteKVP && (
-                    <StartProsess
-                        knappeTekst="Start KVP-periode"
-                        onClick={() => doAll(showStartKvpPeriodeModal, lukkDropdown)}
-                        metricName="start_kvp"
-                    />
-                )}
-                {kanStoppeKVP && (
-                    <StartProsess
-                        knappeTekst="Avslutt KVP-periode"
-                        onClick={() => doAll(showStoppKvpPeriodeModal, lukkDropdown)}
-                        metricName="stopp_kvp"
-                    />
-                )}
+        <VeilederverktoyDropdown
+            apen={dropdownApen}
+            setApen={setDropdownApen}
+            lukkDropdown={lukkDropdown}
+            btnRef={dropdownBtnRef}
+            metricName="dropdown-trykket"
+        >
+            {sjekkHarTilgangTilHuskelappEllerFargekategori && (
+                <>
+                    {kanEndreArbeidsliste && !features[HUSKELAPP] && (
+                        <StartProsess
+                            knappeTekst="Rediger arbeidsliste"
+                            onClick={() => doAll(arbeidslisteKlikk, lukkDropdown)}
+                        />
+                    )}
+                    {kanLagreArbeidsliste && !features[HUSKELAPP] && (
+                        <StartProsess
+                            knappeTekst="Legg i arbeidsliste"
+                            onClick={() => doAll(arbeidslisteKlikk, lukkDropdown)}
+                        />
+                    )}
+                    {huskelapp?.huskelappId && features[HUSKELAPP] && (
+                        <StartProsess
+                            knappeTekst="Rediger huskelapp"
+                            onClick={() => doAll(huskelappKlikk, lukkDropdown)}
+                        />
+                    )}
+                    {huskelapp === null && features[HUSKELAPP] && (
+                        <StartProsess knappeTekst="Lag huskelapp" onClick={() => doAll(huskelappKlikk, lukkDropdown)} />
+                    )}
+                </>
+            )}
+            {kanTildeleVeileder && (
                 <StartProsess
-                    knappeTekst="Opprett Gosys-oppgave"
-                    onClick={() => doAll(showOpprettOppgaveModal, lukkDropdown)}
-                    metricName="gosys"
+                    metricName="tildel_veileder"
+                    knappeTekst="Tildel veileder"
+                    onClick={() => doAll(showTildelVeilederModal, lukkDropdown)}
                 />
-                {kanAvslutteOppfolging && (
-                    <StartProsess
-                        knappeTekst="Avslutt oppfølging"
-                        onClick={() => doAll(showAvsluttOppfolgingModal, lukkDropdown)}
-                        metricName="avslutt_oppfolging"
-                    />
-                )}
+            )}
+            {kanStarteEskalering && (
                 <StartProsess
-                    knappeTekst="Vis historikk"
-                    onClick={() => doAll(showHistorikkModal, lukkDropdown)}
-                    metricName="historikk"
+                    knappeTekst="Send varsel"
+                    onClick={() => doAll(showStartEskaleringModal, lukkDropdown)}
+                    metricName="send_eskalering"
                 />
-            </VeilederverktoyDropdown>
-        </div>
+            )}
+            {kanStoppeEskalering && (
+                <StartProsess
+                    knappeTekst="Deaktiver varsel"
+                    onClick={() => doAll(showStoppEskaleringModal, lukkDropdown)}
+                    metricName="deaktiver_esklaring"
+                />
+            )}
+            {kanRegistrere && <StartRegistreringProsess />}
+            {kanStarteManuellOppfolging && (
+                <StartProsess
+                    knappeTekst="Endre til manuell oppfølging"
+                    onClick={() => doAll(showStartManuellOppfolgingModal, lukkDropdown)}
+                    metricName="manuell"
+                />
+            )}
+            {kanStarteDigitalOppfolging && (
+                <StartProsess
+                    knappeTekst="Endre til digital oppfølging"
+                    onClick={() => doAll(showStartDigitalOppfolgingModal, lukkDropdown)}
+                    metricName="digital"
+                />
+            )}
+            {kanStarteKVP && (
+                <StartProsess
+                    knappeTekst="Start KVP-periode"
+                    onClick={() => doAll(showStartKvpPeriodeModal, lukkDropdown)}
+                    metricName="start_kvp"
+                />
+            )}
+            {kanStoppeKVP && (
+                <StartProsess
+                    knappeTekst="Avslutt KVP-periode"
+                    onClick={() => doAll(showStoppKvpPeriodeModal, lukkDropdown)}
+                    metricName="stopp_kvp"
+                />
+            )}
+            <StartProsess
+                knappeTekst="Opprett Gosys-oppgave"
+                onClick={() => doAll(showOpprettOppgaveModal, lukkDropdown)}
+                metricName="gosys"
+            />
+            {kanAvslutteOppfolging && (
+                <StartProsess
+                    knappeTekst="Avslutt oppfølging"
+                    onClick={() => doAll(showAvsluttOppfolgingModal, lukkDropdown)}
+                    metricName="avslutt_oppfolging"
+                />
+            )}
+            <StartProsess
+                knappeTekst="Vis historikk"
+                onClick={() => doAll(showHistorikkModal, lukkDropdown)}
+                metricName="historikk"
+            />
+        </VeilederverktoyDropdown>
     );
 }
 
