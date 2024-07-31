@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
+import { Form } from 'formik';
 import FormikModal from '../../components/formik/formik-modal';
-import { Form, FormikProps } from 'formik';
 import Maltekstvelger from './maltekstvelger';
 import { BegrunnelseTextArea } from '../begrunnelseform/begrunnelse-textarea';
 import BegrunnelseFooter from '../begrunnelseform/begrunnelse-form-footer';
@@ -17,34 +17,38 @@ interface OwnProps<T extends StartEskaleringValues> {
     isLoading: boolean;
     tittel?: string;
     infoTekst?: ReactNode;
-    render?: (formikProps: FormikProps<T>) => ReactNode;
     maxLength?: number;
 }
 
 type StartEskaleringFormProps<T extends StartEskaleringValues> = OwnProps<T>;
 
-function StartEskaleringForm<T extends StartEskaleringValues>(props: StartEskaleringFormProps<T>) {
+function StartEskaleringForm<T extends StartEskaleringValues>({
+    initialValues,
+    handleSubmit,
+    tekstariaLabel,
+    isLoading,
+    tittel,
+    infoTekst,
+    maxLength
+}: StartEskaleringFormProps<T>) {
     return (
         <FormikModal
-            initialValues={props.initialValues}
-            handleSubmit={props.handleSubmit}
+            initialValues={initialValues}
+            handleSubmit={handleSubmit}
             visConfirmDialog={true}
-            tittel={props.tittel}
+            tittel={tittel}
             render={({ values }) => (
                 <div>
-                    {props.infoTekst}
+                    {infoTekst}
                     <div>
                         <Form>
                             <Maltekstvelger />
                             <BegrunnelseTextArea
-                                tekstariaLabel={props.tekstariaLabel}
-                                maxLength={props.maxLength}
-                                hidden={values.type === props.initialValues.type}
+                                tekstariaLabel={tekstariaLabel}
+                                maxLength={maxLength}
+                                hidden={values.type === initialValues.type}
                             />
-                            <BegrunnelseFooter
-                                spinner={props.isLoading}
-                                disabled={values.type === props.initialValues.type}
-                            />
+                            <BegrunnelseFooter spinner={isLoading} disabled={values.type === initialValues.type} />
                         </Form>
                     </div>
                 </div>
