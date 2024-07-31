@@ -1,3 +1,4 @@
+import { Dropdown } from '@navikt/ds-react';
 import { erITestMiljo } from '../../../util/utils';
 import { logMetrikk } from '../../../util/logger';
 import { useAppStore } from '../../../store/app-store';
@@ -19,15 +20,12 @@ function byggRegistreringUrl(fnr: string, enhet: StringOrNothing, bruk_gammel_ar
     }
 }
 
-function StartRegistreringProsess() {
+export const StartRegistreringProsess = () => {
     const { brukerFnr, enhetId } = useAppStore();
     const { oppfolging, features } = useDataStore();
 
     const kanRegistreres = kanRegistreresEllerReaktiveres(oppfolging);
-
-    if (!kanRegistreres) {
-        return null;
-    }
+    const registreringUrl = byggRegistreringUrl(brukerFnr, enhetId, features[BRUK_GAMMEL_ARBEIDSREGISTRERING_URL]);
 
     const brukerType = () => {
         if (oppfolging?.erSykmeldtMedArbeidsgiver) {
@@ -52,17 +50,17 @@ function StartRegistreringProsess() {
         }
     };
 
-    return (
-        <li>
-            <a
-                href={byggRegistreringUrl(brukerFnr, enhetId, features[BRUK_GAMMEL_ARBEIDSREGISTRERING_URL])}
-                className="knapp meny-knapp btn--mb1"
-                onClick={() => logMetrikk('veilarbvisittkortfs.metrikker.registrering', {}, { brukerType: brukerType })}
-            >
-                {brukerTekst()}
-            </a>
-        </li>
-    );
-}
+    if (!kanRegistreres) {
+        return null;
+    }
 
-export default StartRegistreringProsess;
+    return (
+        <Dropdown.Menu.List.Item
+            as="a"
+            href={registreringUrl}
+            onClick={() => logMetrikk('veilarbvisittkortfs.metrikker.registrering', {}, { brukerType: brukerType })}
+        >
+            {brukerTekst()}
+        </Dropdown.Menu.List.Item>
+    );
+};

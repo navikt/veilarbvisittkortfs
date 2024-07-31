@@ -1,5 +1,5 @@
+import { Dropdown } from '@navikt/ds-react';
 import withClickMetric, { ClickMetricProps } from '../../components/click-metric/click-metric';
-import { MenyKnapp } from '../../components/meny-knapp/meny-knapp';
 import { useAppStore } from '../../../store/app-store';
 
 interface StartProsessProps {
@@ -7,9 +7,9 @@ interface StartProsessProps {
     onClick?: () => void;
 }
 
-const ProcessKnapp = withClickMetric(MenyKnapp);
+const DropdownMenuListItem = withClickMetric(Dropdown.Menu.List.Item);
 
-function StartProcess({ knappeTekst, onClick, metricName }: StartProsessProps & ClickMetricProps) {
+export const StartProsess = ({ knappeTekst, onClick, metricName }: StartProsessProps & ClickMetricProps) => {
     const { setAvsluttOppfolgingOpptelt } = useAppStore();
 
     if (metricName === 'avslutt_oppfolging') {
@@ -17,12 +17,8 @@ function StartProcess({ knappeTekst, onClick, metricName }: StartProsessProps & 
     }
 
     return (
-        <li>
-            <ProcessKnapp onClick={onClick} metricName={metricName}>
-                {knappeTekst}
-            </ProcessKnapp>
-        </li>
+        <DropdownMenuListItem as="button" variant="tertiary-neutral" onClick={onClick} metricName={metricName}>
+            {knappeTekst}
+        </DropdownMenuListItem>
     );
-}
-
-export default StartProcess;
+};

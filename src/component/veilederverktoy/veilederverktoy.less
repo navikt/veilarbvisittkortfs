@@ -1,29 +1,23 @@
 .visittkortfs {
-    .veilederverktoy-dropdown {
-        display: flex;
-        justify-content: flex-end;
-        margin: auto 0;
+    .visittkortfs__container {
+        .veilederverktoy-dropdown-button {
+            align-self: center;
 
-        font-size: 1rem;
-
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            line-height: 2.5rem;
+            & * {
+                font-weight: normal;
+            }
         }
 
-        .veilederverktoy-ikon {
-            margin-left: 4px;
-            width: 2rem;
-            height: 1.5rem;
+        .veilederverktoy-dropdown-menyliste * {
+            color: var(--a-text-default);
         }
-    }
 
-    /* Fiks som sikrar at lukk-knapp ikkje overlappar med overskrifterne i modalar
-     * (Trur dette er naudsynt grunna ting frå veilarbpersonflate som blør inn,
-     * men har ikkje prioritert å dobbeltsjekke det. 2024-01-18 */
-    .navds-modal .navds-modal__header h1 {
-        margin-right: 3rem;
+        /* Fiks som sikrar at lukk-knapp ikkje overlappar med overskrifterne i modalar
+         * (Trur dette er naudsynt grunna ting frå veilarbpersonflate som blør inn,
+         * men har ikkje prioritert å dobbeltsjekke det. 2024-01-18 */
+
+        .navds-modal .navds-modal__header h1 {
+            margin-right: 3rem;
+        }
     }
 }
