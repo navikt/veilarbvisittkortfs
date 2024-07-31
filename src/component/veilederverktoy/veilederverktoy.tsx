@@ -29,7 +29,7 @@ import './veilederverktoy.less';
 
 const ButtonWithClickMetric = withClickMetric(Button);
 
-function Veilederverktoylinje() {
+export const Veilederverktoy = () => {
     const { visVeilederVerktoy, brukerFnr } = useAppStore();
     const { oppfolging, innloggetVeileder, gjeldendeEskaleringsvarsel, features } = useDataStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
@@ -215,6 +215,4 @@ function Veilederverktoylinje() {
             </Dropdown.Menu>
         </Dropdown>
     );
-}
-
-export default Veilederverktoylinje;
+};
