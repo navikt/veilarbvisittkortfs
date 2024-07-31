@@ -1,5 +1,6 @@
-import FormikModal from '../../components/formik/formik-modal';
 import { Form } from 'formik';
+import { BodyShort } from '@navikt/ds-react';
+import FormikModal from '../../components/formik/formik-modal';
 import FormikCheckBox from '../../components/formik/formik-checkbox';
 import BegrunnelseFooter from '../begrunnelseform/begrunnelse-form-footer';
 import { BegrunnelseTextArea } from '../begrunnelseform/begrunnelse-textarea';
@@ -9,7 +10,6 @@ import { useDataStore } from '../../../store/data-store';
 import { eskaleringVarselSendtEvent } from '../../../util/utils';
 import { stopEskalering } from '../../../api/veilarbdialog';
 import './stopp-eskalering.less';
-import { BodyShort } from '@navikt/ds-react';
 
 interface FormValues {
     begrunnelse: string;
@@ -71,7 +71,6 @@ function StoppEskalering() {
                                     />
                                 </>
                             )}
-                            {/* TODO: isLoading: OppfolgingSelector.selectOppfolgingStatus(state)*/}
                             <BegrunnelseFooter spinner={false} />
                         </Form>
                     </div>
