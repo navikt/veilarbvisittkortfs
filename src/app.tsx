@@ -16,21 +16,21 @@ export interface AppProps {
     avsluttOppfolgingOpptelt?: boolean;
 }
 
-function App(props: AppProps) {
+function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, avsluttOppfolgingOpptelt }: AppProps) {
     return (
         <StoreProvider
-            brukerFnr={props.fnr}
-            enhetId={props.enhet}
-            tilbakeTilFlate={props.tilbakeTilFlate}
-            visVeilederVerktoy={props.visVeilederVerktoy || false}
-            avsluttOppfolgingOpptelt={props.avsluttOppfolgingOpptelt || false}
+            brukerFnr={fnr}
+            enhetId={enhet}
+            tilbakeTilFlate={tilbakeTilFlate}
+            visVeilederVerktoy={visVeilederVerktoy || false}
+            avsluttOppfolgingOpptelt={avsluttOppfolgingOpptelt || false}
         >
             <div className="visittkortfs">
                 <DataFetcher>
                     <Tilbakelenke />
                     <div className="visittkortfs__container">
                         <PersonInfo />
-                        {!props.skjulEtiketter && <Etiketter />}
+                        {!skjulEtiketter && <Etiketter />}
                         <Veilederverktoylinje />
                     </div>
                 </DataFetcher>

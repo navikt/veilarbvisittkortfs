@@ -2,8 +2,13 @@ import KvinneIkon from './kvinne.svg';
 import MannIkon from './mann.svg';
 import visibleIf from '../../components/visible-if';
 
-function KjonnIkon(props: { kjonn: string }) {
-    const kjonnLowerCase = props.kjonn.toLowerCase();
+interface Props {
+    kjonn: string;
+}
+
+function KjonnIkon({ kjonn }: Props) {
+    const kjonnLowerCase = kjonn.toLowerCase();
+
     // kan ta bort 'k' og 'm' når vi kun henter personalia fra PDL
     if (kjonnLowerCase === 'k' || kjonnLowerCase === 'kvinne') {
         return <img src={KvinneIkon} className="personinfo__ikon" alt={'kvinne'} />;

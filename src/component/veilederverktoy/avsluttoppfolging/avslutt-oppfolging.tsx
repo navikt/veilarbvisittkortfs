@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
+import dayjs from 'dayjs';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { AvsluttOppfolgingInfoText } from './components/avslutt-oppfolging-info-text';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
-import dayjs from 'dayjs';
 import { useAppStore } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { selectHarUbehandledeDialoger } from '../../../util/selectors';
@@ -79,16 +79,15 @@ function AvsluttOppfolging() {
             handleSubmit={handleSubmitAvsluttOppfolging}
             tekstariaLabel="Begrunnelse"
             tittel="Avslutt oppfølgingsperioden"
-            isLoading={false}
             infoTekst={
                 <AvsluttOppfolgingInfoText
                     visVarselDersom14aUtkastEksisterer={nyVedtakslosningUtrullet}
-                    avslutningStatus={avslutningStatus}
                     datoErInnenFor28DagerSiden={datoErInnenFor28DagerSiden}
                     harUbehandledeDialoger={harUbehandledeDialoger}
                     fnr={brukerFnr}
                 />
             }
+            isLoading={false}
         />
     );
 }

@@ -7,17 +7,24 @@ interface StoreProviderProps extends AppStoreInitialValues {
     children: ReactNode;
 }
 
-const StoreProvider = (props: StoreProviderProps) => {
+const StoreProvider = ({
+    brukerFnr,
+    enhetId,
+    tilbakeTilFlate,
+    visVeilederVerktoy,
+    avsluttOppfolgingOpptelt,
+    children
+}: StoreProviderProps) => {
     return (
         <AppStore
-            brukerFnr={props.brukerFnr}
-            enhetId={props.enhetId}
-            tilbakeTilFlate={props.tilbakeTilFlate}
-            visVeilederVerktoy={props.visVeilederVerktoy}
-            avsluttOppfolgingOpptelt={props.avsluttOppfolgingOpptelt}
+            brukerFnr={brukerFnr}
+            enhetId={enhetId}
+            tilbakeTilFlate={tilbakeTilFlate}
+            visVeilederVerktoy={visVeilederVerktoy}
+            avsluttOppfolgingOpptelt={avsluttOppfolgingOpptelt}
         >
             <DataStore>
-                <ModalStore>{props.children}</ModalStore>
+                <ModalStore>{children}</ModalStore>
             </DataStore>
         </AppStore>
     );

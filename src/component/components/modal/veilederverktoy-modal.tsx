@@ -1,29 +1,29 @@
 import { ReactNode } from 'react';
 import classNames from 'classnames';
-import { useModalStore } from '../../../store/modal-store';
 import { Modal } from '@navikt/ds-react';
+import { useModalStore } from '../../../store/modal-store';
 
-interface VeilederVerktoyModalProps {
+interface Props {
+    tittel: string;
     children: ReactNode;
     className?: string;
-    tittel: string;
 }
 
-function VeilederVerktoyModal(props: VeilederVerktoyModalProps) {
+function VeilederVerktoyModal({ tittel, children, className }: Props) {
     const { hideModal } = useModalStore();
 
     return (
         <Modal
-            className={classNames('veilederverktoy-modal', props.className)}
+            className={classNames('veilederverktoy-modal', className)}
             open={true}
             onClose={hideModal}
             closeOnBackdropClick={true}
             header={{
-                heading: props.tittel,
+                heading: tittel,
                 closeButton: true
             }}
         >
-            <Modal.Body>{props.children}</Modal.Body>
+            <Modal.Body>{children}</Modal.Body>
         </Modal>
     );
 }

@@ -1,18 +1,24 @@
 import { validerBeskrivelse, validerBeskrivelse500TegnFelt } from '../../../util/formik-validation';
 import FormikTekstArea from '../../components/formik/formik-textarea';
 
-export function BegrunnelseTextArea(props: { tekstariaLabel: string; maxLength?: number; hidden?: boolean }) {
-    if (props.hidden) {
+interface Props {
+    tekstariaLabel: string;
+    maxLength?: number;
+    hidden?: boolean;
+}
+
+export function BegrunnelseTextArea({ tekstariaLabel, maxLength, hidden }: Props) {
+    if (hidden) {
         return null;
     }
 
     return (
         <FormikTekstArea
-            label={props.tekstariaLabel}
+            label={tekstariaLabel}
             name="begrunnelse"
-            maxLength={props.maxLength || 500}
+            maxLength={maxLength || 500}
             size="small"
-            validate={props.maxLength ? validerBeskrivelse(props.maxLength) : validerBeskrivelse500TegnFelt}
+            validate={maxLength ? validerBeskrivelse(maxLength) : validerBeskrivelse500TegnFelt}
         />
     );
 }

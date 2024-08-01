@@ -1,6 +1,6 @@
+import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { useModalStore } from '../../../store/modal-store';
-import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import { useErUfordeltBruker } from '../../../api/veilarbportefolje';
 import { useAppStore } from '../../../store/app-store';
 
@@ -8,7 +8,7 @@ export interface TildelVeilederKvitteringProps {
     tildeltVeilederNavn: string;
 }
 
-export function TildelVeilederKvittering(props: TildelVeilederKvitteringProps) {
+export function TildelVeilederKvittering({ tildeltVeilederNavn }: TildelVeilederKvitteringProps) {
     const { brukerFnr, visVeilederVerktoy } = useAppStore();
     const { hideModal } = useModalStore();
     const { mutate: setUfordeltbruker } = useErUfordeltBruker(brukerFnr, visVeilederVerktoy);
@@ -19,7 +19,7 @@ export function TildelVeilederKvittering(props: TildelVeilederKvitteringProps) {
                 Tildel veileder
             </Heading>
             <BodyShort size="small">
-                Du har tildelt veileder {props.tildeltVeilederNavn}. Det kan ta noe tid før brukeren er i Min oversikt.
+                Du har tildelt veileder {tildeltVeilederNavn}. Det kan ta noe tid før brukeren er i Min oversikt.
             </BodyShort>
             <Button
                 variant="primary"

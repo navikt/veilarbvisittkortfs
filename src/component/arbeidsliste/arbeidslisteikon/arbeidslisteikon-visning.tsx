@@ -1,16 +1,20 @@
+import { Field } from 'formik';
+import { Label } from '@navikt/ds-react';
 import ArbeidslisteikonBla from './arbeidslisteikon_bla.svg?react';
 import ArbeidslisteikonLilla from './arbeidslisteikon_lilla.svg?react';
 import ArbeidslisteikonGronn from './arbeidslisteikon_gronn.svg?react';
 import ArbeidslisteikonGul from './arbeidslisteikon_gul.svg?react';
-import { Field } from 'formik';
 import Arbeidslistekategori from './arbeidslistekategori';
 import { FieldProps } from 'formik/dist/Field';
 import { KategoriModell } from '../../../api/veilarbportefolje';
-import { Label } from '@navikt/ds-react';
 
-function ArbeidslistekategoriVisning(props: { name: string }) {
+interface Props {
+    name: string;
+}
+
+function ArbeidslistekategoriVisning({ name }: Props) {
     return (
-        <Field name={props.name}>
+        <Field name={name}>
             {({ field, form }: FieldProps<KategoriModell>) => {
                 return (
                     <div className="arbeidslistekategori">
@@ -21,7 +25,7 @@ function ArbeidslistekategoriVisning(props: { name: string }) {
                             <Arbeidslistekategori
                                 value={KategoriModell.BLA}
                                 arbeidslisteikon={<ArbeidslisteikonBla />}
-                                name={props.name}
+                                name={name}
                                 onChange={() => form.setFieldValue(field.name, KategoriModell.BLA)}
                                 checked={field.value === KategoriModell.BLA}
                                 title="Arbeidslisteikon blå"
@@ -29,24 +33,24 @@ function ArbeidslistekategoriVisning(props: { name: string }) {
                             <Arbeidslistekategori
                                 value={KategoriModell.GRONN}
                                 arbeidslisteikon={<ArbeidslisteikonGronn />}
-                                name={props.name}
-                                onChange={() => form.setFieldValue(props.name, KategoriModell.GRONN)}
+                                name={name}
+                                onChange={() => form.setFieldValue(name, KategoriModell.GRONN)}
                                 checked={field.value === KategoriModell.GRONN}
                                 title="Arbeidslisteikon grønn"
                             />
                             <Arbeidslistekategori
                                 value={KategoriModell.LILLA}
                                 arbeidslisteikon={<ArbeidslisteikonLilla />}
-                                name={props.name}
-                                onChange={() => form.setFieldValue(props.name, KategoriModell.LILLA)}
+                                name={name}
+                                onChange={() => form.setFieldValue(name, KategoriModell.LILLA)}
                                 checked={field.value === KategoriModell.LILLA}
                                 title="Arbeidslisteikon lilla"
                             />
                             <Arbeidslistekategori
                                 value={KategoriModell.GUL}
                                 arbeidslisteikon={<ArbeidslisteikonGul />}
-                                name={props.name}
-                                onChange={() => form.setFieldValue(props.name, KategoriModell.GUL)}
+                                name={name}
+                                onChange={() => form.setFieldValue(name, KategoriModell.GUL)}
                                 checked={field.value === KategoriModell.GUL}
                                 title="Arbeidslisteikon gul"
                             />

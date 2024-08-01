@@ -1,53 +1,56 @@
 import { useEffect } from 'react';
-import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
 import { BodyShort, Loader } from '@navikt/ds-react';
+import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
 import { fetchHarUtkast } from '../../../../api/veilarbvedtaksstotte';
-import { AvslutningStatus } from '../../../../api/veilarboppfolging';
 import { fetchHarArenaTiltak } from '../../../../api/veilarbaktivitet';
 import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
-import { OrNothing } from '../../../../util/type/utility-types';
 
-export function AvsluttOppfolgingInfoText(props: {
+interface Props {
+    fnr: string;
     harYtelser?: boolean;
     visVarselDersom14aUtkastEksisterer: boolean;
-    avslutningStatus: OrNothing<AvslutningStatus>;
     datoErInnenFor28DagerSiden: boolean;
     harUbehandledeDialoger: boolean;
-    fnr: string;
-}) {
+}
+
+export function AvsluttOppfolgingInfoText({
+    fnr,
+    harYtelser,
+    visVarselDersom14aUtkastEksisterer,
+    datoErInnenFor28DagerSiden,
+    harUbehandledeDialoger
+}: Props) {
     const harArenaTiltakFetcher = useAxiosFetcher(fetchHarArenaTiltak);
     const harUtakstFetcher = useAxiosFetcher(fetchHarUtkast);
 
     useEffect(() => {
-        if (props.visVarselDersom14aUtkastEksisterer) {
-            harUtakstFetcher.fetch(props.fnr);
+        if (visVarselDersom14aUtkastEksisterer) {
+            harUtakstFetcher.fetch(fnr);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    if (harArenaTiltakFetcher.loading || (props.visVarselDersom14aUtkastEksisterer && harUtakstFetcher.loading)) {
+    if (harArenaTiltakFetcher.loading || (visVarselDersom14aUtkastEksisterer && harUtakstFetcher.loading)) {
         return <Loader size="2xlarge" />;
     }
 
     const harArenaTiltak = harArenaTiltakFetcher.data;
     const hentTiltakFeilet = !!harArenaTiltakFetcher.error;
 
-    const aktivMindreEnn28Dager = props.datoErInnenFor28DagerSiden
+    const aktivMindreEnn28Dager = datoErInnenFor28DagerSiden
         ? 'Brukeren har vært inaktiv i mindre enn 28 dager. Vil du likevel avslutte brukerens oppfølgingsperiode?'
         : 'Her avslutter du brukerens oppfølgingsperioden og legger inn en kort begrunnelse om hvorfor.';
 
     return (
         <>
             <BodyShort size="small">{aktivMindreEnn28Dager}</BodyShort>
-            <HiddenIfAlertStripeAdvarselSolid
-                hidden={!props.harUbehandledeDialoger && !harArenaTiltak && !props.harYtelser}
-            >
+            <HiddenIfAlertStripeAdvarselSolid hidden={!harUbehandledeDialoger && !harArenaTiltak && !harYtelser}>
                 Du kan avslutte oppfølgingsperioden selv om:
                 <ul className="margin--0">
-                    {props.harUbehandledeDialoger && <li>Brukeren har ubehandlede dialoger</li>}
+                    {harUbehandledeDialoger && <li>Brukeren har ubehandlede dialoger</li>}
                     {hentTiltakFeilet && <li>Brukeren kan ha aktive tiltak i Arena</li>}
                     {!hentTiltakFeilet && harArenaTiltak && <li>Brukeren har aktive tiltak i Arena</li>}
-                    {props.harYtelser && <li>Brukeren har aktive saker i Arena</li>}
+                    {harYtelser && <li>Brukeren har aktive saker i Arena</li>}
                 </ul>
             </HiddenIfAlertStripeAdvarselSolid>
 

@@ -4,7 +4,6 @@ import OpprettOppgaveVelgDatoer from './opprett-oppgave-dato-velger';
 import OpprettOppgaveVelgEnhet from './opprett-oppgave-enhet-dropdown';
 import OpprettOppgaveVelgVeileder from './opprett-oppgave-veileder-selector';
 import OpprettOppgaveBeskrivelseTekstArea from './opprett-oppgave-beskrivelse-textarea';
-import HiddenIfDiv from '../../../components/hidden-if/hidden-if-div';
 import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import { OppgaveTema } from '../../../../api/veilarboppgave';
@@ -51,14 +50,16 @@ function OppgaveInnerForm({
                 />
             </div>
             <OpprettOppgaveBeskrivelseTekstArea />
-            <HiddenIfDiv className="modal-footer" hidden={!tema}>
-                <Button variant="primary" size="small" className="bekreft-btn" type="submit">
-                    Bekreft
-                </Button>
-                <Button variant="secondary" size="small" onClick={tilbake}>
-                    Avbryt
-                </Button>
-            </HiddenIfDiv>
+            {tema && (
+                <div className="modal-footer">
+                    <Button variant="primary" size="small" className="bekreft-btn" type="submit">
+                        Bekreft
+                    </Button>
+                    <Button variant="secondary" size="small" onClick={tilbake}>
+                        Avbryt
+                    </Button>
+                </div>
+            )}
         </>
     );
 }

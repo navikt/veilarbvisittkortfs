@@ -9,15 +9,19 @@ interface StartProsessProps {
 
 const ProcessKnapp = withClickMetric(MenyKnapp);
 
-function StartProcess(props: StartProsessProps & ClickMetricProps) {
+function StartProcess({ knappeTekst, onClick, metricName }: StartProsessProps & ClickMetricProps) {
     const { setAvsluttOppfolgingOpptelt } = useAppStore();
-    if (props.metricName === 'avslutt_oppfolging') {
+
+    if (metricName === 'avslutt_oppfolging') {
         setAvsluttOppfolgingOpptelt(false);
     }
+
     return (
-        <ProcessKnapp onClick={props.onClick} metricName={props.metricName}>
-            {props.knappeTekst}
-        </ProcessKnapp>
+        <li>
+            <ProcessKnapp onClick={onClick} metricName={metricName}>
+                {knappeTekst}
+            </ProcessKnapp>
+        </li>
     );
 }
 

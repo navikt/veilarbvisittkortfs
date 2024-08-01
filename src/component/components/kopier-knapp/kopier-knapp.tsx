@@ -1,13 +1,18 @@
-import './kopier-knapp.less';
 import { CopyButton } from '@navikt/ds-react';
+import './kopier-knapp.less';
 
-export function KopierKnappTekst(props: { kopierTekst: string; viseTekst: string }) {
+interface Props {
+    kopierTekst: string;
+    viseTekst: string;
+}
+
+export function KopierKnappTekst({ kopierTekst, viseTekst }: Props) {
     return (
         <div className="fnr-og-telefon">
-            {props.kopierTekst && (
+            {kopierTekst && (
                 <CopyButton
-                    copyText={props.kopierTekst}
-                    text={props.viseTekst}
+                    copyText={kopierTekst}
+                    text={viseTekst}
                     activeText="Kopiert!"
                     size="medium"
                     iconPosition="right"
