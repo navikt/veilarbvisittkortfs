@@ -5,6 +5,7 @@ import { useDataStore } from '../../../store/data-store';
 import { kanRegistreresEllerReaktiveres } from '../../../util/selectors';
 import { StringOrNothing } from '../../../util/type/utility-types';
 import { BRUK_GAMMEL_ARBEIDSREGISTRERING_URL } from '../../../api/veilarbpersonflatefs';
+import { DropdownMenuListItem } from '@navikt/ds-react/cjs/dropdown';
 
 //@todo: check with arbeidssokerregistrering if they can fetch fnr from modiacontext holder
 function byggRegistreringUrl(fnr: string, enhet: StringOrNothing, bruk_gammel_arbeidsregistrerings_url: boolean) {
@@ -47,12 +48,12 @@ export const StartRegistreringProsess = () => {
     }
 
     return (
-        <Dropdown.Menu.List.Item
+        <DropdownMenuListItem
             as="a"
             href={registreringUrl}
             onClick={() => logMetrikk('veilarbvisittkortfs.metrikker.registrering', {}, { brukerType: brukerType })}
         >
             {brukerTekst()}
-        </Dropdown.Menu.List.Item>
+        </DropdownMenuListItem>
     );
 };
