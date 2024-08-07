@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { Button } from '@navikt/ds-react';
 import { useDocumentEventListner } from '../../../../../util/hook/use-event-listner';
 import withClickMetric from '../../../../components/click-metric/click-metric';
-import hiddenIf from '../../../../components/hidden-if/hidden-if';
 import './select-med-sok.less';
 
 interface SelectMedSokProps {
@@ -65,4 +64,4 @@ function SelectMedSok({ name, knappeTekst, render, onClick }: SelectMedSokProps)
     );
 }
 
-export default withClickMetric(hiddenIf(SelectMedSok));
+export default withClickMetric(SelectMedSok);
