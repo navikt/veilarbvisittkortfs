@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { BodyShort, Loader } from '@navikt/ds-react';
-import { HiddenIfAlertStripeAdvarselSolid } from '../../../components/hidden-if/hidden-if-alertstripe';
+import { Alert, BodyShort, Loader } from '@navikt/ds-react';
 import { fetchHarUtkast } from '../../../../api/veilarbvedtaksstotte';
 import { fetchHarArenaTiltak } from '../../../../api/veilarbaktivitet';
 import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
@@ -43,20 +42,25 @@ export function AvsluttOppfolgingInfoText({
 
     return (
         <>
-            <BodyShort size="small">{aktivMindreEnn28Dager}</BodyShort>
-            <HiddenIfAlertStripeAdvarselSolid hidden={!harUbehandledeDialoger && !harArenaTiltak && !harYtelser}>
-                Du kan avslutte oppfølgingsperioden selv om:
-                <ul className="margin--0">
-                    {harUbehandledeDialoger && <li>Brukeren har ubehandlede dialoger</li>}
-                    {hentTiltakFeilet && <li>Brukeren kan ha aktive tiltak i Arena</li>}
-                    {!hentTiltakFeilet && harArenaTiltak && <li>Brukeren har aktive tiltak i Arena</li>}
-                    {harYtelser && <li>Brukeren har aktive saker i Arena</li>}
-                </ul>
-            </HiddenIfAlertStripeAdvarselSolid>
-
-            <HiddenIfAlertStripeAdvarselSolid hidden={!harUtakstFetcher.data}>
-                Utkast til oppfølgingsvedtak vil bli slettet
-            </HiddenIfAlertStripeAdvarselSolid>
+            <BodyShort size="small" spacing={true}>
+                {aktivMindreEnn28Dager}
+            </BodyShort>
+            {(harUbehandledeDialoger || harArenaTiltak || harYtelser) && (
+                <Alert variant="warning" size="small">
+                    Du kan avslutte oppfølgingsperioden selv om:
+                    <ul className="margin--0">
+                        {harUbehandledeDialoger && <li>Brukeren har ubehandlede dialoger</li>}
+                        {hentTiltakFeilet && <li>Brukeren kan ha aktive tiltak i Arena</li>}
+                        {!hentTiltakFeilet && harArenaTiltak && <li>Brukeren har aktive tiltak i Arena</li>}
+                        {harYtelser && <li>Brukeren har aktive saker i Arena</li>}
+                    </ul>
+                </Alert>
+            )}
+            {harUtakstFetcher.data && (
+                <Alert variant="warning" size="small">
+                    Utkast til oppfølgingsvedtak vil bli slettet
+                </Alert>
+            )}
         </>
     );
 }
