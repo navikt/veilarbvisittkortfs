@@ -7,6 +7,7 @@
             text-align: start;
             max-width: 66ch; // Unngår at tekstlinjer vert ubehageleg lange å lese
         }
+
         ul {
             text-align: left;
             margin: 0.5rem 1.5rem;
@@ -15,9 +16,14 @@
         }
     }
 
+    // Gjer det lettare å midtstille #varsel-ikon
+    & > :first-child {
+        text-align: start;
+    }
+
     #varsel-ikon {
         margin-top: -3rem; // placerar en ikon med størrelsen 64x64 i mitten
-        margin-left: 3rem; // Tilsvarar breidda av lukk-knappen til modalen som også bur i header (2024-01-17)
+        margin-left: calc(50% - 2rem); // midtstillar ikonet langs x-aksen
     }
 
     .modal-footer {

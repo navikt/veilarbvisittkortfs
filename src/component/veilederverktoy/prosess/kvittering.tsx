@@ -27,8 +27,10 @@ function Kvittering({ tittel, alertStripeTekst, footer, onRequestClose }: Kvitte
             <Heading size="medium" level="2" className="modal-info-tekst__undertekst">
                 {tittel}
             </Heading>
-            <BodyShort size="small">{alertStripeTekst}</BodyShort>
-            {!!footer && <BodyShort size="medium">{footer}</BodyShort>}
+            <BodyShort size="small" spacing={true}>
+                {alertStripeTekst}
+            </BodyShort>
+            {footer}
         </VarselModal>
     );
 }
