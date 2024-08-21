@@ -7,7 +7,7 @@ import { trackAmplitude } from '../../../amplitude/amplitude';
 import { slettArbeidslisteMenIkkeFargekategori, useArbeidsliste } from '../../../api/veilarbportefolje';
 import { ifResponseHasData } from '../../../util/utils';
 
-export const SlettArbeidsliste = () => {
+export const SlettArbeidsliste = ({ closeModal }: { closeModal: () => void }) => {
     const [visSlettebekreftelse, setVisSlettebekreftelse] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
@@ -27,7 +27,8 @@ export const SlettArbeidsliste = () => {
             .then(ifResponseHasData(setArbeidsliste))
             .then(() => setLoading(false))
             .catch(() => setError(true))
-            .then(() => setVisSlettebekreftelse(false));
+            .then(() => setVisSlettebekreftelse(false))
+            .then(() => closeModal());
     };
 
     return (

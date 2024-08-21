@@ -204,7 +204,7 @@ function HuskelappRedigereModal() {
                         >
                             Avbryt
                         </Button>
-                        {!erArbeidslistaTom && <SlettArbeidsliste />}
+                        {!erArbeidslistaTom && <SlettArbeidsliste closeModal={() => onRequestClose(formikProps)} />}
                         {erArbeidslistaTom && !erHuskelappTom && <SlettHuskelapp variant="tertiary" />}
                     </Modal.Footer>
                 </Modal>
