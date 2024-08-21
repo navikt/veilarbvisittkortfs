@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
 import './etiketter.less';
-import { fetchRegistrering, InnsatsgruppeType } from '../../../api/veilarbperson';
+import { fetchRegistrering, FullmaktData, InnsatsgruppeType } from '../../../api/veilarbperson';
 import { OppfolgingStatus, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { ifResponseHasData, isEmpty } from '../../../util/utils';
@@ -52,6 +52,13 @@ function manglerVedtak(oppfolging: OrNothing<OppfolgingStatus>): boolean {
     );
 }
 
+function erFullmaktOmradeMedOppfolging(fullmaktListe: FullmaktData[]): boolean {
+    return fullmaktListe
+        .flatMap(fullmakt => fullmakt.omraade)
+        .map(omraadeMedHandling => omraadeMedHandling.tema)
+        .includes('Oppfølging');
+}
+
 function Etiketter() {
     const { brukerFnr } = useAppStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
@@ -84,7 +91,15 @@ function Etiketter() {
             {!features[BRUK_NY_KILDE_TIL_FULLMAKT] && (
                 <Fokus visible={!isEmpty(vergeOgFullmakt?.fullmakt)}>Fullmakt</Fokus>
             )}
-            {features[BRUK_NY_KILDE_TIL_FULLMAKT] && <Fokus visible={!isEmpty(fullmakt?.fullmakt)}>Fullmakt</Fokus>}
+            {features[BRUK_NY_KILDE_TIL_FULLMAKT] && (
+                <Fokus
+                    visible={
+                        fullmakt && !isEmpty(fullmakt.fullmakt) && erFullmaktOmradeMedOppfolging(fullmakt.fullmakt)
+                    }
+                >
+                    Fullmakt
+                </Fokus>
+            )}
             <Fokus visible={spraakTolk?.tegnspraak}>Tegnspråktolk</Fokus>
             <Fokus visible={spraakTolk?.talespraak}>Språktolk</Fokus>
             <Fokus visible={oppfolging?.underKvp}>KVP</Fokus>
