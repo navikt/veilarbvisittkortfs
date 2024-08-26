@@ -8,25 +8,31 @@ env:
     CI: true
     TZ: Europe/Amsterdam
 
-permissions:
-  id-token: 'write'
-  contents: write
-  pages: write
-
 jobs:
     deploy-prod:
         name: Deploy application to prod
         runs-on: ubuntu-latest
+        permissions:
+            id-token: write
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+            - name: Setup Octo Security Token Service
+              uses: octo-sts/action@v1.0.0
+              id: octo-sts
+              with:
+                scope: ${{ github.repository_owner }}
+                identity: readertoken
             - name: Setup node
               uses: actions/setup-node@v4
               with:
                   node-version: 20
                   cache: npm
+                  registry-url: "https://npm.pkg.github.com"
             - name: Install dependencies
               run: npm ci
+              env:
+                  NODE_AUTH_TOKEN: ${{ steps.octo-sts.outputs.token }}
             - name: Run tests
               run: npm run test
             - name: Build application
