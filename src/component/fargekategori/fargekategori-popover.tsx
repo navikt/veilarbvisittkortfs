@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AxiosError } from 'axios';
 import { Alert, Button, Popover } from '@navikt/ds-react';
 import { useAppStore } from '../../store/app-store';
@@ -64,7 +64,7 @@ export const FargekategoriPopover = ({ buttonRef, isOpen, setIsOpen, setFargekat
             }}
             placement="bottom-start"
         >
-            <Popover.Content>
+            <Popover.Content id="fargekategori-popover__innhold">
                 {error ? (
                     <Alert size="small" variant="error">
                         {error}

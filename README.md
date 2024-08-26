@@ -4,6 +4,19 @@ Personinfo om bruker og veilederverktøy
 
 Demoløsning: https://navikt.github.io/veilarbvisittkortfs/
 
+# Komme i gang
+
+**Installere pakker**
+
+For å kunne hente ned @navikt-pakker må du legge til en `.npmrc` fil i homemappen med følgende innhold:
+
+```shell
+//npm.pkg.github.com/:_authToken=TOKEN
+@navikt:registry=https://npm.pkg.github.com
+```
+
+[Se navikt/frontend](https://github.com/navikt/frontend?tab=readme-ov-file#installere-pakker-lokalt) for å se hvordan du kan generere et token på github.
+
 ## Henvendelser
 
 Spørsmål knyttet til koden eller prosjektet kan stilles ved å opprette en issue.
