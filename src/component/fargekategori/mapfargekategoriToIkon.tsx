@@ -10,19 +10,19 @@ import FargekategoriIkonTomtBokmerke from './ikoner/Fargekategoriikon_bokmerke_s
 export const mapfargekategoriToIkon = (fargekategori: FargekategoriModell | null) => {
     switch (fargekategori) {
         case FargekategoriModell.FARGEKATEGORI_A:
-            return <FargekategoriIkonBlaHalvsirkel />;
+            return <FargekategoriIkonBlaHalvsirkel fontSize="1.5rem" />;
         case FargekategoriModell.FARGEKATEGORI_B:
-            return <FargekategoriIkonGronnTrekant />;
+            return <FargekategoriIkonGronnTrekant fontSize="1.5rem" />;
         case FargekategoriModell.FARGEKATEGORI_C:
-            return <FargekategoriIkonGulSirkel />;
+            return <FargekategoriIkonGulSirkel fontSize="1.5rem" />;
         case FargekategoriModell.FARGEKATEGORI_D:
-            return <FargekategoriIkonLillaFirkant />;
+            return <FargekategoriIkonLillaFirkant fontSize="1.5rem" />;
         case FargekategoriModell.FARGEKATEGORI_F:
-            return <FargekategoriIkonOransjeRombe />;
+            return <FargekategoriIkonOransjeRombe fontSize="1.5rem" />;
         case FargekategoriModell.FARGEKATEGORI_E:
-            return <FargekategoriIkonTurkisFemkant />;
+            return <FargekategoriIkonTurkisFemkant fontSize="1.5rem" />;
         case FargekategoriModell.INGEN_KATEGORI:
         case null:
-            return <FargekategoriIkonTomtBokmerke />;
+            return <FargekategoriIkonTomtBokmerke fontSize="1.5rem" />;
     }
 };
