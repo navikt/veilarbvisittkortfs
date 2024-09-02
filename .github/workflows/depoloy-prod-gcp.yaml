@@ -13,6 +13,7 @@ jobs:
         name: Deploy application to prod
         runs-on: ubuntu-latest
         permissions:
+            contents: write
             id-token: write
         steps:
             - name: Checkout
