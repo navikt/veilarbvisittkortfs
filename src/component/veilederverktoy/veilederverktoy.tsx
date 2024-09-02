@@ -3,14 +3,11 @@ import { CogIcon } from '@navikt/aksel-icons';
 import { StartRegistreringProsess } from './start-registrering/start-registrering-prosess';
 import { StartProsess } from './prosess/start-prosess';
 import { useAppStore } from '../../store/app-store';
-import { logMetrikk } from '../../util/logger';
 import { useModalStore } from '../../store/modal-store';
 import { useDataStore } from '../../store/data-store';
 import {
     kanRegistreresEllerReaktiveres,
     selectKanAvslutteOppfolging,
-    selectKanLeggeIArbeidsListe,
-    selectKanRedigereArbeidsliste,
     selectKanSendeEskaleringsVarsel,
     selectKanStarteDigitalOppfolging,
     selectKanStarteKVP,
@@ -22,7 +19,7 @@ import {
 import { trackAmplitude } from '../../amplitude/amplitude';
 import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
 import { harTilgangTilHuskelappEllerFargekategori } from '../huskelapp/harTilgangTilHuskelapp';
-import { useArbeidsliste, useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
+import { useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
 import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 import withClickMetric from '../components/click-metric/click-metric';
 import './veilederverktoy.less';
@@ -31,7 +28,7 @@ const ButtonWithClickMetric = withClickMetric(Button);
 
 export const Veilederverktoy = () => {
     const { visVeilederVerktoy, brukerFnr } = useAppStore();
-    const { oppfolging, innloggetVeileder, gjeldendeEskaleringsvarsel, features } = useDataStore();
+    const { oppfolging, gjeldendeEskaleringsvarsel, features } = useDataStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { data: erUfordeltBruker } = useErUfordeltBruker(
         brukerFnr,
@@ -40,7 +37,6 @@ export const Veilederverktoy = () => {
     const { data: tilgangTilBrukersKontor } = useTilgangTilBrukersKontor(brukerFnr);
 
     const {
-        showArbeidslisteModal,
         showTildelVeilederModal,
         showStartEskaleringModal,
         showStoppEskaleringModal,
@@ -58,11 +54,6 @@ export const Veilederverktoy = () => {
         erUfordeltBruker === undefined ? true : erUfordeltBruker,
         !!oppfolgingsstatus?.veilederId,
         !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor
-    );
-
-    const { data: arbeidsliste } = useArbeidsliste(
-        brukerFnr,
-        visVeilederVerktoy && sjekkHarTilgangTilHuskelappEllerFargekategori
     );
 
     const { data: huskelapp } = useHuskelapp(
@@ -86,23 +77,7 @@ export const Veilederverktoy = () => {
     const kanStarteKVP = selectKanStarteKVP(oppfolging, tilgangTilBrukersKontor);
     const kanStoppeKVP = selectKanStoppeKVP(oppfolging, tilgangTilBrukersKontor);
     const kanRegistrere = kanRegistreresEllerReaktiveres(oppfolging);
-    const kanLagreArbeidsliste = selectKanLeggeIArbeidsListe(innloggetVeileder, oppfolgingsstatus, arbeidsliste);
-    const kanEndreArbeidsliste = selectKanRedigereArbeidsliste(arbeidsliste);
     const kanTildeleVeileder = selectKanTildeleVeileder(oppfolging, tilgangTilBrukersKontor);
-
-    const arbeidslisteKlikk = () => {
-        logMetrikk('veilarbvisittkortfs.metrikker.veilederverktoy.arbeidsliste', {
-            leggtil: !kanEndreArbeidsliste && kanLagreArbeidsliste
-        });
-        trackAmplitude({
-            name: 'navigere',
-            data: {
-                lenketekst: `veiledervektoy-${kanLagreArbeidsliste ? 'opprett-arbeidsliste' : 'rediger-arbeidsliste'}`,
-                destinasjon: 'arbeidslista'
-            }
-        });
-        showArbeidslisteModal();
-    };
 
     const huskelappKlikk = () => {
         trackAmplitude({
@@ -134,12 +109,6 @@ export const Veilederverktoy = () => {
                 <Dropdown.Menu.List className="veilederverktoy-dropdown-menyliste">
                     {sjekkHarTilgangTilHuskelappEllerFargekategori && (
                         <>
-                            {kanEndreArbeidsliste && !features[HUSKELAPP] && (
-                                <StartProsess knappeTekst="Rediger arbeidsliste" onClick={arbeidslisteKlikk} />
-                            )}
-                            {kanLagreArbeidsliste && !features[HUSKELAPP] && (
-                                <StartProsess knappeTekst="Legg i arbeidsliste" onClick={arbeidslisteKlikk} />
-                            )}
                             {huskelapp?.huskelappId && features[HUSKELAPP] && (
                                 <StartProsess knappeTekst="Rediger huskelapp" onClick={huskelappKlikk} />
                             )}
