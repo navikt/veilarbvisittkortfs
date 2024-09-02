@@ -30,7 +30,7 @@ jobs:
             - name: Install dependencies
               run: npm ci
               env:
-                  NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+                  NODE_AUTH_TOKEN: ${{ steps.octo-sts.outputs.token }}
             - name: Build mock application
               run: npm run build:mock
               env:
