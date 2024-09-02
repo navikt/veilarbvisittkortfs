@@ -10,16 +10,27 @@ jobs:
     update-gh-pages:
         name: Update GitHub pages
         runs-on: ubuntu-latest
+        permissions:
+            id-token: write
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+            - name: Setup Octo Security Token Service
+              uses: octo-sts/action@v1.0.0
+              id: octo-sts
+              with:
+                scope: ${{ github.repository_owner }}
+                identity: readertoken
             - name: Setup node
               uses: actions/setup-node@v4
               with:
-                  node-version: '20'
-                  cache: 'npm'
+                  node-version: 20
+                  cache: npm
+                  registry-url: "https://npm.pkg.github.com"
             - name: Install dependencies
               run: npm ci
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
             - name: Build mock application
               run: npm run build:mock
               env:
