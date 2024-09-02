@@ -4,13 +4,12 @@ on:
     push:
         branches:
             - master
-permissions:
-  contents: write
 jobs:
     update-gh-pages:
         name: Update GitHub pages
         runs-on: ubuntu-latest
         permissions:
+            contents: write
             id-token: write
         steps:
             - name: Checkout
