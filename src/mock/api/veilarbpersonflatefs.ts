@@ -1,8 +1,9 @@
 import {
     BRUK_GAMMEL_ARBEIDSREGISTRERING_URL,
+    BRUK_NY_KILDE_TIL_FULLMAKT,
     HUSKELAPP,
     OboUnleashFeatures,
-    BRUK_NY_KILDE_TIL_FULLMAKT
+    SKJUL_ARBEIDSLISTEFUNKSJONALITET
 } from '../../api/veilarbpersonflatefs';
 import { defaultNetworkResponseDelay } from '../config';
 import { delay, http, HttpResponse, RequestHandler } from 'msw';
@@ -10,7 +11,8 @@ import { delay, http, HttpResponse, RequestHandler } from 'msw';
 const mockFeatures: OboUnleashFeatures = {
     [BRUK_GAMMEL_ARBEIDSREGISTRERING_URL]: true,
     [HUSKELAPP]: true,
-    [BRUK_NY_KILDE_TIL_FULLMAKT]: true
+    [BRUK_NY_KILDE_TIL_FULLMAKT]: true,
+    [SKJUL_ARBEIDSLISTEFUNKSJONALITET]: false
 };
 
 export const veilarbpersonflatefsHandlers: RequestHandler[] = [
