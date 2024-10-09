@@ -4,9 +4,7 @@ export interface VisibleProps {
     visible?: any;
 }
 
-export default function visibleIf<PROPS>(
-    Component: ComponentType<PROPS>
-): ComponentType<PROPS & VisibleProps> {
+export default function visibleIf<PROPS>(Component: ComponentType<PROPS>): ComponentType<PROPS & VisibleProps> {
     return (props: PROPS & VisibleProps) => {
         const { visible, ...rest } = props as any; // tslint:disable-line
         if (visible) {

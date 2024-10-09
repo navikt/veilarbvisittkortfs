@@ -3,13 +3,13 @@ import { Loader } from '@navikt/ds-react';
 import { useDataStore } from '../store/data-store';
 import { useAppStore } from '../store/app-store';
 import { fetchOppfolging, useOppfolgingsstatus } from '../api/veilarboppfolging';
-import { fetchFullmakt, fetchPersonalia, fetchSpraakTolk, fetchVergeOgFullmakt } from '../api/veilarbperson';
+import { fetchFullmakt, fetchPersonalia, fetchSpraakTolk, fetchVerge } from '../api/veilarbperson';
 import { fetchInnloggetVeileder, fetchVeilederePaEnhet } from '../api/veilarbveileder';
 import { ifResponseHasData } from '../util/utils';
 import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
 import { isAnyLoadingOrNotStarted } from '../api/utils';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
-import { BRUK_NY_KILDE_TIL_FULLMAKT, useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
+import { useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 import './data-fetcher.less';
 
 interface Props {
@@ -24,7 +24,7 @@ export function DataFetcher({ children }: Props) {
         setPersonalia,
         setVeilederePaEnhet,
         setFeatures,
-        setVergeOgFullmakt,
+        setVerge,
         setSpraakTolk,
         setGjeldendeEskaleringsvarsel,
         setFullmakt,
@@ -36,7 +36,7 @@ export function DataFetcher({ children }: Props) {
     const featureToggleFetcher = useAxiosFetcher(useFetchFeaturesFromOboUnleash);
     const personaliaFetcher = useAxiosFetcher(fetchPersonalia);
     const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
-    const vergeOgFullmaktFetcher = useAxiosFetcher(fetchVergeOgFullmakt);
+    const vergeFetcher = useAxiosFetcher(fetchVerge);
     const fullmaktFetcher = useAxiosFetcher(fetchFullmakt);
     const spraakTolkFetcher = useAxiosFetcher(fetchSpraakTolk);
     const gjeldendeEskaleringsvarselFetcher = useAxiosFetcher(hentGjeldendeEskaleringsvarsel);
@@ -53,9 +53,8 @@ export function DataFetcher({ children }: Props) {
                 .then(ifResponseHasData(setGjeldendeEskaleringsvarsel))
                 .catch();
         }
-        vergeOgFullmaktFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setVergeOgFullmakt)).catch();
-        features[BRUK_NY_KILDE_TIL_FULLMAKT] &&
-            fullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setFullmakt)).catch();
+        vergeFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setVerge)).catch();
+        fullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setFullmakt)).catch();
         spraakTolkFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setSpraakTolk)).catch();
         personaliaFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setPersonalia)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps

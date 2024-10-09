@@ -4,7 +4,7 @@ import {
     PersonaliaTelefon,
     RegistreringData,
     SpraakTolk,
-    VergeOgFullmakt,
+    Verge,
     FullmaktDTO,
     OmraadeHandlingType
 } from '../../api/veilarbperson';
@@ -50,7 +50,7 @@ const mockPersonaliaV2: Personalia = {
     telefon: mockTelefon
 };
 
-const mockVergeOgFullmakt: VergeOgFullmakt = {
+const mockVerge: Verge = {
     vergemaalEllerFremtidsfullmakt: [
         {
             type: 'Enslig mindreårig asylsøker',
@@ -85,15 +85,6 @@ const mockVergeOgFullmakt: VergeOgFullmakt = {
                 ajourholdstidspunkt: '2021-03-02T13:00:42',
                 gyldighetstidspunkt: '2021-03-02T13:00:42'
             }
-        }
-    ],
-    fullmakt: [
-        {
-            motpartsPersonident: '',
-            motpartsRolle: '',
-            omraader: [],
-            gyldigFraOgMed: '',
-            gyldigTilOgMed: ''
         }
     ]
 };
@@ -144,7 +135,7 @@ export const veilarbpersonHandlers: RequestHandler[] = [
     }),
     http.post('/veilarbperson/api/v3/person/hent-vergeOgFullmakt', async () => {
         await delay(defaultNetworkResponseDelay);
-        return HttpResponse.json(mockVergeOgFullmakt);
+        return HttpResponse.json(mockVerge);
     }),
     http.post('/veilarbperson/api/v3/person/hent-fullmakt', async () => {
         await delay(defaultNetworkResponseDelay);
