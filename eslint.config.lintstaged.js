@@ -21,6 +21,7 @@ export default tseslint.config(eslint.configs.recommended, ...tseslint.configs.r
         ...jsxA11y.configs.recommended.rules,
         ...reactHooks.configs.recommended.rules,
         'no-debugger': 'error',
-        'no-console': 'error'
+        'no-console': 'error',
+        '@typescript-eslint/no-explicit-any': 'off'
     }
 });
