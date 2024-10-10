@@ -41,17 +41,8 @@ export interface VergemaalEllerFremtidsfullmakt {
     folkeregistermetadata: Folkeregistermetadata;
 }
 
-export interface Fullmakt {
-    motpartsPersonident: StringOrNothing;
-    motpartsRolle: StringOrNothing;
-    omraader: string[];
-    gyldigFraOgMed: StringOrNothing;
-    gyldigTilOgMed: StringOrNothing;
-}
-
-export interface VergeOgFullmakt {
+export interface Verge {
     vergemaalEllerFremtidsfullmakt: VergemaalEllerFremtidsfullmakt[];
-    fullmakt: Fullmakt[];
 }
 
 export interface FullmaktDTO {
@@ -126,8 +117,8 @@ export function fetchPersonalia(fnr: string, behandlingsnummer: string): AxiosPr
     } as PdlRequest);
 }
 
-export function fetchVergeOgFullmakt(fnr: string, behandlingsnummer: string): AxiosPromise<VergeOgFullmakt> {
-    return axiosInstance.post<VergeOgFullmakt>(`/veilarbperson/api/v3/person/hent-vergeOgFullmakt`, {
+export function fetchVerge(fnr: string, behandlingsnummer: string): AxiosPromise<Verge> {
+    return axiosInstance.post<Verge>(`/veilarbperson/api/v3/person/hent-vergeOgFullmakt`, {
         fnr: fnr,
         behandlingsnummer: behandlingsnummer
     } as PdlRequest);

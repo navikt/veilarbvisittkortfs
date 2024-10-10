@@ -5,14 +5,11 @@ export const BRUK_GAMMEL_ARBEIDSREGISTRERING_URL = 'veilarbvisitkortfs.bruk-gamm
 
 export const HUSKELAPP = 'veilarbportefoljeflatefs.huskelapp';
 
-export const BRUK_NY_KILDE_TIL_FULLMAKT = 'obo.personflate.reprfullmakt';
-
-export const ALL_TOGGLES = [BRUK_GAMMEL_ARBEIDSREGISTRERING_URL, HUSKELAPP, BRUK_NY_KILDE_TIL_FULLMAKT];
+export const ALL_TOGGLES = [BRUK_GAMMEL_ARBEIDSREGISTRERING_URL, HUSKELAPP];
 
 export interface OboUnleashFeatures {
     [BRUK_GAMMEL_ARBEIDSREGISTRERING_URL]: boolean;
     [HUSKELAPP]: boolean;
-    [BRUK_NY_KILDE_TIL_FULLMAKT]: boolean;
 }
 
 export function useFetchFeaturesFromOboUnleash(): AxiosPromise<OboUnleashFeatures> {
