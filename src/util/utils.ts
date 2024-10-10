@@ -12,10 +12,10 @@ export function visEmdashHvisNull(verdi: StringOrNothing) {
 export const APP_NAME = 'veilarbvisittkortfs';
 
 export function isLocalDevelopment(): boolean {
-    return import.meta.env.MODE === "mock";
+    return import.meta.env.MODE === 'mock';
 }
 
-export const erProd = () => (import.meta.env.PROD);
+export const erProd = () => import.meta.env.PROD;
 
 export function ifResponseHasData<T>(
     callback: (data: T) => void

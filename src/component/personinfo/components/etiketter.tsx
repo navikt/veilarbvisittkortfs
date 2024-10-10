@@ -9,7 +9,6 @@ import { ifResponseHasData, isEmpty } from '../../../util/utils';
 import visibleIf from '../../components/visible-if';
 import { OrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
-import { BRUK_NY_KILDE_TIL_FULLMAKT } from '../../../api/veilarbpersonflatefs';
 
 const Advarsel = visibleIf(({ children }: Omit<TagProps, 'variant'>) => (
     <Tag variant="error" size="small" className="etikett">
@@ -62,8 +61,7 @@ function erFullmaktOmradeMedOppfolging(fullmaktListe: FullmaktData[]): boolean {
 function Etiketter() {
     const { brukerFnr } = useAppStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
-    const { gjeldendeEskaleringsvarsel, oppfolging, personalia, vergeOgFullmakt, fullmakt, spraakTolk, features } =
-        useDataStore();
+    const { gjeldendeEskaleringsvarsel, oppfolging, personalia, verge, fullmakt, spraakTolk } = useDataStore();
 
     const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>(null);
 
@@ -87,19 +85,12 @@ function Etiketter() {
             <Advarsel visible={personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>
             <Advarsel visible={personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
             <Advarsel visible={personalia?.egenAnsatt}>Skjermet</Advarsel>
-            <Fokus visible={!isEmpty(vergeOgFullmakt?.vergemaalEllerFremtidsfullmakt)}>Vergemål</Fokus>
-            {!features[BRUK_NY_KILDE_TIL_FULLMAKT] && (
-                <Fokus visible={!isEmpty(vergeOgFullmakt?.fullmakt)}>Fullmakt</Fokus>
-            )}
-            {features[BRUK_NY_KILDE_TIL_FULLMAKT] && (
-                <Fokus
-                    visible={
-                        fullmakt && !isEmpty(fullmakt.fullmakt) && erFullmaktOmradeMedOppfolging(fullmakt.fullmakt)
-                    }
-                >
-                    Fullmakt
-                </Fokus>
-            )}
+            <Fokus visible={!isEmpty(verge?.vergemaalEllerFremtidsfullmakt)}>Vergemål</Fokus>
+            <Fokus
+                visible={fullmakt && !isEmpty(fullmakt.fullmakt) && erFullmaktOmradeMedOppfolging(fullmakt.fullmakt)}
+            >
+                Fullmakt
+            </Fokus>
             <Fokus visible={spraakTolk?.tegnspraak}>Tegnspråktolk</Fokus>
             <Fokus visible={spraakTolk?.talespraak}>Språktolk</Fokus>
             <Fokus visible={oppfolging?.underKvp}>KVP</Fokus>
