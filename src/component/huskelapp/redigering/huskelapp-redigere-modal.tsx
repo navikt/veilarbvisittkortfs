@@ -39,10 +39,9 @@ function HuskelappRedigereModal() {
     const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);
     const arbeidslistefunksjonalitetSkalVises = !features[SKJUL_ARBEIDSLISTEFUNKSJONALITET];
 
-    const erArbeidslistaTom =
-        arbeidsliste?.sistEndretAv == null ||
-        (!arbeidsliste?.overskrift && !arbeidsliste?.kommentar && !arbeidsliste?.frist);
-    const harArbeidsliste = !erArbeidslistaTom;
+    const harArbeidsliste =
+        arbeidsliste?.SistEndretAv != null &&
+        (arbeidsliste?.overskrift || arbeidsliste?.kommentar || arbeidsliste?.frist);
     const erIRedigeringModus = huskelapp?.endretDato;
     const erHuskelappTom = huskelapp?.huskelappId == null;
 
@@ -191,16 +190,19 @@ function HuskelappRedigereModal() {
                         </div>
                     </Modal.Header>
                     <Modal.Body className="rediger-huskelapp-modal-body">
-                        {harArbeidsliste && (
+                        {arbeidslistefunksjonalitetSkalVises && harArbeidsliste && (
                             <>
                                 <GammelArbeidsliste arbeidsliste={arbeidsliste} />
                                 <ArrowRightIcon title="Pil mot høyre" className="rediger-huskelapp-modal-pil" />
                             </>
                         )}
-                        <HuskelappEditForm endretAv={endretAv(huskelapp)} harArbeidsliste={harArbeidsliste} />
+                        <HuskelappEditForm
+                            endretAv={endretAv(huskelapp)}
+                            harArbeidsliste={arbeidslistefunksjonalitetSkalVises && harArbeidsliste}
+                        />
                     </Modal.Body>
                     <Modal.Footer className="rediger-huskelapp-modal-footer">
-                        {harArbeidsliste ? (
+                        {arbeidslistefunksjonalitetSkalVises && harArbeidsliste ? (
                             <Button size="small" variant="primary" form="huskelapp-form" type="submit">
                                 Lagre ny huskelapp og slett arbeidsliste
                             </Button>
@@ -217,8 +219,10 @@ function HuskelappRedigereModal() {
                         >
                             Avbryt
                         </Button>
-                        {harArbeidsliste && <SlettArbeidsliste closeModal={() => onRequestClose(formikProps)} />}
-                        {erArbeidslistaTom && !erHuskelappTom && <SlettHuskelapp variant="tertiary" />}
+                        {arbeidslistefunksjonalitetSkalVises && harArbeidsliste && (
+                            <SlettArbeidsliste closeModal={() => onRequestClose(formikProps)} />
+                        )}
+                        {!harArbeidsliste && !erHuskelappTom && <SlettHuskelapp variant="tertiary" />}
                     </Modal.Footer>
                 </Modal>
             )}
