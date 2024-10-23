@@ -40,8 +40,8 @@ function HuskelappRedigereModal() {
     const arbeidslistefunksjonalitetSkalVises = !features[SKJUL_ARBEIDSLISTEFUNKSJONALITET];
 
     const harArbeidsliste =
-        arbeidsliste?.SistEndretAv != null &&
-        (arbeidsliste?.overskrift || arbeidsliste?.kommentar || arbeidsliste?.frist);
+        arbeidsliste?.sistEndretAv !== null &&
+        (!!arbeidsliste?.overskrift || !!arbeidsliste?.kommentar || !!arbeidsliste?.frist);
     const erIRedigeringModus = huskelapp?.endretDato;
     const harHuskelapp = huskelapp?.huskelappId != null;
 
@@ -161,19 +161,20 @@ function HuskelappRedigereModal() {
                     onClose={() => onRequestClose(formikProps)}
                     closeOnBackdropClick={true}
                     className="rediger-huskelapp-modal"
+                    aria-labelledby={'rediger-huskelapp-modal__overskrift'}
                 >
                     <Modal.Header>
                         <div className="rediger-huskelapp-modal-header">
                             <HuskelappIkon aria-hidden fontSize="1.5rem" />
-                            {arbeidslistefunksjonalitetSkalVises && harArbeidsliste ? (
-                                <Heading size="small" className="rediger-huskelapp-modal-header-tekst">
-                                    Bytt fra gammel arbeidsliste til ny huskelapp
-                                </Heading>
-                            ) : (
-                                <Heading size="small" className="rediger-huskelapp-modal-header-tekst">
-                                    Huskelapp
-                                </Heading>
-                            )}
+                            <Heading
+                                id="rediger-huskelapp-modal__overskrift"
+                                size="small"
+                                className="rediger-huskelapp-modal-header-tekst"
+                            >
+                                {arbeidslistefunksjonalitetSkalVises && harArbeidsliste
+                                    ? 'Bytt fra gammel arbeidsliste til ny huskelapp'
+                                    : 'Huskelapp'}
+                            </Heading>
                         </div>
                         <div className="rediger-huskelapp-modal-personinfo">
                             <BodyShort weight="semibold" size="small">
