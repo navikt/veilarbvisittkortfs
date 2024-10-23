@@ -20,10 +20,10 @@ import { HuskelappEditForm } from './huskelapp-edit-form';
 import { GammelArbeidsliste } from './gammelArbeidsliste';
 import { SlettArbeidsliste } from './huskelapp-slett-arbeidsliste';
 import { SlettHuskelapp } from './slett-huskelapp';
-import './huskelapp-redigering.less';
 import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import { SKJUL_ARBEIDSLISTEFUNKSJONALITET } from '../../../api/veilarbpersonflatefs';
+import './huskelapp-redigering.less';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -33,7 +33,7 @@ const huskelappEmptyValues = {
 
 function HuskelappRedigereModal() {
     const { brukerFnr, visVeilederVerktoy, enhetId } = useAppStore();
-    const { innloggetVeileder, features } = useDataStore();
+    const { innloggetVeileder, personalia, features } = useDataStore();
     const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
     const { data: arbeidsliste, mutate: setArbeidsliste } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
     const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);
@@ -53,7 +53,6 @@ function HuskelappRedigereModal() {
     };
 
     const initalValues: HuskelappformValues = huskelapp?.endretDato ? huskelappValues : huskelappEmptyValues;
-    const { personalia } = useDataStore();
     const navn = selectSammensattNavn(personalia);
 
     function onRequestClose(formikProps: FormikProps<HuskelappformValues>) {
@@ -122,7 +121,7 @@ function HuskelappRedigereModal() {
                 )
                 .then(hideModal)
                 .catch(showErrorModal);
-            if (!erArbeidslistaTom) {
+            if (harArbeidsliste) {
                 slettArbeidslisteMenIkkeFargekategori(brukerFnr)
                     .then(res => res.data)
                     .then(setArbeidsliste);
@@ -192,18 +191,24 @@ function HuskelappRedigereModal() {
                         </div>
                     </Modal.Header>
                     <Modal.Body className="rediger-huskelapp-modal-body">
-                        {!erArbeidslistaTom && (
+                        {harArbeidsliste && (
                             <>
                                 <GammelArbeidsliste arbeidsliste={arbeidsliste} />
                                 <ArrowRightIcon title="Pil mot høyre" className="rediger-huskelapp-modal-pil" />
                             </>
                         )}
-                        <HuskelappEditForm endretAv={endretAv(huskelapp)} erArbeidslistaTom={erArbeidslistaTom} />
+                        <HuskelappEditForm endretAv={endretAv(huskelapp)} harArbeidsliste={harArbeidsliste} />
                     </Modal.Body>
                     <Modal.Footer className="rediger-huskelapp-modal-footer">
-                        <Button size="small" variant="primary" form="huskelapp-form" type="submit">
-                            {erArbeidslistaTom ? 'Lagre' : 'Lagre ny huskelapp og slett arbeidsliste'}
-                        </Button>
+                        {harArbeidsliste ? (
+                            <Button size="small" variant="primary" form="huskelapp-form" type="submit">
+                                Lagre ny huskelapp og slett arbeidsliste
+                            </Button>
+                        ) : (
+                            <Button size="small" variant="primary" form="huskelapp-form" type="submit">
+                                Lagre
+                            </Button>
+                        )}
                         <Button
                             size="small"
                             variant="secondary"
@@ -212,7 +217,7 @@ function HuskelappRedigereModal() {
                         >
                             Avbryt
                         </Button>
-                        {!erArbeidslistaTom && <SlettArbeidsliste closeModal={() => onRequestClose(formikProps)} />}
+                        {harArbeidsliste && <SlettArbeidsliste closeModal={() => onRequestClose(formikProps)} />}
                         {erArbeidslistaTom && !erHuskelappTom && <SlettHuskelapp variant="tertiary" />}
                     </Modal.Footer>
                 </Modal>
