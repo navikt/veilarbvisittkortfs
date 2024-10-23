@@ -25,7 +25,7 @@ import { selectSammensattNavn } from '../../../util/selectors';
 import { SKJUL_ARBEIDSLISTEFUNKSJONALITET } from '../../../api/veilarbpersonflatefs';
 import './huskelapp-redigering.less';
 
-const huskelappEmptyValues = {
+const huskelappEmptyValues: HuskelappformValues = {
     huskelappId: null,
     kommentar: '',
     frist: ''
@@ -43,7 +43,7 @@ function HuskelappRedigereModal() {
         arbeidsliste?.SistEndretAv != null &&
         (arbeidsliste?.overskrift || arbeidsliste?.kommentar || arbeidsliste?.frist);
     const erIRedigeringModus = huskelapp?.endretDato;
-    const erHuskelappTom = huskelapp?.huskelappId == null;
+    const harHuskelapp = huskelapp?.huskelappId != null;
 
     const huskelappValues: HuskelappformValues = {
         huskelappId: huskelapp?.huskelappId ? huskelapp.huskelappId : null,
@@ -222,7 +222,7 @@ function HuskelappRedigereModal() {
                         {arbeidslistefunksjonalitetSkalVises && harArbeidsliste && (
                             <SlettArbeidsliste closeModal={() => onRequestClose(formikProps)} />
                         )}
-                        {!harArbeidsliste && !erHuskelappTom && <SlettHuskelapp variant="tertiary" />}
+                        {!harArbeidsliste && harHuskelapp && <SlettHuskelapp variant="tertiary" />}
                     </Modal.Footer>
                 </Modal>
             )}
