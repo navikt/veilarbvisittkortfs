@@ -23,6 +23,7 @@ import { SlettHuskelapp } from './slett-huskelapp';
 import './huskelapp-redigering.less';
 import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
+import { SKJUL_ARBEIDSLISTEFUNKSJONALITET } from '../../../api/veilarbpersonflatefs';
 
 const huskelappEmptyValues = {
     huskelappId: null,
@@ -32,14 +33,16 @@ const huskelappEmptyValues = {
 
 function HuskelappRedigereModal() {
     const { brukerFnr, visVeilederVerktoy, enhetId } = useAppStore();
-    const { innloggetVeileder } = useDataStore();
+    const { innloggetVeileder, features } = useDataStore();
     const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
     const { data: arbeidsliste, mutate: setArbeidsliste } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
     const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);
+    const arbeidslistefunksjonalitetSkalVises = !features[SKJUL_ARBEIDSLISTEFUNKSJONALITET];
 
     const erArbeidslistaTom =
         arbeidsliste?.sistEndretAv == null ||
         (!arbeidsliste?.overskrift && !arbeidsliste?.kommentar && !arbeidsliste?.frist);
+    const harArbeidsliste = !erArbeidslistaTom;
     const erIRedigeringModus = huskelapp?.endretDato;
     const erHuskelappTom = huskelapp?.huskelappId == null;
 
@@ -50,7 +53,6 @@ function HuskelappRedigereModal() {
     };
 
     const initalValues: HuskelappformValues = huskelapp?.endretDato ? huskelappValues : huskelappEmptyValues;
-    const modalNavn = erArbeidslistaTom ? 'Huskelapp' : 'Bytt fra gammel arbeidsliste til ny huskelapp';
     const { personalia } = useDataStore();
     const navn = selectSammensattNavn(personalia);
 
@@ -68,6 +70,7 @@ function HuskelappRedigereModal() {
             return `Endret ${toSimpleDateStr(huskelapp?.endretDato?.toString())} av ${huskelapp?.endretAv}`;
         return '';
     }
+
     function handleSubmit(
         values: HuskelappformValues,
         formikFunctions: FormikBag<FormikProps<HuskelappformValues>, HuskelappformValues>
@@ -156,7 +159,6 @@ function HuskelappRedigereModal() {
         <Formik key={brukerFnr} initialValues={initalValues} onSubmit={handleSubmit} validateOnBlur={false}>
             {formikProps => (
                 <Modal
-                    aria-label={modalNavn}
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
                     closeOnBackdropClick={true}
@@ -165,9 +167,15 @@ function HuskelappRedigereModal() {
                     <Modal.Header>
                         <div className="rediger-huskelapp-modal-header">
                             <HuskelappIkon aria-hidden fontSize="1.5rem" />
-                            <Heading size="small" className="rediger-huskelapp-modal-header-tekst">
-                                {modalNavn}
-                            </Heading>
+                            {arbeidslistefunksjonalitetSkalVises && harArbeidsliste ? (
+                                <Heading size="small" className="rediger-huskelapp-modal-header-tekst">
+                                    Bytt fra gammel arbeidsliste til ny huskelapp
+                                </Heading>
+                            ) : (
+                                <Heading size="small" className="rediger-huskelapp-modal-header-tekst">
+                                    Huskelapp
+                                </Heading>
+                            )}
                         </div>
                         <div className="rediger-huskelapp-modal-personinfo">
                             <BodyShort weight="semibold" size="small">
