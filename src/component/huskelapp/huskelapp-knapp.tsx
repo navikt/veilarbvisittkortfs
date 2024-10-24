@@ -5,6 +5,8 @@ import HuskelappInaktivIkon from './ikon/Huskelappikon_stiplet.svg?react';
 import HuskelappIkon from './ikon/Huskelappikon_bakgrunnsfarge.svg?react';
 import { useArbeidsliste, useHuskelapp } from '../../api/veilarbportefolje';
 import { feilErIkke400, feilErIkke403 } from './harTilgangTilHuskelapp';
+import { useDataStore } from '../../store/data-store';
+import { SKJUL_ARBEIDSLISTEFUNKSJONALITET } from '../../api/veilarbpersonflatefs';
 
 interface Props {
     brukerFnr: string;
@@ -14,6 +16,8 @@ interface Props {
 
 function HuskelappKnapp({ brukerFnr, visVeilederVerktoy, onClick }: Props) {
     const { data: arbeidsliste, error: arbeidslisteError } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
+    const { features } = useDataStore();
+    const arbeidslistefunksjonalitetSkalVises = !features[SKJUL_ARBEIDSLISTEFUNKSJONALITET];
 
     const {
         data: huskelapp,
@@ -21,9 +25,9 @@ function HuskelappKnapp({ brukerFnr, visVeilederVerktoy, onClick }: Props) {
         error: huskelappError
     } = useHuskelapp(brukerFnr, visVeilederVerktoy);
 
-    const erArbeidslisteTom = arbeidsliste?.sistEndretAv == null;
-    const erHuskelappTom = huskelapp?.huskelappId == null;
-    const harHuskelappEllerArbeidsliste = !erHuskelappTom || !erArbeidslisteTom;
+    const harArbeidsliste = arbeidsliste?.sistEndretAv != null;
+    const harHuskelapp = huskelapp?.huskelappId != null;
+    const harHuskelappEllerArbeidsliste = harHuskelapp || (arbeidslistefunksjonalitetSkalVises && harArbeidsliste);
 
     const hasError =
         (feilErIkke403(huskelappError) && feilErIkke400(huskelappError)) || feilErIkke403(arbeidslisteError);

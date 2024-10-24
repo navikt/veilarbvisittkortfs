@@ -8,12 +8,12 @@ import './../huskelapp-postitstyling.less';
 
 interface Props {
     endretAv: string;
-    erArbeidslistaTom: boolean;
+    harArbeidsliste: boolean;
 }
 
-export const HuskelappEditForm = ({ endretAv, erArbeidslistaTom }: Props) => (
+export const HuskelappEditForm = ({ endretAv, harArbeidsliste }: Props) => (
     <div className="ny-huskelapp huskelapp-postitstyling">
-        {!erArbeidslistaTom && <Heading size="small">Ny huskelapp</Heading>}
+        {harArbeidsliste && <Heading size="small">Ny huskelapp</Heading>}
 
         <Form id="huskelapp-form" className="rediger-huskelapp-skjema">
             <FormikTekstArea
