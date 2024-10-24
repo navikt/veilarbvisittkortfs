@@ -6,14 +6,22 @@ import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
 import { slettArbeidslisteMenIkkeFargekategori, useArbeidsliste } from '../../../api/veilarbportefolje';
 import { ifResponseHasData } from '../../../util/utils';
+import { useDataStore } from '../../../store/data-store';
+import { SKJUL_ARBEIDSLISTEFUNKSJONALITET } from '../../../api/veilarbpersonflatefs';
 
 export const SlettArbeidsliste = ({ closeModal }: { closeModal: () => void }) => {
     const [visSlettebekreftelse, setVisSlettebekreftelse] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+    const { features } = useDataStore();
+    const skjulArbeidslistefunksjonalitet = features[SKJUL_ARBEIDSLISTEFUNKSJONALITET];
 
     const { brukerFnr } = useAppStore();
     const { mutate: setArbeidsliste } = useArbeidsliste(brukerFnr);
+
+    if (skjulArbeidslistefunksjonalitet) {
+        return null;
+    }
 
     const handleSlettArbeidsListe = () => {
         logMetrikk('visittkort.metrikker.fjern_arbeidsliste');
