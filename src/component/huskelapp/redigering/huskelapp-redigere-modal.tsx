@@ -120,7 +120,7 @@ function HuskelappRedigereModal() {
                 )
                 .then(hideModal)
                 .catch(showErrorModal);
-            if (harArbeidsliste) {
+            if (arbeidslistefunksjonalitetSkalVises && harArbeidsliste) {
                 slettArbeidslisteMenIkkeFargekategori(brukerFnr)
                     .then(res => res.data)
                     .then(setArbeidsliste);
@@ -143,10 +143,12 @@ function HuskelappRedigereModal() {
                     })
                 )
                 .then(() => {
-                    slettArbeidslisteMenIkkeFargekategori(brukerFnr)
-                        .then(res => res.data)
-                        .then(setArbeidsliste)
-                        .catch(showErrorModal);
+                    if (arbeidslistefunksjonalitetSkalVises) {
+                        slettArbeidslisteMenIkkeFargekategori(brukerFnr)
+                            .then(res => res.data)
+                            .then(setArbeidsliste)
+                            .catch(showErrorModal);
+                    }
                 })
                 .then(hideModal)
                 .catch(showErrorModal);
