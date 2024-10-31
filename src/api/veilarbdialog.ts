@@ -23,7 +23,7 @@ export interface StartEskaleringRequest {
     begrunnelse: string;
     overskrift: string;
     tekst: string;
-    type: string;
+    begrunnelseType: string;
 }
 
 export interface StopEskaleringRequest {

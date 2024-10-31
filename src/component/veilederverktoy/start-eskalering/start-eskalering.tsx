@@ -42,7 +42,7 @@ function StartEskalering() {
                 begrunnelse: values.begrunnelse,
                 overskrift: values.overskrift,
                 tekst: values.begrunnelse,
-                type: values.type
+                begrunnelseType: values.type
             });
 
             logMetrikk(
