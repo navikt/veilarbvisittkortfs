@@ -2,11 +2,11 @@ import {
     HarBruktNivaa4Type,
     Personalia,
     PersonaliaTelefon,
-    RegistreringData,
     SpraakTolk,
     Verge,
     FullmaktDTO,
-    OmraadeHandlingType
+    OmraadeHandlingType,
+    OpplysningerOmArbeidssoekerMedProfilering
 } from '../../api/veilarbperson';
 import { defaultNetworkResponseDelay } from '../config';
 import { delay, http, HttpResponse, RequestHandler } from 'msw';
@@ -113,18 +113,26 @@ const mockSpraakTolk: SpraakTolk = {
     talespraak: 'Engelsk'
 };
 
-const mockRegistrering: RegistreringData = {
-    type: 'ORDINAER',
-    registrering: {
-        manueltRegistrertAv: null
+const mockProfileringFraArbeidssoekerregisteret: OpplysningerOmArbeidssoekerMedProfilering = {
+    profilering: {
+        profileringId: 'profilering-id-123',
+        periodeId: 'periode-id-123',
+        opplysningerOmArbeidssoekerId: 'opplysninger-om-arbeidssoeker-id-123',
+        sendtInnAv: {
+            tidspunkt: '2021-03-02T13:00:42',
+            utfoertAv: {
+                type: 'SLUTTBRUKER'
+            },
+            kilde: '',
+            aarsak: ''
+        },
+        profilertTil: 'OPPGITT_HINDRINGER',
+        jobbetSammenhengendeSeksAvTolvSisteManeder: true,
+        alder: 24
     }
 };
 
 export const veilarbpersonHandlers: RequestHandler[] = [
-    http.post('/veilarbperson/api/v3/person/hent-registrering', async () => {
-        await delay(defaultNetworkResponseDelay);
-        return HttpResponse.json(mockRegistrering);
-    }),
     http.get('/veilarbperson/api/person/:fnr/harNivaa4', async () => {
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json(mockHarBruktNivaa4);
@@ -144,5 +152,10 @@ export const veilarbpersonHandlers: RequestHandler[] = [
     http.post('/veilarbperson/api/v3/person/hent-tolk', async () => {
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json(mockSpraakTolk);
+    }),
+    http.post('/veilarbperson/api/v3/person/hent-siste-opplysninger-om-arbeidssoeker-med-profilering', async () => {
+        await delay(defaultNetworkResponseDelay);
+
+        return HttpResponse.json(mockProfileringFraArbeidssoekerregisteret);
     })
 ];

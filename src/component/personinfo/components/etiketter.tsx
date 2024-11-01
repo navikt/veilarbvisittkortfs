@@ -2,12 +2,16 @@ import { useEffect, useState } from 'react';
 import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
 import './etiketter.less';
-import { fetchRegistrering, FullmaktData, InnsatsgruppeType } from '../../../api/veilarbperson';
+import {
+    fetchProfileringFraArbeidssoekerregisteret,
+    FullmaktData,
+    OpplysningerOmArbeidssoekerMedProfilering
+} from '../../../api/veilarbperson';
 import { OppfolgingStatus, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { ifResponseHasData, isEmpty } from '../../../util/utils';
 import visibleIf from '../../components/visible-if';
-import { OrNothing } from '../../../util/type/utility-types';
+import { OrNothing, StringOrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
 
 const Advarsel = visibleIf(({ children }: Omit<TagProps, 'variant'>) => (
@@ -63,16 +67,16 @@ function Etiketter() {
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { gjeldendeEskaleringsvarsel, oppfolging, personalia, verge, fullmakt, spraakTolk } = useDataStore();
 
-    const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>(null);
+    const [profilering, setProfilering] = useState<StringOrNothing>(null);
 
-    const registreringFetcher = useAxiosFetcher(fetchRegistrering);
+    const profileringFetcher = useAxiosFetcher(fetchProfileringFraArbeidssoekerregisteret);
 
     const pilot_toggle = false;
     useEffect(() => {
         if (brukerFnr && pilot_toggle) {
-            registreringFetcher.fetch(brukerFnr).then(
-                ifResponseHasData(data => {
-                    setInnsatsgruppe(data.registrering.profilering?.innsatsgruppe);
+            profileringFetcher.fetch(brukerFnr).then(
+                ifResponseHasData((data: OpplysningerOmArbeidssoekerMedProfilering) => {
+                    setProfilering(data.profilering?.profilertTil);
                 })
             );
         }
@@ -125,16 +129,16 @@ function Etiketter() {
             >
                 Ikke registrert KRR
             </Fokus>
-            <Info visible={trengerVurdering(oppfolgingsstatus) && !innsatsgruppe}>Trenger vurdering</Info>
-            <Info visible={trengerAEV(oppfolgingsstatus) && !innsatsgruppe}>Behov for AEV</Info>
+            <Info visible={trengerVurdering(oppfolgingsstatus) && !profilering}>Trenger vurdering</Info>
+            <Info visible={trengerAEV(oppfolgingsstatus) && !profilering}>Behov for AEV</Info>
             <Info visible={erBrukerSykmeldt(oppfolgingsstatus)}>Sykmeldt</Info>
-            <Info visible={innsatsgruppe === 'STANDARD_INNSATS' && manglerVedtak(oppfolgingsstatus)}>
+            <Info visible={profilering === 'ANTATT_GODE_MULIGHETER' && manglerVedtak(oppfolgingsstatus)}>
                 Antatt gode muligheter
             </Info>
-            <Info visible={innsatsgruppe === 'SITUASJONSBESTEMT_INNSATS' && manglerVedtak(oppfolgingsstatus)}>
+            <Info visible={profilering === 'ANTATT_BEHOV_FOR_VEILEDNING' && manglerVedtak(oppfolgingsstatus)}>
                 Antatt behov for veiledning
             </Info>
-            <Info visible={innsatsgruppe === 'BEHOV_FOR_ARBEIDSEVNEVURDERING' && manglerVedtak(oppfolgingsstatus)}>
+            <Info visible={profilering === 'OPPGITT_HINDRINGER' && manglerVedtak(oppfolgingsstatus)}>
                 Oppgitt hindringer
             </Info>
         </div>

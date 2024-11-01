@@ -96,18 +96,24 @@ export interface PdlRequest {
     behandlingsnummer: string;
 }
 
-export type RegistreringType = 'ORDINAER' | 'SYKMELDT';
-export type InnsatsgruppeType = 'STANDARD_INNSATS' | 'SITUASJONSBESTEMT_INNSATS' | 'BEHOV_FOR_ARBEIDSEVNEVURDERING';
-
-export interface RegistreringData {
-    type: RegistreringType;
-    registrering: {
-        profilering?: {
-            jobbetSammenhengendeSeksAvTolvSisteManeder: boolean;
-            innsatsgruppe: InnsatsgruppeType;
+export type Profilering = {
+    profileringId: string;
+    periodeId: string;
+    opplysningerOmArbeidssoekerId: string;
+    sendtInnAv: {
+        tidspunkt: string;
+        utfoertAv: {
+            type: string;
         };
-        manueltRegistrertAv: object | null;
+        kilde: string;
+        aarsak: string;
     };
+    profilertTil: string;
+    jobbetSammenhengendeSeksAvTolvSisteManeder: boolean;
+    alder: number;
+};
+export interface OpplysningerOmArbeidssoekerMedProfilering {
+    profilering: Profilering;
 }
 
 export function fetchPersonalia(fnr: string, behandlingsnummer: string): AxiosPromise<Personalia> {
@@ -142,10 +148,15 @@ export function fetchHarNivaa4(fnr: string): AxiosPromise<HarBruktNivaa4Type> {
     return axiosInstance.get<HarBruktNivaa4Type>(`/veilarbperson/api/person/${fnr}/harNivaa4`);
 }
 
-export function fetchRegistrering(fnr: string): AxiosPromise<RegistreringData> {
-    return axiosInstance.post<RegistreringData>(`/veilarbperson/api/v3/person/hent-registrering`, {
-        fnr: fnr
-    } as PersonRequest);
+export function fetchProfileringFraArbeidssoekerregisteret(
+    fnr: string
+): AxiosPromise<OpplysningerOmArbeidssoekerMedProfilering> {
+    return axiosInstance.post<OpplysningerOmArbeidssoekerMedProfilering>(
+        `/veilarbperson/api/v3/person/hent-siste-opplysninger-om-arbeidssoeker-med-profilering`,
+        {
+            fnr: fnr
+        } as PersonRequest
+    );
 }
 
 export function sendEventTilVeilarbperson(event: FrontendEvent): AxiosPromise<void> {
