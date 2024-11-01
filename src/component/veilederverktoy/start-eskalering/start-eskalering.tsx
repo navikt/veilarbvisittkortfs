@@ -41,7 +41,8 @@ function StartEskalering() {
                 fnr: brukerFnr,
                 begrunnelse: values.begrunnelse,
                 overskrift: values.overskrift,
-                tekst: values.begrunnelse
+                tekst: values.begrunnelse,
+                begrunnelseType: values.type
             });
 
             logMetrikk(
