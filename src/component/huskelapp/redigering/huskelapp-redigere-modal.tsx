@@ -6,7 +6,6 @@ import {
     HuskelappformValues,
     lagreHuskelapp,
     redigerHuskelapp,
-    slettArbeidslisteMenIkkeFargekategori,
     useArbeidsliste,
     useHuskelapp
 } from '../../../api/veilarbportefolje';
@@ -35,7 +34,7 @@ function HuskelappRedigereModal() {
     const { brukerFnr, visVeilederVerktoy, enhetId } = useAppStore();
     const { innloggetVeileder, personalia, features } = useDataStore();
     const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
-    const { data: arbeidsliste, mutate: setArbeidsliste } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
+    const { data: arbeidsliste } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
     const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);
     const arbeidslistefunksjonalitetSkalVises = !features[SKJUL_ARBEIDSLISTEFUNKSJONALITET];
 
@@ -120,11 +119,6 @@ function HuskelappRedigereModal() {
                 )
                 .then(hideModal)
                 .catch(showErrorModal);
-            if (arbeidslistefunksjonalitetSkalVises && harArbeidsliste) {
-                slettArbeidslisteMenIkkeFargekategori(brukerFnr)
-                    .then(res => res.data)
-                    .then(setArbeidsliste);
-            }
         } else {
             lagreHuskelapp({
                 kommentar: values.kommentar ? values.kommentar : null,
@@ -142,14 +136,6 @@ function HuskelappRedigereModal() {
                         frist: values.frist ? new Date(values.frist) : null
                     })
                 )
-                .then(() => {
-                    if (arbeidslistefunksjonalitetSkalVises) {
-                        slettArbeidslisteMenIkkeFargekategori(brukerFnr)
-                            .then(res => res.data)
-                            .then(setArbeidsliste)
-                            .catch(showErrorModal);
-                    }
-                })
                 .then(hideModal)
                 .catch(showErrorModal);
         }
