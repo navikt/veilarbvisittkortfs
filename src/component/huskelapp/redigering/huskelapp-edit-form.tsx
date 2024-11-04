@@ -1,5 +1,5 @@
 import { Form } from 'formik';
-import { Detail, Heading } from '@navikt/ds-react';
+import { Detail } from '@navikt/ds-react';
 import { HuskelappInformasjonsmelding } from '../huskelapp-informasjonsmelding';
 import FormikTekstArea from '../../components/formik/formik-textarea';
 import { validerFristFelt, validerHuskelappKommentarFelt } from '../../../util/formik-validation';
@@ -8,13 +8,10 @@ import './../huskelapp-postitstyling.less';
 
 interface Props {
     endretAv: string;
-    harArbeidsliste: boolean;
 }
 
-export const HuskelappEditForm = ({ endretAv, harArbeidsliste }: Props) => (
+export const HuskelappEditForm = ({ endretAv }: Props) => (
     <div className="ny-huskelapp huskelapp-postitstyling">
-        {harArbeidsliste && <Heading size="small">Ny huskelapp</Heading>}
-
         <Form id="huskelapp-form" className="rediger-huskelapp-skjema">
             <FormikTekstArea
                 name="kommentar"
