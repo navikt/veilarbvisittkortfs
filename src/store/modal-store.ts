@@ -8,8 +8,6 @@ import { TildelVeilederKvitteringProps } from '../component/veilederverktoy/tild
 
 export enum ModalType {
     START_ESKALERING,
-    ARBEIDSLISTE,
-    FJERN_ARBEIDSLISTE,
     TILDEL_VEILEDER,
     TILDEL_VEILEDER_FEILET,
     TILDEL_VEILEDER_KVITTERING,
@@ -130,14 +128,6 @@ export const [ModalStore, useModalStore] = constate(() => {
         showModal(ModalType.TILDEL_VEILEDER_FEILET);
     }
 
-    function showArbeidslisteModal() {
-        showModal(ModalType.ARBEIDSLISTE);
-    }
-
-    function showFjernArbeidslisteModal() {
-        showModal(ModalType.FJERN_ARBEIDSLISTE);
-    }
-
     function showHuskelappRedigereModal() {
         showModal(ModalType.HUSKELAPP_REDIGERE);
     }
@@ -176,8 +166,6 @@ export const [ModalStore, useModalStore] = constate(() => {
         showStoppKvpPeriodeKvitteringModal,
         showTildelVeilederKvitteringModal,
         showTildelVeilederFeiletModal,
-        showArbeidslisteModal,
-        showFjernArbeidslisteModal,
         showStartEskaleringKvitteringModal,
         showStoppEskaleringKvitteringModal,
         showTildelVeilederModal,

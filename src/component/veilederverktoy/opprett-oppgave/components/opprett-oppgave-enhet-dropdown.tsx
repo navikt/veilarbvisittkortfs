@@ -40,7 +40,7 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
     return (
         <div className="skjemaelement navds-form-field navds-form-field--medium navds-date__field">
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label className="skjemaelement__label navds-form-field__label navds-label navds-label--small">Enhet</label>
+            <label className="navds-form-field__label navds-label navds-label--small">Enhet</label>
             {isLoading ? (
                 <Skeleton
                     variant="rectangle"

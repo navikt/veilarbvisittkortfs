@@ -23,22 +23,6 @@ export const validerOppgaveDatoFelt = (input: string): string | undefined => {
     return error;
 };
 
-export const validerArbeidslisteTittelFelt = (input: string): string | undefined => {
-    let error;
-    if (input.length > 30) {
-        error = 'Du må korte ned teksten til 30 tegn';
-    }
-    return error;
-};
-
-export const validerArbeidslisteKommentarFelt = (kommentar: string): string | undefined => {
-    let error;
-    if (kommentar.length > 500) {
-        error = 'Du må korte ned teksten til 500 tegn';
-    }
-    return error;
-};
-
 export const validerHuskelappKommentarFelt = (kommentar: string): string | undefined => {
     let error;
     if (kommentar.length > 200) {

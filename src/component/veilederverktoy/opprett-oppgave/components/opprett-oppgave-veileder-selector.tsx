@@ -54,9 +54,7 @@ function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: 
     return (
         <div className="skjemaelement navds-form-field navds-form-field--medium navds-date__field">
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label className="skjemaelement__label navds-form-field__label navds-label navds-label--small">
-                Veileder (valgfritt)
-            </label>
+            <label className="navds-form-field__label navds-label navds-label--small">Veileder (valgfritt)</label>
             <SelectMedSok
                 name="Velg veileder dropdown"
                 knappeTekst={(valgtVeileder && valgtVeileder.navn) || ''}
