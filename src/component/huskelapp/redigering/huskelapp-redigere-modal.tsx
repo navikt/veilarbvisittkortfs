@@ -13,7 +13,7 @@ import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
 import HuskelappIkon from '../ikon/Huskelappikon_bakgrunnsfarge.svg?react';
 import { toReversedDateStr, toSimpleDateStr } from '../../../util/date-utils';
-import { HuskelappEditForm } from './huskelapp-edit-form';
+import { HuskelappSkjema } from './huskelapp-skjema';
 import { SlettHuskelapp } from './slett-huskelapp';
 import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
@@ -167,7 +167,7 @@ function HuskelappRedigereModal() {
                         </div>
                     </Modal.Header>
                     <Modal.Body className="rediger-huskelapp-modal-body">
-                        <HuskelappEditForm endretAv={endretAv(huskelapp)} />
+                        <HuskelappSkjema endretAv={endretAv(huskelapp)} />
                     </Modal.Body>
                     <Modal.Footer className="rediger-huskelapp-modal-footer">
                         <Button size="small" variant="primary" form="huskelapp-form" type="submit">

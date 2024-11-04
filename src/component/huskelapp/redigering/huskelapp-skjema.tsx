@@ -10,8 +10,8 @@ interface Props {
     endretAv: string;
 }
 
-export const HuskelappEditForm = ({ endretAv }: Props) => (
-    <div className="huskelapp-skjema huskelapp-postitstyling">
+export const HuskelappSkjema = ({ endretAv }: Props) => (
+    <div className="huskelapp-boks huskelapp-postitstyling">
         <Form id="huskelapp-form" className="rediger-huskelapp-skjema">
             <FormikTekstArea
                 name="kommentar"
