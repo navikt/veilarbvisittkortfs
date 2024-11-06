@@ -1,13 +1,10 @@
 import { Formik, FormikBag, FormikProps } from 'formik';
 import { BodyShort, Button, CopyButton, Heading, Modal } from '@navikt/ds-react';
-import { ArrowRightIcon } from '@navikt/aksel-icons';
 import {
     Huskelapp,
     HuskelappformValues,
     lagreHuskelapp,
     redigerHuskelapp,
-    slettArbeidslisteMenIkkeFargekategori,
-    useArbeidsliste,
     useHuskelapp
 } from '../../../api/veilarbportefolje';
 import { useAppStore } from '../../../store/app-store';
@@ -16,13 +13,10 @@ import { logMetrikk } from '../../../util/logger';
 import { trackAmplitude } from '../../../amplitude/amplitude';
 import HuskelappIkon from '../ikon/Huskelappikon_bakgrunnsfarge.svg?react';
 import { toReversedDateStr, toSimpleDateStr } from '../../../util/date-utils';
-import { HuskelappEditForm } from './huskelapp-edit-form';
-import { GammelArbeidsliste } from './gammelArbeidsliste';
-import { SlettArbeidsliste } from './huskelapp-slett-arbeidsliste';
+import { HuskelappSkjema } from './huskelapp-skjema';
 import { SlettHuskelapp } from './slett-huskelapp';
 import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
-import { SKJUL_ARBEIDSLISTEFUNKSJONALITET } from '../../../api/veilarbpersonflatefs';
 import './huskelapp-redigering.less';
 
 const huskelappEmptyValues: HuskelappformValues = {
@@ -33,15 +27,10 @@ const huskelappEmptyValues: HuskelappformValues = {
 
 function HuskelappRedigereModal() {
     const { brukerFnr, visVeilederVerktoy, enhetId } = useAppStore();
-    const { innloggetVeileder, personalia, features } = useDataStore();
+    const { innloggetVeileder, personalia } = useDataStore();
     const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
-    const { data: arbeidsliste, mutate: setArbeidsliste } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
     const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);
-    const arbeidslistefunksjonalitetSkalVises = !features[SKJUL_ARBEIDSLISTEFUNKSJONALITET];
 
-    const harArbeidsliste =
-        arbeidsliste?.sistEndretAv !== null &&
-        (!!arbeidsliste?.overskrift || !!arbeidsliste?.kommentar || !!arbeidsliste?.frist);
     const erIRedigeringModus = huskelapp?.endretDato;
     const harHuskelapp = huskelapp?.huskelappId != null;
 
@@ -120,11 +109,6 @@ function HuskelappRedigereModal() {
                 )
                 .then(hideModal)
                 .catch(showErrorModal);
-            if (arbeidslistefunksjonalitetSkalVises && harArbeidsliste) {
-                slettArbeidslisteMenIkkeFargekategori(brukerFnr)
-                    .then(res => res.data)
-                    .then(setArbeidsliste);
-            }
         } else {
             lagreHuskelapp({
                 kommentar: values.kommentar ? values.kommentar : null,
@@ -135,21 +119,13 @@ function HuskelappRedigereModal() {
                 .then(() =>
                     setHuskelapp({
                         huskelappId: 'midlertidig',
-                        endretDato: new Date(),
-                        endretAv: innloggetVeileder?.ident,
-                        enhetId: enhetId,
                         kommentar: values.kommentar ? values.kommentar : null,
-                        frist: values.frist ? new Date(values.frist) : null
+                        frist: values.frist ? new Date(values.frist) : null,
+                        enhetId: enhetId,
+                        endretDato: new Date(),
+                        endretAv: innloggetVeileder?.ident
                     })
                 )
-                .then(() => {
-                    if (arbeidslistefunksjonalitetSkalVises) {
-                        slettArbeidslisteMenIkkeFargekategori(brukerFnr)
-                            .then(res => res.data)
-                            .then(setArbeidsliste)
-                            .catch(showErrorModal);
-                    }
-                })
                 .then(hideModal)
                 .catch(showErrorModal);
         }
@@ -173,9 +149,7 @@ function HuskelappRedigereModal() {
                                 size="small"
                                 className="rediger-huskelapp-modal-header-tekst"
                             >
-                                {arbeidslistefunksjonalitetSkalVises && harArbeidsliste
-                                    ? 'Bytt fra gammel arbeidsliste til ny huskelapp'
-                                    : 'Huskelapp'}
+                                Huskelapp
                             </Heading>
                         </div>
                         <div className="rediger-huskelapp-modal-personinfo">
@@ -193,27 +167,12 @@ function HuskelappRedigereModal() {
                         </div>
                     </Modal.Header>
                     <Modal.Body className="rediger-huskelapp-modal-body">
-                        {arbeidslistefunksjonalitetSkalVises && harArbeidsliste && (
-                            <>
-                                <GammelArbeidsliste arbeidsliste={arbeidsliste} />
-                                <ArrowRightIcon title="Pil mot høyre" className="rediger-huskelapp-modal-pil" />
-                            </>
-                        )}
-                        <HuskelappEditForm
-                            endretAv={endretAv(huskelapp)}
-                            harArbeidsliste={arbeidslistefunksjonalitetSkalVises && harArbeidsliste}
-                        />
+                        <HuskelappSkjema endretAv={endretAv(huskelapp)} />
                     </Modal.Body>
                     <Modal.Footer className="rediger-huskelapp-modal-footer">
-                        {arbeidslistefunksjonalitetSkalVises && harArbeidsliste ? (
-                            <Button size="small" variant="primary" form="huskelapp-form" type="submit">
-                                Lagre ny huskelapp og slett arbeidsliste
-                            </Button>
-                        ) : (
-                            <Button size="small" variant="primary" form="huskelapp-form" type="submit">
-                                Lagre
-                            </Button>
-                        )}
+                        <Button size="small" variant="primary" form="huskelapp-form" type="submit">
+                            Lagre
+                        </Button>
                         <Button
                             size="small"
                             variant="secondary"
@@ -222,10 +181,7 @@ function HuskelappRedigereModal() {
                         >
                             Avbryt
                         </Button>
-                        {arbeidslistefunksjonalitetSkalVises && harArbeidsliste && (
-                            <SlettArbeidsliste closeModal={() => onRequestClose(formikProps)} />
-                        )}
-                        {!harArbeidsliste && harHuskelapp && <SlettHuskelapp variant="tertiary" />}
+                        {harHuskelapp && <SlettHuskelapp variant="tertiary" />}
                     </Modal.Footer>
                 </Modal>
             )}

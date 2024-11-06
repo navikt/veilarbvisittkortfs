@@ -28,8 +28,6 @@ import TildelVeileder from '../tildel-veileder/tildel-veileder';
 import { TildelVeilederKvittering, TildelVeilederKvitteringProps } from '../tildel-veileder/tildel-veileder-kvittering';
 import { FeilTildelingModal } from '../tildel-veileder/tildel-veileder-feil-modal';
 import { ModalType, useModalStore } from '../../../store/modal-store';
-import FjernArbeidslisteModal from '../../arbeidsliste/fjern-arbeidsliste-modal';
-import ArbeidslisteModal from '../../arbeidsliste/arbeidsliste-modal';
 import HuskelappRedigereModal from '../../huskelapp/redigering/huskelapp-redigere-modal';
 import HuskelappFjernModal from '../../huskelapp/visning/huskelapp-fjern-modal';
 
@@ -43,10 +41,6 @@ export function VeilederverktoyModalController() {
     switch (activeModalState.type) {
         case ModalType.START_ESKALERING:
             return <StartEskalering />;
-        case ModalType.ARBEIDSLISTE:
-            return <ArbeidslisteModal />;
-        case ModalType.FJERN_ARBEIDSLISTE:
-            return <FjernArbeidslisteModal />;
         case ModalType.TILDEL_VEILEDER:
             return <TildelVeileder />;
         case ModalType.TILDEL_VEILEDER_FEILET:

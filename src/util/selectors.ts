@@ -1,8 +1,8 @@
 import { storeForbokstaver } from './utils';
 import { Dialog, GjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
-import { Oppfolging, OppfolgingStatus, TilgangTilBrukersKontor } from '../api/veilarboppfolging';
+import { Oppfolging, TilgangTilBrukersKontor } from '../api/veilarboppfolging';
 import { Personalia } from '../api/veilarbperson';
-import { Arbeidsliste, Huskelapp } from '../api/veilarbportefolje';
+import { Huskelapp } from '../api/veilarbportefolje';
 import { VeilederData } from '../api/veilarbveileder';
 import { OrNothing, StringOrNothing } from './type/utility-types';
 
@@ -10,19 +10,6 @@ export function selectSammensattNavn(personalia: Personalia | undefined): string
     if (!personalia) return '';
     const { fornavn, mellomnavn, etternavn } = personalia;
     return storeForbokstaver([fornavn, mellomnavn || '', etternavn]);
-}
-
-export function selectKanLeggeIArbeidsListe(
-    innloggetVeileder: OrNothing<VeilederData>,
-    oppfolgingsstatus: OrNothing<OppfolgingStatus>,
-    arbeidsliste?: Arbeidsliste
-): boolean {
-    if (!innloggetVeileder || !arbeidsliste || !oppfolgingsstatus) return false;
-    return arbeidsliste?.endringstidspunkt == null && oppfolgingsstatus.veilederId === innloggetVeileder.ident;
-}
-
-export function selectKanRedigereArbeidsliste(arbeidsliste?: Arbeidsliste): boolean {
-    return !!arbeidsliste?.endringstidspunkt && arbeidsliste?.harVeilederTilgang;
 }
 
 export function kanRegistreresEllerReaktiveres(oppfolging: OrNothing<Oppfolging>): boolean {
@@ -40,14 +27,7 @@ export function lagVeilederSammensattNavn(veileder: VeilederData): string {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
 }
 
-export function kanFjerneArbeidsliste(
-    arbeidsliste: Arbeidsliste,
-    oppfolging: OrNothing<Oppfolging>,
-    innloggetVeilederId: OrNothing<string>
-): boolean {
-    return !!arbeidsliste.endringstidspunkt && !!innloggetVeilederId && oppfolging?.veilederId === innloggetVeilederId;
-}
-
+// TODO Skal vi kanskje ta i bruk denne på om slette-knapp skal visast eller ikkje? 2024-11-04, Ingrid
 export function kanFjerneHuskelapp(
     huskelapp: Huskelapp,
     oppfolging: OrNothing<Oppfolging>,

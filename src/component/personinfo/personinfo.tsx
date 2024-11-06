@@ -49,7 +49,7 @@ function PersonInfo() {
         <div className="personinfo">
             <KjonnIkon visible={personalia?.kjonn} kjonn={personalia?.kjonn as string} />
             <NavnOgAlder fodselsdato={personalia?.fodselsdato as string} navn={navn} />
-            <div className="arbeidsliste">
+            <div className="verktoylinje">
                 {sjekkHarTilgangTilHuskelappEllerFargekategori && (
                     <>
                         <Fargekategoriknapp />

@@ -3,20 +3,6 @@ import { AxiosPromise } from 'axios';
 import { axiosInstance, ErrorMessage, fetchWithPost, swrOptions } from './utils';
 import { OrNothing, StringOrNothing } from '../util/type/utility-types';
 
-export interface Arbeidsliste {
-    arbeidslisteAktiv: StringOrNothing; //TODO WHAT IS ZIS?
-    endringstidspunkt: OrNothing<Date>;
-    frist: OrNothing<Date>;
-    harVeilederTilgang: boolean;
-    isOppfolgendeVeileder: boolean;
-    kommentar: StringOrNothing;
-    overskrift: StringOrNothing;
-    sistEndretAv: OrNothing<{ veilederId: string }>;
-    kategori: KategoriModell | null;
-    veilederId?: StringOrNothing;
-    navkontorForArbeidsliste: StringOrNothing;
-}
-
 export interface Huskelapp {
     huskelappId: StringOrNothing;
     frist: OrNothing<Date>;
@@ -24,21 +10,6 @@ export interface Huskelapp {
     endretDato: OrNothing<Date>;
     endretAv: StringOrNothing;
     enhetId: StringOrNothing;
-}
-
-export enum KategoriModell {
-    BLA = 'BLA',
-    GRONN = 'GRONN',
-    LILLA = 'LILLA',
-    GUL = 'GUL',
-    TOM = 'TOM'
-}
-
-export interface ArbeidslisteformValues {
-    kommentar: StringOrNothing | null;
-    frist: StringOrNothing;
-    overskrift: StringOrNothing | null;
-    kategori: KategoriModell | null;
 }
 
 export interface HuskelappformValues {
@@ -93,24 +64,6 @@ export enum Fargekategorinavn {
     INGEN_KATEGORI = 'Ingen kategori'
 }
 
-export function lagreArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformValues): AxiosPromise {
-    return axiosInstance.post(`/veilarbportefolje/api/v2/arbeidsliste`, { ...{ fnr: fnr }, ...arbeidsliste });
-}
-
-export function redigerArbeidsliste(fnr: string, arbeidsliste: ArbeidslisteformValues): AxiosPromise {
-    return axiosInstance.put(`/veilarbportefolje/api/v2/arbeidsliste`, { ...arbeidsliste, fnr });
-}
-
-export function slettArbeidsliste(fnr: string): AxiosPromise<Arbeidsliste> {
-    return axiosInstance.delete(`/veilarbportefolje/api/v2/arbeidsliste`, { data: { fnr: fnr } });
-}
-
-export function slettArbeidslisteMenIkkeFargekategori(fnr: string): AxiosPromise<Arbeidsliste> {
-    return axiosInstance.delete(`/veilarbportefolje/api/v2/arbeidsliste?slettFargekategori=false`, {
-        data: { fnr: fnr }
-    });
-}
-
 export function lagreHuskelapp(huskelappformValues: HuskelappLagreValues): AxiosPromise<string> {
     return axiosInstance.post(`/veilarbportefolje/api/v1/huskelapp`, huskelappformValues);
 }
@@ -140,16 +93,6 @@ export function useErUfordeltBruker(fnr: string, skalHenteData: boolean = true) 
 export function useHuskelapp(fnr: string, skalHenteData: boolean = true) {
     const url = '/veilarbportefolje/api/v1/hent-huskelapp-for-bruker';
     const { data, error, isLoading, mutate } = useSWR<Huskelapp, ErrorMessage>(
-        skalHenteData && fnr ? `${url}/${fnr}` : null,
-        () => fetchWithPost(url, { fnr: fnr }),
-        swrOptions
-    );
-    return { data, isLoading, error, mutate };
-}
-
-export function useArbeidsliste(fnr: string, skalHenteData: boolean = true) {
-    const url = '/veilarbportefolje/api/v2/hent-arbeidsliste';
-    const { data, error, isLoading, mutate } = useSWR<Arbeidsliste, ErrorMessage>(
         skalHenteData && fnr ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr }),
         swrOptions

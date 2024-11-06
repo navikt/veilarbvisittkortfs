@@ -10,21 +10,18 @@ import { Oppfolging, OppfolgingStatus, tildelTilVeileder, useOppfolgingsstatus }
 import { VeilederData } from '../../../api/veilarbveileder';
 import './tildel-veileder.less';
 import { BodyShort, Button, Heading, Modal } from '@navikt/ds-react';
-import { useArbeidsliste, useFargekategori, useHuskelapp } from '../../../api/veilarbportefolje';
-import { SKJUL_ARBEIDSLISTEFUNKSJONALITET } from '../../../api/veilarbpersonflatefs';
+import { useFargekategori, useHuskelapp } from '../../../api/veilarbportefolje';
 
 function TildelVeileder() {
     const { brukerFnr, visVeilederVerktoy } = useAppStore();
-    const { data: arbeidsliste } = useArbeidsliste(brukerFnr, visVeilederVerktoy);
     const { data: huskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);
     const { data: fargekategori } = useFargekategori(brukerFnr, visVeilederVerktoy);
     const { showTildelVeilederKvitteringModal, showTildelVeilederFeiletModal, hideModal } = useModalStore();
     const [visAdvarselOmSletting, setVisAdvarselOmSletting] = useState<boolean>(false);
     const { data: oppfolgingstatus, mutate: setOppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
-    const { veilederePaEnhet, oppfolging, setOppfolging, innloggetVeileder, features } = useDataStore();
+    const { veilederePaEnhet, oppfolging, setOppfolging, innloggetVeileder } = useDataStore();
     const [selectedVeilederId, setSelectedVeilederId] = useState('');
     const fraVeileder = oppfolging?.veilederId;
-    const arbeidslistefunksjonalitetSkalVises = !features[SKJUL_ARBEIDSLISTEFUNKSJONALITET];
 
     const sorterteVeiledere = useMemo(() => {
         const veiledere = veilederePaEnhet?.veilederListe || [];
@@ -77,19 +74,15 @@ function TildelVeileder() {
             .querySelectorAll('input[type=radio]:checked')
             .forEach(elem => ((elem as HTMLInputElement).checked = false));
 
-        const harArbeidslisteSomVilBliSlettet =
-            arbeidslistefunksjonalitetSkalVises &&
-            arbeidsliste?.arbeidslisteAktiv &&
-            arbeidsliste?.navkontorForArbeidsliste !== oppfolgingstatus?.oppfolgingsenhet?.enhetId;
         const harHuskelappSomVilBliSlettet =
             huskelapp && huskelapp?.enhetId !== oppfolgingstatus?.oppfolgingsenhet?.enhetId;
         const harFargekategoriSomVilBliSlettet =
             fargekategori && fargekategori?.enhetId !== oppfolgingstatus?.oppfolgingsenhet?.enhetId;
 
-        const brukerHarHuskelappFargekategoriEllerArbeidslisteSomVilBliSlettet =
-            harArbeidslisteSomVilBliSlettet || harHuskelappSomVilBliSlettet || harFargekategoriSomVilBliSlettet;
+        const brukerHarHuskelappEllerFargekategoriSomVilBliSlettet =
+            harHuskelappSomVilBliSlettet || harFargekategoriSomVilBliSlettet;
 
-        if (brukerHarHuskelappFargekategoriEllerArbeidslisteSomVilBliSlettet) {
+        if (brukerHarHuskelappEllerFargekategoriSomVilBliSlettet) {
             setVisAdvarselOmSletting(true);
         } else {
             handleSubmitTildelVeileder();
@@ -106,23 +99,14 @@ function TildelVeileder() {
             >
                 <Modal.Header>
                     <Heading id="tildel-veileder-slettevarsel__overskrift" size="medium" level="2">
-                        {arbeidslistefunksjonalitetSkalVises
-                            ? 'Arbeidslistenotat, huskelapp og/eller kategori blir slettet'
-                            : 'Huskelapp og/eller kategori blir slettet'}
+                        Huskelapp og/eller kategori blir slettet
                     </Heading>
                 </Modal.Header>
                 <Modal.Body>
-                    {arbeidslistefunksjonalitetSkalVises ? (
-                        <BodyShort size="medium">
-                            Arbeidslistenotat, huskelapp og/eller kategori for bruker med fødselsnummer {brukerFnr} ble
-                            opprettet på en annen enhet, og vil bli slettet ved tildeling av ny veileder.
-                        </BodyShort>
-                    ) : (
-                        <BodyShort size="medium">
-                            Huskelapp og/eller kategori for bruker med fødselsnummer {brukerFnr} ble opprettet på en
-                            annen enhet, og vil bli slettet ved tildeling av ny veileder.
-                        </BodyShort>
-                    )}
+                    <BodyShort size="medium">
+                        Huskelapp og/eller kategori for bruker med fødselsnummer {brukerFnr} ble opprettet på en annen
+                        enhet, og vil bli slettet ved tildeling av ny veileder.
+                    </BodyShort>
                     <br />
                     <BodyShort size="medium" weight="semibold">
                         Ønsker du likevel å tildele veilederen?

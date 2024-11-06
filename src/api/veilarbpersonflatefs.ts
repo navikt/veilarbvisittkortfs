@@ -5,18 +5,11 @@ export const BRUK_GAMMEL_ARBEIDSREGISTRERING_URL = 'veilarbvisitkortfs.bruk-gamm
 
 export const HUSKELAPP = 'veilarbportefoljeflatefs.huskelapp';
 
-export const SKJUL_ARBEIDSLISTEFUNKSJONALITET = 'veilarbportefoljeflatefs.skjul_arbeidslistefunksjonalitet';
-
-export const ALL_TOGGLES = [
-    BRUK_GAMMEL_ARBEIDSREGISTRERING_URL,
-    HUSKELAPP,
-    SKJUL_ARBEIDSLISTEFUNKSJONALITET
-];
+export const ALL_TOGGLES = [BRUK_GAMMEL_ARBEIDSREGISTRERING_URL, HUSKELAPP];
 
 export interface OboUnleashFeatures {
     [BRUK_GAMMEL_ARBEIDSREGISTRERING_URL]: boolean;
     [HUSKELAPP]: boolean;
-    [SKJUL_ARBEIDSLISTEFUNKSJONALITET]: boolean;
 }
 
 export function useFetchFeaturesFromOboUnleash(): AxiosPromise<OboUnleashFeatures> {

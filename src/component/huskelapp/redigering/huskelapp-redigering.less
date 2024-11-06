@@ -1,17 +1,15 @@
 .visittkortfs {
     .rediger-huskelapp-modal {
-        max-width: min(
-            60rem,
-            100% - 2rem
-        ); // max 60rem, men unngå at modalen treff kantane av vindauget på små skjermar
+        max-width: min(60rem, 100% - 2rem); // max 60rem, men unngå at modalen treff kantane av vindauget på små skjermar
 
         .rediger-huskelapp-modal-header {
             display: flex;
             align-items: center;
 
-            &__container {
+            .rediger-huskelapp-modal-header__container {
                 margin-left: 1rem;
             }
+
         }
 
         .rediger-huskelapp-modal-header-tekst {
@@ -27,9 +25,11 @@
 
             /* I oversikten er (nesten) all tekst 0.875rem, så vi etterliknar det på personinfoen her også.
              * Ikonet får likevel vere stort (tilsvarar 20px) */
+
             p, button span {
                 font-size: var(--a-font-size-small);
             }
+
             svg {
                 font-size: var(--a-font-size-xlarge);
             }
@@ -39,85 +39,29 @@
             padding-bottom: 0;
             overflow: visible; // Gjer at focus-stylinga ikkje vert kutta sjølv om padding-bottom er 0.
 
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
+            .huskelapp-boks {
+                max-width: 26rem;
+                padding: var(--a-spacing-4);
+
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+
+                form > :not(:last-child) {
+                    margin-bottom: 1.125rem;
+                }
+
+                .rediger-huskelapp-skjema {
+                    background-color: var(--a-bg-default);
+                    padding-left: var(--a-spacing-2);
+                    padding-right: var(--a-spacing-2);
+                    padding-bottom: var(--a-spacing-4);
+                }
+            }
         }
 
         .rediger-huskelapp-modal-footer {
             align-items: end; // Dytter knappene til bunnen når bekreftelsesmeldingen vises
         }
-
-        .rediger-huskelapp-modal-pil {
-            margin: auto;
-            font-size: 3rem;
-        }
-
-        .ny-huskelapp {
-            flex-basis: 17.75rem;
-            flex-grow: 1;
-            max-width: 26rem;
-            padding: var(--a-spacing-4);
-
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-
-            form > :not(:last-child) {
-                margin-bottom: 1.125rem;
-            }
-
-            .rediger-huskelapp-skjema {
-                background-color: var(--a-bg-default);
-                padding-left: var(--a-spacing-2);
-                padding-right: var(--a-spacing-2);
-                padding-bottom: var(--a-spacing-4); // 4rem
-            }
-        }
-
-        .arbeidsliste-innhold {
-            flex: 10 18rem;
-            max-width: 40ch;
-
-            background-color: var(--a-grayalpha-100);
-            padding: 1rem;
-            border-radius: var(--a-border-radius-medium);
-
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-
-            h3 {
-                font-size: var(--a-font-size-medium); // 1rem, overskriv ds-styling for xsmall (1.125rem)
-            }
-
-            p {
-                font-size: var(--a-font-size-small);
-                line-height: var(--a-font-line-height-medium);
-            }
-
-            .arbeidsliste-innhold-frist {
-                display: flex;
-                align-items: center;
-            }
-        }
-
-        #slett-arbeidsliste__knappevalg {
-            margin-top: var(--a-spacing-2);
-            display: flex;
-            gap: 0.5rem;
-            button {
-                margin: 0;
-            }
-        }
-
-        .sletting-av-arbeidsliste-feilet {
-            margin-bottom: var(--a-spacing-4);
-        }
-    }
-    .arbeidsliste-innhold-tekst {
-        background-color: var(--a-bg-default);
-        padding: var(--a-spacing-2);
-        word-break: break-word;
     }
 }
