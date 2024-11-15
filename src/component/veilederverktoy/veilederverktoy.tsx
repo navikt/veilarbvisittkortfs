@@ -17,7 +17,6 @@ import {
     selectKanTildeleVeileder
 } from '../../util/selectors';
 import { trackAmplitude } from '../../amplitude/amplitude';
-import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
 import { harTilgangTilHuskelappEllerFargekategori } from '../huskelapp/harTilgangTilHuskelapp';
 import { useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
 import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
@@ -28,7 +27,7 @@ const ButtonWithClickMetric = withClickMetric(Button);
 
 export const Veilederverktoy = () => {
     const { visVeilederVerktoy, brukerFnr } = useAppStore();
-    const { oppfolging, gjeldendeEskaleringsvarsel, features } = useDataStore();
+    const { oppfolging, gjeldendeEskaleringsvarsel } = useDataStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { data: erUfordeltBruker } = useErUfordeltBruker(
         brukerFnr,
@@ -109,10 +108,10 @@ export const Veilederverktoy = () => {
                 <Dropdown.Menu.List className="veilederverktoy-dropdown-menyliste">
                     {sjekkHarTilgangTilHuskelappEllerFargekategori && (
                         <>
-                            {huskelapp?.huskelappId && features[HUSKELAPP] && (
+                            {huskelapp?.huskelappId && (
                                 <StartProsess knappeTekst="Rediger huskelapp" onClick={huskelappKlikk} />
                             )}
-                            {huskelapp === null && features[HUSKELAPP] && (
+                            {huskelapp === null && (
                                 <StartProsess knappeTekst="Lag huskelapp" onClick={huskelappKlikk} />
                             )}
                         </>
