@@ -1,25 +1,24 @@
+import { Label } from '@navikt/ds-react';
 import NavnOgAlder from './components/navnogalder';
 import KjonnIkon from './components/kjonn-ikon';
 import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
 import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
 import { selectSammensattNavn, selectTelefonnummer } from '../../util/selectors';
-import './personinfo.less';
 import { logMetrikk } from '../../util/logger';
 import { formaterTelefonnummer } from '../../util/utils';
 import { StringOrNothing } from '../../util/type/utility-types';
-import { Label } from '@navikt/ds-react';
 import HuskelappKnapp from '../huskelapp/huskelapp-knapp';
 import { Fargekategoriknapp } from '../fargekategori/fargekategoriknapp';
 import { harTilgangTilHuskelappEllerFargekategori } from '../huskelapp/harTilgangTilHuskelapp';
 import { useErUfordeltBruker } from '../../api/veilarbportefolje';
 import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 import { useModalStore } from '../../store/modal-store';
-import { HUSKELAPP } from '../../api/veilarbpersonflatefs';
+import './personinfo.less';
 
 function PersonInfo() {
     const { brukerFnr, visVeilederVerktoy } = useAppStore();
-    const { personalia, features, oppfolging } = useDataStore();
+    const { personalia, oppfolging } = useDataStore();
     const { showHuskelappRedigereModal } = useModalStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
 
@@ -31,12 +30,11 @@ function PersonInfo() {
 
     const navn = selectSammensattNavn(personalia);
 
-    const sjekkHarTilgangTilHuskelappEllerFargekategori =
-        harTilgangTilHuskelappEllerFargekategori(
-            erUfordeltBruker === undefined ? true : erUfordeltBruker,
-            !!oppfolgingsstatus?.veilederId,
-            !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor
-        ) && features[HUSKELAPP];
+    const sjekkHarTilgangTilHuskelappEllerFargekategori = harTilgangTilHuskelappEllerFargekategori(
+        erUfordeltBruker === undefined ? true : erUfordeltBruker,
+        !!oppfolgingsstatus?.veilederId,
+        !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor
+    );
 
     const klikkShowHuskelapp = () => {
         logMetrikk('veilarbvisittkortfs.metrikker.visittkort.huskelapp-ikon');

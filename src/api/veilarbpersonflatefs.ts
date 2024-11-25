@@ -3,13 +3,10 @@ import { axiosInstance } from './utils';
 
 export const BRUK_GAMMEL_ARBEIDSREGISTRERING_URL = 'veilarbvisitkortfs.bruk-gammel-arbeidsregistrering-url';
 
-export const HUSKELAPP = 'veilarbportefoljeflatefs.huskelapp';
-
-export const ALL_TOGGLES = [BRUK_GAMMEL_ARBEIDSREGISTRERING_URL, HUSKELAPP];
+export const ALL_TOGGLES = [BRUK_GAMMEL_ARBEIDSREGISTRERING_URL];
 
 export interface OboUnleashFeatures {
     [BRUK_GAMMEL_ARBEIDSREGISTRERING_URL]: boolean;
-    [HUSKELAPP]: boolean;
 }
 
 export function useFetchFeaturesFromOboUnleash(): AxiosPromise<OboUnleashFeatures> {
