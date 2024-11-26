@@ -19,6 +19,11 @@ export function kanRegistreresEllerReaktiveres(oppfolging: OrNothing<Oppfolging>
     return (underOppfolging && kanReaktiveres) || (!underOppfolging && !kanReaktiveres);
 }
 
+export const sjekkKanStarteArbeidsoppfolging = (oppfolging?: Oppfolging) => {
+    if (!oppfolging) return false;
+    return !oppfolging.underOppfolging;
+};
+
 export function selectHarUbehandledeDialoger(dialoger: Dialog[]): boolean {
     return dialoger.filter(dialog => !dialog.historisk && (!dialog.ferdigBehandlet || dialog.venterPaSvar)).length > 0;
 }

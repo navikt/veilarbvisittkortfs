@@ -9,7 +9,7 @@ interface StartProsessProps {
 
 const DropdownMenuListItem = withClickMetric(Dropdown.Menu.List.Item);
 
-export const StartProsess = ({ knappeTekst, onClick, metricName }: StartProsessProps & ClickMetricProps) => {
+export const StartProsessKnapp = ({ knappeTekst, onClick, metricName }: StartProsessProps & ClickMetricProps) => {
     const { setAvsluttOppfolgingOpptelt } = useAppStore();
 
     if (metricName === 'avslutt_oppfolging') {

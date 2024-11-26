@@ -1,7 +1,7 @@
 import { Button, Dropdown } from '@navikt/ds-react';
 import { CogIcon } from '@navikt/aksel-icons';
-import { StartRegistreringProsess } from './start-registrering/start-registrering-prosess';
-import { StartProsess } from './prosess/start-prosess';
+import { StartArbeidssokerRegistreringKnapp } from './start-arbeidssoker-registrering/start-arbeidssoker-registrering-knapp';
+import { StartProsessKnapp } from './prosess/start-prosess-knapp';
 import { useAppStore } from '../../store/app-store';
 import { useModalStore } from '../../store/modal-store';
 import { useDataStore } from '../../store/data-store';
@@ -14,7 +14,8 @@ import {
     selectKanStarteManuellOppfolging,
     selectKanStoppeEskaleringsVarsel,
     selectKanStoppeKVP,
-    selectKanTildeleVeileder
+    selectKanTildeleVeileder,
+    sjekkKanStarteArbeidsoppfolging
 } from '../../util/selectors';
 import { trackAmplitude } from '../../amplitude/amplitude';
 import { harTilgangTilHuskelappEllerFargekategori } from '../huskelapp/harTilgangTilHuskelapp';
@@ -22,6 +23,7 @@ import { useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
 import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 import withClickMetric from '../components/click-metric/click-metric';
 import './veilederverktoy.less';
+import { StartArbeidsoppfolgingKnapp } from './start-arbeidsoppfolging/start-arbeidsoppfolging-knapp';
 
 const ButtonWithClickMetric = withClickMetric(Button);
 
@@ -77,6 +79,7 @@ export const Veilederverktoy = () => {
     const kanStoppeKVP = selectKanStoppeKVP(oppfolging, tilgangTilBrukersKontor);
     const kanRegistrere = kanRegistreresEllerReaktiveres(oppfolging);
     const kanTildeleVeileder = selectKanTildeleVeileder(oppfolging, tilgangTilBrukersKontor);
+    const kanStarteArbeidsoppfolging = sjekkKanStarteArbeidsoppfolging(oppfolging);
 
     const huskelappKlikk = () => {
         trackAmplitude({
@@ -109,76 +112,81 @@ export const Veilederverktoy = () => {
                     {sjekkHarTilgangTilHuskelappEllerFargekategori && (
                         <>
                             {huskelapp?.huskelappId && (
-                                <StartProsess knappeTekst="Rediger huskelapp" onClick={huskelappKlikk} />
+                                <StartProsessKnapp knappeTekst="Rediger huskelapp" onClick={huskelappKlikk} />
                             )}
                             {huskelapp === null && (
-                                <StartProsess knappeTekst="Lag huskelapp" onClick={huskelappKlikk} />
+                                <StartProsessKnapp knappeTekst="Lag huskelapp" onClick={huskelappKlikk} />
                             )}
                         </>
                     )}
                     {kanTildeleVeileder && (
-                        <StartProsess
+                        <StartProsessKnapp
                             metricName="tildel_veileder"
                             knappeTekst="Tildel veileder"
                             onClick={showTildelVeilederModal}
                         />
                     )}
                     {kanStarteEskalering && (
-                        <StartProsess
+                        <StartProsessKnapp
                             knappeTekst="Send varsel"
                             onClick={showStartEskaleringModal}
                             metricName="send_eskalering"
                         />
                     )}
                     {kanStoppeEskalering && (
-                        <StartProsess
+                        <StartProsessKnapp
                             knappeTekst="Deaktiver varsel"
                             onClick={showStoppEskaleringModal}
                             metricName="deaktiver_esklaring"
                         />
                     )}
-                    {kanRegistrere && <StartRegistreringProsess />}
+                    {kanStarteArbeidsoppfolging ? <StartArbeidsoppfolgingKnapp /> : null}
+                    {kanRegistrere && <StartArbeidssokerRegistreringKnapp />}
                     {kanStarteManuellOppfolging && (
-                        <StartProsess
+                        <StartProsessKnapp
                             knappeTekst="Endre til manuell oppfølging"
                             onClick={showStartManuellOppfolgingModal}
                             metricName="manuell"
                         />
                     )}
                     {kanStarteDigitalOppfolging && (
-                        <StartProsess
+                        <StartProsessKnapp
                             knappeTekst="Endre til digital oppfølging"
                             onClick={showStartDigitalOppfolgingModal}
                             metricName="digital"
                         />
                     )}
                     {kanStarteKVP && (
-                        <StartProsess
+                        <StartProsessKnapp
                             knappeTekst="Start KVP-periode"
                             onClick={showStartKvpPeriodeModal}
                             metricName="start_kvp"
                         />
                     )}
                     {kanStoppeKVP && (
-                        <StartProsess
+                        <StartProsessKnapp
                             knappeTekst="Avslutt KVP-periode"
                             onClick={showStoppKvpPeriodeModal}
                             metricName="stopp_kvp"
                         />
                     )}
-                    <StartProsess
+                    <StartProsessKnapp
                         knappeTekst="Opprett Gosys-oppgave"
                         onClick={showOpprettOppgaveModal}
                         metricName="gosys"
                     />
                     {kanAvslutteOppfolging && (
-                        <StartProsess
+                        <StartProsessKnapp
                             knappeTekst="Avslutt oppfølging"
                             onClick={showAvsluttOppfolgingModal}
                             metricName="avslutt_oppfolging"
                         />
                     )}
-                    <StartProsess knappeTekst="Vis historikk" onClick={showHistorikkModal} metricName="historikk" />
+                    <StartProsessKnapp
+                        knappeTekst="Vis historikk"
+                        onClick={showHistorikkModal}
+                        metricName="historikk"
+                    />
                 </Dropdown.Menu.List>
             </Dropdown.Menu>
         </Dropdown>
