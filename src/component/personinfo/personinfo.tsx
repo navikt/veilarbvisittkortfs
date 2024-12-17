@@ -1,6 +1,6 @@
 import { Label } from '@navikt/ds-react';
 import NavnOgAlder from './components/navnogalder';
-import KjonnIkon from './components/kjonn-ikon';
+import { KjonnIkon } from './components/kjonn-ikon';
 import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
 import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
@@ -45,7 +45,7 @@ function PersonInfo() {
 
     return (
         <div className="personinfo">
-            <KjonnIkon visible={personalia?.kjonn} kjonn={personalia?.kjonn as string} />
+            {personalia?.kjonn && <KjonnIkon kjonn={personalia?.kjonn as string} />}
             <NavnOgAlder fodselsdato={personalia?.fodselsdato as string} navn={navn} />
             <div className="verktoylinje">
                 {sjekkHarTilgangTilHuskelappEllerFargekategori && (
