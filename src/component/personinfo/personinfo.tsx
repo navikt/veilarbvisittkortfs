@@ -6,7 +6,6 @@ import { useAppStore } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
 import { selectSammensattNavn, selectTelefonnummer } from '../../util/selectors';
 import { logMetrikk } from '../../util/logger';
-import { formaterTelefonnummer } from '../../util/utils';
 import { StringOrNothing } from '../../util/type/utility-types';
 import HuskelappKnapp from '../huskelapp/huskelapp-knapp';
 import { Fargekategoriknapp } from '../fargekategori/fargekategoriknapp';
@@ -15,6 +14,7 @@ import { useErUfordeltBruker } from '../../api/veilarbportefolje';
 import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 import { useModalStore } from '../../store/modal-store';
 import './personinfo.less';
+import { formaterTelefonnummer } from '../../util/formaterTelefonnummer';
 
 function PersonInfo() {
     const { brukerFnr, visVeilederVerktoy } = useAppStore();
