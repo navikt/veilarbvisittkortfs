@@ -3,7 +3,7 @@ import { StringOrNothing } from './type/utility-types';
 const emdashCharacterCode = 8212;
 const EMDASH = String.fromCharCode(emdashCharacterCode);
 
-export function formaterTelefonnummer(telefon: StringOrNothing) {
+export function formaterTelefonnummer(telefon: StringOrNothing): string {
     let norskTelefonnummer = false;
 
     if (!telefon) {
@@ -34,5 +34,10 @@ export function formaterTelefonnummer(telefon: StringOrNothing) {
 
     if (norskTelefonnummer) {
         return splittTall.join(' ');
-    } else return `${landkode} ${splittTall.join(' ')}`;
+    } else if (landkode.length) {
+        // Dette vil ikkje skje med mindre telefonnummer er norsk eller vi endrar attkjenning av landkodar. Eg let koden liggje fordi den illustrerar korleis vi skulle ynskje det var. 2024-12-17, Ingrid.
+        return `${landkode} ${splittTall.join(' ')}`;
+    } else {
+        return `${splittTall.join(' ')}`;
+    }
 }
