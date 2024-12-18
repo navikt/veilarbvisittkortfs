@@ -3,12 +3,27 @@ import { useFormikContext } from 'formik';
 import { Select } from '@navikt/ds-react';
 import './maltekstvelger.less';
 
-/* TODO Legg til typesikring på denne
- *   For eksempel ved å opprette eit objekt med nøklar og visningstekster for select'en,
- *   og bruke nøklane som nøkkeltype i malTekster
- *           - Ingrid, 2024-02-02 */
-const malTekster: any = {
-    dagpenger:
+enum Maler {
+    DAGPENGER = 'dagpenger',
+    DAGPENGER_VESENTLIG_AVVIK_OPPLARINGSPLAN = 'dagpenger_vesentlig_avvik_fra_oppleringsplanen',
+    DAGPENGER_FORTSATT_UTDANNING_ETTER_OPPHORT_UTDANNING = 'dagpenger_fortsatt_utdanning_etter_opphort_utdanning',
+    IKKE_MOTT_MOTE = 'ikke_mott_mote',
+    IKKE_DELTATT_AKTIVITET = 'ikke_deltatt_aktivitet',
+    IKKE_DELTATT_TILTAK = 'ikke_deltatt_tiltak',
+    IKKE_LENGER_NEDSATT_ARBEIDSEVNE = 'ikke_lenger_nedsatt_arbeidsevne',
+    OVERGANGSSTONAD = 'overgangsstonad',
+    SYKEPENGER = 'sykepenger',
+    STANS_AAP_I_PERIODE = 'stans_aap_i_periode',
+    UUTNYTTET_ARBEIDSEVNE = 'uutnyttet_arbeidsevne'
+}
+
+/* Typeforklaring:
+ * Notasjonen "[key in Maler]" seier at alle nøklar i objektet må vere verdiar i enumen Maler,
+ * og at alle verdiar frå enumen må vere nøklar i objektet.
+ * Dette gjer det lettare å sikre at det finst maltekstar for alle gyldige verdiar,
+ * og at nøklar i maltekstar og values i <option/> samsvarar med kvarandre. 2024-12-18, Ingrid. */
+const malTekster: { [key in Maler]: string } = {
+    [Maler.DAGPENGER]:
         'NAV vurderer å stanse dagpengene dine, eller stanse utbetalingene dine i en periode, fordi du ikke har fulgt opp pliktene dine som arbeidssøker.\n' +
         '\n' +
         '[Fyll inn en kort begrunnelse for varslet]\n' +
@@ -18,7 +33,7 @@ const malTekster: any = {
         'Se folketrygdloven §§ 4-5, 4-20- 4-21 og forskrift om dagpenger under arbeidsløshet § 4-1.\n' +
         '\n' +
         'Har du spørsmål kan du svare på denne dialogmeldingen, eller ringe oss på tlf. 55 55 33 33.\n',
-    dagpenger_vesentlig_avvik_fra_oppleringsplanen:
+    [Maler.DAGPENGER_VESENTLIG_AVVIK_OPPLARINGSPLAN]:
         'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på meldingen.\n' +
         '\n' +
         'Hvis du ikke følger opplæringsplanen din hos NAV, kan du miste retten til å få dagpenger mens du tar utdanning eller opplæring. Hvis du mister retten, kan du tidligst søke på nytt om å få dagpenger mens du tar utdanning eller opplæring 6 måneder etter at du mistet retten. Les mer i forskrift om dagpenger under arbeidsløshet § 4-3f.\n' +
@@ -26,7 +41,7 @@ const malTekster: any = {
         '[Fyll inn begrunnelse for varselet]\n' +
         '\n' +
         'Du kan gi en skriftlig tilbakemelding her i dialogen eller ringe oss på tlf. 55 55 33 33 før vi avgjør saken din. Fristen for tilbakemelding er [fristdato].',
-    dagpenger_fortsatt_utdanning_etter_opphort_utdanning:
+    [Maler.DAGPENGER_FORTSATT_UTDANNING_ETTER_OPPHORT_UTDANNING]:
         'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på meldingen.\n' +
         '\n' +
         'Du har tidligere fått et vedtak fra oss om at du har mistet retten til å få dagpenger mens du tar utdanning eller opplæring. Hvis du velger å fortsette utdanningen/opplæringen, får du altså ikke lenger dagpenger. Du kan tidligst søke på nytt om å få dagpenger mens du tar utdanning eller opplæring 6 måneder etter at du mistet retten. Dette går fram av folketrygdloven § 4-6 første ledd og forskrift om dagpenger under arbeidsløshet § 4-3f.\n' +
@@ -34,7 +49,7 @@ const malTekster: any = {
         '[Fyll inn begrunnelse for varselet]\n' +
         '\n' +
         'Du kan gi en skriftlig tilbakemelding her i dialogen eller ringe oss på tlf. 55 55 33 33, før vi avgjør saken din. Fristen for tilbakemelding er [fristdato].',
-    ikke_mott_mote:
+    [Maler.IKKE_MOTT_MOTE]:
         'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne meldingen.\n' +
         '\n' +
         'Vi kan stanse arbeidsavklaringspengene dine dersom du ikke deltar på møter du blir kalt inn til hos NAV.\n' +
@@ -46,7 +61,7 @@ const malTekster: any = {
         'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på 55 55 33 33 og uttale deg muntlig.\n' +
         '\n' +
         'Dersom arbeidsavklaringspengene dine blir stanset, kan du sende inn en ny søknad. Du kan tidligst gjenoppta arbeidsavklaringspengene dine fra den dagen du søker. Søknadsskjema finner du på nav.no.\n',
-    ikke_deltatt_aktivitet:
+    [Maler.IKKE_DELTATT_AKTIVITET]:
         'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne meldingen.\n' +
         '\n' +
         'Vi kan stanse arbeidsavklaringspengene dine dersom du ikke deltar på de planlagte aktivitetene og bidrar for å komme i arbeid.\n' +
@@ -58,7 +73,7 @@ const malTekster: any = {
         'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på 55 55 33 33 og uttale deg muntlig.\n' +
         '\n' +
         'Dersom arbeidsavklaringspengene dine blir stanset, kan du sende inn en ny søknad. Du kan tidligst gjenoppta arbeidsavklaringspengene dine fra den dagen du søker. Søknadsskjema finner du på nav.no.\n',
-    ikke_deltatt_tiltak:
+    [Maler.IKKE_DELTATT_TILTAK]:
         'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne meldingen.\n' +
         '\n' +
         'Vi kan stanse arbeidsavklaringspengene dine dersom du ikke deltar på de aktivitetene vi har blitt enige om.\n' +
@@ -70,7 +85,7 @@ const malTekster: any = {
         'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på 55 55 33 33 og uttale deg muntlig.\n' +
         '\n' +
         'Dersom arbeidsavklaringspengene dine blir stanset, kan du sende inn en ny søknad. Du kan tidligst gjenoppta arbeidsavklaringspengene dine fra den dagen du søker. Søknadsskjema finner du på nav.no.\n',
-    ikke_lenger_nedsatt_arbeidsevne:
+    [Maler.IKKE_LENGER_NEDSATT_ARBEIDSEVNE]:
         'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe som du lurer på. Det gjør du ved å svare på denne dialogmeldingen.\n' +
         '\n' +
         'Du mottar arbeidsavklaringspenger (AAP), og har tidligere fått et vedtak som gjelder frem til [dato]. Vi vurderer nå å opphøre ytelsen tidligere enn denne datoen, fordi vi vurderer at du ikke lenger har nedsatt arbeidsevne på grunn av helsen din.\n' +
@@ -88,7 +103,7 @@ const malTekster: any = {
         'Hvis du ikke har mulighet til å uttale deg innen fristen, må du ta kontakt med oss så snart som mulig.\n' +
         '\n' +
         'Hvis vi ikke endrer den foreløpige vurderingen vår, betyr det at arbeidsavklaringspengene dine opphører fra og med [dato].\n',
-    overgangsstonad:
+    [Maler.OVERGANGSSTONAD]:
         'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne meldingen.\n' +
         '\n' +
         'Kravene til deg som mottar overgangsstønad og er arbeidssøker går fram av folketrygdloven § 15-12 og § 15-6. Fordi du er en reell arbeidssøker krever vi at du skal ha minst 50 prosent med arbeidsrettede aktiviteter. Du må også aktivt søke arbeid og møte hos oss når vi har behov for å snakke med deg. Takker du nei til arbeid eller arbeidsmarkedstiltak eller ikke møter hos NAV etter at vi har kalt deg inn, kan du miste retten til overgangsstønad fra NAV i én måned. NAV kan også stanse overgangsstønaden din hvis du ikke lenger fyller aktivitetsplikten du har som reell arbeidssøker og ikke har rett til stønaden på andre vilkår.\n' +
@@ -96,7 +111,7 @@ const malTekster: any = {
         '[Fyll inn begrunnelse for varslet]\n' +
         '\n' +
         'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på 55 55 33 33 og uttale deg muntlig.\n',
-    sykepenger:
+    [Maler.SYKEPENGER]:
         'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne meldingen.\n' +
         '\n' +
         'Kravene til deg som har sykepenger og blir friskmeldt til å kunne søke jobber mens du beholder sykepengene i en periode, går fram av folketrygdloven § 8-5 og § 21-8. Du må være reell arbeidssøker i denne perioden. Det betyr at du må delta i arbeidsrettede aktiviteter, aktivt søke arbeid og møte hos oss når vi har behov for å snakke med deg. Hvis du takker nei til et arbeidsrettet tiltak, kan du miste retten til sykepenger.\n' +
@@ -104,7 +119,7 @@ const malTekster: any = {
         '[Fyll inn begrunnelse for varslet]\n' +
         '\n' +
         'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på 55 55 33 33 og uttale deg muntlig.\n',
-    stans_aap_i_periode:
+    [Maler.STANS_AAP_I_PERIODE]:
         'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne dialogmeldingen.\n' +
         '\n' +
         'Vi vurderer nå å stanse arbeidsavklaringspengene dine fordi:\n' +
@@ -120,7 +135,7 @@ const malTekster: any = {
         'Du får dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du får en frist på 14 dager, til [dato], for å komme med tilbakemelding. Du kan gi oss skriftlig tilbakemelding her i dialogen, eller du kan ringe oss på telefon 55 55 33 33.\n' +
         '\n' +
         'Hvis du ikke har mulighet til å uttale deg innen fristen, må du ta kontakt med oss så snart som mulig.\n',
-    uutnyttet_arbeidsevne:
+    [Maler.UUTNYTTET_ARBEIDSEVNE]:
         'Les denne meldingen nøye. Gi beskjed til veilederen din hvis det er noe som du lurer på. Det kan du gjøre ved å svare på denne meldingen. \n' +
         '\n' +
         'Du mottar arbeidsavklaringspenger (AAP) og vi vurderer nå å redusere utbetaling av pengene dine. Hvis du har tapt arbeidsevnen din delvis, skal arbeidsavklaringspengene reduseres slik at du kun får utbetaling for den delen av arbeidsevnen som er tapt.\n' +
@@ -152,30 +167,30 @@ function Maltekstvelger() {
     return (
         <Select label="Velg en mal" className="malvelger" size="small" onChange={onChange}>
             <option value="">Velg en mal</option>
-            <option value="dagpenger">Dagpenger: Stans og tidsbegrenset bortfall.</option>
-            <option value="dagpenger_vesentlig_avvik_fra_oppleringsplanen">
+            <option value={Maler.DAGPENGER}>Dagpenger: Stans og tidsbegrenset bortfall.</option>
+            <option value={Maler.DAGPENGER_VESENTLIG_AVVIK_OPPLARINGSPLAN}>
                 {' '}
                 Dagpenger: Vesentlig avvik fra opplæringsplanen.
             </option>
-            <option value="dagpenger_fortsatt_utdanning_etter_opphort_utdanning">
+            <option value={Maler.DAGPENGER_FORTSATT_UTDANNING_ETTER_OPPHORT_UTDANNING}>
                 Dagpenger: Fortsatt utdanning etter opphørt utdanning.
             </option>
-            <option value="ikke_mott_mote">Arbeidsavklaringspenger: Ikke møtt til møte</option>
-            <option value="ikke_deltatt_aktivitet">
+            <option value={Maler.IKKE_MOTT_MOTE}>Arbeidsavklaringspenger: Ikke møtt til møte</option>
+            <option value={Maler.IKKE_DELTATT_AKTIVITET}>
                 Arbeidsavklaringspenger: Ikke deltatt på planlagt aktivitet eller bidrar ikke for å komme i arbeid
             </option>
-            <option value="ikke_deltatt_tiltak">Arbeidsavklaringspenger: Ikke deltatt på tiltak</option>
-            <option value="ikke_lenger_nedsatt_arbeidsevne">
+            <option value={Maler.IKKE_DELTATT_TILTAK}>Arbeidsavklaringspenger: Ikke deltatt på tiltak</option>
+            <option value={Maler.IKKE_LENGER_NEDSATT_ARBEIDSEVNE}>
                 Arbeidsavklaringspenger: Ikke lenger nedsatt arbeidsevne
             </option>
-            <option value="uutnyttet_arbeidsevne">
+            <option value={Maler.UUTNYTTET_ARBEIDSEVNE}>
                 Arbeidsavklaringspenger: Reduksjon i utbetaling på grunn av arbeidsevne som ikke er utnyttet
             </option>
-            <option value="stans_aap_i_periode">
+            <option value={Maler.STANS_AAP_I_PERIODE}>
                 Arbeidsavklaringspenger: Stans av AAP i perioden som arbeidssøker
             </option>
-            <option value="overgangsstonad">Overgangsstønad</option>
-            <option value="sykepenger">Sykepenger</option>
+            <option value={Maler.OVERGANGSSTONAD}>Overgangsstønad</option>
+            <option value={Maler.SYKEPENGER}>Sykepenger</option>
         </Select>
     );
 }
