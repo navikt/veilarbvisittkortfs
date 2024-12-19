@@ -202,28 +202,9 @@ function Maltekstvelger() {
     return (
         <Select label="Velg en mal" className="malvelger" size="small" onChange={onChange}>
             <option value="">Velg en mal</option>
-            <option value={Maler.DAGPENGER}>{maler[Maler.DAGPENGER].tekstNedtrekksmeny}</option>
-            <option value={Maler.DAGPENGER_VESENTLIG_AVVIK_OPPLARINGSPLAN}>
-                {maler[Maler.DAGPENGER_VESENTLIG_AVVIK_OPPLARINGSPLAN].tekstNedtrekksmeny}
-            </option>
-            <option value={Maler.DAGPENGER_FORTSATT_UTDANNING_ETTER_OPPHORT_UTDANNING}>
-                {maler[Maler.DAGPENGER_FORTSATT_UTDANNING_ETTER_OPPHORT_UTDANNING].tekstNedtrekksmeny}
-            </option>
-            <option value={Maler.IKKE_MOTT_MOTE}>
-                {maler[Maler.IKKE_MOTT_MOTE].tekstNedtrekksmeny}
-                Arbeidsavklaringspenger: Ikke møtt til møte
-            </option>
-            <option value={Maler.IKKE_DELTATT_AKTIVITET}>
-                {maler[Maler.IKKE_DELTATT_AKTIVITET].tekstNedtrekksmeny}
-            </option>
-            <option value={Maler.IKKE_DELTATT_TILTAK}>{maler[Maler.IKKE_DELTATT_TILTAK].tekstNedtrekksmeny}</option>
-            <option value={Maler.IKKE_LENGER_NEDSATT_ARBEIDSEVNE}>
-                {maler[Maler.IKKE_LENGER_NEDSATT_ARBEIDSEVNE].tekstNedtrekksmeny}
-            </option>
-            <option value={Maler.UUTNYTTET_ARBEIDSEVNE}>{maler[Maler.UUTNYTTET_ARBEIDSEVNE].tekstNedtrekksmeny}</option>
-            <option value={Maler.STANS_AAP_I_PERIODE}>{maler[Maler.STANS_AAP_I_PERIODE].tekstNedtrekksmeny}</option>
-            <option value={Maler.OVERGANGSSTONAD}>{maler[Maler.OVERGANGSSTONAD].tekstNedtrekksmeny}</option>
-            <option value={Maler.SYKEPENGER}>{maler[Maler.SYKEPENGER].tekstNedtrekksmeny}</option>
+            {Object.values(Maler).map(mal => {
+                return <option value={mal}>{maler[mal].tekstNedtrekksmeny}</option>;
+            })}
         </Select>
     );
 }
