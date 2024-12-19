@@ -11,10 +11,10 @@ enum Maler {
     IKKE_DELTATT_AKTIVITET = 'ikke_deltatt_aktivitet',
     IKKE_DELTATT_TILTAK = 'ikke_deltatt_tiltak',
     IKKE_LENGER_NEDSATT_ARBEIDSEVNE = 'ikke_lenger_nedsatt_arbeidsevne',
-    OVERGANGSSTONAD = 'overgangsstonad',
-    SYKEPENGER = 'sykepenger',
+    UUTNYTTET_ARBEIDSEVNE = 'uutnyttet_arbeidsevne',
     STANS_AAP_I_PERIODE = 'stans_aap_i_periode',
-    UUTNYTTET_ARBEIDSEVNE = 'uutnyttet_arbeidsevne'
+    OVERGANGSSTONAD = 'overgangsstonad',
+    SYKEPENGER = 'sykepenger'
 }
 
 /* Typeforklaring:
@@ -125,6 +125,43 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
             '\n' +
             'Hvis vi ikke endrer den foreløpige vurderingen vår, betyr det at arbeidsavklaringspengene dine opphører fra og med [dato].\n'
     },
+    [Maler.UUTNYTTET_ARBEIDSEVNE]: {
+        tekstNedtrekksmeny:
+            'Arbeidsavklaringspenger: Reduksjon i utbetaling på grunn av arbeidsevne som ikke er utnyttet',
+        maltekst:
+            'Les denne meldingen nøye. Gi beskjed til veilederen din hvis det er noe som du lurer på. Det kan du gjøre ved å svare på denne meldingen. \n' +
+            '\n' +
+            'Du mottar arbeidsavklaringspenger (AAP) og vi vurderer nå å redusere utbetaling av pengene dine. Hvis du har tapt arbeidsevnen din delvis, skal arbeidsavklaringspengene reduseres slik at du kun får utbetaling for den delen av arbeidsevnen som er tapt.\n' +
+            '\n' +
+            '(Forklar hvorfor vi mener at personen har en arbeidsevne som ikke er utnyttet og hvor stor del av arbeidsevnen det gjelder. Arbeidsevnen som ikke er utnyttet skal angis i prosent.) \n' +
+            '\n' +
+            'På bakgrunn av dette, vurderer vi at utbetalingen av arbeidsavklaringspengene dine skal reduseres, se folketrygdloven § 11-23. \n' +
+            '\n' +
+            'Du får dette varselet slik at du har mulighet til å uttale deg før vi avgjør saken din. Du får nå en frist på 14 dager, til xx.xx.xxxx, for å komme med en tilbakemelding. Vi vil ta tilbakemeldingen din med i vurderingen som vi gjør når fristen har gått ut. \n' +
+            '\n' +
+            'Hvis du ikke har mulighet til å uttale deg innen fristen, må du ta kontakt med oss så fort som mulig. \n' +
+            '\n' +
+            'Hvis vi ikke endrer den foreløpige vurderingen vår, betyr det at arbeidsavklaringspengene dine reduseres fra og med xx.xx.xxxx. Du vil få et eget vedtak som viser hvor mye arbeidsavklaringspengene dine reduseres. \n'
+    },
+    [Maler.STANS_AAP_I_PERIODE]: {
+        tekstNedtrekksmeny: 'Arbeidsavklaringspenger: Stans av AAP i perioden som arbeidssøker',
+        maltekst:
+            'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne dialogmeldingen.\n' +
+            '\n' +
+            'Vi vurderer nå å stanse arbeidsavklaringspengene dine fordi:\n' +
+            '\n' +
+            '[Begrunnelse for varslet. Du må få frem hvilke aktiviteter eller plikter brukeren ikke har fulgt opp.]\n' +
+            '\n' +
+            'For å ha rett til arbeidsavklaringspenger mens du søker jobb, må du være registrert som arbeidssøker hos NAV og være villig til å ta ethvert arbeid, både heltid eller deltid, hvor som helst i landet. Du må også delta på tiltak og komme til møter vi innkaller til.\n' +
+            '\n' +
+            'Hvis du ikke gjennomfører aktiviteten du og NAV har blitt enige om, kan vi stanse arbeidsavklaringspengene, eller stanse utbetalingene dine i en periode.\n' +
+            '\n' +
+            'Dette går fram av folketrygdloven §§ 4-5, 4-20, 4-21, og 11-17.\n' +
+            '\n' +
+            'Du får dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du får en frist på 14 dager, til [dato], for å komme med tilbakemelding. Du kan gi oss skriftlig tilbakemelding her i dialogen, eller du kan ringe oss på telefon 55 55 33 33.\n' +
+            '\n' +
+            'Hvis du ikke har mulighet til å uttale deg innen fristen, må du ta kontakt med oss så snart som mulig.\n'
+    },
     [Maler.OVERGANGSSTONAD]: {
         tekstNedtrekksmeny: 'Overgangsstønad',
         maltekst:
@@ -146,43 +183,6 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
             '[Fyll inn begrunnelse for varslet]\n' +
             '\n' +
             'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på 55 55 33 33 og uttale deg muntlig.\n'
-    },
-    [Maler.STANS_AAP_I_PERIODE]: {
-        tekstNedtrekksmeny: 'Arbeidsavklaringspenger: Stans av AAP i perioden som arbeidssøker',
-        maltekst:
-            'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne dialogmeldingen.\n' +
-            '\n' +
-            'Vi vurderer nå å stanse arbeidsavklaringspengene dine fordi:\n' +
-            '\n' +
-            '[Begrunnelse for varslet. Du må få frem hvilke aktiviteter eller plikter brukeren ikke har fulgt opp.]\n' +
-            '\n' +
-            'For å ha rett til arbeidsavklaringspenger mens du søker jobb, må du være registrert som arbeidssøker hos NAV og være villig til å ta ethvert arbeid, både heltid eller deltid, hvor som helst i landet. Du må også delta på tiltak og komme til møter vi innkaller til.\n' +
-            '\n' +
-            'Hvis du ikke gjennomfører aktiviteten du og NAV har blitt enige om, kan vi stanse arbeidsavklaringspengene, eller stanse utbetalingene dine i en periode.\n' +
-            '\n' +
-            'Dette går fram av folketrygdloven §§ 4-5, 4-20, 4-21, og 11-17.\n' +
-            '\n' +
-            'Du får dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du får en frist på 14 dager, til [dato], for å komme med tilbakemelding. Du kan gi oss skriftlig tilbakemelding her i dialogen, eller du kan ringe oss på telefon 55 55 33 33.\n' +
-            '\n' +
-            'Hvis du ikke har mulighet til å uttale deg innen fristen, må du ta kontakt med oss så snart som mulig.\n'
-    },
-    [Maler.UUTNYTTET_ARBEIDSEVNE]: {
-        tekstNedtrekksmeny:
-            'Arbeidsavklaringspenger: Reduksjon i utbetaling på grunn av arbeidsevne som ikke er utnyttet',
-        maltekst:
-            'Les denne meldingen nøye. Gi beskjed til veilederen din hvis det er noe som du lurer på. Det kan du gjøre ved å svare på denne meldingen. \n' +
-            '\n' +
-            'Du mottar arbeidsavklaringspenger (AAP) og vi vurderer nå å redusere utbetaling av pengene dine. Hvis du har tapt arbeidsevnen din delvis, skal arbeidsavklaringspengene reduseres slik at du kun får utbetaling for den delen av arbeidsevnen som er tapt.\n' +
-            '\n' +
-            '(Forklar hvorfor vi mener at personen har en arbeidsevne som ikke er utnyttet og hvor stor del av arbeidsevnen det gjelder. Arbeidsevnen som ikke er utnyttet skal angis i prosent.) \n' +
-            '\n' +
-            'På bakgrunn av dette, vurderer vi at utbetalingen av arbeidsavklaringspengene dine skal reduseres, se folketrygdloven § 11-23. \n' +
-            '\n' +
-            'Du får dette varselet slik at du har mulighet til å uttale deg før vi avgjør saken din. Du får nå en frist på 14 dager, til xx.xx.xxxx, for å komme med en tilbakemelding. Vi vil ta tilbakemeldingen din med i vurderingen som vi gjør når fristen har gått ut. \n' +
-            '\n' +
-            'Hvis du ikke har mulighet til å uttale deg innen fristen, må du ta kontakt med oss så fort som mulig. \n' +
-            '\n' +
-            'Hvis vi ikke endrer den foreløpige vurderingen vår, betyr det at arbeidsavklaringspengene dine reduseres fra og med xx.xx.xxxx. Du vil få et eget vedtak som viser hvor mye arbeidsavklaringspengene dine reduseres. \n'
     }
 };
 
