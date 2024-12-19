@@ -3,6 +3,8 @@ import { useFormikContext } from 'formik';
 import { Select } from '@navikt/ds-react';
 import './maltekstvelger.less';
 
+const telefonnummerNav = '55 55 33 33';
+
 enum Maler {
     DAGPENGER = 'dagpenger',
     DAGPENGER_VESENTLIG_AVVIK_OPPLARINGSPLAN = 'dagpenger_vesentlig_avvik_fra_oppleringsplanen',
@@ -34,7 +36,7 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
             '\n' +
             'Se folketrygdloven §§ 4-5, 4-20- 4-21 og forskrift om dagpenger under arbeidsløshet § 4-1.\n' +
             '\n' +
-            'Har du spørsmål kan du svare på denne dialogmeldingen, eller ringe oss på tlf. 55 55 33 33.\n'
+            `Har du spørsmål kan du svare på denne dialogmeldingen, eller ringe oss på tlf. ${telefonnummerNav}.\n`
     },
     [Maler.DAGPENGER_VESENTLIG_AVVIK_OPPLARINGSPLAN]: {
         tekstNedtrekksmeny: 'Dagpenger: Vesentlig avvik fra opplæringsplanen.',
@@ -45,7 +47,7 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
             '\n' +
             '[Fyll inn begrunnelse for varselet]\n' +
             '\n' +
-            'Du kan gi en skriftlig tilbakemelding her i dialogen eller ringe oss på tlf. 55 55 33 33 før vi avgjør saken din. Fristen for tilbakemelding er [fristdato].'
+            `Du kan gi en skriftlig tilbakemelding her i dialogen eller ringe oss på tlf. ${telefonnummerNav} før vi avgjør saken din. Fristen for tilbakemelding er [fristdato].`
     },
     [Maler.DAGPENGER_FORTSATT_UTDANNING_ETTER_OPPHORT_UTDANNING]: {
         tekstNedtrekksmeny: 'Dagpenger: Fortsatt utdanning etter opphørt utdanning.',
@@ -56,7 +58,7 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
             '\n' +
             '[Fyll inn begrunnelse for varselet]\n' +
             '\n' +
-            'Du kan gi en skriftlig tilbakemelding her i dialogen eller ringe oss på tlf. 55 55 33 33, før vi avgjør saken din. Fristen for tilbakemelding er [fristdato].'
+            `Du kan gi en skriftlig tilbakemelding her i dialogen eller ringe oss på tlf. ${telefonnummerNav}, før vi avgjør saken din. Fristen for tilbakemelding er [fristdato].`
     },
     [Maler.IKKE_MOTT_MOTE]: {
         tekstNedtrekksmeny: 'Arbeidsavklaringspenger: Ikke møtt til møte',
@@ -69,7 +71,7 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
             '\n' +
             '[Fyll inn begrunnelse for varslet]\n' +
             '\n' +
-            'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på 55 55 33 33 og uttale deg muntlig.\n' +
+            `Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på ${telefonnummerNav} og uttale deg muntlig.\n` +
             '\n' +
             'Dersom arbeidsavklaringspengene dine blir stanset, kan du sende inn en ny søknad. Du kan tidligst gjenoppta arbeidsavklaringspengene dine fra den dagen du søker. Søknadsskjema finner du på nav.no.\n'
     },
@@ -85,7 +87,7 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
             '\n' +
             '[Fyll inn begrunnelse for varslet]\n' +
             '\n' +
-            'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på 55 55 33 33 og uttale deg muntlig.\n' +
+            `Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på ${telefonnummerNav} og uttale deg muntlig.\n` +
             '\n' +
             'Dersom arbeidsavklaringspengene dine blir stanset, kan du sende inn en ny søknad. Du kan tidligst gjenoppta arbeidsavklaringspengene dine fra den dagen du søker. Søknadsskjema finner du på nav.no.\n'
     },
@@ -100,7 +102,7 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
             '\n' +
             '[Fyll inn begrunnelse for varslet]\n' +
             '\n' +
-            'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på 55 55 33 33 og uttale deg muntlig.\n' +
+            `Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på ${telefonnummerNav} og uttale deg muntlig.\n` +
             '\n' +
             'Dersom arbeidsavklaringspengene dine blir stanset, kan du sende inn en ny søknad. Du kan tidligst gjenoppta arbeidsavklaringspengene dine fra den dagen du søker. Søknadsskjema finner du på nav.no.\n'
     },
@@ -158,7 +160,7 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
             '\n' +
             'Dette går fram av folketrygdloven §§ 4-5, 4-20, 4-21, og 11-17.\n' +
             '\n' +
-            'Du får dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du får en frist på 14 dager, til [dato], for å komme med tilbakemelding. Du kan gi oss skriftlig tilbakemelding her i dialogen, eller du kan ringe oss på telefon 55 55 33 33.\n' +
+            `Du får dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du får en frist på 14 dager, til [dato], for å komme med tilbakemelding. Du kan gi oss skriftlig tilbakemelding her i dialogen, eller du kan ringe oss på telefon ${telefonnummerNav}.\n` +
             '\n' +
             'Hvis du ikke har mulighet til å uttale deg innen fristen, må du ta kontakt med oss så snart som mulig.\n'
     },
@@ -171,7 +173,7 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
             '\n' +
             '[Fyll inn begrunnelse for varslet]\n' +
             '\n' +
-            'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på 55 55 33 33 og uttale deg muntlig.\n'
+            `Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på ${telefonnummerNav} og uttale deg muntlig.\n`
     },
     [Maler.SYKEPENGER]: {
         tekstNedtrekksmeny: 'Sykepenger',
@@ -182,7 +184,7 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
             '\n' +
             '[Fyll inn begrunnelse for varslet]\n' +
             '\n' +
-            'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på 55 55 33 33 og uttale deg muntlig.\n'
+            `Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på ${telefonnummerNav} og uttale deg muntlig.\n`
     }
 };
 
