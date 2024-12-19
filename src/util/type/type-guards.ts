@@ -1,4 +1,4 @@
-export const isString = (subject: any): subject is string => {
+export const isString = (subject: unknown): subject is string => {
     return typeof subject === 'string';
 };
 
