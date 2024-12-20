@@ -20,7 +20,7 @@ interface OwnValues extends StartEskaleringValues {
 const initialValues = {
     begrunnelse: '',
     brukMalvelger: true,
-    overskrift: 'Du har fått et varsel fra NAV',
+    overskrift: 'Du har fått et varsel fra Nav',
     tekst: '',
     type: 'ikke_valgt'
 };
