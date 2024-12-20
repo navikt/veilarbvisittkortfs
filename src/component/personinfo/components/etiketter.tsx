@@ -9,31 +9,41 @@ import {
 } from '../../../api/veilarbperson';
 import { OppfolgingStatus, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
-import { ifResponseHasData, isEmpty } from '../../../util/utils';
-import visibleIf from '../../components/visible-if';
+import { ifResponseHasData } from '../../../util/utils';
 import { OrNothing, StringOrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
 
-const Advarsel = visibleIf(({ children }: Omit<TagProps, 'variant'>) => (
-    <Tag variant="error" size="small" className="etikett">
-        {children}
-    </Tag>
-));
-const Info = visibleIf(({ children }: Omit<TagProps, 'variant'>) => (
-    <Tag variant="info" size="small" className="etikett">
-        {children}
-    </Tag>
-));
-const Fokus = visibleIf(({ children }: Omit<TagProps, 'variant'>) => (
-    <Tag variant="warning" size="small" className="etikett">
-        {children}
-    </Tag>
-));
-const BaseDod = visibleIf(({ children }: Omit<TagProps, 'variant'>) => (
-    <Tag variant="neutral" size="small" className="etikett etikett--mork">
-        {children}
-    </Tag>
-));
+interface Etikettprops extends Omit<TagProps, 'variant'> {
+    visible: boolean | undefined;
+}
+
+const Advarsel = ({ visible, title, children }: Etikettprops) =>
+    visible && (
+        <Tag variant="error" size="small" className="etikett" title={title}>
+            {children}
+        </Tag>
+    );
+
+const Info = ({ visible, title, children }: Etikettprops) =>
+    visible && (
+        <Tag variant="info" size="small" className="etikett" title={title}>
+            {children}
+        </Tag>
+    );
+
+const Fokus = ({ visible, title, children }: Etikettprops) =>
+    visible && (
+        <Tag variant="warning" size="small" className="etikett" title={title}>
+            {children}
+        </Tag>
+    );
+
+const BaseDod = ({ visible, title, children }: Etikettprops) =>
+    visible && (
+        <Tag variant="neutral" size="small" className="etikett etikett--mork" title={title}>
+            {children}
+        </Tag>
+    );
 
 function erBrukerSykmeldt(oppfolging: OrNothing<OppfolgingStatus>): boolean {
     return !!oppfolging && oppfolging.formidlingsgruppe === 'IARBS' && oppfolging.servicegruppe === 'VURDI';
@@ -85,18 +95,16 @@ function Etiketter() {
 
     return (
         <div className="etikett-container">
-            <BaseDod visible={personalia?.dodsdato}>Død</BaseDod>
-            <Advarsel visible={personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>
-            <Advarsel visible={personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
+            <BaseDod visible={!!personalia?.dodsdato}>Død</BaseDod>
+            <Advarsel visible={!!personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>
+            <Advarsel visible={!!personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
             <Advarsel visible={personalia?.egenAnsatt}>Skjermet</Advarsel>
-            <Fokus visible={!isEmpty(verge?.vergemaalEllerFremtidsfullmakt)}>Vergemål</Fokus>
-            <Fokus
-                visible={fullmakt && !isEmpty(fullmakt.fullmakt) && erFullmaktOmradeMedOppfolging(fullmakt.fullmakt)}
-            >
+            <Fokus visible={!!verge?.vergemaalEllerFremtidsfullmakt}>Vergemål</Fokus>
+            <Fokus visible={fullmakt && !!fullmakt.fullmakt && erFullmaktOmradeMedOppfolging(fullmakt.fullmakt)}>
                 Fullmakt
             </Fokus>
-            <Fokus visible={spraakTolk?.tegnspraak}>Tegnspråktolk</Fokus>
-            <Fokus visible={spraakTolk?.talespraak}>Språktolk</Fokus>
+            <Fokus visible={!!spraakTolk?.tegnspraak}>Tegnspråktolk</Fokus>
+            <Fokus visible={!!spraakTolk?.talespraak}>Språktolk</Fokus>
             <Fokus visible={oppfolging?.underKvp}>KVP</Fokus>
             <Fokus
                 visible={oppfolging && oppfolging.manuell}
@@ -120,9 +128,9 @@ function Etiketter() {
             >
                 Utdatert i KRR
             </Fokus>
-            <Fokus visible={oppfolging?.inaktivIArena}>Inaktivert</Fokus>
+            <Fokus visible={!!oppfolging?.inaktivIArena}>Inaktivert</Fokus>
             <Fokus visible={!oppfolging?.underOppfolging}>Ikke under oppfølging</Fokus>
-            <Fokus visible={gjeldendeEskaleringsvarsel}>Varsel</Fokus>
+            <Fokus visible={!!gjeldendeEskaleringsvarsel}>Varsel</Fokus>
             <Fokus
                 visible={oppfolging?.registrertKRR === false}
                 title="Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret og kan ikke varsles. Du kan derfor ikke samhandle digitalt med brukeren. "

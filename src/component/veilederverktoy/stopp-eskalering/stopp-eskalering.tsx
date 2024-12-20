@@ -43,7 +43,7 @@ function StoppEskalering() {
 
             eskaleringVarselSendtEvent();
             showStoppEskaleringKvitteringModal();
-        } catch (e) {
+        } catch {
             showErrorModal();
         }
     }

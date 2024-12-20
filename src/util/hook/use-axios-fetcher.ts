@@ -13,6 +13,7 @@ interface FetchState<D> {
     error?: AxiosError;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface UseAxiosFetcher<D = any, F = () => AxiosPromise<D>> extends FetchState<D> {
     fetch: F;
 }
@@ -33,6 +34,7 @@ export function useAxiosFetcher<T1, T2, T3, T4, R>(
     fetcher: (t1: T1, t2: T2, t3: T3, t4: T4) => AxiosPromise<R>
 ): UseAxiosFetcher<R, ActionFunction4<T1, T2, T3, T4, AxiosPromise<R>>>;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useAxiosFetcher<R>(fetcher: (...args: any[]) => AxiosPromise<R>): UseAxiosFetcher<R> {
     const [fetchState, setFetchState] = useState<FetchState<R>>({ loading: false });
     const isMounted = useRef<boolean>(true);
@@ -44,6 +46,7 @@ export function useAxiosFetcher<R>(fetcher: (...args: any[]) => AxiosPromise<R>)
     }, []);
 
     const axiosFetch = useCallback(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (...args: any[]): AxiosPromise<R> => {
             setFetchState({ loading: true });
             return fetcher(...args)

@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ComponentType } from 'react';
 import { logMetrikk } from '../../../util/logger';
 
 export interface ClickMetricProps {
     metricName?: string;
-    tags?: {};
-    fields?: {};
+    tags?: object;
+    fields?: object;
 }
 
 export interface OnClickProps {
