@@ -93,13 +93,18 @@ function Etiketter() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr]);
 
+    const harVergemal =
+        verge?.vergemaalEllerFremtidsfullmakt !== undefined &&
+        verge?.vergemaalEllerFremtidsfullmakt !== null &&
+        verge?.vergemaalEllerFremtidsfullmakt.length > 0;
+
     return (
         <div className="etikett-container">
             <BaseDod visible={!!personalia?.dodsdato}>Død</BaseDod>
             <Advarsel visible={!!personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>
             <Advarsel visible={!!personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
             <Advarsel visible={personalia?.egenAnsatt}>Skjermet</Advarsel>
-            <Fokus visible={!!verge?.vergemaalEllerFremtidsfullmakt}>Vergemål</Fokus>
+            <Fokus visible={harVergemal}>Vergemål</Fokus>
             <Fokus visible={fullmakt && !!fullmakt.fullmakt && erFullmaktOmradeMedOppfolging(fullmakt.fullmakt)}>
                 Fullmakt
             </Fokus>
