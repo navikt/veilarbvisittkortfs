@@ -29,27 +29,25 @@ function StartEskaleringForm<T extends StartEskaleringValues>({
             tittel="Send varsel om mulig stans"
             render={({ values }) => (
                 <div>
-                    <BodyShort size="small">
+                    <BodyShort size="small" spacing={true}>
                         Når du sender forhåndsvarsel må du huske å være tydelig på hvilken oppgave som skal gjennomføre,
                         og hvilken frist personen får for tilbakemelding. Personen får en brukernotifikasjon på ditt nav
                         med teksten: Viktig oppgave. NAV vurderer å stanse pengene dine. Se hva du må gjøre.
                     </BodyShort>
-                    <BodyShort size="small">
+                    <BodyShort size="small" spacing={true}>
                         Ved å klikke på brukernotifikasjon, kommer personen direkte inn i riktig dialog der
                         forhåndsvarslet ligger.
                     </BodyShort>
 
-                    <div>
-                        <Form>
-                            <Maltekstvelger />
-                            <BegrunnelseTextArea
-                                tekstariaLabel="Rediger teksten under slik at den passer."
-                                maxLength={5000}
-                                hidden={values.type === initialValues.type}
-                            />
-                            <BegrunnelseFooter spinner={false} disabled={values.type === initialValues.type} />
-                        </Form>
-                    </div>
+                    <Form>
+                        <Maltekstvelger />
+                        <BegrunnelseTextArea
+                            tekstariaLabel="Rediger teksten under slik at den passer."
+                            maxLength={5000}
+                            hidden={values.type === initialValues.type}
+                        />
+                        <BegrunnelseFooter spinner={false} disabled={values.type === initialValues.type} />
+                    </Form>
                 </div>
             )}
         />

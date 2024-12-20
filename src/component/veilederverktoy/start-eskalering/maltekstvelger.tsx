@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import { useFormikContext } from 'formik';
 import { Select } from '@navikt/ds-react';
-import './maltekstvelger.less';
+import './maltekstvelger.css';
 
 const telefonnummerNav = '55 55 33 33';
 
