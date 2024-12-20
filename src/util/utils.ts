@@ -33,10 +33,6 @@ export function storeForbokstaver(tekster: string[]): string {
         .join(' ');
 }
 
-export function isEmpty<Type>(array: undefined | Type[]): boolean {
-    return !array || array.length === 0;
-}
-
 export function erITestMiljo() {
     return window.location.hostname.indexOf('-q') >= 0 || window.location.hostname.indexOf('dev') >= 0;
 }

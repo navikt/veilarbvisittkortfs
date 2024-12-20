@@ -9,7 +9,7 @@ import {
 } from '../../../api/veilarbperson';
 import { OppfolgingStatus, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
-import { ifResponseHasData, isEmpty } from '../../../util/utils';
+import { ifResponseHasData } from '../../../util/utils';
 import { OrNothing, StringOrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
 
@@ -99,10 +99,8 @@ function Etiketter() {
             <Advarsel visible={!!personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>
             <Advarsel visible={!!personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
             <Advarsel visible={personalia?.egenAnsatt}>Skjermet</Advarsel>
-            <Fokus visible={!isEmpty(verge?.vergemaalEllerFremtidsfullmakt)}>Vergemål</Fokus>
-            <Fokus
-                visible={fullmakt && !isEmpty(fullmakt.fullmakt) && erFullmaktOmradeMedOppfolging(fullmakt.fullmakt)}
-            >
+            <Fokus visible={!!verge?.vergemaalEllerFremtidsfullmakt}>Vergemål</Fokus>
+            <Fokus visible={fullmakt && !!fullmakt.fullmakt && erFullmaktOmradeMedOppfolging(fullmakt.fullmakt)}>
                 Fullmakt
             </Fokus>
             <Fokus visible={!!spraakTolk?.tegnspraak}>Tegnspråktolk</Fokus>
