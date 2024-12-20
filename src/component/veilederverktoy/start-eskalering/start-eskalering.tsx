@@ -58,7 +58,7 @@ function StartEskalering() {
 
             eskaleringVarselSendtEvent();
             showStartEskaleringKvitteringModal();
-        } catch (_) {
+        } catch {
             showErrorModal();
         }
     }

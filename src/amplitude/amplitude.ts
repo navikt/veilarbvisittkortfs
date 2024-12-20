@@ -22,7 +22,7 @@ const maskereFodselsnummer = (data?: Record<string, unknown>) => {
 
     try {
         return JSON.parse(maskertObjekt);
-    } catch (e) {
+    } catch {
         // eslint-disable-next-line no-console
         console.error('kunne ikke maskere data korrekt før sending til amplitude');
     }
