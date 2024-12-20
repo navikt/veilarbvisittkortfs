@@ -5,7 +5,7 @@ function AvsluttOppfolgingKvittering() {
     logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt_oppfolging_bekreftet`);
     return (
         <Kvittering
-            tittel="Avslutt oppfølging fra NAV"
+            tittel="Avslutt oppfølging fra Nav"
             alertStripeTekst="Oppfølgingsperioden er nå avsluttet."
             onRequestClose={window.location.reload.bind(window.location)}
         />

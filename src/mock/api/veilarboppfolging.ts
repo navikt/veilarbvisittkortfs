@@ -136,7 +136,7 @@ const mockOppfolging: Oppfolging = {
 
 const mockOppfolgingsstatus: OppfolgingStatus = {
     oppfolgingsenhet: {
-        navn: 'NAV TestHeim',
+        navn: 'Nav TestHeim',
         enhetId: '007'
     },
     veilederId: mockInnloggetVeileder.ident,

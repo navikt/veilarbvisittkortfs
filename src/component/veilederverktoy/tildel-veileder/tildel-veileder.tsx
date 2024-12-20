@@ -139,7 +139,7 @@ function TildelVeileder() {
                     onSubmit={(event: FormEvent<HTMLFormElement>) => onSubmit(event)}
                     className="tildel-veileder__form"
                 >
-                    <SokFilter data={sorterteVeiledere} label="" placeholder="Søk navn eller NAV-ident">
+                    <SokFilter data={sorterteVeiledere} label="" placeholder="Søk navn eller Nav-ident">
                         {data => (
                             <RadioFilterForm
                                 data={data}

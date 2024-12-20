@@ -28,7 +28,7 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
     [Maler.DAGPENGER]: {
         tekstNedtrekksmeny: 'Dagpenger: Stans og tidsbegrenset bortfall.',
         maltekst:
-            'NAV vurderer å stanse dagpengene dine, eller stanse utbetalingene dine i en periode, fordi du ikke har fulgt opp pliktene dine som arbeidssøker.\n' +
+            'Nav vurderer å stanse dagpengene dine, eller stanse utbetalingene dine i en periode, fordi du ikke har fulgt opp pliktene dine som arbeidssøker.\n' +
             '\n' +
             '[Fyll inn en kort begrunnelse for varslet]\n' +
             '\n' +
@@ -43,7 +43,7 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
         maltekst:
             'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på meldingen.\n' +
             '\n' +
-            'Hvis du ikke følger opplæringsplanen din hos NAV, kan du miste retten til å få dagpenger mens du tar utdanning eller opplæring. Hvis du mister retten, kan du tidligst søke på nytt om å få dagpenger mens du tar utdanning eller opplæring 6 måneder etter at du mistet retten. Les mer i forskrift om dagpenger under arbeidsløshet § 4-3f.\n' +
+            'Hvis du ikke følger opplæringsplanen din hos Nav, kan du miste retten til å få dagpenger mens du tar utdanning eller opplæring. Hvis du mister retten, kan du tidligst søke på nytt om å få dagpenger mens du tar utdanning eller opplæring 6 måneder etter at du mistet retten. Les mer i forskrift om dagpenger under arbeidsløshet § 4-3f.\n' +
             '\n' +
             '[Fyll inn begrunnelse for varselet]\n' +
             '\n' +
@@ -65,7 +65,7 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
         maltekst:
             'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne meldingen.\n' +
             '\n' +
-            'Vi kan stanse arbeidsavklaringspengene dine dersom du ikke deltar på møter du blir kalt inn til hos NAV.\n' +
+            'Vi kan stanse arbeidsavklaringspengene dine dersom du ikke deltar på møter du blir kalt inn til hos Nav.\n' +
             '\n' +
             'Dette går fram av folketrygdloven §§ 11-7 og 11-8.\n' +
             '\n' +
@@ -115,7 +115,7 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
             '\n' +
             '[Begrunnelse for varselet. Skriv en kort oppsummering fra det tidspunktet brukeren fikk innvilget arbeidsavklaringspenger og vis til hva som har skjedd etterpå.]\n' +
             '\n' +
-            '[Vis videre til grunnlaget for at NAV ikke lenger mener at folketrygdloven §11-5 er oppfylt, for eksempel: «Vurderingen er basert på følgende kilder:\n' +
+            '[Vis videre til grunnlaget for at Nav ikke lenger mener at folketrygdloven §11-5 er oppfylt, for eksempel: «Vurderingen er basert på følgende kilder:\n' +
             '    - legeerklæring fra fastlegen din (dato)\n' +
             '    - rapport fra tiltaksarrangøren din (dato)]\n' +
             '\n' +
@@ -154,9 +154,9 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
             '\n' +
             '[Begrunnelse for varslet. Du må få frem hvilke aktiviteter eller plikter brukeren ikke har fulgt opp.]\n' +
             '\n' +
-            'For å ha rett til arbeidsavklaringspenger mens du søker jobb, må du være registrert som arbeidssøker hos NAV og være villig til å ta ethvert arbeid, både heltid eller deltid, hvor som helst i landet. Du må også delta på tiltak og komme til møter vi innkaller til.\n' +
+            'For å ha rett til arbeidsavklaringspenger mens du søker jobb, må du være registrert som arbeidssøker hos Nav og være villig til å ta ethvert arbeid, både heltid eller deltid, hvor som helst i landet. Du må også delta på tiltak og komme til møter vi innkaller til.\n' +
             '\n' +
-            'Hvis du ikke gjennomfører aktiviteten du og NAV har blitt enige om, kan vi stanse arbeidsavklaringspengene, eller stanse utbetalingene dine i en periode.\n' +
+            'Hvis du ikke gjennomfører aktiviteten du og Nav har blitt enige om, kan vi stanse arbeidsavklaringspengene, eller stanse utbetalingene dine i en periode.\n' +
             '\n' +
             'Dette går fram av folketrygdloven §§ 4-5, 4-20, 4-21, og 11-17.\n' +
             '\n' +
@@ -169,7 +169,7 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
         maltekst:
             'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne meldingen.\n' +
             '\n' +
-            'Kravene til deg som mottar overgangsstønad og er arbeidssøker går fram av folketrygdloven § 15-12 og § 15-6. Fordi du er en reell arbeidssøker krever vi at du skal ha minst 50 prosent med arbeidsrettede aktiviteter. Du må også aktivt søke arbeid og møte hos oss når vi har behov for å snakke med deg. Takker du nei til arbeid eller arbeidsmarkedstiltak eller ikke møter hos NAV etter at vi har kalt deg inn, kan du miste retten til overgangsstønad fra NAV i én måned. NAV kan også stanse overgangsstønaden din hvis du ikke lenger fyller aktivitetsplikten du har som reell arbeidssøker og ikke har rett til stønaden på andre vilkår.\n' +
+            'Kravene til deg som mottar overgangsstønad og er arbeidssøker går fram av folketrygdloven § 15-12 og § 15-6. Fordi du er en reell arbeidssøker krever vi at du skal ha minst 50 prosent med arbeidsrettede aktiviteter. Du må også aktivt søke arbeid og møte hos oss når vi har behov for å snakke med deg. Takker du nei til arbeid eller arbeidsmarkedstiltak eller ikke møter hos Nav etter at vi har kalt deg inn, kan du miste retten til overgangsstønad fra Nav i én måned. Nav kan også stanse overgangsstønaden din hvis du ikke lenger fyller aktivitetsplikten du har som reell arbeidssøker og ikke har rett til stønaden på andre vilkår.\n' +
             '\n' +
             '[Fyll inn begrunnelse for varslet]\n' +
             '\n' +

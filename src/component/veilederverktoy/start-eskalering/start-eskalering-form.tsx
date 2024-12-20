@@ -32,7 +32,7 @@ function StartEskaleringForm<T extends StartEskaleringValues>({
                     <BodyShort size="small" spacing={true}>
                         Når du sender forhåndsvarsel må du huske å være tydelig på hvilken oppgave som skal gjennomføre,
                         og hvilken frist personen får for tilbakemelding. Personen får en brukernotifikasjon på ditt nav
-                        med teksten: Viktig oppgave. NAV vurderer å stanse pengene dine. Se hva du må gjøre.
+                        med teksten: Viktig oppgave. Nav vurderer å stanse pengene dine. Se hva du må gjøre.
                     </BodyShort>
                     <BodyShort size="small" spacing={true}>
                         Ved å klikke på brukernotifikasjon, kommer personen direkte inn i riktig dialog der
