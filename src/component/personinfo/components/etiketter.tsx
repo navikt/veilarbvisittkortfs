@@ -93,10 +93,9 @@ function Etiketter() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr]);
 
-    const harVergemal =
-        verge?.vergemaalEllerFremtidsfullmakt !== undefined &&
-        verge?.vergemaalEllerFremtidsfullmakt !== null &&
-        verge?.vergemaalEllerFremtidsfullmakt.length > 0;
+    function isEmpty(array: undefined | unknown[]): boolean {
+        return !array || array.length === 0;
+    }
 
     return (
         <div className="etikett-container">
@@ -104,8 +103,10 @@ function Etiketter() {
             <Advarsel visible={!!personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>
             <Advarsel visible={!!personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
             <Advarsel visible={personalia?.egenAnsatt}>Skjermet</Advarsel>
-            <Fokus visible={harVergemal}>Vergemål</Fokus>
-            <Fokus visible={fullmakt && !!fullmakt.fullmakt && erFullmaktOmradeMedOppfolging(fullmakt.fullmakt)}>
+            <Fokus visible={!isEmpty(verge?.vergemaalEllerFremtidsfullmakt)}>Vergemål</Fokus>
+            <Fokus
+                visible={fullmakt && !isEmpty(fullmakt.fullmakt) && erFullmaktOmradeMedOppfolging(fullmakt.fullmakt)}
+            >
                 Fullmakt
             </Fokus>
             <Fokus visible={!!spraakTolk?.tegnspraak}>Tegnspråktolk</Fokus>
