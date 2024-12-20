@@ -205,7 +205,11 @@ function Maltekstvelger() {
         <Select label="Velg en mal" className="malvelger" size="small" onChange={onChange}>
             <option value="">Velg en mal</option>
             {Object.values(Maler).map(mal => {
-                return <option value={mal}>{maler[mal].tekstNedtrekksmeny}</option>;
+                return (
+                    <option value={mal} key={mal}>
+                        {maler[mal].tekstNedtrekksmeny}
+                    </option>
+                );
             })}
         </Select>
     );

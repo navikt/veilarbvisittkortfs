@@ -11,7 +11,6 @@ test('Formatterer norske telefonnummer riktig', () => {
 
     const forventa = '12 34 56 78';
 
-    // expect(formaterTelefonnummer(utenLandskode)).equals(forventa);
     expect(formaterTelefonnummer(utenLandskode)).equals(forventa);
     expect(formaterTelefonnummer(enkelLandskodeMedMellomrom)).equals(forventa);
     expect(formaterTelefonnummer(enkelLandskodeUtenMellomrom)).equals(forventa);
