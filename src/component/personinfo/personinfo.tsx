@@ -13,8 +13,8 @@ import { harTilgangTilHuskelappEllerFargekategori } from '../huskelapp/harTilgan
 import { useErUfordeltBruker } from '../../api/veilarbportefolje';
 import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 import { useModalStore } from '../../store/modal-store';
-import './personinfo.less';
 import { formaterTelefonnummer } from '../../util/formaterTelefonnummer';
+import './personinfo.less';
 
 function PersonInfo() {
     const { brukerFnr, visVeilederVerktoy } = useAppStore();

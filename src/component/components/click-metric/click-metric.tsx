@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any */ // TODO fiks any-ar i denne fila
 import { ComponentType } from 'react';
 import { logMetrikk } from '../../../util/logger';
 

@@ -3,7 +3,6 @@ import MannIkon from './mann.svg';
 
 interface Props {
     kjonn: string;
-    visible?: boolean;
 }
 
 export function KjonnIkon({ kjonn }: Props) {

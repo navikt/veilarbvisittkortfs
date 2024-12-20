@@ -2,7 +2,7 @@ import { expect, test } from 'vitest';
 import { formaterTelefonnummer } from './formaterTelefonnummer';
 
 test('Formatterer norske telefonnummer riktig', () => {
-    // const utenLandskode = '12 34 56 78';
+    const utenLandskode = '12345678';
     const enkelLandskodeMedMellomrom = '0047 12 34 56 78';
     const enkelLandskodeUtenMellomrom = '004712345678';
     const landskodeMedMellomrom = '+47 12 34 56 78';
@@ -12,6 +12,7 @@ test('Formatterer norske telefonnummer riktig', () => {
     const forventa = '12 34 56 78';
 
     // expect(formaterTelefonnummer(utenLandskode)).equals(forventa);
+    expect(formaterTelefonnummer(utenLandskode)).equals(forventa);
     expect(formaterTelefonnummer(enkelLandskodeMedMellomrom)).equals(forventa);
     expect(formaterTelefonnummer(enkelLandskodeUtenMellomrom)).equals(forventa);
     expect(formaterTelefonnummer(landskodeMedMellomrom)).equals(forventa);
@@ -20,7 +21,6 @@ test('Formatterer norske telefonnummer riktig', () => {
 });
 
 test('Formatterer andre telefonnummer riktig', () => {
-    // resultat per 2024-12-17 i kommentar bak konstanten
     const telefonnummerSverige = '+46 8 12345678';
     const forventetTelefonnummerSverige = '+4 68 12 34 56 78';
     const telefonnummerDanmark = '+45-12345678';
