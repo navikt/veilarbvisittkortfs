@@ -60,9 +60,7 @@ export function selectKanStoppeEskaleringsVarsel(
     return (
         tilgangTilBrukersKontor.tilgangTilBrukersKontor &&
         oppfolging.underOppfolging &&
-        gjeldendeEskaleringsvarsel != null &&
-        !oppfolging.reservasjonKRR &&
-        !oppfolging.manuell
+        gjeldendeEskaleringsvarsel != null
     );
 }
 
