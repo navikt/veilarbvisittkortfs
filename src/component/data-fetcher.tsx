@@ -27,6 +27,7 @@ export function DataFetcher({ children }: Props) {
         setSpraakTolk,
         setGjeldendeEskaleringsvarsel,
         setFullmakt,
+        setFeatures,
         features
     } = useDataStore();
 
