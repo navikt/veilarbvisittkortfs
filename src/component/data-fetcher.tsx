@@ -23,7 +23,6 @@ export function DataFetcher({ children }: Props) {
         setInnloggetVeileder,
         setPersonalia,
         setVeilederePaEnhet,
-        setFeatures,
         setVerge,
         setSpraakTolk,
         setGjeldendeEskaleringsvarsel,
@@ -78,8 +77,7 @@ export function DataFetcher({ children }: Props) {
         isAnyLoadingOrNotStarted(
             oppfolgingFetcher,
             innloggetVeilederFetcher,
-            personaliaFetcher,
-            featureToggleFetcher
+            personaliaFetcher
             // trenger ikke vente på vergeOgFullmaktFetcher eller spraakTolkFetcher
         )
     ) {

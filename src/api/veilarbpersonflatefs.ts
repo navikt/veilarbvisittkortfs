@@ -1,13 +1,11 @@
 import { AxiosPromise } from 'axios';
 import { axiosInstance } from './utils';
 
-export const BRUK_GAMMEL_ARBEIDSREGISTRERING_URL = 'veilarbvisitkortfs.bruk-gammel-arbeidsregistrering-url';
 export const VIS_NY_INNGANG = 'veilarbvisitkortfs.vis-ny-inngang';
 
-export const ALL_TOGGLES = [BRUK_GAMMEL_ARBEIDSREGISTRERING_URL];
+export const ALL_TOGGLES = [VIS_NY_INNGANG];
 
 export interface OboUnleashFeatures {
-    [BRUK_GAMMEL_ARBEIDSREGISTRERING_URL]: boolean;
     [VIS_NY_INNGANG]: boolean;
 }
 
