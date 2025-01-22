@@ -44,18 +44,30 @@ function HuskelappRedigereModal() {
     const navn = selectSammensattNavn(personalia);
 
     function onRequestClose(formikProps: FormikProps<HuskelappformValues>) {
-        const dialogTekst = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
-        if (!formikProps.dirty || window.confirm(dialogTekst)) {
-            hideModal();
-            logMetrikk('veilarbvisittkortfs.metrikker.huskelapp.avbryt');
-            formikProps.resetForm();
+        hideModal();
+        logMetrikk('veilarbvisittkortfs.metrikker.huskelapp.avbryt');
+        formikProps.resetForm();
+    }
+
+    function handleHuskelappEndret(formikProps: FormikProps<HuskelappformValues>) {
+        if (formikProps.dirty) {
+            return window.confirm(
+                'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?'
+            );
         }
+        return true;
     }
 
     function endretAv(huskelapp: Huskelapp | undefined): string {
         if (huskelapp?.endretAv && huskelapp?.endretAv?.length > 0)
             return `Endret ${toSimpleDateStr(huskelapp?.endretDato?.toString())} av ${huskelapp?.endretAv}`;
         return '';
+    }
+
+    function onAvbryt(formikProps: FormikProps<HuskelappformValues>) {
+        if (handleHuskelappEndret(formikProps)) {
+            onRequestClose(formikProps);
+        }
     }
 
     function handleSubmit(
@@ -137,6 +149,7 @@ function HuskelappRedigereModal() {
                 <Modal
                     open={true}
                     onClose={() => onRequestClose(formikProps)}
+                    onBeforeClose={() => handleHuskelappEndret(formikProps)}
                     closeOnBackdropClick={true}
                     className="rediger-huskelapp-modal"
                     aria-labelledby={'rediger-huskelapp-modal__overskrift'}
@@ -173,12 +186,7 @@ function HuskelappRedigereModal() {
                         <Button size="small" variant="primary" form="huskelapp-form" type="submit">
                             Lagre
                         </Button>
-                        <Button
-                            size="small"
-                            variant="secondary"
-                            type="button"
-                            onClick={() => onRequestClose(formikProps)}
-                        >
+                        <Button size="small" variant="secondary" type="button" onClick={() => onAvbryt(formikProps)}>
                             Avbryt
                         </Button>
                         {harHuskelapp && <SlettHuskelapp variant="tertiary" />}

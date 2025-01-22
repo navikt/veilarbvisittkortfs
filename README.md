@@ -21,7 +21,7 @@ For å kunne hente ned @navikt-pakker må du legge til en `.npmrc` fil i homemap
 
 Spørsmål knyttet til koden eller prosjektet kan stilles ved å opprette en issue.
 
-## For NAV-ansatte
+## For Nav-ansatte
 
 Interne henvendelser kan sendes via Slack i kanalen #team-obo-poao
 

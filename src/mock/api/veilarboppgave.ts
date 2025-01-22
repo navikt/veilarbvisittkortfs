@@ -4,10 +4,10 @@ import { defaultNetworkResponseDelay } from '../config';
 import { delay, http, HttpResponse, RequestHandler } from 'msw';
 
 const mockEnheter = [
-    { enhetId: '0000', navn: 'NAV Ost' },
-    { enhetId: '0001', navn: 'NAV Kjeks' },
-    { enhetId: '0002', navn: 'NAV Med jætte lang navn' },
-    { enhetId: '1234', navn: 'NAV jepps' }
+    { enhetId: '0000', navn: 'Nav Ost' },
+    { enhetId: '0001', navn: 'Nav Kjeks' },
+    { enhetId: '0002', navn: 'Nav Med jætte lang navn' },
+    { enhetId: '1234', navn: 'Nav jepps' }
 ];
 
 const mockOppgavehistorikk: OppgaveHistorikkInnslag[] = [

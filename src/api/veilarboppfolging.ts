@@ -76,6 +76,7 @@ export interface TilgangTilBrukersKontor {
 export type InnstillingsHistorikkType =
     | 'SATT_TIL_DIGITAL'
     | 'SATT_TIL_MANUELL'
+    | 'STARTET_OPPFOLGINGSPERIODE'
     | 'AVSLUTTET_OPPFOLGINGSPERIODE'
     | 'KVP_STARTET'
     | 'KVP_STOPPET'

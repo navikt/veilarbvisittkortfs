@@ -5,7 +5,7 @@ import { delay, http, HttpResponse, RequestHandler } from 'msw';
 
 const mockEnhetData: EnhetData = {
     enhetId: '1337',
-    navn: 'NAV Leeten'
+    navn: 'Nav Leeten'
 };
 
 export const mockInnloggetVeileder: VeilederData = {
