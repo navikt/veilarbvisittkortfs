@@ -24,6 +24,8 @@ import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veil
 import withClickMetric from '../components/click-metric/click-metric';
 import './veilederverktoy.less';
 import { StartArbeidsoppfolgingKnapp } from './start-arbeidsoppfolging/start-arbeidsoppfolging-knapp';
+import { fetchFeaturesFromOboUnleash, VIS_NY_INNGANG } from '../../api/veilarbpersonflatefs';
+import { useAxiosFetcher } from '../../util/hook/use-axios-fetcher';
 
 const ButtonWithClickMetric = withClickMetric(Button);
 
@@ -36,6 +38,8 @@ export const Veilederverktoy = () => {
         visVeilederVerktoy && oppfolging?.underOppfolging
     );
     const { data: tilgangTilBrukersKontor } = useTilgangTilBrukersKontor(brukerFnr);
+    const toggles = useAxiosFetcher(fetchFeaturesFromOboUnleash);
+    const visNyInngang = toggles.data?.[VIS_NY_INNGANG] || false;
 
     const {
         showTildelVeilederModal,
@@ -140,7 +144,7 @@ export const Veilederverktoy = () => {
                             metricName="deaktiver_esklaring"
                         />
                     )}
-                    {kanStarteArbeidsoppfolging ? <StartArbeidsoppfolgingKnapp /> : null}
+                    {visNyInngang && kanStarteArbeidsoppfolging ? <StartArbeidsoppfolgingKnapp /> : null}
                     {kanRegistrere && <StartArbeidssokerRegistreringKnapp />}
                     {kanStarteManuellOppfolging && (
                         <StartProsessKnapp

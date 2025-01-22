@@ -9,7 +9,7 @@ import { ifResponseHasData } from '../util/utils';
 import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
 import { isAnyLoadingOrNotStarted } from '../api/utils';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
-import { useFetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
+import { fetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 import './data-fetcher.less';
 
 interface Props {
@@ -33,7 +33,7 @@ export function DataFetcher({ children }: Props) {
 
     const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
     const innloggetVeilederFetcher = useAxiosFetcher(fetchInnloggetVeileder);
-    const featureToggleFetcher = useAxiosFetcher(useFetchFeaturesFromOboUnleash);
+    const featureToggleFetcher = useAxiosFetcher(fetchFeaturesFromOboUnleash);
     const personaliaFetcher = useAxiosFetcher(fetchPersonalia);
     const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
     const vergeFetcher = useAxiosFetcher(fetchVerge);

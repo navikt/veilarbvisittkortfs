@@ -178,12 +178,3 @@ export function useTilgangTilBrukersKontor(fnr: string) {
     );
     return { data, isLoading, error };
 }
-
-interface StartArbeidsoppfolgingPayload {
-    fnr: string;
-    henviserSystem: 'DEMO';
-}
-export const startArbeidsoppfolgingUrl = '/veilarboppfolging/api/v3/oppfolging/startOppfolgingsperiode';
-export const startArbeidsoppfolging = (url: string, config: { arg: StartArbeidsoppfolgingPayload }): Promise<void> => {
-    return axiosInstance.post(url, { fnr: config.arg.fnr, henviserSystem: config.arg.henviserSystem });
-};

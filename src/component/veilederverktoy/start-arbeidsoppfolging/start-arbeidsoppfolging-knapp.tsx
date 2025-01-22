@@ -1,23 +1,23 @@
 import { Dropdown } from '@navikt/ds-react';
-import useSWRMutation from 'swr/mutation';
-import { startArbeidsoppfolging, startArbeidsoppfolgingUrl } from '../../../api/veilarboppfolging';
-import { useAppStore } from '../../../store/app-store';
+import { EnvType, getEnv } from '../../../util/envUtil';
+
+const env = getEnv();
+const startArbeidsoppfolgingUrl: Record<`${EnvType}-${'ansatt' | 'intern'}`, string> = {
+    [`${EnvType.prod}-ansatt`]: '??',
+    [`${EnvType.dev}-ansatt`]: 'start-arbeidsoppfolging.ansatt.dev.nav.no',
+    [`${EnvType.local}-ansatt`]: 'inngar.intern.dev.nav.no',
+    [`${EnvType.prod}-intern`]: '??',
+    [`${EnvType.dev}-intern`]: 'inngar.intern.dev.nav.no',
+    [`${EnvType.local}-intern`]: 'inngar.intern.dev.nav.no'
+};
+const url = startArbeidsoppfolgingUrl[`${env.type}-${env.ingressType}`];
 
 export const StartArbeidsoppfolgingKnapp = () => {
-    const { brukerFnr } = useAppStore();
-    const { isMutating, trigger: postStartOppfolging } = useSWRMutation(
-        startArbeidsoppfolgingUrl,
-        startArbeidsoppfolging
-    );
-    const onStartArbeidsoppfolging = () => {
-        return postStartOppfolging({ fnr: brukerFnr, henviserSystem: 'DEMO' });
-    };
-
     return (
         <Dropdown.Menu.List.Item
-            disabled={isMutating}
+            as="a"
+            href={url}
             onClick={() => {
-                onStartArbeidsoppfolging();
                 // logMetrikk('veilarbvisittkortfs.metrikker.registrering', {}, { brukerType: brukerType });
             }}
         >
