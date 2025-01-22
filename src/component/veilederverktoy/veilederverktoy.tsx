@@ -23,26 +23,21 @@ import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veil
 import withClickMetric from '../components/click-metric/click-metric';
 import './veilederverktoy.less';
 import { StartArbeidsoppfolgingKnapp } from './start-arbeidsoppfolging/start-arbeidsoppfolging-knapp';
-import {
-    fetchFeaturesFromOboUnleash,
-    VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING
-} from '../../api/veilarbpersonflatefs';
-import { useAxiosFetcher } from '../../util/hook/use-axios-fetcher';
+import { VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING } from '../../api/veilarbpersonflatefs';
 import { StartArbeidssokerRegistreringKnapp } from './start-arbeidssoker-registrering/start-arbeidssoker-registrering-knapp';
 
 const ButtonWithClickMetric = withClickMetric(Button);
 
 export const Veilederverktoy = () => {
     const { visVeilederVerktoy, brukerFnr } = useAppStore();
-    const { oppfolging, gjeldendeEskaleringsvarsel } = useDataStore();
+    const { oppfolging, gjeldendeEskaleringsvarsel, features } = useDataStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { data: erUfordeltBruker } = useErUfordeltBruker(
         brukerFnr,
         visVeilederVerktoy && oppfolging?.underOppfolging
     );
     const { data: tilgangTilBrukersKontor } = useTilgangTilBrukersKontor(brukerFnr);
-    const toggles = useAxiosFetcher(fetchFeaturesFromOboUnleash);
-    const visNyInngang = toggles.data?.[VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING] || false;
+    const visNyInngang = features?.[VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING] || false;
 
     const {
         showTildelVeilederModal,
