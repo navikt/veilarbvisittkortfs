@@ -4,9 +4,6 @@ import { Oppfolging } from '../api/veilarboppfolging';
 import { HarBruktNivaa4Type, Personalia, FullmaktDTO, SpraakTolk, Verge } from '../api/veilarbperson';
 import { VeilederData, VeilederListe } from '../api/veilarbveileder';
 import { GjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
-import { OboUnleashFeatures } from '../api/veilarbpersonflatefs';
-
-const placeholder = {} as any; // eslint-disable-line
 
 export const [DataStore, useDataStore] = constate(() => {
     const [oppfolging, setOppfolging] = useState<Oppfolging>();
@@ -16,7 +13,6 @@ export const [DataStore, useDataStore] = constate(() => {
     const [fullmakt, setFullmakt] = useState<FullmaktDTO>();
     const [spraakTolk, setSpraakTolk] = useState<SpraakTolk>();
     const [harBruktNivaa4, setHarBruktNivaa4] = useState<HarBruktNivaa4Type>();
-    const [features, setFeatures] = useState<OboUnleashFeatures>(placeholder);
     const [veilederePaEnhet, setVeilederePaEnhet] = useState<VeilederListe>();
     const [gjeldendeEskaleringsvarsel, setGjeldendeEskaleringsvarsel] = useState<GjeldendeEskaleringsvarsel | null>(
         null
@@ -32,8 +28,6 @@ export const [DataStore, useDataStore] = constate(() => {
         setPersonalia,
         harBruktNivaa4,
         setHarBruktNivaa4,
-        features,
-        setFeatures,
         veilederePaEnhet,
         setVeilederePaEnhet,
         verge,
