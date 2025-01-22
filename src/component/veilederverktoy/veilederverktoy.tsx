@@ -23,9 +23,12 @@ import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veil
 import withClickMetric from '../components/click-metric/click-metric';
 import './veilederverktoy.less';
 import { StartArbeidsoppfolgingKnapp } from './start-arbeidsoppfolging/start-arbeidsoppfolging-knapp';
-import { fetchFeaturesFromOboUnleash, VIS_NY_INNGANG } from '../../api/veilarbpersonflatefs';
+import {
+    fetchFeaturesFromOboUnleash,
+    VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING
+} from '../../api/veilarbpersonflatefs';
 import { useAxiosFetcher } from '../../util/hook/use-axios-fetcher';
-import { StartRegistreringProsess } from './start-arbeidssoker-registrering/start-arbeidssoker-registrering-knapp';
+import { StartArbeidssokerRegistreringKnapp } from './start-arbeidssoker-registrering/start-arbeidssoker-registrering-knapp';
 
 const ButtonWithClickMetric = withClickMetric(Button);
 
@@ -39,7 +42,7 @@ export const Veilederverktoy = () => {
     );
     const { data: tilgangTilBrukersKontor } = useTilgangTilBrukersKontor(brukerFnr);
     const toggles = useAxiosFetcher(fetchFeaturesFromOboUnleash);
-    const visNyInngang = toggles.data?.[VIS_NY_INNGANG] || false;
+    const visNyInngang = toggles.data?.[VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING] || false;
 
     const {
         showTildelVeilederModal,
@@ -145,7 +148,7 @@ export const Veilederverktoy = () => {
                         />
                     )}
                     {visNyInngang && kanStarteArbeidsoppfolging ? <StartArbeidsoppfolgingKnapp /> : null}
-                    {kanRegistrere && <StartRegistreringProsess />}
+                    {kanRegistrere && <StartArbeidssokerRegistreringKnapp />}
                     {kanStarteManuellOppfolging && (
                         <StartProsessKnapp
                             knappeTekst="Endre til manuell oppfølging"

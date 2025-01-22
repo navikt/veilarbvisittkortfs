@@ -11,7 +11,7 @@ function byggRegistreringUrl() {
         : `https://arbeidssokerregistrering-for-veileder.intern.nav.no/`;
 }
 
-export const StartRegistreringProsess = () => {
+export const StartArbeidssokerRegistreringKnapp = () => {
     const { oppfolging } = useDataStore();
 
     const kanRegistreres = kanRegistreresEllerReaktiveres(oppfolging);

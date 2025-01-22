@@ -14,13 +14,7 @@ const url = startArbeidsoppfolgingUrl[`${env.type}-${env.ingressType}`];
 
 export const StartArbeidsoppfolgingKnapp = () => {
     return (
-        <Dropdown.Menu.List.Item
-            as="a"
-            href={url}
-            onClick={() => {
-                // logMetrikk('veilarbvisittkortfs.metrikker.registrering', {}, { brukerType: brukerType });
-            }}
-        >
+        <Dropdown.Menu.List.Item as="a" href={url}>
             {'Start arbeidsoppfølging'}
         </Dropdown.Menu.List.Item>
     );
