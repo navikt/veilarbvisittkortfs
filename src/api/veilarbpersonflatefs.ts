@@ -2,7 +2,7 @@ import { AxiosPromise } from 'axios';
 import { axiosInstance } from './utils';
 
 export const VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING =
-    'veilarbvisitkortfs.vis-ny-inngang-til-arbeidsrettet-oppfolging ';
+    'veilarbvisitkortfs.vis-ny-inngang-til-arbeidsrettet-oppfolging';
 
 export const ALL_TOGGLES = [VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING];
 
