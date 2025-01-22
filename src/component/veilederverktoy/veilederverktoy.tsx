@@ -1,6 +1,5 @@
 import { Button, Dropdown } from '@navikt/ds-react';
 import { CogIcon } from '@navikt/aksel-icons';
-import { StartArbeidssokerRegistreringKnapp } from './start-arbeidssoker-registrering/start-arbeidssoker-registrering-knapp';
 import { StartProsessKnapp } from './prosess/start-prosess-knapp';
 import { useAppStore } from '../../store/app-store';
 import { useModalStore } from '../../store/modal-store';
@@ -26,6 +25,7 @@ import './veilederverktoy.less';
 import { StartArbeidsoppfolgingKnapp } from './start-arbeidsoppfolging/start-arbeidsoppfolging-knapp';
 import { fetchFeaturesFromOboUnleash, VIS_NY_INNGANG } from '../../api/veilarbpersonflatefs';
 import { useAxiosFetcher } from '../../util/hook/use-axios-fetcher';
+import { StartRegistreringProsess } from './start-arbeidssoker-registrering/start-arbeidssoker-registrering-knapp';
 
 const ButtonWithClickMetric = withClickMetric(Button);
 
@@ -145,7 +145,7 @@ export const Veilederverktoy = () => {
                         />
                     )}
                     {visNyInngang && kanStarteArbeidsoppfolging ? <StartArbeidsoppfolgingKnapp /> : null}
-                    {kanRegistrere && <StartArbeidssokerRegistreringKnapp />}
+                    {kanRegistrere && <StartRegistreringProsess />}
                     {kanStarteManuellOppfolging && (
                         <StartProsessKnapp
                             knappeTekst="Endre til manuell oppfølging"
