@@ -9,6 +9,7 @@ import { ifResponseHasData } from '../util/utils';
 import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
 import { isAnyLoadingOrNotStarted } from '../api/utils';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
+import { fetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 import './data-fetcher.less';
 
 interface Props {
@@ -25,11 +26,14 @@ export function DataFetcher({ children }: Props) {
         setVerge,
         setSpraakTolk,
         setGjeldendeEskaleringsvarsel,
-        setFullmakt
+        setFullmakt,
+        setFeatures,
+        features
     } = useDataStore();
 
     const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
     const innloggetVeilederFetcher = useAxiosFetcher(fetchInnloggetVeileder);
+    const featureToggleFetcher = useAxiosFetcher(fetchFeaturesFromOboUnleash);
     const personaliaFetcher = useAxiosFetcher(fetchPersonalia);
     const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
     const vergeFetcher = useAxiosFetcher(fetchVerge);
@@ -54,10 +58,11 @@ export function DataFetcher({ children }: Props) {
         spraakTolkFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setSpraakTolk)).catch();
         personaliaFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setPersonalia)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [brukerFnr, visVeilederVerktoy]);
+    }, [brukerFnr, visVeilederVerktoy, features]);
 
     useEffect(() => {
         innloggetVeilederFetcher.fetch().then(ifResponseHasData(setInnloggetVeileder)).catch();
+        featureToggleFetcher.fetch().then(ifResponseHasData(setFeatures)).catch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
