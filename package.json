@@ -32,9 +32,9 @@
     },
     "dependencies": {
         "@amplitude/analytics-browser": "2.11.7",
-        "@navikt/aksel-icons": "6.16.2",
-        "@navikt/ds-css": "6.16.2",
-        "@navikt/ds-react": "6.16.2",
+        "@navikt/aksel-icons": "6.17.0",
+        "@navikt/ds-css": "6.17.0",
+        "@navikt/ds-react": "6.17.0",
         "@navikt/navspa": "6.1.1",
         "axios": "1.7.9",
         "classnames": "2.5.1",
