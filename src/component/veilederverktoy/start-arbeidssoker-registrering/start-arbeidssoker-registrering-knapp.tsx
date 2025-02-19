@@ -27,7 +27,7 @@ export const StartArbeidssokerRegistreringKnapp = () => {
             case 'kanReaktiveres':
                 return 'Reaktiver arbeidssøker';
             case 'kanIkkeReaktiveres':
-                return 'Registrer person';
+                return 'Registrer arbeidssøker';
             default:
                 return null;
         }

@@ -15,7 +15,7 @@ const url = startArbeidsoppfolgingUrl[`${env.type}-${env.ingressType}`];
 export const StartArbeidsoppfolgingKnapp = () => {
     return (
         <Dropdown.Menu.List.Item as="a" href={url}>
-            {'Start arbeidsoppfølging'}
+            {'Start arbeidsrettet oppfølging'}
         </Dropdown.Menu.List.Item>
     );
 };
