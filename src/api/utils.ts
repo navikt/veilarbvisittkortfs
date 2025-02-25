@@ -50,8 +50,26 @@ export const createPOSToptions = (event: RequestTypes) => ({
     }
 });
 
+const GETOptions = {
+    method: 'GET',
+    headers: {
+        'Nav-Consumer-Id': APP_NAME,
+        Accept: 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8'
+    }
+};
+
 export const fetchWithPost = async (url: string, requestBody: RequestTypes) => {
     const respons = await fetch(url, createPOSToptions(requestBody));
+    return handleResponse(respons);
+};
+
+export const get = async (url: string) => {
+    const respons = await fetch(url, GETOptions);
+    return handleResponse(respons);
+};
+
+const handleResponse = async (respons: Response) => {
     if (respons.status >= 400) {
         throw {
             error: new Error('Det har skjedd en feil ved henting av data.'),
@@ -65,7 +83,15 @@ export const fetchWithPost = async (url: string, requestBody: RequestTypes) => {
         };
     }
 
-    return respons.text().then(res => (!res ? null : JSON.parse(res)));
+    try {
+        return await respons.text().then(res => (!res ? null : JSON.parse(res)));
+    } catch (err) {
+        return {
+            error: err,
+            status: null,
+            info: null
+        };
+    }
 };
 
 export const swrOptions = {

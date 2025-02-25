@@ -1,17 +1,11 @@
-import { useEffect, useState } from 'react';
 import { useDataStore } from '../../../store/data-store';
 import { useAppStore } from '../../../store/app-store';
 import './etiketter.less';
-import {
-    fetchProfileringFraArbeidssoekerregisteret,
-    FullmaktData,
-    OpplysningerOmArbeidssoekerMedProfilering
-} from '../../../api/veilarbperson';
+import { FullmaktData, useOpplysningerOmArbeidssokerMedProfilering } from '../../../api/veilarbperson';
 import { OppfolgingStatus, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
-import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
-import { ifResponseHasData } from '../../../util/utils';
-import { OrNothing, StringOrNothing } from '../../../util/type/utility-types';
+import { OrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
+import { useErUtrullet } from '../../../api/veilarbvedtaksstotte';
 
 interface Etikettprops extends Omit<TagProps, 'variant'> {
     visible: boolean | undefined;
@@ -77,21 +71,9 @@ function Etiketter() {
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { gjeldendeEskaleringsvarsel, oppfolging, personalia, verge, fullmakt, spraakTolk } = useDataStore();
 
-    const [profilering, setProfilering] = useState<StringOrNothing>(null);
-
-    const profileringFetcher = useAxiosFetcher(fetchProfileringFraArbeidssoekerregisteret);
-
-    const pilot_toggle = false;
-    useEffect(() => {
-        if (brukerFnr && pilot_toggle) {
-            profileringFetcher.fetch(brukerFnr).then(
-                ifResponseHasData((data: OpplysningerOmArbeidssoekerMedProfilering) => {
-                    setProfilering(data.profilering?.profilertTil);
-                })
-            );
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [brukerFnr]);
+    const { data: erUtrullet } = useErUtrullet(oppfolgingsstatus?.oppfolgingsenhet?.enhetId as string | undefined);
+    const { data: opplysningerOmArbeidssoeker, isLoading: opplysningerOmArbeidssoekerLoading } =
+        useOpplysningerOmArbeidssokerMedProfilering(brukerFnr, erUtrullet);
 
     function isEmpty(array: undefined | unknown[]): boolean {
         return !array || array.length === 0;
@@ -143,16 +125,50 @@ function Etiketter() {
             >
                 Ikke registrert KRR
             </Fokus>
-            <Info visible={trengerVurdering(oppfolgingsstatus) && !profilering}>Trenger vurdering</Info>
-            <Info visible={trengerAEV(oppfolgingsstatus) && !profilering}>Behov for AEV</Info>
+            <Info
+                visible={
+                    trengerVurdering(oppfolgingsstatus) &&
+                    !opplysningerOmArbeidssoekerLoading &&
+                    !opplysningerOmArbeidssoeker?.profilering?.profilertTil
+                }
+            >
+                Trenger vurdering
+            </Info>
+            <Info
+                visible={
+                    trengerAEV(oppfolgingsstatus) &&
+                    !opplysningerOmArbeidssoekerLoading &&
+                    !opplysningerOmArbeidssoeker?.profilering?.profilertTil
+                }
+            >
+                Behov for AEV
+            </Info>
             <Info visible={erBrukerSykmeldt(oppfolgingsstatus)}>Sykmeldt</Info>
-            <Info visible={profilering === 'ANTATT_GODE_MULIGHETER' && manglerVedtak(oppfolgingsstatus)}>
+            <Info
+                visible={
+                    !opplysningerOmArbeidssoekerLoading &&
+                    opplysningerOmArbeidssoeker?.profilering?.profilertTil === 'ANTATT_GODE_MULIGHETER' &&
+                    manglerVedtak(oppfolgingsstatus)
+                }
+            >
                 Antatt gode muligheter
             </Info>
-            <Info visible={profilering === 'ANTATT_BEHOV_FOR_VEILEDNING' && manglerVedtak(oppfolgingsstatus)}>
+            <Info
+                visible={
+                    !opplysningerOmArbeidssoekerLoading &&
+                    opplysningerOmArbeidssoeker?.profilering?.profilertTil === 'ANTATT_BEHOV_FOR_VEILEDNING' &&
+                    manglerVedtak(oppfolgingsstatus)
+                }
+            >
                 Antatt behov for veiledning
             </Info>
-            <Info visible={profilering === 'OPPGITT_HINDRINGER' && manglerVedtak(oppfolgingsstatus)}>
+            <Info
+                visible={
+                    !opplysningerOmArbeidssoekerLoading &&
+                    opplysningerOmArbeidssoeker?.profilering?.profilertTil === 'OPPGITT_HINDRINGER' &&
+                    manglerVedtak(oppfolgingsstatus)
+                }
+            >
                 Oppgitt hindringer
             </Info>
         </div>
