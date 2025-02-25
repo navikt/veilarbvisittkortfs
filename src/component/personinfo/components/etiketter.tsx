@@ -12,6 +12,7 @@ import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { ifResponseHasData } from '../../../util/utils';
 import { OrNothing, StringOrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
+import { useErUtrullet } from '../../../api/veilarbvedtaksstotte';
 
 interface Etikettprops extends Omit<TagProps, 'variant'> {
     visible: boolean | undefined;
@@ -78,12 +79,12 @@ function Etiketter() {
     const { gjeldendeEskaleringsvarsel, oppfolging, personalia, verge, fullmakt, spraakTolk } = useDataStore();
 
     const [profilering, setProfilering] = useState<StringOrNothing>(null);
+    const { data: erUtrullet } = useErUtrullet(oppfolgingsstatus?.oppfolgingsenhet?.enhetId as string | undefined);
 
     const profileringFetcher = useAxiosFetcher(fetchProfileringFraArbeidssoekerregisteret);
 
-    const pilot_toggle = false;
     useEffect(() => {
-        if (brukerFnr && pilot_toggle) {
+        if (brukerFnr && erUtrullet) {
             profileringFetcher.fetch(brukerFnr).then(
                 ifResponseHasData((data: OpplysningerOmArbeidssoekerMedProfilering) => {
                     setProfilering(data.profilering?.profilertTil);

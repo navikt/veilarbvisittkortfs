@@ -9,25 +9,27 @@ import { selectHarUbehandledeDialoger } from '../../../util/selectors';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { fetchDialoger } from '../../../api/veilarbdialog';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
-import { fetchAvsluttOppfolgingStatus } from '../../../api/veilarboppfolging';
+import { fetchAvsluttOppfolgingStatus, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
 import { isAnyLoading } from '../../../api/utils';
 import { logMetrikk } from '../../../util/logger';
-import { fetchErUtrullet } from '../../../api/veilarbvedtaksstotte';
+import { useErUtrullet } from '../../../api/veilarbvedtaksstotte';
 
 const for28dagerSiden = dayjs().subtract(28, 'day').toISOString();
 
 function AvsluttOppfolging() {
-    const { brukerFnr, avsluttOppfolgingOpptelt, setAvsluttOppfolgingOpptelt, enhetId } = useAppStore();
+    const { brukerFnr, avsluttOppfolgingOpptelt, setAvsluttOppfolgingOpptelt } = useAppStore();
     const { showtAvsluttOppfolgingBekrefModal: showAvsluttOppfolgingBekrefModal, hideModal } = useModalStore();
 
     const avsluttOppfolgingFetcher = useAxiosFetcher(fetchAvsluttOppfolgingStatus);
     const dialogFetcher = useAxiosFetcher(fetchDialoger);
-    const erUtrulletFetcher = useAxiosFetcher(fetchErUtrullet);
+    const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
+    const { data: erUtrullet, isLoading: erUtrulletLoading } = useErUtrullet(
+        oppfolgingsstatus?.oppfolgingsenhet?.enhetId as string | undefined
+    );
 
     const avslutningStatus = avsluttOppfolgingFetcher.data;
     const datoErInnenFor28DagerSiden = (avslutningStatus?.inaktiveringsDato || 0) > for28dagerSiden;
     const harUbehandledeDialoger = dialogFetcher.data ? selectHarUbehandledeDialoger(dialogFetcher.data) : false;
-    const nyVedtakslosningUtrullet = erUtrulletFetcher.data ?? false;
 
     function handleSubmitAvsluttOppfolging(values: BegrunnelseValues) {
         showAvsluttOppfolgingBekrefModal({ begrunnelse: values.begrunnelse });
@@ -39,14 +41,7 @@ function AvsluttOppfolging() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr]);
 
-    useEffect(() => {
-        if (enhetId) {
-            erUtrulletFetcher.fetch(enhetId);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [enhetId]);
-
-    if (isAnyLoading(dialogFetcher, avsluttOppfolgingFetcher, erUtrulletFetcher)) {
+    if (isAnyLoading(dialogFetcher, avsluttOppfolgingFetcher) || erUtrulletLoading) {
         return <LasterModal />;
     }
 
@@ -81,7 +76,7 @@ function AvsluttOppfolging() {
             tittel="Avslutt oppfølgingsperioden"
             infoTekst={
                 <AvsluttOppfolgingInfoText
-                    visVarselDersom14aUtkastEksisterer={nyVedtakslosningUtrullet}
+                    visVarselDersom14aUtkastEksisterer={erUtrullet ?? false}
                     datoErInnenFor28DagerSiden={datoErInnenFor28DagerSiden}
                     harUbehandledeDialoger={harUbehandledeDialoger}
                     fnr={brukerFnr}
