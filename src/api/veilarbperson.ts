@@ -1,7 +1,8 @@
 import { AxiosPromise } from 'axios';
-import { axiosInstance } from './utils';
+import { axiosInstance, ErrorMessage, fetchWithPost, swrOptions } from './utils';
 import { FrontendEvent } from '../util/logger';
 import { StringOrNothing } from '../util/type/utility-types';
+import useSWR from 'swr';
 
 export interface Personalia {
     fornavn: string;
@@ -113,6 +114,7 @@ export type Profilering = {
     alder: number;
 };
 export interface OpplysningerOmArbeidssoekerMedProfilering {
+    arbeidssoekerperiodeStartet: string;
     profilering: Profilering;
 }
 
@@ -148,14 +150,12 @@ export function fetchHarNivaa4(fnr: string): AxiosPromise<HarBruktNivaa4Type> {
     return axiosInstance.get<HarBruktNivaa4Type>(`/veilarbperson/api/person/${fnr}/harNivaa4`);
 }
 
-export function fetchProfileringFraArbeidssoekerregisteret(
-    fnr: string
-): AxiosPromise<OpplysningerOmArbeidssoekerMedProfilering> {
-    return axiosInstance.post<OpplysningerOmArbeidssoekerMedProfilering>(
-        `/veilarbperson/api/v3/person/hent-siste-opplysninger-om-arbeidssoeker-med-profilering`,
-        {
-            fnr: fnr
-        } as PersonRequest
+export function useOpplysningerOmArbeidssokerMedProfilering(fnr: string, hentData: boolean = true) {
+    const url = '/veilarbperson/api/v3/person/hent-siste-opplysninger-om-arbeidssoeker-med-profilering';
+    return useSWR<OpplysningerOmArbeidssoekerMedProfilering, ErrorMessage>(
+        hentData ? url : null,
+        () => fetchWithPost(url, { fnr }),
+        swrOptions
     );
 }
 

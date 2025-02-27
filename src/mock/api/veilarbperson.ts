@@ -114,6 +114,7 @@ const mockSpraakTolk: SpraakTolk = {
 };
 
 const mockProfileringFraArbeidssoekerregisteret: OpplysningerOmArbeidssoekerMedProfilering = {
+    arbeidssoekerperiodeStartet: '2021-03-02T13:00:42',
     profilering: {
         profileringId: 'profilering-id-123',
         periodeId: 'periode-id-123',

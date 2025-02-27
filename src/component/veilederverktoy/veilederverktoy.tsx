@@ -5,7 +5,6 @@ import { useAppStore } from '../../store/app-store';
 import { useModalStore } from '../../store/modal-store';
 import { useDataStore } from '../../store/data-store';
 import {
-    kanRegistreresEllerReaktiveres,
     selectKanAvslutteOppfolging,
     selectKanSendeEskaleringsVarsel,
     selectKanStarteDigitalOppfolging,
@@ -79,7 +78,6 @@ export const Veilederverktoy = () => {
     const kanStarteDigitalOppfolging = selectKanStarteDigitalOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteKVP = selectKanStarteKVP(oppfolging, tilgangTilBrukersKontor);
     const kanStoppeKVP = selectKanStoppeKVP(oppfolging, tilgangTilBrukersKontor);
-    const kanRegistrere = kanRegistreresEllerReaktiveres(oppfolging);
     const kanTildeleVeileder = selectKanTildeleVeileder(oppfolging, tilgangTilBrukersKontor);
     const kanStarteArbeidsoppfolging = sjekkKanStarteArbeidsoppfolging(oppfolging);
 
@@ -111,6 +109,8 @@ export const Veilederverktoy = () => {
             </ButtonWithClickMetric>
             <Dropdown.Menu placement="bottom-end">
                 <Dropdown.Menu.List className="veilederverktoy-dropdown-menyliste">
+                    {visNyInngang && kanStarteArbeidsoppfolging ? <StartArbeidsoppfolgingKnapp /> : null}
+                    <StartArbeidssokerRegistreringKnapp />
                     {sjekkHarTilgangTilHuskelappEllerFargekategori && (
                         <>
                             {huskelapp?.huskelappId && (
@@ -142,8 +142,6 @@ export const Veilederverktoy = () => {
                             metricName="deaktiver_esklaring"
                         />
                     )}
-                    {visNyInngang && kanStarteArbeidsoppfolging ? <StartArbeidsoppfolgingKnapp /> : null}
-                    {kanRegistrere && <StartArbeidssokerRegistreringKnapp />}
                     {kanStarteManuellOppfolging && (
                         <StartProsessKnapp
                             knappeTekst="Endre til manuell oppfølging"
