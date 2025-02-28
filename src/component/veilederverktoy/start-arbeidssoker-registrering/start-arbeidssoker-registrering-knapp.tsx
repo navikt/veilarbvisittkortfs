@@ -1,8 +1,10 @@
+import { useAppStore } from '../../../store/app-store';
 import { erITestMiljo } from '../../../util/utils';
 import { logMetrikk } from '../../../util/logger';
 import { useDataStore } from '../../../store/data-store';
 import { kanRegistreresEllerReaktiveres } from '../../../util/selectors';
 import { Dropdown } from '@navikt/ds-react';
+import { useOpplysningerOmArbeidssokerMedProfilering } from '../../../api/veilarbperson';
 
 //@todo: check with arbeidssokerregistrering if they can fetch fnr from modiacontext holder
 function byggRegistreringUrl() {
@@ -12,25 +14,26 @@ function byggRegistreringUrl() {
 }
 
 export const StartArbeidssokerRegistreringKnapp = () => {
+    const { brukerFnr } = useAppStore();
     const { oppfolging } = useDataStore();
+    const { data: opplysningerOmArbeidssoker } = useOpplysningerOmArbeidssokerMedProfilering(brukerFnr);
 
     const kanRegistreres = kanRegistreresEllerReaktiveres(oppfolging);
     const registreringUrl = byggRegistreringUrl();
 
-    if (!kanRegistreres) {
+    if (!kanRegistreres && !!opplysningerOmArbeidssoker?.arbeidssoekerperiodeStartet) {
         return null;
     }
-    const brukerType = oppfolging?.kanReaktiveres ? 'kanReaktiveres' : 'kanIkkeReaktiveres';
+    const brukerType =
+        oppfolging?.kanReaktiveres && !opplysningerOmArbeidssoker?.arbeidssoekerperiodeStartet
+            ? 'kanReaktiveres'
+            : 'kanIkkeReaktiveres';
 
     const brukerTekst = () => {
-        switch (brukerType) {
-            case 'kanReaktiveres':
-                return 'Reaktiver arbeidssøker';
-            case 'kanIkkeReaktiveres':
-                return 'Registrer arbeidssøker';
-            default:
-                return null;
+        if (brukerType === 'kanReaktiveres') {
+            return 'Reaktiver arbeidssøker';
         }
+        return 'Registrer arbeidssøker';
     };
 
     return (
