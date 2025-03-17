@@ -8,7 +8,7 @@ import { useOpplysningerOmArbeidssokerMedProfilering } from '../../../api/veilar
 //@todo: check with arbeidssokerregistrering if they can fetch fnr from modiacontext holder
 function byggRegistreringUrl() {
     return erITestMiljo()
-        ? `https://arbeidssokerregistrering-for-veileder.intern.ansatt.nav.no`
+        ? `https://arbeidssokerregistrering-for-veileder.ansatt.dev.nav.no`
         : `https://arbeidssokerregistrering-for-veileder.intern.nav.no/`;
 }
 
