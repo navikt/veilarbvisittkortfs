@@ -30,6 +30,7 @@ updates:
           - 'eslint*'
           - 'globals'
           - 'typescript-eslint'
+          - '@eslint/*'
       workflow-tools:
         patterns:
           - 'husky'
@@ -39,3 +40,7 @@ updates:
           - '@testing-library/react'
           - 'jsdom'
           - 'vitest'
+      typescript:
+        patterns:
+          - 'typescript'
+          - 'typescript-eslint'
