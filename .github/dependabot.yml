@@ -40,3 +40,7 @@ updates:
           - '@testing-library/react'
           - 'jsdom'
           - 'vitest'
+      typescript:
+        patterns:
+          - 'typescript'
+          - 'typescript-eslint'
