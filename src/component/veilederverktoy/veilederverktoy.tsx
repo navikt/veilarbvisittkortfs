@@ -21,14 +21,13 @@ import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veil
 import withClickMetric from '../components/click-metric/click-metric';
 import './veilederverktoy.less';
 import { StartArbeidsoppfolgingKnapp } from './start-arbeidsoppfolging/start-arbeidsoppfolging-knapp';
-import { VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING } from '../../api/veilarbpersonflatefs';
 import { StartArbeidssokerRegistreringKnapp } from './start-arbeidssoker-registrering/start-arbeidssoker-registrering-knapp';
 
 const ButtonWithClickMetric = withClickMetric(Button);
 
 export const Veilederverktoy = () => {
     const { visVeilederVerktoy, brukerFnr } = useAppStore();
-    const { oppfolging, gjeldendeEskaleringsvarsel, features } = useDataStore();
+    const { oppfolging, gjeldendeEskaleringsvarsel} = useDataStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { data: erUfordeltBruker } = useErUfordeltBruker(
         brukerFnr,
