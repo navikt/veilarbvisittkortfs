@@ -12,18 +12,6 @@ export function selectSammensattNavn(personalia: Personalia | undefined): string
     return storeForbokstaver([fornavn, mellomnavn || '', etternavn]);
 }
 
-export function kanRegistreresEllerReaktiveres(oppfolging: OrNothing<Oppfolging>): boolean {
-    if (!oppfolging) return false;
-    const underOppfolging = oppfolging.underOppfolging;
-    const kanReaktiveres = !!oppfolging.kanReaktiveres;
-    return (underOppfolging && kanReaktiveres) || (!underOppfolging && !kanReaktiveres);
-}
-
-export const sjekkKanStarteArbeidsoppfolging = (oppfolging?: Oppfolging) => {
-    if (!oppfolging) return false;
-    return !oppfolging.underOppfolging;
-};
-
 export function selectHarUbehandledeDialoger(dialoger: Dialog[]): boolean {
     return dialoger.filter(dialog => !dialog.historisk && (!dialog.ferdigBehandlet || dialog.venterPaSvar)).length > 0;
 }

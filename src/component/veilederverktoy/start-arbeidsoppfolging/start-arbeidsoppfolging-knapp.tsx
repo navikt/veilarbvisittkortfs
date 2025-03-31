@@ -12,10 +12,22 @@ const startArbeidsoppfolgingUrl: Record<`${EnvType}-${'ansatt' | 'intern'}`, str
 };
 const url = startArbeidsoppfolgingUrl[`${env.type}-${env.ingressType}`];
 
-export const StartArbeidsoppfolgingKnapp = () => {
+export const StartArbeidsoppfolgingKnapp = ({
+                                                underOppfolging,
+                                                erIservIArena
+                                            }: {
+    underOppfolging: boolean;
+    erIservIArena: boolean;
+}) => {
+    if (underOppfolging && !erIservIArena) return null;
+
+    const buttonText = underOppfolging && erIservIArena
+        ? 'Reaktiver bruker i Arena'
+        : 'Start arbeidsrettet oppfølging';
+
     return (
         <Dropdown.Menu.List.Item as="a" href={url}>
-            {'Start arbeidsrettet oppfølging'}
+            {buttonText}
         </Dropdown.Menu.List.Item>
     );
 };
