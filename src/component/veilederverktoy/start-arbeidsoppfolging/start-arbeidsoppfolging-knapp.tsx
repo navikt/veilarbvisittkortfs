@@ -12,10 +12,20 @@ const startArbeidsoppfolgingUrl: Record<`${EnvType}-${'ansatt' | 'intern'}`, str
 };
 const url = startArbeidsoppfolgingUrl[`${env.type}-${env.ingressType}`];
 
-export const StartArbeidsoppfolgingKnapp = () => {
-    return (
-        <Dropdown.Menu.List.Item as="a" href={url}>
-            {'Start arbeidsrettet oppfølging'}
-        </Dropdown.Menu.List.Item>
-    );
+export const StartArbeidsoppfolgingKnapp = (underOppfolging: boolean, erIservIArena: boolean) => {
+    if (underOppfolging && !erIservIArena) return null;
+    else if (underOppfolging && erIservIArena) {
+        return (
+            <Dropdown.Menu.List.Item as="a" href={url}>
+                {'Reaktiver bruker i Arena'}
+            </Dropdown.Menu.List.Item>
+        );
+    }
+    else if (!underOppfolging) {
+        return (
+            <Dropdown.Menu.List.Item as="a" href={url}>
+                {'Start arbeidsrettet oppfølging'}
+            </Dropdown.Menu.List.Item>
+        );
+    }
 };

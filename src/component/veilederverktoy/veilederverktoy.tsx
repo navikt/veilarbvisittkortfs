@@ -12,8 +12,7 @@ import {
     selectKanStarteManuellOppfolging,
     selectKanStoppeEskaleringsVarsel,
     selectKanStoppeKVP,
-    selectKanTildeleVeileder,
-    sjekkKanStarteArbeidsoppfolging
+    selectKanTildeleVeileder
 } from '../../util/selectors';
 import { trackAmplitude } from '../../amplitude/amplitude';
 import { harTilgangTilHuskelappEllerFargekategori } from '../huskelapp/harTilgangTilHuskelapp';
@@ -73,13 +72,14 @@ export const Veilederverktoy = () => {
         gjeldendeEskaleringsvarsel,
         tilgangTilBrukersKontor
     );
+    const underOppfolging = oppfolging?.underOppfolging || false;
+    const erIservIArena = oppfolgingsstatus?.formidlingsgruppe == 'ISERV' || false
     const kanAvslutteOppfolging = selectKanAvslutteOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteManuellOppfolging = selectKanStarteManuellOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteDigitalOppfolging = selectKanStarteDigitalOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteKVP = selectKanStarteKVP(oppfolging, tilgangTilBrukersKontor);
     const kanStoppeKVP = selectKanStoppeKVP(oppfolging, tilgangTilBrukersKontor);
     const kanTildeleVeileder = selectKanTildeleVeileder(oppfolging, tilgangTilBrukersKontor);
-    const kanStarteArbeidsoppfolging = sjekkKanStarteArbeidsoppfolging(oppfolging);
 
     const huskelappKlikk = () => {
         trackAmplitude({
@@ -109,7 +109,7 @@ export const Veilederverktoy = () => {
             </ButtonWithClickMetric>
             <Dropdown.Menu placement="bottom-end">
                 <Dropdown.Menu.List className="veilederverktoy-dropdown-menyliste">
-                    {visNyInngang && kanStarteArbeidsoppfolging ? <StartArbeidsoppfolgingKnapp /> : null}
+                    <StartArbeidsoppfolgingKnapp  underOppfolging={underOppfolging} erIservIArena={erIservIArena}/>
                     <StartArbeidssokerRegistreringKnapp />
                     {sjekkHarTilgangTilHuskelappEllerFargekategori && (
                         <>
