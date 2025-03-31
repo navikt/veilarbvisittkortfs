@@ -35,7 +35,6 @@ export const Veilederverktoy = () => {
         visVeilederVerktoy && oppfolging?.underOppfolging
     );
     const { data: tilgangTilBrukersKontor } = useTilgangTilBrukersKontor(brukerFnr);
-    const visNyInngang = features?.[VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING] || false;
 
     const {
         showTildelVeilederModal,
