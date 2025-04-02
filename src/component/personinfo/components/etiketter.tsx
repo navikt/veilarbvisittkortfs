@@ -5,7 +5,6 @@ import { FullmaktData, useOpplysningerOmArbeidssokerMedProfilering } from '../..
 import { OppfolgingStatus, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
 import { OrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
-import { useErUtrullet } from '../../../api/veilarbvedtaksstotte';
 
 interface Etikettprops extends Omit<TagProps, 'variant'> {
     visible: boolean | undefined;
@@ -71,9 +70,8 @@ function Etiketter() {
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { gjeldendeEskaleringsvarsel, oppfolging, personalia, verge, fullmakt, spraakTolk } = useDataStore();
 
-    const { data: erUtrullet } = useErUtrullet(oppfolgingsstatus?.oppfolgingsenhet?.enhetId as string | undefined);
     const { data: opplysningerOmArbeidssoeker, isLoading: opplysningerOmArbeidssoekerLoading } =
-        useOpplysningerOmArbeidssokerMedProfilering(brukerFnr, erUtrullet);
+        useOpplysningerOmArbeidssokerMedProfilering(brukerFnr);
 
     function isEmpty(array: undefined | unknown[]): boolean {
         return !array || array.length === 0;
