@@ -7,7 +7,6 @@ import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
 interface Props {
     fnr: string;
     harYtelser?: boolean;
-    visVarselDersom14aUtkastEksisterer: boolean;
     datoErInnenFor28DagerSiden: boolean;
     harUbehandledeDialoger: boolean;
 }
@@ -15,7 +14,6 @@ interface Props {
 export function AvsluttOppfolgingInfoText({
     fnr,
     harYtelser,
-    visVarselDersom14aUtkastEksisterer,
     datoErInnenFor28DagerSiden,
     harUbehandledeDialoger
 }: Props) {
@@ -23,13 +21,11 @@ export function AvsluttOppfolgingInfoText({
     const harUtakstFetcher = useAxiosFetcher(fetchHarUtkast);
 
     useEffect(() => {
-        if (visVarselDersom14aUtkastEksisterer) {
-            harUtakstFetcher.fetch(fnr);
-        }
+        harUtakstFetcher.fetch(fnr);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    if (harArenaTiltakFetcher.loading || (visVarselDersom14aUtkastEksisterer && harUtakstFetcher.loading)) {
+    if (harArenaTiltakFetcher.loading || harUtakstFetcher.loading) {
         return <Loader size="2xlarge" />;
     }
 
