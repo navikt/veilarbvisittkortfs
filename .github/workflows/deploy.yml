@@ -1,4 +1,4 @@
-name: Deploy to prod
+name: Deploy
 on:
     workflow_call:
         inputs:
@@ -24,7 +24,7 @@ jobs:
         name: Deploy application ${{ inputs.envName }}
         runs-on: ubuntu-latest
         permissions:
-            contents: write
+            contents: read
             id-token: write
         steps:
             - name: Checkout
