@@ -68,6 +68,6 @@ jobs:
             - name: Set special cache for asset-manifest.json
               shell: bash
               run: |
-                gcloud storage objects update gs://${BUCKET_NAME}/poao/${{ inputs.bucket }}/build/asset-manifest.json --cache-control="public, max-age=120, stale-while-revalidate=60, stale-if-error=600"
+                gcloud storage objects update gs://${BUCKET_NAME}/poao/${{ inputs.bucket }}/build/asset-manifest.json --cache-control="public, max-age=120, stale-while-revalidate=1800, stale-if-error=600"
 
 
