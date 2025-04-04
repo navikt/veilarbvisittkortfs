@@ -17,7 +17,7 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       bucket: veilarbvisittkortfs-prod
-      buildCommand: 'npm run build'
+      buildCommand: npm run build
       envName: 'prod'
     secrets:
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
