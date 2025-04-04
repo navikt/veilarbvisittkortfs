@@ -9,14 +9,14 @@ env:
     TZ: Europe/Amsterdam
 
 jobs:
-    deploy-dev:
-      name: Deploy to dev
-      permissions:
-        id-token: write
-      uses: ./.github/workflows/deploy.yml
-      with:
-        bucket: veilarbvisittkortfs-dev
-        buildCommand: 'npm run build:dev'
-        envName: 'dev'
-      secrets:
-        READER_TOKEN: ${{ secrets.READER_TOKEN }}
+  deploy-dev:
+    name: Deploy to dev
+    permissions:
+      id-token: write
+    uses: ./.github/workflows/deploy.yml
+    with:
+      bucket: veilarbvisittkortfs-dev
+      buildCommand: 'npm run build:dev'
+      envName: 'dev'
+    secrets:
+      READER_TOKEN: ${{ secrets.READER_TOKEN }}
