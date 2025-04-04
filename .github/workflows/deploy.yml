@@ -14,6 +14,8 @@ on:
         secrets:
             READER_TOKEN:
                 required: true
+            GCS_SA_KEY:
+                required: true
 
 env:
     CI: true
@@ -55,7 +57,15 @@ jobs:
                   source: ./build/
                   destination: /${{ inputs.bucket }}/
 
-            -   name: Set special cache for asset-manifest.json
-                shell: bash
-                run: |
-                    gcloud storage objects update gs://${BUCKET_NAME}/poao/${{ inputs.bucket }}/build/asset-manifest.json --cache-control="public, max-age=120, stale-while-revalidate=60, stale-if-error=600"
+            - name: Set special cache for asset-manifest.json
+              shell: bash
+              run: |
+                gcloud storage objects update gs://${BUCKET_NAME}/poao/${{ inputs.bucket }}/build/asset-manifest.json --cache-control="public, max-age=120, stale-while-revalidate=60, stale-if-error=600"
+
+            - name: Authenticate to Google Cloud
+              uses: google-github-actions/auth@v2
+              with:
+                  credentials_json: ${{ secrets.GCS_SA_KEY }}
+
+            - name: Upload files to GCS
+              run: gsutil -m rsync -r build gs://${{ inputs.bucket }}

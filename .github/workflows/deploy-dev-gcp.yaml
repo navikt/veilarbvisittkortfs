@@ -22,3 +22,4 @@ jobs:
       envName: 'dev'
     secrets:
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
+      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
