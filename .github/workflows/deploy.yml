@@ -50,6 +50,14 @@ jobs:
             - name: Build application
               run: ${{ inputs.buildCommand }}
 
+            - name: Authenticate to Google Cloud
+              uses: google-github-actions/auth@v2
+              with:
+                credentials_json: ${{ secrets.GCS_SA_KEY }}
+
+            - name: Upload files to GCS
+              run: gcloud storage cp -r build gs://${{ inputs.bucket }}
+
             - name: Upload to CDN
               uses: nais/deploy/actions/cdn-upload/v2@master
               with:
@@ -62,10 +70,4 @@ jobs:
               run: |
                 gcloud storage objects update gs://${BUCKET_NAME}/poao/${{ inputs.bucket }}/build/asset-manifest.json --cache-control="public, max-age=120, stale-while-revalidate=60, stale-if-error=600"
 
-            - name: Authenticate to Google Cloud
-              uses: google-github-actions/auth@v2
-              with:
-                  credentials_json: ${{ secrets.GCS_SA_KEY }}
 
-            - name: Upload files to GCS
-              run: gsutil -m rsync -r build gs://${{ inputs.bucket }}
