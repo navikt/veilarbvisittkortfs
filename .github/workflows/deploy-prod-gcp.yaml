@@ -1,0 +1,24 @@
+name: Deploy to prod
+run-name: Deploy to prod ${{ github.ref_name }} by @${{ github.actor }}
+on:
+    push:
+        branches:
+            - master
+env:
+    CI: true
+    TZ: Europe/Amsterdam
+
+jobs:
+  deploy-prod:
+    name: Deploy to prod
+    permissions:
+      contents: read
+      id-token: write
+    uses: ./.github/workflows/deploy.yml
+    with:
+      bucket: veilarbvisittkortfs-prod
+      buildCommand: npm run build
+      envName: 'prod'
+    secrets:
+      READER_TOKEN: ${{ secrets.READER_TOKEN }}
+      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_PROD }}

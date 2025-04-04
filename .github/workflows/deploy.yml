@@ -1,0 +1,73 @@
+name: Deploy
+on:
+    workflow_call:
+        inputs:
+            envName:
+                required: true
+                type: string
+            buildCommand:
+                required: true
+                type: string
+            bucket:
+                required: true
+                type: string
+        secrets:
+            READER_TOKEN:
+                required: true
+            GCS_SA_KEY:
+                required: true
+
+env:
+    CI: true
+    TZ: Europe/Amsterdam
+
+jobs:
+    deploy-prod:
+        name: Deploy application ${{ inputs.envName }}
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            id-token: write
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: npm
+                  registry-url: "https://npm.pkg.github.com"
+
+            - name: Install dependencies
+              run: npm ci
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+
+            - name: Run tests
+              run: npm run test
+
+            - name: Build application
+              run: ${{ inputs.buildCommand }}
+
+            - name: Authenticate to Google Cloud
+              uses: google-github-actions/auth@v2
+              with:
+                credentials_json: ${{ secrets.GCS_SA_KEY }}
+
+            - name: Upload files to GCS
+              run: gcloud storage cp -r build gs://${{ inputs.bucket }}
+
+            - name: Upload to CDN
+              uses: nais/deploy/actions/cdn-upload/v2@master
+              with:
+                  team: poao
+                  source: ./build/
+                  destination: /${{ inputs.bucket }}/
+
+            - name: Set special cache for asset-manifest.json
+              shell: bash
+              run: |
+                gcloud storage objects update gs://${BUCKET_NAME}/poao/${{ inputs.bucket }}/build/asset-manifest.json --cache-control="public, max-age=120, stale-while-revalidate=60, stale-if-error=600"
+
+
