@@ -59,11 +59,3 @@ jobs:
                 shell: bash
                 run: |
                     gcloud storage objects update gs://${BUCKET_NAME}/poao/${{ inputs.bucket }}/build/asset-manifest.json --cache-control="public, max-age=120, stale-while-revalidate=60, stale-if-error=600"
-
-            -   name: Create release
-                uses: softprops/action-gh-release@v2
-                with:
-                    name: Release to prod
-                    target_commitish: master
-                    tag_name: release/prod@${{ github.sha }}
-                    prerelease: false
