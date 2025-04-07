@@ -11,6 +11,7 @@ import { isAnyLoadingOrNotStarted } from '../api/utils';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 import { fetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 import './data-fetcher.less';
+import { useGjeldende14aVedtak } from '../api/veilarbvedtaksstotte';
 
 interface Props {
     children: React.ReactNode;
@@ -41,6 +42,7 @@ export function DataFetcher({ children }: Props) {
     const spraakTolkFetcher = useAxiosFetcher(fetchSpraakTolk);
     const gjeldendeEskaleringsvarselFetcher = useAxiosFetcher(hentGjeldendeEskaleringsvarsel);
     const { data: oppfolgingsstatus, isLoading: oppfolgingsstatusIsLoading } = useOppfolgingsstatus(brukerFnr);
+    const { isLoading: gjeldende14aVedtakIsLoading } = useGjeldende14aVedtak(brukerFnr);
 
     const behandlingsnummer = 'B643';
     const oppfolgingsEnhet = oppfolgingsstatus?.oppfolgingsenhet.enhetId || '';
@@ -75,6 +77,7 @@ export function DataFetcher({ children }: Props) {
 
     if (
         oppfolgingsstatusIsLoading ||
+        gjeldende14aVedtakIsLoading ||
         isAnyLoadingOrNotStarted(
             oppfolgingFetcher,
             innloggetVeilederFetcher,

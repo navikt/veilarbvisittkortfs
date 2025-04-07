@@ -5,6 +5,7 @@ import { FullmaktData, useOpplysningerOmArbeidssokerMedProfilering } from '../..
 import { OppfolgingStatus, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
 import { OrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
+import { Oppfolgingsvedtak14a, useGjeldende14aVedtak } from '../../../api/veilarbvedtaksstotte';
 
 interface Etikettprops extends Omit<TagProps, 'variant'> {
     visible: boolean | undefined;
@@ -42,20 +43,12 @@ function erBrukerSykmeldt(oppfolging: OrNothing<OppfolgingStatus>): boolean {
     return !!oppfolging && oppfolging.formidlingsgruppe === 'IARBS' && oppfolging.servicegruppe === 'VURDI';
 }
 
-function trengerVurdering(oppfolging: OrNothing<OppfolgingStatus>): boolean {
-    return !!oppfolging && oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'IVURD';
-}
-
 function trengerAEV(oppfolging: OrNothing<OppfolgingStatus>): boolean {
     return !!oppfolging && oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'BKART';
 }
 
-function manglerVedtak(oppfolging: OrNothing<OppfolgingStatus>): boolean {
-    return (
-        !!oppfolging &&
-        oppfolging.formidlingsgruppe !== 'ISERV' &&
-        (oppfolging.servicegruppe === 'BKART' || oppfolging.servicegruppe === 'IVURD')
-    );
+function harGjeldende14aVedtak(gjeldende14aVedtak: OrNothing<Oppfolgingsvedtak14a>): boolean {
+    return gjeldende14aVedtak !== null && gjeldende14aVedtak !== undefined && typeof gjeldende14aVedtak !== 'undefined';
 }
 
 function erFullmaktOmradeMedOppfolging(fullmaktListe: FullmaktData[]): boolean {
@@ -72,6 +65,8 @@ function Etiketter() {
 
     const { data: opplysningerOmArbeidssoeker, isLoading: opplysningerOmArbeidssoekerLoading } =
         useOpplysningerOmArbeidssokerMedProfilering(brukerFnr);
+
+    const { data: gjeldende14aVedtak, isLoading: gjeldende14aVedtakIsLoading } = useGjeldende14aVedtak(brukerFnr);
 
     function isEmpty(array: undefined | unknown[]): boolean {
         return !array || array.length === 0;
@@ -125,7 +120,8 @@ function Etiketter() {
             </Fokus>
             <Info
                 visible={
-                    trengerVurdering(oppfolgingsstatus) &&
+                    !gjeldende14aVedtakIsLoading &&
+                    (gjeldende14aVedtak === null || gjeldende14aVedtak == undefined) &&
                     !opplysningerOmArbeidssoekerLoading &&
                     !opplysningerOmArbeidssoeker?.profilering?.profilertTil
                 }
@@ -146,7 +142,8 @@ function Etiketter() {
                 visible={
                     !opplysningerOmArbeidssoekerLoading &&
                     opplysningerOmArbeidssoeker?.profilering?.profilertTil === 'ANTATT_GODE_MULIGHETER' &&
-                    manglerVedtak(oppfolgingsstatus)
+                    !gjeldende14aVedtakIsLoading &&
+                    !harGjeldende14aVedtak(gjeldende14aVedtak)
                 }
             >
                 Antatt gode muligheter
@@ -155,7 +152,8 @@ function Etiketter() {
                 visible={
                     !opplysningerOmArbeidssoekerLoading &&
                     opplysningerOmArbeidssoeker?.profilering?.profilertTil === 'ANTATT_BEHOV_FOR_VEILEDNING' &&
-                    manglerVedtak(oppfolgingsstatus)
+                    !gjeldende14aVedtakIsLoading &&
+                    !harGjeldende14aVedtak(gjeldende14aVedtak)
                 }
             >
                 Antatt behov for veiledning
@@ -164,7 +162,8 @@ function Etiketter() {
                 visible={
                     !opplysningerOmArbeidssoekerLoading &&
                     opplysningerOmArbeidssoeker?.profilering?.profilertTil === 'OPPGITT_HINDRINGER' &&
-                    manglerVedtak(oppfolgingsstatus)
+                    !gjeldende14aVedtakIsLoading &&
+                    !harGjeldende14aVedtak(gjeldende14aVedtak)
                 }
             >
                 Oppgitt hindringer
