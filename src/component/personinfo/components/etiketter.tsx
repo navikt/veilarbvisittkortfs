@@ -128,6 +128,7 @@ function Etiketter() {
             >
                 Trenger vurdering
             </Info>
+            {/* 2025-04-07 Kva skal vi gjere med denne etiketten - skal den fortsatt leve no når ny vedtaksløysing § 14 a er på lufta?*/}
             <Info
                 visible={
                     trengerAEV(oppfolgingsstatus) &&
