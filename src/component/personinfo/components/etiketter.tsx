@@ -141,6 +141,15 @@ function Etiketter() {
             <Info
                 visible={
                     !opplysningerOmArbeidssoekerLoading &&
+                    opplysningerOmArbeidssoeker !== null &&
+                    opplysningerOmArbeidssoeker !== undefined
+                }
+            >
+                I Arbeidssøkerregisteret
+            </Info>
+            <Info
+                visible={
+                    !opplysningerOmArbeidssoekerLoading &&
                     opplysningerOmArbeidssoeker?.profilering?.profilertTil === 'ANTATT_GODE_MULIGHETER' &&
                     !gjeldende14aVedtakIsLoading &&
                     !harGjeldende14aVedtak(gjeldende14aVedtak)
