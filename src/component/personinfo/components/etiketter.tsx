@@ -121,7 +121,7 @@ function Etiketter() {
             <Info
                 visible={
                     !gjeldende14aVedtakIsLoading &&
-                    (gjeldende14aVedtak === null || gjeldende14aVedtak == undefined) &&
+                    !harGjeldende14aVedtak(gjeldende14aVedtak) &&
                     !opplysningerOmArbeidssoekerLoading &&
                     !opplysningerOmArbeidssoeker?.profilering?.profilertTil
                 }
