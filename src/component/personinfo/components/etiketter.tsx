@@ -5,6 +5,8 @@ import { FullmaktData, useOpplysningerOmArbeidssokerMedProfilering } from '../..
 import { OppfolgingStatus, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
 import { OrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
+import { BRUK_GJELDENDE_14A_SOM_KILDE_FOR_TRENGER_VURDERING_ETIKETT } from '../../../api/veilarbpersonflatefs';
+import { Oppfolgingsvedtak14a, useGjeldende14aVedtak } from '../../../api/veilarbvedtaksstotte';
 
 interface Etikettprops extends Omit<TagProps, 'variant'> {
     visible: boolean | undefined;
@@ -50,6 +52,10 @@ function trengerAEV(oppfolging: OrNothing<OppfolgingStatus>): boolean {
     return !!oppfolging && oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'BKART';
 }
 
+function harGjeldende14aVedtak(gjeldende14aVedtak: OrNothing<Oppfolgingsvedtak14a>): boolean {
+    return gjeldende14aVedtak !== null && gjeldende14aVedtak !== undefined && typeof gjeldende14aVedtak !== 'undefined';
+}
+
 function manglerVedtak(oppfolging: OrNothing<OppfolgingStatus>): boolean {
     return (
         !!oppfolging &&
@@ -68,13 +74,33 @@ function erFullmaktOmradeMedOppfolging(fullmaktListe: FullmaktData[]): boolean {
 function Etiketter() {
     const { brukerFnr } = useAppStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
-    const { gjeldendeEskaleringsvarsel, oppfolging, personalia, verge, fullmakt, spraakTolk } = useDataStore();
+    const { gjeldendeEskaleringsvarsel, oppfolging, personalia, verge, fullmakt, spraakTolk, features } =
+        useDataStore();
 
     const { data: opplysningerOmArbeidssoeker, isLoading: opplysningerOmArbeidssoekerLoading } =
         useOpplysningerOmArbeidssokerMedProfilering(brukerFnr);
+    const { data: gjeldende14aVedtak, isLoading: gjeldende14aVedtakLoading } = useGjeldende14aVedtak(brukerFnr);
 
     function isEmpty(array: undefined | unknown[]): boolean {
         return !array || array.length === 0;
+    }
+
+    function visTrengerVurderingEtikett() {
+        if (features?.[BRUK_GJELDENDE_14A_SOM_KILDE_FOR_TRENGER_VURDERING_ETIKETT]) {
+            return (
+                !!oppfolging &&
+                !gjeldende14aVedtakLoading &&
+                !harGjeldende14aVedtak(gjeldende14aVedtak) &&
+                !opplysningerOmArbeidssoekerLoading &&
+                !opplysningerOmArbeidssoeker?.profilering?.profilertTil
+            );
+        }
+
+        return (
+            trengerVurdering(oppfolgingsstatus) &&
+            !opplysningerOmArbeidssoekerLoading &&
+            !opplysningerOmArbeidssoeker?.profilering?.profilertTil
+        );
     }
 
     return (
@@ -123,15 +149,7 @@ function Etiketter() {
             >
                 Ikke registrert KRR
             </Fokus>
-            <Info
-                visible={
-                    trengerVurdering(oppfolgingsstatus) &&
-                    !opplysningerOmArbeidssoekerLoading &&
-                    !opplysningerOmArbeidssoeker?.profilering?.profilertTil
-                }
-            >
-                Trenger vurdering
-            </Info>
+            <Info visible={visTrengerVurderingEtikett()}>Trenger vurdering</Info>
             <Info
                 visible={
                     trengerAEV(oppfolgingsstatus) &&
