@@ -5,6 +5,12 @@ import { FullmaktData, useOpplysningerOmArbeidssokerMedProfilering } from '../..
 import { OppfolgingStatus, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
 import { OrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
+import {
+    BRUK_GJELDENDE_14A_SOM_KILDE_FOR_PROFILERINGSETIKETTER,
+    BRUK_GJELDENDE_14A_SOM_KILDE_FOR_TRENGER_VURDERING_ETIKETT,
+    VIS_I_ARBEIDSSOKERREGISTERET_ETIKETT
+} from '../../../api/veilarbpersonflatefs';
+import { Oppfolgingsvedtak14a, useGjeldende14aVedtak } from '../../../api/veilarbvedtaksstotte';
 
 interface Etikettprops extends Omit<TagProps, 'variant'> {
     visible: boolean | undefined;
@@ -42,17 +48,20 @@ function erBrukerSykmeldt(oppfolging: OrNothing<OppfolgingStatus>): boolean {
     return !!oppfolging && oppfolging.formidlingsgruppe === 'IARBS' && oppfolging.servicegruppe === 'VURDI';
 }
 
-function trengerVurdering(oppfolging: OrNothing<OppfolgingStatus>): boolean {
-    return !!oppfolging && oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'IVURD';
+function trengerVurdering(oppfolging: OppfolgingStatus): boolean {
+    return oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'IVURD';
 }
 
 function trengerAEV(oppfolging: OrNothing<OppfolgingStatus>): boolean {
     return !!oppfolging && oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'BKART';
 }
 
-function manglerVedtak(oppfolging: OrNothing<OppfolgingStatus>): boolean {
+function harGjeldende14aVedtak(gjeldende14aVedtak: OrNothing<Oppfolgingsvedtak14a>): boolean {
+    return gjeldende14aVedtak !== null && gjeldende14aVedtak !== undefined && typeof gjeldende14aVedtak !== 'undefined';
+}
+
+function manglerVedtak(oppfolging: OppfolgingStatus): boolean {
     return (
-        !!oppfolging &&
         oppfolging.formidlingsgruppe !== 'ISERV' &&
         (oppfolging.servicegruppe === 'BKART' || oppfolging.servicegruppe === 'IVURD')
     );
@@ -68,13 +77,71 @@ function erFullmaktOmradeMedOppfolging(fullmaktListe: FullmaktData[]): boolean {
 function Etiketter() {
     const { brukerFnr } = useAppStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
-    const { gjeldendeEskaleringsvarsel, oppfolging, personalia, verge, fullmakt, spraakTolk } = useDataStore();
+    const { gjeldendeEskaleringsvarsel, oppfolging, personalia, verge, fullmakt, spraakTolk, features } =
+        useDataStore();
 
     const { data: opplysningerOmArbeidssoeker, isLoading: opplysningerOmArbeidssoekerLoading } =
         useOpplysningerOmArbeidssokerMedProfilering(brukerFnr);
+    const { data: gjeldende14aVedtak, isLoading: gjeldende14aVedtakLoading } = useGjeldende14aVedtak(brukerFnr);
 
     function isEmpty(array: undefined | unknown[]): boolean {
         return !array || array.length === 0;
+    }
+
+    function visTrengerVurderingEtikett() {
+        if (oppfolgingsstatus === null || oppfolgingsstatus === undefined || typeof oppfolgingsstatus === 'undefined') {
+            return false;
+        }
+
+        if (features?.[BRUK_GJELDENDE_14A_SOM_KILDE_FOR_TRENGER_VURDERING_ETIKETT]) {
+            return (
+                !gjeldende14aVedtakLoading &&
+                !harGjeldende14aVedtak(gjeldende14aVedtak) &&
+                !opplysningerOmArbeidssoekerLoading &&
+                !opplysningerOmArbeidssoeker?.profilering?.profilertTil
+            );
+        }
+
+        return (
+            trengerVurdering(oppfolgingsstatus) &&
+            !opplysningerOmArbeidssoekerLoading &&
+            !opplysningerOmArbeidssoeker?.profilering?.profilertTil
+        );
+    }
+
+    function visProfileringsetikett(
+        profilering: 'OPPGITT_HINDRINGER' | 'ANTATT_GODE_MULIGHETER' | 'ANTATT_BEHOV_FOR_VEILEDNING'
+    ) {
+        if (oppfolgingsstatus === null || oppfolgingsstatus === undefined || typeof oppfolgingsstatus === 'undefined') {
+            return false;
+        }
+
+        if (features?.[BRUK_GJELDENDE_14A_SOM_KILDE_FOR_PROFILERINGSETIKETTER]) {
+            return (
+                !opplysningerOmArbeidssoekerLoading &&
+                opplysningerOmArbeidssoeker?.profilering?.profilertTil === profilering &&
+                !gjeldende14aVedtakLoading &&
+                !harGjeldende14aVedtak(gjeldende14aVedtak)
+            );
+        }
+
+        return (
+            !opplysningerOmArbeidssoekerLoading &&
+            opplysningerOmArbeidssoeker?.profilering?.profilertTil === profilering &&
+            manglerVedtak(oppfolgingsstatus)
+        );
+    }
+
+    function visIArbeidssokerregisteretEtikett() {
+        if (features?.[VIS_I_ARBEIDSSOKERREGISTERET_ETIKETT]) {
+            return (
+                !opplysningerOmArbeidssoekerLoading &&
+                opplysningerOmArbeidssoeker !== null &&
+                opplysningerOmArbeidssoeker !== undefined
+            );
+        }
+
+        return false;
     }
 
     return (
@@ -123,15 +190,7 @@ function Etiketter() {
             >
                 Ikke registrert KRR
             </Fokus>
-            <Info
-                visible={
-                    trengerVurdering(oppfolgingsstatus) &&
-                    !opplysningerOmArbeidssoekerLoading &&
-                    !opplysningerOmArbeidssoeker?.profilering?.profilertTil
-                }
-            >
-                Trenger vurdering
-            </Info>
+            <Info visible={visTrengerVurderingEtikett()}>Trenger vurdering</Info>
             <Info
                 visible={
                     trengerAEV(oppfolgingsstatus) &&
@@ -142,33 +201,10 @@ function Etiketter() {
                 Behov for AEV
             </Info>
             <Info visible={erBrukerSykmeldt(oppfolgingsstatus)}>Sykmeldt</Info>
-            <Info
-                visible={
-                    !opplysningerOmArbeidssoekerLoading &&
-                    opplysningerOmArbeidssoeker?.profilering?.profilertTil === 'ANTATT_GODE_MULIGHETER' &&
-                    manglerVedtak(oppfolgingsstatus)
-                }
-            >
-                Antatt gode muligheter
-            </Info>
-            <Info
-                visible={
-                    !opplysningerOmArbeidssoekerLoading &&
-                    opplysningerOmArbeidssoeker?.profilering?.profilertTil === 'ANTATT_BEHOV_FOR_VEILEDNING' &&
-                    manglerVedtak(oppfolgingsstatus)
-                }
-            >
-                Antatt behov for veiledning
-            </Info>
-            <Info
-                visible={
-                    !opplysningerOmArbeidssoekerLoading &&
-                    opplysningerOmArbeidssoeker?.profilering?.profilertTil === 'OPPGITT_HINDRINGER' &&
-                    manglerVedtak(oppfolgingsstatus)
-                }
-            >
-                Oppgitt hindringer
-            </Info>
+            <Info visible={visIArbeidssokerregisteretEtikett()}>I Arbeidssøkerregisteret</Info>
+            <Info visible={visProfileringsetikett('ANTATT_GODE_MULIGHETER')}>Antatt gode muligheter</Info>
+            <Info visible={visProfileringsetikett('ANTATT_BEHOV_FOR_VEILEDNING')}>Antatt behov for veiledning</Info>
+            <Info visible={visProfileringsetikett('OPPGITT_HINDRINGER')}>Oppgitt hindringer</Info>
         </div>
     );
 }
