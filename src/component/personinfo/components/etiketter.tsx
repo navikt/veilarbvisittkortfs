@@ -7,7 +7,8 @@ import { OrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
 import {
     BRUK_GJELDENDE_14A_SOM_KILDE_FOR_PROFILERINGSETIKETTER,
-    BRUK_GJELDENDE_14A_SOM_KILDE_FOR_TRENGER_VURDERING_ETIKETT
+    BRUK_GJELDENDE_14A_SOM_KILDE_FOR_TRENGER_VURDERING_ETIKETT,
+    VIS_I_ARBEIDSSOKERREGISTERET_ETIKETT
 } from '../../../api/veilarbpersonflatefs';
 import { Oppfolgingsvedtak14a, useGjeldende14aVedtak } from '../../../api/veilarbvedtaksstotte';
 
@@ -128,6 +129,18 @@ function Etiketter() {
         );
     }
 
+    function visIArbeidssokerregisteretEtikett() {
+        if (features?.[VIS_I_ARBEIDSSOKERREGISTERET_ETIKETT]) {
+            return (
+                !opplysningerOmArbeidssoekerLoading &&
+                opplysningerOmArbeidssoeker !== null &&
+                opplysningerOmArbeidssoeker !== undefined
+            );
+        }
+
+        return false;
+    }
+
     return (
         <div className="etikett-container">
             <BaseDod visible={!!personalia?.dodsdato}>Død</BaseDod>
@@ -185,6 +198,7 @@ function Etiketter() {
                 Behov for AEV
             </Info>
             <Info visible={erBrukerSykmeldt(oppfolgingsstatus)}>Sykmeldt</Info>
+            <Info visible={visIArbeidssokerregisteretEtikett()}>I Arbeidssøkerregisteret</Info>
             <Info visible={visProfileringsetikett('ANTATT_GODE_MULIGHETER')}>Antatt gode muligheter</Info>
             <Info visible={visProfileringsetikett('ANTATT_BEHOV_FOR_VEILEDNING')}>Antatt behov for veiledning</Info>
             <Info visible={visProfileringsetikett('OPPGITT_HINDRINGER')}>Oppgitt hindringer</Info>
