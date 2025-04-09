@@ -59,9 +59,8 @@ function harGjeldende14aVedtak(gjeldende14aVedtak: OrNothing<Oppfolgingsvedtak14
     return gjeldende14aVedtak !== null && gjeldende14aVedtak !== undefined && typeof gjeldende14aVedtak !== 'undefined';
 }
 
-function manglerVedtak(oppfolging: OrNothing<OppfolgingStatus>): boolean {
+function manglerVedtak(oppfolging: OppfolgingStatus): boolean {
     return (
-        !!oppfolging &&
         oppfolging.formidlingsgruppe !== 'ISERV' &&
         (oppfolging.servicegruppe === 'BKART' || oppfolging.servicegruppe === 'IVURD')
     );
@@ -109,9 +108,12 @@ function Etiketter() {
     function visProfileringsetikett(
         profilering: 'OPPGITT_HINDRINGER' | 'ANTATT_GODE_MULIGHETER' | 'ANTATT_BEHOV_FOR_VEILEDNING'
     ) {
+        if (oppfolgingsstatus === null || oppfolgingsstatus === undefined || typeof oppfolgingsstatus === 'undefined') {
+            return false;
+        }
+
         if (features?.[BRUK_GJELDENDE_14A_SOM_KILDE_FOR_PROFILERINGSETIKETTER]) {
             return (
-                !!oppfolging &&
                 !opplysningerOmArbeidssoekerLoading &&
                 opplysningerOmArbeidssoeker?.profilering?.profilertTil === profilering &&
                 !gjeldende14aVedtakLoading &&
