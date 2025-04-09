@@ -91,7 +91,7 @@ function Etiketter() {
     function visTrengerVurderingEtikett() {
         if (features?.[BRUK_GJELDENDE_14A_SOM_KILDE_FOR_TRENGER_VURDERING_ETIKETT]) {
             return (
-                !!oppfolging &&
+                !!oppfolgingsstatus &&
                 !gjeldende14aVedtakLoading &&
                 !harGjeldende14aVedtak(gjeldende14aVedtak) &&
                 !opplysningerOmArbeidssoekerLoading &&
