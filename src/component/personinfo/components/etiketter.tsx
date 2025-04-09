@@ -5,7 +5,10 @@ import { FullmaktData, useOpplysningerOmArbeidssokerMedProfilering } from '../..
 import { OppfolgingStatus, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
 import { OrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
-import { BRUK_GJELDENDE_14A_SOM_KILDE_FOR_TRENGER_VURDERING_ETIKETT } from '../../../api/veilarbpersonflatefs';
+import {
+    BRUK_GJELDENDE_14A_SOM_KILDE_FOR_PROFILERINGSETIKETTER,
+    BRUK_GJELDENDE_14A_SOM_KILDE_FOR_TRENGER_VURDERING_ETIKETT
+} from '../../../api/veilarbpersonflatefs';
 import { Oppfolgingsvedtak14a, useGjeldende14aVedtak } from '../../../api/veilarbvedtaksstotte';
 
 interface Etikettprops extends Omit<TagProps, 'variant'> {
@@ -103,6 +106,26 @@ function Etiketter() {
         );
     }
 
+    function visProfileringsetikett(
+        profilering: 'OPPGITT_HINDRINGER' | 'ANTATT_GODE_MULIGHETER' | 'ANTATT_BEHOV_FOR_VEILEDNING'
+    ) {
+        if (features?.[BRUK_GJELDENDE_14A_SOM_KILDE_FOR_PROFILERINGSETIKETTER]) {
+            return (
+                !!oppfolging &&
+                !opplysningerOmArbeidssoekerLoading &&
+                opplysningerOmArbeidssoeker?.profilering?.profilertTil === profilering &&
+                !gjeldende14aVedtakLoading &&
+                !harGjeldende14aVedtak(gjeldende14aVedtak)
+            );
+        }
+
+        return (
+            !opplysningerOmArbeidssoekerLoading &&
+            opplysningerOmArbeidssoeker?.profilering?.profilertTil === profilering &&
+            manglerVedtak(oppfolgingsstatus)
+        );
+    }
+
     return (
         <div className="etikett-container">
             <BaseDod visible={!!personalia?.dodsdato}>Død</BaseDod>
@@ -160,33 +183,9 @@ function Etiketter() {
                 Behov for AEV
             </Info>
             <Info visible={erBrukerSykmeldt(oppfolgingsstatus)}>Sykmeldt</Info>
-            <Info
-                visible={
-                    !opplysningerOmArbeidssoekerLoading &&
-                    opplysningerOmArbeidssoeker?.profilering?.profilertTil === 'ANTATT_GODE_MULIGHETER' &&
-                    manglerVedtak(oppfolgingsstatus)
-                }
-            >
-                Antatt gode muligheter
-            </Info>
-            <Info
-                visible={
-                    !opplysningerOmArbeidssoekerLoading &&
-                    opplysningerOmArbeidssoeker?.profilering?.profilertTil === 'ANTATT_BEHOV_FOR_VEILEDNING' &&
-                    manglerVedtak(oppfolgingsstatus)
-                }
-            >
-                Antatt behov for veiledning
-            </Info>
-            <Info
-                visible={
-                    !opplysningerOmArbeidssoekerLoading &&
-                    opplysningerOmArbeidssoeker?.profilering?.profilertTil === 'OPPGITT_HINDRINGER' &&
-                    manglerVedtak(oppfolgingsstatus)
-                }
-            >
-                Oppgitt hindringer
-            </Info>
+            <Info visible={visProfileringsetikett('ANTATT_GODE_MULIGHETER')}>Antatt gode muligheter</Info>
+            <Info visible={visProfileringsetikett('ANTATT_BEHOV_FOR_VEILEDNING')}>Antatt behov for veiledning</Info>
+            <Info visible={visProfileringsetikett('OPPGITT_HINDRINGER')}>Oppgitt hindringer</Info>
         </div>
     );
 }
