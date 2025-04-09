@@ -48,8 +48,8 @@ function erBrukerSykmeldt(oppfolging: OrNothing<OppfolgingStatus>): boolean {
     return !!oppfolging && oppfolging.formidlingsgruppe === 'IARBS' && oppfolging.servicegruppe === 'VURDI';
 }
 
-function trengerVurdering(oppfolging: OrNothing<OppfolgingStatus>): boolean {
-    return !!oppfolging && oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'IVURD';
+function trengerVurdering(oppfolging: OppfolgingStatus): boolean {
+    return oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'IVURD';
 }
 
 function trengerAEV(oppfolging: OrNothing<OppfolgingStatus>): boolean {
@@ -89,9 +89,12 @@ function Etiketter() {
     }
 
     function visTrengerVurderingEtikett() {
+        if (oppfolgingsstatus === null || oppfolgingsstatus === undefined || typeof oppfolgingsstatus === 'undefined') {
+            return false;
+        }
+
         if (features?.[BRUK_GJELDENDE_14A_SOM_KILDE_FOR_TRENGER_VURDERING_ETIKETT]) {
             return (
-                !!oppfolgingsstatus &&
                 !gjeldende14aVedtakLoading &&
                 !harGjeldende14aVedtak(gjeldende14aVedtak) &&
                 !opplysningerOmArbeidssoekerLoading &&
