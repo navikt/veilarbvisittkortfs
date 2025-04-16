@@ -3,7 +3,6 @@ import { FormikProps } from 'formik';
 import { Skeleton } from '@navikt/ds-react';
 import SokFilter from '../../../components/sokfilter/sok-filter';
 import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
-import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import { BehandlandeEnhet, hentBehandlendeEnheter, OppgaveTema } from '../../../../api/veilarboppgave';
 import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
 import SelectMedSok from './select-med-sok/select-med-sok';
@@ -12,7 +11,7 @@ interface OpprettOppgaveVelgEnhetProps {
     tema: OrNothing<OppgaveTema>;
     value: StringOrNothing;
     fnr: string;
-    formikProps: FormikProps<OpprettOppgaveFormValues>;
+    formikProps: FormikProps<{ enhetId: StringOrNothing }>;
 }
 
 const behandlingsnummer = 'B643';
