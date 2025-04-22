@@ -15,9 +15,13 @@ function ByttOppfolgingskontorModal() {
 
     const navn = selectSammensattNavn(personalia);
 
+    if (!enhetId) {
+        return null;
+    }
+
     const arbeidsOppfolgingKontorInitialValues: ArbeidsOppfolgingKontorDTO = {
         fnr: brukerFnr,
-        kontorId: enhetId ? enhetId : ''
+        kontorId: enhetId
     }
 
     function lagreOppfolgingskontor(formdata: ArbeidsOppfolgingKontorDTO) {
@@ -41,7 +45,7 @@ function ByttOppfolgingskontorModal() {
                     <Form>
                         <ByttOppfolgingskontorForm
                             fnr={brukerFnr}
-                            kontorId={enhetId ? enhetId : ''}
+                            kontorId={enhetId}
                             formikProps={formikProps}
                             tilbake={() => hideModal()}
                         />

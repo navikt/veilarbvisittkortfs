@@ -1,40 +1,19 @@
-import { useEffect, useState } from 'react';
-import { FormikProps } from 'formik';
 import { Skeleton } from '@navikt/ds-react';
 import SokFilter from '../../../components/sokfilter/sok-filter';
 import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
-import { BehandlandeEnhet, hentBehandlendeEnheter, OppgaveTema } from '../../../../api/veilarboppgave';
 import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
 import SelectMedSok from './select-med-sok/select-med-sok';
+import { Kontor } from '../../../../api/ao-oppfolgingskontor';
 
-interface OpprettOppgaveVelgEnhetProps {
-    tema: OrNothing<OppgaveTema>;
-    value: StringOrNothing;
-    fnr: string;
-    formikProps: FormikProps<{ kontorId: StringOrNothing }>;
+interface KontorDropdownProps {
+    valgtKontorId: StringOrNothing;
+    alleKontor: Kontor[]
+    isLoading: boolean;
 }
 
-const behandlingsnummer = 'B643';
-
-function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppgaveVelgEnhetProps) {
-    const [behandladeEnheter, setBehandladeEnheter] = useState([] as BehandlandeEnhet[]);
-    const [isLoading, setIsLoading] = useState(true);
-    const { setFieldValue } = formikProps;
-
-    useEffect(() => {
-        if (tema) {
-            hentBehandlendeEnheter(tema, fnr, behandlingsnummer).then(res => {
-                const behandlendeEnhetersData = res.data;
-                setBehandladeEnheter(behandlendeEnhetersData);
-                setFieldValue('enhetId', behandlendeEnhetersData[0].enhetId);
-                setIsLoading(false);
-                document.getElementsByName('Velg enhet').forEach(elem => ((elem as HTMLInputElement).checked = false));
-            });
-        }
-    }, [tema, fnr, setFieldValue]);
-
-    const valgtEnhet: OrNothing<BehandlandeEnhet> =
-        behandladeEnheter.find(enhet => enhet.enhetId === value) || behandladeEnheter[0];
+function KontorDropdown({ valgtKontorId, alleKontor, isLoading }: KontorDropdownProps) {
+    const valgtKontor: OrNothing<Kontor> =
+        alleKontor.find(kontor => kontor.kontorId === valgtKontorId) || alleKontor[0];
 
     return (
         <div className="skjemaelement navds-form-field navds-form-field--medium navds-date__field">
@@ -50,20 +29,20 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
             ) : (
                 <SelectMedSok
                     name="Velg enhet dropdown"
-                    knappeTekst={`${valgtEnhet.enhetId} ${valgtEnhet.navn}`}
+                    knappeTekst={`${valgtKontor?.kontorId} ${valgtKontor?.navn}`}
                     render={lukkDropdown => (
-                        <SokFilter data={behandladeEnheter} label="" placeholder="Søk etter enhet">
+                        <SokFilter data={alleKontor} label="" placeholder="Søk etter enhet">
                             {data => (
                                 <FormikRadioGroup
-                                    defaultValue={behandladeEnheter[0].enhetId}
+                                    defaultValue={alleKontor[0].kontorId}
                                     data={data}
-                                    createLabel={(behandlandeEnhet: BehandlandeEnhet) =>
-                                        `${behandlandeEnhet.enhetId} ${behandlandeEnhet.navn}`
+                                    createLabel={(kontor: Kontor) =>
+                                        `${kontor.kontorId} ${kontor.navn}`
                                     }
-                                    createValue={(behandlandeEnhet: BehandlandeEnhet) => behandlandeEnhet.enhetId}
+                                    createValue={(kontor: Kontor) => kontor.kontorId}
                                     radioName="Velg enhet"
                                     closeDropdown={lukkDropdown}
-                                    name="enhetId"
+                                    name="kontorId"
                                 />
                             )}
                         </SokFilter>
@@ -74,4 +53,4 @@ function OpprettOppgaveVelgEnhet({ value, tema, fnr, formikProps }: OpprettOppga
     );
 }
 
-export default OpprettOppgaveVelgEnhet;
+export default KontorDropdown;
