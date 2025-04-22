@@ -13,7 +13,7 @@ import { Button } from '@navikt/ds-react';
 interface OppgaveInnerFormProps {
     fnr: string;
     tema: OrNothing<OppgaveTema>;
-    enhetId: StringOrNothing;
+    kontorId: StringOrNothing;
     veilederId: StringOrNothing;
     avsenderenhetId: string;
     formikProps: FormikProps<OpprettOppgaveFormValues>;
@@ -23,7 +23,7 @@ interface OppgaveInnerFormProps {
 function OppgaveInnerForm({
     fnr,
     tema,
-    enhetId,
+    kontorId,
     veilederId,
     avsenderenhetId,
     formikProps,
@@ -41,12 +41,12 @@ function OppgaveInnerForm({
             </div>
             <OpprettOppgaveVelgDatoer />
             <div className="oppgave-enhet-container">
-                <OpprettOppgaveVelgEnhet value={enhetId} tema={tema} fnr={fnr} formikProps={formikProps} />
+                <OpprettOppgaveVelgEnhet value={kontorId} tema={tema} fnr={fnr} formikProps={formikProps} />
                 <OpprettOppgaveVelgVeileder
                     tema={tema}
                     veilederId={veilederId}
                     formikProps={formikProps}
-                    enhetId={enhetId || avsenderenhetId}
+                    enhetId={kontorId || avsenderenhetId}
                 />
             </div>
             <OpprettOppgaveBeskrivelseTekstArea />

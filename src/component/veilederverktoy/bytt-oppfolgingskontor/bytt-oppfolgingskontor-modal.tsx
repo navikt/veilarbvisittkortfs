@@ -6,11 +6,7 @@ import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import ByttOppfolgingskontorForm from './bytt-oppfolgingskontor-form';
-
-export interface ByttOppfolgingskontorFormValues {
-    fnr: string;
-    enhetId: string;
-}
+import { ArbeidsOppfolgingKontorDTO, settKontor } from '../../../api/ao-oppfolgingskontor';
 
 function ByttOppfolgingskontorModal() {
     const { brukerFnr, enhetId } = useAppStore();
@@ -19,19 +15,19 @@ function ByttOppfolgingskontorModal() {
 
     const navn = selectSammensattNavn(personalia);
 
-    const byttOppfolgingskontorInitialValues: ByttOppfolgingskontorFormValues = {
+    const arbeidsOppfolgingKontorInitialValues: ArbeidsOppfolgingKontorDTO = {
         fnr: brukerFnr,
-        enhetId: enhetId ? enhetId : ''
+        kontorId: enhetId ? enhetId : ''
     }
 
-    function lagreOppfolgingskontor(formdata: ByttOppfolgingskontorFormValues) {
+    function lagreOppfolgingskontor(formdata: ArbeidsOppfolgingKontorDTO) {
         showSpinnerModal();
-
+        settKontor(formdata)
     }
 
     return (
         <FormikModal
-            initialValues={byttOppfolgingskontorInitialValues}
+            initialValues={arbeidsOppfolgingKontorInitialValues}
             handleSubmit={lagreOppfolgingskontor}
             tittel="Bytt oppfolgingskontor"
             className="bytt-oppfolgingskontor"
@@ -45,7 +41,7 @@ function ByttOppfolgingskontorModal() {
                     <Form>
                         <ByttOppfolgingskontorForm
                             fnr={brukerFnr}
-                            enhetId={enhetId ? enhetId : ''}
+                            kontorId={enhetId ? enhetId : ''}
                             formikProps={formikProps}
                             tilbake={() => hideModal()}
                         />

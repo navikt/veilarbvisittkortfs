@@ -11,7 +11,7 @@ interface OpprettOppgaveVelgEnhetProps {
     tema: OrNothing<OppgaveTema>;
     value: StringOrNothing;
     fnr: string;
-    formikProps: FormikProps<{ enhetId: StringOrNothing }>;
+    formikProps: FormikProps<{ kontorId: StringOrNothing }>;
 }
 
 const behandlingsnummer = 'B643';

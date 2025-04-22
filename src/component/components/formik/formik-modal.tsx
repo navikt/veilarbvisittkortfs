@@ -4,8 +4,8 @@ import { Formik, FormikProps, FormikValues } from 'formik';
 import { Modal } from '@navikt/ds-react';
 import { useModalStore } from '../../../store/modal-store';
 
-interface FormikModalProps<Values> {
-    initialValues: Values;
+interface FormikModalProps<Values extends InitialValues, InitialValues> {
+    initialValues: InitialValues;
     handleSubmit: (values: Values) => void;
     tittel: string;
     render: (formikProps: FormikProps<Values>) => ReactNode;
@@ -13,14 +13,14 @@ interface FormikModalProps<Values> {
     className?: string;
 }
 
-function FormikModal<Values extends FormikValues>({
+function FormikModal<Values extends InitialValues, InitialValues extends FormikValues>({
     initialValues,
     handleSubmit,
     tittel,
     render,
     visConfirmDialog = true,
     className
-}: FormikModalProps<Values>) {
+}: FormikModalProps<Values, InitialValues>) {
     const { hideModal } = useModalStore();
     const [isOpen, setIsOpen] = useState(true);
 
@@ -43,19 +43,19 @@ function FormikModal<Values extends FormikValues>({
     };
 
     return (
-        <Formik initialValues={initialValues} onSubmit={values => handleSubmit(values)}>
+        <Formik initialValues={initialValues} onSubmit={values => handleSubmit(values as Values)}>
             {formikProps => (
                 <Modal
                     className={cls('visittkortfs-modal', className)}
                     open={isOpen}
-                    onClose={() => tilbake(formikProps)}
+                    onClose={() => tilbake(formikProps as FormikProps<Values>)}
                     closeOnBackdropClick={true}
                     header={{
                         heading: tittel,
                         closeButton: true
                     }}
                 >
-                    <Modal.Body>{render(formikProps)}</Modal.Body>
+                    <Modal.Body>{render(formikProps as FormikProps<Values>)}</Modal.Body>
                 </Modal>
             )}
         </Formik>

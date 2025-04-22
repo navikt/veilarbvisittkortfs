@@ -1,19 +1,19 @@
-import { ByttOppfolgingskontorFormValues } from './bytt-oppfolgingskontor-modal';
+import { ArbeidsOppfolgingKontorDTO } from '../../../api/ao-oppfolgingskontor';
 import { FormikProps } from 'formik';
 import { Button } from '@navikt/ds-react';
 import OpprettOppgaveVelgEnhet from '../opprett-oppgave/components/opprett-oppgave-enhet-dropdown';
 
 interface ByttOppfolgingskontorFormProps {
     fnr: string;
-    enhetId: string;
-    formikProps: FormikProps<ByttOppfolgingskontorFormValues>;
+    kontorId: string;
+    formikProps: FormikProps<ArbeidsOppfolgingKontorDTO>;
     tilbake: () => void;
 }
 
-function ByttOppfolgingskontorForm({ fnr, enhetId, formikProps, tilbake }: ByttOppfolgingskontorFormProps) {
+function ByttOppfolgingskontorForm({ fnr, kontorId, formikProps, tilbake }: ByttOppfolgingskontorFormProps) {
     return (
         <div className="modal-footer">
-            <OpprettOppgaveVelgEnhet value={enhetId} tema={"OPPFOLGING"} fnr={fnr} formikProps={formikProps} />
+            <OpprettOppgaveVelgEnhet value={kontorId} tema={"OPPFOLGING"} fnr={fnr} formikProps={formikProps} />
             <Button variant="primary" size="small" className="bekreft-btn" type="submit">
                 Bekreft
             </Button>
