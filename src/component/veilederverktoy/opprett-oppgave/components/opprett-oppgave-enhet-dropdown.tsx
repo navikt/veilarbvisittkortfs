@@ -7,18 +7,19 @@ import { Kontor } from '../../../../api/ao-oppfolgingskontor';
 
 interface KontorDropdownProps {
     valgtKontorId: StringOrNothing;
-    alleKontor: Kontor[]
+    alleKontor: Kontor[];
     isLoading: boolean;
+    formikFieldName: 'enhetId' | 'kontorId';
 }
 
-function KontorDropdown({ valgtKontorId, alleKontor, isLoading }: KontorDropdownProps) {
+function KontorDropdown({ valgtKontorId, alleKontor, isLoading, formikFieldName }: KontorDropdownProps) {
     const valgtKontor: OrNothing<Kontor> =
         alleKontor.find(kontor => kontor.kontorId === valgtKontorId) || alleKontor[0];
 
     return (
         <div className="skjemaelement navds-form-field navds-form-field--medium navds-date__field">
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label className="navds-form-field__label navds-label navds-label--small">Enhet</label>
+            <label className="navds-form-field__label navds-label navds-label--small">Kontor</label>
             {isLoading ? (
                 <Skeleton
                     variant="rectangle"
@@ -28,21 +29,19 @@ function KontorDropdown({ valgtKontorId, alleKontor, isLoading }: KontorDropdown
                 />
             ) : (
                 <SelectMedSok
-                    name="Velg enhet dropdown"
+                    name="Velg kontor dropdown"
                     knappeTekst={`${valgtKontor?.kontorId} ${valgtKontor?.navn}`}
                     render={lukkDropdown => (
-                        <SokFilter data={alleKontor} label="" placeholder="Søk etter enhet">
+                        <SokFilter data={alleKontor} label="" placeholder="Søk etter kontor">
                             {data => (
                                 <FormikRadioGroup
                                     defaultValue={alleKontor[0].kontorId}
                                     data={data}
-                                    createLabel={(kontor: Kontor) =>
-                                        `${kontor.kontorId} ${kontor.navn}`
-                                    }
+                                    createLabel={(kontor: Kontor) => `${kontor.kontorId} ${kontor.navn}`}
                                     createValue={(kontor: Kontor) => kontor.kontorId}
-                                    radioName="Velg enhet"
+                                    radioName="Velg kontor"
                                     closeDropdown={lukkDropdown}
-                                    name="kontorId"
+                                    name={formikFieldName}
                                 />
                             )}
                         </SokFilter>

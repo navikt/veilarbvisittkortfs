@@ -1,0 +1,16 @@
+:root {
+    --spacing: 0.25rem;
+}
+
+.mb-4 {
+    margin-bottom: calc(var(--spacing) * 4);
+}
+
+.bytt-oppfolgingskontor-modal .space-x-4 > *:not(:last-child) {
+    margin-right: 1rem;
+}
+
+.bytt-oppfolgingskontor-modal .space-y-4 > *:not(:last-child) {
+    margin-bottom: 1rem;
+}
+

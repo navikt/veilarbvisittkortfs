@@ -12,22 +12,30 @@ interface ByttOppfolgingskontorFormProps {
     tilbake: () => void;
 }
 
-function ByttOppfolgingskontorForm({kontorId, formikProps, tilbake }: ByttOppfolgingskontorFormProps) {
+function ByttOppfolgingskontorForm({ kontorId, tilbake }: ByttOppfolgingskontorFormProps) {
     const alleKontorFetcher = useAxiosFetcher(hentAlleKontor);
 
     useEffect(() => {
         alleKontorFetcher.fetch();
+        /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, []);
 
     return (
-        <div className="modal-footer">
-            <KontorDropdown valgtKontorId={kontorId} alleKontor={alleKontorFetcher.data?.data.alleKontor || []} isLoading={alleKontorFetcher.loading} formikProps={formikProps} />
-            <Button variant="primary" size="small" className="bekreft-btn" type="submit">
-                Bekreft
-            </Button>
-            <Button variant="secondary" size="small" onClick={tilbake}>
-                Avbryt
-            </Button>
+        <div className="space-y-4">
+            <KontorDropdown
+                valgtKontorId={kontorId}
+                alleKontor={alleKontorFetcher.data?.data.alleKontor || []}
+                isLoading={alleKontorFetcher.loading}
+                formikFieldName={'kontorId'}
+            />
+            <div className="space-x-4">
+                <Button variant="primary" size="small" className="" type="submit">
+                    Bekreft
+                </Button>
+                <Button variant="secondary" size="small" onClick={tilbake}>
+                    Avbryt
+                </Button>
+            </div>
         </div>
     );
 }

@@ -21,6 +21,8 @@ interface OppgaveInnerFormProps {
     tilbake: () => void;
 }
 
+const behandlingsnummer = 'B643';
+
 function OppgaveInnerForm({
     fnr,
     tema,
@@ -34,8 +36,6 @@ function OppgaveInnerForm({
     const [isLoading, setIsLoading] = useState(true);
     const { setFieldValue } = formikProps;
 
-    const behandlingsnummer = 'B643';
-
     useEffect(() => {
         if (tema) {
             hentBehandlendeEnheter(tema, fnr, behandlingsnummer).then(res => {
@@ -43,11 +43,10 @@ function OppgaveInnerForm({
                 setBehandladeEnheter(behandlendeEnhetersData);
                 setFieldValue('enhetId', behandlendeEnhetersData[0].enhetId);
                 setIsLoading(false);
-                document.getElementsByName('Velg enhet').forEach(elem => ((elem as HTMLInputElement).checked = false));
+                document.getElementsByName('Velg kontor').forEach(elem => ((elem as HTMLInputElement).checked = false));
             });
         }
     }, [tema, fnr, setFieldValue]);
-
 
     if (!tema) {
         return null;
@@ -61,7 +60,12 @@ function OppgaveInnerForm({
             </div>
             <OpprettOppgaveVelgDatoer />
             <div className="oppgave-enhet-container">
-                <KontorDropdown valgtKontorId={kontorId} fieldName={"enhetId"} alleKontor={behandladeEnheter} formikProps={formikProps} />
+                <KontorDropdown
+                    isLoading={isLoading}
+                    valgtKontorId={kontorId}
+                    formikFieldName={'enhetId'}
+                    alleKontor={behandladeEnheter.map(it => ({ navn: it.navn, kontorId: it.enhetId }))}
+                />
                 <OpprettOppgaveVelgVeileder
                     tema={tema}
                     veilederId={veilederId}

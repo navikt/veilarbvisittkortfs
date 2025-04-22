@@ -7,11 +7,12 @@ import { useModalStore } from '../../../store/modal-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import ByttOppfolgingskontorForm from './bytt-oppfolgingskontor-form';
 import { ArbeidsOppfolgingKontorDTO, settKontor } from '../../../api/ao-oppfolgingskontor';
+import './bytt-oppfolgingskontor.css';
 
 function ByttOppfolgingskontorModal() {
     const { brukerFnr, enhetId } = useAppStore();
     const { personalia } = useDataStore();
-    const { hideModal, showOpprettOppgaveKvitteringModal, showErrorModal, showSpinnerModal } = useModalStore();
+    const { hideModal, /*showOpprettOppgaveKvitteringModal, showErrorModal,*/ showSpinnerModal } = useModalStore();
 
     const navn = selectSammensattNavn(personalia);
 
@@ -22,26 +23,22 @@ function ByttOppfolgingskontorModal() {
     const arbeidsOppfolgingKontorInitialValues: ArbeidsOppfolgingKontorDTO = {
         fnr: brukerFnr,
         kontorId: enhetId
-    }
+    };
 
     function lagreOppfolgingskontor(formdata: ArbeidsOppfolgingKontorDTO) {
         showSpinnerModal();
-        settKontor(formdata)
+        settKontor(formdata);
     }
 
     return (
         <FormikModal
             initialValues={arbeidsOppfolgingKontorInitialValues}
             handleSubmit={lagreOppfolgingskontor}
-            tittel="Bytt oppfolgingskontor"
+            tittel="Bytt oppfølgingskontor"
             className="bytt-oppfolgingskontor"
             render={formikProps => (
-                <div>
-                    <Heading
-                        size="small"
-                        level="2"
-                        className="bytt-oppfolgingskontor__undertittel"
-                    >{`Bytt oppfolgingskontor for ${navn}`}</Heading>
+                <div className="bytt-oppfolgingskontor-modal">
+                    <Heading size="small" level="2" className="mb-4">{`Bytt oppfølgingskontor for ${navn}`}</Heading>
                     <Form>
                         <ByttOppfolgingskontorForm
                             fnr={brukerFnr}
