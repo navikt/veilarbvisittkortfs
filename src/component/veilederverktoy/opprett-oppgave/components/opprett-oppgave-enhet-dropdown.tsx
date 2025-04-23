@@ -25,28 +25,23 @@ function KontorDropdown({ valgtKontorId, alleKontor, isLoading, formikFieldName 
                     variant="rectangle"
                     style={{ borderRadius: 'var(--a-border-radius-medium)', lineHeight: '1.333' }}
                     height="2rem"
-                    width="12rem"
+                    width="20rem"
                 />
             ) : (
-                <SelectMedSok
-                    name="Velg kontor dropdown"
-                    knappeTekst={`${valgtKontor?.kontorId} ${valgtKontor?.navn}`}
-                    render={lukkDropdown => (
-                        <SokFilter data={alleKontor} label="" placeholder="Søk etter kontor">
-                            {data => (
-                                <FormikRadioGroup
-                                    defaultValue={alleKontor[0].kontorId}
-                                    data={data}
-                                    createLabel={(kontor: Kontor) => `${kontor.kontorId} ${kontor.navn}`}
-                                    createValue={(kontor: Kontor) => kontor.kontorId}
-                                    radioName="Velg kontor"
-                                    closeDropdown={lukkDropdown}
-                                    name={formikFieldName}
-                                />
-                            )}
-                        </SokFilter>
-                    )}
-                />
+                <SelectMedSok name="Velg kontor dropdown" knappeTekst={`${valgtKontor?.kontorId} ${valgtKontor?.navn}`}>
+                    <SokFilter data={alleKontor} label="" placeholder="Søk etter kontor">
+                        {data => (
+                            <FormikRadioGroup
+                                defaultValue={alleKontor[0]?.kontorId}
+                                data={data}
+                                createLabel={(kontor: Kontor) => `${kontor.kontorId} ${kontor.navn}`}
+                                createValue={(kontor: Kontor) => kontor.kontorId}
+                                radioName="Velg kontor"
+                                name={formikFieldName}
+                            />
+                        )}
+                    </SokFilter>
+                </SelectMedSok>
             )}
         </div>
     );
