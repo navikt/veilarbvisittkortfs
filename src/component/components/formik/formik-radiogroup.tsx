@@ -8,7 +8,6 @@ interface FormikRadioFilterProps<T> {
     radioName: string;
     createLabel: (object: T) => string;
     createValue: (object: T) => string;
-    closeDropdown: () => void;
     defaultValue?: string;
 }
 

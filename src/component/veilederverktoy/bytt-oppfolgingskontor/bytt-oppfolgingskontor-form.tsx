@@ -12,7 +12,7 @@ interface ByttOppfolgingskontorFormProps {
     tilbake: () => void;
 }
 
-function ByttOppfolgingskontorForm({ kontorId, tilbake }: ByttOppfolgingskontorFormProps) {
+function ByttOppfolgingskontorForm({ kontorId, tilbake, formikProps }: ByttOppfolgingskontorFormProps) {
     const alleKontorFetcher = useAxiosFetcher(hentAlleKontor);
 
     useEffect(() => {
@@ -23,7 +23,7 @@ function ByttOppfolgingskontorForm({ kontorId, tilbake }: ByttOppfolgingskontorF
     return (
         <div className="space-y-4">
             <KontorDropdown
-                valgtKontorId={kontorId}
+                valgtKontorId={formikProps.values.kontorId || kontorId}
                 alleKontor={alleKontorFetcher.data?.data.alleKontor || []}
                 isLoading={alleKontorFetcher.loading}
                 formikFieldName={'kontorId'}

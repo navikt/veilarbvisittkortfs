@@ -1,65 +1,24 @@
-import { ReactNode, useRef, useState } from 'react';
-import classNames from 'classnames';
-import { Button } from '@navikt/ds-react';
-import { useDocumentEventListner } from '../../../../../util/hook/use-event-listner';
+import { ReactNode } from 'react';
+import { Button, Dropdown } from '@navikt/ds-react';
 import withClickMetric from '../../../../components/click-metric/click-metric';
 import './select-med-sok.less';
 
 interface SelectMedSokProps {
     name: string;
     knappeTekst: ReactNode;
-    render: (lukkDropdown: () => void) => ReactNode;
     onClick?: () => void;
+    children: ReactNode;
 }
 
-function SelectMedSok({ name, knappeTekst, render, onClick }: SelectMedSokProps) {
-    const [apen, setApen] = useState(false);
-    const btnRef = useRef<HTMLButtonElement>(null);
-    const loggNode = useRef<HTMLDivElement>(null);
-
-    const lukkSelect = () => {
-        if (apen) {
-            setApen(false);
-            btnRef.current?.focus();
-        }
-    };
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const eventHandler = (e: any) => {
-        if (loggNode.current && !loggNode.current.contains(e.target)) {
-            lukkSelect();
-        }
-    };
-
-    useDocumentEventListner('click', eventHandler);
-
-    function toggleSelect() {
-        if (apen) {
-            lukkSelect();
-        } else {
-            onClick?.();
-            setApen(true);
-        }
-    }
-
+function SelectMedSok({ knappeTekst, children }: SelectMedSokProps) {
     return (
-        <div className={classNames('select-med-sok', { 'select-med-sok--apen': apen })} ref={loggNode}>
-            <Button
-                variant="tertiary-neutral"
-                ref={btnRef}
-                className="select-med-sok__btn"
-                onClick={toggleSelect}
-                aria-expanded={apen}
-                aria-controls={`${name}-select-med-sok__innhold`}
-                type="button"
-            >
-                {knappeTekst}
-            </Button>
-            {apen && (
-                <ul className={'select-med-sok__innhold'} id={`${name}-select-med-sok__innhold`}>
-                    {render(lukkSelect)}
-                </ul>
-            )}
+        <div className="select-med-sok">
+            <Dropdown>
+                <Button as={Dropdown.Toggle} variant="tertiary-neutral" className="select-med-sok__btn" type="button">
+                    {knappeTekst}
+                </Button>
+                <Dropdown.Menu>{children}</Dropdown.Menu>
+            </Dropdown>
         </div>
     );
 }
