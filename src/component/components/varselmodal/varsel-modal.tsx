@@ -1,9 +1,9 @@
 import { PropsWithChildren } from 'react';
-import './varsel-modal.less';
+import { Modal } from '@navikt/ds-react';
 import AdvarselSirkelIkon from './advarsel-sirkel.svg?react';
 import FeilSirkelIkon from './feil-sirkel.svg?react';
 import SuccessSirkelIkon from './ok-sirkel.svg?react';
-import { Modal } from '@navikt/ds-react';
+import './varsel-modal.less';
 
 type VarselModalType = 'ADVARSEL' | 'FEIL' | 'SUCCESS';
 
@@ -12,7 +12,6 @@ interface VarselModalProps {
     onRequestClose: () => void;
     type: VarselModalType;
     inkluderIkon?: boolean;
-    egenBody: boolean;
 }
 
 export function VarselModal({
@@ -20,24 +19,8 @@ export function VarselModal({
     onRequestClose,
     children,
     type,
-    inkluderIkon = true,
-    egenBody
+    inkluderIkon = true
 }: PropsWithChildren<VarselModalProps>) {
-    if (egenBody) {
-        return (
-            <Modal
-                open={isOpen}
-                onClose={onRequestClose}
-                closeOnBackdropClick={true}
-                className="veilarbvisittkortfs-varsel-modal"
-                aria-label="Varselmodal"
-            >
-                {inkluderIkon && <Modal.Header>{getIkon(type)}</Modal.Header>}
-                {children}
-            </Modal>
-        );
-    }
-
     return (
         <Modal
             open={isOpen}
@@ -47,7 +30,7 @@ export function VarselModal({
             aria-label="Varselmodal"
         >
             {inkluderIkon && <Modal.Header>{getIkon(type)}</Modal.Header>}
-            <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">{children}</Modal.Body>
+            {children}
         </Modal>
     );
 }

@@ -14,7 +14,7 @@ export function TildelVeilederKvittering({ tildeltVeilederNavn }: TildelVeileder
     const { mutate: setUfordeltbruker } = useErUfordeltBruker(brukerFnr, visVeilederVerktoy);
 
     return (
-        <VarselModal isOpen={true} onRequestClose={hideModal} type="SUCCESS" inkluderIkon={false} egenBody={true}>
+        <VarselModal isOpen={true} onRequestClose={hideModal} type="SUCCESS" inkluderIkon={false}>
             <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
                 <Heading size="large" level="1">
                     Tildel veileder

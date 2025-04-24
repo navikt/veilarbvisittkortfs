@@ -1,7 +1,7 @@
+import { BodyShort, Heading, Button, Modal } from '@navikt/ds-react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { logMetrikk } from '../../../util/logger';
 import { useModalStore } from '../../../store/modal-store';
-import { BodyShort, Heading, Button, Modal } from '@navikt/ds-react';
 
 export function FeilTildelingModal() {
     const { hideModal } = useModalStore();
@@ -12,7 +12,7 @@ export function FeilTildelingModal() {
     };
 
     return (
-        <VarselModal isOpen={true} type="FEIL" onRequestClose={lukkModal} inkluderIkon={false} egenBody={true}>
+        <VarselModal isOpen={true} type="FEIL" onRequestClose={lukkModal} inkluderIkon={false}>
             <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
                 <Heading size="medium" level="2">
                     Handlingen kan ikke utføres

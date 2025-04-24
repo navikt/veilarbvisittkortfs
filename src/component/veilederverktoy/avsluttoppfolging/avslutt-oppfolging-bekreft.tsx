@@ -26,7 +26,7 @@ function AvsluttOppfolgingBekreft({ begrunnelse }: AvsluttOppfolgingBekreftelseM
     }
 
     return (
-        <VarselModal onRequestClose={hideModal} isOpen={true} type="ADVARSEL" egenBody={true}>
+        <VarselModal onRequestClose={hideModal} isOpen={true} type="ADVARSEL">
             <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
                 <BodyShort size="small">
                     Er du sikker på at du vil avslutte oppfølgingsperioden til {brukerNavn}?

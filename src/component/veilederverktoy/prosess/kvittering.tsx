@@ -23,7 +23,6 @@ function Kvittering({ tittel, alertStripeTekst, annetInnhold, onRequestClose }: 
                 }
             }}
             type="SUCCESS"
-            egenBody={true}
         >
             <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
                 <Heading size="medium" level="2" className="modal-info-tekst__undertekst">
