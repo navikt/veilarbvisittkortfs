@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import cls from 'classnames';
 import { Formik, FormikProps, FormikValues } from 'formik';
 import { Modal } from '@navikt/ds-react';
