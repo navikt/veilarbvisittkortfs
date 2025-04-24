@@ -12,7 +12,7 @@ interface VarselModalProps {
     onRequestClose: () => void;
     type: VarselModalType;
     inkluderIkon?: boolean;
-    egenBody?: boolean;
+    egenBody: boolean;
 }
 
 export function VarselModal({
@@ -21,7 +21,7 @@ export function VarselModal({
     children,
     type,
     inkluderIkon = true,
-    egenBody = false
+    egenBody
 }: PropsWithChildren<VarselModalProps>) {
     if (egenBody) {
         return (
