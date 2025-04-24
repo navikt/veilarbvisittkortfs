@@ -10,6 +10,7 @@ import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { fetchHarNivaa4 } from '../../../api/veilarbperson';
 import { logMetrikk } from '../../../util/logger';
+import { Modal } from '@navikt/ds-react';
 
 interface OwnValues extends StartEskaleringValues {
     overskrift: string;
@@ -78,8 +79,8 @@ function StartEskalering() {
             : 'Du kan ikke sende varsel fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4 (for eksempel BankID).';
 
         return (
-            <VarselModal onRequestClose={hideModal} isOpen={true} type="ADVARSEL">
-                {varselTekst}
+            <VarselModal onRequestClose={hideModal} isOpen={true} type="ADVARSEL" egenBody={true}>
+                <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">{varselTekst}</Modal.Body>
             </VarselModal>
         );
     }
