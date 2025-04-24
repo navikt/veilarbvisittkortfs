@@ -23,7 +23,7 @@ export enum Hovedmal {
 }
 
 export function fetchHarUtkast(fnr: string): AxiosPromise<boolean> {
-    return axiosInstance.post<boolean>(`/veilarbvedtaksstotte/api/v2/hent-harUtkast`, { fnr: fnr });
+    return axiosInstance.post<boolean>(`/veilarbvedtaksstotte/api/v2/utkast/hent-harUtkast`, { fnr: fnr });
 }
 
 export function useGjeldende14aVedtak(fnr: string) {
