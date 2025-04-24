@@ -28,7 +28,7 @@ function StartDigitalOppfolging() {
 
     if (oppfolging?.reservasjonKRR) {
         return (
-            <VarselModal type="ADVARSEL" isOpen={true} onRequestClose={hideModal} egenBody={true}>
+            <VarselModal type="ADVARSEL" isOpen={true} onRequestClose={hideModal}>
                 <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
                     <BodyShort size="small">
                         Brukeren er reservert i Kontakt- og reservasjonsregisteret og må selv fjerne reservasjonen for å

@@ -49,7 +49,7 @@ function AvsluttOppfolging() {
             }
         }
         return (
-            <VarselModal isOpen={true} onRequestClose={hideModal} type="ADVARSEL" egenBody={true}>
+            <VarselModal isOpen={true} onRequestClose={hideModal} type="ADVARSEL">
                 <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
                     <BodyShort>Du kan ikke avslutte oppfølgingsperioden fordi:</BodyShort>
                     <ul>
