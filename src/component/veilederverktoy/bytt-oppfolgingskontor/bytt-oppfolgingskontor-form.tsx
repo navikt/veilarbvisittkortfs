@@ -1,19 +1,19 @@
 import { ArbeidsOppfolgingKontorDTO, hentAlleKontor } from '../../../api/ao-oppfolgingskontor';
-import { FormikProps } from 'formik';
-import { Button } from '@navikt/ds-react';
+import { Field, useFormikContext } from 'formik';
+import { Button, TextField } from '@navikt/ds-react';
 import KontorDropdown from '../opprett-oppgave/components/opprett-oppgave-enhet-dropdown';
 import { useEffect } from 'react';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 
 interface ByttOppfolgingskontorFormProps {
     fnr: string;
-    kontorId: string;
-    formikProps: FormikProps<ArbeidsOppfolgingKontorDTO>;
     tilbake: () => void;
 }
 
-function ByttOppfolgingskontorForm({ kontorId, tilbake, formikProps }: ByttOppfolgingskontorFormProps) {
+function ByttOppfolgingskontorForm({ tilbake }: ByttOppfolgingskontorFormProps) {
+    const formikProps = useFormikContext<ArbeidsOppfolgingKontorDTO>();
     const alleKontorFetcher = useAxiosFetcher(hentAlleKontor);
+    const harSkiftetKontor = formikProps.initialValues.kontorId !== formikProps.values.kontorId;
 
     useEffect(() => {
         alleKontorFetcher.fetch();
@@ -23,16 +23,24 @@ function ByttOppfolgingskontorForm({ kontorId, tilbake, formikProps }: ByttOppfo
     return (
         <div className="space-y-4">
             <KontorDropdown
-                valgtKontorId={formikProps.values.kontorId || kontorId}
+                valgtKontorId={formikProps.values.kontorId}
                 alleKontor={alleKontorFetcher.data?.data.alleKontor || []}
                 isLoading={alleKontorFetcher.loading}
                 formikFieldName={'kontorId'}
             />
+            <Field as={TextField} label={'Begrunnelse (frivillig)'} name={'begrunnelse'} />
             <div className="space-x-4">
-                <Button variant="primary" size="small" className="" type="submit">
+                <Button
+                    loading={formikProps.isSubmitting}
+                    disabled={!harSkiftetKontor || formikProps.isSubmitting}
+                    variant="primary"
+                    size="small"
+                    className=""
+                    type="submit"
+                >
                     Bekreft
                 </Button>
-                <Button variant="secondary" size="small" onClick={tilbake}>
+                <Button disabled={formikProps.isSubmitting} variant="secondary" size="small" onClick={tilbake}>
                     Avbryt
                 </Button>
             </div>
