@@ -63,7 +63,7 @@ function ByttOppfolgingskontorModal() {
             className="bytt-oppfolgingskontor"
             render={() => (
                 <div className="bytt-oppfolgingskontor-modal space-y-4">
-                    <Heading size="small" level="2" className="mb-4">{`Bytt oppfølgingskontor for ${navn}`}</Heading>
+                    {/*<Heading size="small" level="2" className="mb-4">{`Bytt oppfølgingskontor for ${navn}`}</Heading>*/}
                     <div className="space-y-2 p-4 rounded-sm border-border-default bg-surface-subtle">
                         <div className="mb-2">
                             <Heading size={'small'}>Fakta om bruker</Heading>

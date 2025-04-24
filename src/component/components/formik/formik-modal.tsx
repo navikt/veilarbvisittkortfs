@@ -22,23 +22,23 @@ function FormikModal<Values extends InitialValues, InitialValues extends FormikV
     className
 }: FormikModalProps<Values, InitialValues>) {
     const { hideModal } = useModalStore();
-    const [isOpen, setIsOpen] = useState(true);
 
     const tilbake = (formikProps: FormikProps<Values>) => {
         const confirmTekst = 'Er du sikker på at du vil lukke siden? Ulagrede endringer vil da gå tapt.';
 
         if (formikProps.dirty) {
             if (visConfirmDialog && window.confirm(confirmTekst)) {
-                setIsOpen(false);
                 hideModal();
+                return true;
             }
             if (!visConfirmDialog) {
-                setIsOpen(false);
                 hideModal();
+                return true;
             }
+            return false;
         } else {
-            setIsOpen(false);
             hideModal();
+            return true;
         }
     };
 
@@ -47,9 +47,10 @@ function FormikModal<Values extends InitialValues, InitialValues extends FormikV
             {formikProps => (
                 <Modal
                     className={cls('visittkortfs-modal', className)}
-                    open={isOpen}
-                    onClose={() => tilbake(formikProps as FormikProps<Values>)}
+                    open
+                    onBeforeClose={() => tilbake(formikProps as FormikProps<Values>)}
                     closeOnBackdropClick={true}
+                    onClose={() => {}}
                     header={{
                         heading: tittel,
                         closeButton: true

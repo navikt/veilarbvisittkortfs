@@ -16,5 +16,5 @@ export function hentAlleKontor() {
 }
 
 export function settKontor(arbeidsOppfolgingKontorDTO: ArbeidsOppfolgingKontorDTO) {
-    return axiosInstance.post<string>(`/ao-oppfolgingskontor/api/kontor`, { arbeidsOppfolgingKontorDTO });
+    return axiosInstance.post<string>(`/ao-oppfolgingskontor/api/kontor`, arbeidsOppfolgingKontorDTO);
 }
