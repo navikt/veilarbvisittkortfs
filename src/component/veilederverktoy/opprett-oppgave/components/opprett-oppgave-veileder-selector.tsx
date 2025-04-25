@@ -9,7 +9,7 @@ import { OppgaveTema } from '../../../../api/veilarboppgave';
 import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
 import { ifResponseHasData } from '../../../../util/utils';
 import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
-import SelectMedSok from './select-med-sok/select-med-sok';
+import SelectMedSok from './select-med-sok/dropdown-med-soke-filter';
 
 interface OpprettOppgaveVelgVeilederProps {
     veilederId: StringOrNothing;

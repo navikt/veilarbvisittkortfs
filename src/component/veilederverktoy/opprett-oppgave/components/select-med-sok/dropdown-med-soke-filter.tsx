@@ -10,10 +10,15 @@ interface SelectMedSokProps {
     children: ReactNode;
 }
 
-function SelectMedSok({ knappeTekst, children }: SelectMedSokProps) {
+function DropdownMedSokeFilter({ knappeTekst, children }: SelectMedSokProps) {
     return (
         <div className="select-med-sok">
-            <Dropdown>
+            <Dropdown
+                onSelect={element => {
+                    element.preventDefault(); // Dont submit form on select
+                }}
+                closeOnSelect
+            >
                 <Button as={Dropdown.Toggle} variant="tertiary-neutral" className="select-med-sok__btn" type="button">
                     {knappeTekst}
                 </Button>
@@ -23,4 +28,4 @@ function SelectMedSok({ knappeTekst, children }: SelectMedSokProps) {
     );
 }
 
-export default withClickMetric(SelectMedSok);
+export default withClickMetric(DropdownMedSokeFilter);

@@ -1,31 +1,24 @@
-import { ArbeidsOppfolgingKontorDTO, hentAlleKontor } from '../../../api/ao-oppfolgingskontor';
+import { ArbeidsOppfolgingKontorDTO, Kontor } from '../../../api/ao-oppfolgingskontor';
 import { Field, useFormikContext } from 'formik';
 import { Button, TextField } from '@navikt/ds-react';
 import KontorDropdown from '../opprett-oppgave/components/opprett-oppgave-enhet-dropdown';
-import { useEffect } from 'react';
-import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 
 interface ByttOppfolgingskontorFormProps {
-    fnr: string;
     tilbake: () => void;
+    alleKontor: Kontor[];
+    isKontorFetchLoading: boolean;
 }
 
-function ByttOppfolgingskontorForm({ tilbake }: ByttOppfolgingskontorFormProps) {
+function ByttOppfolgingskontorForm({ tilbake, alleKontor, isKontorFetchLoading }: ByttOppfolgingskontorFormProps) {
     const formikProps = useFormikContext<ArbeidsOppfolgingKontorDTO>();
-    const alleKontorFetcher = useAxiosFetcher(hentAlleKontor);
     const harSkiftetKontor = formikProps.initialValues.kontorId !== formikProps.values.kontorId;
-
-    useEffect(() => {
-        alleKontorFetcher.fetch();
-        /* eslint-disable-next-line react-hooks/exhaustive-deps */
-    }, []);
 
     return (
         <div className="space-y-4">
             <KontorDropdown
                 valgtKontorId={formikProps.values.kontorId}
-                alleKontor={alleKontorFetcher.data?.data.alleKontor || []}
-                isLoading={alleKontorFetcher.loading}
+                alleKontor={alleKontor}
+                isLoading={isKontorFetchLoading}
                 formikFieldName={'kontorId'}
             />
             <Field as={TextField} label={'Begrunnelse (frivillig)'} name={'begrunnelse'} />

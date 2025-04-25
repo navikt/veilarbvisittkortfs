@@ -1,9 +1,9 @@
 import { Skeleton } from '@navikt/ds-react';
-import SokFilter from '../../../components/sokfilter/sok-filter';
-import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
 import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
-import SelectMedSok from './select-med-sok/select-med-sok';
 import { Kontor } from '../../../../api/ao-oppfolgingskontor';
+import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
+import SokFilter from '../../../components/sokfilter/sok-filter';
+import DropdownMedSokeFilter from './select-med-sok/dropdown-med-soke-filter';
 
 interface KontorDropdownProps {
     valgtKontorId: StringOrNothing;
@@ -12,14 +12,12 @@ interface KontorDropdownProps {
     formikFieldName: 'enhetId' | 'kontorId';
 }
 
-function KontorDropdown({ valgtKontorId, alleKontor, isLoading, formikFieldName }: KontorDropdownProps) {
+function KontorDropdown({ alleKontor, isLoading, formikFieldName, valgtKontorId }: KontorDropdownProps) {
     const valgtKontor: OrNothing<Kontor> =
         alleKontor.find(kontor => kontor.kontorId === valgtKontorId) || alleKontor[0];
 
     return (
         <div className="skjemaelement navds-form-field navds-form-field--medium navds-date__field">
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label className="navds-form-field__label navds-label navds-label--small">Kontor</label>
             {isLoading ? (
                 <Skeleton
                     variant="rectangle"
@@ -28,7 +26,10 @@ function KontorDropdown({ valgtKontorId, alleKontor, isLoading, formikFieldName 
                     width="20rem"
                 />
             ) : (
-                <SelectMedSok name="Velg kontor dropdown" knappeTekst={`${valgtKontor?.kontorId} ${valgtKontor?.navn}`}>
+                <DropdownMedSokeFilter
+                    name="Velg kontor dropdown"
+                    knappeTekst={`${valgtKontor?.kontorId} ${valgtKontor?.navn}`}
+                >
                     <SokFilter data={alleKontor} label="" placeholder="Søk etter kontor">
                         {data => (
                             <FormikRadioGroup
@@ -41,7 +42,7 @@ function KontorDropdown({ valgtKontorId, alleKontor, isLoading, formikFieldName 
                             />
                         )}
                     </SokFilter>
-                </SelectMedSok>
+                </DropdownMedSokeFilter>
             )}
         </div>
     );
