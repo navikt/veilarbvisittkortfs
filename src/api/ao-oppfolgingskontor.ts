@@ -48,43 +48,39 @@ interface GraphqlError {
     extensions?: { [key: string]: unknown };
 }
 
-function logGraphQLError(response: { errors: GraphqlError[] }): void {
+/* eslint no-console: 0 */
+export function logGraphQLError(response: { errors: GraphqlError[] }): void {
     if (!response || !Array.isArray(response.errors)) {
-        // eslint-disable-next-line no-console
         console.warn('Invalid or empty GraphQL error object.');
         return;
     }
 
-    const titleStyle = 'font-weight: bold; color: red; font-size: 14px;';
-    const labelStyle = 'color: #888; font-weight: bold;';
-    const valueStyle = 'color: #000;';
-    const divider = '-'.repeat(40);
-
-    // eslint-disable-next-line no-console
-    console.groupCollapsed('%cGraphQL Error', titleStyle);
+    console.groupCollapsed(
+        `%cGraphQL Error: ${response.errors[0]?.message}`,
+        'color: red; font-weight: bold; font-size: 13px;'
+    );
 
     response.errors.forEach((err, idx) => {
-        // eslint-disable-next-line no-console
-        console.group(`%cError ${idx + 1}`, labelStyle);
-        // eslint-disable-next-line no-console
-        console.log(`%cMessage: %c${err.message}`, labelStyle, valueStyle);
-        if (err.locations) {
-            // eslint-disable-next-line no-console
-            console.log(`%cLocation: %c${JSON.stringify(err.locations)}`, labelStyle, valueStyle);
-        }
+        const prefix = `[Error ${idx + 1}]`;
+
+        console.error(`${prefix} ${err.message}`);
+
         if (err.path) {
-            // eslint-disable-next-line no-console
-            console.log(`%cPath: %c${err.path.join(' > ')}`, labelStyle, valueStyle);
+            console.log(`    at path: ${err.path.join('.')}`);
         }
+
+        if (err.locations) {
+            err.locations.forEach(loc => {
+                console.log(`    at line ${loc.line}, column ${loc.column}`);
+            });
+        }
+
         if (err.extensions) {
-            // eslint-disable-next-line no-console
-            console.log(`%cExtensions: %c${JSON.stringify(err.extensions, null, 2)}`, labelStyle, valueStyle);
+            console.log('    extensions:', err.extensions);
         }
-        // eslint-disable-next-line no-console
-        console.groupEnd();
+
+        console.log('');
     });
-    // eslint-disable-next-line no-console
-    console.log(`%c${divider}`, 'color: #ccc;');
-    // eslint-disable-next-line no-console
+
     console.groupEnd();
 }
