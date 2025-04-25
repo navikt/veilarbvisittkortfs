@@ -1,5 +1,5 @@
 import FormikModal from '../../components/formik/formik-modal';
-import { BodyShort, Heading, Modal, Skeleton } from '@navikt/ds-react';
+import { BodyShort, ErrorMessage, Heading, Modal, Skeleton } from '@navikt/ds-react';
 import { Form as FormikForm } from 'formik';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
@@ -36,7 +36,7 @@ function ByttOppfolgingskontorModal() {
         kontorId: enhetId
     };
 
-    const alleKontor = alleKontorFetcher?.data?.data.alleKontor || [];
+    const alleKontor = alleKontorFetcher?.data?.data?.alleKontor || [];
     const nåværendeKontor = alleKontor.find(kontor => kontor.kontorId === enhetId);
 
     async function lagreOppfolgingskontor(formdata: ArbeidsOppfolgingKontorDTO) {
@@ -61,6 +61,25 @@ function ByttOppfolgingskontorModal() {
             >
                 <Modal.Body>
                     <ByttOppfolgingskontorKvittering kvittering={kvittering} />
+                </Modal.Body>
+            </Modal>
+        );
+    }
+
+    if (alleKontorFetcher.error) {
+        return (
+            <Modal
+                className="visittkortfs-modal"
+                open
+                onClose={hideModal}
+                closeOnBackdropClick={true}
+                header={{
+                    heading: 'Bytt oppfølgingskontor',
+                    closeButton: true
+                }}
+            >
+                <Modal.Body>
+                    <ErrorMessage>Kunne ikke hente oppfølgingskontor. Vennligst prøv igjen senere.</ErrorMessage>
                 </Modal.Body>
             </Modal>
         );
