@@ -29,6 +29,7 @@ export function hentAlleKontor() {
                 logGraphQLError(res.data);
                 throw new Error('Feil ved henting av kontor');
             }
+            return res;
         });
 }
 
