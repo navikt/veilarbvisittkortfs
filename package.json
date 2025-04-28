@@ -60,7 +60,7 @@
         "jsdom": "26.1.0",
         "less": "4.2.2",
         "lint-staged": "15.5.0",
-        "msw": "2.7.3",
+        "msw": "2.7.5",
         "prettier": "3.5.3",
         "typescript": "5.8.3",
         "typescript-eslint": "8.31.0",
