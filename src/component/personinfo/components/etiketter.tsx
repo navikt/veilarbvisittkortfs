@@ -93,17 +93,21 @@ function Etiketter() {
             return false;
         }
 
-        if (features?.[BRUK_GJELDENDE_14A_SOM_KILDE_FOR_TRENGER_VURDERING_ETIKETT]) {
-            return (
-                !gjeldende14aVedtakLoading &&
-                !harGjeldende14aVedtak(gjeldende14aVedtak) &&
-                !opplysningerOmArbeidssoekerLoading &&
-                !opplysningerOmArbeidssoeker?.profilering?.profilertTil
-            );
+        return (
+            trengerVurdering(oppfolgingsstatus) &&
+            !opplysningerOmArbeidssoekerLoading &&
+            !opplysningerOmArbeidssoeker?.profilering?.profilertTil
+        );
+    }
+
+    function visTrengerOppfolgingsvedtakEtikett() {
+        if (oppfolgingsstatus === null || oppfolgingsstatus === undefined || typeof oppfolgingsstatus === 'undefined') {
+            return false;
         }
 
         return (
-            trengerVurdering(oppfolgingsstatus) &&
+            !gjeldende14aVedtakLoading &&
+            !harGjeldende14aVedtak(gjeldende14aVedtak) &&
             !opplysningerOmArbeidssoekerLoading &&
             !opplysningerOmArbeidssoeker?.profilering?.profilertTil
         );
@@ -190,7 +194,11 @@ function Etiketter() {
             >
                 Ikke registrert KRR
             </Fokus>
-            <Info visible={visTrengerVurderingEtikett()}>Trenger vurdering</Info>
+            {features?.[BRUK_GJELDENDE_14A_SOM_KILDE_FOR_TRENGER_VURDERING_ETIKETT] ? (
+                <Info visible={visTrengerOppfolgingsvedtakEtikett()}>Trenger oppfølgingsvedtak § 14 a</Info>
+            ) : (
+                <Info visible={visTrengerVurderingEtikett()}>Trenger vurdering</Info>
+            )}
             <Info
                 visible={
                     trengerAEV(oppfolgingsstatus) &&
