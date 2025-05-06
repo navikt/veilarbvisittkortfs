@@ -38,6 +38,7 @@ export function selectKanSendeEskaleringsVarsel(
     return (
         tilgangTilBrukersKontor.tilgangTilBrukersKontor &&
         oppfolging.underOppfolging &&
+        !oppfolging.underKvp &&
         gjeldendeEskaleringsvarsel == null &&
         !oppfolging.reservasjonKRR &&
         !oppfolging.manuell
