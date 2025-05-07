@@ -135,8 +135,8 @@ function Etiketter() {
         if (features?.[VIS_I_ARBEIDSSOKERREGISTERET_ETIKETT]) {
             return (
                 !opplysningerOmArbeidssoekerLoading &&
-                opplysningerOmArbeidssoeker !== null &&
-                opplysningerOmArbeidssoeker !== undefined
+                opplysningerOmArbeidssoeker?.arbeidssoekerperiodeStartet !== null &&
+                opplysningerOmArbeidssoeker?.arbeidssoekerperiodeStartet !== undefined
             );
         }
 
