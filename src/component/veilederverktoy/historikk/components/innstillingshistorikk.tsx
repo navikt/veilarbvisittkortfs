@@ -19,6 +19,7 @@ const typeTilTekst: InnstillingsHistorikkTypeTilTekst = {
     SATT_TIL_MANUELL: 'Endret til manuell oppfølging',
     STARTET_OPPFOLGINGSPERIODE: 'Oppfølgingsperioden ble startet',
     AVSLUTTET_OPPFOLGINGSPERIODE: 'Oppfølgingsperioden ble avsluttet',
+    REAKTIVERT_OPPFOLGINGSPERIODE: 'Oppfølgingsperioden ble reaktivert',
     KVP_STARTET: 'Kvalifiseringsprogram startet',
     KVP_STOPPET: 'Kvalifiseringsprogram avsluttet',
     VEILEDER_TILORDNET: 'Tildelt veileder',
