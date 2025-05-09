@@ -105,12 +105,7 @@ function Etiketter() {
             return false;
         }
 
-        return (
-            !gjeldende14aVedtakLoading &&
-            !harGjeldende14aVedtak(gjeldende14aVedtak) &&
-            !opplysningerOmArbeidssoekerLoading &&
-            !opplysningerOmArbeidssoeker?.profilering?.profilertTil
-        );
+        return !gjeldende14aVedtakLoading && !harGjeldende14aVedtak(gjeldende14aVedtak);
     }
 
     function visProfileringsetikett(
@@ -140,8 +135,8 @@ function Etiketter() {
         if (features?.[VIS_I_ARBEIDSSOKERREGISTERET_ETIKETT]) {
             return (
                 !opplysningerOmArbeidssoekerLoading &&
-                opplysningerOmArbeidssoeker !== null &&
-                opplysningerOmArbeidssoeker !== undefined
+                opplysningerOmArbeidssoeker?.arbeidssoekerperiodeStartet !== null &&
+                opplysningerOmArbeidssoeker?.arbeidssoekerperiodeStartet !== undefined
             );
         }
 
