@@ -12,6 +12,7 @@ interface KvitteringProps {
 
 function Kvittering({ tittel, alertStripeTekst, annetInnhold, onRequestClose }: KvitteringProps) {
     const { hideModal } = useModalStore();
+    const kvitteringOverskriftId = 'kvittering-overskrift';
 
     return (
         <VarselModal
@@ -23,11 +24,14 @@ function Kvittering({ tittel, alertStripeTekst, annetInnhold, onRequestClose }: 
                 }
             }}
             type="SUCCESS"
+            ariaLabelledBy={kvitteringOverskriftId}
         >
-            <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
-                <Heading size="medium" level="2" className="modal-info-tekst__undertekst">
+            <Modal.Header>
+                <Heading size="medium" level="2" className="modal-info-tekst__undertekst" id={kvitteringOverskriftId}>
                     {tittel}
                 </Heading>
+            </Modal.Header>
+            <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
                 <BodyShort size="small" spacing={true}>
                     {alertStripeTekst}
                 </BodyShort>

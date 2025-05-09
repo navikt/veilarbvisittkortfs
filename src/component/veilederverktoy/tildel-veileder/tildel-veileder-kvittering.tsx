@@ -14,11 +14,19 @@ export function TildelVeilederKvittering({ tildeltVeilederNavn }: TildelVeileder
     const { mutate: setUfordeltbruker } = useErUfordeltBruker(brukerFnr, visVeilederVerktoy);
 
     return (
-        <VarselModal isOpen={true} onRequestClose={hideModal} type="SUCCESS" inkluderIkon={false}>
-            <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
-                <Heading size="large" level="1">
+        <VarselModal
+            isOpen={true}
+            onRequestClose={hideModal}
+            type="SUCCESS"
+            inkluderIkon={false}
+            ariaLabelledBy="tildel-veileder-overskrift"
+        >
+            <Modal.Header>
+                <Heading size="large" level="2" id="tildel-veileder-overskrift">
                     Tildel veileder
                 </Heading>
+            </Modal.Header>
+            <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
                 <BodyShort size="small">
                     Du har tildelt veileder {tildeltVeilederNavn}. Det kan ta noe tid før brukeren er i Min oversikt.
                 </BodyShort>
