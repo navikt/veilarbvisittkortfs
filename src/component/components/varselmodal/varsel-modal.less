@@ -2,6 +2,10 @@
     overflow: visible; // Gjer at ikonet ikkje vert kutta av kanten på modalen
     text-align: center;
 
+    .varsel-modal-ikon #varsel-ikon {
+        margin-top: -2rem; // Gjer at halve ikonet med storleik 4x4rem kjem utanfor modalen
+    }
+
     .veilarbvisittkortfs-varsel-modal-body {
         p {
             text-align: start;
@@ -16,26 +20,8 @@
         }
     }
 
-    // Gjer det lettare å midtstille #varsel-ikon
-    & > :first-child {
-        text-align: start;
-    }
-
     /* Runder av hjørna til modalen (midlertidig fiks), slik at vi unngår at berre botnen er avrunda grunna Modal.Footer sin styling. */
     & > :first-child, & > :last-child {
         border-radius: var(--a-border-radius-large);
-    }
-
-    #varsel-ikon {
-        margin-top: -3rem; // placerar en ikon med størrelsen 64x64 i mitten
-        margin-left: calc(50% - 2rem); // midtstillar ikonet langs x-aksen
-    }
-
-    .modal-footer {
-        margin-top: 1rem;
-
-        .navds-button--primary {
-            margin-right: 1rem;
-        }
     }
 }
