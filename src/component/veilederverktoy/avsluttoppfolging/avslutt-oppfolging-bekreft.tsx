@@ -1,4 +1,4 @@
-import { BodyShort, Button } from '@navikt/ds-react';
+import { BodyShort, Button, Modal } from '@navikt/ds-react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
@@ -27,15 +27,19 @@ function AvsluttOppfolgingBekreft({ begrunnelse }: AvsluttOppfolgingBekreftelseM
 
     return (
         <VarselModal onRequestClose={hideModal} isOpen={true} type="ADVARSEL">
-            <BodyShort size="small">Er du sikker på at du vil avslutte oppfølgingsperioden til {brukerNavn}?</BodyShort>
-            <div className="modal-footer">
+            <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
+                <BodyShort size="small">
+                    Er du sikker på at du vil avslutte oppfølgingsperioden til {brukerNavn}?
+                </BodyShort>
+            </Modal.Body>
+            <Modal.Footer>
                 <Button variant="primary" size="small" type="submit" onClick={handleSubmitAvsluttOppfolging}>
                     Bekreft
                 </Button>
                 <Button variant="secondary" size="small" onClick={hideModal}>
                     Avbryt
                 </Button>
-            </div>
+            </Modal.Footer>
         </VarselModal>
     );
 }

@@ -1,17 +1,18 @@
 import { ReactNode } from 'react';
+import { BodyShort, Heading, Modal } from '@navikt/ds-react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { useModalStore } from '../../../store/modal-store';
-import { BodyShort, Heading } from '@navikt/ds-react';
 
 interface KvitteringProps {
     tittel: string;
     alertStripeTekst: string;
-    footer?: ReactNode;
+    annetInnhold?: ReactNode;
     onRequestClose?: () => void;
 }
 
-function Kvittering({ tittel, alertStripeTekst, footer, onRequestClose }: KvitteringProps) {
+function Kvittering({ tittel, alertStripeTekst, annetInnhold, onRequestClose }: KvitteringProps) {
     const { hideModal } = useModalStore();
+    const kvitteringOverskriftId = 'kvittering-overskrift';
 
     return (
         <VarselModal
@@ -23,14 +24,19 @@ function Kvittering({ tittel, alertStripeTekst, footer, onRequestClose }: Kvitte
                 }
             }}
             type="SUCCESS"
+            ariaLabelledBy={kvitteringOverskriftId}
         >
-            <Heading size="medium" level="2" className="modal-info-tekst__undertekst">
-                {tittel}
-            </Heading>
-            <BodyShort size="small" spacing={true}>
-                {alertStripeTekst}
-            </BodyShort>
-            {footer}
+            <Modal.Header>
+                <Heading size="medium" level="2" className="modal-info-tekst__undertekst" id={kvitteringOverskriftId}>
+                    {tittel}
+                </Heading>
+            </Modal.Header>
+            <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
+                <BodyShort size="small" spacing={true}>
+                    {alertStripeTekst}
+                </BodyShort>
+                {annetInnhold}
+            </Modal.Body>
         </VarselModal>
     );
 }
