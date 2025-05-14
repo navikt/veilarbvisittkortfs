@@ -10,7 +10,7 @@ interface FormikRadioFilterProps<T> {
     defaultValue?: string;
 }
 
-function FormikRadioGroup<T>({ name, data, createLabel, createValue }: FormikRadioFilterProps<T>) {
+function FormikDropdown<T>({ name, data, createLabel, createValue }: FormikRadioFilterProps<T>) {
     const { setFieldValue } = useFormikContext();
     return (
         <Dropdown.Menu.List>
@@ -30,4 +30,4 @@ function FormikRadioGroup<T>({ name, data, createLabel, createValue }: FormikRad
     );
 }
 
-export default FormikRadioGroup;
+export default FormikDropdown;

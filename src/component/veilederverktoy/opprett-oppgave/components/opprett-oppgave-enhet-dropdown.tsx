@@ -1,7 +1,7 @@
 import { Skeleton } from '@navikt/ds-react';
 import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
 import { Kontor } from '../../../../api/ao-oppfolgingskontor';
-import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
+import FormikDropdown from '../../../components/formik/formik-dropdown';
 import SokFilter from '../../../components/sokfilter/sok-filter';
 import DropdownMedSokeFilter from './select-med-sok/dropdown-med-soke-filter';
 
@@ -32,7 +32,7 @@ function KontorDropdown({ alleKontor, isLoading, formikFieldName, valgtKontorId 
                 >
                     <SokFilter data={alleKontor} label="" placeholder="Søk etter kontor">
                         {data => (
-                            <FormikRadioGroup
+                            <FormikDropdown
                                 defaultValue={alleKontor[0]?.kontorId}
                                 data={data}
                                 createLabel={(kontor: Kontor) => `${kontor.kontorId} ${kontor.navn}`}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FormikProps } from 'formik';
 import SokFilter from '../../../components/sokfilter/sok-filter';
-import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
+import FormikDropdown from '../../../components/formik/formik-dropdown';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import { useDataStore } from '../../../../store/data-store';
 import { fetchVeilederePaEnhet, VeilederData } from '../../../../api/veilarbveileder';
@@ -58,7 +58,7 @@ function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: 
             <SelectMedSok name="Velg veileder dropdown" knappeTekst={(valgtVeileder && valgtVeileder.navn) || ''}>
                 <SokFilter data={sorterteVeiledere} label="" placeholder="Søk etter veileder">
                     {data => (
-                        <FormikRadioGroup
+                        <FormikDropdown
                             data={data}
                             createLabel={(veileder: VeilederData) => veileder.navn}
                             createValue={(veileder: VeilederData) => veileder.ident}
