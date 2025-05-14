@@ -187,7 +187,7 @@ export const Veilederverktoy = () => {
                         metricName="historikk"
                     />
                     <StartProsessKnapp
-                        knappeTekst={'Bytt oppfolgingskontor'}
+                        knappeTekst={'Bytt oppfølgingskontor'}
                         onClick={showByttOppfolgingKontorModal}
                         metricName="bytt_oppfolgingskontor"
                     />
