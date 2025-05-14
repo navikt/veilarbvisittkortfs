@@ -26,10 +26,7 @@ function KontorDropdown({ alleKontor, isLoading, formikFieldName, valgtKontorId 
                     width="20rem"
                 />
             ) : (
-                <DropdownMedSokeFilter
-                    name="Velg kontor dropdown"
-                    knappeTekst={`${valgtKontor?.kontorId} ${valgtKontor?.navn}`}
-                >
+                <DropdownMedSokeFilter knappeTekst={`${valgtKontor?.kontorId} ${valgtKontor?.navn}`}>
                     <SokFilter data={alleKontor} label="" placeholder="Søk etter kontor">
                         {data => (
                             <FormikDropdown

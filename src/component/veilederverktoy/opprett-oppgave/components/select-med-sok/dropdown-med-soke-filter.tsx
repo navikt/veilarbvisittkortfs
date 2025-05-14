@@ -4,7 +4,6 @@ import withClickMetric from '../../../../components/click-metric/click-metric';
 import './select-med-sok.less';
 
 interface SelectMedSokProps {
-    // name: string;
     knappeTekst: ReactNode;
     onClick?: () => void;
     children: ReactNode;
@@ -18,7 +17,6 @@ function DropdownMedSokeFilter({ knappeTekst, children }: SelectMedSokProps) {
                     element.preventDefault(); // Dont submit form on select
                 }}
                 closeOnSelect
-                className="dropdown-width-override"
             >
                 <Button as={Dropdown.Toggle} variant="tertiary-neutral" className="select-med-sok__btn" type="button">
                     {knappeTekst}
