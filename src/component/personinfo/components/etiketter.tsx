@@ -5,11 +5,6 @@ import { FullmaktData, useOpplysningerOmArbeidssokerMedProfilering } from '../..
 import { OppfolgingStatus, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
 import { OrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
-import {
-    BRUK_GJELDENDE_14A_SOM_KILDE_FOR_PROFILERINGSETIKETTER,
-    BRUK_GJELDENDE_14A_SOM_KILDE_FOR_TRENGER_VURDERING_ETIKETT,
-    VIS_I_ARBEIDSSOKERREGISTERET_ETIKETT
-} from '../../../api/veilarbpersonflatefs';
 import { Oppfolgingsvedtak14a, useGjeldende14aVedtak } from '../../../api/veilarbvedtaksstotte';
 
 interface Etikettprops extends Omit<TagProps, 'variant'> {
@@ -48,23 +43,12 @@ function erBrukerSykmeldt(oppfolging: OrNothing<OppfolgingStatus>): boolean {
     return !!oppfolging && oppfolging.formidlingsgruppe === 'IARBS' && oppfolging.servicegruppe === 'VURDI';
 }
 
-function trengerVurdering(oppfolging: OppfolgingStatus): boolean {
-    return oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'IVURD';
-}
-
 function trengerAEV(oppfolging: OrNothing<OppfolgingStatus>): boolean {
     return !!oppfolging && oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'BKART';
 }
 
 function harGjeldende14aVedtak(gjeldende14aVedtak: OrNothing<Oppfolgingsvedtak14a>): boolean {
     return gjeldende14aVedtak !== null && gjeldende14aVedtak !== undefined && typeof gjeldende14aVedtak !== 'undefined';
-}
-
-function manglerVedtak(oppfolging: OppfolgingStatus): boolean {
-    return (
-        oppfolging.formidlingsgruppe !== 'ISERV' &&
-        (oppfolging.servicegruppe === 'BKART' || oppfolging.servicegruppe === 'IVURD')
-    );
 }
 
 function erFullmaktOmradeMedOppfolging(fullmaktListe: FullmaktData[]): boolean {
@@ -77,8 +61,7 @@ function erFullmaktOmradeMedOppfolging(fullmaktListe: FullmaktData[]): boolean {
 function Etiketter() {
     const { brukerFnr } = useAppStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
-    const { gjeldendeEskaleringsvarsel, oppfolging, personalia, verge, fullmakt, spraakTolk, features } =
-        useDataStore();
+    const { gjeldendeEskaleringsvarsel, oppfolging, personalia, verge, fullmakt, spraakTolk } = useDataStore();
 
     const { data: opplysningerOmArbeidssoeker, isLoading: opplysningerOmArbeidssoekerLoading } =
         useOpplysningerOmArbeidssokerMedProfilering(brukerFnr);
@@ -86,18 +69,6 @@ function Etiketter() {
 
     function isEmpty(array: undefined | unknown[]): boolean {
         return !array || array.length === 0;
-    }
-
-    function visTrengerVurderingEtikett() {
-        if (oppfolgingsstatus === null || oppfolgingsstatus === undefined || typeof oppfolgingsstatus === 'undefined') {
-            return false;
-        }
-
-        return (
-            trengerVurdering(oppfolgingsstatus) &&
-            !opplysningerOmArbeidssoekerLoading &&
-            !opplysningerOmArbeidssoeker?.profilering?.profilertTil
-        );
     }
 
     function visTrengerOppfolgingsvedtakEtikett() {
@@ -115,32 +86,20 @@ function Etiketter() {
             return false;
         }
 
-        if (features?.[BRUK_GJELDENDE_14A_SOM_KILDE_FOR_PROFILERINGSETIKETTER]) {
-            return (
-                !opplysningerOmArbeidssoekerLoading &&
-                opplysningerOmArbeidssoeker?.profilering?.profilertTil === profilering &&
-                !gjeldende14aVedtakLoading &&
-                !harGjeldende14aVedtak(gjeldende14aVedtak)
-            );
-        }
-
         return (
             !opplysningerOmArbeidssoekerLoading &&
             opplysningerOmArbeidssoeker?.profilering?.profilertTil === profilering &&
-            manglerVedtak(oppfolgingsstatus)
+            !gjeldende14aVedtakLoading &&
+            !harGjeldende14aVedtak(gjeldende14aVedtak)
         );
     }
 
     function visIArbeidssokerregisteretEtikett() {
-        if (features?.[VIS_I_ARBEIDSSOKERREGISTERET_ETIKETT]) {
-            return (
-                !opplysningerOmArbeidssoekerLoading &&
-                opplysningerOmArbeidssoeker?.arbeidssoekerperiodeStartet !== null &&
-                opplysningerOmArbeidssoeker?.arbeidssoekerperiodeStartet !== undefined
-            );
-        }
-
-        return false;
+        return (
+            !opplysningerOmArbeidssoekerLoading &&
+            opplysningerOmArbeidssoeker?.arbeidssoekerperiodeStartet !== null &&
+            opplysningerOmArbeidssoeker?.arbeidssoekerperiodeStartet !== undefined
+        );
     }
 
     return (
@@ -189,11 +148,7 @@ function Etiketter() {
             >
                 Ikke registrert KRR
             </Fokus>
-            {features?.[BRUK_GJELDENDE_14A_SOM_KILDE_FOR_TRENGER_VURDERING_ETIKETT] ? (
-                <Info visible={visTrengerOppfolgingsvedtakEtikett()}>Trenger oppfølgingsvedtak § 14 a</Info>
-            ) : (
-                <Info visible={visTrengerVurderingEtikett()}>Trenger vurdering</Info>
-            )}
+            <Info visible={visTrengerOppfolgingsvedtakEtikett()}>Trenger oppfølgingsvedtak § 14 a</Info>
             <Info
                 visible={
                     trengerAEV(oppfolgingsstatus) &&
