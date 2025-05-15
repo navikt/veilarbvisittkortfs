@@ -1,5 +1,5 @@
 import FormikModal from '../../components/formik/formik-modal';
-import { BodyShort, ErrorMessage, Heading, Modal, Skeleton } from '@navikt/ds-react';
+import { Alert, BodyShort, ErrorMessage, Heading, Modal, Skeleton } from '@navikt/ds-react';
 import { Form as FormikForm } from 'formik';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
@@ -9,21 +9,22 @@ import ByttOppfolgingskontorForm from './bytt-oppfolgingskontor-form';
 import { ArbeidsOppfolgingKontorDTO, hentAlleKontor, settKontor } from '../../../api/ao-oppfolgingskontor';
 import './bytt-oppfolgingskontor.css';
 import { ByttOppfolgingskontorKvittering, KontorSkiftetKvittering } from './bytt-oppfolgingskontor-kvittering';
-import { useEffect, useState } from 'react';
-import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
+import { useState } from 'react';
+import useSWR from 'swr';
+import { AxiosError } from 'axios';
 
 function ByttOppfolgingskontorModal() {
     const [kvittering, setKvittering] = useState<KontorSkiftetKvittering | undefined>(undefined);
     const { brukerFnr, enhetId } = useAppStore();
     const { personalia } = useDataStore();
     const { hideModal } = useModalStore();
+    const [settKontorError, setSettKontorError] = useState<string | undefined>();
 
-    const alleKontorFetcher = useAxiosFetcher(hentAlleKontor);
-
-    useEffect(() => {
-        alleKontorFetcher.fetch();
-        /* eslint-disable-next-line react-hooks/exhaustive-deps */
-    }, []);
+    const {
+        data: alleKontorData,
+        error: hentAlleKontorError,
+        isLoading: hentAlleKontorLoading
+    } = useSWR('kontorer', hentAlleKontor);
 
     const navn = selectSammensattNavn(personalia);
 
@@ -36,15 +37,21 @@ function ByttOppfolgingskontorModal() {
         kontorId: enhetId
     };
 
-    const alleKontor = alleKontorFetcher?.data?.data?.alleKontor || [];
+    const alleKontor = alleKontorData?.data?.data?.alleKontor || [];
     const nåværendeKontor = alleKontor.find(kontor => kontor.kontorId === enhetId);
 
     async function lagreOppfolgingskontor(formdata: ArbeidsOppfolgingKontorDTO) {
-        await settKontor(formdata);
-        setKvittering({
-            fraKontor: { kontorId: enhetId || '', navn: 'Ditt nåværende kontor' },
-            tilKontor: { kontorId: formdata.kontorId, navn: 'Ditt nye kontor' }
-        });
+        try {
+            setSettKontorError(undefined);
+            await settKontor(formdata);
+            setKvittering({
+                fraKontor: { kontorId: enhetId || '', navn: 'Ditt nåværende kontor' },
+                tilKontor: { kontorId: formdata.kontorId, navn: 'Ditt nye kontor' }
+            });
+        } catch (error) {
+            const axisosError = error as AxiosError<string>;
+            setSettKontorError(axisosError.response?.data || axisosError.message);
+        }
     }
 
     if (kvittering) {
@@ -66,7 +73,7 @@ function ByttOppfolgingskontorModal() {
         );
     }
 
-    if (alleKontorFetcher.error) {
+    if (hentAlleKontorError) {
         return (
             <Modal
                 className="visittkortfs-modal"
@@ -116,7 +123,7 @@ function ByttOppfolgingskontorModal() {
                                 <BodyShort as={'dt'} weight="semibold">
                                     Nåværende oppfølgingskontor:
                                 </BodyShort>
-                                {alleKontorFetcher.loading ? (
+                                {hentAlleKontorLoading ? (
                                     <Skeleton width={100} />
                                 ) : (
                                     <BodyShort
@@ -128,10 +135,18 @@ function ByttOppfolgingskontorModal() {
                     </div>
                     <FormikForm>
                         <ByttOppfolgingskontorForm
-                            isKontorFetchLoading={alleKontorFetcher.loading}
+                            isKontorFetchLoading={hentAlleKontorLoading}
                             alleKontor={alleKontor}
                             tilbake={() => hideModal()}
                         />
+                        {settKontorError && (
+                            <Alert className="mt-4" variant="error">
+                                <span className="flex">
+                                    Klarte ikke tilordne nytt kontor til bruker. Vennligst prøv igjen senere
+                                </span>
+                                <span>{settKontorError}</span>
+                            </Alert>
+                        )}
                     </FormikForm>
                 </div>
             )}

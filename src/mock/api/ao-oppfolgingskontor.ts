@@ -6,6 +6,7 @@ const baseUrl = '/ao-oppfolgingskontor';
 
 export const settOppfolgingskontor: RequestHandler = http.post(`${baseUrl}/api/kontor`, async () => {
     await delay(defaultNetworkResponseDelay);
+    return new HttpResponse('Ikkje bra', { status: 500 });
     return HttpResponse.json(true);
 });
 
