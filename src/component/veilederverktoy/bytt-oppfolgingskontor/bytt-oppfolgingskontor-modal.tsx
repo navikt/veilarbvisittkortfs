@@ -44,10 +44,11 @@ function ByttOppfolgingskontorModal() {
     async function lagreOppfolgingskontor(formdata: ArbeidsOppfolgingKontorDTO) {
         try {
             setSettKontorError(undefined);
-            await settKontor(formdata);
+            const response = await settKontor(formdata);
+            const kontorKvittering = response.data;
             setKvittering({
-                fraKontor: { kontorId: enhetId || '', navn: 'Ditt nåværende kontor' },
-                tilKontor: { kontorId: formdata.kontorId, navn: 'Ditt nye kontor' }
+                fraKontor: kontorKvittering.fraKontor,
+                tilKontor: kontorKvittering.tilKontor
             });
         } catch (error) {
             const axisosError = error as AxiosError<string>;

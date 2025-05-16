@@ -53,8 +53,14 @@ export function hentAlleKontor(fnr: string) {
         });
 }
 
+/* kontorNavn istedetfor navn */
+export interface KvittertKontor {
+    kontorId: string;
+    kontorNavn: string;
+}
+
 export function settKontor(arbeidsOppfolgingKontorDTO: ArbeidsOppfolgingKontorDTO) {
-    return axiosInstance.post<string>(
+    return axiosInstance.post<{ fraKontor: KvittertKontor; tilKontor: KvittertKontor }>(
         `/ao-oppfolgingskontor/api/kontor`,
         arbeidsOppfolgingKontorDTO,
         axiosJsonRequestConfig

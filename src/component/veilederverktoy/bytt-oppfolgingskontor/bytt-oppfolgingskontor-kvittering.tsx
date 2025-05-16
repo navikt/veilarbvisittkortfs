@@ -1,9 +1,9 @@
 import { Heading, TextField } from '@navikt/ds-react';
-import { Kontor } from '../../../api/ao-oppfolgingskontor';
+import { KvittertKontor } from '../../../api/ao-oppfolgingskontor';
 
 export interface KontorSkiftetKvittering {
-    fraKontor: Kontor;
-    tilKontor: Kontor;
+    fraKontor: KvittertKontor;
+    tilKontor: KvittertKontor;
 }
 
 export const ByttOppfolgingskontorKvittering = ({ kvittering }: { kvittering: KontorSkiftetKvittering }) => {
@@ -12,12 +12,12 @@ export const ByttOppfolgingskontorKvittering = ({ kvittering }: { kvittering: Ko
             <Heading size={'small'}>Bytte av oppfølgingskontor er registrert</Heading>
             <div className="space-y-4">
                 <TextField
-                    value={`${kvittering.fraKontor.kontorId} - ${kvittering.fraKontor.navn}`}
+                    value={`${kvittering.fraKontor.kontorId} - ${kvittering.fraKontor.kontorNavn}`}
                     label={'Gammelt kontor'}
                     readOnly
                 />
                 <TextField
-                    value={`${kvittering.tilKontor.kontorId} - ${kvittering.tilKontor.navn}`}
+                    value={`${kvittering.tilKontor.kontorId} - ${kvittering.tilKontor.kontorNavn}`}
                     label={'Nytt kontor'}
                     readOnly
                 />
