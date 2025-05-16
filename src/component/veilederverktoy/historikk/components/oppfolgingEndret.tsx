@@ -22,7 +22,7 @@ export function OppfolgingEnhetEndret({ historikkElement, erGjeldendeEnhet }: Pr
         if (enhet) {
             enhetNavnFetcher.fetch(enhet);
         }
-    }, [enhet, enhetNavnFetcher]);
+    }, [enhet]);
 
     if (isAnyLoading(enhetNavnFetcher)) {
         return <Loader size="2xlarge" />;
