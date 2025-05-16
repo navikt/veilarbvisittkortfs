@@ -38,7 +38,7 @@ function ByttOppfolgingskontorModal() {
     };
 
     const alleKontor = alleKontorData?.data?.data?.alleKontor || [];
-    const nåværendeKontor = alleKontor.find(kontor => kontor.kontorId === enhetId);
+    const kontorTilhorighet = alleKontorData?.data?.data?.kontorTilhorighet || null;
 
     async function lagreOppfolgingskontor(formdata: ArbeidsOppfolgingKontorDTO) {
         try {
@@ -128,7 +128,7 @@ function ByttOppfolgingskontorModal() {
                                 ) : (
                                     <BodyShort
                                         as={'dd'}
-                                    >{`${nåværendeKontor?.kontorId} - ${nåværendeKontor?.navn}`}</BodyShort>
+                                    >{`${kontorTilhorighet?.kontorId} - ${kontorTilhorighet?.kontorNavn}`}</BodyShort>
                                 )}
                             </div>
                         </dl>

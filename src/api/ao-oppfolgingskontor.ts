@@ -11,13 +11,30 @@ export interface Kontor {
     navn: string;
 }
 
-const graphqlQuery = `
-    { alleKontor { kontorId , navn } }
-`;
+const graphqlQuery = `{
+    alleKontor {
+        kontorId,
+        navn
+    },
+    kontorTilhorighet {
+        kontorId,
+        kilde,
+        registrant,
+        registrantType,
+    }
+}`;
+
+interface KontorTilhorighet {
+    kontorId: string;
+    kontorNavn: string;
+    kilde: string;
+    registrant: string;
+    registrantType: string;
+}
 
 export function hentAlleKontor() {
     return axiosInstance
-        .post<GraphqlResponse<{ alleKontor: Kontor[] }>>(
+        .post<GraphqlResponse<{ alleKontor: Kontor[]; kontorTilhorighet: KontorTilhorighet }>>(
             `/ao-oppfolgingskontor/graphql`,
             JSON.stringify({
                 query: graphqlQuery
