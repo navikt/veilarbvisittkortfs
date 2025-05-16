@@ -11,7 +11,7 @@ export interface Kontor {
     navn: string;
 }
 
-const graphqlQuery = `{
+const graphqlQuery = `
     query($fnr: String!) {
         alleKontor {
             kontorId,
@@ -24,7 +24,7 @@ const graphqlQuery = `{
             registrantType,
         }
     }
-}`;
+`;
 
 interface KontorTilhorighet {
     kontorId: string;
