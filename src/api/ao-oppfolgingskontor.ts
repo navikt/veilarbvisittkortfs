@@ -19,6 +19,7 @@ const graphqlQuery = `
         },
         kontorTilhorighet(fnr: $fnr) {
             kontorId,
+            kontorNavn,
             kilde,
             registrant,
             registrantType,
