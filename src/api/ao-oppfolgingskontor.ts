@@ -8,7 +8,7 @@ export interface ArbeidsOppfolgingKontorDTO {
 
 export interface Kontor {
     kontorId: string;
-    navn: string;
+    kontorNavn: string;
 }
 
 const graphqlQuery = `

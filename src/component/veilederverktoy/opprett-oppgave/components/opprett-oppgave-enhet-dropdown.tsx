@@ -26,13 +26,13 @@ function KontorDropdown({ alleKontor, isLoading, formikFieldName, valgtKontorId 
                     width="20rem"
                 />
             ) : (
-                <DropdownMedSokeFilter knappeTekst={`${valgtKontor?.kontorId} ${valgtKontor?.navn}`}>
+                <DropdownMedSokeFilter knappeTekst={`${valgtKontor?.kontorId} ${valgtKontor?.kontorNavn}`}>
                     <SokFilter data={alleKontor} label="" placeholder="Søk etter kontor">
                         {data => (
                             <FormikDropdown
                                 defaultValue={alleKontor[0]?.kontorId}
                                 data={data}
-                                createLabel={(kontor: Kontor) => `${kontor.kontorId} ${kontor.navn}`}
+                                createLabel={(kontor: Kontor) => `${kontor.kontorId} ${kontor.kontorNavn}`}
                                 createValue={(kontor: Kontor) => kontor.kontorId}
                                 radioName="Velg kontor"
                                 name={formikFieldName}
