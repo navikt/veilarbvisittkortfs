@@ -64,7 +64,7 @@ function OppgaveInnerForm({
                     isLoading={isLoading}
                     valgtKontorId={kontorId}
                     formikFieldName={'enhetId'}
-                    alleKontor={behandladeEnheter.map(it => ({ navn: it.navn, kontorId: it.enhetId }))}
+                    alleKontor={behandladeEnheter.map(it => ({ kontorNavn: it.navn, kontorId: it.enhetId }))}
                 />
                 <OpprettOppgaveVelgVeileder
                     tema={tema}
