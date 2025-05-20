@@ -15,7 +15,7 @@ const graphqlQuery = `
     query($fnr: String!) {
         alleKontor {
             kontorId,
-            navn
+            kontorNavn
         },
         kontorTilhorighet(fnr: $fnr) {
             kontorId,
