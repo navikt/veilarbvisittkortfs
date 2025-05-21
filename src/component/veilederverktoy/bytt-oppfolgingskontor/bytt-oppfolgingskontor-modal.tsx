@@ -39,7 +39,7 @@ function ByttOppfolgingskontorModal() {
     };
 
     const alleKontor = alleKontorData?.data?.data?.alleKontor || [];
-    const kontorTilhorighet = alleKontorData?.data?.data?.kontorTilhorighet || null;
+    const kontorTilhorighet = alleKontorData?.data?.data?.kontorTilhorigheter || null;
 
     async function lagreOppfolgingskontor(formdata: ArbeidsOppfolgingKontorDTO) {
         try {
@@ -102,6 +102,13 @@ function ByttOppfolgingskontorModal() {
             className="bytt-oppfolgingskontor"
             render={() => (
                 <div className="bytt-oppfolgingskontor-modal space-y-4">
+                    <div>
+                        Her kan du overføre denne personen / brukeren til et annet kontor for arbeidsrettet oppfølging.
+                    </div>
+                    <Alert inline variant="info">
+                        Husk å oppdatere aktivitetsplan og § 14 a vedtaket før du overfører brukeren til et annet
+                        kontor.
+                    </Alert>
                     <div className="space-y-2 p-4 rounded-sm border-border-default bg-surface-subtle">
                         <div className="mb-2">
                             <Heading size={'small'}>Fakta om bruker</Heading>
@@ -123,14 +130,26 @@ function ByttOppfolgingskontorModal() {
                             </div>
                             <div className="flex space-x-2">
                                 <BodyShort as={'dt'} weight="semibold">
-                                    Nåværende oppfølgingskontor:
+                                    Lokalkontor:
                                 </BodyShort>
                                 {hentAlleKontorLoading ? (
                                     <Skeleton width={100} />
                                 ) : (
                                     <BodyShort
                                         as={'dd'}
-                                    >{`${kontorTilhorighet?.kontorId} - ${kontorTilhorighet?.kontorNavn}`}</BodyShort>
+                                    >{`${kontorTilhorighet?.geografiskTilknytning?.kontorId} - ${kontorTilhorighet?.geografiskTilknytning?.kontorNavn}`}</BodyShort>
+                                )}
+                            </div>
+                            <div className="flex space-x-2">
+                                <BodyShort as={'dt'} weight="semibold">
+                                    Arbeidsrettet oppfølging:
+                                </BodyShort>
+                                {hentAlleKontorLoading ? (
+                                    <Skeleton width={100} />
+                                ) : (
+                                    <BodyShort
+                                        as={'dd'}
+                                    >{`${kontorTilhorighet?.arbeidsoppfolging?.kontorId} - ${kontorTilhorighet?.arbeidsoppfolging?.kontorNavn}`}</BodyShort>
                                 )}
                             </div>
                         </dl>

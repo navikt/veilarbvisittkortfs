@@ -17,27 +17,41 @@ const graphqlQuery = `
             kontorId,
             kontorNavn
         },
-        kontorTilhorighet(fnr: $fnr) {
-            kontorId,
-            kontorNavn,
-            kilde,
-            registrant,
-            registrantType,
+        kontorTilhorigheter(fnr: $fnr) {
+            arena {
+                kontorId,
+                kontorNavn,
+            }
+            arbeidsoppfolging {
+                kontorId,
+                kontorNavn,
+            }
+            geografiskTilknytning {
+                kontorId,
+                kontorNavn,
+            }
         }
     }
 `;
 
-interface KontorTilhorighet {
-    kontorId: string;
-    kontorNavn: string;
-    kilde: string;
-    registrant: string;
-    registrantType: string;
+interface KontorTilhorigheter {
+    arena: {
+        kontorId: string;
+        kontorNavn: string;
+    };
+    arbeidsoppfolging: {
+        kontorId: string;
+        kontorNavn: string;
+    };
+    geografiskTilknytning: {
+        kontorId: string;
+        kontorNavn: string;
+    };
 }
 
 export function hentAlleKontor(fnr: string) {
     return axiosInstance
-        .post<GraphqlResponse<{ alleKontor: Kontor[]; kontorTilhorighet: KontorTilhorighet }>>(
+        .post<GraphqlResponse<{ alleKontor: Kontor[]; kontorTilhorigheter: KontorTilhorigheter }>>(
             `/ao-oppfolgingskontor/graphql`,
             JSON.stringify({
                 query: graphqlQuery,

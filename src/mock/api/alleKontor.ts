@@ -1,1909 +1,1923 @@
 export const alleKontorResponse = {
     data: {
+        kontorTilhorigheter: {
+            arena: {
+                kontorId: '1234',
+                kontorNavn: 'NAV Oslo'
+            },
+            arbeidsoppfolging: {
+                kontorId: '1234',
+                kontorNavn: 'NAV  AOslo'
+            },
+            geografiskTilknytning: {
+                kontorId: '1234',
+                kontorNavn: 'NAV Lokal'
+            }
+        },
         alleKontor: [
             {
                 kontorId: '0101',
-                navn: 'Nav Halden-Aremark'
+                kontorNavn: 'Nav Halden-Aremark'
             },
             {
                 kontorId: '0104',
-                navn: 'Nav Moss'
+                kontorNavn: 'Nav Moss'
             },
             {
                 kontorId: '0105',
-                navn: 'Nav Sarpsborg'
+                kontorNavn: 'Nav Sarpsborg'
             },
             {
                 kontorId: '0106',
-                navn: 'Nav Fredrikstad'
+                kontorNavn: 'Nav Fredrikstad'
             },
             {
                 kontorId: '0111',
-                navn: 'Nav Hvaler'
+                kontorNavn: 'Nav Hvaler'
             },
             {
                 kontorId: '0118',
-                navn: 'NAV Aremark'
+                kontorNavn: 'NAV Aremark'
             },
             {
                 kontorId: '0119',
-                navn: 'Nav Skiptvet Marker'
+                kontorNavn: 'Nav Skiptvet Marker'
             },
             {
                 kontorId: '0121',
-                navn: 'NAV Rømskog'
+                kontorNavn: 'NAV Rømskog'
             },
             {
                 kontorId: '0122',
-                navn: 'NAV Trøgstad'
+                kontorNavn: 'NAV Trøgstad'
             },
             {
                 kontorId: '0123',
-                navn: 'NAV Hobøl - Spydeberg'
+                kontorNavn: 'NAV Hobøl - Spydeberg'
             },
             {
                 kontorId: '0124',
-                navn: 'Nav Indre Østfold'
+                kontorNavn: 'Nav Indre Østfold'
             },
             {
                 kontorId: '0125',
-                navn: 'NAV Eidsberg'
+                kontorNavn: 'NAV Eidsberg'
             },
             {
                 kontorId: '0127',
-                navn: 'NAV Skiptvet'
+                kontorNavn: 'NAV Skiptvet'
             },
             {
                 kontorId: '0128',
-                navn: 'Nav Rakkestad'
+                kontorNavn: 'Nav Rakkestad'
             },
             {
                 kontorId: '0135',
-                navn: 'Nav Råde'
+                kontorNavn: 'Nav Råde'
             },
             {
                 kontorId: '0136',
-                navn: 'NAV Rygge'
+                kontorNavn: 'NAV Rygge'
             },
             {
                 kontorId: '0137',
-                navn: 'Nav Våler'
+                kontorNavn: 'Nav Våler'
             },
             {
                 kontorId: '0138',
-                navn: 'NAV Hobøl'
+                kontorNavn: 'NAV Hobøl'
             },
             {
                 kontorId: '0211',
-                navn: 'Nav Vestby'
+                kontorNavn: 'Nav Vestby'
             },
             {
                 kontorId: '0213',
-                navn: 'Nav Nordre Follo'
+                kontorNavn: 'Nav Nordre Follo'
             },
             {
                 kontorId: '0214',
-                navn: 'Nav Ås'
+                kontorNavn: 'Nav Ås'
             },
             {
                 kontorId: '0215',
-                navn: 'Nav Frogn'
+                kontorNavn: 'Nav Frogn'
             },
             {
                 kontorId: '0216',
-                navn: 'Nav Nesodden'
+                kontorNavn: 'Nav Nesodden'
             },
             {
                 kontorId: '0217',
-                navn: 'NAV Oppegård'
+                kontorNavn: 'NAV Oppegård'
             },
             {
                 kontorId: '0219',
-                navn: 'Nav Bærum'
+                kontorNavn: 'Nav Bærum'
             },
             {
                 kontorId: '0220',
-                navn: 'Nav Asker'
+                kontorNavn: 'Nav Asker'
             },
             {
                 kontorId: '0221',
-                navn: 'Nav Aurskog-Høland'
+                kontorNavn: 'Nav Aurskog-Høland'
             },
             {
                 kontorId: '0226',
-                navn: 'NAV Sørum'
+                kontorNavn: 'NAV Sørum'
             },
             {
                 kontorId: '0227',
-                navn: 'NAV Fet'
+                kontorNavn: 'NAV Fet'
             },
             {
                 kontorId: '0228',
-                navn: 'Nav Rælingen'
+                kontorNavn: 'Nav Rælingen'
             },
             {
                 kontorId: '0229',
-                navn: 'Nav Enebakk'
+                kontorNavn: 'Nav Enebakk'
             },
             {
                 kontorId: '0230',
-                navn: 'Nav Lørenskog'
+                kontorNavn: 'Nav Lørenskog'
             },
             {
                 kontorId: '0231',
-                navn: 'Nav Lillestrøm'
+                kontorNavn: 'Nav Lillestrøm'
             },
             {
                 kontorId: '0233',
-                navn: 'Nav Nittedal'
+                kontorNavn: 'Nav Nittedal'
             },
             {
                 kontorId: '0234',
-                navn: 'NAV Gjerdrum'
+                kontorNavn: 'NAV Gjerdrum'
             },
             {
                 kontorId: '0235',
-                navn: 'Nav Ullensaker'
+                kontorNavn: 'Nav Ullensaker'
             },
             {
                 kontorId: '0236',
-                navn: 'Nav Nes i Akershus'
+                kontorNavn: 'Nav Nes i Akershus'
             },
             {
                 kontorId: '0237',
-                navn: 'Nav Eidsvoll Hurdal'
+                kontorNavn: 'Nav Eidsvoll Hurdal'
             },
             {
                 kontorId: '0238',
-                navn: 'Nav Nannestad Gjerdrum'
+                kontorNavn: 'Nav Nannestad Gjerdrum'
             },
             {
                 kontorId: '0239',
-                navn: 'NAV Hurdal'
+                kontorNavn: 'NAV Hurdal'
             },
             {
                 kontorId: '0312',
-                navn: 'Nav Frogner'
+                kontorNavn: 'Nav Frogner'
             },
             {
                 kontorId: '0313',
-                navn: 'Nav St. Hanshaugen'
+                kontorNavn: 'Nav St. Hanshaugen'
             },
             {
                 kontorId: '0314',
-                navn: 'Nav Sagene'
+                kontorNavn: 'Nav Sagene'
             },
             {
                 kontorId: '0315',
-                navn: 'Nav Grünerløkka'
+                kontorNavn: 'Nav Grünerløkka'
             },
             {
                 kontorId: '0316',
-                navn: 'Nav Gamle Oslo'
+                kontorNavn: 'Nav Gamle Oslo'
             },
             {
                 kontorId: '0318',
-                navn: 'Nav Nordstrand'
+                kontorNavn: 'Nav Nordstrand'
             },
             {
                 kontorId: '0319',
-                navn: 'Nav Søndre Nordstrand'
+                kontorNavn: 'Nav Søndre Nordstrand'
             },
             {
                 kontorId: '0321',
-                navn: 'Nav Østensjø'
+                kontorNavn: 'Nav Østensjø'
             },
             {
                 kontorId: '0326',
-                navn: 'Nav Alna'
+                kontorNavn: 'Nav Alna'
             },
             {
                 kontorId: '0327',
-                navn: 'Nav Stovner'
+                kontorNavn: 'Nav Stovner'
             },
             {
                 kontorId: '0328',
-                navn: 'Nav Grorud'
+                kontorNavn: 'Nav Grorud'
             },
             {
                 kontorId: '0330',
-                navn: 'Nav Bjerke'
+                kontorNavn: 'Nav Bjerke'
             },
             {
                 kontorId: '0331',
-                navn: 'Nav Nordre Aker'
+                kontorNavn: 'Nav Nordre Aker'
             },
             {
                 kontorId: '0334',
-                navn: 'Nav Vestre Aker'
+                kontorNavn: 'Nav Vestre Aker'
             },
             {
                 kontorId: '0335',
-                navn: 'Nav Ullern'
+                kontorNavn: 'Nav Ullern'
             },
             {
                 kontorId: '0402',
-                navn: 'Nav Kongsvinger'
+                kontorNavn: 'Nav Kongsvinger'
             },
             {
                 kontorId: '0403',
-                navn: 'Nav Hamar'
+                kontorNavn: 'Nav Hamar'
             },
             {
                 kontorId: '0412',
-                navn: 'Nav Ringsaker'
+                kontorNavn: 'Nav Ringsaker'
             },
             {
                 kontorId: '0415',
-                navn: 'Nav Løten'
+                kontorNavn: 'Nav Løten'
             },
             {
                 kontorId: '0417',
-                navn: 'Nav Stange'
+                kontorNavn: 'Nav Stange'
             },
             {
                 kontorId: '0418',
-                navn: 'NAV Nord-Odal'
+                kontorNavn: 'NAV Nord-Odal'
             },
             {
                 kontorId: '0419',
-                navn: 'Nav Odal'
+                kontorNavn: 'Nav Odal'
             },
             {
                 kontorId: '0420',
-                navn: 'Nav Eidskog'
+                kontorNavn: 'Nav Eidskog'
             },
             {
                 kontorId: '0423',
-                navn: 'NAV Grue'
+                kontorNavn: 'NAV Grue'
             },
             {
                 kontorId: '0425',
-                navn: 'Nav Solør'
+                kontorNavn: 'Nav Solør'
             },
             {
                 kontorId: '0426',
-                navn: 'NAV Våler i Hedmark'
+                kontorNavn: 'NAV Våler i Hedmark'
             },
             {
                 kontorId: '0427',
-                navn: 'Nav Elverum'
+                kontorNavn: 'Nav Elverum'
             },
             {
                 kontorId: '0428',
-                navn: 'Nav Trysil'
+                kontorNavn: 'Nav Trysil'
             },
             {
                 kontorId: '0429',
-                navn: 'Nav Åmot'
+                kontorNavn: 'Nav Åmot'
             },
             {
                 kontorId: '0430',
-                navn: 'Nav Stor-Elvdal'
+                kontorNavn: 'Nav Stor-Elvdal'
             },
             {
                 kontorId: '0432',
-                navn: 'NAV Rendalen'
+                kontorNavn: 'NAV Rendalen'
             },
             {
                 kontorId: '0434',
-                navn: 'Nav Engerdal'
+                kontorNavn: 'Nav Engerdal'
             },
             {
                 kontorId: '0436',
-                navn: 'NAV Tolga'
+                kontorNavn: 'NAV Tolga'
             },
             {
                 kontorId: '0437',
-                navn: 'Nav Nord-Østerdal'
+                kontorNavn: 'Nav Nord-Østerdal'
             },
             {
                 kontorId: '0438',
-                navn: 'NAV Alvdal'
+                kontorNavn: 'NAV Alvdal'
             },
             {
                 kontorId: '0439',
-                navn: 'NAV Folldal'
+                kontorNavn: 'NAV Folldal'
             },
             {
                 kontorId: '0441',
-                navn: 'NAV Os i Hedmark'
+                kontorNavn: 'NAV Os i Hedmark'
             },
             {
                 kontorId: '0501',
-                navn: 'Nav Lillehammer-Gausdal'
+                kontorNavn: 'Nav Lillehammer-Gausdal'
             },
             {
                 kontorId: '0502',
-                navn: 'Nav Gjøvik'
+                kontorNavn: 'Nav Gjøvik'
             },
             {
                 kontorId: '0511',
-                navn: 'Nav Lesja - Dovre'
+                kontorNavn: 'Nav Lesja - Dovre'
             },
             {
                 kontorId: '0512',
-                navn: 'NAV Lesja'
+                kontorNavn: 'NAV Lesja'
             },
             {
                 kontorId: '0513',
-                navn: 'Nav Lom-Skjåk'
+                kontorNavn: 'Nav Lom-Skjåk'
             },
             {
                 kontorId: '0514',
-                navn: 'NAV Lom'
+                kontorNavn: 'NAV Lom'
             },
             {
                 kontorId: '0515',
-                navn: 'Nav Vågå'
+                kontorNavn: 'Nav Vågå'
             },
             {
                 kontorId: '0516',
-                navn: 'Nav Midt-Gudbrandsdal'
+                kontorNavn: 'Nav Midt-Gudbrandsdal'
             },
             {
                 kontorId: '0517',
-                navn: 'Nav Sel'
+                kontorNavn: 'Nav Sel'
             },
             {
                 kontorId: '0519',
-                navn: 'NAV Sør-Fron'
+                kontorNavn: 'NAV Sør-Fron'
             },
             {
                 kontorId: '0520',
-                navn: 'NAV Ringebu'
+                kontorNavn: 'NAV Ringebu'
             },
             {
                 kontorId: '0521',
-                navn: 'Nav Øyer'
+                kontorNavn: 'Nav Øyer'
             },
             {
                 kontorId: '0522',
-                navn: 'NAV Gausdal'
+                kontorNavn: 'NAV Gausdal'
             },
             {
                 kontorId: '0528',
-                navn: 'Nav Østre Toten'
+                kontorNavn: 'Nav Østre Toten'
             },
             {
                 kontorId: '0529',
-                navn: 'Nav Vestre Toten'
+                kontorNavn: 'Nav Vestre Toten'
             },
             {
                 kontorId: '0532',
-                navn: 'Nav Jevnaker'
+                kontorNavn: 'Nav Jevnaker'
             },
             {
                 kontorId: '0533',
-                navn: 'NAV Lunner'
+                kontorNavn: 'NAV Lunner'
             },
             {
                 kontorId: '0534',
-                navn: 'Nav Hadeland'
+                kontorNavn: 'Nav Hadeland'
             },
             {
                 kontorId: '0536',
-                navn: 'NAV Søndre Land'
+                kontorNavn: 'NAV Søndre Land'
             },
             {
                 kontorId: '0538',
-                navn: 'Nav Land'
+                kontorNavn: 'Nav Land'
             },
             {
                 kontorId: '0540',
-                navn: 'NAV Sør-Aurdal'
+                kontorNavn: 'NAV Sør-Aurdal'
             },
             {
                 kontorId: '0541',
-                navn: 'NAV Etnedal'
+                kontorNavn: 'NAV Etnedal'
             },
             {
                 kontorId: '0542',
-                navn: 'Nav Valdres'
+                kontorNavn: 'Nav Valdres'
             },
             {
                 kontorId: '0543',
-                navn: 'NAV Vestre Slidre'
+                kontorNavn: 'NAV Vestre Slidre'
             },
             {
                 kontorId: '0544',
-                navn: 'NAV Øystre Slidre'
+                kontorNavn: 'NAV Øystre Slidre'
             },
             {
                 kontorId: '0545',
-                navn: 'NAV Vang'
+                kontorNavn: 'NAV Vang'
             },
             {
                 kontorId: '0602',
-                navn: 'Nav Drammen'
+                kontorNavn: 'Nav Drammen'
             },
             {
                 kontorId: '0604',
-                navn: 'Nav Kongsberg'
+                kontorNavn: 'Nav Kongsberg'
             },
             {
                 kontorId: '0605',
-                navn: 'Nav Ringerike'
+                kontorNavn: 'Nav Ringerike'
             },
             {
                 kontorId: '0612',
-                navn: 'Nav Hole'
+                kontorNavn: 'Nav Hole'
             },
             {
                 kontorId: '0615',
-                navn: 'NAV Flå'
+                kontorNavn: 'NAV Flå'
             },
             {
                 kontorId: '0616',
-                navn: 'NAV Nes'
+                kontorNavn: 'NAV Nes'
             },
             {
                 kontorId: '0617',
-                navn: 'Nav Hallingdal'
+                kontorNavn: 'Nav Hallingdal'
             },
             {
                 kontorId: '0618',
-                navn: 'NAV Hemsedal'
+                kontorNavn: 'NAV Hemsedal'
             },
             {
                 kontorId: '0619',
-                navn: 'NAV Ål'
+                kontorNavn: 'NAV Ål'
             },
             {
                 kontorId: '0620',
-                navn: 'NAV Hol'
+                kontorNavn: 'NAV Hol'
             },
             {
                 kontorId: '0621',
-                navn: 'NAV Sigdal'
+                kontorNavn: 'NAV Sigdal'
             },
             {
                 kontorId: '0622',
-                navn: 'NAV Krødsherad'
+                kontorNavn: 'NAV Krødsherad'
             },
             {
                 kontorId: '0623',
-                navn: 'Nav Midt-Buskerud'
+                kontorNavn: 'Nav Midt-Buskerud'
             },
             {
                 kontorId: '0624',
-                navn: 'Nav Øvre Eiker'
+                kontorNavn: 'Nav Øvre Eiker'
             },
             {
                 kontorId: '0625',
-                navn: 'NAV Nedre Eiker'
+                kontorNavn: 'NAV Nedre Eiker'
             },
             {
                 kontorId: '0626',
-                navn: 'Nav Lier'
+                kontorNavn: 'Nav Lier'
             },
             {
                 kontorId: '0627',
-                navn: 'NAV Røyken'
+                kontorNavn: 'NAV Røyken'
             },
             {
                 kontorId: '0628',
-                navn: 'NAV Hurum'
+                kontorNavn: 'NAV Hurum'
             },
             {
                 kontorId: '0631',
-                navn: 'NAV Numedal - Flesberg'
+                kontorNavn: 'NAV Numedal - Flesberg'
             },
             {
                 kontorId: '0632',
-                navn: 'Nav Numedal'
+                kontorNavn: 'Nav Numedal'
             },
             {
                 kontorId: '0633',
-                navn: 'NAV Numedal - Nore og Uvdal'
+                kontorNavn: 'NAV Numedal - Nore og Uvdal'
             },
             {
                 kontorId: '0701',
-                navn: 'Nav Horten'
+                kontorNavn: 'Nav Horten'
             },
             {
                 kontorId: '0702',
-                navn: 'NAV Holmestrand'
+                kontorNavn: 'NAV Holmestrand'
             },
             {
                 kontorId: '0704',
-                navn: 'Nav Tønsberg'
+                kontorNavn: 'Nav Tønsberg'
             },
             {
                 kontorId: '0706',
-                navn: 'Avviklet - NAV Sandefjord'
+                kontorNavn: 'Avviklet - NAV Sandefjord'
             },
             {
                 kontorId: '0709',
-                navn: 'NAV Larvik'
+                kontorNavn: 'NAV Larvik'
             },
             {
                 kontorId: '0710',
-                navn: 'Nav Sandefjord'
+                kontorNavn: 'Nav Sandefjord'
             },
             {
                 kontorId: '0711',
-                navn: 'NAV Svelvik'
+                kontorNavn: 'NAV Svelvik'
             },
             {
                 kontorId: '0713',
-                navn: 'NAV Sande i Vestfold'
+                kontorNavn: 'NAV Sande i Vestfold'
             },
             {
                 kontorId: '0714',
-                navn: 'NAV Hof'
+                kontorNavn: 'NAV Hof'
             },
             {
                 kontorId: '0716',
-                navn: 'NAV Re'
+                kontorNavn: 'NAV Re'
             },
             {
                 kontorId: '0719',
-                navn: 'Avviklet - NAV Andebu'
+                kontorNavn: 'Avviklet - NAV Andebu'
             },
             {
                 kontorId: '0720',
-                navn: 'Avviklet - NAV Stokke'
+                kontorNavn: 'Avviklet - NAV Stokke'
             },
             {
                 kontorId: '0722',
-                navn: 'NAV Nøtterøy'
+                kontorNavn: 'NAV Nøtterøy'
             },
             {
                 kontorId: '0723',
-                navn: 'NAV Tjøme'
+                kontorNavn: 'NAV Tjøme'
             },
             {
                 kontorId: '0728',
-                navn: 'NAV Lardal'
+                kontorNavn: 'NAV Lardal'
             },
             {
                 kontorId: '0805',
-                navn: 'Nav Porsgrunn'
+                kontorNavn: 'Nav Porsgrunn'
             },
             {
                 kontorId: '0806',
-                navn: 'Nav Skien'
+                kontorNavn: 'Nav Skien'
             },
             {
                 kontorId: '0807',
-                navn: 'Nav Notodden og Hjartdal'
+                kontorNavn: 'Nav Notodden og Hjartdal'
             },
             {
                 kontorId: '0811',
-                navn: 'Nav Siljan'
+                kontorNavn: 'Nav Siljan'
             },
             {
                 kontorId: '0814',
-                navn: 'Nav Bamble'
+                kontorNavn: 'Nav Bamble'
             },
             {
                 kontorId: '0815',
-                navn: 'Nav Kragerø'
+                kontorNavn: 'Nav Kragerø'
             },
             {
                 kontorId: '0817',
-                navn: 'Nav Drangedal'
+                kontorNavn: 'Nav Drangedal'
             },
             {
                 kontorId: '0819',
-                navn: 'NAV Nome'
+                kontorNavn: 'NAV Nome'
             },
             {
                 kontorId: '0821',
-                navn: 'Nav Midt-Telemark'
+                kontorNavn: 'Nav Midt-Telemark'
             },
             {
                 kontorId: '0822',
-                navn: 'NAV Sauherad'
+                kontorNavn: 'NAV Sauherad'
             },
             {
                 kontorId: '0826',
-                navn: 'Nav Tinn'
+                kontorNavn: 'Nav Tinn'
             },
             {
                 kontorId: '0827',
-                navn: 'NAV Hjartdal'
+                kontorNavn: 'NAV Hjartdal'
             },
             {
                 kontorId: '0828',
-                navn: 'NAV Seljord'
+                kontorNavn: 'NAV Seljord'
             },
             {
                 kontorId: '0829',
-                navn: 'NAV Kviteseid - Nissedal'
+                kontorNavn: 'NAV Kviteseid - Nissedal'
             },
             {
                 kontorId: '0830',
-                navn: 'NAV Nissedal'
+                kontorNavn: 'NAV Nissedal'
             },
             {
                 kontorId: '0831',
-                navn: 'NAV Fyresdal'
+                kontorNavn: 'NAV Fyresdal'
             },
             {
                 kontorId: '0833',
-                navn: 'Nav Vest-Telemark'
+                kontorNavn: 'Nav Vest-Telemark'
             },
             {
                 kontorId: '0834',
-                navn: 'NAV Vinje'
+                kontorNavn: 'NAV Vinje'
             },
             {
                 kontorId: '0901',
-                navn: 'Nav Risør'
+                kontorNavn: 'Nav Risør'
             },
             {
                 kontorId: '0904',
-                navn: 'Nav Grimstad'
+                kontorNavn: 'Nav Grimstad'
             },
             {
                 kontorId: '0906',
-                navn: 'Nav Arendal'
+                kontorNavn: 'Nav Arendal'
             },
             {
                 kontorId: '0911',
-                navn: 'NAV Gjerstad'
+                kontorNavn: 'NAV Gjerstad'
             },
             {
                 kontorId: '0912',
-                navn: 'NAV Vegårshei'
+                kontorNavn: 'NAV Vegårshei'
             },
             {
                 kontorId: '0914',
-                navn: 'Nav Øst i Agder'
+                kontorNavn: 'Nav Øst i Agder'
             },
             {
                 kontorId: '0919',
-                navn: 'NAV Froland'
+                kontorNavn: 'NAV Froland'
             },
             {
                 kontorId: '0926',
-                navn: 'Nav Lillesand'
+                kontorNavn: 'Nav Lillesand'
             },
             {
                 kontorId: '0928',
-                navn: 'Nav Birkenes'
+                kontorNavn: 'Nav Birkenes'
             },
             {
                 kontorId: '0929',
-                navn: 'Nav Åmli'
+                kontorNavn: 'Nav Åmli'
             },
             {
                 kontorId: '0935',
-                navn: 'NAV Iveland'
+                kontorNavn: 'NAV Iveland'
             },
             {
                 kontorId: '0937',
-                navn: 'Nav Evje og Hornnes'
+                kontorNavn: 'Nav Evje og Hornnes'
             },
             {
                 kontorId: '0938',
-                navn: 'NAV Bygland'
+                kontorNavn: 'NAV Bygland'
             },
             {
                 kontorId: '0940',
-                navn: 'NAV Valle'
+                kontorNavn: 'NAV Valle'
             },
             {
                 kontorId: '0941',
-                navn: 'NAV Bykle'
+                kontorNavn: 'NAV Bykle'
             },
             {
                 kontorId: '1001',
-                navn: 'Nav Kristiansand'
+                kontorNavn: 'Nav Kristiansand'
             },
             {
                 kontorId: '1002',
-                navn: 'Nav Lindesnes'
+                kontorNavn: 'Nav Lindesnes'
             },
             {
                 kontorId: '1003',
-                navn: 'NAV Farsund'
+                kontorNavn: 'NAV Farsund'
             },
             {
                 kontorId: '1004',
-                navn: 'NAV Flekkefjord'
+                kontorNavn: 'NAV Flekkefjord'
             },
             {
                 kontorId: '1014',
-                navn: 'Nav Midt-Agder'
+                kontorNavn: 'Nav Midt-Agder'
             },
             {
                 kontorId: '1017',
-                navn: 'NAV Songdalen'
+                kontorNavn: 'NAV Songdalen'
             },
             {
                 kontorId: '1018',
-                navn: 'NAV Søgne'
+                kontorNavn: 'NAV Søgne'
             },
             {
                 kontorId: '1021',
-                navn: 'NAV Marnardal'
+                kontorNavn: 'NAV Marnardal'
             },
             {
                 kontorId: '1026',
-                navn: 'NAV Åseral'
+                kontorNavn: 'NAV Åseral'
             },
             {
                 kontorId: '1027',
-                navn: 'NAV Audnedal'
+                kontorNavn: 'NAV Audnedal'
             },
             {
                 kontorId: '1029',
-                navn: 'NAV Lindesnes'
+                kontorNavn: 'NAV Lindesnes'
             },
             {
                 kontorId: '1032',
-                navn: 'NAV Lyngdal'
+                kontorNavn: 'NAV Lyngdal'
             },
             {
                 kontorId: '1034',
-                navn: 'Nav Hægebostad'
+                kontorNavn: 'Nav Hægebostad'
             },
             {
                 kontorId: '1037',
-                navn: 'Nav Lister'
+                kontorNavn: 'Nav Lister'
             },
             {
                 kontorId: '1046',
-                navn: 'NAV Sirdal'
+                kontorNavn: 'NAV Sirdal'
             },
             {
                 kontorId: '1101',
-                navn: 'Nav Dalane'
+                kontorNavn: 'Nav Dalane'
             },
             {
                 kontorId: '1102',
-                navn: 'Nav Sandnes'
+                kontorNavn: 'Nav Sandnes'
             },
             {
                 kontorId: '1106',
-                navn: 'Nav Haugesund-Utsira'
+                kontorNavn: 'Nav Haugesund-Utsira'
             },
             {
                 kontorId: '1111',
-                navn: 'NAV Sokndal'
+                kontorNavn: 'NAV Sokndal'
             },
             {
                 kontorId: '1112',
-                navn: 'NAV Lund'
+                kontorNavn: 'NAV Lund'
             },
             {
                 kontorId: '1114',
-                navn: 'NAV Bjerkreim'
+                kontorNavn: 'NAV Bjerkreim'
             },
             {
                 kontorId: '1119',
-                navn: 'Nav Hå'
+                kontorNavn: 'Nav Hå'
             },
             {
                 kontorId: '1120',
-                navn: 'Nav Klepp-Time'
+                kontorNavn: 'Nav Klepp-Time'
             },
             {
                 kontorId: '1121',
-                navn: 'NAV Time'
+                kontorNavn: 'NAV Time'
             },
             {
                 kontorId: '1122',
-                navn: 'Nav Gjesdal'
+                kontorNavn: 'Nav Gjesdal'
             },
             {
                 kontorId: '1124',
-                navn: 'Nav Sola'
+                kontorNavn: 'Nav Sola'
             },
             {
                 kontorId: '1127',
-                navn: 'Nav Randaberg-Kvitsøy'
+                kontorNavn: 'Nav Randaberg-Kvitsøy'
             },
             {
                 kontorId: '1129',
-                navn: 'NAV Forsand'
+                kontorNavn: 'NAV Forsand'
             },
             {
                 kontorId: '1130',
-                navn: 'Nav Strand'
+                kontorNavn: 'Nav Strand'
             },
             {
                 kontorId: '1133',
-                navn: 'Nav Hjelmeland'
+                kontorNavn: 'Nav Hjelmeland'
             },
             {
                 kontorId: '1134',
-                navn: 'Nav Suldal'
+                kontorNavn: 'Nav Suldal'
             },
             {
                 kontorId: '1135',
-                navn: 'Nav Sauda'
+                kontorNavn: 'Nav Sauda'
             },
             {
                 kontorId: '1141',
-                navn: 'NAV Finnøy'
+                kontorNavn: 'NAV Finnøy'
             },
             {
                 kontorId: '1142',
-                navn: 'NAV Rennesøy'
+                kontorNavn: 'NAV Rennesøy'
             },
             {
                 kontorId: '1144',
-                navn: 'NAV Kvitsøy'
+                kontorNavn: 'NAV Kvitsøy'
             },
             {
                 kontorId: '1145',
-                navn: 'NAV Bokn'
+                kontorNavn: 'NAV Bokn'
             },
             {
                 kontorId: '1146',
-                navn: 'Nav Tysvær'
+                kontorNavn: 'Nav Tysvær'
             },
             {
                 kontorId: '1149',
-                navn: 'Nav Karmøy-Bokn'
+                kontorNavn: 'Nav Karmøy-Bokn'
             },
             {
                 kontorId: '1151',
-                navn: 'NAV Utsira'
+                kontorNavn: 'NAV Utsira'
             },
             {
                 kontorId: '1160',
-                navn: 'Nav Vindafjord-Etne'
+                kontorNavn: 'Nav Vindafjord-Etne'
             },
             {
                 kontorId: '1161',
-                navn: 'Nav Eiganes og Tasta'
+                kontorNavn: 'Nav Eiganes og Tasta'
             },
             {
                 kontorId: '1162',
-                navn: 'Nav Hundvåg og Storhaug'
+                kontorNavn: 'Nav Hundvåg og Storhaug'
             },
             {
                 kontorId: '1164',
-                navn: 'Nav Hillevåg og Hinna'
+                kontorNavn: 'Nav Hillevåg og Hinna'
             },
             {
                 kontorId: '1165',
-                navn: 'Nav Madla'
+                kontorNavn: 'Nav Madla'
             },
             {
                 kontorId: '1169',
-                navn: 'Nav Rennesøy og Finnøy'
+                kontorNavn: 'Nav Rennesøy og Finnøy'
             },
             {
                 kontorId: '1202',
-                navn: 'Nav Bergen sør'
+                kontorNavn: 'Nav Bergen sør'
             },
             {
                 kontorId: '1203',
-                navn: 'Nav Bergen nord'
+                kontorNavn: 'Nav Bergen nord'
             },
             {
                 kontorId: '1204',
-                navn: 'NAV Arna'
+                kontorNavn: 'NAV Arna'
             },
             {
                 kontorId: '1205',
-                navn: 'NAV Fyllingsdalen'
+                kontorNavn: 'NAV Fyllingsdalen'
             },
             {
                 kontorId: '1206',
-                navn: 'Nav Bergen vest'
+                kontorNavn: 'Nav Bergen vest'
             },
             {
                 kontorId: '1208',
-                navn: 'Nav Årstad'
+                kontorNavn: 'Nav Årstad'
             },
             {
                 kontorId: '1209',
-                navn: 'Nav Bergenhus'
+                kontorNavn: 'Nav Bergenhus'
             },
             {
                 kontorId: '1210',
-                navn: 'NAV Ytrebygda'
+                kontorNavn: 'NAV Ytrebygda'
             },
             {
                 kontorId: '1211',
-                navn: 'NAV Etne'
+                kontorNavn: 'NAV Etne'
             },
             {
                 kontorId: '1216',
-                navn: 'Nav Sveio'
+                kontorNavn: 'Nav Sveio'
             },
             {
                 kontorId: '1219',
-                navn: 'Nav Bømlo'
+                kontorNavn: 'Nav Bømlo'
             },
             {
                 kontorId: '1221',
-                navn: 'Nav Stord'
+                kontorNavn: 'Nav Stord'
             },
             {
                 kontorId: '1222',
-                navn: 'Nav Fitjar'
+                kontorNavn: 'Nav Fitjar'
             },
             {
                 kontorId: '1223',
-                navn: 'Nav Tysnes'
+                kontorNavn: 'Nav Tysnes'
             },
             {
                 kontorId: '1224',
-                navn: 'Nav Kvinnherad'
+                kontorNavn: 'Nav Kvinnherad'
             },
             {
                 kontorId: '1227',
-                navn: 'NAV Jondal'
+                kontorNavn: 'NAV Jondal'
             },
             {
                 kontorId: '1228',
-                navn: 'Nav Ullensvang'
+                kontorNavn: 'Nav Ullensvang'
             },
             {
                 kontorId: '1231',
-                navn: 'NAV Ullensvang'
+                kontorNavn: 'NAV Ullensvang'
             },
             {
                 kontorId: '1232',
-                navn: 'Nav Eidfjord'
+                kontorNavn: 'Nav Eidfjord'
             },
             {
                 kontorId: '1233',
-                navn: 'Nav Ulvik'
+                kontorNavn: 'Nav Ulvik'
             },
             {
                 kontorId: '1234',
-                navn: 'NAV Granvin'
+                kontorNavn: 'NAV Granvin'
             },
             {
                 kontorId: '1235',
-                navn: 'Nav Voss'
+                kontorNavn: 'Nav Voss'
             },
             {
                 kontorId: '1238',
-                navn: 'Nav Kvam'
+                kontorNavn: 'Nav Kvam'
             },
             {
                 kontorId: '1241',
-                navn: 'NAV Fusa'
+                kontorNavn: 'NAV Fusa'
             },
             {
                 kontorId: '1242',
-                navn: 'Nav Samnanger'
+                kontorNavn: 'Nav Samnanger'
             },
             {
                 kontorId: '1243',
-                navn: 'Nav Bjørnafjorden'
+                kontorNavn: 'Nav Bjørnafjorden'
             },
             {
                 kontorId: '1244',
-                navn: 'Nav Austevoll'
+                kontorNavn: 'Nav Austevoll'
             },
             {
                 kontorId: '1245',
-                navn: 'NAV Sund'
+                kontorNavn: 'NAV Sund'
             },
             {
                 kontorId: '1246',
-                navn: 'Nav Øygarden'
+                kontorNavn: 'Nav Øygarden'
             },
             {
                 kontorId: '1247',
-                navn: 'Nav Askøy'
+                kontorNavn: 'Nav Askøy'
             },
             {
                 kontorId: '1251',
-                navn: 'Nav Vaksdal'
+                kontorNavn: 'Nav Vaksdal'
             },
             {
                 kontorId: '1252',
-                navn: 'NAV Modalen'
+                kontorNavn: 'NAV Modalen'
             },
             {
                 kontorId: '1253',
-                navn: 'Nav Osterøy'
+                kontorNavn: 'Nav Osterøy'
             },
             {
                 kontorId: '1256',
-                navn: 'NAV Meland'
+                kontorNavn: 'NAV Meland'
             },
             {
                 kontorId: '1259',
-                navn: 'NAV Øygarden'
+                kontorNavn: 'NAV Øygarden'
             },
             {
                 kontorId: '1260',
-                navn: 'NAV Radøy'
+                kontorNavn: 'NAV Radøy'
             },
             {
                 kontorId: '1263',
-                navn: 'Nav Alver'
+                kontorNavn: 'Nav Alver'
             },
             {
                 kontorId: '1264',
-                navn: 'NAV Austrheim'
+                kontorNavn: 'NAV Austrheim'
             },
             {
                 kontorId: '1265',
-                navn: 'NAV Fedje'
+                kontorNavn: 'NAV Fedje'
             },
             {
                 kontorId: '1266',
-                navn: 'Nav Fensfjorden'
+                kontorNavn: 'Nav Fensfjorden'
             },
             {
                 kontorId: '1401',
-                navn: 'Nav Kinn'
+                kontorNavn: 'Nav Kinn'
             },
             {
                 kontorId: '1411',
-                navn: 'NAV Gulen'
+                kontorNavn: 'NAV Gulen'
             },
             {
                 kontorId: '1412',
-                navn: 'Nav Solund'
+                kontorNavn: 'Nav Solund'
             },
             {
                 kontorId: '1413',
-                navn: 'Nav Hyllestad'
+                kontorNavn: 'Nav Hyllestad'
             },
             {
                 kontorId: '1416',
-                navn: 'Nav Høyanger'
+                kontorNavn: 'Nav Høyanger'
             },
             {
                 kontorId: '1417',
-                navn: 'Nav Vik'
+                kontorNavn: 'Nav Vik'
             },
             {
                 kontorId: '1418',
-                navn: 'NAV Balestrand'
+                kontorNavn: 'NAV Balestrand'
             },
             {
                 kontorId: '1419',
-                navn: 'NAV Leikanger'
+                kontorNavn: 'NAV Leikanger'
             },
             {
                 kontorId: '1420',
-                navn: 'Nav Sogndal'
+                kontorNavn: 'Nav Sogndal'
             },
             {
                 kontorId: '1421',
-                navn: 'Nav Aurland'
+                kontorNavn: 'Nav Aurland'
             },
             {
                 kontorId: '1422',
-                navn: 'Nav Aurland og Lærdal'
+                kontorNavn: 'Nav Aurland og Lærdal'
             },
             {
                 kontorId: '1424',
-                navn: 'Nav Årdal'
+                kontorNavn: 'Nav Årdal'
             },
             {
                 kontorId: '1426',
-                navn: 'Nav Luster'
+                kontorNavn: 'Nav Luster'
             },
             {
                 kontorId: '1428',
-                navn: 'Nav Askvoll'
+                kontorNavn: 'Nav Askvoll'
             },
             {
                 kontorId: '1429',
-                navn: 'Nav Fjaler'
+                kontorNavn: 'Nav Fjaler'
             },
             {
                 kontorId: '1430',
-                navn: 'NAV Gaular'
+                kontorNavn: 'NAV Gaular'
             },
             {
                 kontorId: '1431',
-                navn: 'NAV Jølster'
+                kontorNavn: 'NAV Jølster'
             },
             {
                 kontorId: '1432',
-                navn: 'Nav Sunnfjord og Ytre Sogn'
+                kontorNavn: 'Nav Sunnfjord og Ytre Sogn'
             },
             {
                 kontorId: '1433',
-                navn: 'NAV Naustdal'
+                kontorNavn: 'NAV Naustdal'
             },
             {
                 kontorId: '1438',
-                navn: 'NAV Bremanger'
+                kontorNavn: 'NAV Bremanger'
             },
             {
                 kontorId: '1439',
-                navn: 'NAV Vågsøy'
+                kontorNavn: 'NAV Vågsøy'
             },
             {
                 kontorId: '1441',
-                navn: 'NAV Selje'
+                kontorNavn: 'NAV Selje'
             },
             {
                 kontorId: '1443',
-                navn: 'Nav Nordfjord'
+                kontorNavn: 'Nav Nordfjord'
             },
             {
                 kontorId: '1444',
-                navn: 'NAV Hornindal'
+                kontorNavn: 'NAV Hornindal'
             },
             {
                 kontorId: '1445',
-                navn: 'NAV Gloppen'
+                kontorNavn: 'NAV Gloppen'
             },
             {
                 kontorId: '1449',
-                navn: 'NAV Stryn'
+                kontorNavn: 'NAV Stryn'
             },
             {
                 kontorId: '1502',
-                navn: 'Nav Molde'
+                kontorNavn: 'Nav Molde'
             },
             {
                 kontorId: '1503',
-                navn: 'Avviklet - NAV Kristiansund'
+                kontorNavn: 'Avviklet - NAV Kristiansund'
             },
             {
                 kontorId: '1504',
-                navn: 'Nav Ålesund'
+                kontorNavn: 'Nav Ålesund'
             },
             {
                 kontorId: '1505',
-                navn: 'Nav Kristiansund'
+                kontorNavn: 'Nav Kristiansund'
             },
             {
                 kontorId: '1511',
-                navn: 'NAV Vanylven'
+                kontorNavn: 'NAV Vanylven'
             },
             {
                 kontorId: '1514',
-                navn: 'NAV Sande i Møre og Romsdal'
+                kontorNavn: 'NAV Sande i Møre og Romsdal'
             },
             {
                 kontorId: '1515',
-                navn: 'Nav Herøy og Vanylven'
+                kontorNavn: 'Nav Herøy og Vanylven'
             },
             {
                 kontorId: '1516',
-                navn: 'NAV Hareid og Ulstein'
+                kontorNavn: 'NAV Hareid og Ulstein'
             },
             {
                 kontorId: '1517',
-                navn: 'Nav ytre Søre Sunnmøre'
+                kontorNavn: 'Nav ytre Søre Sunnmøre'
             },
             {
                 kontorId: '1519',
-                navn: 'NAV Volda'
+                kontorNavn: 'NAV Volda'
             },
             {
                 kontorId: '1520',
-                navn: 'Nav Ørsta-Volda'
+                kontorNavn: 'Nav Ørsta-Volda'
             },
             {
                 kontorId: '1523',
-                navn: 'NAV Ørskog'
+                kontorNavn: 'NAV Ørskog'
             },
             {
                 kontorId: '1524',
-                navn: 'NAV Norddal'
+                kontorNavn: 'NAV Norddal'
             },
             {
                 kontorId: '1525',
-                navn: 'NAV Stranda'
+                kontorNavn: 'NAV Stranda'
             },
             {
                 kontorId: '1526',
-                navn: 'NAV Stordal'
+                kontorNavn: 'NAV Stordal'
             },
             {
                 kontorId: '1528',
-                navn: 'Nav Sykkylven - Stranda'
+                kontorNavn: 'Nav Sykkylven - Stranda'
             },
             {
                 kontorId: '1529',
-                navn: 'NAV Fjord'
+                kontorNavn: 'NAV Fjord'
             },
             {
                 kontorId: '1531',
-                navn: 'Nav Sula'
+                kontorNavn: 'Nav Sula'
             },
             {
                 kontorId: '1532',
-                navn: 'Nav Giske'
+                kontorNavn: 'Nav Giske'
             },
             {
                 kontorId: '1534',
-                navn: 'NAV Haram'
+                kontorNavn: 'NAV Haram'
             },
             {
                 kontorId: '1535',
-                navn: 'Nav Vestnes'
+                kontorNavn: 'Nav Vestnes'
             },
             {
                 kontorId: '1539',
-                navn: 'Nav Rauma'
+                kontorNavn: 'Nav Rauma'
             },
             {
                 kontorId: '1543',
-                navn: 'NAV Nesset'
+                kontorNavn: 'NAV Nesset'
             },
             {
                 kontorId: '1545',
-                navn: 'NAV Midsund'
+                kontorNavn: 'NAV Midsund'
             },
             {
                 kontorId: '1546',
-                navn: 'NAV Sandøy'
+                kontorNavn: 'NAV Sandøy'
             },
             {
                 kontorId: '1547',
-                navn: 'Nav Aukra'
+                kontorNavn: 'Nav Aukra'
             },
             {
                 kontorId: '1548',
-                navn: 'Nav Hustadvika'
+                kontorNavn: 'Nav Hustadvika'
             },
             {
                 kontorId: '1551',
-                navn: 'NAV Eide'
+                kontorNavn: 'NAV Eide'
             },
             {
                 kontorId: '1554',
-                navn: 'Nav Averøy'
+                kontorNavn: 'Nav Averøy'
             },
             {
                 kontorId: '1556',
-                navn: 'NAV Frei'
+                kontorNavn: 'NAV Frei'
             },
             {
                 kontorId: '1557',
-                navn: 'Nav Gjemnes'
+                kontorNavn: 'Nav Gjemnes'
             },
             {
                 kontorId: '1560',
-                navn: 'NAV Tingvoll'
+                kontorNavn: 'NAV Tingvoll'
             },
             {
                 kontorId: '1563',
-                navn: 'Nav Indre Nordmøre'
+                kontorNavn: 'Nav Indre Nordmøre'
             },
             {
                 kontorId: '1566',
-                navn: 'NAV Surnadal'
+                kontorNavn: 'NAV Surnadal'
             },
             {
                 kontorId: '1567',
-                navn: 'NAV Rindal'
+                kontorNavn: 'NAV Rindal'
             },
             {
                 kontorId: '1571',
-                navn: 'NAV Halsa'
+                kontorNavn: 'NAV Halsa'
             },
             {
                 kontorId: '1572',
-                navn: 'NAV Tustna'
+                kontorNavn: 'NAV Tustna'
             },
             {
                 kontorId: '1573',
-                navn: 'Nav Smøla'
+                kontorNavn: 'Nav Smøla'
             },
             {
                 kontorId: '1576',
-                navn: 'Nav Aure'
+                kontorNavn: 'Nav Aure'
             },
             {
                 kontorId: '1580',
-                navn: 'Nav Haram'
+                kontorNavn: 'Nav Haram'
             },
             {
                 kontorId: '1603',
-                navn: 'NAV Midtbyen'
+                kontorNavn: 'NAV Midtbyen'
             },
             {
                 kontorId: '1604',
-                navn: 'NAV Østbyen'
+                kontorNavn: 'NAV Østbyen'
             },
             {
                 kontorId: '1605',
-                navn: 'NAV Lerkendal'
+                kontorNavn: 'NAV Lerkendal'
             },
             {
                 kontorId: '1607',
-                navn: 'NAV Heimdal'
+                kontorNavn: 'NAV Heimdal'
             },
             {
                 kontorId: '1612',
-                navn: 'Nav Heim'
+                kontorNavn: 'Nav Heim'
             },
             {
                 kontorId: '1613',
-                navn: 'NAV Snillfjord'
+                kontorNavn: 'NAV Snillfjord'
             },
             {
                 kontorId: '1617',
-                navn: 'NAV Hitra'
+                kontorNavn: 'NAV Hitra'
             },
             {
                 kontorId: '1620',
-                navn: 'Nav Hitra Frøya'
+                kontorNavn: 'Nav Hitra Frøya'
             },
             {
                 kontorId: '1621',
-                navn: 'Nav Ørland'
+                kontorNavn: 'Nav Ørland'
             },
             {
                 kontorId: '1622',
-                navn: 'NAV Agdenes'
+                kontorNavn: 'NAV Agdenes'
             },
             {
                 kontorId: '1624',
-                navn: 'NAV Rissa'
+                kontorNavn: 'NAV Rissa'
             },
             {
                 kontorId: '1627',
-                navn: 'NAV Bjugn'
+                kontorNavn: 'NAV Bjugn'
             },
             {
                 kontorId: '1630',
-                navn: 'Nav Nord-Fosen'
+                kontorNavn: 'Nav Nord-Fosen'
             },
             {
                 kontorId: '1632',
-                navn: 'NAV Nord-Fosen - Roan'
+                kontorNavn: 'NAV Nord-Fosen - Roan'
             },
             {
                 kontorId: '1633',
-                navn: 'NAV Nord-Fosen - Osen'
+                kontorNavn: 'NAV Nord-Fosen - Osen'
             },
             {
                 kontorId: '1634',
-                navn: 'Nav Oppdal og Rennebu'
+                kontorNavn: 'Nav Oppdal og Rennebu'
             },
             {
                 kontorId: '1635',
-                navn: 'NAV Rennebu'
+                kontorNavn: 'NAV Rennebu'
             },
             {
                 kontorId: '1636',
-                navn: 'NAV Meldal'
+                kontorNavn: 'NAV Meldal'
             },
             {
                 kontorId: '1638',
-                navn: 'Nav Orkland'
+                kontorNavn: 'Nav Orkland'
             },
             {
                 kontorId: '1640',
-                navn: 'Nav Røros, Os og Holtålen'
+                kontorNavn: 'Nav Røros, Os og Holtålen'
             },
             {
                 kontorId: '1644',
-                navn: 'NAV Holtålen'
+                kontorNavn: 'NAV Holtålen'
             },
             {
                 kontorId: '1648',
-                navn: 'Nav Midtre Gauldal'
+                kontorNavn: 'Nav Midtre Gauldal'
             },
             {
                 kontorId: '1653',
-                navn: 'NAV Melhus'
+                kontorNavn: 'NAV Melhus'
             },
             {
                 kontorId: '1657',
-                navn: 'Nav Skaun Melhus'
+                kontorNavn: 'Nav Skaun Melhus'
             },
             {
                 kontorId: '1662',
-                navn: 'NAV Klæbu'
+                kontorNavn: 'NAV Klæbu'
             },
             {
                 kontorId: '1663',
-                navn: 'Nav Malvik'
+                kontorNavn: 'Nav Malvik'
             },
             {
                 kontorId: '1664',
-                navn: 'Avviklet - NAV Selbu'
+                kontorNavn: 'Avviklet - NAV Selbu'
             },
             {
                 kontorId: '1665',
-                navn: 'Avviklet - NAV Tydal'
+                kontorNavn: 'Avviklet - NAV Tydal'
             },
             {
                 kontorId: '1702',
-                navn: 'Nav Inn-Trøndelag'
+                kontorNavn: 'Nav Inn-Trøndelag'
             },
             {
                 kontorId: '1703',
-                navn: 'Nav Midtre Namdal'
+                kontorNavn: 'Nav Midtre Namdal'
             },
             {
                 kontorId: '1711',
-                navn: 'Avviklet - NAV Værnes Nord Meråker'
+                kontorNavn: 'Avviklet - NAV Værnes Nord Meråker'
             },
             {
                 kontorId: '1714',
-                navn: 'Avviklet - NAV Værnes Nord Stjørdal'
+                kontorNavn: 'Avviklet - NAV Værnes Nord Stjørdal'
             },
             {
                 kontorId: '1717',
-                navn: 'Avviklet - NAV Værnes Nord Frosta'
+                kontorNavn: 'Avviklet - NAV Værnes Nord Frosta'
             },
             {
                 kontorId: '1718',
-                navn: 'NAV Leksvik'
+                kontorNavn: 'NAV Leksvik'
             },
             {
                 kontorId: '1719',
-                navn: 'Nav Levanger'
+                kontorNavn: 'Nav Levanger'
             },
             {
                 kontorId: '1721',
-                navn: 'Nav Verdal'
+                kontorNavn: 'Nav Verdal'
             },
             {
                 kontorId: '1723',
-                navn: 'Avviklet - NAV Mosvik'
+                kontorNavn: 'Avviklet - NAV Mosvik'
             },
             {
                 kontorId: '1724',
-                navn: 'NAV Verran'
+                kontorNavn: 'NAV Verran'
             },
             {
                 kontorId: '1725',
-                navn: 'NAV Namdalseid'
+                kontorNavn: 'NAV Namdalseid'
             },
             {
                 kontorId: '1729',
-                navn: 'Avviklet - NAV Inderøy'
+                kontorNavn: 'Avviklet - NAV Inderøy'
             },
             {
                 kontorId: '1736',
-                navn: 'NAV Snåsa'
+                kontorNavn: 'NAV Snåsa'
             },
             {
                 kontorId: '1738',
-                navn: 'NAV Lierne'
+                kontorNavn: 'NAV Lierne'
             },
             {
                 kontorId: '1739',
-                navn: 'NAV Røyrvik'
+                kontorNavn: 'NAV Røyrvik'
             },
             {
                 kontorId: '1740',
-                navn: 'NAV Namsskogan'
+                kontorNavn: 'NAV Namsskogan'
             },
             {
                 kontorId: '1742',
-                navn: 'Nav Indre Namdal'
+                kontorNavn: 'Nav Indre Namdal'
             },
             {
                 kontorId: '1743',
-                navn: 'NAV Høylandet'
+                kontorNavn: 'NAV Høylandet'
             },
             {
                 kontorId: '1744',
-                navn: 'NAV Overhalla'
+                kontorNavn: 'NAV Overhalla'
             },
             {
                 kontorId: '1748',
-                navn: 'NAV Fosnes'
+                kontorNavn: 'NAV Fosnes'
             },
             {
                 kontorId: '1749',
-                navn: 'NAV Flatanger'
+                kontorNavn: 'NAV Flatanger'
             },
             {
                 kontorId: '1750',
-                navn: 'NAV Vikna'
+                kontorNavn: 'NAV Vikna'
             },
             {
                 kontorId: '1751',
-                navn: 'Nav Nærøysund'
+                kontorNavn: 'Nav Nærøysund'
             },
             {
                 kontorId: '1755',
-                navn: 'NAV Leka'
+                kontorNavn: 'NAV Leka'
             },
             {
                 kontorId: '1756',
-                navn: 'NAV Inderøy'
+                kontorNavn: 'NAV Inderøy'
             },
             {
                 kontorId: '1783',
-                navn: 'Nav Værnes'
+                kontorNavn: 'Nav Værnes'
             },
             {
                 kontorId: '1804',
-                navn: 'Nav Bodø'
+                kontorNavn: 'Nav Bodø'
             },
             {
                 kontorId: '1805',
-                navn: 'Nav Narvik'
+                kontorNavn: 'Nav Narvik'
             },
             {
                 kontorId: '1811',
-                navn: 'NAV Bindal'
+                kontorNavn: 'NAV Bindal'
             },
             {
                 kontorId: '1812',
-                navn: 'NAV Sømna'
+                kontorNavn: 'NAV Sømna'
             },
             {
                 kontorId: '1813',
-                navn: 'Nav Sør-Helgeland'
+                kontorNavn: 'Nav Sør-Helgeland'
             },
             {
                 kontorId: '1815',
-                navn: 'NAV Vega'
+                kontorNavn: 'NAV Vega'
             },
             {
                 kontorId: '1816',
-                navn: 'NAV Vevelstad'
+                kontorNavn: 'NAV Vevelstad'
             },
             {
                 kontorId: '1818',
-                navn: 'NAV Herøy'
+                kontorNavn: 'NAV Herøy'
             },
             {
                 kontorId: '1820',
-                navn: 'Nav Ytre Helgeland'
+                kontorNavn: 'Nav Ytre Helgeland'
             },
             {
                 kontorId: '1822',
-                navn: 'NAV Leirfjord'
+                kontorNavn: 'NAV Leirfjord'
             },
             {
                 kontorId: '1824',
-                navn: 'Nav Vefsna'
+                kontorNavn: 'Nav Vefsna'
             },
             {
                 kontorId: '1825',
-                navn: 'NAV Grane'
+                kontorNavn: 'NAV Grane'
             },
             {
                 kontorId: '1826',
-                navn: 'Nav Hattfjelldal'
+                kontorNavn: 'Nav Hattfjelldal'
             },
             {
                 kontorId: '1827',
-                navn: 'NAV Dønna'
+                kontorNavn: 'NAV Dønna'
             },
             {
                 kontorId: '1828',
-                navn: 'Nav Nesna'
+                kontorNavn: 'Nav Nesna'
             },
             {
                 kontorId: '1832',
-                navn: 'Nav Hemnes'
+                kontorNavn: 'Nav Hemnes'
             },
             {
                 kontorId: '1833',
-                navn: 'Nav Rana'
+                kontorNavn: 'Nav Rana'
             },
             {
                 kontorId: '1834',
-                navn: 'Nav Lurøy'
+                kontorNavn: 'Nav Lurøy'
             },
             {
                 kontorId: '1835',
-                navn: 'NAV Træna'
+                kontorNavn: 'NAV Træna'
             },
             {
                 kontorId: '1836',
-                navn: 'NAV Rødøy'
+                kontorNavn: 'NAV Rødøy'
             },
             {
                 kontorId: '1837',
-                navn: 'Nav Sør-Salten'
+                kontorNavn: 'Nav Sør-Salten'
             },
             {
                 kontorId: '1838',
-                navn: 'Nav Gildeskål'
+                kontorNavn: 'Nav Gildeskål'
             },
             {
                 kontorId: '1839',
-                navn: 'NAV Beiarn'
+                kontorNavn: 'NAV Beiarn'
             },
             {
                 kontorId: '1840',
-                navn: 'NAV Saltdal'
+                kontorNavn: 'NAV Saltdal'
             },
             {
                 kontorId: '1841',
-                navn: 'Nav Indre Salten'
+                kontorNavn: 'Nav Indre Salten'
             },
             {
                 kontorId: '1845',
-                navn: 'NAV Sørfold'
+                kontorNavn: 'NAV Sørfold'
             },
             {
                 kontorId: '1848',
-                navn: 'Nav Steigen'
+                kontorNavn: 'Nav Steigen'
             },
             {
                 kontorId: '1849',
-                navn: 'NAV Hamarøy'
+                kontorNavn: 'NAV Hamarøy'
             },
             {
                 kontorId: '1850',
-                navn: 'NAV Tysfjord'
+                kontorNavn: 'NAV Tysfjord'
             },
             {
                 kontorId: '1851',
-                navn: 'Nav Lødingen'
+                kontorNavn: 'Nav Lødingen'
             },
             {
                 kontorId: '1852',
-                navn: 'NAV Evenes og Tjeldsund'
+                kontorNavn: 'NAV Evenes og Tjeldsund'
             },
             {
                 kontorId: '1853',
-                navn: 'NAV Evenes'
+                kontorNavn: 'NAV Evenes'
             },
             {
                 kontorId: '1854',
-                navn: 'NAV Ballangen'
+                kontorNavn: 'NAV Ballangen'
             },
             {
                 kontorId: '1856',
-                navn: 'Nav Røst'
+                kontorNavn: 'Nav Røst'
             },
             {
                 kontorId: '1857',
-                navn: 'Nav Værøy'
+                kontorNavn: 'Nav Værøy'
             },
             {
                 kontorId: '1859',
-                navn: 'NAV Flakstad'
+                kontorNavn: 'NAV Flakstad'
             },
             {
                 kontorId: '1860',
-                navn: 'Nav Lofoten'
+                kontorNavn: 'Nav Lofoten'
             },
             {
                 kontorId: '1865',
-                navn: 'NAV Svolvær'
+                kontorNavn: 'NAV Svolvær'
             },
             {
                 kontorId: '1866',
-                navn: 'Nav Hadsel'
+                kontorNavn: 'Nav Hadsel'
             },
             {
                 kontorId: '1867',
-                navn: 'Nav Bø'
+                kontorNavn: 'Nav Bø'
             },
             {
                 kontorId: '1868',
-                navn: 'Nav Øksnes'
+                kontorNavn: 'Nav Øksnes'
             },
             {
                 kontorId: '1870',
-                navn: 'Nav Sortland'
+                kontorNavn: 'Nav Sortland'
             },
             {
                 kontorId: '1871',
-                navn: 'Nav Andøy'
+                kontorNavn: 'Nav Andøy'
             },
             {
                 kontorId: '1874',
-                navn: 'NAV Moskenes'
+                kontorNavn: 'NAV Moskenes'
             },
             {
                 kontorId: '1901',
-                navn: 'Avviklet - NAV Harstad'
+                kontorNavn: 'Avviklet - NAV Harstad'
             },
             {
                 kontorId: '1902',
-                navn: 'Nav Tromsø'
+                kontorNavn: 'Nav Tromsø'
             },
             {
                 kontorId: '1903',
-                navn: 'Nav Sør-Troms'
+                kontorNavn: 'Nav Sør-Troms'
             },
             {
                 kontorId: '1911',
-                navn: 'NAV Kvæfjord'
+                kontorNavn: 'NAV Kvæfjord'
             },
             {
                 kontorId: '1913',
-                navn: 'NAV Tjeldsund'
+                kontorNavn: 'NAV Tjeldsund'
             },
             {
                 kontorId: '1915',
-                navn: 'Avviklet - NAV Bjarkøy'
+                kontorNavn: 'Avviklet - NAV Bjarkøy'
             },
             {
                 kontorId: '1917',
-                navn: 'NAV Ibestad'
+                kontorNavn: 'NAV Ibestad'
             },
             {
                 kontorId: '1919',
-                navn: 'NAV Gratangen'
+                kontorNavn: 'NAV Gratangen'
             },
             {
                 kontorId: '1920',
-                navn: 'NAV Lavangen'
+                kontorNavn: 'NAV Lavangen'
             },
             {
                 kontorId: '1922',
-                navn: 'NAV Bardu'
+                kontorNavn: 'NAV Bardu'
             },
             {
                 kontorId: '1923',
-                navn: 'Nav Salangen-Lavangen-Dyrøy'
+                kontorNavn: 'Nav Salangen-Lavangen-Dyrøy'
             },
             {
                 kontorId: '1924',
-                navn: 'Nav Målselv-Bardu'
+                kontorNavn: 'Nav Målselv-Bardu'
             },
             {
                 kontorId: '1925',
-                navn: 'NAV Sørreisa'
+                kontorNavn: 'NAV Sørreisa'
             },
             {
                 kontorId: '1926',
-                navn: 'NAV Dyrøy'
+                kontorNavn: 'NAV Dyrøy'
             },
             {
                 kontorId: '1927',
-                navn: 'NAV Tranøy'
+                kontorNavn: 'NAV Tranøy'
             },
             {
                 kontorId: '1928',
-                navn: 'NAV Torsken'
+                kontorNavn: 'NAV Torsken'
             },
             {
                 kontorId: '1929',
-                navn: 'NAV Berg'
+                kontorNavn: 'NAV Berg'
             },
             {
                 kontorId: '1931',
-                navn: 'Nav Senja-Sørreisa'
+                kontorNavn: 'Nav Senja-Sørreisa'
             },
             {
                 kontorId: '1933',
-                navn: 'Nav Balsfjord-Storfjord'
+                kontorNavn: 'Nav Balsfjord-Storfjord'
             },
             {
                 kontorId: '1936',
-                navn: 'Nav Karlsøy'
+                kontorNavn: 'Nav Karlsøy'
             },
             {
                 kontorId: '1938',
-                navn: 'Nav Lyngen'
+                kontorNavn: 'Nav Lyngen'
             },
             {
                 kontorId: '1939',
-                navn: 'NAV Storfjord'
+                kontorNavn: 'NAV Storfjord'
             },
             {
                 kontorId: '1940',
-                navn: 'Nav Gáivuotna/Kåfjord'
+                kontorNavn: 'Nav Gáivuotna/Kåfjord'
             },
             {
                 kontorId: '1941',
-                navn: 'Nav Skjervøy'
+                kontorNavn: 'Nav Skjervøy'
             },
             {
                 kontorId: '1942',
-                navn: 'Nav Nordreisa'
+                kontorNavn: 'Nav Nordreisa'
             },
             {
                 kontorId: '1943',
-                navn: 'NAV Kvænangen'
+                kontorNavn: 'NAV Kvænangen'
             },
             {
                 kontorId: '2002',
-                navn: 'Nav Vardø'
+                kontorNavn: 'Nav Vardø'
             },
             {
                 kontorId: '2003',
-                navn: 'Nav Vadsø'
+                kontorNavn: 'Nav Vadsø'
             },
             {
                 kontorId: '2004',
-                navn: 'Nav Hammerfest-Måsøy'
+                kontorNavn: 'Nav Hammerfest-Måsøy'
             },
             {
                 kontorId: '2011',
-                navn: 'Nav Ávjovárri'
+                kontorNavn: 'Nav Ávjovárri'
             },
             {
                 kontorId: '2012',
-                navn: 'Nav Alta-Kvænangen-Loppa'
+                kontorNavn: 'Nav Alta-Kvænangen-Loppa'
             },
             {
                 kontorId: '2014',
-                navn: 'NAV Loppa'
+                kontorNavn: 'NAV Loppa'
             },
             {
                 kontorId: '2015',
-                navn: 'Nav Hasvik'
+                kontorNavn: 'Nav Hasvik'
             },
             {
                 kontorId: '2017',
-                navn: 'NAV Kvalsund'
+                kontorNavn: 'NAV Kvalsund'
             },
             {
                 kontorId: '2018',
-                navn: 'NAV Måsøy'
+                kontorNavn: 'NAV Måsøy'
             },
             {
                 kontorId: '2019',
-                navn: 'Nav Nordkapp'
+                kontorNavn: 'Nav Nordkapp'
             },
             {
                 kontorId: '2020',
-                navn: 'Nav Porsanger'
+                kontorNavn: 'Nav Porsanger'
             },
             {
                 kontorId: '2021',
-                navn: 'NAV Karasjohka/Karasjok'
+                kontorNavn: 'NAV Karasjohka/Karasjok'
             },
             {
                 kontorId: '2022',
-                navn: 'Nav Lebesby'
+                kontorNavn: 'Nav Lebesby'
             },
             {
                 kontorId: '2023',
-                navn: 'Nav Gamvik'
+                kontorNavn: 'Nav Gamvik'
             },
             {
                 kontorId: '2024',
-                navn: 'Nav Berlevåg'
+                kontorNavn: 'Nav Berlevåg'
             },
             {
                 kontorId: '2025',
-                navn: 'Nav Deatnu/Tana'
+                kontorNavn: 'Nav Deatnu/Tana'
             },
             {
                 kontorId: '2027',
-                navn: 'Nav Unjárga/Nesseby'
+                kontorNavn: 'Nav Unjárga/Nesseby'
             },
             {
                 kontorId: '2028',
-                navn: 'Nav Båtsfjord'
+                kontorNavn: 'Nav Båtsfjord'
             },
             {
                 kontorId: '2030',
-                navn: 'Nav Sør-Varanger'
+                kontorNavn: 'Nav Sør-Varanger'
             },
             {
                 kontorId: '5301',
-                navn: 'Nav Holmestrand'
+                kontorNavn: 'Nav Holmestrand'
             },
             {
                 kontorId: '5302',
-                navn: 'Nav Færder'
+                kontorNavn: 'Nav Færder'
             },
             {
                 kontorId: '5303',
-                navn: 'Nav Larvik'
+                kontorNavn: 'Nav Larvik'
             },
             {
                 kontorId: '5701',
-                navn: 'Nav Falkenborg'
+                kontorNavn: 'Nav Falkenborg'
             },
             {
                 kontorId: '5702',
-                navn: 'Nav Lerkendal'
+                kontorNavn: 'Nav Lerkendal'
             },
             {
                 kontorId: '5703',
-                navn: 'Nav Indre Fosen'
+                kontorNavn: 'Nav Indre Fosen'
             },
             {
                 kontorId: '7773',
-                navn: 'Testenhet'
+                kontorNavn: 'Testenhet'
             },
             {
                 kontorId: '7775',
-                navn: 'test 5'
+                kontorNavn: 'test 5'
             },
             {
                 kontorId: '7776',
-                navn: 'testenhet -6'
+                kontorNavn: 'testenhet -6'
             },
             {
                 kontorId: '7777',
-                navn: 'TEST-ENHET-4'
+                kontorNavn: 'TEST-ENHET-4'
             }
         ]
     }
