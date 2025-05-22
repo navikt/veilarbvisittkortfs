@@ -3,11 +3,12 @@ import { OppgaveFormData, OppgaveHistorikkInnslag } from '../../api/veilarboppga
 import { defaultNetworkResponseDelay } from '../config';
 import { delay, http, HttpResponse, RequestHandler } from 'msw';
 
-const mockEnheter = [
+export const mockEnheter = [
     { enhetId: '0000', navn: 'Nav Ost' },
     { enhetId: '0001', navn: 'Nav Kjeks' },
     { enhetId: '0002', navn: 'Nav Med jætte lang navn' },
-    { enhetId: '1234', navn: 'Nav jepps' }
+    { enhetId: '1234', navn: 'Nav jepps' },
+    { enhetId: '0003', navn: 'Nav Familie og pensjonsytelser utland' }
 ];
 
 const mockOppgavehistorikk: OppgaveHistorikkInnslag[] = [
