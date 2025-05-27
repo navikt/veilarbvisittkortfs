@@ -112,7 +112,7 @@ function Etiketter() {
             <Fokus
                 visible={fullmakt && !isEmpty(fullmakt.fullmakt) && erFullmaktOmradeMedOppfolging(fullmakt.fullmakt)}
             >
-                Fullmakt
+                Fullmakt Oppfølging
             </Fokus>
             <Fokus visible={!!spraakTolk?.tegnspraak}>Tegnspråktolk</Fokus>
             <Fokus visible={!!spraakTolk?.talespraak}>Språktolk</Fokus>
