@@ -72,7 +72,7 @@ function Etiketter() {
     }
 
     function visTrengerOppfolgingsvedtakEtikett() {
-        if (oppfolgingsstatus === null || oppfolgingsstatus === undefined || typeof oppfolgingsstatus === 'undefined') {
+        if (!oppfolging?.underOppfolging) {
             return false;
         }
 
