@@ -58,10 +58,18 @@ function PersonInfo() {
                         />
                     </>
                 )}
-                <KopierKnappTekst kopierTekst={brukerFnr} viseTekst={`F.nr.: ${brukerFnr}`} />
+                <KopierKnappTekst
+                    kopierTekst={brukerFnr}
+                    viseTekst={`F.nr.: ${brukerFnr}`}
+                    arialabel="Kopier fødselsnummer"
+                />
                 {<Label>/</Label>}
                 {uformattertTelefon && (
-                    <KopierKnappTekst kopierTekst={telefon.replace(/\s/g, '')} viseTekst={`Tlf.: ${telefon}`} />
+                    <KopierKnappTekst
+                        kopierTekst={telefon.replace(/\s/g, '')}
+                        viseTekst={`Tlf.: ${telefon}`}
+                        arialabel="Kopier telefonnummer"
+                    />
                 )}
                 {!uformattertTelefon && <Label className="uten-telefon">Tlf.: -</Label>}
             </div>
