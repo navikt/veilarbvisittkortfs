@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Modal } from '@navikt/ds-react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import StartEskaleringForm, { StartEskaleringValues } from './start-eskalering-form';
 import { useModalStore } from '../../../store/modal-store';
@@ -79,7 +80,7 @@ function StartEskalering() {
 
         return (
             <VarselModal onRequestClose={hideModal} isOpen={true} type="ADVARSEL">
-                {varselTekst}
+                <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">{varselTekst}</Modal.Body>
             </VarselModal>
         );
     }

@@ -1,4 +1,4 @@
-import { Alert, BodyShort } from '@navikt/ds-react';
+import { Alert, BodyShort, Modal } from '@navikt/ds-react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { useAppStore } from '../../../store/app-store';
@@ -29,10 +29,12 @@ function StartDigitalOppfolging() {
     if (oppfolging?.reservasjonKRR) {
         return (
             <VarselModal type="ADVARSEL" isOpen={true} onRequestClose={hideModal}>
-                <BodyShort size="small">
-                    Brukeren er reservert i Kontakt- og reservasjonsregisteret og må selv fjerne reservasjonen for å få
-                    digital oppfølging.
-                </BodyShort>
+                <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
+                    <BodyShort size="small">
+                        Brukeren er reservert i Kontakt- og reservasjonsregisteret og må selv fjerne reservasjonen for å
+                        få digital oppfølging.
+                    </BodyShort>
+                </Modal.Body>
             </VarselModal>
         );
     }

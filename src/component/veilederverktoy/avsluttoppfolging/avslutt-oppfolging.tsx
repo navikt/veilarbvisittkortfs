@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import dayjs from 'dayjs';
+import { BodyShort, Modal } from '@navikt/ds-react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { AvsluttOppfolgingInfoText } from './components/avslutt-oppfolging-info-text';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
@@ -49,16 +50,18 @@ function AvsluttOppfolging() {
         }
         return (
             <VarselModal isOpen={true} onRequestClose={hideModal} type="ADVARSEL">
-                Du kan ikke avslutte oppfølgingsperioden fordi:
-                <ul>
-                    {(avslutningStatus?.underOppfolging || !avslutningStatus?.erIserv) && (
-                        <li>Brukeren har aktiv status i Arena.</li>
-                    )}
-                    {avslutningStatus?.harAktiveTiltaksdeltakelser && (
-                        <li>Brukeren har aktive arbeidsmarkedstiltak.</li>
-                    )}
-                    {avslutningStatus?.underKvp && <li>Brukeren deltar i på KVP. KVP må avsluttes først.</li>}
-                </ul>
+                <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
+                    <BodyShort>Du kan ikke avslutte oppfølgingsperioden fordi:</BodyShort>
+                    <ul>
+                        {(avslutningStatus?.underOppfolging || !avslutningStatus?.erIserv) && (
+                            <li>Brukeren har aktiv status i Arena.</li>
+                        )}
+                        {avslutningStatus?.harAktiveTiltaksdeltakelser && (
+                            <li>Brukeren har aktive arbeidsmarkedstiltak.</li>
+                        )}
+                        {avslutningStatus?.underKvp && <li>Brukeren deltar i på KVP. KVP må avsluttes først.</li>}
+                    </ul>
+                </Modal.Body>
             </VarselModal>
         );
     }
