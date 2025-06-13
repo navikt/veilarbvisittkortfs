@@ -10,7 +10,7 @@ function StartManuellOppfolgingKvittering({ begrunnelse }: StartManuellOppfolgin
         <Kvittering
             tittel="Endre til manuell oppfølging"
             alertStripeTekst={`Endring til manuell oppfølging er gjennomført. Begrunnelse: ${begrunnelse}`}
-            footer={
+            annetInnhold={
                 <Alert variant="warning" size="small">
                     Brukere som ikke kan legge inn CV og jobbprofil selv skal få hjelp til dette.
                 </Alert>
