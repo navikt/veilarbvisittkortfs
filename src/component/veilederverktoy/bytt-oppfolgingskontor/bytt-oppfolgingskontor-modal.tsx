@@ -130,6 +130,18 @@ function ByttOppfolgingskontorModal() {
                             </div>
                             <div className="flex space-x-2">
                                 <BodyShort as={'dt'} weight="semibold">
+                                    Arenakontor:
+                                </BodyShort>
+                                {hentAlleKontorLoading ? (
+                                    <Skeleton width={100} />
+                                ) : (
+                                    <BodyShort
+                                        as={'dd'}
+                                    >{`${kontorTilhorighet?.arena?.kontorId} - ${kontorTilhorighet?.arena?.kontorNavn}`}</BodyShort>
+                                )}
+                            </div>
+                            <div className="flex space-x-2">
+                                <BodyShort as={'dt'} weight="semibold">
                                     Lokalkontor:
                                 </BodyShort>
                                 {hentAlleKontorLoading ? (
