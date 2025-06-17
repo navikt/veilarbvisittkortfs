@@ -1,9 +1,9 @@
 import { PropsWithChildren } from 'react';
-import './varsel-modal.less';
+import { Modal } from '@navikt/ds-react';
 import AdvarselSirkelIkon from './advarsel-sirkel.svg?react';
 import FeilSirkelIkon from './feil-sirkel.svg?react';
 import SuccessSirkelIkon from './ok-sirkel.svg?react';
-import { Modal } from '@navikt/ds-react';
+import './varsel-modal.less';
 
 type VarselModalType = 'ADVARSEL' | 'FEIL' | 'SUCCESS';
 
@@ -30,7 +30,7 @@ export function VarselModal({
             aria-label="Varselmodal"
         >
             {inkluderIkon && <Modal.Header>{getIkon(type)}</Modal.Header>}
-            <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">{children}</Modal.Body>
+            {children}
         </Modal>
     );
 }

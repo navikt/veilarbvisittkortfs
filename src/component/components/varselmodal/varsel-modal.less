@@ -21,6 +21,11 @@
         text-align: start;
     }
 
+    /* Runder av hjørna til modalen (midlertidig fiks), slik at vi unngår at berre botnen er avrunda grunna Modal.Footer sin styling. */
+    & > :first-child, & > :last-child {
+        border-radius: var(--a-border-radius-large);
+    }
+
     #varsel-ikon {
         margin-top: -3rem; // placerar en ikon med størrelsen 64x64 i mitten
         margin-left: calc(50% - 2rem); // midtstillar ikonet langs x-aksen
