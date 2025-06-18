@@ -72,7 +72,7 @@ function Etiketter() {
     }
 
     function visTrengerOppfolgingsvedtakEtikett() {
-        if (oppfolgingsstatus === null || oppfolgingsstatus === undefined || typeof oppfolgingsstatus === 'undefined') {
+        if (!oppfolging?.underOppfolging) {
             return false;
         }
 
@@ -112,7 +112,7 @@ function Etiketter() {
             <Fokus
                 visible={fullmakt && !isEmpty(fullmakt.fullmakt) && erFullmaktOmradeMedOppfolging(fullmakt.fullmakt)}
             >
-                Fullmakt
+                Fullmakt Oppfølging
             </Fokus>
             <Fokus visible={!!spraakTolk?.tegnspraak}>Tegnspråktolk</Fokus>
             <Fokus visible={!!spraakTolk?.talespraak}>Språktolk</Fokus>

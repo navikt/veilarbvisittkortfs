@@ -1,4 +1,4 @@
-import { BodyShort, Button, Heading } from '@navikt/ds-react';
+import { BodyShort, Button, Heading, Modal } from '@navikt/ds-react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { useModalStore } from '../../../store/modal-store';
 import { useErUfordeltBruker } from '../../../api/veilarbportefolje';
@@ -15,22 +15,26 @@ export function TildelVeilederKvittering({ tildeltVeilederNavn }: TildelVeileder
 
     return (
         <VarselModal isOpen={true} onRequestClose={hideModal} type="SUCCESS" inkluderIkon={false}>
-            <Heading size="large" level="1">
-                Tildel veileder
-            </Heading>
-            <BodyShort size="small">
-                Du har tildelt veileder {tildeltVeilederNavn}. Det kan ta noe tid før brukeren er i Min oversikt.
-            </BodyShort>
-            <Button
-                variant="primary"
-                size="small"
-                onClick={() => {
-                    setTimeout(() => setUfordeltbruker(false), 1000);
-                    hideModal();
-                }}
-            >
-                Ok
-            </Button>
+            <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
+                <Heading size="large" level="1">
+                    Tildel veileder
+                </Heading>
+                <BodyShort size="small">
+                    Du har tildelt veileder {tildeltVeilederNavn}. Det kan ta noe tid før brukeren er i Min oversikt.
+                </BodyShort>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button
+                    variant="primary"
+                    size="small"
+                    onClick={() => {
+                        setTimeout(() => setUfordeltbruker(false), 1000);
+                        hideModal();
+                    }}
+                >
+                    Ok
+                </Button>
+            </Modal.Footer>
         </VarselModal>
     );
 }

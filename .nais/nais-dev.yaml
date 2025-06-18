@@ -32,6 +32,11 @@ spec:
     buckets:
       - name: veilarbvisittkortfs-dev
         cascadingDelete: false
+  observability:
+    logging:
+      destinations:
+        - id: elastic
+        - id: loki
   env:
     - name: JSON_CONFIG
       value: >
