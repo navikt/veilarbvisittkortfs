@@ -142,7 +142,7 @@ function ByttOppfolgingskontorModal() {
                             </div>
                             <div className="flex space-x-2">
                                 <BodyShort as={'dt'} weight="semibold">
-                                    Lokalkontor:
+                                    Geografisk enhet:
                                 </BodyShort>
                                 {hentAlleKontorLoading ? (
                                     <Skeleton width={100} />
