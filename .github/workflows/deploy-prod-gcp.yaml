@@ -3,7 +3,7 @@ run-name: Deploy to prod ${{ github.ref_name }} by @${{ github.actor }}
 on:
     push:
         branches:
-            - master
+            - main
 env:
     CI: true
     TZ: Europe/Amsterdam
