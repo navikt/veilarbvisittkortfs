@@ -30,6 +30,7 @@ import { FeilTildelingModal } from '../tildel-veileder/tildel-veileder-feil-moda
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import HuskelappRedigereModal from '../../huskelapp/redigering/huskelapp-redigere-modal';
 import HuskelappFjernModal from '../../huskelapp/visning/huskelapp-fjern-modal';
+import ByttOppfolgingskontorModal from '../bytt-oppfolgingskontor/bytt-oppfolgingskontor-modal';
 
 export function VeilederverktoyModalController() {
     const { activeModalState } = useModalStore();
@@ -97,6 +98,8 @@ export function VeilederverktoyModalController() {
             return <HuskelappRedigereModal />;
         case ModalType.FJERN_HUSKELAPP:
             return <HuskelappFjernModal />;
+        case ModalType.BYTT_OPPFOLGINGSKONTOR:
+            return <ByttOppfolgingskontorModal />;
         default:
             return null;
     }
