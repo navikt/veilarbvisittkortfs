@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
-import federation from '@originjs/vite-plugin-federation';
+import { federation } from '@module-federation/vite';
 import { visualizer } from 'rollup-plugin-visualizer';
 import * as path from 'node:path';
 
@@ -14,6 +14,7 @@ export default defineConfig({
         federation({
             // A unique name for this remote application
             name: 'veilarbvisittkort',
+            manifest: true,
             // The manifest file that the host will use to find the components
             filename: 'visittkortEntry.js',
             // The components you want to make available to other apps
@@ -23,11 +24,11 @@ export default defineConfig({
             },
             // Libraries to share with the host app to avoid duplicates
             shared: {
-                react: { generate: false, import: false },
-                'react-dom': { generate: false, import: false },
-                '@navikt/ds-css': { generate: false, import: false },
-                '@navikt/aksel-icons': { generate: false, import: false },
-                '@navikt/ds-react': { generate: false, import: false }
+                react: { singleton: true },
+                'react-dom': { singleton: true },
+                '@navikt/ds-css': { singleton: true },
+                '@navikt/aksel-icons': { singleton: true },
+                '@navikt/ds-react': { singleton: true }
             }
         }),
         visualizer({ open: true })

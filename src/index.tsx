@@ -5,6 +5,7 @@ import * as dayjs from 'dayjs';
 import 'dayjs/locale/nb';
 import App from './app';
 import { initAmplitude } from './amplitude/amplitude';
+import '@navikt/ds-css';
 
 dayjs.locale('nb');
 
