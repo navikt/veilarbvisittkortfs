@@ -27,6 +27,9 @@ export default defineConfig({
         open: true,
         port: 3042
     },
+    optimizeDeps: {
+        exclude: ['react', 'react-dom', '@navikt/ds-css', '@navikt/aksel-icons', '@navikt/ds-react']
+    },
     build: {
         target: 'esnext',
         minify: false,
@@ -34,6 +37,7 @@ export default defineConfig({
         cssCodeSplit: false,
         manifest: 'asset-manifest.json',
         outDir: 'build',
-        sourcemap: true
+        sourcemap: true,
+        rollupOptions: { external: ['react', 'react-dom', '@navikt/ds-css', '@navikt/aksel-icons', '@navikt/ds-react'] }
     }
 });
