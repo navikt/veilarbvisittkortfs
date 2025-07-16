@@ -73,6 +73,6 @@ jobs:
             - name: Set no- cache for module federation entrypoint
               shell: bash
               run: |
-                  gcloud storage objects update gs://${BUCKET_NAME}/poao/${{ inputs.bucket }}/build/assets/visittkortEntry.js --cache-control="public, no-cache"
+                  gcloud storage objects update gs://${BUCKET_NAME}/poao/${{ inputs.bucket }}/build/assets/visittkortEntry.js --cache-control="no-cache"
 
 
