@@ -2,6 +2,8 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import federation from '@originjs/vite-plugin-federation';
+import { visualizer } from 'rollup-plugin-visualizer';
+import * as path from 'node:path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,8 +22,15 @@ export default defineConfig({
                 './App': './src/app.jsx'
             },
             // Libraries to share with the host app to avoid duplicates
-            shared: ['react', 'react-dom', '@navikt/ds-css', '@navikt/aksel-icons', '@navikt/ds-react']
-        })
+            shared: {
+                react: { generate: false, import: false },
+                'react-dom': { generate: false, import: false },
+                '@navikt/ds-css': { generate: false, import: false },
+                '@navikt/aksel-icons': { generate: false, import: false },
+                '@navikt/ds-react': { generate: false, import: false }
+            }
+        }),
+        visualizer({ open: true })
     ],
     server: {
         open: true,
@@ -29,6 +38,12 @@ export default defineConfig({
     },
     optimizeDeps: {
         exclude: ['react', 'react-dom', '@navikt/ds-css', '@navikt/aksel-icons', '@navikt/ds-react']
+    },
+    resolve: {
+        alias: {
+            react: path.resolve(__dirname, 'node_modules/react'),
+            'react-dom': path.resolve(__dirname, 'node_modules/react-dom')
+        }
     },
     build: {
         target: 'esnext',
@@ -38,6 +53,8 @@ export default defineConfig({
         manifest: 'asset-manifest.json',
         outDir: 'build',
         sourcemap: true,
-        rollupOptions: { external: ['react', 'react-dom', '@navikt/ds-css', '@navikt/aksel-icons', '@navikt/ds-react'] }
+        rollupOptions: {
+            external: ['react', 'react-dom', '@navikt/ds-css', '@navikt/aksel-icons', '@navikt/ds-react']
+        }
     }
 });
