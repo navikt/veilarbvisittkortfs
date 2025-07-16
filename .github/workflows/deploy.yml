@@ -70,4 +70,9 @@ jobs:
               run: |
                 gcloud storage objects update gs://${BUCKET_NAME}/poao/${{ inputs.bucket }}/build/asset-manifest.json --cache-control="public, max-age=120, stale-while-revalidate=1800, stale-if-error=600"
 
+            - name: Set no- cache for module federation entrypoint
+              shell: bash
+              run: |
+                  gcloud storage objects update gs://${BUCKET_NAME}/poao/${{ inputs.bucket }}/build/assets/visittkortEntry.js --cache-control="public, no-cache"
+
 
