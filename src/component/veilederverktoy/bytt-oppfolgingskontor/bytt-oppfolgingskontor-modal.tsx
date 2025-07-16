@@ -1,5 +1,5 @@
 import FormikModal from '../../components/formik/formik-modal';
-import { Alert, BodyShort, ErrorMessage, Heading, Modal, Skeleton } from '@navikt/ds-react';
+import { Accordion, Alert, BodyShort, ErrorMessage, Heading, Modal, Skeleton } from '@navikt/ds-react';
 import { Form as FormikForm } from 'formik';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
@@ -40,6 +40,7 @@ function ByttOppfolgingskontorModal() {
 
     const alleKontor = alleKontorData?.data?.data?.alleKontor || [];
     const kontorTilhorighet = alleKontorData?.data?.data?.kontorTilhorigheter || null;
+    const kontorHistorikk = alleKontorData?.data?.data?.kontorHistorikk || [];
 
     async function lagreOppfolgingskontor(formdata: ArbeidsOppfolgingKontorDTO) {
         try {
@@ -166,6 +167,12 @@ function ByttOppfolgingskontorModal() {
                             </div>
                         </dl>
                     </div>
+                    <Accordion>
+                        <Accordion.Item>
+                            <Accordion.Header>Kontorhistorikk</Accordion.Header>
+                            <Accordion.Content>{kontorHistorikk.map(historikkEntry)}</Accordion.Content>
+                        </Accordion.Item>
+                    </Accordion>
                     <FormikForm>
                         <ByttOppfolgingskontorForm
                             isKontorFetchLoading={hentAlleKontorLoading}

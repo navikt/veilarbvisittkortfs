@@ -1,5 +1,33 @@
+import { KontorHistorikkEntry } from '../../api/ao-oppfolgingskontor';
+
 export const alleKontorResponse = {
     data: {
+        kontorHistorikk: [
+            {
+                kontorId: '1234',
+                kontorType: 'ARBEIDSOPPFOLGING',
+                endringsType: 'FlyttetAvVeileder',
+                endretAv: 'veileder',
+                endretAvType: 'G151413',
+                endretTidspunkt: '2023-10-01T12:00:00Z'
+            } as KontorHistorikkEntry,
+            {
+                kontorId: '1234',
+                kontorType: 'ARBEIDSOPPFOLGING',
+                endringsType: 'AutomatiskRutetTilNOE',
+                endretAv: 'system',
+                endretAvType: 'System',
+                endretTidspunkt: '2023-10-01T12:00:00Z'
+            } as KontorHistorikkEntry,
+            {
+                kontorId: '1234',
+                kontorType: 'ARENA',
+                endringsType: 'EndretIArena',
+                endretAv: 'system',
+                endretAvType: 'System',
+                endretTidspunkt: '2023-10-01T12:00:00Z'
+            } as KontorHistorikkEntry
+        ],
         kontorTilhorigheter: {
             arena: {
                 kontorId: '1234',

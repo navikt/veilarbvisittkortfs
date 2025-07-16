@@ -31,6 +31,14 @@ const graphqlQuery = `
                 kontorNavn,
             }
         }
+        kontorHistorikk {
+            kontorId,
+            kontorType,
+            endringsType,
+            endretAv,
+            endretAvType,
+            endretTidspunkt,
+        }
     }
 `;
 
@@ -49,9 +57,37 @@ interface KontorTilhorigheter {
     };
 }
 
+export type KontorEndringsType =
+    | 'AutomatiskRutetTilNOE'
+    | 'AutomatiskRutetTilLokalkontor'
+    | 'FlyttetAvVeileder'
+    | 'FikkSkjerming'
+    | 'MistetSkjerming'
+    | 'FikkAddressebeskyttelse'
+    | 'AddressebeskyttelseMistet'
+    | 'EndretIArena'
+    | 'EndretBostedsadresse';
+
+type KontorType = 'ARENA' | 'ARBEIDSOPPFOLGING' | 'GEOGRAFISK_TILKNYTNING';
+
+export interface KontorHistorikkEntry {
+    kontorId: string;
+    kontorType: KontorType;
+    endringsType: KontorEndringsType;
+    endretAv: string;
+    endretAvType: string;
+    endretTidspunkt: string;
+}
+
 export function hentAlleKontor(fnr: string) {
     return axiosInstance
-        .post<GraphqlResponse<{ alleKontor: Kontor[]; kontorTilhorigheter: KontorTilhorigheter }>>(
+        .post<
+            GraphqlResponse<{
+                alleKontor: Kontor[];
+                kontorTilhorigheter: KontorTilhorigheter;
+                kontorHistorikk: KontorHistorikkEntry[];
+            }>
+        >(
             `/ao-oppfolgingskontor/graphql`,
             JSON.stringify({
                 query: graphqlQuery,
