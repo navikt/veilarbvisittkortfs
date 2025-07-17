@@ -14,7 +14,7 @@ export default defineConfig({
         federation({
             // A unique name for this remote application
             name: 'veilarbvisittkort',
-            manifest: true,
+            manifest: false,
             // The manifest file that the host will use to find the components
             filename: 'visittkortEntry.js',
             // The components you want to make available to other apps
