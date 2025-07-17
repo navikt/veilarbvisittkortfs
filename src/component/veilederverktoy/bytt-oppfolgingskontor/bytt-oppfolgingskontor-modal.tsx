@@ -170,7 +170,7 @@ function ByttOppfolgingskontorModal() {
                             </div>
                         </dl>
                     </div>
-                    <Accordion>
+                    <Accordion size="small">
                         <Accordion.Item>
                             <Accordion.Header>Kontorhistorikk</Accordion.Header>
                             <Accordion.Content>
