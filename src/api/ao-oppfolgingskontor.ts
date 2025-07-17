@@ -31,7 +31,7 @@ const graphqlQuery = `
                 kontorNavn,
             }
         }
-        kontorHistorikk {
+        kontorHistorikk(fnr: $fnr) {
             kontorId,
             kontorType,
             endringsType,
