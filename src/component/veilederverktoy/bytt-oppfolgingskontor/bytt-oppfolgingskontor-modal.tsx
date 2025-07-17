@@ -170,7 +170,16 @@ function ByttOppfolgingskontorModal() {
                     <Accordion>
                         <Accordion.Item>
                             <Accordion.Header>Kontorhistorikk</Accordion.Header>
-                            <Accordion.Content>{kontorHistorikk.map(historikkEntry)}</Accordion.Content>
+                            <Accordion.Content>
+                                {kontorHistorikk.map(historikkEntry => {
+                                    return (
+                                        <div>
+                                            {historikkEntry.kontorId} - {historikkEntry.endretAv} (
+                                            {historikkEntry.endretAvType})
+                                        </div>
+                                    );
+                                })}
+                            </Accordion.Content>
                         </Accordion.Item>
                     </Accordion>
                     <FormikForm>
