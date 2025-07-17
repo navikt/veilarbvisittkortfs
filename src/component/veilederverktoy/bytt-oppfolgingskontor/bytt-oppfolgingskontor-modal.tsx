@@ -13,6 +13,11 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import { AxiosError } from 'axios';
 
+const getKontorNavn = (kontor: { kontorId: string; kontorNavn: string } | undefined) => {
+    if (!kontor) return '-';
+    return `${kontor?.kontorId} - ${kontor?.kontorNavn}`;
+};
+
 function ByttOppfolgingskontorModal() {
     const [kvittering, setKvittering] = useState<KontorSkiftetKvittering | undefined>(undefined);
     const { brukerFnr, enhetId } = useAppStore();
@@ -136,9 +141,7 @@ function ByttOppfolgingskontorModal() {
                                 {hentAlleKontorLoading ? (
                                     <Skeleton width={100} />
                                 ) : (
-                                    <BodyShort
-                                        as={'dd'}
-                                    >{`${kontorTilhorighet?.arena?.kontorId} - ${kontorTilhorighet?.arena?.kontorNavn}`}</BodyShort>
+                                    <BodyShort as={'dd'}>{getKontorNavn(kontorTilhorighet?.arena)}</BodyShort>
                                 )}
                             </div>
                             <div className="flex space-x-2">
@@ -148,9 +151,9 @@ function ByttOppfolgingskontorModal() {
                                 {hentAlleKontorLoading ? (
                                     <Skeleton width={100} />
                                 ) : (
-                                    <BodyShort
-                                        as={'dd'}
-                                    >{`${kontorTilhorighet?.geografiskTilknytning?.kontorId} - ${kontorTilhorighet?.geografiskTilknytning?.kontorNavn}`}</BodyShort>
+                                    <BodyShort as={'dd'}>
+                                        {getKontorNavn(kontorTilhorighet?.geografiskTilknytning)}
+                                    </BodyShort>
                                 )}
                             </div>
                             <div className="flex space-x-2">
@@ -160,9 +163,9 @@ function ByttOppfolgingskontorModal() {
                                 {hentAlleKontorLoading ? (
                                     <Skeleton width={100} />
                                 ) : (
-                                    <BodyShort
-                                        as={'dd'}
-                                    >{`${kontorTilhorighet?.arbeidsoppfolging?.kontorId} - ${kontorTilhorighet?.arbeidsoppfolging?.kontorNavn}`}</BodyShort>
+                                    <BodyShort as={'dd'}>
+                                        {getKontorNavn(kontorTilhorighet?.arbeidsoppfolging)}
+                                    </BodyShort>
                                 )}
                             </div>
                         </dl>
