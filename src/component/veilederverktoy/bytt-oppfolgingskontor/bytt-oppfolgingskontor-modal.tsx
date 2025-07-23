@@ -12,6 +12,7 @@ import { ByttOppfolgingskontorKvittering, KontorSkiftetKvittering } from './bytt
 import { useState } from 'react';
 import useSWR from 'swr';
 import { AxiosError } from 'axios';
+import dayjs from 'dayjs';
 
 const getKontorNavn = (kontor: { kontorId: string; kontorNavn: string } | undefined) => {
     if (!kontor) return '-';
@@ -176,9 +177,16 @@ function ByttOppfolgingskontorModal() {
                             <Accordion.Content>
                                 {kontorHistorikk.map(historikkEntry => {
                                     return (
-                                        <div>
-                                            {historikkEntry.kontorId} - {historikkEntry.endretAv} (
-                                            {historikkEntry.endretAvType})
+                                        <div className="flex space-x-2 border-b" key={historikkEntry.endretTidspunkt}>
+                                            <span className="flex-1 space-x-2 flex">
+                                                <span className="flex-1">
+                                                    {historikkEntry.kontorId} - {historikkEntry.endretAv} (
+                                                    {historikkEntry.endretAvType})
+                                                </span>
+                                            </span>
+                                            <span className="flex-1">
+                                                {dayjs(historikkEntry.endretTidspunkt).fromNow()}
+                                            </span>
                                         </div>
                                     );
                                 })}

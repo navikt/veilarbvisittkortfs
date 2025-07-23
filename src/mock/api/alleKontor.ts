@@ -4,27 +4,27 @@ export const alleKontorResponse = {
     data: {
         kontorHistorikk: [
             {
-                kontorId: '1234',
+                kontorId: '3101',
                 kontorType: 'ARBEIDSOPPFOLGING',
                 endringsType: 'FlyttetAvVeileder',
-                endretAv: 'veileder',
-                endretAvType: 'G151413',
-                endretTidspunkt: '2023-10-01T12:00:00Z'
+                endretAv: 'G151413',
+                endretAvType: 'veileder',
+                endretTidspunkt: '2025-07-23T10:00:00Z'
             } as KontorHistorikkEntry,
             {
-                kontorId: '1234',
+                kontorId: '4154',
                 kontorType: 'ARBEIDSOPPFOLGING',
                 endringsType: 'AutomatiskRutetTilNOE',
-                endretAv: 'system',
-                endretAvType: 'System',
-                endretTidspunkt: '2023-10-01T12:00:00Z'
+                endretAv: 'System',
+                endretAvType: 'system',
+                endretTidspunkt: '2025-01-01T12:00:00Z'
             } as KontorHistorikkEntry,
             {
-                kontorId: '1234',
+                kontorId: '0220',
                 kontorType: 'ARENA',
                 endringsType: 'EndretIArena',
-                endretAv: 'system',
-                endretAvType: 'System',
+                endretAv: 'Arena',
+                endretAvType: 'system',
                 endretTidspunkt: '2023-10-01T12:00:00Z'
             } as KontorHistorikkEntry
         ],
