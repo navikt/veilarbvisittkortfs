@@ -1,5 +1,5 @@
 import FormikModal from '../../components/formik/formik-modal';
-import { Accordion, Alert, BodyShort, ErrorMessage, Heading, Modal, Skeleton } from '@navikt/ds-react';
+import { Alert, BodyShort, ErrorMessage, ExpansionCard, Heading, HStack, Modal, Skeleton } from '@navikt/ds-react';
 import { Form as FormikForm } from 'formik';
 import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
@@ -13,6 +13,7 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import { AxiosError } from 'axios';
 import dayjs from 'dayjs';
+import { Buildings2Icon, ClockDashedIcon } from '@navikt/aksel-icons';
 
 const getKontorNavn = (kontor: { kontorId: string; kontorNavn: string } | undefined) => {
     if (!kontor) return '-';
@@ -71,6 +72,7 @@ function ByttOppfolgingskontorModal() {
                 onClose={hideModal}
                 closeOnBackdropClick={true}
                 header={{
+                    icon: <Buildings2Icon />,
                     heading: 'Bytt oppfølgingskontor',
                     closeButton: true
                 }}
@@ -90,6 +92,7 @@ function ByttOppfolgingskontorModal() {
                 onClose={hideModal}
                 closeOnBackdropClick={true}
                 header={{
+                    icon: <Buildings2Icon />,
                     heading: 'Bytt oppfølgingskontor',
                     closeButton: true
                 }}
@@ -108,7 +111,7 @@ function ByttOppfolgingskontorModal() {
             tittel="Bytt oppfølgingskontor"
             className="bytt-oppfolgingskontor"
             render={() => (
-                <div className="bytt-oppfolgingskontor-modal space-y-4">
+                <div className="bytt-oppfolgingskontor-modal space-y-6">
                     <div>
                         Her kan du overføre denne personen / brukeren til et annet kontor for arbeidsrettet oppfølging.
                     </div>
@@ -171,29 +174,40 @@ function ByttOppfolgingskontorModal() {
                             </div>
                         </dl>
                     </div>
-                    <Accordion size="small">
-                        <Accordion.Item>
-                            <Accordion.Header>Kontorhistorikk</Accordion.Header>
-                            <Accordion.Content>
-                                {kontorHistorikk.map(historikkEntry => {
-                                    return (
-                                        <div className="flex space-x-2 border-b" key={historikkEntry.endretTidspunkt}>
-                                            <span className="flex-1 space-x-2 flex">
-                                                <span className="flex-1">
-                                                    {historikkEntry.kontorId} - {historikkEntry.endretAv} (
-                                                    {historikkEntry.endretAvType})
-                                                </span>
-                                            </span>
+                    <ExpansionCard size="small" className="mt-4 mb-4" aria-labelledby="Kontorhistorikk">
+                        <ExpansionCard.Header>
+                            <HStack gap="4" align="center">
+                                <ClockDashedIcon />
+                                <ExpansionCard.Title size="small">Kontorhistorikk</ExpansionCard.Title>
+                            </HStack>
+                        </ExpansionCard.Header>
+                        <ExpansionCard.Content>
+                            {kontorHistorikk.map(historikkEntry => {
+                                return (
+                                    <div className="flex space-x-2 border-b" key={historikkEntry.endretTidspunkt}>
+                                        <span className="flex-1 space-x-2 flex">
                                             <span className="flex-1">
-                                                {dayjs(historikkEntry.endretTidspunkt).fromNow()}
+                                                {historikkEntry.kontorId} - {historikkEntry.endretAv} (
+                                                {historikkEntry.endretAvType})
                                             </span>
-                                        </div>
-                                    );
-                                })}
-                            </Accordion.Content>
-                        </Accordion.Item>
-                    </Accordion>
+                                        </span>
+                                        <span className="flex-1">
+                                            {dayjs(historikkEntry.endretTidspunkt).fromNow()}
+                                        </span>
+                                    </div>
+                                );
+                            })}
+                        </ExpansionCard.Content>
+                    </ExpansionCard>
                     <FormikForm>
+                        <div className="mb-2">
+                            <div className="mb-1">
+                                <BodyShort weight="semibold">Nytt kontor for arbeidsrettet oppfølging</BodyShort>
+                            </div>
+                            <BodyShort textColor="subtle">
+                                Velg i listen eller skriv inn navn på kontoret du ønsker å bytte til
+                            </BodyShort>
+                        </div>
                         <ByttOppfolgingskontorForm
                             isKontorFetchLoading={hentAlleKontorLoading}
                             alleKontor={alleKontor}

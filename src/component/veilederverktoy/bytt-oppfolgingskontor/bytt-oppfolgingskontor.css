@@ -19,9 +19,14 @@
 .space-y-4 > *:not(:last-child) {
     margin-bottom: 1rem;
 }
-
+.space-y-6 > *:not(:last-child) {
+    margin-bottom: 1.5rem;
+}
 .space-y-2 > *:not(:last-child) {
     margin-bottom: 0.5rem;
+}
+.space-y-3 > *:not(:last-child) {
+    margin-bottom: 0.75rem;
 }
 
 .space-x-2 > *:not(:last-child) {
@@ -58,6 +63,9 @@
 
 .mb-2 {
     margin-bottom: calc(var(--spacing) * 2);
+}
+.mb-1 {
+    margin-bottom: calc(var(--spacing) * 1);
 }
 
 .flex {

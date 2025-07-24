@@ -7,6 +7,7 @@ interface SelectMedSokProps {
     knappeTekst: ReactNode;
     onClick?: () => void;
     children: ReactNode;
+    description?: string;
 }
 
 function DropdownMedSokeFilter({ knappeTekst, children }: SelectMedSokProps) {
