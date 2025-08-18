@@ -27,7 +27,7 @@ const ButtonWithClickMetric = withClickMetric(Button);
 
 export const Veilederverktoy = () => {
     const { visVeilederVerktoy, brukerFnr } = useAppStore();
-    const { oppfolging, gjeldendeEskaleringsvarsel} = useDataStore();
+    const { oppfolging, gjeldendeEskaleringsvarsel } = useDataStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { data: erUfordeltBruker } = useErUfordeltBruker(
         brukerFnr,
@@ -71,7 +71,7 @@ export const Veilederverktoy = () => {
         tilgangTilBrukersKontor
     );
     const underOppfolging = oppfolging?.underOppfolging || false;
-    const erIservIArena = oppfolgingsstatus?.formidlingsgruppe == 'ISERV' || false
+    const erIservIArena = oppfolgingsstatus?.formidlingsgruppe == 'ISERV' || false;
     const kanAvslutteOppfolging = selectKanAvslutteOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteManuellOppfolging = selectKanStarteManuellOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteDigitalOppfolging = selectKanStarteDigitalOppfolging(oppfolging, tilgangTilBrukersKontor);
@@ -107,7 +107,7 @@ export const Veilederverktoy = () => {
             </ButtonWithClickMetric>
             <Dropdown.Menu placement="bottom-end">
                 <Dropdown.Menu.List className="veilederverktoy-dropdown-menyliste">
-                    <StartArbeidsoppfolgingKnapp  underOppfolging={underOppfolging} erIservIArena={erIservIArena}/>
+                    <StartArbeidsoppfolgingKnapp underOppfolging={underOppfolging} erIservIArena={erIservIArena} />
                     <StartArbeidssokerRegistreringKnapp />
                     {sjekkHarTilgangTilHuskelappEllerFargekategori && (
                         <>
