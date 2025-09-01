@@ -29,7 +29,9 @@ function SokFilter<T>({ label, placeholder, data, children, limitSize }: SokFilt
         <div className="sok-filter-container">
             <div className="sok-filter-container__fixed-top">
                 <TextField
-                    ref={inputRef => (focusRef.current = inputRef)}
+                    ref={inputRef => {
+                        focusRef.current = inputRef;
+                    }}
                     label={label}
                     placeholder={placeholder}
                     value={query}
