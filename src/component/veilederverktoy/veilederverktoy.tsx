@@ -182,14 +182,14 @@ export const Veilederverktoy = () => {
                         />
                     )}
                     <StartProsessKnapp
-                        knappeTekst="Vis historikk"
-                        onClick={showHistorikkModal}
-                        metricName="historikk"
-                    />
-                    <StartProsessKnapp
                         knappeTekst={'Bytt oppfølgingskontor'}
                         onClick={showByttOppfolgingKontorModal}
                         metricName="bytt_oppfolgingskontor"
+                    />
+                    <StartProsessKnapp
+                        knappeTekst="Vis historikk"
+                        onClick={showHistorikkModal}
+                        metricName="historikk"
                     />
                 </Dropdown.Menu.List>
             </Dropdown.Menu>

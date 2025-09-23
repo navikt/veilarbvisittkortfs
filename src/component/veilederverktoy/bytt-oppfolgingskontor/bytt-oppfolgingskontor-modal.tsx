@@ -41,7 +41,7 @@ function ByttOppfolgingskontorModal() {
     }
 
     const arbeidsOppfolgingKontorInitialValues: ArbeidsOppfolgingKontorDTO = {
-        fnr: brukerFnr,
+        ident: brukerFnr,
         kontorId: enhetId
     };
 

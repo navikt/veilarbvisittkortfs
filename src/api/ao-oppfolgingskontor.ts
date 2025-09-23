@@ -3,7 +3,7 @@ import { GraphqlResponse } from './GraphqlUtils';
 
 export interface ArbeidsOppfolgingKontorDTO {
     kontorId: string;
-    fnr: string;
+    ident: string;
 }
 
 export interface Kontor {
@@ -12,12 +12,12 @@ export interface Kontor {
 }
 
 const graphqlQuery = `
-    query($fnr: String!) {
+    query($ident: String!) {
         alleKontor {
             kontorId,
             kontorNavn
         },
-        kontorTilhorigheter(fnr: $fnr) {
+        kontorTilhorigheter(ident: $ident) {
             arena {
                 kontorId,
                 kontorNavn,
@@ -31,7 +31,7 @@ const graphqlQuery = `
                 kontorNavn,
             }
         }
-        kontorHistorikk(fnr: $fnr) {
+        kontorHistorikk(ident: $ident) {
             kontorId,
             kontorType,
             endringsType,
@@ -79,7 +79,7 @@ export interface KontorHistorikkEntry {
     endretTidspunkt: string;
 }
 
-export function hentAlleKontor(fnr: string) {
+export function hentAlleKontor(ident: string) {
     return axiosInstance
         .post<
             GraphqlResponse<{
@@ -91,7 +91,7 @@ export function hentAlleKontor(fnr: string) {
             `/ao-oppfolgingskontor/graphql`,
             JSON.stringify({
                 query: graphqlQuery,
-                variables: { fnr }
+                variables: { ident }
             }),
             axiosJsonRequestConfig
         )
