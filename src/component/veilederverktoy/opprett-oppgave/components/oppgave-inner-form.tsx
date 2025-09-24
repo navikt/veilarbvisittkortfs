@@ -1,7 +1,6 @@
 import OpprettOppgaveTypeSelector from './opprett-oppgave-type-selector';
 import OpprettOppgavePrioritetSelector from './opprett-oppgave-prioritet-selector';
 import OpprettOppgaveVelgDatoer from './opprett-oppgave-dato-velger';
-import KontorDropdown from './opprett-oppgave-enhet-dropdown';
 import OpprettOppgaveVelgVeileder from './opprett-oppgave-veileder-selector';
 import OpprettOppgaveBeskrivelseTekstArea from './opprett-oppgave-beskrivelse-textarea';
 import { FormikProps } from 'formik';
@@ -10,6 +9,7 @@ import { BehandlandeEnhet, hentBehandlendeEnheter, OppgaveTema } from '../../../
 import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
 import { Button } from '@navikt/ds-react';
 import { useEffect, useState } from 'react';
+import KontorDropdown from './kontorDropdown';
 
 interface OppgaveInnerFormProps {
     fnr: string;

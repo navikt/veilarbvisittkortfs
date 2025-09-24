@@ -42,7 +42,7 @@ const graphqlQuery = `
     }
 `;
 
-interface KontorTilhorigheter {
+export interface KontorTilhorigheter {
     arena: {
         kontorId: string;
         kontorNavn: string;
@@ -68,7 +68,7 @@ export type KontorEndringsType =
     | 'EndretIArena'
     | 'EndretBostedsadresse';
 
-type KontorType = 'ARENA' | 'ARBEIDSOPPFOLGING' | 'GEOGRAFISK_TILKNYTNING';
+export type KontorType = 'ARENA' | 'ARBEIDSOPPFOLGING' | 'GEOGRAFISK_TILKNYTNING';
 
 export interface KontorHistorikkEntry {
     kontorId: string;
