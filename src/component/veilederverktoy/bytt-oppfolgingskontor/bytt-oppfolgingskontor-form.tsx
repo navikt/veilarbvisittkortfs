@@ -52,7 +52,7 @@ function ByttOppfolgingskontorForm({
                         formikFieldName={'kontorId'}
                     />
                     <Field as={TextField} label={'Begrunnelse (frivillig)'} name={'begrunnelse'} />
-                    <div className="space-x-4">
+                    <div className="space-x-4 flex">
                         <div>
                             {/*
                                 Ekstra div pga alle stiler fra Aksel i veilarbpersonflate er ikke i plassert i
