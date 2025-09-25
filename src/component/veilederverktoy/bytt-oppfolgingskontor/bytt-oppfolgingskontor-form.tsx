@@ -53,18 +53,31 @@ function ByttOppfolgingskontorForm({
                     />
                     <Field as={TextField} label={'Begrunnelse (frivillig)'} name={'begrunnelse'} />
                     <div className="space-x-4">
-                        <Button
-                            loading={formikProps.isSubmitting}
-                            disabled={!formikProps.dirty || formikProps.isSubmitting}
-                            variant="primary"
-                            size="small"
-                            type="submit"
-                        >
-                            Bekreft
-                        </Button>
-                        <Button disabled={formikProps.isSubmitting} variant="secondary" size="small" onClick={tilbake}>
-                            Avbryt
-                        </Button>
+                        <div>
+                            {/*
+                                Ekstra div pga alle stiler fra Aksel i veilarbpersonflate er ikke i plassert i
+                                css-layer components enda og vil da overstyre tailwind stiler
+                            */}
+                            <Button
+                                loading={formikProps.isSubmitting}
+                                disabled={!formikProps.dirty || formikProps.isSubmitting}
+                                variant="primary"
+                                size="small"
+                                type="submit"
+                            >
+                                Bekreft
+                            </Button>
+                        </div>
+                        <div>
+                            <Button
+                                disabled={formikProps.isSubmitting}
+                                variant="secondary"
+                                size="small"
+                                onClick={tilbake}
+                            >
+                                Avbryt
+                            </Button>
+                        </div>
                     </div>
                 </Form>
             )}
