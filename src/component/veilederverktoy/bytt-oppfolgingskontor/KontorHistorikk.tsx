@@ -32,7 +32,8 @@ export const KontorHistorikk = ({ kontorHistorikk }: Props) => {
                             >
                                 <span className="col-span-5 space-x-2 flex flex-col">
                                     <span className="">
-                                        <span className="font-bold">{historikkEntry.kontorId}</span> -{'NAV Østensjø'}
+                                        <span className="font-bold">{historikkEntry.kontorId}</span> -{' '}
+                                        {'TODO: Hent kontornavn'}
                                     </span>
                                     <span className="text-gray-700">
                                         Endret av: {historikkEntry.endretAv} ({historikkEntry.endretAvType})
