@@ -33,7 +33,6 @@ function KontorDropdown({ alleKontor, isLoading, formikFieldName, valgtKontorId 
                     onToggleSelected={value => {
                         return formikProps.setFieldValue(formikFieldName, value);
                     }}
-                    isListOpen={true}
                     label={'Velg kontor'}
                     name={formikFieldName}
                     placeholder={kontorNavn(valgtKontor)}
