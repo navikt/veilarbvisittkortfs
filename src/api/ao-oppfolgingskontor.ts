@@ -13,7 +13,7 @@ export interface Kontor {
 
 const graphqlQuery = `
     query($ident: String!) {
-        alleKontor {
+        alleKontor(ident: $ident) {
             kontorId,
             kontorNavn
         },
