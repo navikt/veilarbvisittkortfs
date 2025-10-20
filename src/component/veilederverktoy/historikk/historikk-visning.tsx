@@ -119,7 +119,7 @@ function HistorikkVisning({
     );
 
     return (
-        <ul className="ustilet">
+        <ul className="space-y-4">
             {historikk.map((elem, idx) => (
                 <li key={`historikk_visning_${idx}`}>{mapTilKomponent(elem, idx, indexForNyesteEnhetEndring)}</li>
             ))}
