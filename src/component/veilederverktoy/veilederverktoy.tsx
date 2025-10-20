@@ -22,6 +22,7 @@ import withClickMetric from '../components/click-metric/click-metric';
 import './veilederverktoy.less';
 import { StartArbeidsoppfolgingKnapp } from './start-arbeidsoppfolging/start-arbeidsoppfolging-knapp';
 import { StartArbeidssokerRegistreringKnapp } from './start-arbeidssoker-registrering/start-arbeidssoker-registrering-knapp';
+import { erProd } from '../../util/utils';
 
 const ButtonWithClickMetric = withClickMetric(Button);
 
@@ -46,7 +47,8 @@ export const Veilederverktoy = () => {
         showOpprettOppgaveModal,
         showAvsluttOppfolgingModal,
         showHistorikkModal,
-        showHuskelappRedigereModal
+        showHuskelappRedigereModal,
+        showByttOppfolgingKontorModal
     } = useModalStore();
 
     const sjekkHarTilgangTilHuskelappEllerFargekategori = harTilgangTilHuskelappEllerFargekategori(
@@ -78,6 +80,7 @@ export const Veilederverktoy = () => {
     const kanStarteKVP = selectKanStarteKVP(oppfolging, tilgangTilBrukersKontor);
     const kanStoppeKVP = selectKanStoppeKVP(oppfolging, tilgangTilBrukersKontor);
     const kanTildeleVeileder = selectKanTildeleVeileder(oppfolging, tilgangTilBrukersKontor);
+    const harLansertArbeidsoppfolgingskontor = !erProd();
 
     const huskelappKlikk = () => {
         trackAmplitude({
@@ -178,6 +181,13 @@ export const Veilederverktoy = () => {
                             knappeTekst="Avslutt oppfølging"
                             onClick={showAvsluttOppfolgingModal}
                             metricName="avslutt_oppfolging"
+                        />
+                    )}
+                    {harLansertArbeidsoppfolgingskontor && (
+                        <StartProsessKnapp
+                            knappeTekst={'Bytt oppfølgingskontor'}
+                            onClick={showByttOppfolgingKontorModal}
+                            metricName="bytt_oppfolgingskontor"
                         />
                     )}
                     <StartProsessKnapp

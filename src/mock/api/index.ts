@@ -8,6 +8,7 @@ import { veilarboppgaveHandlers } from './veilarboppgave';
 import { veilarbpersonflatefsHandlers } from './veilarbpersonflatefs';
 import { veilarbportefoljeHandlers } from './veilarbportefolje';
 import { veilarbvedtaksstotteHandlers } from './veilarbvedtaksstotte';
+import { aoOppfolgingskontorHandlers } from './ao-oppfolgingskontor';
 
 export const allHandlers: RequestHandler[] = [
     ...veilarbaktivitetHandlers,
@@ -18,5 +19,6 @@ export const allHandlers: RequestHandler[] = [
     ...veilarbpersonflatefsHandlers,
     ...veilarbportefoljeHandlers,
     ...veilarbvedtaksstotteHandlers,
-    ...veilarbveilederHandlers
+    ...veilarbveilederHandlers,
+    ...aoOppfolgingskontorHandlers
 ];

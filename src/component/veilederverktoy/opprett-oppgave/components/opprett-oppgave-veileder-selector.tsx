@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FormikProps } from 'formik';
 import SokFilter from '../../../components/sokfilter/sok-filter';
-import FormikRadioGroup from '../../../components/formik/formik-radiogroup';
+import FormikDropdown from '../../../components/formik/formik-dropdown';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
 import { useDataStore } from '../../../../store/data-store';
 import { fetchVeilederePaEnhet, VeilederData } from '../../../../api/veilarbveileder';
@@ -9,7 +9,7 @@ import { OppgaveTema } from '../../../../api/veilarboppgave';
 import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
 import { ifResponseHasData } from '../../../../util/utils';
 import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
-import SelectMedSok from './select-med-sok/select-med-sok';
+import SelectMedSok from './select-med-sok/dropdown-med-soke-filter';
 
 interface OpprettOppgaveVelgVeilederProps {
     veilederId: StringOrNothing;
@@ -55,24 +55,20 @@ function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: 
         <div className="skjemaelement navds-form-field navds-form-field--medium navds-date__field">
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label className="navds-form-field__label navds-label navds-label--small">Veileder (valgfritt)</label>
-            <SelectMedSok
-                name="Velg veileder dropdown"
-                knappeTekst={(valgtVeileder && valgtVeileder.navn) || ''}
-                render={lukkDropdown => (
-                    <SokFilter data={sorterteVeiledere} label="" placeholder="Søk etter veileder">
-                        {data => (
-                            <FormikRadioGroup
-                                data={data}
-                                createLabel={(veileder: VeilederData) => veileder.navn}
-                                createValue={(veileder: VeilederData) => veileder.ident}
-                                radioName="Velg veileder"
-                                closeDropdown={lukkDropdown}
-                                name="veilederId"
-                            />
-                        )}
-                    </SokFilter>
-                )}
-            />
+            <SelectMedSok knappeTekst={(valgtVeileder && valgtVeileder.navn) || ''}>
+                <SokFilter data={sorterteVeiledere} label="" placeholder="Søk etter veileder">
+                    {data => (
+                        <FormikDropdown
+                            data={data}
+                            createLabel={(veileder: VeilederData) => veileder.navn}
+                            createValue={(veileder: VeilederData) => veileder.ident}
+                            radioName="Velg veileder"
+                            // closeDropdown={lukkDropdown}
+                            name="veilederId"
+                        />
+                    )}
+                </SokFilter>
+            </SelectMedSok>
         </div>
     );
 }

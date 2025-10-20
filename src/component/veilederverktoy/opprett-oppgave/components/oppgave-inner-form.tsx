@@ -1,34 +1,53 @@
 import OpprettOppgaveTypeSelector from './opprett-oppgave-type-selector';
 import OpprettOppgavePrioritetSelector from './opprett-oppgave-prioritet-selector';
 import OpprettOppgaveVelgDatoer from './opprett-oppgave-dato-velger';
-import OpprettOppgaveVelgEnhet from './opprett-oppgave-enhet-dropdown';
 import OpprettOppgaveVelgVeileder from './opprett-oppgave-veileder-selector';
 import OpprettOppgaveBeskrivelseTekstArea from './opprett-oppgave-beskrivelse-textarea';
 import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
-import { OppgaveTema } from '../../../../api/veilarboppgave';
+import { BehandlandeEnhet, hentBehandlendeEnheter, OppgaveTema } from '../../../../api/veilarboppgave';
 import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
 import { Button } from '@navikt/ds-react';
+import { useEffect, useState } from 'react';
+import KontorDropdown from './kontorDropdown';
 
 interface OppgaveInnerFormProps {
     fnr: string;
     tema: OrNothing<OppgaveTema>;
-    enhetId: StringOrNothing;
+    kontorId: StringOrNothing;
     veilederId: StringOrNothing;
     avsenderenhetId: string;
     formikProps: FormikProps<OpprettOppgaveFormValues>;
     tilbake: () => void;
 }
 
+const behandlingsnummer = 'B643';
+
 function OppgaveInnerForm({
     fnr,
     tema,
-    enhetId,
+    kontorId,
     veilederId,
     avsenderenhetId,
     formikProps,
     tilbake
 }: OppgaveInnerFormProps) {
+    const [behandladeEnheter, setBehandladeEnheter] = useState([] as BehandlandeEnhet[]);
+    const [isLoading, setIsLoading] = useState(true);
+    const { setFieldValue } = formikProps;
+
+    useEffect(() => {
+        if (tema) {
+            hentBehandlendeEnheter(tema, fnr, behandlingsnummer).then(res => {
+                const behandlendeEnhetersData = res.data;
+                setBehandladeEnheter(behandlendeEnhetersData);
+                setFieldValue('enhetId', behandlendeEnhetersData[0].enhetId);
+                setIsLoading(false);
+                document.getElementsByName('Velg kontor').forEach(elem => ((elem as HTMLInputElement).checked = false));
+            });
+        }
+    }, [tema, fnr, setFieldValue]);
+
     if (!tema) {
         return null;
     }
@@ -41,12 +60,17 @@ function OppgaveInnerForm({
             </div>
             <OpprettOppgaveVelgDatoer />
             <div className="oppgave-enhet-container">
-                <OpprettOppgaveVelgEnhet value={enhetId} tema={tema} fnr={fnr} formikProps={formikProps} />
+                <KontorDropdown
+                    isLoading={isLoading}
+                    valgtKontorId={kontorId}
+                    formikFieldName={'enhetId'}
+                    alleKontor={behandladeEnheter.map(it => ({ kontorNavn: it.navn, kontorId: it.enhetId }))}
+                />
                 <OpprettOppgaveVelgVeileder
                     tema={tema}
                     veilederId={veilederId}
                     formikProps={formikProps}
-                    enhetId={enhetId || avsenderenhetId}
+                    enhetId={kontorId || avsenderenhetId}
                 />
             </div>
             <OpprettOppgaveBeskrivelseTekstArea />
