@@ -183,13 +183,13 @@ export const Veilederverktoy = () => {
                             metricName="avslutt_oppfolging"
                         />
                     )}
-                    {harLansertArbeidsoppfolgingskontor && (
+                    {harLansertArbeidsoppfolgingskontor && underOppfolging ? (
                         <StartProsessKnapp
                             knappeTekst={'Bytt oppfølgingskontor'}
                             onClick={showByttOppfolgingKontorModal}
                             metricName="bytt_oppfolgingskontor"
                         />
-                    )}
+                    ) : null}
                     <StartProsessKnapp
                         knappeTekst="Vis historikk"
                         onClick={showHistorikkModal}
