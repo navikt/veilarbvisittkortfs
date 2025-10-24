@@ -35,7 +35,8 @@ const mockInnstillingsHistorikk: InnstillingHistorikkInnslag[] = [
         begrunnelse: 'Brukeren er tildelt veileder Z000004',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'Z000003',
-        dialogId: null
+        dialogId: null,
+        tildeltVeilederId: 'Z000004'
     },
     {
         type: 'VEILEDER_TILORDNET',
@@ -43,7 +44,8 @@ const mockInnstillingsHistorikk: InnstillingHistorikkInnslag[] = [
         begrunnelse: 'Brukeren er tildelt veileder Z000003',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'Z000002',
-        dialogId: null
+        dialogId: null,
+        tildeltVeilederId: 'Z000003'
     },
     {
         type: 'AVSLUTTET_OPPFOLGINGSPERIODE',
@@ -59,7 +61,8 @@ const mockInnstillingsHistorikk: InnstillingHistorikkInnslag[] = [
         begrunnelse: 'Brukeren er tildelt veileder Z000002',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: null,
-        dialogId: null
+        dialogId: null,
+        tildeltVeilederId: 'Z000002'
     },
     {
         type: 'OPPFOLGINGSENHET_ENDRET',

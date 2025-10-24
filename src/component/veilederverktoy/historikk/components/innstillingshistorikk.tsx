@@ -30,7 +30,6 @@ const typeTilTekst: InnstillingsHistorikkTypeTilTekst = {
 
 function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHistorikkKomponentProps) {
     const { type, begrunnelse, dialogId } = innstillingsHistorikk;
-
     const begrunnelseTekst =
         begrunnelse && begrunnelse.length > ESKALERING_MAX_LENGTH
             ? `${begrunnelse.substring(0, ESKALERING_MAX_LENGTH)}... `
@@ -43,6 +42,9 @@ function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHis
             </BodyShort>
             <BodyShort size="small">
                 {begrunnelseTekst}
+                {innstillingsHistorikk.tildeltVeilederId && innstillingsHistorikk.tildeltVeilederNavn
+                    ? `(${innstillingsHistorikk.tildeltVeilederNavn})`
+                    : ''}
                 {dialogId && <LenkeTilDialog dialogId={dialogId}>Les mer i dialog</LenkeTilDialog>}
             </BodyShort>
             <Detail>{`${toSimpleDateStr(innstillingsHistorikk.dato)} ${opprettetAvTekst(

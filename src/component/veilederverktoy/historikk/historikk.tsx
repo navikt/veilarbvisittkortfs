@@ -96,6 +96,11 @@ function Historikk() {
                     (ihi: InnstillingHistorikkInnslag) => ihi.opprettetAv === 'NAV'
                 ),
                 ...tilIdentListe(
+                    innstillingsHistorikkFetcher.data,
+                    (ihi: InnstillingHistorikkInnslag) => ihi.tildeltVeilederId,
+                    (ihi: InnstillingHistorikkInnslag) => ihi.opprettetAv === 'NAV'
+                ),
+                ...tilIdentListe(
                     oppgaveHistorikkFetcher.data,
                     (ohi: OppgaveHistorikkInnslag) => ohi.opprettetAvBrukerId,
                     (ohi: OppgaveHistorikkInnslag) => ohi.opprettetAv === 'NAV'
@@ -142,7 +147,8 @@ function Historikk() {
         innstillingsHistorikkFetcher.data?.map(ih => {
             return {
                 ...ih,
-                opprettetAvBrukerNavn: veilederDataListeData?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn
+                opprettetAvBrukerNavn: veilederDataListeData?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn,
+                tildeltVeilederNavn: veilederDataListeData?.find(vd => ih.tildeltVeilederId === vd.ident)?.navn
             };
         }) || [];
 
