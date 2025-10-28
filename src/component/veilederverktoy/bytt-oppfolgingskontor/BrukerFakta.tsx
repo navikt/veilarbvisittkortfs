@@ -9,57 +9,53 @@ interface Props {
 
 const getKontorNavn = (kontor: { kontorId: string; kontorNavn: string } | undefined) => {
     if (!kontor) return '-';
-    return `${kontor?.kontorId} - ${kontor?.kontorNavn}`;
+    return `${kontor?.kontorId} ${kontor?.kontorNavn}`;
 };
 
 export const BrukerFakta = ({ hentAlleKontorLoading, navn, kontorTilhorighet }: Props) => {
     return (
-        <div className="space-y-2 p-4 rounded-lg border border-border-default bg-surface-subtle">
+        <div className="space-y-2 pb-4 bg-surface-alt-3-subtle p-4 rounded-lg">
             <div className="mb-2">
                 <Heading size={'small'}>Fakta om bruker</Heading>
             </div>
             <dl>
-                <div className="flex space-x-2">
+                <div className="flex space-x-2 mb-4">
                     <BodyShort weight="semibold" as={'dt'}>
                         Navn:
                     </BodyShort>
                     <BodyShort as={'dd'}>{navn}</BodyShort>
                 </div>
-                <div className="flex space-x-2">
-                    <BodyShort as="dt" weight="semibold">
-                        Folkeregistrert adresse:
-                    </BodyShort>
-                    <BodyShort as={'dd'}>Fyrstikkalleen 1, Fyrstikkalleen 1, , Fyrstikkalleen 1, </BodyShort>
-                </div>
-                <div className="flex space-x-2">
-                    <BodyShort as={'dt'} weight="semibold">
-                        Arenakontor:
-                    </BodyShort>
-                    {hentAlleKontorLoading ? (
-                        <Skeleton width={100} />
-                    ) : (
-                        <BodyShort as={'dd'}>{getKontorNavn(kontorTilhorighet?.arena)}</BodyShort>
-                    )}
-                </div>
-                <div className="flex space-x-2">
-                    <BodyShort as={'dt'} weight="semibold">
-                        Geografisk enhet:
-                    </BodyShort>
-                    {hentAlleKontorLoading ? (
-                        <Skeleton width={100} />
-                    ) : (
-                        <BodyShort as={'dd'}>{getKontorNavn(kontorTilhorighet?.geografiskTilknytning)}</BodyShort>
-                    )}
-                </div>
-                <div className="flex space-x-2">
-                    <BodyShort as={'dt'} weight="semibold">
-                        Arbeidsrettet oppfølging:
-                    </BodyShort>
-                    {hentAlleKontorLoading ? (
-                        <Skeleton width={100} />
-                    ) : (
-                        <BodyShort as={'dd'}>{getKontorNavn(kontorTilhorighet?.arbeidsoppfolging)}</BodyShort>
-                    )}
+                <div className="pl-4 flex flex-col flex-wrap gap-4">
+                    <div className="flex border-b pb-2 space-x-2 flex-col border-surface-alt-3-moderate">
+                        <BodyShort className="text-gray-700" as={'dt'} weight="semibold">
+                            Arbeidsrettet oppfølging
+                        </BodyShort>
+                        {hentAlleKontorLoading ? (
+                            <Skeleton width={100} />
+                        ) : (
+                            <BodyShort as={'dd'}>{getKontorNavn(kontorTilhorighet?.arbeidsoppfolging)}</BodyShort>
+                        )}
+                    </div>
+                    <div className="flex border-b pb-2 border-surface-alt-3-moderate space-x-2 flex-col">
+                        <BodyShort className="text-gray-700" as={'dt'} weight="semibold">
+                            Arenakontor
+                        </BodyShort>
+                        {hentAlleKontorLoading ? (
+                            <Skeleton width={100} />
+                        ) : (
+                            <BodyShort as={'dd'}>{getKontorNavn(kontorTilhorighet?.arena)}</BodyShort>
+                        )}
+                    </div>
+                    <div className="flex pb-2 space-x-2 flex-col">
+                        <BodyShort className="text-gray-700" as={'dt'} weight="semibold">
+                            Geografisk enhet
+                        </BodyShort>
+                        {hentAlleKontorLoading ? (
+                            <Skeleton width={100} />
+                        ) : (
+                            <BodyShort as={'dd'}>{getKontorNavn(kontorTilhorighet?.geografiskTilknytning)}</BodyShort>
+                        )}
+                    </div>
                 </div>
             </dl>
         </div>
