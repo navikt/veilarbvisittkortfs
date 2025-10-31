@@ -30,16 +30,16 @@ export const alleKontorResponse = {
         ],
         kontorTilhorigheter: {
             arena: {
-                kontorId: '1234',
-                kontorNavn: 'NAV Oslo'
+                kontorId: '0937',
+                kontorNavn: 'Nav Evje og Hornnes'
             },
             arbeidsoppfolging: {
-                kontorId: '1234',
-                kontorNavn: 'NAV  AOslo'
+                kontorId: '4154',
+                kontorNavn: 'Nasjonal oppfølgingsenhet'
             },
             geografiskTilknytning: {
-                kontorId: '1234',
-                kontorNavn: 'NAV Lokal'
+                kontorId: '0937',
+                kontorNavn: 'Nav Evje og Hornnes'
             }
         },
         alleKontor: [
