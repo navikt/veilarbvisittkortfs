@@ -74,6 +74,9 @@ export const veilarboppgaveHandlers: RequestHandler[] = [
     http.post('/veilarboppgave/api/oppgave', async ({ request }) => {
         const requestBody = (await request.json()) as OppgaveFormData;
         await delay(defaultNetworkResponseDelay);
+        if (requestBody.enhetId === '') {
+            return HttpResponse.text('Mangler enhet', { status: 400 });
+        }
         return HttpResponse.json({
             ID: 123,
             aktoerid: '00000012345',

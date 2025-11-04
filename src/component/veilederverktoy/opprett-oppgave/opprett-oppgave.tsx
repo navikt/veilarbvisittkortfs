@@ -14,7 +14,7 @@ import './opprett-oppgave.less';
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
-    kontorId: string;
+    enhetId: string;
     fnr: string;
     fraDato: string;
     tilDato: string;
@@ -38,7 +38,7 @@ function OpprettOppgave() {
 
     const opprettOppgaveInitialValues: Omit<OpprettOppgaveFormValues, 'tema'> = {
         beskrivelse: '',
-        kontorId: '',
+        enhetId: '',
         fnr: brukerFnr,
         fraDato: todayReversedDateStr(),
         tilDato: todayReversedDateStr(),
@@ -51,7 +51,7 @@ function OpprettOppgave() {
     function lagreOppgave(formdata: OpprettOppgaveFormValues) {
         showSpinnerModal();
 
-        opprettOppgave(brukerFnr, {...formdata, enhetId: formdata.kontorId})
+        opprettOppgave(brukerFnr, { ...formdata, enhetId: formdata.enhetId })
             .then(res => {
                 showOpprettOppgaveKvitteringModal({ type: res.data.type, tema: res.data.tema });
             })
@@ -76,7 +76,7 @@ function OpprettOppgave() {
                         <OppgaveInnerForm
                             tema={formikProps.values.tema}
                             fnr={brukerFnr}
-                            kontorId={formikProps.values.kontorId}
+                            enhetId={formikProps.values.enhetId}
                             veilederId={formikProps.values.veilederId}
                             avsenderenhetId={enhetId}
                             formikProps={formikProps}

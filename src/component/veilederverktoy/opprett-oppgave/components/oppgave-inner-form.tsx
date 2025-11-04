@@ -14,7 +14,7 @@ import KontorDropdown from './kontorDropdown';
 interface OppgaveInnerFormProps {
     fnr: string;
     tema: OrNothing<OppgaveTema>;
-    kontorId: StringOrNothing;
+    enhetId: StringOrNothing;
     veilederId: StringOrNothing;
     avsenderenhetId: string;
     formikProps: FormikProps<OpprettOppgaveFormValues>;
@@ -26,7 +26,7 @@ const behandlingsnummer = 'B643';
 function OppgaveInnerForm({
     fnr,
     tema,
-    kontorId,
+    enhetId,
     veilederId,
     avsenderenhetId,
     formikProps,
@@ -62,7 +62,7 @@ function OppgaveInnerForm({
             <div className="oppgave-enhet-container">
                 <KontorDropdown
                     isLoading={isLoading}
-                    valgtKontorId={kontorId}
+                    valgtKontorId={enhetId}
                     formikFieldName={'enhetId'}
                     alleKontor={behandladeEnheter.map(it => ({ kontorNavn: it.navn, kontorId: it.enhetId }))}
                 />
@@ -70,7 +70,7 @@ function OppgaveInnerForm({
                     tema={tema}
                     veilederId={veilederId}
                     formikProps={formikProps}
-                    enhetId={kontorId || avsenderenhetId}
+                    enhetId={enhetId || avsenderenhetId}
                 />
             </div>
             <OpprettOppgaveBeskrivelseTekstArea />
