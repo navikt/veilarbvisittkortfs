@@ -4,6 +4,8 @@ Personinfo om bruker og veilederverktøy
 
 Demoløsning: https://navikt.github.io/veilarbvisittkortfs/
 
+![Skjermutklipp av hvordan Visittkort og veilederverktøy ser ut i frontend.](readme_appillustrasjon.png)
+
 # Komme i gang
 
 **Installere pakker**

@@ -5,6 +5,7 @@
     "private": true,
     "scripts": {
         "start": "vite --mode mock",
+        "dev": "vite --mode mock",
         "build": "tsc && vite build",
         "build:dev": "tsc && NODE_ENV=development vite build",
         "build:mock": "tsc && vite build --mode mock --base=/veilarbvisittkortfs/",
@@ -32,10 +33,12 @@
     },
     "dependencies": {
         "@amplitude/analytics-browser": "2.22.2",
-        "@navikt/aksel-icons": "7.28.1",
-        "@navikt/ds-css": "7.28.1",
-        "@navikt/ds-react": "7.28.1",
+        "@navikt/aksel-icons": "7.31.0",
+        "@navikt/ds-css": "7.31.0",
+        "@navikt/ds-react": "7.31.0",
+        "@navikt/ds-tailwind": "^7.31.0",
         "@navikt/navspa": "7.1.0",
+        "@tailwindcss/vite": "^4.1.13",
         "axios": "1.11.0",
         "classnames": "2.5.1",
         "constate": "3.3.3",
@@ -43,14 +46,15 @@
         "formik": "2.4.6",
         "react": "19.1.0",
         "react-dom": "19.1.0",
-        "swr": "^2.3.6"
+        "swr": "^2.3.6",
+        "tailwindcss": "^4.1.13"
     },
     "devDependencies": {
         "@eslint/js": "9.33.0",
         "@testing-library/react": "16.3.0",
         "@types/react": "19.1.10",
         "@types/react-dom": "19.1.7",
-        "@vitejs/plugin-react": "5.0.0",
+        "@vitejs/plugin-react": "5.0.3",
         "cross-env": "10.0.0",
         "eslint": "9.33.0",
         "eslint-plugin-jsx-a11y": "6.10.2",
@@ -63,9 +67,9 @@
         "msw": "2.10.5",
         "prettier": "3.6.2",
         "typescript": "5.9.2",
-        "typescript-eslint": "8.39.1",
-        "vite":  "7.1.2",
-        "vite-plugin-svgr": "4.3.0",
+        "typescript-eslint": "8.44.1",
+        "vite": "7.2.1",
+        "vite-plugin-svgr": "4.5.0",
         "vitest": "3.2.4"
     },
     "msw": {

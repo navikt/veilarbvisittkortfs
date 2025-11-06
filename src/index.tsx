@@ -2,11 +2,13 @@ import { createRoot } from 'react-dom/client';
 import { Navspa } from '@navikt/navspa';
 import { isLocalDevelopment } from './util/utils';
 import * as dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/nb';
 import App from './app';
 import { initAmplitude } from './amplitude/amplitude';
 
 dayjs.locale('nb');
+dayjs.extend(relativeTime);
 
 Navspa.eksporter('veilarbvisittkortfs', App);
 
