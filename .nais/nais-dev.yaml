@@ -33,6 +33,9 @@ spec:
       - name: veilarbvisittkortfs-dev
         cascadingDelete: false
   observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
     logging:
       destinations:
         - id: elastic

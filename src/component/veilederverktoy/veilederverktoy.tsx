@@ -22,12 +22,13 @@ import withClickMetric from '../components/click-metric/click-metric';
 import './veilederverktoy.less';
 import { StartArbeidsoppfolgingKnapp } from './start-arbeidsoppfolging/start-arbeidsoppfolging-knapp';
 import { StartArbeidssokerRegistreringKnapp } from './start-arbeidssoker-registrering/start-arbeidssoker-registrering-knapp';
+import { erProd } from '../../util/utils';
 
 const ButtonWithClickMetric = withClickMetric(Button);
 
 export const Veilederverktoy = () => {
     const { visVeilederVerktoy, brukerFnr } = useAppStore();
-    const { oppfolging, gjeldendeEskaleringsvarsel} = useDataStore();
+    const { oppfolging, gjeldendeEskaleringsvarsel } = useDataStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { data: erUfordeltBruker } = useErUfordeltBruker(
         brukerFnr,
@@ -46,7 +47,8 @@ export const Veilederverktoy = () => {
         showOpprettOppgaveModal,
         showAvsluttOppfolgingModal,
         showHistorikkModal,
-        showHuskelappRedigereModal
+        showHuskelappRedigereModal,
+        showByttOppfolgingKontorModal
     } = useModalStore();
 
     const sjekkHarTilgangTilHuskelappEllerFargekategori = harTilgangTilHuskelappEllerFargekategori(
@@ -71,13 +73,14 @@ export const Veilederverktoy = () => {
         tilgangTilBrukersKontor
     );
     const underOppfolging = oppfolging?.underOppfolging || false;
-    const erIservIArena = oppfolgingsstatus?.formidlingsgruppe == 'ISERV' || false
+    const erIservIArena = oppfolgingsstatus?.formidlingsgruppe == 'ISERV' || false;
     const kanAvslutteOppfolging = selectKanAvslutteOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteManuellOppfolging = selectKanStarteManuellOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteDigitalOppfolging = selectKanStarteDigitalOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteKVP = selectKanStarteKVP(oppfolging, tilgangTilBrukersKontor);
     const kanStoppeKVP = selectKanStoppeKVP(oppfolging, tilgangTilBrukersKontor);
     const kanTildeleVeileder = selectKanTildeleVeileder(oppfolging, tilgangTilBrukersKontor);
+    const harLansertArbeidsoppfolgingskontor = !erProd();
 
     const huskelappKlikk = () => {
         trackAmplitude({
@@ -107,7 +110,7 @@ export const Veilederverktoy = () => {
             </ButtonWithClickMetric>
             <Dropdown.Menu placement="bottom-end">
                 <Dropdown.Menu.List className="veilederverktoy-dropdown-menyliste">
-                    <StartArbeidsoppfolgingKnapp  underOppfolging={underOppfolging} erIservIArena={erIservIArena}/>
+                    <StartArbeidsoppfolgingKnapp underOppfolging={underOppfolging} erIservIArena={erIservIArena} />
                     <StartArbeidssokerRegistreringKnapp />
                     {sjekkHarTilgangTilHuskelappEllerFargekategori && (
                         <>
@@ -180,6 +183,13 @@ export const Veilederverktoy = () => {
                             metricName="avslutt_oppfolging"
                         />
                     )}
+                    {harLansertArbeidsoppfolgingskontor && underOppfolging ? (
+                        <StartProsessKnapp
+                            knappeTekst={'Bytt oppfølgingskontor'}
+                            onClick={showByttOppfolgingKontorModal}
+                            metricName="bytt_oppfolgingskontor"
+                        />
+                    ) : null}
                     <StartProsessKnapp
                         knappeTekst="Vis historikk"
                         onClick={showHistorikkModal}

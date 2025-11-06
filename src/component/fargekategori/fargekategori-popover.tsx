@@ -7,7 +7,7 @@ import { trackAmplitude } from '../../amplitude/amplitude';
 import { endreFargekategori, Fargekategori, FargekategoriModell, Fargekategorinavn } from '../../api/veilarbportefolje';
 
 interface Props {
-    buttonRef: React.RefObject<HTMLButtonElement>;
+    buttonRef: React.RefObject<HTMLButtonElement | null>;
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
     setFargekategori: (fargekategori: Fargekategori) => void;

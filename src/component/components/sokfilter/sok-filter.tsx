@@ -26,20 +26,22 @@ function SokFilter<T>({ label, placeholder, data, children, limitSize }: SokFilt
     const filteredData = limitSize === undefined ? rawfilteredData : limit(rawfilteredData, limitSize || 20);
 
     return (
-        <>
-            <div className="sokfilter">
+        <div className="sok-filter-container">
+            <div className="sok-filter-container__fixed-top">
                 <TextField
-                    ref={inputRef => (focusRef.current = inputRef)}
+                    ref={inputRef => {
+                        focusRef.current = inputRef;
+                    }}
                     label={label}
                     placeholder={placeholder}
                     value={query}
                     size="small"
-                    className="sokfilter__input"
+                    className=""
                     onChange={e => changeQuery(e.target.value)}
                 />
             </div>
-            {children(filteredData)}
-        </>
+            <div className="sok-filter-container__scrollable-bottom">{children(filteredData)}</div>
+        </div>
     );
 }
 

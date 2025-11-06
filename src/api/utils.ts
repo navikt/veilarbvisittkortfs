@@ -1,10 +1,15 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { APP_NAME, isDefined } from '../util/utils';
 
 export const axiosInstance = axios.create({
     withCredentials: true,
     headers: { 'Nav-Consumer-Id': APP_NAME }
 });
+
+export const axiosJsonRequestConfig: AxiosRequestConfig = {
+    withCredentials: true,
+    headers: { 'Nav-Consumer-Id': APP_NAME, 'Content-Type': 'application/json' }
+};
 
 export function isAnyLoading(...fetchers: Array<{ loading: boolean }>): boolean {
     return fetchers.some(f => f.loading);

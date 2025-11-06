@@ -16,7 +16,7 @@ export const mockInnloggetVeileder: VeilederData = {
 };
 
 const mockVeiledereNavn = (veiledereDataListeRequest: VeilederDataListeRequest): VeilederData[] => {
-    const veilederIdenterSomSkalMockes = ['Z000002', 'Z123456', 'Z000003', 'Z995009'];
+    const veilederIdenterSomSkalMockes = ['Z000002', 'Z000003', 'Z000004', 'Z123456', 'Z000003', 'Z995009'];
 
     return veiledereDataListeRequest.identer
         .filter(i => veilederIdenterSomSkalMockes.some(vism => vism === i))

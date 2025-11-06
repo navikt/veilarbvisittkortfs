@@ -94,7 +94,8 @@ export interface InnstillingHistorikkInnslag {
     opprettetAvBrukerId: StringOrNothing;
     opprettetAvBrukerNavn?: StringOrNothing;
     dialogId: OrNothing<number>;
-    veileder?: string;
+    tildeltVeilederId?: StringOrNothing;
+    tildeltVeilederNavn?: StringOrNothing;
     enhet?: StringOrNothing;
 }
 
