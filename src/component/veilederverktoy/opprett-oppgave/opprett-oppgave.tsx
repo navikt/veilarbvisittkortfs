@@ -8,8 +8,8 @@ import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import { todayReversedDateStr } from '../../../util/date-utils';
-import { OppgaveFormData, OppgaveTema, OppgaveType, opprettOppgave, PrioritetType } from '../../../api/veilarboppgave';
-import { OrNothing, StringOrNothing } from '../../../util/type/utility-types';
+import { OppgaveTema, OppgaveType, opprettOppgave, PrioritetType } from '../../../api/veilarboppgave';
+import { StringOrNothing } from '../../../util/type/utility-types';
 import './opprett-oppgave.less';
 
 export interface OpprettOppgaveFormValues {
@@ -19,9 +19,9 @@ export interface OpprettOppgaveFormValues {
     fraDato: string;
     tilDato: string;
     prioritet: PrioritetType;
-    tema: OrNothing<OppgaveTema>;
+    tema: OppgaveTema;
     type: OppgaveType;
-    avsenderenhetId: StringOrNothing;
+    avsenderenhetId: string;
     veilederId: StringOrNothing;
 }
 
@@ -32,32 +32,32 @@ function OpprettOppgave() {
 
     const navn = selectSammensattNavn(personalia);
 
-    const opprettOppgaveInitialValues: OpprettOppgaveFormValues = {
+    if (!enhetId) {
+        return null;
+    }
+
+    const opprettOppgaveInitialValues: Omit<OpprettOppgaveFormValues, 'tema'> = {
         beskrivelse: '',
         enhetId: '',
         fnr: brukerFnr,
         fraDato: todayReversedDateStr(),
         tilDato: todayReversedDateStr(),
         prioritet: 'NORM',
-        tema: undefined,
         type: 'VURDER_HENVENDELSE',
         veilederId: null,
         avsenderenhetId: enhetId
     };
 
-    function lagreOppgave(formdata: OppgaveFormData) {
+    function lagreOppgave(formdata: OpprettOppgaveFormValues) {
         showSpinnerModal();
 
-        opprettOppgave(brukerFnr, formdata)
+        opprettOppgave(brukerFnr, { ...formdata, enhetId: formdata.enhetId })
             .then(res => {
                 showOpprettOppgaveKvitteringModal({ type: res.data.type, tema: res.data.tema });
             })
             .catch(showErrorModal);
     }
 
-    if (!enhetId) {
-        return null;
-    }
     return (
         <FormikModal
             initialValues={opprettOppgaveInitialValues}

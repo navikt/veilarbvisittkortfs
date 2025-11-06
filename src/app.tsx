@@ -6,6 +6,7 @@ import StoreProvider from './store/store-provider';
 import { DataFetcher } from './component/data-fetcher';
 import { VeilederverktoyModalController } from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-modal-controller';
 import './index.less';
+import './index.css';
 
 export interface AppProps {
     fnr: string;

@@ -32,7 +32,8 @@ export enum ModalType {
     SPINNER,
     HUSKELAPP,
     FJERN_HUSKELAPP,
-    HUSKELAPP_REDIGERE
+    HUSKELAPP_REDIGERE,
+    BYTT_OPPFOLGINGSKONTOR,
 }
 
 export interface ModalState {
@@ -152,6 +153,10 @@ export const [ModalStore, useModalStore] = constate(() => {
         showModal(ModalType.STOPP_ESKALERING_KVITTERING);
     }
 
+    function showByttOppfolgingKontorModal() {
+        showModal(ModalType.BYTT_OPPFOLGINGSKONTOR)
+    }
+
     return {
         activeModalState,
         hideModal,
@@ -179,6 +184,7 @@ export const [ModalStore, useModalStore] = constate(() => {
         showAvsluttOppfolgingModal,
         showHistorikkModal,
         showFjernHuskelappModal,
-        showHuskelappRedigereModal
+        showHuskelappRedigereModal,
+        showByttOppfolgingKontorModal
     };
 });
