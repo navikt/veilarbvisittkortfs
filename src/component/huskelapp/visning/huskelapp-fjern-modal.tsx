@@ -1,6 +1,5 @@
 import { useModalStore } from '../../../store/modal-store';
 import { logMetrikk } from '../../../util/logger';
-import { trackAmplitude } from '../../../amplitude/amplitude';
 import { slettHuskelapp, useHuskelapp } from '../../../api/veilarbportefolje';
 import { Button, Heading, Modal } from '@navikt/ds-react';
 import { useAppStore } from '../../../store/app-store';
@@ -12,10 +11,6 @@ function HuskelappFjernModal() {
 
     function handleSlettHuskelapp() {
         logMetrikk('visittkort.metrikker.fjern_huskelapp');
-        trackAmplitude({
-            name: 'knapp klikket',
-            data: { knapptekst: 'Arkivere huskelapp', effekt: 'Arkivere huskelapp for bruker' }
-        });
         showSpinnerModal();
 
         slettHuskelapp(huskelapp!.huskelappId!)

@@ -14,7 +14,6 @@ import {
     selectKanStoppeKVP,
     selectKanTildeleVeileder
 } from '../../util/selectors';
-import { trackAmplitude } from '../../amplitude/amplitude';
 import { harTilgangTilHuskelappEllerFargekategori } from '../huskelapp/harTilgangTilHuskelapp';
 import { useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
 import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
@@ -83,13 +82,6 @@ export const Veilederverktoy = () => {
     const harLansertArbeidsoppfolgingskontor = !erProd();
 
     const huskelappKlikk = () => {
-        trackAmplitude({
-            name: 'navigere',
-            data: {
-                lenketekst: `veiledervektoy-${huskelapp?.huskelappId ? 'endre-huskelapp' : 'lag-huskelapp'}`,
-                destinasjon: 'huskelapp'
-            }
-        });
         showHuskelappRedigereModal();
     };
 

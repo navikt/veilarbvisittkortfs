@@ -10,7 +10,6 @@ import {
 import { useAppStore } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { logMetrikk } from '../../../util/logger';
-import { trackAmplitude } from '../../../amplitude/amplitude';
 import HuskelappIkon from '../ikon/Huskelappikon_bakgrunnsfarge.svg?react';
 import { toReversedDateStr, toSimpleDateStr } from '../../../util/date-utils';
 import { HuskelappSkjema } from './huskelapp-skjema';
@@ -84,20 +83,6 @@ function HuskelappRedigereModal() {
             leggtil: !erIRedigeringModus,
             applikasjon: 'visittkort'
         });
-
-        trackAmplitude(
-            {
-                name: 'skjema fullført',
-                data: {
-                    skjemanavn: erIRedigeringModus ? 'Rediger huskelapp' : 'Opprett huskelapp',
-                    skjemaId: 'veilarbvisittkortfs-huskelapp'
-                }
-            },
-            {
-                kommentarlengde: values.kommentar?.length,
-                fristSatt: !!values.frist?.toString().length
-            }
-        );
 
         showSpinnerModal();
 
