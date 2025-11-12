@@ -5,7 +5,6 @@ import * as dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/nb';
 import App from './app';
-import { initAmplitude } from './amplitude/amplitude';
 
 dayjs.locale('nb');
 dayjs.extend(relativeTime);
@@ -14,8 +13,6 @@ Navspa.eksporter('veilarbvisittkortfs', App);
 
 if (isLocalDevelopment()) {
     renderMockApp();
-} else {
-    initAmplitude();
 }
 
 function renderMockApp() {
