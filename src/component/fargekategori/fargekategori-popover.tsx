@@ -3,7 +3,6 @@ import { AxiosError } from 'axios';
 import { Alert, Button, Popover } from '@navikt/ds-react';
 import { useAppStore } from '../../store/app-store';
 import { mapfargekategoriToIkon } from './mapfargekategoriToIkon';
-import { trackAmplitude } from '../../amplitude/amplitude';
 import { endreFargekategori, Fargekategori, FargekategoriModell, Fargekategorinavn } from '../../api/veilarbportefolje';
 
 interface Props {
@@ -12,17 +11,11 @@ interface Props {
     setIsOpen: (isOpen: boolean) => void;
     setFargekategori: (fargekategori: Fargekategori) => void;
 }
+
 export const FargekategoriPopover = ({ buttonRef, isOpen, setIsOpen, setFargekategori }: Props) => {
     const { brukerFnr, enhetId } = useAppStore();
     const [error, setError] = useState<string>();
     const onClick = (kategoriVerdi: FargekategoriModell) => {
-        trackAmplitude({
-            name: 'knapp klikket',
-            data: {
-                knapptekst: kategoriVerdi,
-                effekt: `Valgt fargekategori ${kategoriVerdi} på bruker`
-            }
-        });
         endreFargekategori(kategoriVerdi, brukerFnr)
             .then(res => res.data)
             .then(response =>
