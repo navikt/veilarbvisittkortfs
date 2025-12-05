@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import HistorikkVisning from './historikk-visning';
-import { LasterModal } from '../../components/lastermodal/laster-modal';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { Alert } from '@navikt/ds-react';
 import { useAppStore } from '../../../store/app-store';
@@ -128,19 +127,12 @@ function Historikk() {
         hentVeilederDataListe
     ]);
 
-    if (
+    const isLoading =
         isAnyLoading(innstillingsHistorikkFetcher, oppgaveHistorikkFetcher, eskaleringsvarselHistorikkFetcher) ||
-        veilederDataListeLoading
-    ) {
-        return <LasterModal />;
-    } else if (hasAnyFailed(innstillingsHistorikkFetcher, oppgaveHistorikkFetcher, eskaleringsvarselHistorikkFetcher)) {
+        veilederDataListeLoading;
+
+    if (hasAnyFailed(innstillingsHistorikkFetcher, oppgaveHistorikkFetcher, eskaleringsvarselHistorikkFetcher)) {
         return <Alert variant="error">Noe gikk galt</Alert>;
-    } else if (
-        !innstillingsHistorikkFetcher.data &&
-        !oppgaveHistorikkFetcher.data &&
-        !eskaleringsvarselHistorikkFetcher.data
-    ) {
-        return null;
     }
 
     const innstillingHistorikk =
@@ -173,6 +165,7 @@ function Historikk() {
         <VeilederVerktoyModal className="historikk__modal" tittel="Historikk">
             <div className="prosess">
                 <HistorikkVisning
+                    isLoading={isLoading}
                     innstillingHistorikk={innstillingHistorikk}
                     oppgaveHistorikk={oppgaveHistorikk}
                     eskaleringsvarselHistorikk={eskaleringsvarselHistorikk}
