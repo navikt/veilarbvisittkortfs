@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { Alert, BodyShort, Detail, Loader } from '@navikt/ds-react';
+import { BodyShort, Detail, Skeleton } from '@navikt/ds-react';
 import { opprettetAvTekst } from './opprettet-av';
-import { hasAnyFailed, isAnyLoading } from '../../../../api/utils';
+import { isAnyLoading } from '../../../../api/utils';
 import { toSimpleDateStr } from '../../../../util/date-utils';
 import { InnstillingHistorikkInnslag } from '../../../../api/veilarboppfolging';
 import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
@@ -25,16 +25,20 @@ export function OppfolgingEnhetEndret({ historikkElement, erGjeldendeEnhet }: Pr
     }, [enhet, enhetNavnFetcher.fetch]);
 
     if (isAnyLoading(enhetNavnFetcher)) {
-        return <Loader size="2xlarge" />;
-    } else if (hasAnyFailed(enhetNavnFetcher)) {
-        return <Alert variant="error">Noe gikk galt</Alert>;
-    } else if (!enhetNavn) {
-        return null;
+        return (
+            <div className="historikk__elem" key={dato}>
+                <BodyShort size="small" weight="semibold">
+                    <Skeleton variant="text" width="100%" />
+                </BodyShort>
+                <Skeleton variant="text" width="40%" />
+                <Skeleton variant="text" width="40%" />
+            </div>
+        );
     }
 
     const begrunnelseTekst = erGjeldendeEnhet
-        ? `Oppfølgingsenhet ${enhet} ${enhetNavn}`
-        : `Ny oppfølgingsenhet ${enhet} ${enhetNavn}`;
+        ? `Oppfølgingsenhet ${enhet} ${enhetNavn || '<ukjent navn>'}`
+        : `Ny oppfølgingsenhet ${enhet} ${enhetNavn || '<ukjent navn>'}`;
 
     return (
         <div className="historikk__elem" key={dato}>
