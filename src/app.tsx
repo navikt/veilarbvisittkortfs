@@ -7,6 +7,9 @@ import { DataFetcher } from './component/data-fetcher';
 import { VeilederverktoyModalController } from './component/veilederverktoy/veilederverktoy-components/veilederverktoy-modal-controller';
 import './index.less';
 import './index.css';
+import { useSetAppState } from './store/app-store';
+import { useEffect } from 'react';
+import { VisittKortConfigContext } from './store/visittkort-config';
 
 export interface AppProps {
     fnr: string;
@@ -14,30 +17,35 @@ export interface AppProps {
     tilbakeTilFlate: string;
     visVeilederVerktoy?: boolean;
     skjulEtiketter?: boolean;
-    avsluttOppfolgingOpptelt?: boolean;
 }
 
-function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, avsluttOppfolgingOpptelt }: AppProps) {
+function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter }: AppProps) {
+    const setAppstate = useSetAppState();
+    useEffect(() => {
+        setAppstate({ brukerFnr: fnr, enhetId: enhet });
+    }, [fnr, enhet, setAppstate]);
+
     return (
-        <StoreProvider
-            brukerFnr={fnr}
-            enhetId={enhet}
-            tilbakeTilFlate={tilbakeTilFlate}
-            visVeilederVerktoy={visVeilederVerktoy || false}
-            avsluttOppfolgingOpptelt={avsluttOppfolgingOpptelt || false}
+        <VisittKortConfigContext.Provider
+            value={{
+                visVeilederVerktoy: visVeilederVerktoy || false,
+                tilbakeTilFlate
+            }}
         >
-            <div className="visittkortfs">
-                <DataFetcher>
-                    <Tilbakelenke />
-                    <div className="visittkortfs__container">
-                        <PersonInfo />
-                        {!skjulEtiketter && <Etiketter />}
-                        <Veilederverktoy />
-                    </div>
-                </DataFetcher>
-                <VeilederverktoyModalController />
-            </div>
-        </StoreProvider>
+            <StoreProvider>
+                <div className="visittkortfs">
+                    <DataFetcher>
+                        <Tilbakelenke />
+                        <div className="visittkortfs__container">
+                            <PersonInfo />
+                            {!skjulEtiketter && <Etiketter />}
+                            <Veilederverktoy />
+                        </div>
+                    </DataFetcher>
+                    <VeilederverktoyModalController />
+                </div>
+            </StoreProvider>
+        </VisittKortConfigContext.Provider>
     );
 }
 

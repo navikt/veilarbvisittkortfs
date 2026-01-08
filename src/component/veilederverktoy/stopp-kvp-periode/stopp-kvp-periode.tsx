@@ -1,17 +1,18 @@
 import { BodyShort } from '@navikt/ds-react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
-import { useAppStore } from '../../../store/app-store';
+import { useBrukerFnr } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { fetchOppfolging, stoppKvpOppfolging } from '../../../api/veilarboppfolging';
 import { ifResponseHasData } from '../../../util/utils';
 import { useDataStore } from '../../../store/data-store';
 
 function StoppKvpPeriode() {
-    const { brukerFnr } = useAppStore();
+    const brukerFnr = useBrukerFnr();
     const { setOppfolging } = useDataStore();
     const { showStoppKvpPeriodeKvitteringModal, showSpinnerModal, showErrorModal } = useModalStore();
 
     function stoppKvp({ begrunnelse }: BegrunnelseValues) {
+        if (!brukerFnr) return;
         showSpinnerModal();
 
         stoppKvpOppfolging(brukerFnr, begrunnelse)

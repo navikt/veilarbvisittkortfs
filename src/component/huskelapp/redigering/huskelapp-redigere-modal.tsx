@@ -7,7 +7,7 @@ import {
     redigerHuskelapp,
     useHuskelapp
 } from '../../../api/veilarbportefolje';
-import { useAppStore } from '../../../store/app-store';
+import { useBrukerFnr, useEnhetId } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { logMetrikk } from '../../../util/logger';
 import HuskelappIkon from '../ikon/Huskelappikon_bakgrunnsfarge.svg?react';
@@ -17,6 +17,7 @@ import { SlettHuskelapp } from './slett-huskelapp';
 import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import './huskelapp-redigering.less';
+import { useVisVeilederVerktøy } from '../../../store/visittkort-config';
 
 const huskelappEmptyValues: HuskelappformValues = {
     huskelappId: null,
@@ -25,7 +26,9 @@ const huskelappEmptyValues: HuskelappformValues = {
 };
 
 function HuskelappRedigereModal() {
-    const { brukerFnr, visVeilederVerktoy, enhetId } = useAppStore();
+    const brukerFnr = useBrukerFnr();
+    const visVeilederVerktoy = useVisVeilederVerktøy();
+    const enhetId = useEnhetId();
     const { innloggetVeileder, personalia } = useDataStore();
     const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
     const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);

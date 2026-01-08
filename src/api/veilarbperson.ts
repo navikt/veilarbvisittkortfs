@@ -150,11 +150,11 @@ export function fetchHarNivaa4(fnr: string): AxiosPromise<HarBruktNivaa4Type> {
     return axiosInstance.get<HarBruktNivaa4Type>(`/veilarbperson/api/person/${fnr}/harNivaa4`);
 }
 
-export function useOpplysningerOmArbeidssokerMedProfilering(fnr: string) {
+export function useOpplysningerOmArbeidssokerMedProfilering(fnr: string | undefined) {
     const url = '/veilarbperson/api/v3/person/hent-siste-opplysninger-om-arbeidssoeker-med-profilering';
     return useSWR<OpplysningerOmArbeidssoekerMedProfilering, ErrorMessage>(
         fnr ? url : null,
-        () => fetchWithPost(url, { fnr }),
+        () => fetchWithPost(url, { fnr: fnr as string }),
         swrOptions
     );
 }

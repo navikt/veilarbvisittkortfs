@@ -161,21 +161,21 @@ export function tildelTilVeileder(
     return axiosInstance.post(`/veilarboppfolging/api/tilordneveileder`, tilordninger);
 }
 
-export function useOppfolgingsstatus(fnr: string) {
+export function useOppfolgingsstatus(fnr: string | undefined) {
     const url = '/veilarboppfolging/api/v2/person/hent-oppfolgingsstatus';
     const { data, error, isLoading, mutate } = useSWR<OppfolgingStatus, ErrorMessage>(
         fnr ? `${url}/${fnr}` : null,
-        () => fetchWithPost(url, { fnr: fnr }),
+        () => fetchWithPost(url, { fnr: fnr as string }),
         swrOptions
     );
     return { data, isLoading, error, mutate };
 }
 
-export function useTilgangTilBrukersKontor(fnr: string) {
+export function useTilgangTilBrukersKontor(fnr: string | undefined) {
     const url = '/veilarboppfolging/api/v3/oppfolging/hent-veilederTilgang';
     const { data, error, isLoading } = useSWR<TilgangTilBrukersKontor, ErrorMessage>(
         fnr ? `${url}/${fnr}` : null,
-        () => fetchWithPost(url, { fnr: fnr }),
+        () => fetchWithPost(url, { fnr: fnr as string }),
         swrOptions
     );
     return { data, isLoading, error };

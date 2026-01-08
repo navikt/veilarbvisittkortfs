@@ -10,7 +10,7 @@ import { delay, http, HttpResponse, RequestHandler } from 'msw';
 
 const mockAvslutningStatus: AvslutningStatus = {
     kanAvslutte: true,
-    harYtelser: false,
+    harYtelser: true,
     underOppfolging: true,
     inaktiveringsDato: null,
     underKvp: false,
@@ -20,7 +20,7 @@ const mockAvslutningStatus: AvslutningStatus = {
 
 const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
     kanAvslutte: false,
-    harYtelser: false,
+    harYtelser: true,
     underOppfolging: false,
     inaktiveringsDato: null,
     underKvp: false,

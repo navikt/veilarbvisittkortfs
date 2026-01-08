@@ -26,12 +26,12 @@ export function fetchHarUtkast(fnr: string): AxiosPromise<boolean> {
     return axiosInstance.post<boolean>(`/veilarbvedtaksstotte/api/v2/utkast/hent-harUtkast`, { fnr: fnr });
 }
 
-export function useGjeldende14aVedtak(fnr: string) {
+export function useGjeldende14aVedtak(fnr: string | undefined) {
     const url = '/veilarbvedtaksstotte/api/hent-gjeldende-14a-vedtak';
     const { data, error, isLoading } = useSWR<Oppfolgingsvedtak14a | null, ErrorMessage>(
         fnr ? `${url}/${fnr}` : null,
         async () => {
-            const response = await fetch(url, createPOSToptions({ fnr }));
+            const response = await fetch(url, createPOSToptions({ fnr: fnr as string }));
 
             if (response.status === 200) {
                 try {
