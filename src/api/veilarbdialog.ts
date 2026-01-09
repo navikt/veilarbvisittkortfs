@@ -7,7 +7,6 @@ import {
     stansVarselHistorikkQuery,
     StansVarselHistorikkResponse,
     stansVarselQuery,
-    StansVarselQueryRequest,
     StansVarselResponse,
     veilarbdialogGraphqlQuery
 } from './veilarbdialogGraphql';
@@ -73,10 +72,9 @@ export const useGjeldendeEskaleringsvarsel = (fnr: string | undefined) => {
     const { data, error, isLoading, mutate } = useSWR<GjeldendeEskaleringsvarsel | undefined>(
         fnr ? url : null,
         () =>
-            fetchWithPost(
-                url,
-                veilarbdialogGraphqlQuery(fnr as string, stansVarselQuery) as StansVarselQueryRequest
-            ).then((res: StansVarselResponse) => res.data.stansVarsel),
+            fetchWithPost(url, veilarbdialogGraphqlQuery(fnr as string, stansVarselQuery)).then(
+                (res: StansVarselResponse) => res.data.stansVarsel
+            ),
         swrOptions
     );
     return { gjeldendeEskaleringsvarsel: data, error, isLoading, mutate: mutate };
