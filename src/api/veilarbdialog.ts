@@ -68,20 +68,15 @@ export function fetchDialoger(fnr: string): AxiosPromise<Dialog[]> {
         }));
 }
 
-export function hentGjeldendeEskaleringsvarsel(fnr: string): AxiosPromise<GjeldendeEskaleringsvarsel> {
-    return axiosInstance
-        .post(veilarbDialogGraphqlEndpoint, veilarbdialogGraphqlQuery(fnr, stansVarselQuery))
-        .then((res: AxiosResponse<StansVarselResponse>) => ({
-            ...res,
-            data: res.data.data.stansVarsel
-        }));
-}
-
 export const useGjeldendeEskaleringsvarsel = (fnr: string | undefined) => {
     const url = veilarbDialogGraphqlEndpoint;
-    const { data, error, isLoading, mutate } = useSWR<GjeldendeEskaleringsvarsel>(
+    const { data, error, isLoading, mutate } = useSWR<GjeldendeEskaleringsvarsel | undefined>(
         fnr ? url : null,
-        () => fetchWithPost(url, veilarbdialogGraphqlQuery(fnr as string, stansVarselQuery) as StansVarselQueryRequest),
+        () =>
+            fetchWithPost(
+                url,
+                veilarbdialogGraphqlQuery(fnr as string, stansVarselQuery) as StansVarselQueryRequest
+            ).then((res: StansVarselResponse) => res.data.stansVarsel),
         swrOptions
     );
     return { gjeldendeEskaleringsvarsel: data, error, isLoading, mutate: mutate };
