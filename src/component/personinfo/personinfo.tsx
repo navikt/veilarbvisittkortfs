@@ -60,8 +60,8 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
                     </>
                 )}
                 <KopierKnappTekst
-                    kopierTekst={brukerFnr as string}
-                    viseTekst={`F.nr.: ${brukerFnr as string}`}
+                    kopierTekst={brukerFnr}
+                    viseTekst={`F.nr.: ${brukerFnr}`}
                     arialabel="Kopier fødselsnummer"
                 />
                 {<Label>/</Label>}
