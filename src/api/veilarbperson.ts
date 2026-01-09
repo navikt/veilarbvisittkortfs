@@ -3,6 +3,7 @@ import { axiosInstance, ErrorMessage, fetchWithPost, swrOptions } from './utils'
 import { FrontendEvent } from '../util/logger';
 import { StringOrNothing } from '../util/type/utility-types';
 import useSWR from 'swr';
+import { behandlingsnummer } from './behandlingsnummer';
 
 export interface Personalia {
     fornavn: string;
@@ -122,24 +123,17 @@ export const usePersonalia = (fnr: string | undefined) => {
     const url = '/veilarbperson/api/v3/hent-person';
     const { data, error, isLoading } = useSWR<Personalia, ErrorMessage>(
         fnr ? url : null,
-        ({ behandlingsnummer }: { behandlingsnummer: string }) =>
-            fetchWithPost(url, { fnr: fnr as string, behandlingsnummer } as PdlRequest),
+        () => fetchWithPost(url, { fnr: fnr as string, behandlingsnummer } as PdlRequest),
         swrOptions
     );
     return { personalia: data, error, isLoading };
 };
 
-export function fetchVerge(fnr: string, behandlingsnummer: string): AxiosPromise<Verge> {
-    return axiosInstance.post<Verge>(`/veilarbperson/api/v3/person/hent-vergeOgFullmakt`, {
-        fnr: fnr,
-        behandlingsnummer: behandlingsnummer
-    } as PdlRequest);
-}
-export const useVerge = (fnr: string | undefined, behandlingsnummer: string | undefined) => {
+export const useVerge = (fnr: string | undefined) => {
     const url = '/veilarbperson/api/v3/person/hent-vergeOgFullmakt';
     const { data, error, isLoading } = useSWR<Verge, ErrorMessage>(
         fnr && behandlingsnummer ? url : null,
-        () => fetchWithPost(url, { fnr: fnr as string, behandlingsnummer: behandlingsnummer } as PdlRequest),
+        () => fetchWithPost(url, { fnr: fnr as string, behandlingsnummer } as PdlRequest),
         swrOptions
     );
     return { verge: data, error, isLoading };
@@ -155,11 +149,11 @@ export const useFullmakt = (fnr: string | undefined) => {
     return { fullmakt: data, error, isLoading };
 };
 
-export const useSpraakTolk = (fnr: string | undefined, behandlingsnummer: string | undefined) => {
+export const useSpraakTolk = (fnr: string | undefined) => {
     const url = '/veilarbperson/api/v3/person/hent-tolk';
     const { data, error, isLoading } = useSWR<SpraakTolk, ErrorMessage>(
         fnr && behandlingsnummer ? url : null,
-        () => fetchWithPost(url, { fnr: fnr as string, behandlingsnummer: behandlingsnummer } as PdlRequest),
+        () => fetchWithPost(url, { fnr: fnr as string, behandlingsnummer } as PdlRequest),
         swrOptions
     );
     return { spraakTolk: data, error, isLoading };

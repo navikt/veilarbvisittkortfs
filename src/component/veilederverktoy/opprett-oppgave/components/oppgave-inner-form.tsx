@@ -21,8 +21,6 @@ interface OppgaveInnerFormProps {
     tilbake: () => void;
 }
 
-const behandlingsnummer = 'B643';
-
 function OppgaveInnerForm({
     fnr,
     tema,
@@ -38,7 +36,7 @@ function OppgaveInnerForm({
 
     useEffect(() => {
         if (tema) {
-            hentBehandlendeEnheter(tema, fnr, behandlingsnummer).then(res => {
+            hentBehandlendeEnheter(tema, fnr).then(res => {
                 const behandlendeEnhetersData = res.data;
                 setBehandladeEnheter(behandlendeEnhetersData);
                 setFieldValue('enhetId', behandlendeEnhetersData[0].enhetId);

@@ -13,8 +13,6 @@ interface Props {
     children: (brukerFnr: string) => React.ReactNode;
 }
 
-const behandlingsnummer = 'B643';
-
 export function DataFetcher({ children }: Props) {
     const brukerFnr = useBrukerFnr();
     const visVeilederVerktoy = useVisVeilederVerktøy();
@@ -25,9 +23,9 @@ export function DataFetcher({ children }: Props) {
     const { isLoading: personaliaIsLoading } = usePersonalia(brukerFnr);
     const { isLoading: innloggetVeilederIsLoading } = useInnloggetVeileder();
     useFeaturesFromOboUnleash();
-    useVerge(brukerFnr, behandlingsnummer);
+    useVerge(brukerFnr);
     useFullmakt(brukerFnr);
-    useSpraakTolk(brukerFnr, behandlingsnummer);
+    useSpraakTolk(brukerFnr);
 
     const oppfolgingsEnhet = oppfolgingsstatus?.oppfolgingsenhet.enhetId || undefined;
 
