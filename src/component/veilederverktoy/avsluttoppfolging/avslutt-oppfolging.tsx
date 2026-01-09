@@ -4,7 +4,7 @@ import { BodyShort, Modal } from '@navikt/ds-react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { AvsluttOppfolgingInfoText } from './components/avslutt-oppfolging-info-text';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
-import { useAvsluttOppfolgingOpptelt, useBrukerFnr, useSetAvsluttOppfolgingOpptelt } from '../../../store/app-store';
+import { useAvsluttOppfolgingOpptelt, useSetAvsluttOppfolgingOpptelt } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { selectHarUbehandledeDialoger } from '../../../util/selectors';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
@@ -16,8 +16,7 @@ import { logMetrikk } from '../../../util/logger';
 
 const for28dagerSiden = dayjs().subtract(28, 'day').toISOString();
 
-function AvsluttOppfolging() {
-    const brukerFnr = useBrukerFnr();
+function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
     const avsluttOppfolgingOpptelt = useAvsluttOppfolgingOpptelt();
     const setAvsluttOppfolgingOpptelt = useSetAvsluttOppfolgingOpptelt();
     const { showtAvsluttOppfolgingBekrefModal: showAvsluttOppfolgingBekrefModal, hideModal } = useModalStore();

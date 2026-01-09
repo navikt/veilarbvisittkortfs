@@ -4,13 +4,13 @@ import OpprettOppgaveTemaSelector from './components/opprett-oppgave-tema-select
 import OppgaveInnerForm from './components/oppgave-inner-form';
 import FormikModal from '../../components/formik/formik-modal';
 import { useModalStore } from '../../../store/modal-store';
-import { useBrukerFnr, useEnhetId } from '../../../store/app-store';
-import { useDataStore } from '../../../store/data-store';
+import { useEnhetId } from '../../../store/app-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import { todayReversedDateStr } from '../../../util/date-utils';
 import { OppgaveTema, OppgaveType, opprettOppgave, PrioritetType } from '../../../api/veilarboppgave';
 import { StringOrNothing } from '../../../util/type/utility-types';
 import './opprett-oppgave.less';
+import { usePersonalia } from '../../../api/veilarbperson';
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
@@ -25,10 +25,9 @@ export interface OpprettOppgaveFormValues {
     veilederId: StringOrNothing;
 }
 
-function OpprettOppgave() {
+function OpprettOppgave({ brukerFnr }: { brukerFnr: string }) {
     const enhetId = useEnhetId();
-    const brukerFnr = useBrukerFnr();
-    const { personalia } = useDataStore();
+    const { personalia } = usePersonalia(brukerFnr);
     const { hideModal, showOpprettOppgaveKvitteringModal, showErrorModal, showSpinnerModal } = useModalStore();
 
     const navn = selectSammensattNavn(personalia);

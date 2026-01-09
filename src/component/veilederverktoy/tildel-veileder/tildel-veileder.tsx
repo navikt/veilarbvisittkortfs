@@ -1,13 +1,18 @@
-import React, { ChangeEvent, FormEvent, useMemo, useState } from 'react';
+import { ChangeEvent, FormEvent, useMemo, useState } from 'react';
 import SokFilter from '../../components/sokfilter/sok-filter';
 import RadioFilterForm from '../../components/radiofilterform/radio-filter-form';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { useBrukerFnr } from '../../../store/app-store';
 import { lagVeilederSammensattNavn } from '../../../util/selectors';
 import { useModalStore } from '../../../store/modal-store';
-import { useDataStore } from '../../../store/data-store';
-import { Oppfolging, OppfolgingStatus, tildelTilVeileder, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
-import { VeilederData } from '../../../api/veilarbveileder';
+import {
+    Oppfolging,
+    OppfolgingStatus,
+    useOppfolging,
+    useOppfolgingsstatus,
+    useTildelTilVeileder
+} from '../../../api/veilarboppfolging';
+import { useInnloggetVeileder, useVeilederePaEnhet, VeilederData } from '../../../api/veilarbveileder';
 import './tildel-veileder.less';
 import { BodyShort, Button, Heading, Modal } from '@navikt/ds-react';
 import { useFargekategori, useHuskelapp } from '../../../api/veilarbportefolje';
@@ -20,10 +25,14 @@ function TildelVeileder() {
     const { data: fargekategori } = useFargekategori(brukerFnr, visVeilederVerktoy);
     const { showTildelVeilederKvitteringModal, showTildelVeilederFeiletModal, hideModal } = useModalStore();
     const [visAdvarselOmSletting, setVisAdvarselOmSletting] = useState<boolean>(false);
-    const { data: oppfolgingstatus, mutate: setOppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
-    const { veilederePaEnhet, oppfolging, setOppfolging, innloggetVeileder } = useDataStore();
+    const { data: oppfolgingstatus, mutate: mutateOppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
+    const { innloggetVeileder } = useInnloggetVeileder();
+    const { oppfolging, mutate: mutateOppfolging } = useOppfolging(brukerFnr);
+    const { veilederePaEnhet } = useVeilederePaEnhet(oppfolgingstatus?.oppfolgingsenhet?.enhetId || undefined);
     const [selectedVeilederId, setSelectedVeilederId] = useState('');
     const fraVeileder = oppfolging?.veilederId;
+
+    const { tildelTilVeileder } = useTildelTilVeileder();
 
     const sorterteVeiledere = useMemo(() => {
         const veiledere = veilederePaEnhet?.veilederListe || [];
@@ -44,17 +53,15 @@ function TildelVeileder() {
                 brukerFnr
             }
         ])
-            .then(res => {
-                if (res.data.feilendeTilordninger.length > 0) {
+            .then(response => {
+                if (response?.feilendeTilordninger?.length && response.feilendeTilordninger.length > 0) {
                     throw new Error('Tildeling feilet');
                 }
 
                 // Oppdater med ny veileder
-                setOppfolging(
-                    prevOppfolging => ({ ...(prevOppfolging || {}), veilederId: selectedVeilederId }) as Oppfolging
-                );
-                setOppfolgingsstatus(
-                    prevOppfolgingStatus =>
+                mutateOppfolging((currentState: Oppfolging) => ({ ...currentState, veilederId: selectedVeilederId }));
+                mutateOppfolgingsstatus(
+                    (prevOppfolgingStatus: OppfolgingStatus | undefined) =>
                         ({
                             ...(prevOppfolgingStatus || {}),
                             veilederId: selectedVeilederId

@@ -1,92 +1,50 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Loader } from '@navikt/ds-react';
-import { useDataStore } from '../store/data-store';
 import { useBrukerFnr } from '../store/app-store';
-import { fetchOppfolging, useOppfolgingsstatus } from '../api/veilarboppfolging';
-import { fetchFullmakt, fetchPersonalia, fetchSpraakTolk, fetchVerge } from '../api/veilarbperson';
-import { fetchInnloggetVeileder, fetchVeilederePaEnhet } from '../api/veilarbveileder';
-import { ifResponseHasData } from '../util/utils';
-import { useAxiosFetcher } from '../util/hook/use-axios-fetcher';
-import { isAnyLoadingOrNotStarted } from '../api/utils';
-import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
-import { fetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
+import { useOppfolging, useOppfolgingsstatus } from '../api/veilarboppfolging';
+import { usePersonalia, useVerge, useFullmakt, useSpraakTolk } from '../api/veilarbperson';
+import { useInnloggetVeileder, useVeilederePaEnhet } from '../api/veilarbveileder';
+import { useGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
+import { useFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 import './data-fetcher.less';
 import { useVisVeilederVerktøy } from '../store/visittkort-config';
 
 interface Props {
-    children: React.ReactNode;
+    children: (brukerFnr: string) => React.ReactNode;
 }
+
+const behandlingsnummer = 'B643';
 
 export function DataFetcher({ children }: Props) {
     const brukerFnr = useBrukerFnr();
     const visVeilederVerktoy = useVisVeilederVerktøy();
-    const {
-        setOppfolging,
-        setInnloggetVeileder,
-        setPersonalia,
-        setVeilederePaEnhet,
-        setVerge,
-        setSpraakTolk,
-        setGjeldendeEskaleringsvarsel,
-        setFullmakt,
-        setFeatures,
-        features
-    } = useDataStore();
 
-    const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
-    const innloggetVeilederFetcher = useAxiosFetcher(fetchInnloggetVeileder);
-    const featureToggleFetcher = useAxiosFetcher(fetchFeaturesFromOboUnleash);
-    const personaliaFetcher = useAxiosFetcher(fetchPersonalia);
-    const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
-    const vergeFetcher = useAxiosFetcher(fetchVerge);
-    const fullmaktFetcher = useAxiosFetcher(fetchFullmakt);
-    const spraakTolkFetcher = useAxiosFetcher(fetchSpraakTolk);
-    const gjeldendeEskaleringsvarselFetcher = useAxiosFetcher(hentGjeldendeEskaleringsvarsel);
+    // Start henting av data
     const { data: oppfolgingsstatus, isLoading: oppfolgingsstatusIsLoading } = useOppfolgingsstatus(brukerFnr);
+    const { isLoading: oppfolgingIsLoading } = useOppfolging(brukerFnr);
+    const { isLoading: personaliaIsLoading } = usePersonalia(brukerFnr);
+    const { isLoading: innloggetVeilederIsLoading } = useInnloggetVeileder();
+    useFeaturesFromOboUnleash();
+    useVerge(brukerFnr, behandlingsnummer);
+    useFullmakt(brukerFnr);
+    useSpraakTolk(brukerFnr, behandlingsnummer);
 
-    const behandlingsnummer = 'B643';
-    const oppfolgingsEnhet = oppfolgingsstatus?.oppfolgingsenhet.enhetId || '';
+    const oppfolgingsEnhet = oppfolgingsstatus?.oppfolgingsenhet.enhetId || undefined;
 
-    useEffect(() => {
-        if (!brukerFnr) return;
-        oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging)).catch();
-        if (visVeilederVerktoy) {
-            gjeldendeEskaleringsvarselFetcher
-                .fetch(brukerFnr)
-                .then(ifResponseHasData(setGjeldendeEskaleringsvarsel))
-                .catch();
-        }
-        vergeFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setVerge)).catch();
-        fullmaktFetcher.fetch(brukerFnr).then(ifResponseHasData(setFullmakt)).catch();
-        spraakTolkFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setSpraakTolk)).catch();
-        personaliaFetcher.fetch(brukerFnr, behandlingsnummer).then(ifResponseHasData(setPersonalia)).catch();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [brukerFnr, visVeilederVerktoy, features]);
-
-    useEffect(() => {
-        innloggetVeilederFetcher.fetch().then(ifResponseHasData(setInnloggetVeileder)).catch();
-        featureToggleFetcher.fetch().then(ifResponseHasData(setFeatures)).catch();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        if (visVeilederVerktoy && oppfolgingsEnhet) {
-            veilederePaEnhetFetcher.fetch(oppfolgingsEnhet).then(ifResponseHasData(setVeilederePaEnhet)).catch();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [oppfolgingsstatus, visVeilederVerktoy]);
+    // Bare hent disse hvis visVeilederVerktoy er konfigurert til true
+    useVeilederePaEnhet(visVeilederVerktoy ? oppfolgingsEnhet : undefined);
+    useGjeldendeEskaleringsvarsel(visVeilederVerktoy ? brukerFnr : undefined);
 
     if (
+        innloggetVeilederIsLoading ||
         oppfolgingsstatusIsLoading ||
-        isAnyLoadingOrNotStarted(
-            oppfolgingFetcher,
-            innloggetVeilederFetcher,
-            personaliaFetcher
-            // trenger ikke vente på vergeOgFullmaktFetcher eller spraakTolkFetcher
-        )
+        personaliaIsLoading ||
+        oppfolgingIsLoading
+        // trenger ikke vente på vergeOgFullmaktFetcher eller spraakTolkFetcher
     ) {
         return <Loader className="visittkort-laster" size="xlarge" />;
     }
 
-    return <>{children}</>;
+    if (!brukerFnr) return null;
+    return <>{children(brukerFnr)}</>;
 }

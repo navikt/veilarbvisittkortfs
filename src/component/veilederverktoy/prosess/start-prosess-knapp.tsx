@@ -17,7 +17,7 @@ export const StartProsessKnapp = ({ knappeTekst, onClick, metricName }: StartPro
         if (metricName === 'avslutt_oppfolging') {
             setAvsluttOppfolgingOpptelt(false);
         }
-    }, [setAvsluttOppfolgingOpptelt]);
+    }, [setAvsluttOppfolgingOpptelt, metricName]);
 
     return (
         <DropdownMenuListItem as="button" variant="tertiary-neutral" onClick={onClick} metricName={metricName}>

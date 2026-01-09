@@ -1,4 +1,5 @@
 import useSWR from 'swr';
+import useSWRMutation from 'swr/mutation';
 import { AxiosPromise } from 'axios';
 import { axiosInstance, ErrorMessage, fetchWithPost, swrOptions } from './utils';
 import { OrNothing, StringOrNothing } from '../util/type/utility-types';
@@ -99,9 +100,15 @@ export interface InnstillingHistorikkInnslag {
     enhet?: StringOrNothing;
 }
 
-export function fetchOppfolging(fnr: string): AxiosPromise<Oppfolging> {
-    return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/hent-status`, { fnr: fnr });
-}
+export const useOppfolging = (fnr: string | undefined) => {
+    const url = '/veilarboppfolging/api/v3/oppfolging/hent-status';
+    const { data, error, isLoading, mutate } = useSWR<Oppfolging, ErrorMessage>(
+        fnr ? `${url}/${fnr}` : null,
+        () => fetchWithPost(url, { fnr: fnr as string }),
+        swrOptions
+    );
+    return { oppfolging: data, isLoading, error, mutate };
+};
 
 export function fetchInstillingsHistorikk(fnr: string): AxiosPromise<InnstillingHistorikkInnslag[]> {
     return axiosInstance.post<InnstillingHistorikkInnslag[]>(`/veilarboppfolging/api/v3/hent-instillingshistorikk`, {
@@ -155,11 +162,13 @@ export function avsluttOppfolging(
     });
 }
 
-export function tildelTilVeileder(
-    tilordninger: TildelVeilederData[]
-): AxiosPromise<{ resultat: string; feilendeTilordninger: TildelVeilederData[] }> {
-    return axiosInstance.post(`/veilarboppfolging/api/tilordneveileder`, tilordninger);
-}
+export const useTildelTilVeileder = () => {
+    const url = '/veilarboppfolging/api/tilordneveileder';
+    const { trigger, isMutating, error } = useSWRMutation(url, (url, arg: { arg: TildelVeilederData[] }) =>
+        fetchWithPost(url, arg.arg)
+    );
+    return { tildelTilVeileder: trigger, isLoading: isMutating, error: error };
+};
 
 export function useOppfolgingsstatus(fnr: string | undefined) {
     const url = '/veilarboppfolging/api/v2/person/hent-oppfolgingsstatus';

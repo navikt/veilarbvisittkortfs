@@ -31,11 +31,13 @@ import { ModalType, useModalStore } from '../../../store/modal-store';
 import HuskelappRedigereModal from '../../huskelapp/redigering/huskelapp-redigere-modal';
 import HuskelappFjernModal from '../../huskelapp/visning/huskelapp-fjern-modal';
 import ByttOppfolgingskontorModal from '../bytt-oppfolgingskontor/bytt-oppfolgingskontor-modal';
+import { useBrukerFnr } from '../../../store/app-store';
 
 export function VeilederverktoyModalController() {
     const { activeModalState } = useModalStore();
+    const brukerFnr = useBrukerFnr();
 
-    if (!activeModalState) {
+    if (!activeModalState || !brukerFnr) {
         return null;
     }
 
@@ -75,13 +77,18 @@ export function VeilederverktoyModalController() {
         case ModalType.STOPP_KVP_PERIODE_KVITTERING:
             return <StoppKVPKvittering />;
         case ModalType.OPPRETT_OPPGAVE:
-            return <OpprettOppgave />;
+            return <OpprettOppgave brukerFnr={brukerFnr} />;
         case ModalType.OPPGAVE_KVITTERING:
             return <OpprettOppgaveKvittering {...(activeModalState.props as OpprettOppgaveKvitteringProps)} />;
         case ModalType.AVSLUTT_OPPFOLGING:
-            return <AvsluttOppfolging />;
+            return <AvsluttOppfolging brukerFnr={brukerFnr} />;
         case ModalType.AVLUTT_OPPFOLGING_BEKREFT:
-            return <AvsluttOppfolgingBekreft {...(activeModalState.props as AvsluttOppfolgingBekreftelseModalProps)} />;
+            return (
+                <AvsluttOppfolgingBekreft
+                    {...(activeModalState.props as AvsluttOppfolgingBekreftelseModalProps)}
+                    brukerFnr={brukerFnr}
+                />
+            );
         case ModalType.AVSLUTT_OPPFOLGING_KVITTERING:
             return <AvsluttOppfolgingKvittering />;
         case ModalType.STOPP_ESKALERING:
@@ -95,11 +102,11 @@ export function VeilederverktoyModalController() {
         case ModalType.SPINNER:
             return <LasterModal />;
         case ModalType.HUSKELAPP_REDIGERE:
-            return <HuskelappRedigereModal />;
+            return <HuskelappRedigereModal brukerFnr={brukerFnr} />;
         case ModalType.FJERN_HUSKELAPP:
             return <HuskelappFjernModal />;
         case ModalType.BYTT_OPPFOLGINGSKONTOR:
-            return <ByttOppfolgingskontorModal />;
+            return <ByttOppfolgingskontorModal brukerFnr={brukerFnr} />;
         default:
             return null;
     }

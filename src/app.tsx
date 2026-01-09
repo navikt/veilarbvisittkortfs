@@ -35,12 +35,16 @@ function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter }
             <StoreProvider>
                 <div className="visittkortfs">
                     <DataFetcher>
-                        <Tilbakelenke />
-                        <div className="visittkortfs__container">
-                            <PersonInfo />
-                            {!skjulEtiketter && <Etiketter />}
-                            <Veilederverktoy />
-                        </div>
+                        {brukerFnr => (
+                            <>
+                                <Tilbakelenke />
+                                <div className="visittkortfs__container">
+                                    <PersonInfo brukerFnr={brukerFnr} />
+                                    {!skjulEtiketter && <Etiketter brukerFnr={brukerFnr} />}
+                                    <Veilederverktoy />
+                                </div>
+                            </>
+                        )}
                     </DataFetcher>
                     <VeilederverktoyModalController />
                 </div>

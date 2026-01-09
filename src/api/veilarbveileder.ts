@@ -1,5 +1,6 @@
 import { AxiosPromise } from 'axios';
-import { axiosInstance } from './utils';
+import { axiosInstance, ErrorMessage, get, swrOptions } from './utils';
+import useSWR from 'swr';
 
 export interface VeilederData {
     ident: string;
@@ -19,9 +20,11 @@ export interface EnhetData {
 
 export type VeilederDataListeRequest = { identer: string[] };
 
-export function fetchInnloggetVeileder(): AxiosPromise<VeilederData> {
-    return axiosInstance.get<VeilederData>(`/veilarbveileder/api/veileder/me`);
-}
+export const useInnloggetVeileder = () => {
+    const url = '/veilarbveileder/api/veileder/me';
+    const { data, error, isLoading } = useSWR<VeilederData, ErrorMessage>(url, () => get(url), swrOptions);
+    return { innloggetVeileder: data, error, isLoading };
+};
 
 export function fetchVeilederDataListe(
     veilederDataListeRequest: VeilederDataListeRequest
@@ -29,9 +32,15 @@ export function fetchVeilederDataListe(
     return axiosInstance.post<VeilederData[]>('/veilarbveileder/api/veileder/list', veilederDataListeRequest);
 }
 
-export function fetchVeilederePaEnhet(enhetId: string): AxiosPromise<VeilederListe> {
-    return axiosInstance.get<VeilederListe>(`/veilarbveileder/api/enhet/${enhetId}/veiledere`);
-}
+export const useVeilederePaEnhet = (enhetId: string | undefined) => {
+    const url = `/veilarbveileder/api/enhet/${enhetId}/veiledere`;
+    const { data, error, isLoading } = useSWR<VeilederListe, ErrorMessage>(
+        enhetId ? url : null,
+        () => get(url),
+        swrOptions
+    );
+    return { veilederePaEnhet: data, error, isLoading };
+};
 
 export function fetchEnhetNavn(enhetId: string): AxiosPromise<EnhetData> {
     return axiosInstance.get<EnhetData>(`/veilarbveileder/api/enhet/${enhetId}/navn`);

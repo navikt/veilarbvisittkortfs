@@ -1,16 +1,12 @@
-import { useEffect } from 'react';
 import { Modal } from '@navikt/ds-react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import StartEskaleringForm, { StartEskaleringValues } from './start-eskalering-form';
 import { useModalStore } from '../../../store/modal-store';
-import { useDataStore } from '../../../store/data-store';
 import { useBrukerFnr } from '../../../store/app-store';
-import { eskaleringVarselSendtEvent, ifResponseHasData } from '../../../util/utils';
-import { hentGjeldendeEskaleringsvarsel, startEskalering } from '../../../api/veilarbdialog';
-import { LasterModal } from '../../components/lastermodal/laster-modal';
-import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
-import { fetchHarNivaa4 } from '../../../api/veilarbperson';
+import { eskaleringVarselSendtEvent } from '../../../util/utils';
+import { startEskalering, useGjeldendeEskaleringsvarsel } from '../../../api/veilarbdialog';
 import { logMetrikk } from '../../../util/logger';
+import { useOppfolging } from '../../../api/veilarboppfolging';
 
 interface OwnValues extends StartEskaleringValues {
     overskrift: string;
@@ -28,11 +24,9 @@ const initialValues = {
 
 function StartEskalering() {
     const brukerFnr = useBrukerFnr();
-    const { oppfolging, setGjeldendeEskaleringsvarsel } = useDataStore();
+    const { oppfolging } = useOppfolging(brukerFnr);
+    const { mutate: refreshGjeldendeEskaleringsvarsel } = useGjeldendeEskaleringsvarsel(brukerFnr);
     const { showSpinnerModal, showStartEskaleringKvitteringModal, hideModal, showErrorModal } = useModalStore();
-
-    const gjeldendeEskaleringsvarselFetcher = useAxiosFetcher(hentGjeldendeEskaleringsvarsel);
-    const harNivaa4Fetcher = useAxiosFetcher(fetchHarNivaa4);
 
     async function opprettHenvendelse(values: OwnValues) {
         if (!brukerFnr) return;
@@ -54,9 +48,7 @@ function StartEskalering() {
             );
 
             // Hent oppdatert data med ny eskaleringsvarsel
-            await gjeldendeEskaleringsvarselFetcher
-                .fetch(brukerFnr)
-                .then(ifResponseHasData(setGjeldendeEskaleringsvarsel));
+            await refreshGjeldendeEskaleringsvarsel();
 
             eskaleringVarselSendtEvent();
             showStartEskaleringKvitteringModal();
@@ -65,17 +57,7 @@ function StartEskalering() {
         }
     }
 
-    useEffect(() => {
-        if (!brukerFnr) return;
-        harNivaa4Fetcher.fetch(brukerFnr);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [brukerFnr]);
-
-    if (harNivaa4Fetcher.loading) {
-        return <LasterModal />;
-    }
-
-    if (!oppfolging?.kanVarsles || !harNivaa4Fetcher.data?.harbruktnivaa4) {
+    if (!oppfolging?.kanVarsles) {
         const varselTekst = !oppfolging?.kanVarsles
             ? 'Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret, og du kan derfor ikke sende varsel.'
             : 'Du kan ikke sende varsel fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4 (for eksempel BankID).';
