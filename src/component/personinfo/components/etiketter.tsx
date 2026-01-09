@@ -64,16 +64,14 @@ function erFullmaktOmradeMedOppfolging(fullmaktListe: FullmaktData[]): boolean {
         .includes('Oppfølging');
 }
 
-const behandlingsnummer = 'B643';
-
 function Etiketter({ brukerFnr }: { brukerFnr: string }) {
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { personalia } = usePersonalia(brukerFnr);
     const { gjeldendeEskaleringsvarsel } = useGjeldendeEskaleringsvarsel(brukerFnr);
     const { oppfolging } = useOppfolging(brukerFnr);
-    const { verge } = useVerge(brukerFnr, behandlingsnummer);
+    const { verge } = useVerge(brukerFnr);
     const { fullmakt } = useFullmakt(brukerFnr);
-    const { spraakTolk } = useSpraakTolk(brukerFnr, behandlingsnummer);
+    const { spraakTolk } = useSpraakTolk(brukerFnr);
 
     const { data: opplysningerOmArbeidssoeker, isLoading: opplysningerOmArbeidssoekerLoading } =
         useOpplysningerOmArbeidssokerMedProfilering(brukerFnr);
