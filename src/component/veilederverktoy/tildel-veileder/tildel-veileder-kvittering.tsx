@@ -2,14 +2,16 @@ import { BodyShort, Button, Heading, Modal } from '@navikt/ds-react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { useModalStore } from '../../../store/modal-store';
 import { useErUfordeltBruker } from '../../../api/veilarbportefolje';
-import { useAppStore } from '../../../store/app-store';
+import { useBrukerFnr } from '../../../store/app-store';
+import { useVisVeilederVerktøy } from '../../../store/visittkort-config';
 
 export interface TildelVeilederKvitteringProps {
     tildeltVeilederNavn: string;
 }
 
 export function TildelVeilederKvittering({ tildeltVeilederNavn }: TildelVeilederKvitteringProps) {
-    const { brukerFnr, visVeilederVerktoy } = useAppStore();
+    const brukerFnr = useBrukerFnr();
+    const visVeilederVerktoy = useVisVeilederVerktøy();
     const { hideModal } = useModalStore();
     const { mutate: setUfordeltbruker } = useErUfordeltBruker(brukerFnr, visVeilederVerktoy);
 

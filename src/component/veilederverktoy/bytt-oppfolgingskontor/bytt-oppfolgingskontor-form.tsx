@@ -2,10 +2,11 @@ import { ArbeidsOppfolgingKontorDTO, Kontor, KvittertKontor, settKontor } from '
 import { Field, Formik, Form } from 'formik';
 import { Button, TextField } from '@navikt/ds-react';
 import { AxiosError } from 'axios';
-import { useAppStore } from '../../../store/app-store';
+import { useEnhetId } from '../../../store/app-store';
 import KontorDropdown from '../opprett-oppgave/components/kontorDropdown';
 
 interface ByttOppfolgingskontorFormProps {
+    brukerFnr: string;
     tilbake: () => void;
     alleKontor: Kontor[];
     isKontorFetchLoading: boolean;
@@ -14,13 +15,14 @@ interface ByttOppfolgingskontorFormProps {
 }
 
 function ByttOppfolgingskontorForm({
+    brukerFnr,
     tilbake,
     alleKontor,
     isKontorFetchLoading,
     setKvittering,
     setSettKontorError
 }: ByttOppfolgingskontorFormProps) {
-    const { brukerFnr, enhetId } = useAppStore();
+    const enhetId = useEnhetId();
     const arbeidsOppfolgingKontorInitialValues: ArbeidsOppfolgingKontorDTO = {
         ident: brukerFnr,
         kontorId: enhetId || ''

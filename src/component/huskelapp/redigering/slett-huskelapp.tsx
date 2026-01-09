@@ -2,14 +2,16 @@ import { Button } from '@navikt/ds-react';
 import { TrashIcon } from '@navikt/aksel-icons';
 import { useModalStore } from '../../../store/modal-store';
 import { useHuskelapp } from '../../../api/veilarbportefolje';
-import { useAppStore } from '../../../store/app-store';
+import { useBrukerFnr } from '../../../store/app-store';
+import { useVisVeilederVerktøy } from '../../../store/visittkort-config';
 
 interface Props {
     variant?: 'primary' | 'secondary' | 'tertiary' | 'danger';
 }
 
 export const SlettHuskelapp = ({ variant = 'secondary' }: Props) => {
-    const { brukerFnr, visVeilederVerktoy } = useAppStore();
+    const brukerFnr = useBrukerFnr();
+    const visVeilederVerktoy = useVisVeilederVerktøy();
     const { showFjernHuskelappModal } = useModalStore();
     const { data: huskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);
 

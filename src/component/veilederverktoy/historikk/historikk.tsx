@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import HistorikkVisning from './historikk-visning';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { Alert } from '@navikt/ds-react';
-import { useAppStore } from '../../../store/app-store';
+import { useBrukerFnr } from '../../../store/app-store';
 import { hasAllData, hasAnyFailed, isAnyLoading } from '../../../api/utils';
 import './historikk.less';
 import { fetchOppgaveHistorikk, OppgaveHistorikkInnslag } from '../../../api/veilarboppgave';
@@ -63,7 +63,7 @@ function tilIdentListe(
 }
 
 function Historikk() {
-    const { brukerFnr } = useAppStore();
+    const brukerFnr = useBrukerFnr();
 
     const innstillingsHistorikkFetcher = useAxiosFetcher(fetchInstillingsHistorikk);
     const oppgaveHistorikkFetcher = useAxiosFetcher(fetchOppgaveHistorikk);
@@ -76,6 +76,7 @@ function Historikk() {
     } = useAxiosFetcher(fetchVeilederDataListe);
 
     useEffect(() => {
+        if (!brukerFnr) return;
         innstillingsHistorikkFetcher.fetch(brukerFnr);
         oppgaveHistorikkFetcher.fetch(brukerFnr);
         eskaleringsvarselHistorikkFetcher.fetch(brukerFnr);
