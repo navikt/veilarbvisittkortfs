@@ -118,12 +118,16 @@ export interface OpplysningerOmArbeidssoekerMedProfilering {
     profilering: Profilering;
 }
 
-export function fetchPersonalia(fnr: string, behandlingsnummer: string): AxiosPromise<Personalia> {
-    return axiosInstance.post<Personalia>(`/veilarbperson/api/v3/hent-person`, {
-        fnr: fnr,
-        behandlingsnummer: behandlingsnummer
-    } as PdlRequest);
-}
+export const usePersonalia = (fnr: string | undefined) => {
+    const url = '/veilarbperson/api/v3/hent-person';
+    const { data, error, isLoading } = useSWR<Personalia, ErrorMessage>(
+        fnr ? url : null,
+        ({ behandlingsnummer }: { behandlingsnummer: string }) =>
+            fetchWithPost(url, { fnr: fnr as string, behandlingsnummer } as PdlRequest),
+        swrOptions
+    );
+    return { personalia: data, error, isLoading };
+};
 
 export function fetchVerge(fnr: string, behandlingsnummer: string): AxiosPromise<Verge> {
     return axiosInstance.post<Verge>(`/veilarbperson/api/v3/person/hent-vergeOgFullmakt`, {
@@ -131,24 +135,35 @@ export function fetchVerge(fnr: string, behandlingsnummer: string): AxiosPromise
         behandlingsnummer: behandlingsnummer
     } as PdlRequest);
 }
+export const useVerge = (fnr: string | undefined, behandlingsnummer: string | undefined) => {
+    const url = '/veilarbperson/api/v3/person/hent-vergeOgFullmakt';
+    const { data, error, isLoading } = useSWR<Verge, ErrorMessage>(
+        fnr && behandlingsnummer ? url : null,
+        () => fetchWithPost(url, { fnr: fnr as string, behandlingsnummer: behandlingsnummer } as PdlRequest),
+        swrOptions
+    );
+    return { verge: data, error, isLoading };
+};
 
-export function fetchFullmakt(fnr: string): AxiosPromise<FullmaktDTO> {
-    return axiosInstance.post<FullmaktDTO>(`/veilarbperson/api/v3/person/hent-fullmakt`, {
-        fnr: fnr
-    } as PersonRequest);
-}
+export const useFullmakt = (fnr: string | undefined) => {
+    const url = '/veilarbperson/api/v3/person/hent-fullmakt';
+    const { data, error, isLoading } = useSWR<FullmaktDTO, ErrorMessage>(
+        fnr ? url : null,
+        () => fetchWithPost(url, { fnr: fnr as string }),
+        swrOptions
+    );
+    return { fullmakt: data, error, isLoading };
+};
 
-export function fetchSpraakTolk(fnr: string, behandlingsnummer: string): AxiosPromise<SpraakTolk> {
-    return axiosInstance.post<SpraakTolk>(`/veilarbperson/api/v3/person/hent-tolk`, {
-        fnr: fnr,
-        behandlingsnummer: behandlingsnummer
-    } as PdlRequest);
-}
-
-//@TODO: 21/08/2023 denne skal slettes etter vi har ryddet opp i kode i de andre appene da dkif slutter å tilby tjenesten
-export function fetchHarNivaa4(fnr: string): AxiosPromise<HarBruktNivaa4Type> {
-    return axiosInstance.get<HarBruktNivaa4Type>(`/veilarbperson/api/person/${fnr}/harNivaa4`);
-}
+export const useSpraakTolk = (fnr: string | undefined, behandlingsnummer: string | undefined) => {
+    const url = '/veilarbperson/api/v3/person/hent-tolk';
+    const { data, error, isLoading } = useSWR<SpraakTolk, ErrorMessage>(
+        fnr && behandlingsnummer ? url : null,
+        () => fetchWithPost(url, { fnr: fnr as string, behandlingsnummer: behandlingsnummer } as PdlRequest),
+        swrOptions
+    );
+    return { spraakTolk: data, error, isLoading };
+};
 
 export function useOpplysningerOmArbeidssokerMedProfilering(fnr: string | undefined) {
     const url = '/veilarbperson/api/v3/person/hent-siste-opplysninger-om-arbeidssoeker-med-profilering';

@@ -7,17 +7,18 @@ import {
     redigerHuskelapp,
     useHuskelapp
 } from '../../../api/veilarbportefolje';
-import { useBrukerFnr, useEnhetId } from '../../../store/app-store';
+import { useEnhetId } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { logMetrikk } from '../../../util/logger';
 import HuskelappIkon from '../ikon/Huskelappikon_bakgrunnsfarge.svg?react';
 import { toReversedDateStr, toSimpleDateStr } from '../../../util/date-utils';
 import { HuskelappSkjema } from './huskelapp-skjema';
 import { SlettHuskelapp } from './slett-huskelapp';
-import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import './huskelapp-redigering.less';
 import { useVisVeilederVerktøy } from '../../../store/visittkort-config';
+import { useInnloggetVeileder } from '../../../api/veilarbveileder';
+import { usePersonalia } from '../../../api/veilarbperson';
 
 const huskelappEmptyValues: HuskelappformValues = {
     huskelappId: null,
@@ -25,11 +26,11 @@ const huskelappEmptyValues: HuskelappformValues = {
     frist: ''
 };
 
-function HuskelappRedigereModal() {
-    const brukerFnr = useBrukerFnr();
+function HuskelappRedigereModal({ brukerFnr }: { brukerFnr: string }) {
     const visVeilederVerktoy = useVisVeilederVerktøy();
     const enhetId = useEnhetId();
-    const { innloggetVeileder, personalia } = useDataStore();
+    const { innloggetVeileder } = useInnloggetVeileder();
+    const { personalia } = usePersonalia(brukerFnr);
     const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
     const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);
 

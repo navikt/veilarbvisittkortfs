@@ -3,7 +3,6 @@ import { CogIcon } from '@navikt/aksel-icons';
 import { StartProsessKnapp } from './prosess/start-prosess-knapp';
 import { useBrukerFnr } from '../../store/app-store';
 import { useModalStore } from '../../store/modal-store';
-import { useDataStore } from '../../store/data-store';
 import {
     selectKanAvslutteOppfolging,
     selectKanSendeEskaleringsVarsel,
@@ -16,20 +15,22 @@ import {
 } from '../../util/selectors';
 import { harTilgangTilHuskelappEllerFargekategori } from '../huskelapp/harTilgangTilHuskelapp';
 import { useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
-import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
+import { useOppfolging, useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 import withClickMetric from '../components/click-metric/click-metric';
 import './veilederverktoy.less';
 import { StartArbeidsoppfolgingKnapp } from './start-arbeidsoppfolging/start-arbeidsoppfolging-knapp';
 import { StartArbeidssokerRegistreringKnapp } from './start-arbeidssoker-registrering/start-arbeidssoker-registrering-knapp';
 import { erProd } from '../../util/utils';
 import { useVisVeilederVerktøy } from '../../store/visittkort-config';
+import { useGjeldendeEskaleringsvarsel } from '../../api/veilarbdialog';
 
 const ButtonWithClickMetric = withClickMetric(Button);
 
 export const Veilederverktoy = () => {
     const brukerFnr = useBrukerFnr();
     const visVeilederVerktoy = useVisVeilederVerktøy();
-    const { oppfolging, gjeldendeEskaleringsvarsel } = useDataStore();
+    const { oppfolging } = useOppfolging(brukerFnr);
+    const { gjeldendeEskaleringsvarsel } = useGjeldendeEskaleringsvarsel(brukerFnr);
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { data: erUfordeltBruker } = useErUfordeltBruker(
         brukerFnr,

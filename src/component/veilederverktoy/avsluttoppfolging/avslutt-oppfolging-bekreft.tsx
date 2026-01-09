@@ -1,18 +1,21 @@
 import { BodyShort, Button, Modal } from '@navikt/ds-react';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { useModalStore } from '../../../store/modal-store';
-import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
-import { useBrukerFnr } from '../../../store/app-store';
 import { avsluttOppfolging } from '../../../api/veilarboppfolging';
+import { usePersonalia } from '../../../api/veilarbperson';
+import { useInnloggetVeileder } from '../../../api/veilarbveileder';
 
 export interface AvsluttOppfolgingBekreftelseModalProps {
     begrunnelse: string;
 }
 
-function AvsluttOppfolgingBekreft({ begrunnelse }: AvsluttOppfolgingBekreftelseModalProps) {
-    const brukerFnr = useBrukerFnr();
-    const { personalia, innloggetVeileder } = useDataStore();
+function AvsluttOppfolgingBekreft({
+    brukerFnr,
+    begrunnelse
+}: AvsluttOppfolgingBekreftelseModalProps & { brukerFnr: string }) {
+    const { personalia } = usePersonalia(brukerFnr);
+    const { innloggetVeileder } = useInnloggetVeileder();
     const { showAvsluttOppfolgingKvitteringModal, showSpinnerModal, showErrorModal, hideModal } = useModalStore();
 
     const brukerNavn = selectSammensattNavn(personalia);

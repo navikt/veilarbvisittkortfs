@@ -1,9 +1,9 @@
 import { useBrukerFnr } from '../../../store/app-store';
 import { erITestMiljo } from '../../../util/utils';
 import { logMetrikk } from '../../../util/logger';
-import { useDataStore } from '../../../store/data-store';
 import { Dropdown } from '@navikt/ds-react';
 import { useOpplysningerOmArbeidssokerMedProfilering } from '../../../api/veilarbperson';
+import { useOppfolging } from '../../../api/veilarboppfolging';
 
 //@todo: check with arbeidssokerregistrering if they can fetch fnr from modiacontext holder
 function byggRegistreringUrl() {
@@ -14,7 +14,7 @@ function byggRegistreringUrl() {
 
 export const StartArbeidssokerRegistreringKnapp = () => {
     const brukerFnr = useBrukerFnr();
-    const { oppfolging } = useDataStore();
+    const { oppfolging } = useOppfolging(brukerFnr);
     const { data: opplysningerOmArbeidssoker } = useOpplysningerOmArbeidssokerMedProfilering(brukerFnr);
 
     const registreringUrl = byggRegistreringUrl();

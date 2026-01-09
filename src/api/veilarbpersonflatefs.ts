@@ -1,5 +1,5 @@
-import { AxiosPromise } from 'axios';
-import { axiosInstance } from './utils';
+import { ErrorMessage, get, swrOptions } from './utils';
+import useSWR from 'swr';
 
 export const VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING =
     'veilarbvisittkortfs.vis-ny-inngang-til-arbeidsrettet-oppfolging';
@@ -10,7 +10,9 @@ export interface OboUnleashFeatures {
     [VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING]: boolean;
 }
 
-export function fetchFeaturesFromOboUnleash(): AxiosPromise<OboUnleashFeatures> {
+export const useFeaturesFromOboUnleash = () => {
     const features = ALL_TOGGLES.map(element => 'feature=' + element).join('&');
-    return axiosInstance.get<OboUnleashFeatures>(`/obo-unleash/api/feature?${features}`);
-}
+    const url = `/obo-unleash/api/feature?${features}`;
+    const { data, error, isLoading } = useSWR<OboUnleashFeatures, ErrorMessage>(url, () => get(url), swrOptions);
+    return { features: data, error, isLoading };
+};

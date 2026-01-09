@@ -1,5 +1,5 @@
 import { AxiosPromise, AxiosResponse } from 'axios';
-import { axiosInstance } from './utils';
+import { axiosInstance, fetchWithPost, swrOptions } from './utils';
 import { StringOrNothing } from '../util/type/utility-types';
 import {
     dialogerQuery,
@@ -7,9 +7,11 @@ import {
     stansVarselHistorikkQuery,
     StansVarselHistorikkResponse,
     stansVarselQuery,
+    StansVarselQueryRequest,
     StansVarselResponse,
     veilarbdialogGraphqlQuery
 } from './veilarbdialogGraphql';
+import useSWR from 'swr';
 
 export interface Dialog {
     ferdigBehandlet: boolean;
@@ -74,6 +76,16 @@ export function hentGjeldendeEskaleringsvarsel(fnr: string): AxiosPromise<Gjelde
             data: res.data.data.stansVarsel
         }));
 }
+
+export const useGjeldendeEskaleringsvarsel = (fnr: string | undefined) => {
+    const url = veilarbDialogGraphqlEndpoint;
+    const { data, error, isLoading, mutate } = useSWR<GjeldendeEskaleringsvarsel>(
+        fnr ? url : null,
+        () => fetchWithPost(url, veilarbdialogGraphqlQuery(fnr as string, stansVarselQuery) as StansVarselQueryRequest),
+        swrOptions
+    );
+    return { gjeldendeEskaleringsvarsel: data, error, isLoading, mutate: mutate };
+};
 
 export function hentEskaleringsvarselHistorikk(fnr: string): AxiosPromise<EskaleringsvarselHistorikkInnslag[]> {
     return axiosInstance

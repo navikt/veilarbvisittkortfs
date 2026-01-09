@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { DataStore } from './data-store';
 import { ModalStore } from './modal-store';
 
 interface StoreProviderProps {
@@ -7,11 +6,7 @@ interface StoreProviderProps {
 }
 
 const StoreProvider = ({ children }: StoreProviderProps) => {
-    return (
-        <DataStore>
-            <ModalStore>{children}</ModalStore>
-        </DataStore>
-    );
+    return <ModalStore>{children}</ModalStore>;
 };
 
 export default StoreProvider;

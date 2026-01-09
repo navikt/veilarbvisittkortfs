@@ -1,11 +1,17 @@
-import { useDataStore } from '../../../store/data-store';
-import { useBrukerFnr } from '../../../store/app-store';
 import './etiketter.less';
-import { FullmaktData, useOpplysningerOmArbeidssokerMedProfilering } from '../../../api/veilarbperson';
-import { OppfolgingStatus, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
+import {
+    FullmaktData,
+    useFullmakt,
+    useOpplysningerOmArbeidssokerMedProfilering,
+    usePersonalia,
+    useSpraakTolk,
+    useVerge
+} from '../../../api/veilarbperson';
+import { OppfolgingStatus, useOppfolging, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
 import { OrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
 import { Oppfolgingsvedtak14a, useGjeldende14aVedtak } from '../../../api/veilarbvedtaksstotte';
+import { useGjeldendeEskaleringsvarsel } from '../../../api/veilarbdialog';
 
 interface Etikettprops extends Omit<TagProps, 'variant'> {
     visible: boolean | undefined;
@@ -58,10 +64,16 @@ function erFullmaktOmradeMedOppfolging(fullmaktListe: FullmaktData[]): boolean {
         .includes('Oppfølging');
 }
 
-function Etiketter() {
-    const brukerFnr = useBrukerFnr();
+const behandlingsnummer = 'B643';
+
+function Etiketter({ brukerFnr }: { brukerFnr: string }) {
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
-    const { gjeldendeEskaleringsvarsel, oppfolging, personalia, verge, fullmakt, spraakTolk } = useDataStore();
+    const { personalia } = usePersonalia(brukerFnr);
+    const { gjeldendeEskaleringsvarsel } = useGjeldendeEskaleringsvarsel(brukerFnr);
+    const { oppfolging } = useOppfolging(brukerFnr);
+    const { verge } = useVerge(brukerFnr, behandlingsnummer);
+    const { fullmakt } = useFullmakt(brukerFnr);
+    const { spraakTolk } = useSpraakTolk(brukerFnr, behandlingsnummer);
 
     const { data: opplysningerOmArbeidssoeker, isLoading: opplysningerOmArbeidssoekerLoading } =
         useOpplysningerOmArbeidssokerMedProfilering(brukerFnr);
