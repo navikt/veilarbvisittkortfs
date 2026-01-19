@@ -7,7 +7,7 @@ import { VeilederverktoyModalController } from './component/veilederverktoy/veil
 import './index.less';
 import './index.css';
 import { useSetAppState } from './store/app-store';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { VisittKortConfigContext } from './store/visittkort-config';
 
 export interface AppProps {
@@ -24,13 +24,15 @@ function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter }
         setAppstate({ brukerFnr: fnr, enhetId: enhet });
     }, [fnr, enhet, setAppstate]);
 
+    const configValue = useMemo(() => {
+        return {
+            visVeilederVerktoy: visVeilederVerktoy || false,
+            tilbakeTilFlate
+        };
+    }, [visVeilederVerktoy, tilbakeTilFlate]);
+
     return (
-        <VisittKortConfigContext.Provider
-            value={{
-                visVeilederVerktoy: visVeilederVerktoy || false,
-                tilbakeTilFlate
-            }}
-        >
+        <VisittKortConfigContext.Provider value={configValue}>
             <div className="visittkortfs">
                 <DataFetcher>
                     {brukerFnr => (

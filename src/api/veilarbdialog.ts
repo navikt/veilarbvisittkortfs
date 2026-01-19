@@ -70,7 +70,7 @@ export function fetchDialoger(fnr: string): AxiosPromise<Dialog[]> {
 export const useGjeldendeEskaleringsvarsel = (fnr: string | undefined) => {
     const url = veilarbDialogGraphqlEndpoint;
     const { data, error, isLoading, mutate } = useSWR<GjeldendeEskaleringsvarsel | undefined>(
-        fnr ? url : null,
+        fnr ? `${url}-${fnr}` : null,
         () =>
             fetchWithPost(url, veilarbdialogGraphqlQuery(fnr as string, stansVarselQuery)).then(
                 (res: StansVarselResponse) => res.data.stansVarsel

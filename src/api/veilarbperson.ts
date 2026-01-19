@@ -122,7 +122,7 @@ export interface OpplysningerOmArbeidssoekerMedProfilering {
 export const usePersonalia = (fnr: string | undefined) => {
     const url = '/veilarbperson/api/v3/hent-person';
     const { data, error, isLoading } = useSWR<Personalia, ErrorMessage>(
-        fnr ? url : null,
+        fnr ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr as string, behandlingsnummer } as PdlRequest),
         swrOptions
     );
@@ -132,7 +132,7 @@ export const usePersonalia = (fnr: string | undefined) => {
 export const useVerge = (fnr: string | undefined) => {
     const url = '/veilarbperson/api/v3/person/hent-vergeOgFullmakt';
     const { data, error, isLoading } = useSWR<Verge, ErrorMessage>(
-        fnr && behandlingsnummer ? url : null,
+        fnr && behandlingsnummer ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr as string, behandlingsnummer } as PdlRequest),
         swrOptions
     );
@@ -142,7 +142,7 @@ export const useVerge = (fnr: string | undefined) => {
 export const useFullmakt = (fnr: string | undefined) => {
     const url = '/veilarbperson/api/v3/person/hent-fullmakt';
     const { data, error, isLoading } = useSWR<FullmaktDTO, ErrorMessage>(
-        fnr ? url : null,
+        fnr ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr as string }),
         swrOptions
     );
@@ -152,7 +152,7 @@ export const useFullmakt = (fnr: string | undefined) => {
 export const useSpraakTolk = (fnr: string | undefined) => {
     const url = '/veilarbperson/api/v3/person/hent-tolk';
     const { data, error, isLoading } = useSWR<SpraakTolk, ErrorMessage>(
-        fnr && behandlingsnummer ? url : null,
+        fnr && behandlingsnummer ? `${url}/${fnr}/${behandlingsnummer}` : null,
         () => fetchWithPost(url, { fnr: fnr as string, behandlingsnummer } as PdlRequest),
         swrOptions
     );
@@ -162,7 +162,7 @@ export const useSpraakTolk = (fnr: string | undefined) => {
 export function useOpplysningerOmArbeidssokerMedProfilering(fnr: string | undefined) {
     const url = '/veilarbperson/api/v3/person/hent-siste-opplysninger-om-arbeidssoeker-med-profilering';
     return useSWR<OpplysningerOmArbeidssoekerMedProfilering, ErrorMessage>(
-        fnr ? url : null,
+        fnr ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr as string }),
         swrOptions
     );
