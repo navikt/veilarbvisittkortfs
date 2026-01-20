@@ -5,6 +5,7 @@ export const alleKontorResponse = {
         kontorHistorikk: [
             {
                 kontorId: '3101',
+                kontorNavn: 'Nav Oppland',
                 kontorType: 'ARBEIDSOPPFOLGING',
                 endringsType: 'FlyttetAvVeileder',
                 endretAv: 'G151413',
@@ -13,6 +14,7 @@ export const alleKontorResponse = {
             } as KontorHistorikkEntry,
             {
                 kontorId: '4154',
+                kontorNavn: 'Nav NOE',
                 kontorType: 'ARBEIDSOPPFOLGING',
                 endringsType: 'AutomatiskRutetTilNOE',
                 endretAv: 'System',
@@ -21,6 +23,7 @@ export const alleKontorResponse = {
             } as KontorHistorikkEntry,
             {
                 kontorId: '0220',
+                kontorNavn: 'Nav Nedland',
                 kontorType: 'ARENA',
                 endringsType: 'EndretIArena',
                 endretAv: 'Arena',
