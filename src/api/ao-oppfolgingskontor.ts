@@ -63,6 +63,7 @@ export type KontorType = 'ARENA' | 'ARBEIDSOPPFOLGING' | 'GEOGRAFISK_TILKNYTNING
 export interface KontorHistorikkEntry {
     kontorId: string;
     kontorType: KontorType;
+    kontorNavn: string;
     endretAv: string;
     endretAvType: string;
     endretTidspunkt: string;
