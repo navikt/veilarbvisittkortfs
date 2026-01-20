@@ -23,7 +23,7 @@ function ByttOppfolgingskontorModal() {
         error: hentAlleKontorError,
         isLoading: hentAlleKontorLoading
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } = useSWR(['/kontorer', brukerFnr], ([_, fnr]) => hentAlleKontor(fnr));
+    } = useSWR(brukerFnr ? `/kontorer/${brukerFnr}` : null, () => hentAlleKontor(brukerFnr));
 
     const navn = selectSammensattNavn(personalia);
 
