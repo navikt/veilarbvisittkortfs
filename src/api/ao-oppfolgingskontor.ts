@@ -34,6 +34,7 @@ const graphqlQuery = `
         kontorHistorikk(ident: $ident) {
             kontorId,
             kontorType,
+            kontorNavn,
             endringsType,
             endretAv,
             endretAvType,
