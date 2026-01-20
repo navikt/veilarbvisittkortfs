@@ -4,7 +4,7 @@ import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import StartEskaleringForm, { StartEskaleringValues } from './start-eskalering-form';
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
-import { useAppStore } from '../../../store/app-store';
+import { useBrukerFnr } from '../../../store/app-store';
 import { eskaleringVarselSendtEvent, ifResponseHasData } from '../../../util/utils';
 import { hentGjeldendeEskaleringsvarsel, startEskalering } from '../../../api/veilarbdialog';
 import { LasterModal } from '../../components/lastermodal/laster-modal';
@@ -27,7 +27,7 @@ const initialValues = {
 };
 
 function StartEskalering() {
-    const { brukerFnr } = useAppStore();
+    const brukerFnr = useBrukerFnr();
     const { oppfolging, setGjeldendeEskaleringsvarsel } = useDataStore();
     const { showSpinnerModal, showStartEskaleringKvitteringModal, hideModal, showErrorModal } = useModalStore();
 
@@ -35,6 +35,7 @@ function StartEskalering() {
     const harNivaa4Fetcher = useAxiosFetcher(fetchHarNivaa4);
 
     async function opprettHenvendelse(values: OwnValues) {
+        if (!brukerFnr) return;
         showSpinnerModal();
 
         try {
@@ -65,6 +66,7 @@ function StartEskalering() {
     }
 
     useEffect(() => {
+        if (!brukerFnr) return;
         harNivaa4Fetcher.fetch(brukerFnr);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [brukerFnr]);

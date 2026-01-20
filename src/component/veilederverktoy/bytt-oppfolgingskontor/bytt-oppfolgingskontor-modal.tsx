@@ -1,5 +1,5 @@
 import { Alert, BodyShort, ErrorMessage, Modal } from '@navikt/ds-react';
-import { useAppStore } from '../../../store/app-store';
+import { useBrukerFnr, useEnhetId } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
 import { selectSammensattNavn } from '../../../util/selectors';
@@ -13,7 +13,8 @@ import { BrukerFakta } from './BrukerFakta';
 
 function ByttOppfolgingskontorModal() {
     const [kvittering, setKvittering] = useState<KontorSkiftetKvittering | undefined>(undefined);
-    const { brukerFnr, enhetId } = useAppStore();
+    const enhetId = useEnhetId();
+    const brukerFnr = useBrukerFnr();
     const { personalia } = useDataStore();
     const { hideModal } = useModalStore();
     const [settKontorError, setSettKontorError] = useState<string | undefined>();

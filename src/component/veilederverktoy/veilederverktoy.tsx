@@ -1,7 +1,7 @@
 import { Button, Dropdown } from '@navikt/ds-react';
 import { CogIcon } from '@navikt/aksel-icons';
 import { StartProsessKnapp } from './prosess/start-prosess-knapp';
-import { useAppStore } from '../../store/app-store';
+import { useBrukerFnr } from '../../store/app-store';
 import { useModalStore } from '../../store/modal-store';
 import { useDataStore } from '../../store/data-store';
 import {
@@ -22,11 +22,13 @@ import './veilederverktoy.less';
 import { StartArbeidsoppfolgingKnapp } from './start-arbeidsoppfolging/start-arbeidsoppfolging-knapp';
 import { StartArbeidssokerRegistreringKnapp } from './start-arbeidssoker-registrering/start-arbeidssoker-registrering-knapp';
 import { erProd } from '../../util/utils';
+import { useVisVeilederVerktøy } from '../../store/visittkort-config';
 
 const ButtonWithClickMetric = withClickMetric(Button);
 
 export const Veilederverktoy = () => {
-    const { visVeilederVerktoy, brukerFnr } = useAppStore();
+    const brukerFnr = useBrukerFnr();
+    const visVeilederVerktoy = useVisVeilederVerktøy();
     const { oppfolging, gjeldendeEskaleringsvarsel } = useDataStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { data: erUfordeltBruker } = useErUfordeltBruker(

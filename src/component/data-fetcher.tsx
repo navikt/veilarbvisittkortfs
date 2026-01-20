@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Loader } from '@navikt/ds-react';
 import { useDataStore } from '../store/data-store';
-import { useAppStore } from '../store/app-store';
+import { useBrukerFnr } from '../store/app-store';
 import { fetchOppfolging, useOppfolgingsstatus } from '../api/veilarboppfolging';
 import { fetchFullmakt, fetchPersonalia, fetchSpraakTolk, fetchVerge } from '../api/veilarbperson';
 import { fetchInnloggetVeileder, fetchVeilederePaEnhet } from '../api/veilarbveileder';
@@ -11,13 +11,15 @@ import { isAnyLoadingOrNotStarted } from '../api/utils';
 import { hentGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 import { fetchFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 import './data-fetcher.less';
+import { useVisVeilederVerktøy } from '../store/visittkort-config';
 
 interface Props {
     children: React.ReactNode;
 }
 
 export function DataFetcher({ children }: Props) {
-    const { brukerFnr, visVeilederVerktoy } = useAppStore();
+    const brukerFnr = useBrukerFnr();
+    const visVeilederVerktoy = useVisVeilederVerktøy();
     const {
         setOppfolging,
         setInnloggetVeileder,
@@ -46,6 +48,7 @@ export function DataFetcher({ children }: Props) {
     const oppfolgingsEnhet = oppfolgingsstatus?.oppfolgingsenhet.enhetId || '';
 
     useEffect(() => {
+        if (!brukerFnr) return;
         oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging)).catch();
         if (visVeilederVerktoy) {
             gjeldendeEskaleringsvarselFetcher

@@ -1,21 +1,23 @@
 import { useState } from 'react';
 import { AxiosError } from 'axios';
 import { Alert, Button, Popover } from '@navikt/ds-react';
-import { useAppStore } from '../../store/app-store';
+import { useBrukerFnr, useEnhetId } from '../../store/app-store';
 import { mapfargekategoriToIkon } from './mapfargekategoriToIkon';
 import { endreFargekategori, Fargekategori, FargekategoriModell, Fargekategorinavn } from '../../api/veilarbportefolje';
 
 interface Props {
-    buttonRef: React.RefObject<HTMLButtonElement | null>;
+    buttonAnchor: React.RefObject<HTMLButtonElement | null>;
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
     setFargekategori: (fargekategori: Fargekategori) => void;
 }
 
-export const FargekategoriPopover = ({ buttonRef, isOpen, setIsOpen, setFargekategori }: Props) => {
-    const { brukerFnr, enhetId } = useAppStore();
+export const FargekategoriPopover = ({ buttonAnchor, isOpen, setIsOpen, setFargekategori }: Props) => {
+    const brukerFnr = useBrukerFnr();
+    const enhetId = useEnhetId();
     const [error, setError] = useState<string>();
     const onClick = (kategoriVerdi: FargekategoriModell) => {
+        if (!brukerFnr) return;
         endreFargekategori(kategoriVerdi, brukerFnr)
             .then(res => res.data)
             .then(response =>
@@ -49,7 +51,7 @@ export const FargekategoriPopover = ({ buttonRef, isOpen, setIsOpen, setFargekat
 
     return (
         <Popover
-            anchorEl={buttonRef.current}
+            anchorEl={buttonAnchor.current}
             open={isOpen}
             onClose={() => {
                 setError(undefined);

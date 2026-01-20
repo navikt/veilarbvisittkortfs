@@ -1,5 +1,5 @@
 import { useDataStore } from '../../../store/data-store';
-import { useAppStore } from '../../../store/app-store';
+import { useBrukerFnr } from '../../../store/app-store';
 import './etiketter.less';
 import { FullmaktData, useOpplysningerOmArbeidssokerMedProfilering } from '../../../api/veilarbperson';
 import { OppfolgingStatus, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
@@ -59,7 +59,7 @@ function erFullmaktOmradeMedOppfolging(fullmaktListe: FullmaktData[]): boolean {
 }
 
 function Etiketter() {
-    const { brukerFnr } = useAppStore();
+    const brukerFnr = useBrukerFnr();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { gjeldendeEskaleringsvarsel, oppfolging, personalia, verge, fullmakt, spraakTolk } = useDataStore();
 

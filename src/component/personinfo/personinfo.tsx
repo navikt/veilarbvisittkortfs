@@ -2,7 +2,7 @@ import { Label } from '@navikt/ds-react';
 import NavnOgAlder from './components/navnogalder';
 import { KjonnIkon } from './components/kjonn-ikon';
 import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
-import { useAppStore } from '../../store/app-store';
+import { useBrukerFnr } from '../../store/app-store';
 import { useDataStore } from '../../store/data-store';
 import { selectSammensattNavn, selectTelefonnummer } from '../../util/selectors';
 import { logMetrikk } from '../../util/logger';
@@ -15,9 +15,11 @@ import { useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veil
 import { useModalStore } from '../../store/modal-store';
 import { formaterTelefonnummer } from '../../util/formaterTelefonnummer';
 import './personinfo.less';
+import { useVisVeilederVerktøy } from '../../store/visittkort-config';
 
 function PersonInfo() {
-    const { brukerFnr, visVeilederVerktoy } = useAppStore();
+    const brukerFnr = useBrukerFnr();
+    const visVeilederVerktoy = useVisVeilederVerktøy();
     const { personalia, oppfolging } = useDataStore();
     const { showHuskelappRedigereModal } = useModalStore();
     const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);

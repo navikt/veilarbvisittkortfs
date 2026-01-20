@@ -3,7 +3,7 @@ import { VarselModal } from '../../components/varselmodal/varsel-modal';
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
-import { useAppStore } from '../../../store/app-store';
+import { useBrukerFnr } from '../../../store/app-store';
 import { avsluttOppfolging } from '../../../api/veilarboppfolging';
 
 export interface AvsluttOppfolgingBekreftelseModalProps {
@@ -11,13 +11,14 @@ export interface AvsluttOppfolgingBekreftelseModalProps {
 }
 
 function AvsluttOppfolgingBekreft({ begrunnelse }: AvsluttOppfolgingBekreftelseModalProps) {
-    const { brukerFnr } = useAppStore();
+    const brukerFnr = useBrukerFnr();
     const { personalia, innloggetVeileder } = useDataStore();
     const { showAvsluttOppfolgingKvitteringModal, showSpinnerModal, showErrorModal, hideModal } = useModalStore();
 
     const brukerNavn = selectSammensattNavn(personalia);
 
     function handleSubmitAvsluttOppfolging() {
+        if (!brukerFnr) return;
         showSpinnerModal();
 
         avsluttOppfolging(brukerFnr, begrunnelse, innloggetVeileder!.ident)

@@ -1,7 +1,7 @@
 import { Alert, BodyShort, Modal } from '@navikt/ds-react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { VarselModal } from '../../components/varselmodal/varsel-modal';
-import { useAppStore } from '../../../store/app-store';
+import { useBrukerFnr } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
 import { fetchOppfolging, settBrukerTilDigital } from '../../../api/veilarboppfolging';
@@ -9,13 +9,14 @@ import { ifResponseHasData } from '../../../util/utils';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 
 function StartDigitalOppfolging() {
-    const { brukerFnr } = useAppStore();
+    const brukerFnr = useBrukerFnr();
     const { innloggetVeileder, oppfolging, setOppfolging } = useDataStore();
     const { hideModal, showStartDigitalOppfolgingKvitteringModal, showSpinnerModal, showErrorModal } = useModalStore();
 
     const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
 
     function startDigitalOppgfolging(begrunnelseValues: BegrunnelseValues) {
+        if (!brukerFnr) return;
         showSpinnerModal();
         settBrukerTilDigital(brukerFnr, innloggetVeileder!.ident, begrunnelseValues.begrunnelse)
             .then(() => {

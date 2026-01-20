@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useMemo, useState } from 'react';
 import SokFilter from '../../components/sokfilter/sok-filter';
 import RadioFilterForm from '../../components/radiofilterform/radio-filter-form';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
-import { useAppStore } from '../../../store/app-store';
+import { useBrukerFnr } from '../../../store/app-store';
 import { lagVeilederSammensattNavn } from '../../../util/selectors';
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
@@ -11,9 +11,11 @@ import { VeilederData } from '../../../api/veilarbveileder';
 import './tildel-veileder.less';
 import { BodyShort, Button, Heading, Modal } from '@navikt/ds-react';
 import { useFargekategori, useHuskelapp } from '../../../api/veilarbportefolje';
+import { useVisVeilederVerktøy } from '../../../store/visittkort-config';
 
 function TildelVeileder() {
-    const { brukerFnr, visVeilederVerktoy } = useAppStore();
+    const brukerFnr = useBrukerFnr();
+    const visVeilederVerktoy = useVisVeilederVerktøy();
     const { data: huskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);
     const { data: fargekategori } = useFargekategori(brukerFnr, visVeilederVerktoy);
     const { showTildelVeilederKvitteringModal, showTildelVeilederFeiletModal, hideModal } = useModalStore();
@@ -34,6 +36,7 @@ function TildelVeileder() {
     }, [veilederePaEnhet?.veilederListe, innloggetVeileder]);
 
     const handleSubmitTildelVeileder = async () => {
+        if (!brukerFnr) return;
         tildelTilVeileder([
             {
                 fraVeilederId: fraVeileder,

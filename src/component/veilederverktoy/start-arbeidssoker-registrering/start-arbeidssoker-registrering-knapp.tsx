@@ -1,4 +1,4 @@
-import { useAppStore } from '../../../store/app-store';
+import { useBrukerFnr } from '../../../store/app-store';
 import { erITestMiljo } from '../../../util/utils';
 import { logMetrikk } from '../../../util/logger';
 import { useDataStore } from '../../../store/data-store';
@@ -13,7 +13,7 @@ function byggRegistreringUrl() {
 }
 
 export const StartArbeidssokerRegistreringKnapp = () => {
-    const { brukerFnr } = useAppStore();
+    const brukerFnr = useBrukerFnr();
     const { oppfolging } = useDataStore();
     const { data: opplysningerOmArbeidssoker } = useOpplysningerOmArbeidssokerMedProfilering(brukerFnr);
 

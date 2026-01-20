@@ -1,9 +1,11 @@
 import './tilbakelenke.less';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
-import { useAppStore } from '../../../store/app-store';
+import { useEnhetId } from '../../../store/app-store';
+import { useTilbakeTilFlate } from '../../../store/visittkort-config';
 
 function Tilbakelenke() {
-    const { enhetId, tilbakeTilFlate } = useAppStore();
+    const enhetId = useEnhetId();
+    const tilbakeTilFlate = useTilbakeTilFlate();
     const tilbakeLenke = getTilbakeUrl(tilbakeTilFlate, enhetId);
 
     return (

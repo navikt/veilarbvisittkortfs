@@ -1,6 +1,6 @@
 import { Dropdown } from '@navikt/ds-react';
 import withClickMetric, { ClickMetricProps } from '../../components/click-metric/click-metric';
-import { useAppStore } from '../../../store/app-store';
+import { useSetAvsluttOppfolgingOpptelt } from '../../../store/app-store';
 import { useEffect } from 'react';
 
 interface StartProsessProps {
@@ -11,13 +11,13 @@ interface StartProsessProps {
 const DropdownMenuListItem = withClickMetric(Dropdown.Menu.List.Item);
 
 export const StartProsessKnapp = ({ knappeTekst, onClick, metricName }: StartProsessProps & ClickMetricProps) => {
-    const { setAvsluttOppfolgingOpptelt } = useAppStore();
+    const setAvsluttOppfolgingOpptelt = useSetAvsluttOppfolgingOpptelt();
 
     useEffect(() => {
         if (metricName === 'avslutt_oppfolging') {
             setAvsluttOppfolgingOpptelt(false);
         }
-    }, []);
+    }, [setAvsluttOppfolgingOpptelt]);
 
     return (
         <DropdownMenuListItem as="button" variant="tertiary-neutral" onClick={onClick} metricName={metricName}>

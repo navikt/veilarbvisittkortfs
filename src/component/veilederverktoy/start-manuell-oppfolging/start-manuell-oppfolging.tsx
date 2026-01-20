@@ -1,6 +1,6 @@
 import { Alert } from '@navikt/ds-react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
-import { useAppStore } from '../../../store/app-store';
+import { useBrukerFnr } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { useModalStore } from '../../../store/modal-store';
 import { fetchOppfolging, settBrukerTilManuell } from '../../../api/veilarboppfolging';
@@ -8,12 +8,13 @@ import { ifResponseHasData } from '../../../util/utils';
 import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 
 function StartManuellOppfolging() {
-    const { brukerFnr } = useAppStore();
+    const brukerFnr = useBrukerFnr();
     const { innloggetVeileder, setOppfolging } = useDataStore();
     const { showStartManuellOppfolgingKvitteringModal, showSpinnerModal, showErrorModal } = useModalStore();
     const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
 
     function settBrukerTilManuellOppfolging(values: BegrunnelseValues) {
+        if (!brukerFnr) return;
         showSpinnerModal();
         settBrukerTilManuell(brukerFnr, innloggetVeileder!.ident, values.begrunnelse)
             .then(() => {

@@ -15,14 +15,16 @@ interface Props {
 export function OppfolgingEnhetEndret({ historikkElement, erGjeldendeEnhet }: Props) {
     const { enhet, dato, opprettetAv, opprettetAvBrukerId } = historikkElement;
     const enhetNavnFetcher = useAxiosFetcher(fetchEnhetNavn);
+    // Make the linter happy by using this const instead of just enhetNavnFetcher.fetch
+    const doFetchEnhetNavn = enhetNavnFetcher.fetch;
 
     const enhetNavn = enhetNavnFetcher.data?.navn;
 
     useEffect(() => {
         if (enhet) {
-            enhetNavnFetcher.fetch(enhet);
+            doFetchEnhetNavn(enhet);
         }
-    }, [enhet, enhetNavnFetcher.fetch]);
+    }, [enhet, doFetchEnhetNavn]);
 
     if (isAnyLoading(enhetNavnFetcher)) {
         return (

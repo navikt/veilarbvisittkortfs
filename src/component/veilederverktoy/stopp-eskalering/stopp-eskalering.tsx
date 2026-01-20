@@ -4,7 +4,7 @@ import FormikModal from '../../components/formik/formik-modal';
 import FormikCheckBox from '../../components/formik/formik-checkbox';
 import BegrunnelseFooter from '../begrunnelseform/begrunnelse-form-footer';
 import { BegrunnelseTextArea } from '../begrunnelseform/begrunnelse-textarea';
-import { useAppStore } from '../../../store/app-store';
+import { useBrukerFnr } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { eskaleringVarselSendtEvent } from '../../../util/utils';
@@ -22,11 +22,12 @@ const initialFormValues: FormValues = {
 };
 
 function StoppEskalering() {
-    const { brukerFnr } = useAppStore();
+    const brukerFnr = useBrukerFnr();
     const { setGjeldendeEskaleringsvarsel } = useDataStore();
     const { showStoppEskaleringKvitteringModal, showErrorModal, showSpinnerModal } = useModalStore();
 
     async function startStoppingAvEskalering(values: FormValues) {
+        if (!brukerFnr) return;
         showSpinnerModal();
 
         // Hvis eskaleringsvarselet ble startet i veilarboppfolging så må vi stoppe varselet der også istedenfor i veilarbdialog
