@@ -8,9 +8,10 @@ import { useAppStore } from '../../../store/app-store';
 import { useDataStore } from '../../../store/data-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import { todayReversedDateStr } from '../../../util/date-utils';
-import { OppgaveTema, OppgaveType, opprettOppgave, PrioritetType } from '../../../api/veilarboppgave';
+import { BehandlingsTema, OppgaveTema, OppgaveType, opprettOppgave, PrioritetType } from '../../../api/veilarboppgave';
 import { StringOrNothing } from '../../../util/type/utility-types';
 import './opprett-oppgave.less';
+import OppgaveInnerFormAapUfore from './components/oppgave-inner-form-aap-ufore';
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
@@ -20,6 +21,7 @@ export interface OpprettOppgaveFormValues {
     tilDato: string;
     prioritet: PrioritetType;
     tema: OppgaveTema;
+    behandlingsTema: BehandlingsTema;
     type: OppgaveType;
     avsenderenhetId: string;
     veilederId: StringOrNothing;
@@ -36,7 +38,7 @@ function OpprettOppgave() {
         return null;
     }
 
-    const opprettOppgaveInitialValues: Omit<OpprettOppgaveFormValues, 'tema'> = {
+    const opprettOppgaveInitialValues: Omit<OpprettOppgaveFormValues, 'tema' | 'behandlingsTema'> = {
         beskrivelse: '',
         enhetId: '',
         fnr: brukerFnr,
@@ -73,15 +75,29 @@ function OpprettOppgave() {
                     >{`Oppfølging av ${navn}`}</Heading>
                     <Form>
                         <OpprettOppgaveTemaSelector />
-                        <OppgaveInnerForm
-                            tema={formikProps.values.tema}
-                            fnr={brukerFnr}
-                            enhetId={formikProps.values.enhetId}
-                            veilederId={formikProps.values.veilederId}
-                            avsenderenhetId={enhetId}
-                            formikProps={formikProps}
-                            tilbake={hideModal}
-                        />
+                        {formikProps.values.tema === 'ARBEIDSAVKLARING' ? (
+                            <OppgaveInnerFormAapUfore
+                                tema={formikProps.values.tema}
+                                behandlingsTema={formikProps.values.behandlingsTema}
+                                fnr={brukerFnr}
+                                enhetId={formikProps.values.enhetId}
+                                veilederId={formikProps.values.veilederId}
+                                avsenderenhetId={enhetId}
+                                formikProps={formikProps}
+                                tilbake={hideModal}
+                            />
+                        ) : (
+                            <OppgaveInnerForm
+                                tema={formikProps.values.tema}
+                                fnr={brukerFnr}
+                                enhetId={formikProps.values.enhetId}
+                                veilederId={formikProps.values.veilederId}
+                                avsenderenhetId={enhetId}
+                                formikProps={formikProps}
+                                tilbake={hideModal}
+                            />
+                        )}
+
                     </Form>
                 </div>
             )}
