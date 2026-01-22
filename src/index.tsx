@@ -5,11 +5,14 @@ import * as dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/nb';
 import App from './app';
+import './webComponentWrapper';
+import { exposeVisittkortAsWebComponent } from './webComponentWrapper';
 
 dayjs.locale('nb');
 dayjs.extend(relativeTime);
 
 Navspa.eksporter('veilarbvisittkortfs', App);
+exposeVisittkortAsWebComponent();
 
 if (isLocalDevelopment()) {
     renderMockApp();
