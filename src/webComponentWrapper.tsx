@@ -46,6 +46,7 @@ class VisittkortElement extends HTMLElement {
         this.root.render(
             <React.StrictMode>
                 <template
+                    className="flex"
                     {...{
                         shadowrootmode: 'closed'
                     }}
