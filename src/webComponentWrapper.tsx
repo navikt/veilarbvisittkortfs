@@ -45,13 +45,15 @@ class VisittkortElement extends HTMLElement {
 
         this.root.render(
             <React.StrictMode>
-                <App
-                    fnr={fnr}
-                    enhet={enhet}
-                    tilbakeTilFlate={tilbakeTilFlate}
-                    skjulEtiketter={skjulEtiketter}
-                    visVeilederVerktoy={visVeilederVerktoy}
-                />
+                <template shadowrootmode="closed">
+                    <App
+                        fnr={fnr}
+                        enhet={enhet}
+                        tilbakeTilFlate={tilbakeTilFlate}
+                        skjulEtiketter={skjulEtiketter}
+                        visVeilederVerktoy={visVeilederVerktoy}
+                    />
+                </template>
             </React.StrictMode>
         );
     }
