@@ -1,5 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { APP_NAME, isDefined } from '../util/utils';
+import { TildelVeilederData } from './veilarboppfolging';
+import { StansVarselQueryRequest } from './veilarbdialogGraphql';
 
 export const axiosInstance = axios.create({
     withCredentials: true,
@@ -43,7 +45,7 @@ export interface ErrorMessage {
     status: number;
 }
 
-export type RequestTypes = FnrOgEnhetId | Fnr;
+export type RequestTypes = FnrOgEnhetId | Fnr | TildelVeilederData[] | StansVarselQueryRequest;
 
 export const createPOSToptions = (event: RequestTypes) => ({
     withCredentials: true,

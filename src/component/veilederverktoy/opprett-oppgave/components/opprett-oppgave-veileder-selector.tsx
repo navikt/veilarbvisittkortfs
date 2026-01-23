@@ -1,13 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { FormikProps } from 'formik';
 import SokFilter from '../../../components/sokfilter/sok-filter';
 import FormikDropdown from '../../../components/formik/formik-dropdown';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
-import { useDataStore } from '../../../../store/data-store';
-import { fetchVeilederePaEnhet, VeilederData } from '../../../../api/veilarbveileder';
+import { useVeilederePaEnhet, VeilederData } from '../../../../api/veilarbveileder';
 import { OppgaveTema } from '../../../../api/veilarboppgave';
-import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
-import { ifResponseHasData } from '../../../../util/utils';
 import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
 import SelectMedSok from './select-med-sok/dropdown-med-soke-filter';
 
@@ -19,23 +16,13 @@ interface OpprettOppgaveVelgVeilederProps {
 }
 
 function OpprettOppgaveVelgVeileder({ veilederId, tema, formikProps, enhetId }: OpprettOppgaveVelgVeilederProps) {
-    const { veilederePaEnhet, setVeilederePaEnhet } = useDataStore();
-    const [ingenData, setIngenData] = useState(false);
-
-    const veilederePaEnhetFetcher = useAxiosFetcher(fetchVeilederePaEnhet);
+    const { veilederePaEnhet, error } = useVeilederePaEnhet(tema === 'OPPFOLGING' ? enhetId : undefined);
+    const ingenData = error || !veilederePaEnhet;
 
     const veilederListe = veilederePaEnhet?.veilederListe || [];
 
     useEffect(() => {
-        setIngenData(false);
-        setVeilederePaEnhet(undefined);
         formikProps.setFieldValue('veilederId', null);
-        if (tema === 'OPPFOLGING') {
-            veilederePaEnhetFetcher
-                .fetch(enhetId)
-                .then(ifResponseHasData(setVeilederePaEnhet))
-                .catch(() => setIngenData(true));
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [enhetId, tema]);
 

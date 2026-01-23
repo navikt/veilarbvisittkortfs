@@ -1,33 +1,40 @@
-import constate from 'constate';
-import { useState } from 'react';
+import { create } from 'zustand';
 
-export interface AppStoreInitialValues {
-    brukerFnr: string;
+interface AppStoreActions {
+    setBrukerFnr: (brukerFnr: string) => void;
+    setEnhetId: (enhetId: string) => void;
+    setAvsluttOppfolgingOpptelt: (erOpptelt: boolean) => void;
+    setAppState: (state: { enhetId: string | undefined; brukerFnr: string | undefined }) => void;
+}
+
+export interface AppStoreState {
+    brukerFnr?: string;
     enhetId?: string;
-    tilbakeTilFlate: string;
-    visVeilederVerktoy: boolean;
     avsluttOppfolgingOpptelt: boolean;
 }
 
-export const [AppStore, useAppStore] = constate((initalValues: AppStoreInitialValues) => {
-    const [brukerFnr, setBrukerFnr] = useState<string>(initalValues.brukerFnr);
-    const [enhetId, setEnhetId] = useState<string | undefined>(initalValues.enhetId);
-    const [tilbakeTilFlate, setTilbakeTilFlate] = useState<string>(initalValues.tilbakeTilFlate);
-    const [visVeilederVerktoy, setVisVeilederVerktoy] = useState<boolean>(initalValues.visVeilederVerktoy);
-    const [avsluttOppfolgingOpptelt, setAvsluttOppfolgingOpptelt] = useState<boolean>(
-        initalValues.avsluttOppfolgingOpptelt
-    );
+type AppStore = AppStoreState & AppStoreActions;
 
-    return {
-        brukerFnr,
-        setBrukerFnr,
-        enhetId,
-        setEnhetId,
-        tilbakeTilFlate,
-        setTilbakeTilFlate,
-        visVeilederVerktoy,
-        setVisVeilederVerktoy,
-        avsluttOppfolgingOpptelt,
-        setAvsluttOppfolgingOpptelt
-    };
-});
+/**
+ * Fields in the AppStore are expected to possibly be changed by the visittkort-app itself unlike VisittkortConfig which is only configured from the outside
+ */
+export const useAppStore = create<AppStore>()(set => ({
+    brukerFnr: undefined,
+    enhetId: undefined,
+    avsluttOppfolgingOpptelt: false,
+    /* Setters */
+    setBrukerFnr: (brukerFnr: string) => set({ brukerFnr: brukerFnr }),
+    setEnhetId: (enhetId: string) => set({ enhetId: enhetId }),
+    setAvsluttOppfolgingOpptelt: (erOpptelt: boolean) => set({ avsluttOppfolgingOpptelt: erOpptelt }),
+    setAppState: state =>
+        set({
+            brukerFnr: state.brukerFnr,
+            enhetId: state.enhetId
+        })
+}));
+
+export const useBrukerFnr = () => useAppStore((state: AppStore) => state.brukerFnr);
+export const useEnhetId = () => useAppStore((state: AppStore) => state.enhetId);
+export const useAvsluttOppfolgingOpptelt = () => useAppStore((state: AppStore) => state.avsluttOppfolgingOpptelt);
+export const useSetAvsluttOppfolgingOpptelt = () => useAppStore(state => state.setAvsluttOppfolgingOpptelt);
+export const useSetAppState = () => useAppStore(state => state.setAppState);

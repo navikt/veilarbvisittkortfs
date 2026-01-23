@@ -80,31 +80,31 @@ export function endreFargekategori(fargekategoriVerdi: string, fnr: string): Axi
     return axiosInstance.put('/veilarbportefolje/api/v1/fargekategorier', { fargekategoriVerdi, fnr: [fnr] });
 }
 
-export function useErUfordeltBruker(fnr: string, skalHenteData: boolean = true) {
+export function useErUfordeltBruker(fnr: string | undefined, skalHenteData: boolean = true) {
     const url = '/veilarbportefolje/api/v1/hent-er-bruker-ufordelt';
     const { data, error, isLoading, mutate } = useSWR<boolean, ErrorMessage>(
         skalHenteData && fnr ? `${url}/${fnr}` : null,
-        () => fetchWithPost(url, { fnr: fnr ?? null }),
+        () => fetchWithPost(url, { fnr: fnr as string }),
         swrOptions
     );
     return { data, isLoading, error, mutate };
 }
 
-export function useHuskelapp(fnr: string, skalHenteData: boolean = true) {
+export function useHuskelapp(fnr: string | undefined, skalHenteData: boolean = true) {
     const url = '/veilarbportefolje/api/v1/hent-huskelapp-for-bruker';
     const { data, error, isLoading, mutate } = useSWR<Huskelapp, ErrorMessage>(
         skalHenteData && fnr ? `${url}/${fnr}` : null,
-        () => fetchWithPost(url, { fnr: fnr }),
+        () => fetchWithPost(url, { fnr: fnr as string }),
         swrOptions
     );
     return { data, isLoading, error, mutate };
 }
 
-export function useFargekategori(fnr: string, skalHenteData: boolean = true) {
+export function useFargekategori(fnr: string | undefined, skalHenteData: boolean = true) {
     const url = '/veilarbportefolje/api/v1/hent-fargekategori';
     const { data, error, isLoading, mutate } = useSWR<Fargekategori, ErrorMessage>(
         skalHenteData && fnr ? `${url}/${fnr}` : null,
-        () => fetchWithPost(url, { fnr: fnr }),
+        () => fetchWithPost(url, { fnr: fnr as string }),
         swrOptions
     );
     return { data, isLoading, error, mutate };

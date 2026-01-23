@@ -42,7 +42,6 @@ class VisittkortElement extends HTMLElement {
         const tilbakeTilFlate = this.getAttribute('tilbakeTilFlate') || '';
         const visVeilederVerktoy = this.getAttribute('visVeilederVerktoy') === 'true';
         const skjulEtiketter = this.getAttribute('skjulEtiketter') === 'true';
-        const avsluttOppfolgingOpptelt = this.getAttribute('avsluttOppfolgingOpptelt') === 'true';
 
         this.root.render(
             <React.StrictMode>
@@ -51,7 +50,6 @@ class VisittkortElement extends HTMLElement {
                     enhet={enhet}
                     tilbakeTilFlate={tilbakeTilFlate}
                     skjulEtiketter={skjulEtiketter}
-                    avsluttOppfolgingOpptelt={avsluttOppfolgingOpptelt}
                     visVeilederVerktoy={visVeilederVerktoy}
                 />
             </React.StrictMode>
