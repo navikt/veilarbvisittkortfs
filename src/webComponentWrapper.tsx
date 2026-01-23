@@ -45,7 +45,11 @@ class VisittkortElement extends HTMLElement {
 
         this.root.render(
             <React.StrictMode>
-                <template shadowrootmode="closed">
+                <template
+                    {...{
+                        shadowrootmode: 'closed'
+                    }}
+                >
                     <App
                         fnr={fnr}
                         enhet={enhet}
