@@ -31,7 +31,7 @@ export const Veilederverktoy = () => {
     const visVeilederVerktoy = useVisVeilederVerktøy();
     const { oppfolging } = useOppfolging(brukerFnr);
     const { gjeldendeEskaleringsvarsel } = useGjeldendeEskaleringsvarsel(brukerFnr);
-    const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
+    const { oppfolging: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { data: erUfordeltBruker } = useErUfordeltBruker(
         brukerFnr,
         visVeilederVerktoy && oppfolging?.underOppfolging
