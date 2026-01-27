@@ -202,9 +202,9 @@ const graphqlQuery = `
                 registrertIKrr
             }
             erKontorsperret
-        }
-        veilederTilordning(fnr: $fnr) {
-            veilederIdent
+            veilederTilordning(fnr: $fnr) {
+                veilederIdent
+            }
         }
         oppfolging(fnr: $fnr) {
             erUnderOppfolging
@@ -244,8 +244,8 @@ interface OppfolgingsDataGraphqlResponse {
             registrertIKrr: boolean;
         };
         erKontorsperret: boolean; // Tidligere kalt 'underKvp'
+        veilederTilordning: VeilederTilordning | undefined;
     };
-    veilederTilordning: VeilederTilordning | undefined;
     oppfolging: {
         erUnderOppfolging: boolean | undefined;
     };
@@ -270,7 +270,7 @@ const mapTilBackoverkompatibelState = (
               manuell: data.data.brukerStatus.manuell.erManuell || false,
               underKvp: data.data.brukerStatus.erKontorsperret,
               underOppfolging: data.data.oppfolging.erUnderOppfolging || false,
-              veilederId: data.data.veilederTilordning?.veilederIdent,
+              veilederId: data.data.brukerStatus.veilederTilordning?.veilederIdent,
               oppfolgingsenhet: oppfolgingsEnhet(data.data.oppfolgingsEnhet.enhet),
               formidlingsgruppe: data.data.brukerStatus.arena?.formidlingsgruppe,
               servicegruppe: data.data.brukerStatus.arena?.kvalifiseringsgruppe
