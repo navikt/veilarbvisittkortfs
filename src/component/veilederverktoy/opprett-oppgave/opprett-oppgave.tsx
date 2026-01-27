@@ -11,7 +11,6 @@ import { BehandlingsTema, OppgaveTema, OppgaveType, opprettOppgave, PrioritetTyp
 import { StringOrNothing } from '../../../util/type/utility-types';
 import './opprett-oppgave.less';
 import { usePersonalia } from '../../../api/veilarbperson';
-import OppgaveInnerFormAapUfore from './components/oppgave-inner-form-aap-ufore';
 
 export interface OpprettOppgaveFormValues {
     beskrivelse: string;
@@ -75,29 +74,16 @@ function OpprettOppgave({ brukerFnr }: { brukerFnr: string }) {
                     >{`Oppfølging av ${navn}`}</Heading>
                     <Form>
                         <OpprettOppgaveTemaSelector />
-                        {formikProps.values.tema === 'ARBEIDSAVKLARING' ? (
-                            <OppgaveInnerFormAapUfore
-                                tema={formikProps.values.tema}
-                                behandlingsTema={formikProps.values.behandlingsTema}
-                                fnr={brukerFnr}
-                                enhetId={formikProps.values.enhetId}
-                                veilederId={formikProps.values.veilederId}
-                                avsenderenhetId={enhetId}
-                                formikProps={formikProps}
-                                tilbake={hideModal}
-                            />
-                        ) : (
-                            <OppgaveInnerForm
-                                tema={formikProps.values.tema}
-                                fnr={brukerFnr}
-                                enhetId={formikProps.values.enhetId}
-                                veilederId={formikProps.values.veilederId}
-                                avsenderenhetId={enhetId}
-                                formikProps={formikProps}
-                                tilbake={hideModal}
-                            />
-                        )}
-
+                        <OppgaveInnerForm
+                            tema={formikProps.values.tema}
+                            behandlingsTema={formikProps.values.behandlingsTema}
+                            fnr={brukerFnr}
+                            enhetId={formikProps.values.enhetId}
+                            veilederId={formikProps.values.veilederId}
+                            avsenderenhetId={enhetId}
+                            formikProps={formikProps}
+                            tilbake={hideModal}
+                        />
                     </Form>
                 </div>
             )}
