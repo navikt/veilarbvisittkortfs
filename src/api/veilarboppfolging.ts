@@ -283,7 +283,7 @@ export interface VeilarbOppfolgingGraphqlRequest {
     variables: { fnr: string };
 }
 
-const graphqlUrl = '/veilarboppfolging/graphql';
+const graphqlUrl = '/veilarboppfolging/api/graphql';
 export const useVeilarboppfolgingData = (fnr: string | undefined) => {
     const { data, error, isLoading, mutate } = useSWR<(Oppfolging & OppfolgingStatus) | undefined, ErrorMessage>(
         fnr ? `${graphqlUrl}/${fnr}` : null,
