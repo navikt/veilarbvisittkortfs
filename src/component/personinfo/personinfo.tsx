@@ -9,7 +9,7 @@ import HuskelappKnapp from '../huskelapp/huskelapp-knapp';
 import { Fargekategoriknapp } from '../fargekategori/fargekategoriknapp';
 import { harTilgangTilHuskelappEllerFargekategori } from '../huskelapp/harTilgangTilHuskelapp';
 import { useErUfordeltBruker } from '../../api/veilarbportefolje';
-import { useOppfolging, useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
+import { useOppfolging, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 import { useModalStore } from '../../store/modal-store';
 import { formaterTelefonnummer } from '../../util/formaterTelefonnummer';
 import './personinfo.less';
@@ -21,7 +21,6 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
     const { personalia } = usePersonalia(brukerFnr);
     const { oppfolging } = useOppfolging(brukerFnr);
     const { showHuskelappRedigereModal } = useModalStore();
-    const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
 
     const { data: erUfordeltBruker } = useErUfordeltBruker(
         brukerFnr,
@@ -33,7 +32,7 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
 
     const sjekkHarTilgangTilHuskelappEllerFargekategori = harTilgangTilHuskelappEllerFargekategori(
         erUfordeltBruker === undefined ? true : erUfordeltBruker,
-        !!oppfolgingsstatus?.veilederId,
+        !!oppfolging?.veilederId,
         !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor
     );
 

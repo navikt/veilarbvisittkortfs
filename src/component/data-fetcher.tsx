@@ -1,7 +1,7 @@
 import React from 'react';
 import { Loader } from '@navikt/ds-react';
 import { useBrukerFnr } from '../store/app-store';
-import { useOppfolging, useOppfolgingsstatus } from '../api/veilarboppfolging';
+import { useOppfolgingsstatus } from '../api/veilarboppfolging';
 import { usePersonalia, useVerge, useFullmakt, useSpraakTolk } from '../api/veilarbperson';
 import { useInnloggetVeileder, useVeilederePaEnhet } from '../api/veilarbveileder';
 import { useGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
@@ -18,8 +18,7 @@ export function DataFetcher({ children }: Props) {
     const visVeilederVerktoy = useVisVeilederVerktøy();
 
     // Start henting av data
-    const { data: oppfolgingsstatus, isLoading: oppfolgingsstatusIsLoading } = useOppfolgingsstatus(brukerFnr);
-    const { isLoading: oppfolgingIsLoading } = useOppfolging(brukerFnr);
+    const { oppfolging, isLoading: oppfolgingsstatusIsLoading } = useOppfolgingsstatus(brukerFnr);
     const { isLoading: personaliaIsLoading } = usePersonalia(brukerFnr);
     const { isLoading: innloggetVeilederIsLoading } = useInnloggetVeileder();
     useFeaturesFromOboUnleash();
@@ -27,7 +26,7 @@ export function DataFetcher({ children }: Props) {
     useFullmakt(brukerFnr);
     useSpraakTolk(brukerFnr);
 
-    const oppfolgingsEnhet = oppfolgingsstatus?.oppfolgingsenhet.enhetId || undefined;
+    const oppfolgingsEnhet = oppfolging?.oppfolgingsenhet.enhetId || undefined;
 
     // Bare hent disse hvis visVeilederVerktoy er konfigurert til true
     useVeilederePaEnhet(visVeilederVerktoy ? oppfolgingsEnhet : undefined);
@@ -36,8 +35,7 @@ export function DataFetcher({ children }: Props) {
     if (
         innloggetVeilederIsLoading ||
         oppfolgingsstatusIsLoading ||
-        personaliaIsLoading ||
-        oppfolgingIsLoading
+        personaliaIsLoading
         // trenger ikke vente på vergeOgFullmaktFetcher eller spraakTolkFetcher
     ) {
         return <Loader className="visittkort-laster" size="xlarge" />;

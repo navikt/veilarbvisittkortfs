@@ -3,9 +3,21 @@ import useSWRMutation from 'swr/mutation';
 import { AxiosPromise } from 'axios';
 import { axiosInstance, ErrorMessage, fetchWithPost, swrOptions } from './utils';
 import { OrNothing, StringOrNothing } from '../util/type/utility-types';
+import { GraphqlResponse } from './GraphqlUtils';
 
 export type Formidlingsgruppe = 'ARBS' | 'IARBS' | 'ISERV' | 'PARBS' | 'RARBS';
 export type Servicegruppe = 'BKART' | 'IVURD' | 'OPPFI' | 'VARIG' | 'VURDI' | 'VURDU';
+type Kvalifiseringsgruppe =
+    | 'BATT' // Spesielt tilpasset innsats:	                Personen har nedsatt arbeidsevne og har et identifisert behov for kvalifisering og/eller tilrettelegging.  Aktivitetsplan skal utformes.
+    | 'BFORM' // Situasjonsbestemt innsats:	                    Personen har moderat bistandsbehov
+    | 'BKART' // Behov for arbeidsevnevurdering:	            Personen har behov for arbeidsevnevurdering
+    | 'IKVAL' // Standardinnsats:	                            Personen har behov for ordinær bistand
+    | 'IVURD' // Ikke vurdert:	                                Ikke vurdert
+    | 'KAP11' // Rettigheter etter Ftrl. Kapittel 11:	        Rettigheter etter Ftrl. Kapittel 11
+    | 'OPPFI' // Helserelatert arbeidsrettet oppfølging i NAV:	Helserelatert arbeidsrettet oppfølging i NAV
+    | 'VARIG' // Varig tilpasset innsats:	                    Personen har varig nedsatt arbeidsevne
+    | 'VURDI' // Sykmeldt, oppfølging på arbeidsplassen:	    Sykmeldt, oppfølging på arbeidsplassen
+    | 'VURDU'; // Sykmeldt uten arbeidsgiver:
 
 interface OppfolgingEnhet {
     navn: StringOrNothing;
@@ -16,7 +28,7 @@ export interface OppfolgingStatus {
     oppfolgingsenhet: OppfolgingEnhet;
     veilederId: StringOrNothing;
     formidlingsgruppe: OrNothing<Formidlingsgruppe>;
-    servicegruppe: OrNothing<Servicegruppe>;
+    servicegruppe: OrNothing<Kvalifiseringsgruppe>;
 }
 
 export interface AvslutningStatus {
@@ -29,28 +41,12 @@ export interface AvslutningStatus {
     harAktiveTiltaksdeltakelser: boolean;
 }
 
-export interface OppfolgingsPerioder {
-    aktorId: string;
-    veileder: StringOrNothing;
-    startDato: string;
-    sluttDato?: string;
-    begrunnelse: string;
-    kvpPerioder: any[]; // eslint-disable-line
-}
-
 export interface Oppfolging {
-    erIkkeArbeidssokerUtenOppfolging: boolean;
-    erSykmeldtMedArbeidsgiver: OrNothing<boolean>;
-    fnr: string;
-    harSkriveTilgang: boolean;
     inaktivIArena: OrNothing<boolean>;
     inaktiveringsdato: StringOrNothing;
     kanReaktiveres: OrNothing<boolean>;
-    kanStarteOppfolging: boolean;
     kanVarsles: boolean;
     manuell: boolean;
-    oppfolgingUtgang: StringOrNothing;
-    oppfolgingsPerioder: OppfolgingsPerioder[];
     reservasjonKRR: boolean;
     registrertKRR: boolean;
     underKvp: boolean;
@@ -187,15 +183,127 @@ export const useTildelTilVeileder = () => {
     return { tildelTilVeileder: trigger, isLoading: isMutating, error: error };
 };
 
-export function useOppfolgingsstatus(fnr: string | undefined) {
-    const url = '/veilarboppfolging/api/v2/person/hent-oppfolgingsstatus';
-    const { data, error, isLoading, mutate } = useSWR<OppfolgingStatus, ErrorMessage>(
-        fnr ? `${url}/${fnr}` : null,
-        () => fetchWithPost(url, { fnr: fnr as string }),
+const graphqlQuery = `
+    query hentOppfolgingsData($fnr: String!) {
+        brukerStatus(fnr: $fnr) {
+            arena {
+                inaktivIArena
+                inaktiveringsdato
+                kanReaktiveres
+                formidlingsgruppe
+                kvalifiseringsgruppe
+            }
+            manuell {
+                erManuell
+            }
+            krr {
+                kanVarsles
+                reservertIKrr
+                registrertIKrr
+            }
+            erKontorsperret
+        }
+        veilederTilordning(fnr: $fnr) {
+            veilederIdent
+        }
+        oppfolging(fnr: $fnr) {
+            erUnderOppfolging
+        }
+    }
+`;
+
+interface VeilederTilordning {
+    veilederIdent: string;
+}
+
+interface ArenaStatus {
+    inaktivIArena: boolean;
+    inaktiveringsdato: StringOrNothing;
+    kanReaktiveres: boolean | undefined;
+    formidlingsgruppe: 'IARBS' | 'ARBS' | 'ISERV' | undefined;
+    kvalifiseringsgruppe: Kvalifiseringsgruppe | undefined;
+}
+
+interface OppfolgingsDataGraphqlResponse {
+    oppfolgingsEnhet: {
+        enhet:
+            | {
+                  id: string;
+                  navn: string;
+              }
+            | undefined;
+    };
+    brukerStatus: {
+        arena: ArenaStatus | undefined;
+        manuell: {
+            erManuell: boolean | undefined;
+        };
+        krr: {
+            kanVarsles: boolean;
+            reservertIKrr: boolean;
+            registrertIKrr: boolean;
+        };
+        erKontorsperret: boolean; // Tidligere kalt 'underKvp'
+    };
+    veilederTilordning: VeilederTilordning | undefined;
+    oppfolging: {
+        erUnderOppfolging: boolean | undefined;
+    };
+}
+
+const mapTilBackoverkompatibelState = (
+    data: GraphqlResponse<OppfolgingsDataGraphqlResponse>
+): (Oppfolging & OppfolgingStatus) | undefined => {
+    if ((data.errors?.length || 0) != 0) {
+        throw new Error(
+            `Feilet å hente oppfolgingsdata (graphql) fra veilarboppfolging: ${data.errors.map(it => it.message).join(',')}`
+        );
+    }
+    return data?.data
+        ? {
+              inaktiveringsdato: data.data.brukerStatus.arena?.inaktiveringsdato,
+              inaktivIArena: data.data.brukerStatus.arena?.inaktivIArena,
+              kanReaktiveres: data.data.brukerStatus.arena?.kanReaktiveres,
+              kanVarsles: data.data.brukerStatus.krr.kanVarsles,
+              registrertKRR: data.data.brukerStatus.krr.registrertIKrr,
+              reservasjonKRR: data.data.brukerStatus.krr.reservertIKrr,
+              manuell: data.data.brukerStatus.manuell.erManuell || false,
+              underKvp: data.data.brukerStatus.erKontorsperret,
+              underOppfolging: data.data.oppfolging.erUnderOppfolging || false,
+              veilederId: data.data.veilederTilordning?.veilederIdent,
+              oppfolgingsenhet: oppfolgingsEnhet(data.data.oppfolgingsEnhet.enhet),
+              formidlingsgruppe: data.data.brukerStatus.arena?.formidlingsgruppe,
+              servicegruppe: data.data.brukerStatus.arena?.kvalifiseringsgruppe
+          }
+        : undefined;
+};
+
+export interface VeilarbOppfolgingGraphqlRequest {
+    query: string;
+    variables: { fnr: string };
+}
+
+const graphqlUrl = '/veilarboppfolging/graphql';
+export const useVeilarboppfolgingData = (fnr: string | undefined) => {
+    const { data, error, isLoading, mutate } = useSWR<(Oppfolging & OppfolgingStatus) | undefined, ErrorMessage>(
+        fnr ? `${graphqlUrl}/${fnr}` : null,
+        () =>
+            fetchWithPost(graphqlUrl, {
+                query: graphqlQuery,
+                variables: { fnr: fnr as string }
+            }).then(res => mapTilBackoverkompatibelState(res)),
         swrOptions
     );
-    return { data, isLoading, error, mutate };
-}
+    return { oppfolging: data, isLoading, error, mutate };
+};
+
+/* Burde vært modelert annerledes men vil ikke brekke noe */
+const oppfolgingsEnhet = (
+    enhet: GraphqlResponse<OppfolgingsDataGraphqlResponse>['data']['oppfolgingsEnhet']['enhet'] | undefined
+): OppfolgingEnhet => ({ enhetId: enhet?.id, navn: enhet?.navn });
+
+export const useOppfolging = useVeilarboppfolgingData;
+export const useOppfolgingsstatus = useVeilarboppfolgingData;
 
 export function useTilgangTilBrukersKontor(fnr: string | undefined) {
     const url = '/veilarboppfolging/api/v3/oppfolging/hent-veilederTilgang';
