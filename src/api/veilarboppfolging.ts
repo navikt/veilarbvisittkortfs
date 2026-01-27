@@ -203,7 +203,7 @@ const graphqlQuery = `
                 registrertIKrr
             }
             erKontorsperret
-            veilederTilordning(fnr: $fnr) {
+            veilederTilordning {
                 veilederIdent
             }
         }
