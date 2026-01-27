@@ -1,24 +1,22 @@
 import { Alert } from '@navikt/ds-react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
-import { useAppStore } from '../../../store/app-store';
-import { useDataStore } from '../../../store/data-store';
+import { useBrukerFnr } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
-import { fetchOppfolging, settBrukerTilManuell } from '../../../api/veilarboppfolging';
-import { ifResponseHasData } from '../../../util/utils';
-import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
+import { settBrukerTilManuell, useOppfolging } from '../../../api/veilarboppfolging';
+import { useInnloggetVeileder } from '../../../api/veilarbveileder';
 
 function StartManuellOppfolging() {
-    const { brukerFnr } = useAppStore();
-    const { innloggetVeileder, setOppfolging } = useDataStore();
+    const brukerFnr = useBrukerFnr();
+    const { mutate: refreshOppfolging } = useOppfolging(brukerFnr);
+    const { innloggetVeileder } = useInnloggetVeileder();
     const { showStartManuellOppfolgingKvitteringModal, showSpinnerModal, showErrorModal } = useModalStore();
-    const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
 
     function settBrukerTilManuellOppfolging(values: BegrunnelseValues) {
+        if (!brukerFnr) return;
         showSpinnerModal();
         settBrukerTilManuell(brukerFnr, innloggetVeileder!.ident, values.begrunnelse)
             .then(() => {
-                oppfolgingFetcher.fetch(brukerFnr).then(ifResponseHasData(setOppfolging));
-
+                refreshOppfolging();
                 showStartManuellOppfolgingKvitteringModal({ begrunnelse: values.begrunnelse });
             })
             .catch(showErrorModal);

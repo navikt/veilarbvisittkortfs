@@ -1,6 +1,7 @@
 import { axiosInstance } from './utils';
 import { AxiosPromise } from 'axios';
 import { StringOrNothing } from '../util/type/utility-types';
+import { behandlingsnummer } from './behandlingsnummer';
 
 export interface OppgaveHistorikkInnslag {
     type: 'OPPRETTET_OPPGAVE';
@@ -63,13 +64,9 @@ export function opprettOppgave(fnr: string, oppgaveFormData: OppgaveFormData): A
     return axiosInstance.post(`/veilarboppgave/api/oppgave`, oppgaveFormData);
 }
 
-export function hentBehandlendeEnheter(
-    tema: OppgaveTema,
-    fnr: string,
-    behandlingsnummer: string
-): AxiosPromise<BehandlandeEnhet[]> {
+export function hentBehandlendeEnheter(tema: OppgaveTema, fnr: string): AxiosPromise<BehandlandeEnhet[]> {
     return axiosInstance.post<BehandlandeEnhet[]>(`/veilarboppgave/api/v2/hent-enheter?tema=${tema}`, {
         fnr: fnr,
-        behandlingsnummer: behandlingsnummer
+        behandlingsnummer
     });
 }

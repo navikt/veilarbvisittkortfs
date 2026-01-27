@@ -60,3 +60,5 @@ export const veilarbdialogGraphqlQuery = (fnr: string, query: string) => {
         }
     };
 };
+
+export type StansVarselQueryRequest = ReturnType<typeof veilarbdialogGraphqlQuery>;

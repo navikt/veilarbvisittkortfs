@@ -3,12 +3,14 @@ import { mapfargekategoriToIkon } from './mapfargekategoriToIkon';
 import { FargekategoriPopover } from './fargekategori-popover';
 import { Fargekategorinavn, useFargekategori } from '../../api/veilarbportefolje';
 import { Alert, Button } from '@navikt/ds-react';
-import { useAppStore } from '../../store/app-store';
+import { useBrukerFnr } from '../../store/app-store';
 import { feilErIkke400, feilErIkke403 } from '../huskelapp/harTilgangTilHuskelapp';
+import { useVisVeilederVerktøy } from '../../store/visittkort-config';
 
 export const Fargekategoriknapp = () => {
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const { brukerFnr, visVeilederVerktoy } = useAppStore();
+    const brukerFnr = useBrukerFnr();
+    const visVeilederVerktoy = useVisVeilederVerktøy();
     const {
         data: fargekategori,
         mutate: setFargekategori,
@@ -41,7 +43,7 @@ export const Fargekategoriknapp = () => {
                         loading={fargekategoriIsLoading}
                     />
                     <FargekategoriPopover
-                        buttonRef={buttonRef}
+                        buttonAnchor={buttonRef}
                         isOpen={isPopoverOpen}
                         setIsOpen={setIsPopoverOpen}
                         setFargekategori={setFargekategori}

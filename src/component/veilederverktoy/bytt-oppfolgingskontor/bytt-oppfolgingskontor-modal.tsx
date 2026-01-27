@@ -1,6 +1,5 @@
 import { Alert, BodyShort, ErrorMessage, Modal } from '@navikt/ds-react';
-import { useAppStore } from '../../../store/app-store';
-import { useDataStore } from '../../../store/data-store';
+import { useEnhetId } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import ByttOppfolgingskontorForm from './bytt-oppfolgingskontor-form';
@@ -10,11 +9,12 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import KontorHistorikk from './KontorHistorikk';
 import { BrukerFakta } from './BrukerFakta';
+import { usePersonalia } from '../../../api/veilarbperson';
 
-function ByttOppfolgingskontorModal() {
+function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
     const [kvittering, setKvittering] = useState<KontorSkiftetKvittering | undefined>(undefined);
-    const { brukerFnr, enhetId } = useAppStore();
-    const { personalia } = useDataStore();
+    const enhetId = useEnhetId();
+    const { personalia } = usePersonalia(brukerFnr);
     const { hideModal } = useModalStore();
     const [settKontorError, setSettKontorError] = useState<string | undefined>();
 
@@ -65,6 +65,7 @@ function ByttOppfolgingskontorModal() {
                         </BodyShort>
                     </div>
                     <ByttOppfolgingskontorForm
+                        brukerFnr={brukerFnr}
                         isKontorFetchLoading={hentAlleKontorLoading}
                         alleKontor={alleKontor}
                         tilbake={() => hideModal()}

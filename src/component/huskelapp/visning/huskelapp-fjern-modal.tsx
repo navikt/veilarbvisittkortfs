@@ -2,10 +2,12 @@ import { useModalStore } from '../../../store/modal-store';
 import { logMetrikk } from '../../../util/logger';
 import { slettHuskelapp, useHuskelapp } from '../../../api/veilarbportefolje';
 import { Button, Heading, Modal } from '@navikt/ds-react';
-import { useAppStore } from '../../../store/app-store';
+import { useBrukerFnr } from '../../../store/app-store';
+import { useVisVeilederVerktøy } from '../../../store/visittkort-config';
 
 function HuskelappFjernModal() {
-    const { brukerFnr, visVeilederVerktoy } = useAppStore();
+    const brukerFnr = useBrukerFnr();
+    const visVeilederVerktoy = useVisVeilederVerktøy();
     const { data: huskelapp, mutate: setHuskelapp } = useHuskelapp(brukerFnr, visVeilederVerktoy);
     const { showSpinnerModal, showErrorModal, hideModal } = useModalStore();
 

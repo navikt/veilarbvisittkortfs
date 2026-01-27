@@ -30,3 +30,34 @@ Interne henvendelser kan sendes via Slack i kanalen #team-obo-poao
 ## Kode generert av GitHub Copilot
 
 Dette repoet bruker GitHub Copilot til å generere kode.
+
+## Rendre visittkortet som et custom element (web component)
+```tsx
+/* Definer props som visittkortet kan ta imot */
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            "ao-visittkort": React.DetailedHTMLProps<
+                React.HTMLAttributes<HTMLElement> & {
+                    fnr?: string
+                    enhet?: string
+                    tilbakeTilFlate?: string
+                    visVeilederVerktoy?: string
+                    skjulEtiketter?: string
+                },
+                HTMLElement
+            >
+        }
+    }
+}
+
+export const Visittkort = () => {
+    return <ao-visittkort
+        enhet={"1234"}
+        fnr={"123123123"}
+        tilbakeTilFlate={"http://veilarbportefolje.nav.no"}
+        visVeilederVerktoy={"true"}
+        key={fnr}
+    ></ao-visittkort>
+}
+```
