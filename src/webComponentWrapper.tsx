@@ -24,6 +24,29 @@ import veilederverktoyStyles from './component/veilederverktoy/veilederverktoy.l
 import selectMedSokStyles from './component/veilederverktoy/opprett-oppgave/components/select-med-sok/select-med-sok.less?inline';
 import opprettOppgaveStyles from './component/veilederverktoy/opprett-oppgave/opprett-oppgave.less?inline';
 
+const styles =
+    visittkortCssStyles +
+    visittkortLessStyles +
+    sijStyles +
+    kopierStyles +
+    radioStyles +
+    varselModalStyles +
+    tilbakelenkeStyles +
+    lasterModalStyles +
+    formikStyles +
+    huskelappPostitstylingStyles +
+    huskelappRedigeringStyles +
+    dataFetcherStyles +
+    personinfoStyles +
+    etiketterStyles +
+    tildelVeilederStyles +
+    begrunnelseFormStyles +
+    historikkStyles +
+    stoppEskaleringStyles +
+    veilederverktoyStyles +
+    selectMedSokStyles +
+    opprettOppgaveStyles;
+
 class VisittkortElement extends HTMLElement {
     private root: ReactDOM.Root | null = null;
     private mountPoint: HTMLDivElement | null = null;
@@ -33,8 +56,14 @@ class VisittkortElement extends HTMLElement {
     }
 
     connectedCallback() {
+        const shadow = this.attachShadow({ mode: 'closed' });
         this.mountPoint = document.createElement('div');
-        this.appendChild(this.mountPoint);
+        shadow.appendChild(this.mountPoint);
+
+        const style = document.createElement('style');
+        style.textContent = styles;
+        shadow.appendChild(style);
+
         this.root = ReactDOM.createRoot(this.mountPoint);
         this.render();
     }
@@ -67,43 +96,13 @@ class VisittkortElement extends HTMLElement {
 
         this.root.render(
             <React.StrictMode>
-                <template
-                    className="flex"
-                    {...{
-                        shadowrootmode: 'closed'
-                    }}
-                >
-                    <style>
-                        {visittkortCssStyles +
-                            visittkortLessStyles +
-                            sijStyles +
-                            kopierStyles +
-                            radioStyles +
-                            varselModalStyles +
-                            tilbakelenkeStyles +
-                            lasterModalStyles +
-                            formikStyles +
-                            huskelappPostitstylingStyles +
-                            huskelappRedigeringStyles +
-                            dataFetcherStyles +
-                            personinfoStyles +
-                            etiketterStyles +
-                            tildelVeilederStyles +
-                            begrunnelseFormStyles +
-                            historikkStyles +
-                            stoppEskaleringStyles +
-                            veilederverktoyStyles +
-                            selectMedSokStyles +
-                            opprettOppgaveStyles}
-                    </style>
-                    <App
-                        fnr={fnr}
-                        enhet={enhet}
-                        tilbakeTilFlate={tilbakeTilFlate}
-                        skjulEtiketter={skjulEtiketter}
-                        visVeilederVerktoy={visVeilederVerktoy}
-                    />
-                </template>
+                <App
+                    fnr={fnr}
+                    enhet={enhet}
+                    tilbakeTilFlate={tilbakeTilFlate}
+                    skjulEtiketter={skjulEtiketter}
+                    visVeilederVerktoy={visVeilederVerktoy}
+                />
             </React.StrictMode>
         );
     }
