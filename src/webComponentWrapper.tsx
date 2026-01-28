@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './app';
+import './index.less?inline';
+import visittkortLessStyles from './index.less?inline';
+import visittkortCssStyles from './index.css?inline';
 
 class VisittkortElement extends HTMLElement {
     private root: ReactDOM.Root | null = null;
@@ -51,6 +54,7 @@ class VisittkortElement extends HTMLElement {
                         shadowrootmode: 'closed'
                     }}
                 >
+                    <style>{visittkortCssStyles + visittkortLessStyles}</style>
                     <App
                         fnr={fnr}
                         enhet={enhet}
