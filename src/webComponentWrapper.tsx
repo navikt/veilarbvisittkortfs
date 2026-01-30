@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './app';
-import './index.less?inline';
 import visittkortLessStyles from './index.less?inline';
 import visittkortCssStyles from './index.css?inline';
 import sijStyles from './component/components/sokfilter/sok-filter.less?inline';
