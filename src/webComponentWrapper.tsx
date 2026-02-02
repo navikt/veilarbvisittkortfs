@@ -55,7 +55,7 @@ class VisittkortElement extends HTMLElement {
     }
 
     connectedCallback() {
-        const shadow = this.attachShadow({ mode: 'closed' });
+        const shadow = this.attachShadow({ mode: 'open' });
         this.mountPoint = document.createElement('div');
         shadow.appendChild(this.mountPoint);
 
