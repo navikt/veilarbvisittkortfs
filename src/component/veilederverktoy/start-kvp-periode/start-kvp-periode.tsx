@@ -1,24 +1,20 @@
 import { BodyShort } from '@navikt/ds-react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { useModalStore } from '../../../store/modal-store';
-import { useAppStore } from '../../../store/app-store';
-import { fetchOppfolging, startKvpOppfolging } from '../../../api/veilarboppfolging';
-import { ifResponseHasData } from '../../../util/utils';
-import { useDataStore } from '../../../store/data-store';
+import { useBrukerFnr } from '../../../store/app-store';
+import { startKvpOppfolging, useOppfolging } from '../../../api/veilarboppfolging';
 
 function StarKvpPeriode() {
-    const { brukerFnr } = useAppStore();
-    const { setOppfolging } = useDataStore();
+    const brukerFnr = useBrukerFnr();
     const { showStartKvpPeriodeKvitteringModal, showSpinnerModal, showErrorModal } = useModalStore();
+    const { mutate: refreshOppfolging } = useOppfolging(brukerFnr);
 
     function startKvp({ begrunnelse }: BegrunnelseValues) {
+        if (!brukerFnr) return;
         showSpinnerModal();
         startKvpOppfolging(brukerFnr, begrunnelse)
             .then(() => {
-                fetchOppfolging(brukerFnr)
-                    .then(ifResponseHasData(setOppfolging))
-                    .then(showStartKvpPeriodeKvitteringModal)
-                    .catch(showErrorModal);
+                refreshOppfolging().then(showStartKvpPeriodeKvitteringModal).catch(showErrorModal);
             })
             .catch(showErrorModal);
     }

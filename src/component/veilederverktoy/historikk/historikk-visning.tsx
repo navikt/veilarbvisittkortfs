@@ -7,7 +7,7 @@ import { InnstillingHistorikkInnslag } from '../../../api/veilarboppfolging';
 import { OppgaveHistorikkInnslag } from '../../../api/veilarboppgave';
 import { EskaleringsvarselHistorikkInnslag } from '../../../api/veilarbdialog';
 import EskaleringsvarselHistorikkKomponent from './components/eskaleringsvarselHistorikk';
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Skeleton } from '@navikt/ds-react';
 
 type Historikk = InnstillingHistorikk | OppgaveHistorikk | EskaleringsvarselHistorikk;
 
@@ -27,6 +27,7 @@ interface EskaleringsvarselHistorikk {
 }
 
 interface HistorikkVisningProps {
+    isLoading: boolean;
     innstillingHistorikk: InnstillingHistorikkInnslag[];
     oppgaveHistorikk: OppgaveHistorikkInnslag[];
     eskaleringsvarselHistorikk: EskaleringsvarselHistorikkInnslag[];
@@ -93,6 +94,7 @@ function erEskaleringsvarselHistorikk(historikk: Historikk): historikk is Eskale
 }
 
 function HistorikkVisning({
+    isLoading,
     innstillingHistorikk,
     oppgaveHistorikk,
     eskaleringsvarselHistorikk
@@ -105,6 +107,16 @@ function HistorikkVisning({
             return dayjs(d2).diff(d1);
         }
     );
+
+    if (isLoading) {
+        return (
+            <ul className="space-y-4">
+                <HistorikkLoadingElement />
+                <HistorikkLoadingElement />
+                <HistorikkLoadingElement />
+            </ul>
+        );
+    }
 
     if (historikk.length === 0) {
         return <BodyShort size="small">Ingen historikk</BodyShort>;
@@ -126,5 +138,17 @@ function HistorikkVisning({
         </ul>
     );
 }
+
+const HistorikkLoadingElement = () => {
+    return (
+        <div className="historikk__elem">
+            <BodyShort size="small" weight="semibold">
+                <Skeleton variant="text" width="100%" />
+            </BodyShort>
+            <Skeleton variant="text" width="40%" />
+            <Skeleton variant="text" width="40%" />
+        </div>
+    );
+};
 
 export default HistorikkVisning;
