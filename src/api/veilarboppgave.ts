@@ -36,7 +36,7 @@ export interface OppgaveFormData {
     tilDato: string;
     prioritet: PrioritetType;
     tema: OppgaveTema;
-    behandlingstema?: BehandlingsTema;
+    behandlingsTema?: BehandlingsTema;
     type: OppgaveType;
     veilederId: StringOrNothing;
 }

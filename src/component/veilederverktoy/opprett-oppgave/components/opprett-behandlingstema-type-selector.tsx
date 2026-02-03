@@ -16,7 +16,7 @@ function OpprettBehandlingstemaTypeSelector({ behandlingsTema }: OpprettBehandli
     if (behandlingsTema) {
         typeOptions.push({ value: 'FERDIG_AVKLART_MOT_UFØRETRYGD', label: 'Ferdig avklart mot uføretrygd' });
     }
-    return <FormikSelect label="Gjelder" name="type" options={typeOptions} />;
+    return <FormikSelect label="Gjelder" name="behandlingsTema" options={typeOptions} />;
 }
 
 export default OpprettBehandlingstemaTypeSelector;
