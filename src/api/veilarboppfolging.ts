@@ -96,16 +96,6 @@ export interface InnstillingHistorikkInnslag {
     enhet?: StringOrNothing;
 }
 
-export const useOppfolging = (fnr: string | undefined) => {
-    const url = '/veilarboppfolging/api/v3/oppfolging/hent-status';
-    const { data, error, isLoading, mutate } = useSWR<Oppfolging, ErrorMessage>(
-        fnr ? `${url}/${fnr}` : null,
-        () => fetchWithPost(url, { fnr: fnr as string }),
-        swrOptions
-    );
-    return { oppfolging: data, isLoading, error, mutate };
-};
-
 export const useInnstillingsHistorikk = (fnr: string | undefined) => {
     const url = '/veilarboppfolging/api/v3/hent-instillingshistorikk';
     const { data, isLoading, error } = useSWR<InnstillingHistorikkInnslag[], ErrorMessage>(

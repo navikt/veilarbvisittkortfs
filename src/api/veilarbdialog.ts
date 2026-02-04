@@ -70,15 +70,6 @@ export const useDialoger = (fnr: string | undefined) => {
     };
 };
 
-export function fetchDialoger(fnr: string): AxiosPromise<Dialog[]> {
-    return axiosInstance
-        .post(veilarbDialogGraphqlEndpoint, veilarbdialogGraphqlQuery(fnr, dialogerQuery))
-        .then((res: AxiosResponse<DialogerResponse>) => ({
-            ...res,
-            data: res.data.data.dialoger
-        }));
-}
-
 export const useGjeldendeEskaleringsvarsel = (fnr: string | undefined) => {
     const url = veilarbDialogGraphqlEndpoint;
     const { data, error, isLoading, mutate } = useSWR<GjeldendeEskaleringsvarsel | undefined>(
