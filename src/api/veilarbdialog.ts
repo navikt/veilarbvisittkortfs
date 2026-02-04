@@ -82,7 +82,7 @@ export const useGjeldendeEskaleringsvarsel = (fnr: string | undefined) => {
 
 export const useEskaleringsvarselHistorikk = (fnr: string | undefined) => {
     const url = veilarbDialogGraphqlEndpoint;
-    const { data, isLoading, error } = useSWR(
+    const { data, isLoading, error } = useSWR<StansVarselHistorikkResponse>(
         fnr ? `${url}/${fnr}` : undefined,
         () =>
             fetchWithPost(
@@ -92,7 +92,7 @@ export const useEskaleringsvarselHistorikk = (fnr: string | undefined) => {
         swrOptions
     );
     return {
-        eskaleringsvarselHistorikkData: data,
+        eskaleringsvarselHistorikkData: data?.data?.stansVarselHistorikk,
         eskaleringsvarselHistorikkLoading: isLoading,
         eskaleringsvarselHistorikkError: error
     };
