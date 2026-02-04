@@ -80,6 +80,24 @@ export const useGjeldendeEskaleringsvarsel = (fnr: string | undefined) => {
     return { gjeldendeEskaleringsvarsel: data, error, isLoading, mutate: mutate };
 };
 
+export const useEskaleringsvarselHistorikk = (fnr: string | undefined) => {
+    const url = veilarbDialogGraphqlEndpoint;
+    const { data, isLoading, error } = useSWR(
+        fnr ? `${url}/${fnr}` : undefined,
+        () =>
+            fetchWithPost(
+                veilarbDialogGraphqlEndpoint,
+                veilarbdialogGraphqlQuery(fnr as string, stansVarselHistorikkQuery)
+            ),
+        swrOptions
+    );
+    return {
+        eskaleringsvarselHistorikkData: data,
+        eskaleringsvarselHistorikkLoading: isLoading,
+        eskaleringsvarselHistorikkError: error
+    };
+};
+
 export function hentEskaleringsvarselHistorikk(fnr: string): AxiosPromise<EskaleringsvarselHistorikkInnslag[]> {
     return axiosInstance
         .post(veilarbDialogGraphqlEndpoint, veilarbdialogGraphqlQuery(fnr, stansVarselHistorikkQuery))
