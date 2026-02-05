@@ -1,11 +1,8 @@
-import { useEffect } from 'react';
 import { BodyShort, Detail, Skeleton } from '@navikt/ds-react';
 import { opprettetAvTekst } from './opprettet-av';
-import { isAnyLoading } from '../../../../api/utils';
 import { toSimpleDateStr } from '../../../../util/date-utils';
 import { InnstillingHistorikkInnslag } from '../../../../api/veilarboppfolging';
-import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
-import { fetchEnhetNavn } from '../../../../api/veilarbveileder';
+import { useEnhetsNavn } from '../../../../api/veilarbveileder';
 
 interface Props {
     historikkElement: InnstillingHistorikkInnslag;
@@ -14,19 +11,9 @@ interface Props {
 
 export function OppfolgingEnhetEndret({ historikkElement, erGjeldendeEnhet }: Props) {
     const { enhet, dato, opprettetAv, opprettetAvBrukerId } = historikkElement;
-    const enhetNavnFetcher = useAxiosFetcher(fetchEnhetNavn);
-    // Make the linter happy by using this const instead of just enhetNavnFetcher.fetch
-    const doFetchEnhetNavn = enhetNavnFetcher.fetch;
+    const { enhetsNavnData, enhetsNavnLoding } = useEnhetsNavn(enhet || undefined);
 
-    const enhetNavn = enhetNavnFetcher.data?.navn;
-
-    useEffect(() => {
-        if (enhet) {
-            doFetchEnhetNavn(enhet);
-        }
-    }, [enhet, doFetchEnhetNavn]);
-
-    if (isAnyLoading(enhetNavnFetcher)) {
+    if (enhetsNavnLoding) {
         return (
             <div className="historikk__elem" key={dato}>
                 <BodyShort size="small" weight="semibold">
@@ -39,8 +26,8 @@ export function OppfolgingEnhetEndret({ historikkElement, erGjeldendeEnhet }: Pr
     }
 
     const begrunnelseTekst = erGjeldendeEnhet
-        ? `Oppfølgingsenhet ${enhet} ${enhetNavn || '<ukjent navn>'}`
-        : `Ny oppfølgingsenhet ${enhet} ${enhetNavn || '<ukjent navn>'}`;
+        ? `Oppfølgingsenhet ${enhet} ${enhetsNavnData?.navn || '<ukjent navn>'}`
+        : `Ny oppfølgingsenhet ${enhet} ${enhetsNavnData?.navn || '<ukjent navn>'}`;
 
     return (
         <div className="historikk__elem" key={dato}>
