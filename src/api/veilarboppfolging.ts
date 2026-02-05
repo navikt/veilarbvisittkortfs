@@ -192,15 +192,9 @@ const graphqlQuery = `
                 registrertIKrr
             }
             erKontorsperret
-<<<<<<< HEAD
             veilederTilordning {
                 veilederIdent
             }
-=======
-        }
-        veilederTilordning(fnr: $fnr) {
-            veilederIdent
->>>>>>> 39350f89 (Bruk graphql endepunkt fra veilarboppfolging)
         }
         oppfolging(fnr: $fnr) {
             erUnderOppfolging
@@ -240,13 +234,8 @@ interface OppfolgingsDataGraphqlResponse {
             registrertIKrr: boolean;
         };
         erKontorsperret: boolean; // Tidligere kalt 'underKvp'
-<<<<<<< HEAD
         veilederTilordning: VeilederTilordning | undefined;
     };
-=======
-    };
-    veilederTilordning: VeilederTilordning | undefined;
->>>>>>> 39350f89 (Bruk graphql endepunkt fra veilarboppfolging)
     oppfolging: {
         erUnderOppfolging: boolean | undefined;
     };
@@ -271,11 +260,7 @@ const mapTilBackoverkompatibelState = (
               manuell: data.data.brukerStatus.manuell.erManuell || false,
               underKvp: data.data.brukerStatus.erKontorsperret,
               underOppfolging: data.data.oppfolging.erUnderOppfolging || false,
-<<<<<<< HEAD
               veilederId: data.data.brukerStatus.veilederTilordning?.veilederIdent,
-=======
-              veilederId: data.data.veilederTilordning?.veilederIdent,
->>>>>>> 39350f89 (Bruk graphql endepunkt fra veilarboppfolging)
               oppfolgingsenhet: oppfolgingsEnhet(data.data.oppfolgingsEnhet.enhet),
               formidlingsgruppe: data.data.brukerStatus.arena?.formidlingsgruppe,
               servicegruppe: data.data.brukerStatus.arena?.kvalifiseringsgruppe
@@ -288,11 +273,7 @@ export interface VeilarbOppfolgingGraphqlRequest {
     variables: { fnr: string };
 }
 
-<<<<<<< HEAD
 const graphqlUrl = '/veilarboppfolging/api/graphql';
-=======
-const graphqlUrl = '/veilarboppfolging/graphql';
->>>>>>> 39350f89 (Bruk graphql endepunkt fra veilarboppfolging)
 export const useVeilarboppfolgingData = (fnr: string | undefined) => {
     const { data, error, isLoading, mutate } = useSWR<(Oppfolging & OppfolgingStatus) | undefined, ErrorMessage>(
         fnr ? `${graphqlUrl}/${fnr}` : null,
