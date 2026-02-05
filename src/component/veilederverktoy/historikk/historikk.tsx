@@ -1,14 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import HistorikkVisning from './historikk-visning';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { Alert } from '@navikt/ds-react';
 import { useBrukerFnr } from '../../../store/app-store';
 import './historikk.less';
 import { OppgaveHistorikkInnslag, useOppgaveHistorikk } from '../../../api/veilarboppgave';
-import { useAxiosFetcher } from '../../../util/hook/use-axios-fetcher';
 import { InnstillingHistorikkInnslag, useInnstillingsHistorikk } from '../../../api/veilarboppfolging';
 import { EskaleringsvarselHistorikkInnslag, useEskaleringsvarselHistorikk } from '../../../api/veilarbdialog';
-import { fetchVeilederDataListe } from '../../../api/veilarbveileder';
+import { useVeilederDataListe } from '../../../api/veilarbveileder';
 import { isNonEmptyArray, isString } from '../../../util/type/type-guards';
 import { StringOrNothing } from '../../../util/type/utility-types';
 import { filterUnique } from '../../../util/utils';
@@ -70,11 +69,8 @@ function Historikk() {
     const { eskaleringsvarselHistorikkData, eskaleringsvarselHistorikkError, eskaleringsvarselHistorikkLoading } =
         useEskaleringsvarselHistorikk(brukerFnr);
 
-    const {
-        fetch: hentVeilederDataListe,
-        data: veilederDataListeData,
-        loading: veilederDataListeLoading
-    } = useAxiosFetcher(fetchVeilederDataListe);
+    const [veilederIdenter, setVeilederIdenter] = useState<string[] | null>(null);
+    const { veilederListeData, veilederListeLoading } = useVeilederDataListe(veilederIdenter);
 
     useEffect(() => {
         const skalHenteVeilederDataListe =
@@ -113,16 +109,17 @@ function Historikk() {
             ]);
 
             if (isNonEmptyArray(veilederIdentListe)) {
-                hentVeilederDataListe({ identer: veilederIdentListe });
+                // eslint-disable-next-line react-hooks/set-state-in-effect
+                setVeilederIdenter(veilederIdentListe);
             }
         }
-    }, [innstillingsHistorikkData, oppgaveHistorikkData, eskaleringsvarselHistorikkData, hentVeilederDataListe]);
+    }, [innstillingsHistorikkData, oppgaveHistorikkData, eskaleringsvarselHistorikkData]);
 
     const isLoading =
         innstillingsHistorikkLoading ||
         oppgaveHistorikkLoaing ||
         eskaleringsvarselHistorikkLoading ||
-        veilederDataListeLoading;
+        veilederListeLoading;
 
     if (innstillingsHistorikkError || oppgaveHistorikkError || eskaleringsvarselHistorikkError) {
         return <Alert variant="error">Noe gikk galt</Alert>;
@@ -132,8 +129,8 @@ function Historikk() {
         innstillingsHistorikkData?.map(ih => {
             return {
                 ...ih,
-                opprettetAvBrukerNavn: veilederDataListeData?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn,
-                tildeltVeilederNavn: veilederDataListeData?.find(vd => ih.tildeltVeilederId === vd.ident)?.navn
+                opprettetAvBrukerNavn: veilederListeData?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn,
+                tildeltVeilederNavn: veilederListeData?.find(vd => ih.tildeltVeilederId === vd.ident)?.navn
             };
         }) || [];
 
@@ -141,7 +138,7 @@ function Historikk() {
         oppgaveHistorikkData?.map(ih => {
             return {
                 ...ih,
-                opprettetAvBrukerNavn: veilederDataListeData?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn
+                opprettetAvBrukerNavn: veilederListeData?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn
             };
         }) || [];
 
@@ -149,8 +146,8 @@ function Historikk() {
         eskaleringsvarselHistorikkTilEvent(eskaleringsvarselHistorikkData)?.map(evhi => {
             return {
                 ...evhi,
-                opprettetAvBrukerNavn: veilederDataListeData?.find(vd => evhi.opprettetAv === vd.ident)?.navn,
-                avsluttetAvBrukerNavn: veilederDataListeData?.find(vd => evhi.avsluttetAv === vd.ident)?.navn
+                opprettetAvBrukerNavn: veilederListeData?.find(vd => evhi.opprettetAv === vd.ident)?.navn,
+                avsluttetAvBrukerNavn: veilederListeData?.find(vd => evhi.avsluttetAv === vd.ident)?.navn
             };
         }) || [];
 

@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { APP_NAME, isDefined } from '../util/utils';
 import { TildelVeilederData } from './veilarboppfolging';
 import { StansVarselQueryRequest } from './veilarbdialogGraphql';
+import { VeilederDataListeRequest } from './veilarbveileder';
 
 export const axiosInstance = axios.create({
     withCredentials: true,
@@ -45,7 +46,12 @@ export interface ErrorMessage {
     status: number;
 }
 
-export type RequestTypes = FnrOgEnhetId | Fnr | TildelVeilederData[] | StansVarselQueryRequest;
+export type RequestTypes =
+    | FnrOgEnhetId
+    | Fnr
+    | TildelVeilederData[]
+    | StansVarselQueryRequest
+    | VeilederDataListeRequest;
 
 export const createPOSToptions = (event: RequestTypes) => ({
     withCredentials: true,
