@@ -53,7 +53,7 @@ export const useVeilederePaEnhet = (enhetId: string | undefined) => {
 export const useEnhetsNavn = (enhetId: string | undefined) => {
     const url = `/veilarbveileder/api/enhet/${enhetId}/navn`;
     const { isLoading, data } = useSWR(
-        enhetId ? url : enhetId,
+        enhetId,
         () =>
             fetch(url).then(res => {
                 if (res.ok) {
