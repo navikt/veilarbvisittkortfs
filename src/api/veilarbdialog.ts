@@ -58,6 +58,18 @@ export interface EskaleringsvarselHistorikkInnslag {
 
 export const veilarbDialogGraphqlEndpoint = '/veilarbdialog/graphql';
 
+export const useDialoger = (fnr: string | undefined) => {
+    const { data, isLoading } = useSWR<DialogerResponse>(
+        fnr ? `${veilarbDialogGraphqlEndpoint}/dialoger/${fnr}` : null,
+        () => fetchWithPost(veilarbDialogGraphqlEndpoint, veilarbdialogGraphqlQuery(fnr as string, dialogerQuery)),
+        swrOptions
+    );
+    return {
+        dialogerData: data?.data?.dialoger,
+        dialogerLoading: isLoading
+    };
+};
+
 export function fetchDialoger(fnr: string): AxiosPromise<Dialog[]> {
     return axiosInstance
         .post(veilarbDialogGraphqlEndpoint, veilarbdialogGraphqlQuery(fnr, dialogerQuery))
@@ -70,7 +82,7 @@ export function fetchDialoger(fnr: string): AxiosPromise<Dialog[]> {
 export const useGjeldendeEskaleringsvarsel = (fnr: string | undefined) => {
     const url = veilarbDialogGraphqlEndpoint;
     const { data, error, isLoading, mutate } = useSWR<GjeldendeEskaleringsvarsel | undefined>(
-        fnr ? `${url}-${fnr}` : null,
+        fnr ? `${url}/gjeldendeEskalering/${fnr}` : null,
         () =>
             fetchWithPost(url, veilarbdialogGraphqlQuery(fnr as string, stansVarselQuery)).then(
                 (res: StansVarselResponse) => res.data.stansVarsel
@@ -80,14 +92,23 @@ export const useGjeldendeEskaleringsvarsel = (fnr: string | undefined) => {
     return { gjeldendeEskaleringsvarsel: data, error, isLoading, mutate: mutate };
 };
 
-export function hentEskaleringsvarselHistorikk(fnr: string): AxiosPromise<EskaleringsvarselHistorikkInnslag[]> {
-    return axiosInstance
-        .post(veilarbDialogGraphqlEndpoint, veilarbdialogGraphqlQuery(fnr, stansVarselHistorikkQuery))
-        .then((res: AxiosResponse<StansVarselHistorikkResponse>) => ({
-            ...res,
-            data: res.data.data.stansVarselHistorikk
-        }));
-}
+export const useEskaleringsvarselHistorikk = (fnr: string | undefined) => {
+    const url = veilarbDialogGraphqlEndpoint;
+    const { data, isLoading, error } = useSWR<StansVarselHistorikkResponse>(
+        fnr ? `${url}/eskaleringHistorikk/${fnr}` : undefined,
+        () =>
+            fetchWithPost(
+                veilarbDialogGraphqlEndpoint,
+                veilarbdialogGraphqlQuery(fnr as string, stansVarselHistorikkQuery)
+            ),
+        swrOptions
+    );
+    return {
+        eskaleringsvarselHistorikkData: data?.data?.stansVarselHistorikk,
+        eskaleringsvarselHistorikkLoading: isLoading,
+        eskaleringsvarselHistorikkError: error
+    };
+};
 
 export function startEskalering(startEskaleringRequest: StartEskaleringRequest): AxiosPromise {
     return axiosInstance.post('/veilarbdialog/api/eskaleringsvarsel/start', startEskaleringRequest);
