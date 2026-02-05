@@ -51,7 +51,10 @@ function tilIdentListe(
     filter: (hi: HistorikkInnslag) => boolean
 ): string[] {
     if (isNonEmptyArray(historikkInnslag)) {
-        return historikkInnslag.filter(filter).map(identMapper).filter(isString);
+        return historikkInnslag
+            .filter(filter)
+            .map(identMapper)
+            .filter(item => isString(item));
     }
 
     return [];
