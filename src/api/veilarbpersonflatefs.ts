@@ -1,13 +1,12 @@
 import { ErrorMessage, get, swrOptions } from './utils';
 import useSWR from 'swr';
 
-export const VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING =
-    'veilarbvisittkortfs.vis-ny-inngang-til-arbeidsrettet-oppfolging';
+export const EKSEMPELTOGGLE = 'togglenavn-eksempeltoggle';
 
-export const ALL_TOGGLES = [VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING];
+export const ALL_TOGGLES = [EKSEMPELTOGGLE];
 
 export interface OboUnleashFeatures {
-    [VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING]: boolean;
+    [EKSEMPELTOGGLE]: boolean;
 }
 
 export const useFeaturesFromOboUnleash = () => {
