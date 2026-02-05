@@ -4,11 +4,11 @@ import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { Alert } from '@navikt/ds-react';
 import { useBrukerFnr } from '../../../store/app-store';
 import './historikk.less';
-import { useVeilederDataListe } from '../../../api/veilarbveileder';
 import { getVeilederIdents } from './getIdents';
-import { OppgaveHistorikkInnslag, useOppgaveHistorikk } from '../../../api/veilarboppgave';
-import { InnstillingHistorikkInnslag, useInnstillingsHistorikk } from '../../../api/veilarboppfolging';
+import { useOppgaveHistorikk } from '../../../api/veilarboppgave';
+import { useInnstillingsHistorikk } from '../../../api/veilarboppfolging';
 import { EskaleringsvarselHistorikkInnslag, useEskaleringsvarselHistorikk } from '../../../api/veilarbdialog';
+import { useVeilederDataListe } from '../../../api/veilarbveileder';
 import { isNonEmptyArray } from '../../../util/type/type-guards';
 
 function eskaleringsvarselHistorikkTilEvent(
