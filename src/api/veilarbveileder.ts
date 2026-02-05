@@ -50,6 +50,22 @@ export const useVeilederePaEnhet = (enhetId: string | undefined) => {
     return { veilederePaEnhet: data, error, isLoading };
 };
 
+export const useEnhetsNavn = (enhetId: string | undefined) => {
+    const url = `/veilarbveileder/api/enhet/${enhetId}/navn`;
+    const { isLoading, data } = useSWR(
+        enhetId ? url : enhetId,
+        () =>
+            fetch(url).then(res => {
+                if (res.ok) {
+                    return res.json() as Promise<EnhetData>;
+                }
+                throw new Error('Klarte ikke hente enhetsnavn');
+            }),
+        swrOptions
+    );
+    return { enhetsNavnLoding: isLoading, enhetsNavnData: data };
+};
+
 export function fetchEnhetNavn(enhetId: string): AxiosPromise<EnhetData> {
     return axiosInstance.get<EnhetData>(`/veilarbveileder/api/enhet/${enhetId}/navn`);
 }
