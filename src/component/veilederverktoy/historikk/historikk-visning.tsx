@@ -142,7 +142,7 @@ function HistorikkVisning({
 const HistorikkLoadingElement = () => {
     return (
         <div className="historikk__elem">
-            <BodyShort size="small" weight="semibold">
+            <BodyShort as={'div'} size="small" weight="semibold">
                 <Skeleton variant="text" width="100%" />
             </BodyShort>
             <Skeleton variant="text" width="40%" />

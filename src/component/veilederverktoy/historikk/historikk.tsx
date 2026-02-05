@@ -4,15 +4,12 @@ import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { Alert } from '@navikt/ds-react';
 import { useBrukerFnr } from '../../../store/app-store';
 import './historikk.less';
-import { OppgaveHistorikkInnslag, useOppgaveHistorikk } from '../../../api/veilarboppgave';
-import { InnstillingHistorikkInnslag, useInnstillingsHistorikk } from '../../../api/veilarboppfolging';
+import { useOppgaveHistorikk } from '../../../api/veilarboppgave';
+import { useInnstillingsHistorikk } from '../../../api/veilarboppfolging';
 import { EskaleringsvarselHistorikkInnslag, useEskaleringsvarselHistorikk } from '../../../api/veilarbdialog';
 import { useVeilederDataListe } from '../../../api/veilarbveileder';
-import { isNonEmptyArray, isString } from '../../../util/type/type-guards';
-import { StringOrNothing } from '../../../util/type/utility-types';
-import { filterUnique } from '../../../util/utils';
-
-type HistorikkInnslag = InnstillingHistorikkInnslag | OppgaveHistorikkInnslag | EskaleringsvarselHistorikkInnslag;
+import { isNonEmptyArray } from '../../../util/type/type-guards';
+import { getVeilederIdents } from './getIdents';
 
 function eskaleringsvarselHistorikkTilEvent(
     historikk: EskaleringsvarselHistorikkInnslag[] | undefined
@@ -48,18 +45,6 @@ function eskaleringsvarselHistorikkTilEvent(
     return eventHistorikk;
 }
 
-function tilIdentListe(
-    historikkInnslag: HistorikkInnslag[] | undefined,
-    identMapper: (hi: HistorikkInnslag) => StringOrNothing,
-    filter: (hi: HistorikkInnslag) => boolean
-): string[] {
-    if (isNonEmptyArray(historikkInnslag)) {
-        return historikkInnslag.filter(filter).map(identMapper).filter(isString);
-    }
-
-    return [];
-}
-
 function Historikk() {
     const brukerFnr = useBrukerFnr();
 
@@ -80,33 +65,11 @@ function Historikk() {
             eskaleringsvarselHistorikkData;
 
         if (skalHenteVeilederDataListe) {
-            const veilederIdentListe = filterUnique([
-                ...tilIdentListe(
-                    innstillingsHistorikkData,
-                    (ihi: InnstillingHistorikkInnslag) => ihi.opprettetAvBrukerId,
-                    (ihi: InnstillingHistorikkInnslag) => ihi.opprettetAv === 'NAV'
-                ),
-                ...tilIdentListe(
-                    innstillingsHistorikkData,
-                    (ihi: InnstillingHistorikkInnslag) => ihi.tildeltVeilederId,
-                    (ihi: InnstillingHistorikkInnslag) => ihi.opprettetAv === 'NAV'
-                ),
-                ...tilIdentListe(
-                    oppgaveHistorikkData,
-                    (ohi: OppgaveHistorikkInnslag) => ohi.opprettetAvBrukerId,
-                    (ohi: OppgaveHistorikkInnslag) => ohi.opprettetAv === 'NAV'
-                ),
-                ...tilIdentListe(
-                    eskaleringsvarselHistorikkData,
-                    (evhi: EskaleringsvarselHistorikkInnslag) => evhi.opprettetAv,
-                    (evhi: EskaleringsvarselHistorikkInnslag) => /^[A-Z]\d{6}$/.test(evhi.opprettetAv)
-                ),
-                ...tilIdentListe(
-                    eskaleringsvarselHistorikkData,
-                    (evhi: EskaleringsvarselHistorikkInnslag) => evhi.avsluttetAv,
-                    (evhi: EskaleringsvarselHistorikkInnslag) => /^[A-Z]\d{6}$/.test(evhi.avsluttetAv ?? '')
-                )
-            ]);
+            const veilederIdentListe = getVeilederIdents({
+                innstillingsHistorikkData,
+                oppgaveHistorikkData,
+                eskaleringsvarselHistorikkData
+            });
 
             if (isNonEmptyArray(veilederIdentListe)) {
                 // eslint-disable-next-line react-hooks/set-state-in-effect
