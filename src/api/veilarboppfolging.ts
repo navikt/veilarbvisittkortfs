@@ -249,23 +249,22 @@ const mapTilBackoverkompatibelState = (
             `Feilet å hente oppfolgingsdata (graphql) fra veilarboppfolging: ${data.errors.map(it => it.message).join(',')}`
         );
     }
-    return data?.data
-        ? {
-              inaktiveringsdato: data.data.brukerStatus.arena?.inaktiveringsdato,
-              inaktivIArena: data.data.brukerStatus.arena?.inaktivIArena,
-              kanReaktiveres: data.data.brukerStatus.arena?.kanReaktiveres,
-              kanVarsles: data.data.brukerStatus.krr.kanVarsles,
-              registrertKRR: data.data.brukerStatus.krr.registrertIKrr,
-              reservasjonKRR: data.data.brukerStatus.krr.reservertIKrr,
-              manuell: data.data.brukerStatus.manuell.erManuell || false,
-              underKvp: data.data.brukerStatus.erKontorsperret,
-              underOppfolging: data.data.oppfolging.erUnderOppfolging || false,
-              veilederId: data.data.brukerStatus.veilederTilordning?.veilederIdent,
-              oppfolgingsenhet: oppfolgingsEnhet(data.data.oppfolgingsEnhet.enhet),
-              formidlingsgruppe: data.data.brukerStatus.arena?.formidlingsgruppe,
-              servicegruppe: data.data.brukerStatus.arena?.kvalifiseringsgruppe
-          }
-        : undefined;
+    if (!data.data) throw new Error(`Forventet "data" i graphql response med fikk ingenting`);
+    return {
+        inaktiveringsdato: data.data.brukerStatus.arena?.inaktiveringsdato,
+        inaktivIArena: data.data.brukerStatus.arena?.inaktivIArena,
+        kanReaktiveres: data.data.brukerStatus.arena?.kanReaktiveres,
+        kanVarsles: data.data.brukerStatus.krr.kanVarsles,
+        registrertKRR: data.data.brukerStatus.krr.registrertIKrr,
+        reservasjonKRR: data.data.brukerStatus.krr.reservertIKrr,
+        manuell: data.data.brukerStatus.manuell.erManuell || false,
+        underKvp: data.data.brukerStatus.erKontorsperret,
+        underOppfolging: data.data.oppfolging.erUnderOppfolging || false,
+        veilederId: data.data.brukerStatus.veilederTilordning?.veilederIdent,
+        oppfolgingsenhet: oppfolgingsEnhet(data.data.oppfolgingsEnhet.enhet),
+        formidlingsgruppe: data.data.brukerStatus.arena?.formidlingsgruppe,
+        servicegruppe: data.data.brukerStatus.arena?.kvalifiseringsgruppe
+    };
 };
 
 export interface VeilarbOppfolgingGraphqlRequest {
