@@ -221,15 +221,15 @@ interface ArenaStatus {
     kvalifiseringsgruppe: Kvalifiseringsgruppe | undefined;
 }
 
+interface Enhet {
+    id: string;
+    navn: string;
+}
+
 interface OppfolgingsDataGraphqlResponse {
     oppfolgingsEnhet:
         | {
-              enhet:
-                  | {
-                        id: string;
-                        navn: string;
-                    }
-                  | undefined;
+              enhet: Enhet | undefined;
           }
         | undefined;
     brukerStatus: {
@@ -302,9 +302,7 @@ export const useVeilarboppfolgingData = (fnr: string | undefined) => {
 };
 
 /* Burde vært modelert annerledes men vil ikke brekke noe */
-const oppfolgingsEnhet = (
-    enhet: GraphqlResponse<OppfolgingsDataGraphqlResponse>['data']['oppfolgingsEnhet']['enhet'] | undefined
-): OppfolgingEnhet => ({ enhetId: enhet?.id, navn: enhet?.navn });
+const oppfolgingsEnhet = (enhet: Enhet | undefined): OppfolgingEnhet => ({ enhetId: enhet?.id, navn: enhet?.navn });
 
 export const useOppfolging = useVeilarboppfolgingData;
 export const useOppfolgingsstatus = useVeilarboppfolgingData;
