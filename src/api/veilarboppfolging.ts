@@ -176,6 +176,12 @@ export const useTildelTilVeileder = () => {
 
 const graphqlQuery = `
     query hentOppfolgingsData($fnr: String!) {
+        oppfolgingsEnhet(fnr: $fnr) {
+            enhet {
+                id
+                navn
+            }
+        }
         brukerStatus(fnr: $fnr) {
             arena {
                 inaktivIArena
