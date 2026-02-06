@@ -1,4 +1,4 @@
-import { AxiosPromise, AxiosResponse } from 'axios';
+import { AxiosPromise } from 'axios';
 import { axiosInstance, fetchWithPost, swrOptions } from './utils';
 import { StringOrNothing } from '../util/type/utility-types';
 import {
@@ -69,15 +69,6 @@ export const useDialoger = (fnr: string | undefined) => {
         dialogerLoading: isLoading
     };
 };
-
-export function fetchDialoger(fnr: string): AxiosPromise<Dialog[]> {
-    return axiosInstance
-        .post(veilarbDialogGraphqlEndpoint, veilarbdialogGraphqlQuery(fnr, dialogerQuery))
-        .then((res: AxiosResponse<DialogerResponse>) => ({
-            ...res,
-            data: res.data.data.dialoger
-        }));
-}
 
 export const useGjeldendeEskaleringsvarsel = (fnr: string | undefined) => {
     const url = veilarbDialogGraphqlEndpoint;

@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { APP_NAME, isDefined } from '../util/utils';
-import { TildelVeilederData } from './veilarboppfolging';
+import { TildelVeilederData, VeilarbOppfolgingGraphqlRequest } from './veilarboppfolging';
 import { StansVarselQueryRequest } from './veilarbdialogGraphql';
 import { VeilederDataListeRequest } from './veilarbveileder';
 
@@ -51,6 +51,7 @@ export type RequestTypes =
     | Fnr
     | TildelVeilederData[]
     | StansVarselQueryRequest
+    | VeilarbOppfolgingGraphqlRequest
     | VeilederDataListeRequest;
 
 export const createPOSToptions = (event: RequestTypes) => ({

@@ -5,13 +5,7 @@ import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { useBrukerFnr } from '../../../store/app-store';
 import { lagVeilederSammensattNavn } from '../../../util/selectors';
 import { useModalStore } from '../../../store/modal-store';
-import {
-    Oppfolging,
-    OppfolgingStatus,
-    useOppfolging,
-    useOppfolgingsstatus,
-    useTildelTilVeileder
-} from '../../../api/veilarboppfolging';
+import { useOppfolging, useTildelTilVeileder } from '../../../api/veilarboppfolging';
 import { useInnloggetVeileder, useVeilederePaEnhet, VeilederData } from '../../../api/veilarbveileder';
 import './tildel-veileder.less';
 import { BodyShort, Button, Heading, Modal } from '@navikt/ds-react';
@@ -25,10 +19,9 @@ function TildelVeileder() {
     const { data: fargekategori } = useFargekategori(brukerFnr, visVeilederVerktoy);
     const { showTildelVeilederKvitteringModal, showTildelVeilederFeiletModal, hideModal } = useModalStore();
     const [visAdvarselOmSletting, setVisAdvarselOmSletting] = useState<boolean>(false);
-    const { data: oppfolgingstatus, mutate: mutateOppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { innloggetVeileder } = useInnloggetVeileder();
     const { oppfolging, mutate: mutateOppfolging } = useOppfolging(brukerFnr);
-    const { veilederePaEnhet } = useVeilederePaEnhet(oppfolgingstatus?.oppfolgingsenhet?.enhetId || undefined);
+    const { veilederePaEnhet } = useVeilederePaEnhet(oppfolging?.oppfolgingsenhet?.enhetId || undefined);
     const [selectedVeilederId, setSelectedVeilederId] = useState('');
     const fraVeileder = oppfolging?.veilederId;
 
@@ -59,14 +52,10 @@ function TildelVeileder() {
                 }
 
                 // Oppdater med ny veileder
-                mutateOppfolging((currentState: Oppfolging) => ({ ...currentState, veilederId: selectedVeilederId }));
-                mutateOppfolgingsstatus(
-                    (prevOppfolgingStatus: OppfolgingStatus | undefined) =>
-                        ({
-                            ...(prevOppfolgingStatus || {}),
-                            veilederId: selectedVeilederId
-                        }) as OppfolgingStatus
-                );
+                mutateOppfolging(currentState => ({
+                    ...currentState!,
+                    veilederId: selectedVeilederId
+                }));
 
                 const veilederNavn =
                     sorterteVeiledere
@@ -84,10 +73,9 @@ function TildelVeileder() {
             .querySelectorAll('input[type=radio]:checked')
             .forEach(elem => ((elem as HTMLInputElement).checked = false));
 
-        const harHuskelappSomVilBliSlettet =
-            huskelapp && huskelapp?.enhetId !== oppfolgingstatus?.oppfolgingsenhet?.enhetId;
+        const harHuskelappSomVilBliSlettet = huskelapp && huskelapp?.enhetId !== oppfolging?.oppfolgingsenhet?.enhetId;
         const harFargekategoriSomVilBliSlettet =
-            fargekategori && fargekategori?.enhetId !== oppfolgingstatus?.oppfolgingsenhet?.enhetId;
+            fargekategori && fargekategori?.enhetId !== oppfolging?.oppfolgingsenhet?.enhetId;
 
         const brukerHarHuskelappEllerFargekategoriSomVilBliSlettet =
             harHuskelappSomVilBliSlettet || harFargekategoriSomVilBliSlettet;
