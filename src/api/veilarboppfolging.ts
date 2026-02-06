@@ -290,6 +290,10 @@ export const useVeilarboppfolgingData = (fnr: string | undefined) => {
             }).then(res => mapTilBackoverkompatibelState(res)),
         swrOptions
     );
+    if (error) {
+        // eslint-disable-next-line no-console
+        console.log('useVeilarboppfolgingData - error', error);
+    }
     return { oppfolging: data, isLoading, error, mutate };
 };
 
