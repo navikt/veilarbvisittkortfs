@@ -1,5 +1,5 @@
 import { AxiosPromise } from 'axios';
-import { axiosInstance, ErrorMessage, get, swrOptions } from './utils';
+import { axiosInstance, ErrorMessage, fetchWithPost, get, swrOptions } from './utils';
 import useSWR from 'swr';
 
 export interface VeilederData {
@@ -26,11 +26,19 @@ export const useInnloggetVeileder = () => {
     return { innloggetVeileder: data, error, isLoading };
 };
 
-export function fetchVeilederDataListe(
-    veilederDataListeRequest: VeilederDataListeRequest
-): AxiosPromise<VeilederData[]> {
-    return axiosInstance.post<VeilederData[]>('/veilarbveileder/api/veileder/list', veilederDataListeRequest);
-}
+export const useVeilederDataListe = (identer: string[] | null) => {
+    const url = '/veilarbveileder/api/veileder/list';
+    const { data, error, isLoading } = useSWR<VeilederData[]>(
+        identer ? [...identer] : null,
+        () => fetchWithPost(url, { identer } as VeilederDataListeRequest),
+        swrOptions
+    );
+    return {
+        veilederListeData: data,
+        veilederListeLoading: isLoading,
+        veilederListeError: error
+    };
+};
 
 export const useVeilederePaEnhet = (enhetId: string | undefined) => {
     const url = `/veilarbveileder/api/enhet/${enhetId}/veiledere`;
@@ -40,6 +48,22 @@ export const useVeilederePaEnhet = (enhetId: string | undefined) => {
         swrOptions
     );
     return { veilederePaEnhet: data, error, isLoading };
+};
+
+export const useEnhetsNavn = (enhetId: string | undefined) => {
+    const url = `/veilarbveileder/api/enhet/${enhetId}/navn`;
+    const { isLoading, data } = useSWR(
+        enhetId,
+        () =>
+            fetch(url).then(res => {
+                if (res.ok) {
+                    return res.json() as Promise<EnhetData>;
+                }
+                throw new Error('Klarte ikke hente enhetsnavn');
+            }),
+        swrOptions
+    );
+    return { enhetsNavnLoding: isLoading, enhetsNavnData: data };
 };
 
 export function fetchEnhetNavn(enhetId: string): AxiosPromise<EnhetData> {

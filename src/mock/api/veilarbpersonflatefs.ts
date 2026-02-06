@@ -1,9 +1,9 @@
-import { OboUnleashFeatures, VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING } from '../../api/veilarbpersonflatefs';
+import { OboUnleashFeatures, EKSEMPELTOGGLE } from '../../api/veilarbpersonflatefs';
 import { defaultNetworkResponseDelay } from '../config';
 import { delay, http, HttpResponse, RequestHandler } from 'msw';
 
 const mockFeatures: OboUnleashFeatures = {
-    [VIS_NY_INNGANG_TIL_ARBEIDSRETTET_OPPFOLGING]: true
+    [EKSEMPELTOGGLE]: true
 };
 
 export const veilarbpersonflatefsHandlers: RequestHandler[] = [

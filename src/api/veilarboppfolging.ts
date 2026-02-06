@@ -110,15 +110,32 @@ export const useOppfolging = (fnr: string | undefined) => {
     return { oppfolging: data, isLoading, error, mutate };
 };
 
-export function fetchInstillingsHistorikk(fnr: string): AxiosPromise<InnstillingHistorikkInnslag[]> {
-    return axiosInstance.post<InnstillingHistorikkInnslag[]>(`/veilarboppfolging/api/v3/hent-instillingshistorikk`, {
-        fnr: fnr
-    });
-}
+export const useInnstillingsHistorikk = (fnr: string | undefined) => {
+    const url = '/veilarboppfolging/api/v3/hent-instillingshistorikk';
+    const { data, isLoading, error } = useSWR<InnstillingHistorikkInnslag[], ErrorMessage>(
+        fnr ? `${url}/${fnr}` : null,
+        () => fetchWithPost(url, { fnr: fnr as string }),
+        swrOptions
+    );
+    return {
+        innstillingsHistorikkData: data,
+        innstillingsHistorikkLoading: isLoading,
+        innstillingsHistorikkError: error
+    };
+};
 
-export function fetchAvsluttOppfolgingStatus(fnr: string): AxiosPromise<AvslutningStatus> {
-    return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/hent-avslutning-status`, { fnr: fnr });
-}
+export const useAvsluttOppfolgingStatus = (fnr: string | undefined) => {
+    const url = `/veilarboppfolging/api/v3/oppfolging/hent-avslutning-status`;
+    const { data, isLoading } = useSWR<AvslutningStatus>(
+        fnr ? `${url}/${fnr}` : null,
+        () => fetchWithPost(url, { fnr: fnr as string }),
+        swrOptions
+    );
+    return {
+        avsluttOppfolgingStatus: data,
+        avsluttOppfolgingStatusLoading: isLoading
+    };
+};
 
 export function settBrukerTilDigital(fnr: string, veilederId: string, begrunnelse: string): AxiosPromise {
     return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/settDigital`, {
