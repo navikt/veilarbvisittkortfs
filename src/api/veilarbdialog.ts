@@ -1,4 +1,4 @@
-import { AxiosPromise, AxiosResponse } from 'axios';
+import { AxiosPromise } from 'axios';
 import { axiosInstance, fetchWithPost, swrOptions } from './utils';
 import { StringOrNothing } from '../util/type/utility-types';
 import {

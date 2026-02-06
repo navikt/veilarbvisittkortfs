@@ -68,8 +68,6 @@ function Etiketter({ brukerFnr }: { brukerFnr: string }) {
     const { personalia } = usePersonalia(brukerFnr);
     const { gjeldendeEskaleringsvarsel } = useGjeldendeEskaleringsvarsel(brukerFnr);
     const { oppfolging } = useOppfolging(brukerFnr);
-    // eslint-disable-next-line no-console
-    console.log('Etiketter - Oppfolging', oppfolging);
     const { verge } = useVerge(brukerFnr);
     const { fullmakt } = useFullmakt(brukerFnr);
     const { spraakTolk } = useSpraakTolk(brukerFnr);

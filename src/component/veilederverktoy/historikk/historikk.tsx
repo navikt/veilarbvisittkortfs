@@ -76,7 +76,14 @@ function Historikk() {
                 setVeilederIdenter(veilederIdentListe);
             }
         }
-    }, [innstillingsHistorikkData, oppgaveHistorikkData, eskaleringsvarselHistorikkData]);
+    }, [
+        innstillingsHistorikkData,
+        oppgaveHistorikkData,
+        eskaleringsvarselHistorikkData,
+        innstillingsHistorikkLoading,
+        oppgaveHistorikkLoaing,
+        eskaleringsvarselHistorikkLoading
+    ]);
 
     const isLoading =
         innstillingsHistorikkLoading ||

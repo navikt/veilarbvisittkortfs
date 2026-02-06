@@ -221,14 +221,16 @@ interface ArenaStatus {
 }
 
 interface OppfolgingsDataGraphqlResponse {
-    oppfolgingsEnhet: {
-        enhet:
-            | {
-                  id: string;
-                  navn: string;
-              }
-            | undefined;
-    };
+    oppfolgingsEnhet:
+        | {
+              enhet:
+                  | {
+                        id: string;
+                        navn: string;
+                    }
+                  | undefined;
+          }
+        | undefined;
     brukerStatus: {
         arena: ArenaStatus | undefined;
         manuell:
@@ -269,7 +271,7 @@ const mapTilBackoverkompatibelState = (
         underKvp: data.data.brukerStatus.erKontorsperret,
         underOppfolging: data.data.oppfolging.erUnderOppfolging || false,
         veilederId: data.data.brukerStatus.veilederTilordning?.veilederIdent,
-        oppfolgingsenhet: oppfolgingsEnhet(data.data.oppfolgingsEnhet.enhet),
+        oppfolgingsenhet: oppfolgingsEnhet(data.data.oppfolgingsEnhet?.enhet),
         formidlingsgruppe: data.data.brukerStatus.arena?.formidlingsgruppe,
         servicegruppe: data.data.brukerStatus.arena?.kvalifiseringsgruppe
     };
