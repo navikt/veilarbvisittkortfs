@@ -231,9 +231,11 @@ interface OppfolgingsDataGraphqlResponse {
     };
     brukerStatus: {
         arena: ArenaStatus | undefined;
-        manuell: {
-            erManuell: boolean | undefined;
-        };
+        manuell:
+            | {
+                  erManuell: boolean | undefined;
+              }
+            | undefined;
         krr: {
             kanVarsles: boolean;
             reservertIKrr: boolean;
@@ -263,7 +265,7 @@ const mapTilBackoverkompatibelState = (
         kanVarsles: data.data.brukerStatus.krr.kanVarsles,
         registrertKRR: data.data.brukerStatus.krr.registrertIKrr,
         reservasjonKRR: data.data.brukerStatus.krr.reservertIKrr,
-        manuell: data.data.brukerStatus.manuell.erManuell || false,
+        manuell: data.data.brukerStatus.manuell?.erManuell || false,
         underKvp: data.data.brukerStatus.erKontorsperret,
         underOppfolging: data.data.oppfolging.erUnderOppfolging || false,
         veilederId: data.data.brukerStatus.veilederTilordning?.veilederIdent,
