@@ -51,7 +51,6 @@ export type RequestTypes =
     | Fnr
     | TildelVeilederData[]
     | StansVarselQueryRequest
-    | VeilederDataListeRequest
     | VeilarbOppfolgingGraphqlRequest
     | VeilederDataListeRequest;
 
