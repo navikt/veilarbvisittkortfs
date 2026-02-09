@@ -43,22 +43,28 @@ export const KontorHistorikk = ({ kontorHistorikk }: Props) => {
                     {kontorHistorikk.map(historikkEntry => {
                         return (
                             <div
-                                className="first:rounded-t-lg last:rounded-b-lg grid p-2 odd:bg-gray-50 grid-flow-col grid-cols-12"
+                                className="first:rounded-t-lg last:rounded-b-lg p-2 odd:bg-gray-50 "
                                 key={historikkEntry.endretTidspunkt}
                             >
-                                <span className="col-span-5 space-x-2 flex flex-col">
-                                    <span className="">
-                                        <span className="font-bold">{historikkEntry.kontorId}</span> -{' '}
-                                        {historikkEntry.kontorNavn}
+                                <div className="flex flex-row grid grid-flow-col grid-cols-12">
+                                    <span className="col-span-5 space-x-2 flex flex-col">
+                                        <span className="">
+                                            <span className="font-bold">{historikkEntry.kontorId}</span> -{' '}
+                                            {historikkEntry.kontorNavn}
+                                        </span>
                                     </span>
+                                    <span className="col-span-4">{kontorTypeNavn[historikkEntry.kontorType]}</span>
+
+                                    <span className="col-span-3">
+                                        {dayjs(historikkEntry.endretTidspunkt).fromNow()}
+                                    </span>
+                                </div>
+                                <div>
                                     <EndretAv
                                         isLoading={veilederListeLoading}
                                         navn={getNavn(historikkEntry, veilederIdentTilNavnMapping)}
                                     />
-                                </span>
-                                <span className="col-span-4">{kontorTypeNavn[historikkEntry.kontorType]}</span>
-
-                                <span className="col-span-3">{dayjs(historikkEntry.endretTidspunkt).fromNow()}</span>
+                                </div>
                             </div>
                         );
                     })}
