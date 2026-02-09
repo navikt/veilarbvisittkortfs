@@ -32,10 +32,10 @@
         ]
     },
     "dependencies": {
-        "@navikt/aksel-icons": "7.31.0",
-        "@navikt/ds-css": "7.31.0",
-        "@navikt/ds-react": "7.31.0",
-        "@navikt/ds-tailwind": "^7.31.0",
+        "@navikt/aksel-icons": "8.3.0",
+        "@navikt/ds-css": "8.3.0",
+        "@navikt/ds-react": "8.3.0",
+        "@navikt/ds-tailwind": "^8.3.0",
         "@navikt/navspa": "7.1.0",
         "@tailwindcss/vite": "^4.1.13",
         "axios": "1.13.4",
