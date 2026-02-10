@@ -1,6 +1,6 @@
 import { ArbeidsOppfolgingKontorDTO, Kontor, KvittertKontor, settKontor } from '../../../api/ao-oppfolgingskontor';
-import { Field, Formik, Form } from 'formik';
-import { Button, TextField } from '@navikt/ds-react';
+import { Formik, Form } from 'formik';
+import { Button } from '@navikt/ds-react';
 import { AxiosError } from 'axios';
 import { useEnhetId } from '../../../store/app-store';
 import KontorDropdown from '../opprett-oppgave/components/kontorDropdown';
@@ -53,7 +53,6 @@ function ByttOppfolgingskontorForm({
                         isLoading={isKontorFetchLoading}
                         formikFieldName={'kontorId'}
                     />
-                    <Field as={TextField} label={'Begrunnelse (frivillig)'} name={'begrunnelse'} />
                     <div className="space-x-4 flex">
                         <div>
                             {/*
