@@ -1,7 +1,7 @@
 import { ExpansionCard, HStack, Skeleton } from '@navikt/ds-react';
 import { ClockDashedIcon } from '@navikt/aksel-icons';
 import dayjs from 'dayjs';
-import { KontorHistorikkEntry, KontorType } from '../../../api/ao-oppfolgingskontor';
+import { KontorEndringsType, KontorHistorikkEntry, KontorType } from '../../../api/ao-oppfolgingskontor';
 import { useVeilederDataListe, VeilederData } from '../../../api/veilarbveileder';
 
 interface Props {
@@ -65,6 +65,7 @@ export const KontorHistorikk = ({ kontorHistorikk }: Props) => {
                                         navn={getNavn(historikkEntry, veilederIdentTilNavnMapping)}
                                     />
                                 </div>
+                                <div className="text-gray-700">{endringstypeTekst[historikkEntry.endringsType]}</div>
                             </div>
                         );
                     })}
@@ -97,6 +98,36 @@ const EndretAv = ({ isLoading, navn }: { isLoading: boolean; navn: string }) => 
         );
     }
     return <span className="text-gray-700">Endret av: {navn}</span>;
+};
+
+const endringstypeTekst: Record<KontorEndringsType, string> = {
+    AddressebeskyttelseMistet: 'Bruker fikk nytt geografisk kontor fordi hen ikke lenger er adressebeskyttet',
+    ArenaKontorFraOppfolgingsbrukerVedOppfolgingStart: 'Brukers kontor i Arena ved start av oppfølging',
+    ArenaKontorHentetSynkrontVedOppfolgingsStart: 'Brukers kontor i Arena ved start av oppfølging',
+    ArenaKontorManuellSynk: 'Bruker kontor i Arena (synkronisert manuelt av )',
+    ArenaKontorVedOppfolgingStartMedEtterslep: 'Brukers kontor i Arena ved start av oppfølging',
+    ArenaKontorVedOppfolgingsStart: 'Brukers kontor i Arena ved start av oppfølging',
+    AutomatiskNorgRuting: 'Bruker ble rutet til lokalkontor ved hjelp av NORG',
+    AutomatiskNorgRutingFallback: 'Bruker ble rutet til NAV-IT fordi det ikke ble funnet et passende kontor',
+    AutomatiskRutetTilNOE: 'Bruker ble rutet til NOE på grunn av alder og profilering',
+    AutomatiskRutetTilNavItGtErLand: 'Bruker ble rutet til NAV-IT fordi det ikke ble funnet et passende kontor',
+    AutomatiskRutetTilNavItIngenKontorFunnetForGt:
+        'Bruker ble rutet til NAV-IT fordi det ikke ble funnet et passende kontor',
+    AutomatiskRutetTilNavItManglerGt: 'Bruker ble rutet til NAV-IT fordi det ikke ble funnet et passende kontor',
+    AutomatiskRutetTilNavItUgyldigGt: 'Bruker ble rutet til NAV-IT fordi det ikke ble funnet et passende kontor',
+    AutomatiskRutingArbeidsgiverFallback:
+        'Bruker fikk lokalkontor basert på arbeidsgivers adresse (ingen norsk adresse funnet)',
+    EndretBostedsadresse: 'Bruker endret bostedsadresse',
+    EndretIArena: 'Kontoret ble endret i Arena',
+    FikkAddressebeskyttelse: 'Bruker fikk adressebeskyttelse',
+    FikkSkjerming: 'Bruker ble skjermet',
+    FlyttetAvVeileder: 'Bruker ble manuelt flyttet av en veileder',
+    GTKontorVedOppfolgingStart: 'Bruker geografiske kontor ved start oppfølging',
+    MIGRERING: 'Kontor ble migrert fra Arena',
+    MistetSkjerming: 'Bruker er ikke lenger skjermet',
+    PATCH: 'Kontor ble migrert fra Arena',
+    StartKontorSattManueltAvVeileder: 'Kontor ble manuelt satt av en veileder ved start oppfølging',
+    TidligArenaKontorVedOppfolgingStart: 'Brukers kontor i Arena ved start av oppfølging'
 };
 
 export default KontorHistorikk;
