@@ -102,11 +102,11 @@ const EndretAv = ({ isLoading, navn }: { isLoading: boolean; navn: string }) => 
 
 const endringstypeTekst: Record<KontorEndringsType, string> = {
     AddressebeskyttelseMistet: 'Bruker fikk nytt geografisk kontor fordi hen ikke lenger er adressebeskyttet',
-    ArenaKontorFraOppfolgingsbrukerVedOppfolgingStart: 'Brukers kontor i Arena ved start av oppfølging',
-    ArenaKontorHentetSynkrontVedOppfolgingsStart: 'Brukers kontor i Arena ved start av oppfølging',
+    ArenaKontorFraOppfolgingsbrukerVedOppfolgingStart: 'Brukers kontor i Arena ved start oppfølging',
+    ArenaKontorHentetSynkrontVedOppfolgingsStart: 'Brukers kontor i Arena ved start oppfølging',
     ArenaKontorManuellSynk: 'Bruker kontor i Arena (synkronisert manuelt av )',
-    ArenaKontorVedOppfolgingStartMedEtterslep: 'Brukers kontor i Arena ved start av oppfølging',
-    ArenaKontorVedOppfolgingsStart: 'Brukers kontor i Arena ved start av oppfølging',
+    ArenaKontorVedOppfolgingStartMedEtterslep: 'Brukers kontor i Arena ved start oppfølging',
+    ArenaKontorVedOppfolgingsStart: 'Brukers kontor i Arena ved start oppfølging',
     AutomatiskNorgRuting: 'Bruker ble rutet til lokalkontor ved hjelp av NORG',
     AutomatiskNorgRutingFallback: 'Bruker ble rutet til NAV-IT fordi det ikke ble funnet et passende kontor',
     AutomatiskRutetTilNOE: 'Bruker ble rutet til NOE på grunn av alder og profilering',
