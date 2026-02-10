@@ -122,7 +122,7 @@ const endringstypeTekst: Record<KontorEndringsType, string> = {
     FikkAddressebeskyttelse: 'Bruker fikk adressebeskyttelse',
     FikkSkjerming: 'Bruker ble skjermet',
     FlyttetAvVeileder: 'Bruker ble manuelt flyttet av en veileder',
-    GTKontorVedOppfolgingStart: 'Bruker geografiske kontor ved start oppfølging',
+    GTKontorVedOppfolgingStart: 'Brukers geografiske kontor ved start oppfølging',
     MIGRERING: 'Kontor ble migrert fra Arena',
     MistetSkjerming: 'Bruker er ikke lenger skjermet',
     PATCH: 'Kontor ble migrert fra Arena',
