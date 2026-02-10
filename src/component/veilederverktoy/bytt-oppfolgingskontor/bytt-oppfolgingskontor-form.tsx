@@ -48,6 +48,8 @@ function ByttOppfolgingskontorForm({
             {formikProps => (
                 <Form className="space-y-8">
                     <KontorDropdown
+                        label="Nytt kontor for arbeidsrettet oppfølging"
+                        description="Velg i listen eller skriv inn navn på kontoret du ønsker å bytte til"
                         valgtKontorId={formikProps.values.kontorId}
                         alleKontor={alleKontor}
                         isLoading={isKontorFetchLoading}
