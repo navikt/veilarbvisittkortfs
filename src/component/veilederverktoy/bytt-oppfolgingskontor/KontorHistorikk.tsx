@@ -90,8 +90,9 @@ const getNavn = (historikkEntry: KontorHistorikkEntry, veilederIdentTilNavnMappi
 const EndretAv = ({ isLoading, navn }: { isLoading: boolean; navn: string }) => {
     if (isLoading) {
         return (
-            <span className="text-gray-700">
-                <Skeleton variant="text" />
+            <span className="text-gray-700 flex space-x-4">
+                <span>Endret av:</span>
+                <Skeleton variant="text" width={'40%'} />
             </span>
         );
     }
