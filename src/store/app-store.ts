@@ -34,7 +34,7 @@ export const useAppStore = create<AppStore>()(set => ({
 }));
 
 export const useBrukerFnr = () => useAppStore((state: AppStore) => state.brukerFnr);
-export const useEnhetId = () => useAppStore((state: AppStore) => state.enhetId);
+export const useVeiledersEnhetId = () => useAppStore((state: AppStore) => state.enhetId);
 export const useAvsluttOppfolgingOpptelt = () => useAppStore((state: AppStore) => state.avsluttOppfolgingOpptelt);
 export const useSetAvsluttOppfolgingOpptelt = () => useAppStore(state => state.setAvsluttOppfolgingOpptelt);
 export const useSetAppState = () => useAppStore(state => state.setAppState);
