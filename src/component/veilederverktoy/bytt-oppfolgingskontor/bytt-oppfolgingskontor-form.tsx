@@ -5,8 +5,8 @@ import {
     KvittertKontor,
     settKontor
 } from '../../../api/ao-oppfolgingskontor';
-import { Field, Formik, Form } from 'formik';
-import { Button, TextField } from '@navikt/ds-react';
+import { Formik, Form } from 'formik';
+import { Button } from '@navikt/ds-react';
 import { AxiosError } from 'axios';
 import KontorDropdown from '../opprett-oppgave/components/kontorDropdown';
 
@@ -58,12 +58,13 @@ function ByttOppfolgingskontorForm({
             {formikProps => (
                 <Form className="space-y-8">
                     <KontorDropdown
+                        label="Nytt kontor for arbeidsrettet oppfølging"
+                        description="Velg i listen eller skriv inn navn på kontoret du ønsker å bytte til"
                         valgtKontorId={formikProps.values.kontorId}
                         alleKontor={alleKontor}
                         isLoading={isKontorFetchLoading}
                         formikFieldName={'kontorId'}
                     />
-                    <Field as={TextField} label={'Begrunnelse (frivillig)'} name={'begrunnelse'} />
                     <div className="space-x-4 flex">
                         <div>
                             {/*

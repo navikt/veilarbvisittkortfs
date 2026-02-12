@@ -9,7 +9,7 @@ export const alleKontorResponse = {
                 kontorType: 'ARBEIDSOPPFOLGING',
                 endringsType: 'FlyttetAvVeileder',
                 endretAv: 'G151413',
-                endretAvType: 'veileder',
+                endretAvType: 'VEILEDER',
                 endretTidspunkt: '2025-07-23T10:00:00Z'
             } as KontorHistorikkEntry,
             {
@@ -18,7 +18,7 @@ export const alleKontorResponse = {
                 kontorType: 'ARBEIDSOPPFOLGING',
                 endringsType: 'AutomatiskRutetTilNOE',
                 endretAv: 'System',
-                endretAvType: 'system',
+                endretAvType: 'SYSTEM',
                 endretTidspunkt: '2025-01-01T12:00:00Z'
             } as KontorHistorikkEntry,
             {
@@ -27,7 +27,7 @@ export const alleKontorResponse = {
                 kontorType: 'ARENA',
                 endringsType: 'EndretIArena',
                 endretAv: 'Arena',
-                endretAvType: 'system',
+                endretAvType: 'SYSTEM',
                 endretTidspunkt: '2023-10-01T12:00:00Z'
             } as KontorHistorikkEntry
         ],
