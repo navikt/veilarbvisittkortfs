@@ -6,7 +6,7 @@ import {
     settKontor
 } from '../../../api/ao-oppfolgingskontor';
 import { Field, Formik, Form } from 'formik';
-import { Button, TextField, Skeleton } from '@navikt/ds-react';
+import { Button, TextField } from '@navikt/ds-react';
 import { AxiosError } from 'axios';
 import KontorDropdown from '../opprett-oppgave/components/kontorDropdown';
 
@@ -42,15 +42,6 @@ function ByttOppfolgingskontorForm({
             const axisosError = error as AxiosError<string>;
             setSettKontorError(axisosError.response?.data || axisosError.message);
         }
-    }
-
-    if (isKontorFetchLoading) {
-        return (
-            <div className="space-y-8">
-                <Skeleton variant="rectangle" height="3rem" width="100%" />
-                <Skeleton variant="rectangle" height="3rem" width="100%" />
-            </div>
-        );
     }
 
     const arbeidsOppfolgingKontorInitialValues: ArbeidsOppfolgingKontorDTO = {
