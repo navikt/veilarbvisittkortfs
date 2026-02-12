@@ -1,12 +1,18 @@
-import { ArbeidsOppfolgingKontorDTO, Kontor, KvittertKontor, settKontor } from '../../../api/ao-oppfolgingskontor';
+import {
+    ArbeidsOppfolgingKontorDTO,
+    Kontor,
+    KontorTilhorigheter,
+    KvittertKontor,
+    settKontor
+} from '../../../api/ao-oppfolgingskontor';
 import { Formik, Form } from 'formik';
 import { Button } from '@navikt/ds-react';
 import { AxiosError } from 'axios';
-import { useEnhetId } from '../../../store/app-store';
 import KontorDropdown from '../opprett-oppgave/components/kontorDropdown';
 
 interface ByttOppfolgingskontorFormProps {
     brukerFnr: string;
+    brukerKontorTilhorigheter: KontorTilhorigheter | null;
     tilbake: () => void;
     alleKontor: Kontor[];
     isKontorFetchLoading: boolean;
@@ -16,18 +22,13 @@ interface ByttOppfolgingskontorFormProps {
 
 function ByttOppfolgingskontorForm({
     brukerFnr,
+    brukerKontorTilhorigheter,
     tilbake,
     alleKontor,
     isKontorFetchLoading,
     setKvittering,
     setSettKontorError
 }: ByttOppfolgingskontorFormProps) {
-    const enhetId = useEnhetId();
-    const arbeidsOppfolgingKontorInitialValues: ArbeidsOppfolgingKontorDTO = {
-        ident: brukerFnr,
-        kontorId: enhetId || ''
-    };
-
     async function lagreOppfolgingskontor(formdata: ArbeidsOppfolgingKontorDTO) {
         try {
             setSettKontorError(undefined);
@@ -43,8 +44,17 @@ function ByttOppfolgingskontorForm({
         }
     }
 
+    const arbeidsOppfolgingKontorInitialValues: ArbeidsOppfolgingKontorDTO = {
+        ident: brukerFnr,
+        kontorId: brukerKontorTilhorigheter?.arbeidsoppfolging.kontorId || ''
+    };
+
     return (
-        <Formik initialValues={arbeidsOppfolgingKontorInitialValues} onSubmit={lagreOppfolgingskontor}>
+        <Formik
+            initialValues={arbeidsOppfolgingKontorInitialValues}
+            onSubmit={lagreOppfolgingskontor}
+            enableReinitialize={true}
+        >
             {formikProps => (
                 <Form className="space-y-8">
                     <KontorDropdown
