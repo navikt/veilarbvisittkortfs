@@ -66,6 +66,7 @@ function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
                     </div>
                     <ByttOppfolgingskontorForm
                         brukerFnr={brukerFnr}
+                        brukerKontorTilhorigheter={kontorTilhorighet}
                         isKontorFetchLoading={hentAlleKontorLoading}
                         alleKontor={alleKontor}
                         tilbake={() => hideModal()}

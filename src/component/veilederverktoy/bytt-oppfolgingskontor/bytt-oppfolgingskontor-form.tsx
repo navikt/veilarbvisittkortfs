@@ -1,12 +1,18 @@
-import { ArbeidsOppfolgingKontorDTO, Kontor, KvittertKontor, settKontor } from '../../../api/ao-oppfolgingskontor';
+import {
+    ArbeidsOppfolgingKontorDTO,
+    Kontor,
+    KontorTilhorigheter,
+    KvittertKontor,
+    settKontor
+} from '../../../api/ao-oppfolgingskontor';
 import { Field, Formik, Form } from 'formik';
-import { Button, TextField } from '@navikt/ds-react';
+import { Button, TextField, Skeleton } from '@navikt/ds-react';
 import { AxiosError } from 'axios';
-import { useEnhetId } from '../../../store/app-store';
 import KontorDropdown from '../opprett-oppgave/components/kontorDropdown';
 
 interface ByttOppfolgingskontorFormProps {
     brukerFnr: string;
+    brukerKontorTilhorigheter: KontorTilhorigheter | null;
     tilbake: () => void;
     alleKontor: Kontor[];
     isKontorFetchLoading: boolean;
@@ -16,18 +22,13 @@ interface ByttOppfolgingskontorFormProps {
 
 function ByttOppfolgingskontorForm({
     brukerFnr,
+    brukerKontorTilhorigheter,
     tilbake,
     alleKontor,
     isKontorFetchLoading,
     setKvittering,
     setSettKontorError
 }: ByttOppfolgingskontorFormProps) {
-    const enhetId = useEnhetId();
-    const arbeidsOppfolgingKontorInitialValues: ArbeidsOppfolgingKontorDTO = {
-        ident: brukerFnr,
-        kontorId: enhetId || ''
-    };
-
     async function lagreOppfolgingskontor(formdata: ArbeidsOppfolgingKontorDTO) {
         try {
             setSettKontorError(undefined);
@@ -43,8 +44,26 @@ function ByttOppfolgingskontorForm({
         }
     }
 
+    if (isKontorFetchLoading) {
+        return (
+            <div className="space-y-8">
+                <Skeleton variant="rectangle" height="3rem" width="100%" />
+                <Skeleton variant="rectangle" height="3rem" width="100%" />
+            </div>
+        );
+    }
+
+    const arbeidsOppfolgingKontorInitialValues: ArbeidsOppfolgingKontorDTO = {
+        ident: brukerFnr,
+        kontorId: brukerKontorTilhorigheter?.arbeidsoppfolging.kontorId || ''
+    };
+
     return (
-        <Formik initialValues={arbeidsOppfolgingKontorInitialValues} onSubmit={lagreOppfolgingskontor}>
+        <Formik
+            initialValues={arbeidsOppfolgingKontorInitialValues}
+            onSubmit={lagreOppfolgingskontor}
+            enableReinitialize={true}
+        >
             {formikProps => (
                 <Form className="space-y-8">
                     <KontorDropdown

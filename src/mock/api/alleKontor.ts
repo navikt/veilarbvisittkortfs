@@ -1949,6 +1949,10 @@ export const alleKontorResponse = {
             {
                 kontorId: '7777',
                 kontorNavn: 'TEST-ENHET-4'
+            },
+            {
+                kontorId: '4154',
+                kontorNavn: 'Nasjonal oppfølgingsenhet'
             }
         ]
     }
