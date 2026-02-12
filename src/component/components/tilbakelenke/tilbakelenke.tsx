@@ -1,10 +1,10 @@
 import './tilbakelenke.less';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
-import { useVeiledersEnhetId } from '../../../store/app-store';
+import { useEnhetIdValgtIModiaContextHolder } from '../../../store/app-store';
 import { useTilbakeTilFlate } from '../../../store/visittkort-config';
 
 function Tilbakelenke() {
-    const enhetId = useVeiledersEnhetId();
+    const enhetId = useEnhetIdValgtIModiaContextHolder();
     const tilbakeTilFlate = useTilbakeTilFlate();
     const tilbakeLenke = getTilbakeUrl(tilbakeTilFlate, enhetId);
 

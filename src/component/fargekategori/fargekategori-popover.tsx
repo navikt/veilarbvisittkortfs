@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AxiosError } from 'axios';
 import { Alert, Button, Popover } from '@navikt/ds-react';
-import { useBrukerFnr, useVeiledersEnhetId } from '../../store/app-store';
+import { useBrukerFnr, useEnhetIdValgtIModiaContextHolder } from '../../store/app-store';
 import { mapfargekategoriToIkon } from './mapfargekategoriToIkon';
 import { endreFargekategori, Fargekategori, FargekategoriModell, Fargekategorinavn } from '../../api/veilarbportefolje';
 
@@ -14,7 +14,7 @@ interface Props {
 
 export const FargekategoriPopover = ({ buttonAnchor, isOpen, setIsOpen, setFargekategori }: Props) => {
     const brukerFnr = useBrukerFnr();
-    const enhetId = useVeiledersEnhetId();
+    const enhetId = useEnhetIdValgtIModiaContextHolder();
     const [error, setError] = useState<string>();
     const onClick = (kategoriVerdi: FargekategoriModell) => {
         if (!brukerFnr) return;

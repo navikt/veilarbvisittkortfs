@@ -1,5 +1,5 @@
 import { Alert, ErrorMessage, Modal } from '@navikt/ds-react';
-import { useVeiledersEnhetId } from '../../../store/app-store';
+import { useEnhetIdValgtIModiaContextHolder } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import ByttOppfolgingskontorForm from './bytt-oppfolgingskontor-form';
@@ -13,7 +13,7 @@ import { usePersonalia } from '../../../api/veilarbperson';
 
 function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
     const [kvittering, setKvittering] = useState<KontorSkiftetKvittering | undefined>(undefined);
-    const enhetId = useVeiledersEnhetId();
+    const enhetId = useEnhetIdValgtIModiaContextHolder();
     const { personalia } = usePersonalia(brukerFnr);
     const { hideModal } = useModalStore();
     const [settKontorError, setSettKontorError] = useState<string | undefined>();
