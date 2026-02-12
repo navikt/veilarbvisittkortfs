@@ -1,4 +1,4 @@
-import { Alert, BodyShort, ErrorMessage, Modal } from '@navikt/ds-react';
+import { Alert, ErrorMessage, Modal } from '@navikt/ds-react';
 import { useEnhetId } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { selectSammensattNavn } from '../../../util/selectors';
@@ -56,14 +56,6 @@ function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
                         navn={navn}
                     />
                     <KontorHistorikk kontorHistorikk={kontorHistorikk} />
-                    <div className="mb-2">
-                        <div className="mb-1">
-                            <BodyShort weight="semibold">Nytt kontor for arbeidsrettet oppfølging</BodyShort>
-                        </div>
-                        <BodyShort textColor="subtle">
-                            Velg i listen eller skriv inn navn på kontoret du ønsker å bytte til
-                        </BodyShort>
-                    </div>
                     <ByttOppfolgingskontorForm
                         brukerFnr={brukerFnr}
                         isKontorFetchLoading={hentAlleKontorLoading}
