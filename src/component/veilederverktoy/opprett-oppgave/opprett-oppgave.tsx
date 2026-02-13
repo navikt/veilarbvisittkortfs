@@ -7,7 +7,7 @@ import { useModalStore } from '../../../store/modal-store';
 import { useEnhetIdValgtIModiaContextHolder } from '../../../store/app-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import { todayReversedDateStr } from '../../../util/date-utils';
-import { OppgaveTema, OppgaveType, opprettOppgave, PrioritetType } from '../../../api/veilarboppgave';
+import { BehandlingsTema, OppgaveTema, OppgaveType, opprettOppgave, PrioritetType } from '../../../api/veilarboppgave';
 import { StringOrNothing } from '../../../util/type/utility-types';
 import './opprett-oppgave.less';
 import { usePersonalia } from '../../../api/veilarbperson';
@@ -20,6 +20,7 @@ export interface OpprettOppgaveFormValues {
     tilDato: string;
     prioritet: PrioritetType;
     tema: OppgaveTema;
+    behandlingsTema: BehandlingsTema;
     type: OppgaveType;
     avsenderenhetId: string;
     veilederId: StringOrNothing;
@@ -36,7 +37,7 @@ function OpprettOppgave({ brukerFnr }: { brukerFnr: string }) {
         return null;
     }
 
-    const opprettOppgaveInitialValues: Omit<OpprettOppgaveFormValues, 'tema'> = {
+    const opprettOppgaveInitialValues: Omit<OpprettOppgaveFormValues, 'tema' | 'behandlingsTema'> = {
         beskrivelse: '',
         enhetId: '',
         fnr: brukerFnr,
@@ -75,6 +76,7 @@ function OpprettOppgave({ brukerFnr }: { brukerFnr: string }) {
                         <OpprettOppgaveTemaSelector />
                         <OppgaveInnerForm
                             tema={formikProps.values.tema}
+                            behandlingsTema={formikProps.values.behandlingsTema}
                             fnr={brukerFnr}
                             enhetId={formikProps.values.enhetId}
                             veilederId={formikProps.values.veilederId}
