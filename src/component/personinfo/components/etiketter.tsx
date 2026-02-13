@@ -7,7 +7,7 @@ import {
     useSpraakTolk,
     useVerge
 } from '../../../api/veilarbperson';
-import { OppfolgingStatus, useOppfolging, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
+import { OppfolgingStatus, useOppfolging } from '../../../api/veilarboppfolging';
 import { OrNothing } from '../../../util/type/utility-types';
 import { Tag, TagProps } from '@navikt/ds-react';
 import { Oppfolgingsvedtak14a, useGjeldende14aVedtak } from '../../../api/veilarbvedtaksstotte';
@@ -65,7 +65,6 @@ function erFullmaktOmradeMedOppfolging(fullmaktListe: FullmaktData[]): boolean {
 }
 
 function Etiketter({ brukerFnr }: { brukerFnr: string }) {
-    const { data: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { personalia } = usePersonalia(brukerFnr);
     const { gjeldendeEskaleringsvarsel } = useGjeldendeEskaleringsvarsel(brukerFnr);
     const { oppfolging } = useOppfolging(brukerFnr);
@@ -92,7 +91,7 @@ function Etiketter({ brukerFnr }: { brukerFnr: string }) {
     function visProfileringsetikett(
         profilering: 'OPPGITT_HINDRINGER' | 'ANTATT_GODE_MULIGHETER' | 'ANTATT_BEHOV_FOR_VEILEDNING'
     ) {
-        if (oppfolgingsstatus === null || oppfolgingsstatus === undefined || typeof oppfolgingsstatus === 'undefined') {
+        if (oppfolging === null || oppfolging === undefined || typeof oppfolging === 'undefined') {
             return false;
         }
 
@@ -161,14 +160,14 @@ function Etiketter({ brukerFnr }: { brukerFnr: string }) {
             <Info visible={visTrengerOppfolgingsvedtakEtikett()}>Trenger oppfølgingsvedtak § 14 a</Info>
             <Info
                 visible={
-                    trengerAEV(oppfolgingsstatus) &&
+                    trengerAEV(oppfolging) &&
                     !opplysningerOmArbeidssoekerLoading &&
                     !opplysningerOmArbeidssoeker?.profilering?.profilertTil
                 }
             >
                 Behov for AEV
             </Info>
-            <Info visible={erBrukerSykmeldt(oppfolgingsstatus)}>Sykmeldt</Info>
+            <Info visible={erBrukerSykmeldt(oppfolging)}>Sykmeldt</Info>
             <Info visible={visIArbeidssokerregisteretEtikett()}>I Arbeidssøkerregisteret</Info>
             <Info visible={visProfileringsetikett('ANTATT_GODE_MULIGHETER')}>Antatt gode muligheter</Info>
             <Info visible={visProfileringsetikett('ANTATT_BEHOV_FOR_VEILEDNING')}>Antatt behov for veiledning</Info>

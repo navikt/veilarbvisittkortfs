@@ -9,6 +9,7 @@ import './index.css';
 import { useSetAppState } from './store/app-store';
 import { useEffect, useMemo } from 'react';
 import { VisittKortConfigContext } from './store/visittkort-config';
+import { FeilIVisittkortAlert } from './component/FeilIVisittkortAlert';
 
 export interface AppProps {
     fnr: string;
@@ -33,20 +34,23 @@ function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter }
 
     return (
         <VisittKortConfigContext.Provider value={configValue}>
-            <div className="visittkortfs">
-                <DataFetcher>
-                    {brukerFnr => (
-                        <>
-                            <Tilbakelenke />
-                            <div className="visittkortfs__container">
-                                <PersonInfo brukerFnr={brukerFnr} />
-                                {!skjulEtiketter && <Etiketter brukerFnr={brukerFnr} />}
-                                <Veilederverktoy />
-                            </div>
-                        </>
-                    )}
-                </DataFetcher>
-                <VeilederverktoyModalController />
+            <div>
+                <div className="visittkortfs">
+                    <DataFetcher>
+                        {brukerFnr => (
+                            <>
+                                <Tilbakelenke />
+                                <div className="visittkortfs__container">
+                                    <PersonInfo brukerFnr={brukerFnr} />
+                                    {!skjulEtiketter && <Etiketter brukerFnr={brukerFnr} />}
+                                    <Veilederverktoy />
+                                </div>
+                            </>
+                        )}
+                    </DataFetcher>
+                    <VeilederverktoyModalController />
+                </div>
+                <FeilIVisittkortAlert />
             </div>
         </VisittKortConfigContext.Provider>
     );
