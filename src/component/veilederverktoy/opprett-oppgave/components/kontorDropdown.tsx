@@ -4,6 +4,8 @@ import { Kontor } from '../../../../api/ao-oppfolgingskontor';
 import { useFormikContext } from 'formik';
 
 interface KontorDropdownProps {
+    label?: string | undefined;
+    description?: string | undefined;
     valgtKontorId: StringOrNothing;
     alleKontor: Kontor[];
     isLoading: boolean;
@@ -14,13 +16,20 @@ const kontorNavn = (kontor: { kontorId: string; kontorNavn: string }) => {
     return `${kontor?.kontorId} ${kontor?.kontorNavn}`;
 };
 
-function KontorDropdown({ alleKontor, isLoading, formikFieldName, valgtKontorId }: KontorDropdownProps) {
+function KontorDropdown({
+    alleKontor,
+    isLoading,
+    formikFieldName,
+    valgtKontorId,
+    description,
+    label
+}: KontorDropdownProps) {
     const valgtKontor: OrNothing<Kontor> =
         alleKontor.find(kontor => kontor.kontorId === valgtKontorId) || alleKontor[0];
     const formikProps = useFormikContext<KontorDropdownProps>();
 
     return (
-        <div className="skjemaelement navds-form-field navds-form-field--medium navds-date__field">
+        <div className="">
             {isLoading ? (
                 <Skeleton
                     variant="rectangle"
@@ -33,7 +42,8 @@ function KontorDropdown({ alleKontor, isLoading, formikFieldName, valgtKontorId 
                     onToggleSelected={value => {
                         return formikProps.setFieldValue(formikFieldName, value);
                     }}
-                    label={'Velg kontor'}
+                    label={label || 'Velg kontor'}
+                    description={description}
                     name={formikFieldName}
                     placeholder={kontorNavn(valgtKontor)}
                     options={alleKontor.map(kontor => ({

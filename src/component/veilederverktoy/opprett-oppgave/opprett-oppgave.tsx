@@ -4,7 +4,7 @@ import OpprettOppgaveTemaSelector from './components/opprett-oppgave-tema-select
 import OppgaveInnerForm from './components/oppgave-inner-form';
 import FormikModal from '../../components/formik/formik-modal';
 import { useModalStore } from '../../../store/modal-store';
-import { useEnhetId } from '../../../store/app-store';
+import { useEnhetIdValgtIModiaContextHolder } from '../../../store/app-store';
 import { selectSammensattNavn } from '../../../util/selectors';
 import { todayReversedDateStr } from '../../../util/date-utils';
 import { OppgaveTema, OppgaveType, opprettOppgave, PrioritetType } from '../../../api/veilarboppgave';
@@ -26,7 +26,7 @@ export interface OpprettOppgaveFormValues {
 }
 
 function OpprettOppgave({ brukerFnr }: { brukerFnr: string }) {
-    const enhetId = useEnhetId();
+    const enhetId = useEnhetIdValgtIModiaContextHolder();
     const { personalia } = usePersonalia(brukerFnr);
     const { hideModal, showOpprettOppgaveKvitteringModal, showErrorModal, showSpinnerModal } = useModalStore();
 

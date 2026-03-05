@@ -7,7 +7,7 @@ import {
     redigerHuskelapp,
     useHuskelapp
 } from '../../../api/veilarbportefolje';
-import { useEnhetId } from '../../../store/app-store';
+import { useEnhetIdValgtIModiaContextHolder } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { logMetrikk } from '../../../util/logger';
 import HuskelappIkon from '../ikon/Huskelappikon_bakgrunnsfarge.svg?react';
@@ -28,7 +28,7 @@ const huskelappEmptyValues: HuskelappformValues = {
 
 function HuskelappRedigereModal({ brukerFnr }: { brukerFnr: string }) {
     const visVeilederVerktoy = useVisVeilederVerktøy();
-    const enhetId = useEnhetId();
+    const enhetId = useEnhetIdValgtIModiaContextHolder();
     const { innloggetVeileder } = useInnloggetVeileder();
     const { personalia } = usePersonalia(brukerFnr);
     const { hideModal, showSpinnerModal, showErrorModal } = useModalStore();
