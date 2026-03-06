@@ -1,8 +1,10 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { AxiosPromise } from 'axios';
-import { axiosInstance, ErrorMessage, fetchWithPost, swrOptions } from './utils';
+import { axiosInstance, axiosJsonRequestConfig, ErrorMessage, fetchWithPost, swrOptions } from './utils';
 import { OrNothing, StringOrNothing } from '../util/type/utility-types';
+import { GraphqlResponse } from './GraphqlUtils';
+import { logGraphQLError } from './ao-oppfolgingskontor';
 
 export type Formidlingsgruppe = 'ARBS' | 'IARBS' | 'ISERV' | 'PARBS' | 'RARBS';
 export type Servicegruppe = 'BKART' | 'IVURD' | 'OPPFI' | 'VARIG' | 'VURDI' | 'VURDU';
@@ -205,4 +207,39 @@ export function useTilgangTilBrukersKontor(fnr: string | undefined) {
         swrOptions
     );
     return { data, isLoading, error };
+}
+
+const aktiveTiltaksdeltakelserGraphqlQuery = `
+  query($fnr: String!) {
+    brukerStatus(fnr: $fnr) {
+		harAktiveTiltaksdeltakelser
+    }
+  }
+`;
+
+export interface BrukerStatus {
+    harAktiveTiltaksdeltakelser?: boolean;
+}
+
+export function hentBrukerHarAktiveTiltaksdeltakelser(fnr: string) {
+    return axiosInstance
+        .post<
+            GraphqlResponse<{
+                brukerStatus: BrukerStatus;
+            }>
+        >(
+            `/veilarboppfolging/api/graphql`,
+            JSON.stringify({
+                query: aktiveTiltaksdeltakelserGraphqlQuery,
+                variables: { fnr }
+            }),
+            axiosJsonRequestConfig
+        )
+        .then(res => {
+            if (res.data.errors) {
+                logGraphQLError(res.data);
+                throw new Error('Feil ved henting av om bruker har aktive tiltaksdeltakelser');
+            }
+            return res;
+        });
 }

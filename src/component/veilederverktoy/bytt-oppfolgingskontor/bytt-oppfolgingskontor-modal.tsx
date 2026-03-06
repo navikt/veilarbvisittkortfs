@@ -10,6 +10,7 @@ import useSWR from 'swr';
 import KontorHistorikk from './KontorHistorikk';
 import { BrukerFakta } from './BrukerFakta';
 import { usePersonalia } from '../../../api/veilarbperson';
+import { hentBrukerHarAktiveTiltaksdeltakelser } from '../../../api/veilarboppfolging';
 
 function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
     const [kvittering, setKvittering] = useState<KontorSkiftetKvittering | undefined>(undefined);
@@ -25,6 +26,15 @@ function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } = useSWR(brukerFnr ? `/kontorer/${brukerFnr}` : null, () => hentAlleKontor(brukerFnr));
 
+    const {
+        data: brukerHarAktiveTiltaksdeltakelserData,
+        error: brukerHarAktiveTiltaksdeltakelserError,
+        isLoading: brukerHarAktiveTiltaksdeltakelserLoading
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } = useSWR(brukerFnr ? `/tiltaksdeltakelser/${brukerFnr}` : null, () =>
+        hentBrukerHarAktiveTiltaksdeltakelser(brukerFnr)
+    );
+
     const navn = selectSammensattNavn(personalia);
 
     if (!enhetId) {
@@ -34,6 +44,8 @@ function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
     const alleKontor = alleKontorData?.data?.data?.alleKontor || [];
     const kontorTilhorighet = alleKontorData?.data?.data?.kontorTilhorigheter || null;
     const kontorHistorikk = alleKontorData?.data?.data?.kontorHistorikk || [];
+    const harAktiveTiltaksdeltakelser =
+        brukerHarAktiveTiltaksdeltakelserData?.data?.data?.brukerStatus?.harAktiveTiltaksdeltakelser;
 
     const getModalBody = () => {
         if (kvittering) {
@@ -50,6 +62,22 @@ function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
                         Husk å oppdatere aktivitetsplan og § 14 a vedtaket før du overfører brukeren til et annet
                         kontor.
                     </Alert>
+                    {brukerHarAktiveTiltaksdeltakelserError && (
+                        <Alert inline variant="error">
+                            Kunne ikke hente informasjon om tiltaksdeltakelser for bruker.
+                        </Alert>
+                    )}
+                    {brukerHarAktiveTiltaksdeltakelserLoading && (
+                        <Alert inline variant="info">
+                            Henter informasjon om tiltaksdeltakelser for bruker
+                        </Alert>
+                    )}
+                    {harAktiveTiltaksdeltakelser && (
+                        <Alert inline variant="info">
+                            Bruker deltar på tiltak. Hvis du flytter brukeren må du undersøke om dette kan få
+                            konsekvenser for tiltaksdeltakelsen.
+                        </Alert>
+                    )}
                     <BrukerFakta
                         kontorTilhorighet={kontorTilhorighet}
                         hentAlleKontorLoading={hentAlleKontorLoading}
