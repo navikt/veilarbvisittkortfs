@@ -10,7 +10,7 @@ import useSWR from 'swr';
 import KontorHistorikk from './KontorHistorikk';
 import { BrukerFakta } from './BrukerFakta';
 import { usePersonalia } from '../../../api/veilarbperson';
-import { hentBrukerHarAktiveTiltaksdeltakelser } from '../../../api/veilarboppfolging';
+import { useBrukerHarAktiveTiltaksdeltakelser } from '../../../api/veilarboppfolging';
 
 function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
     const [kvittering, setKvittering] = useState<KontorSkiftetKvittering | undefined>(undefined);
@@ -30,10 +30,7 @@ function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
         data: brukerHarAktiveTiltaksdeltakelserData,
         error: brukerHarAktiveTiltaksdeltakelserError,
         isLoading: brukerHarAktiveTiltaksdeltakelserLoading
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } = useSWR(brukerFnr ? `/tiltaksdeltakelser/${brukerFnr}` : null, () =>
-        hentBrukerHarAktiveTiltaksdeltakelser(brukerFnr)
-    );
+    } = useBrukerHarAktiveTiltaksdeltakelser(brukerFnr);
 
     const navn = selectSammensattNavn(personalia);
 
@@ -45,7 +42,7 @@ function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
     const kontorTilhorighet = alleKontorData?.data?.data?.kontorTilhorigheter || null;
     const kontorHistorikk = alleKontorData?.data?.data?.kontorHistorikk || [];
     const harAktiveTiltaksdeltakelser =
-        brukerHarAktiveTiltaksdeltakelserData?.data?.data?.brukerStatus?.harAktiveTiltaksdeltakelser;
+        brukerHarAktiveTiltaksdeltakelserData?.data?.brukerStatus?.harAktiveTiltaksdeltakelser;
 
     const getModalBody = () => {
         if (kvittering) {
