@@ -227,7 +227,7 @@ export interface BrukerStatus {
 export function useBrukerHarAktiveTiltaksdeltakelser(fnr: string) {
     const url = '/veilarboppfolging/api/graphql';
     const { data, error, isLoading } = useSWR<GraphqlResponse<BrukerStatusResponse>, ErrorMessage>(
-        fnr ? `${url}/${fnr}` : null,
+        fnr ? `brukerHarAktiveTiltaksdeltakelser/${fnr}` : null,
         () =>
             fetchWithPost(url, {
                 query: aktiveTiltaksdeltakelserGraphqlQuery,
