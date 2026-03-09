@@ -3,6 +3,7 @@ import useSWRMutation from 'swr/mutation';
 import { AxiosPromise } from 'axios';
 import { axiosInstance, ErrorMessage, fetchWithPost, swrOptions } from './utils';
 import { OrNothing, StringOrNothing } from '../util/type/utility-types';
+import { GraphqlResponse } from './GraphqlUtils';
 
 export type Formidlingsgruppe = 'ARBS' | 'IARBS' | 'ISERV' | 'PARBS' | 'RARBS';
 export type Servicegruppe = 'BKART' | 'IVURD' | 'OPPFI' | 'VARIG' | 'VURDI' | 'VURDU';
@@ -202,6 +203,36 @@ export function useTilgangTilBrukersKontor(fnr: string | undefined) {
     const { data, error, isLoading } = useSWR<TilgangTilBrukersKontor, ErrorMessage>(
         fnr ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr as string }),
+        swrOptions
+    );
+    return { data, isLoading, error };
+}
+
+const aktiveTiltaksdeltakelserGraphqlQuery = `
+  query($fnr: String!) {
+    brukerStatus(fnr: $fnr) {
+		harAktiveTiltaksdeltakelser
+    }
+  }
+`;
+
+export interface BrukerStatusResponse {
+    brukerStatus?: BrukerStatus;
+}
+
+export interface BrukerStatus {
+    harAktiveTiltaksdeltakelser?: boolean;
+}
+
+export function useBrukerHarAktiveTiltaksdeltakelser(fnr: string) {
+    const url = '/veilarboppfolging/api/graphql';
+    const { data, error, isLoading } = useSWR<GraphqlResponse<BrukerStatusResponse>, ErrorMessage>(
+        fnr ? `brukerHarAktiveTiltaksdeltakelser/${fnr}` : null,
+        () =>
+            fetchWithPost(url, {
+                query: aktiveTiltaksdeltakelserGraphqlQuery,
+                variables: { fnr }
+            }),
         swrOptions
     );
     return { data, isLoading, error };

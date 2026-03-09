@@ -147,6 +147,14 @@ const mockOppfolgingsstatus: OppfolgingStatus = {
     servicegruppe: 'BKART'
 };
 
+const mockAktiveTiltaksdeltakelserResponse = {
+    data: {
+        brukerStatus: {
+            harAktiveTiltaksdeltakelser: true
+        }
+    }
+};
+
 export const veilarboppfolgingHandlers: RequestHandler[] = [
     http.post('/veilarboppfolging/api/tilordneveileder', async () => {
         await delay(defaultNetworkResponseDelay);
@@ -187,5 +195,9 @@ export const veilarboppfolgingHandlers: RequestHandler[] = [
     http.post('/veilarboppfolging/api/v3/oppfolging/hent-status', async () => {
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json(mockOppfolging);
+    }),
+    http.post('/veilarboppfolging/api/graphql', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(mockAktiveTiltaksdeltakelserResponse);
     })
 ];
