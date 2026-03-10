@@ -107,13 +107,15 @@ function Historikk() {
     }
 
     const innstillingHistorikk =
-        innstillingsHistorikkData?.map(ih => {
-            return {
-                ...ih,
-                opprettetAvBrukerNavn: veilederListeData?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn,
-                tildeltVeilederNavn: veilederListeData?.find(vd => ih.tildeltVeilederId === vd.ident)?.navn
-            };
-        }) || [];
+        innstillingsHistorikkData
+            ?.filter(ih => ih.type !== 'OPPFOLGINGSENHET_ENDRET')
+            .map(ih => {
+                return {
+                    ...ih,
+                    opprettetAvBrukerNavn: veilederListeData?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn,
+                    tildeltVeilederNavn: veilederListeData?.find(vd => ih.tildeltVeilederId === vd.ident)?.navn
+                };
+            }) || [];
 
     const oppgaveHistorikk =
         oppgaveHistorikkData?.map(ih => {

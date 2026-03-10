@@ -1,7 +1,6 @@
 import { ReactElement } from 'react';
 import OppgaveHistorikkKomponent from './components/oppgavehistorikk';
 import InnstillingsHistorikkKomponent from './components/innstillingshistorikk';
-import { OppfolgingEnhetEndret } from './components/oppfolgingEndret';
 import KontorEndringHistorikkKomponent from './components/kontorEndringHistorikk';
 import dayjs from 'dayjs';
 import { InnstillingHistorikkInnslag } from '../../../api/veilarboppfolging';
@@ -41,18 +40,8 @@ interface HistorikkVisningProps {
     kontorEndringHistorikk: KontorHistorikkEntry[];
 }
 
-function mapTilKomponent(historikk: Historikk, indeks: number, indeksForNyesteEnhetEndring: number): ReactElement {
+function mapTilKomponent(historikk: Historikk, indeks: number): ReactElement {
     if (erInnstillingshistorikk(historikk)) {
-        if (historikk.innslag.type === 'OPPFOLGINGSENHET_ENDRET') {
-            return (
-                <OppfolgingEnhetEndret
-                    historikkElement={historikk.innslag}
-                    erGjeldendeEnhet={indeks === indeksForNyesteEnhetEndring}
-                    key={indeks}
-                />
-            );
-        }
-
         return <InnstillingsHistorikkKomponent innstillingsHistorikk={historikk.innslag} key={indeks} />;
     } else if (erOppgaveHistorikk(historikk)) {
         return <OppgaveHistorikkKomponent oppgaveHistorikk={historikk.innslag} key={indeks} />;
@@ -145,17 +134,13 @@ function HistorikkVisning({
     }
 
     if (historikk.length === 1) {
-        return mapTilKomponent(historikk[0], 0, 0);
+        return mapTilKomponent(historikk[0], 0);
     }
-
-    const indexForNyesteEnhetEndring = historikk.findIndex(
-        h => erInnstillingshistorikk(h) && h.innslag.type === 'OPPFOLGINGSENHET_ENDRET'
-    );
 
     return (
         <ul className="space-y-4">
             {historikk.map((elem, idx) => (
-                <li key={`historikk_visning_${idx}`}>{mapTilKomponent(elem, idx, indexForNyesteEnhetEndring)}</li>
+                <li key={`historikk_visning_${idx}`}>{mapTilKomponent(elem, idx)}</li>
             ))}
         </ul>
     );
