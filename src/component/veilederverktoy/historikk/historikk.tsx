@@ -10,6 +10,8 @@ import { EskaleringsvarselHistorikkInnslag, useEskaleringsvarselHistorikk } from
 import { useVeilederDataListe } from '../../../api/veilarbveileder';
 import { isNonEmptyArray } from '../../../util/type/type-guards';
 import { getVeilederIdents } from './getIdents';
+import { hentAlleKontor, KontorHistorikkEntry } from '../../../api/ao-oppfolgingskontor';
+import useSWR from 'swr';
 
 function eskaleringsvarselHistorikkTilEvent(
     historikk: EskaleringsvarselHistorikkInnslag[] | undefined
@@ -54,6 +56,16 @@ function Historikk() {
     const { eskaleringsvarselHistorikkData, eskaleringsvarselHistorikkError, eskaleringsvarselHistorikkLoading } =
         useEskaleringsvarselHistorikk(brukerFnr);
 
+    const {
+        data: alleKontorData,
+        error: kontorHistorikkError,
+        isLoading: kontorHistorikkLoading
+    } = useSWR(brukerFnr ? `/kontorer/${brukerFnr}` : null, () => hentAlleKontor(brukerFnr!));
+
+    const kontorHistorikkData: KontorHistorikkEntry[] = (alleKontorData?.data?.data?.kontorHistorikk || []).filter(
+        ke => ke.kontorType === 'ARBEIDSOPPFOLGING'
+    );
+
     const [veilederIdenter, setVeilederIdenter] = useState<string[] | null>(null);
     const { veilederListeData, veilederListeLoading } = useVeilederDataListe(veilederIdenter);
 
@@ -82,9 +94,15 @@ function Historikk() {
         innstillingsHistorikkLoading ||
         oppgaveHistorikkLoaing ||
         eskaleringsvarselHistorikkLoading ||
+        kontorHistorikkLoading ||
         veilederListeLoading;
 
-    if (innstillingsHistorikkError || oppgaveHistorikkError || eskaleringsvarselHistorikkError) {
+    if (
+        innstillingsHistorikkError ||
+        oppgaveHistorikkError ||
+        eskaleringsvarselHistorikkError ||
+        kontorHistorikkError
+    ) {
         return <Alert variant="error">Noe gikk galt</Alert>;
     }
 
@@ -114,6 +132,8 @@ function Historikk() {
             };
         }) || [];
 
+    const kontorEndringHistorikk = kontorHistorikkData || [];
+
     return (
         <VeilederVerktoyModal className="historikk__modal" tittel="Historikk">
             <div className="prosess">
@@ -122,6 +142,7 @@ function Historikk() {
                     innstillingHistorikk={innstillingHistorikk}
                     oppgaveHistorikk={oppgaveHistorikk}
                     eskaleringsvarselHistorikk={eskaleringsvarselHistorikk}
+                    kontorEndringHistorikk={kontorEndringHistorikk}
                 />
             </div>
         </VeilederVerktoyModal>

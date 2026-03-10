@@ -2,14 +2,16 @@ import { ReactElement } from 'react';
 import OppgaveHistorikkKomponent from './components/oppgavehistorikk';
 import InnstillingsHistorikkKomponent from './components/innstillingshistorikk';
 import { OppfolgingEnhetEndret } from './components/oppfolgingEndret';
+import KontorEndringHistorikkKomponent from './components/kontorEndringHistorikk';
 import dayjs from 'dayjs';
 import { InnstillingHistorikkInnslag } from '../../../api/veilarboppfolging';
 import { OppgaveHistorikkInnslag } from '../../../api/veilarboppgave';
 import { EskaleringsvarselHistorikkInnslag } from '../../../api/veilarbdialog';
+import { KontorHistorikkEntry } from '../../../api/ao-oppfolgingskontor';
 import EskaleringsvarselHistorikkKomponent from './components/eskaleringsvarselHistorikk';
 import { BodyShort, Skeleton } from '@navikt/ds-react';
 
-type Historikk = InnstillingHistorikk | OppgaveHistorikk | EskaleringsvarselHistorikk;
+type Historikk = InnstillingHistorikk | OppgaveHistorikk | EskaleringsvarselHistorikk | KontorEndringHistorikk;
 
 interface InnstillingHistorikk {
     type: 'innstilling';
@@ -26,11 +28,17 @@ interface EskaleringsvarselHistorikk {
     innslag: EskaleringsvarselHistorikkInnslag;
 }
 
+interface KontorEndringHistorikk {
+    type: 'kontorEndring';
+    innslag: KontorHistorikkEntry;
+}
+
 interface HistorikkVisningProps {
     isLoading: boolean;
     innstillingHistorikk: InnstillingHistorikkInnslag[];
     oppgaveHistorikk: OppgaveHistorikkInnslag[];
     eskaleringsvarselHistorikk: EskaleringsvarselHistorikkInnslag[];
+    kontorEndringHistorikk: KontorHistorikkEntry[];
 }
 
 function mapTilKomponent(historikk: Historikk, indeks: number, indeksForNyesteEnhetEndring: number): ReactElement {
@@ -50,6 +58,8 @@ function mapTilKomponent(historikk: Historikk, indeks: number, indeksForNyesteEn
         return <OppgaveHistorikkKomponent oppgaveHistorikk={historikk.innslag} key={indeks} />;
     } else if (erEskaleringsvarselHistorikk(historikk)) {
         return <EskaleringsvarselHistorikkKomponent innslag={historikk.innslag} key={indeks} />;
+    } else if (erKontorEndringHistorikk(historikk)) {
+        return <KontorEndringHistorikkKomponent kontorEndring={historikk.innslag} key={indeks} />;
     } else {
         return <></>;
     }
@@ -58,13 +68,15 @@ function mapTilKomponent(historikk: Historikk, indeks: number, indeksForNyesteEn
 function opprettHistorikk(
     innstillingHistorikkInnslag: InnstillingHistorikkInnslag[],
     oppgaveHistorikkInnslag: OppgaveHistorikkInnslag[],
-    eskaleringsvarselHistorikkInnslag: EskaleringsvarselHistorikkInnslag[]
+    eskaleringsvarselHistorikkInnslag: EskaleringsvarselHistorikkInnslag[],
+    kontorEndringInnslag: KontorHistorikkEntry[]
 ): Historikk[] {
     let historikk: Historikk[] = [];
 
     historikk = historikk.concat(innstillingHistorikkInnslag.map(ih => ({ type: 'innstilling', innslag: ih })));
     historikk = historikk.concat(oppgaveHistorikkInnslag.map(oh => ({ type: 'oppgave', innslag: oh })));
     historikk = historikk.concat(eskaleringsvarselHistorikkInnslag.map(eh => ({ type: 'eskalering', innslag: eh })));
+    historikk = historikk.concat(kontorEndringInnslag.map(ke => ({ type: 'kontorEndring', innslag: ke })));
 
     return historikk;
 }
@@ -76,6 +88,8 @@ function hentDato(historikk: Historikk): string {
         return historikk.innslag.dato;
     } else if (erEskaleringsvarselHistorikk(historikk)) {
         return historikk.innslag.avsluttetDato || historikk.innslag.opprettetDato;
+    } else if (erKontorEndringHistorikk(historikk)) {
+        return historikk.innslag.endretTidspunkt;
     } else {
         return new Date(0).toISOString();
     }
@@ -93,20 +107,28 @@ function erEskaleringsvarselHistorikk(historikk: Historikk): historikk is Eskale
     return historikk.type === 'eskalering';
 }
 
+function erKontorEndringHistorikk(historikk: Historikk): historikk is KontorEndringHistorikk {
+    return historikk.type === 'kontorEndring';
+}
+
 function HistorikkVisning({
     isLoading,
     innstillingHistorikk,
     oppgaveHistorikk,
-    eskaleringsvarselHistorikk
+    eskaleringsvarselHistorikk,
+    kontorEndringHistorikk
 }: HistorikkVisningProps) {
-    const historikk = opprettHistorikk(innstillingHistorikk, oppgaveHistorikk, eskaleringsvarselHistorikk).sort(
-        (h1, h2) => {
-            const d1 = hentDato(h1);
-            const d2 = hentDato(h2);
+    const historikk = opprettHistorikk(
+        innstillingHistorikk,
+        oppgaveHistorikk,
+        eskaleringsvarselHistorikk,
+        kontorEndringHistorikk
+    ).sort((h1, h2) => {
+        const d1 = hentDato(h1);
+        const d2 = hentDato(h2);
 
-            return dayjs(d2).diff(d1);
-        }
-    );
+        return dayjs(d2).diff(d1);
+    });
 
     if (isLoading) {
         return (
