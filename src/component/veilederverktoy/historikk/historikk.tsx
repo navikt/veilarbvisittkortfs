@@ -60,7 +60,7 @@ function Historikk() {
         data: alleKontorData,
         error: kontorHistorikkError,
         isLoading: kontorHistorikkLoading
-    } = useSWR(brukerFnr ? `/kontorer/${brukerFnr}` : null, () => hentAlleKontor(brukerFnr!));
+    } = useSWR(brukerFnr ? `/kontorer/${brukerFnr}` : null, () => hentAlleKontor(brukerFnr as string));
 
     const kontorHistorikkData: KontorHistorikkEntry[] = (alleKontorData?.data?.data?.kontorHistorikk || []).filter(
         ke => ke.kontorType === 'ARBEIDSOPPFOLGING'
