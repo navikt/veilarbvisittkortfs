@@ -134,7 +134,14 @@ function Historikk() {
             };
         }) || [];
 
-    const kontorEndringHistorikk = kontorHistorikkData || [];
+    const kontorEndringHistorikk = kontorHistorikkData.map((ke, idx) => {
+        const forrigeKontor = kontorHistorikkData[idx + 1];
+        return {
+            ...ke,
+            fraKontorId: forrigeKontor?.kontorId,
+            fraKontorNavn: forrigeKontor?.kontorNavn
+        };
+    });
 
     return (
         <VeilederVerktoyModal className="historikk__modal" tittel="Historikk">

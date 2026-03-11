@@ -105,6 +105,8 @@ export interface KontorHistorikkEntry {
     endretAvType: KontorEndretAvType;
     endretTidspunkt: string;
     endringsType: KontorEndringsType;
+    fraKontorId?: string;
+    fraKontorNavn?: string;
 }
 
 export function hentAlleKontor(ident: string) {
