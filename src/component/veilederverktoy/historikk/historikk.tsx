@@ -10,7 +10,7 @@ import { EskaleringsvarselHistorikkInnslag, useEskaleringsvarselHistorikk } from
 import { useVeilederDataListe } from '../../../api/veilarbveileder';
 import { isNonEmptyArray } from '../../../util/type/type-guards';
 import { getVeilederIdents } from './getIdents';
-import { hentAlleKontor, KontorHistorikkEntry } from '../../../api/ao-oppfolgingskontor';
+import { hentAlleKontor } from '../../../api/ao-oppfolgingskontor';
 import useSWR from 'swr';
 
 function eskaleringsvarselHistorikkTilEvent(
@@ -62,7 +62,7 @@ function Historikk() {
         isLoading: kontorHistorikkLoading
     } = useSWR(brukerFnr ? `/kontorer/${brukerFnr}` : null, () => hentAlleKontor(brukerFnr as string));
 
-    const kontorHistorikkData: KontorHistorikkEntry[] = (alleKontorData?.data?.data?.kontorHistorikk || []).filter(
+    const kontorHistorikkData = (alleKontorData?.data?.data?.kontorHistorikk || []).filter(
         ke => ke.kontorType === 'ARBEIDSOPPFOLGING'
     );
 
@@ -90,10 +90,10 @@ function Historikk() {
             });
 
             if (isNonEmptyArray(veilederIdentListe)) {
-                // eslint-disable-next-line react-hooks/set-state-in-effect
                 setVeilederIdenter(veilederIdentListe);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         innstillingsHistorikkData,
         oppgaveHistorikkData,
@@ -102,8 +102,7 @@ function Historikk() {
         innstillingsHistorikkLoading,
         oppgaveHistorikkLoaing,
         eskaleringsvarselHistorikkLoading,
-        kontorHistorikkLoading,
-        kontorHistorikkData
+        kontorHistorikkLoading
     ]);
 
     const isLoading =
