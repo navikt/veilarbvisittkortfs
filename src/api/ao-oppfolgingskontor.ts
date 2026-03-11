@@ -76,11 +76,11 @@ export type KontorEndringsType =
     /* Både Arbeidsoppfølgingskontor og GT kontor  */
     | 'FikkSkjerming'
     | 'FikkAddressebeskyttelse'
+    | 'MistetSkjerming'
 
     /* GT kontor */
     | 'GTKontorVedOppfolgingStart'
     | 'EndretBostedsadresse'
-    | 'MistetSkjerming'
     | 'AddressebeskyttelseMistet'
 
     /* ArenaKontor */

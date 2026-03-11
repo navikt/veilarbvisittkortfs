@@ -6,17 +6,6 @@ interface KontorEndringHistorikkKomponentProps {
     kontorEndring: KontorHistorikkEntry;
 }
 
-const automatiskRutetTyper: Set<KontorEndringsType> = new Set([
-    'AutomatiskRutetTilNOE',
-    'AutomatiskNorgRuting',
-    'AutomatiskNorgRutingFallback',
-    'AutomatiskRutingArbeidsgiverFallback',
-    'AutomatiskRutetTilNavItManglerGt',
-    'AutomatiskRutetTilNavItGtErLand',
-    'AutomatiskRutetTilNavItUgyldigGt',
-    'AutomatiskRutetTilNavItIngenKontorFunnetForGt'
-]);
-
 const endringstypeTekst: Partial<Record<KontorEndringsType, string>> = {
     FlyttetAvVeileder: 'Bytte av oppfølgingskontor',
     StartKontorSattManueltAvVeileder: 'Oppfølgingskontor satt manuelt ved start',
@@ -29,6 +18,7 @@ const endringstypeTekst: Partial<Record<KontorEndringsType, string>> = {
     AutomatiskRutetTilNavItUgyldigGt: 'Automatisk rutet til oppfølgingskontor',
     AutomatiskRutetTilNavItIngenKontorFunnetForGt: 'Automatisk rutet til oppfølgingskontor',
     FikkSkjerming: 'Kontor endret grunnet skjerming',
+    MistetSkjerming: 'Kontor endret grunnet opphør av skjerming',
     FikkAddressebeskyttelse: 'Kontor endret grunnet adressebeskyttelse'
 };
 
@@ -55,7 +45,6 @@ function endretAvTekst(kontorEndring: KontorHistorikkEntry): string {
 function KontorEndringHistorikkKomponent({ kontorEndring }: KontorEndringHistorikkKomponentProps) {
     const tittel = hentTittel(kontorEndring);
     const erBytteAvKontor = kontorEndring.endringsType === 'FlyttetAvVeileder';
-    const erAutomatiskRutet = automatiskRutetTyper.has(kontorEndring.endringsType);
 
     return (
         <div className="historikk__elem">
@@ -63,16 +52,17 @@ function KontorEndringHistorikkKomponent({ kontorEndring }: KontorEndringHistori
                 {tittel}
             </BodyShort>
             {erBytteAvKontor && kontorEndring.fraKontorId ? (
-                <BodyShort size="small">
-                    Gammelt kontor: {kontorEndring.fraKontorId} - {kontorEndring.fraKontorNavn}
-                </BodyShort>
-            ) : erAutomatiskRutet ? (
-                <BodyShort size="small">
-                    Automatisk rutet til {kontorEndring.kontorId} - {kontorEndring.kontorNavn}
-                </BodyShort>
+                <>
+                    <BodyShort size="small">
+                        Gammelt kontor: {kontorEndring.fraKontorId} - {kontorEndring.fraKontorNavn}
+                    </BodyShort>
+                    <BodyShort size="small">
+                        Nytt kontor: {kontorEndring.kontorId} - {kontorEndring.kontorNavn}
+                    </BodyShort>
+                </>
             ) : (
                 <BodyShort size="small">
-                    {kontorEndring.kontorId} - {kontorEndring.kontorNavn}
+                    Nytt kontor: {kontorEndring.kontorId} - {kontorEndring.kontorNavn}
                 </BodyShort>
             )}
             <Detail>{`${toSimpleDateStr(kontorEndring.endretTidspunkt)} ${endretAvTekst(kontorEndring)}`}</Detail>
