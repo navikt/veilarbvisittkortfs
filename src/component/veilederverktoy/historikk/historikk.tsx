@@ -71,7 +71,12 @@ function Historikk() {
 
     useEffect(() => {
         const skalHenteVeilederDataListe =
-            !(innstillingsHistorikkLoading || oppgaveHistorikkLoaing || eskaleringsvarselHistorikkLoading) &&
+            !(
+                innstillingsHistorikkLoading ||
+                oppgaveHistorikkLoaing ||
+                eskaleringsvarselHistorikkLoading ||
+                kontorHistorikkLoading
+            ) &&
             innstillingsHistorikkData &&
             oppgaveHistorikkData &&
             eskaleringsvarselHistorikkData;
@@ -80,7 +85,8 @@ function Historikk() {
             const veilederIdentListe = getVeilederIdents({
                 innstillingsHistorikkData,
                 oppgaveHistorikkData,
-                eskaleringsvarselHistorikkData
+                eskaleringsvarselHistorikkData,
+                kontorEndringHistorikkData: kontorHistorikkData
             });
 
             if (isNonEmptyArray(veilederIdentListe)) {
@@ -88,7 +94,17 @@ function Historikk() {
                 setVeilederIdenter(veilederIdentListe);
             }
         }
-    }, [innstillingsHistorikkData, oppgaveHistorikkData, eskaleringsvarselHistorikkData]);
+    }, [
+        innstillingsHistorikkData,
+        oppgaveHistorikkData,
+        eskaleringsvarselHistorikkData,
+        alleKontorData,
+        innstillingsHistorikkLoading,
+        oppgaveHistorikkLoaing,
+        eskaleringsvarselHistorikkLoading,
+        kontorHistorikkLoading,
+        kontorHistorikkData
+    ]);
 
     const isLoading =
         innstillingsHistorikkLoading ||
@@ -139,7 +155,11 @@ function Historikk() {
         return {
             ...ke,
             fraKontorId: forrigeKontor?.kontorId,
-            fraKontorNavn: forrigeKontor?.kontorNavn
+            fraKontorNavn: forrigeKontor?.kontorNavn,
+            endretAvBrukerNavn:
+                ke.endretAvType === 'VEILEDER'
+                    ? veilederListeData?.find(vd => ke.endretAv === vd.ident)?.navn
+                    : undefined
         };
     });
 

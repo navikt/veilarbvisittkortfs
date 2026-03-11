@@ -20,14 +20,14 @@ const automatiskRutetTyper: Set<KontorEndringsType> = new Set([
 const endringstypeTekst: Partial<Record<KontorEndringsType, string>> = {
     FlyttetAvVeileder: 'Bytte av oppfølgingskontor',
     StartKontorSattManueltAvVeileder: 'Oppfølgingskontor satt manuelt ved start',
-    AutomatiskRutetTilNOE: 'Automatisk rutet til',
-    AutomatiskNorgRuting: 'Automatisk rutet til',
-    AutomatiskNorgRutingFallback: 'Automatisk rutet til',
-    AutomatiskRutingArbeidsgiverFallback: 'Automatisk rutet til',
-    AutomatiskRutetTilNavItManglerGt: 'Automatisk rutet til',
-    AutomatiskRutetTilNavItGtErLand: 'Automatisk rutet til',
-    AutomatiskRutetTilNavItUgyldigGt: 'Automatisk rutet til',
-    AutomatiskRutetTilNavItIngenKontorFunnetForGt: 'Automatisk rutet til',
+    AutomatiskRutetTilNOE: 'Automatisk rutet til oppfølgingskontor',
+    AutomatiskNorgRuting: 'Automatisk rutet til oppfølgingskontor',
+    AutomatiskNorgRutingFallback: 'Automatisk rutet til oppfølgingskontor',
+    AutomatiskRutingArbeidsgiverFallback: 'Automatisk rutet til oppfølgingskontor',
+    AutomatiskRutetTilNavItManglerGt: 'Automatisk rutet til oppfølgingskontor',
+    AutomatiskRutetTilNavItGtErLand: 'Automatisk rutet til oppfølgingskontor',
+    AutomatiskRutetTilNavItUgyldigGt: 'Automatisk rutet til oppfølgingskontor',
+    AutomatiskRutetTilNavItIngenKontorFunnetForGt: 'Automatisk rutet til oppfølgingskontor',
     FikkSkjerming: 'Kontor endret grunnet skjerming',
     FikkAddressebeskyttelse: 'Kontor endret grunnet adressebeskyttelse'
 };
@@ -37,14 +37,14 @@ function hentTittel(kontorEndring: KontorHistorikkEntry): string {
     if (kontorEndring.endringsType === 'FlyttetAvVeileder') {
         return `${baseTekst} til ${kontorEndring.kontorId} - ${kontorEndring.kontorNavn}`;
     }
-    if (automatiskRutetTyper.has(kontorEndring.endringsType)) {
-        return `${baseTekst} ${kontorEndring.kontorId} - ${kontorEndring.kontorNavn}`;
-    }
     return baseTekst;
 }
 
 function endretAvTekst(kontorEndring: KontorHistorikkEntry): string {
     if (kontorEndring.endretAvType === 'VEILEDER') {
+        if (kontorEndring.endretAvBrukerNavn) {
+            return `av ${kontorEndring.endretAv} (${kontorEndring.endretAvBrukerNavn})`;
+        }
         return `av ${kontorEndring.endretAv}`;
     } else if (kontorEndring.endretAvType === 'SYSTEM') {
         return 'av system (automatisk oppdatering)';
@@ -55,6 +55,7 @@ function endretAvTekst(kontorEndring: KontorHistorikkEntry): string {
 function KontorEndringHistorikkKomponent({ kontorEndring }: KontorEndringHistorikkKomponentProps) {
     const tittel = hentTittel(kontorEndring);
     const erBytteAvKontor = kontorEndring.endringsType === 'FlyttetAvVeileder';
+    const erAutomatiskRutet = automatiskRutetTyper.has(kontorEndring.endringsType);
 
     return (
         <div className="historikk__elem">
@@ -64,6 +65,10 @@ function KontorEndringHistorikkKomponent({ kontorEndring }: KontorEndringHistori
             {erBytteAvKontor && kontorEndring.fraKontorId ? (
                 <BodyShort size="small">
                     Gammelt kontor: {kontorEndring.fraKontorId} - {kontorEndring.fraKontorNavn}
+                </BodyShort>
+            ) : erAutomatiskRutet ? (
+                <BodyShort size="small">
+                    Automatisk rutet til {kontorEndring.kontorId} - {kontorEndring.kontorNavn}
                 </BodyShort>
             ) : (
                 <BodyShort size="small">

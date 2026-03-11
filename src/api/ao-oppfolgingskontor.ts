@@ -105,6 +105,7 @@ export interface KontorHistorikkEntry {
     endretAvType: KontorEndretAvType;
     endretTidspunkt: string;
     endringsType: KontorEndringsType;
+    endretAvBrukerNavn?: string;
     fraKontorId?: string;
     fraKontorNavn?: string;
 }
