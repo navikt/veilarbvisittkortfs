@@ -7,7 +7,11 @@ import { StringOrNothing } from '../../../util/type/utility-types';
 import { isNonEmptyArray } from '../../../util/type/type-guards';
 import { isString } from 'formik';
 
-type HistorikkInnslag = InnstillingHistorikkInnslag | OppgaveHistorikkInnslag | EskaleringsvarselHistorikkInnslag;
+type HistorikkInnslag =
+    | InnstillingHistorikkInnslag
+    | OppgaveHistorikkInnslag
+    | EskaleringsvarselHistorikkInnslag
+    | KontorHistorikkEntry;
 
 export const getVeilederIdents = ({
     innstillingsHistorikkData,
@@ -46,10 +50,11 @@ export const getVeilederIdents = ({
             (evhi: EskaleringsvarselHistorikkInnslag) => evhi.avsluttetAv,
             (evhi: EskaleringsvarselHistorikkInnslag) => /^[A-Z]\d{6}$/.test(evhi.avsluttetAv ?? '')
         ),
-        ...(kontorEndringHistorikkData
-            ?.filter(ke => ke.endretAvType === 'VEILEDER')
-            .map(ke => ke.endretAv)
-            .filter(item => isString(item)) ?? [])
+        ...tilIdentListe(
+            kontorEndringHistorikkData,
+            (ke: KontorHistorikkEntry) => ke.endretAv,
+            (ke: KontorHistorikkEntry) => ke.endretAvType === 'VEILEDER'
+        )
     ]);
 
 function tilIdentListe(
