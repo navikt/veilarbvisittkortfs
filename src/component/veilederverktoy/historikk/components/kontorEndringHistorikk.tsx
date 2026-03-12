@@ -8,7 +8,7 @@ interface KontorEndringHistorikkKomponentProps {
 
 const endringstypeTekst: Partial<Record<KontorEndringsType, string>> = {
     FlyttetAvVeileder: 'Bytte av oppfølgingskontor',
-    StartKontorSattManueltAvVeileder: 'Oppfølgingskontor satt manuelt ved start',
+    StartKontorSattManueltAvVeileder: 'Oppfølgingskontor satt manuelt ved start av oppfølging',
     AutomatiskRutetTilNOE: 'Automatisk rutet til oppfølgingskontor',
     AutomatiskNorgRuting: 'Automatisk rutet til oppfølgingskontor',
     AutomatiskNorgRutingFallback: 'Automatisk rutet til oppfølgingskontor',
@@ -23,11 +23,7 @@ const endringstypeTekst: Partial<Record<KontorEndringsType, string>> = {
 };
 
 function hentTittel(kontorEndring: KontorHistorikkEntry): string {
-    const baseTekst = endringstypeTekst[kontorEndring.endringsType] ?? 'Endring av oppfølgingskontor';
-    if (kontorEndring.endringsType === 'FlyttetAvVeileder') {
-        return `${baseTekst} til ${kontorEndring.kontorId} - ${kontorEndring.kontorNavn}`;
-    }
-    return baseTekst;
+    return endringstypeTekst[kontorEndring.endringsType] ?? 'Endring av oppfølgingskontor';
 }
 
 function endretAvTekst(kontorEndring: KontorHistorikkEntry): string {
