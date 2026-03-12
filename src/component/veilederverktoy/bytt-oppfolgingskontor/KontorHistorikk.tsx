@@ -1,18 +1,12 @@
-import { ExpansionCard, HStack, Skeleton } from '@navikt/ds-react';
+import { ExpansionCard, HStack, Skeleton, Tabs } from '@navikt/ds-react';
 import { ClockDashedIcon } from '@navikt/aksel-icons';
 import dayjs from 'dayjs';
-import { KontorEndringsType, KontorHistorikkEntry, KontorType } from '../../../api/ao-oppfolgingskontor';
+import { KontorEndringsType, KontorHistorikkEntry } from '../../../api/ao-oppfolgingskontor';
 import { useVeilederDataListe, VeilederData } from '../../../api/veilarbveileder';
 
 interface Props {
     kontorHistorikk: KontorHistorikkEntry[];
 }
-
-const kontorTypeNavn: Record<KontorType, string> = {
-    GEOGRAFISK_TILKNYTNING: 'GT-kontor',
-    ARENA: 'Arena',
-    ARBEIDSOPPFOLGING: 'Arbeidsoppfølgingskontor'
-};
 
 export const KontorHistorikk = ({ kontorHistorikk }: Props) => {
     const veilederIdenter = kontorHistorikk.filter(it => it.endretAvType === 'VEILEDER').map(it => it.endretAv);
@@ -29,6 +23,9 @@ export const KontorHistorikk = ({ kontorHistorikk }: Props) => {
             },
             {} as Record<string, string>
         ) || ({} as Record<string, string>);
+    const arbeidsoppfolgingskontorHistorikk = kontorHistorikk.filter(it => it.kontorType === 'ARBEIDSOPPFOLGING');
+    const gtkontorHistorikk = kontorHistorikk.filter(it => it.kontorType === 'GEOGRAFISK_TILKNYTNING');
+    const arenakontorHistorikk = kontorHistorikk.filter(it => it.kontorType === 'ARENA');
 
     return (
         <ExpansionCard size="small" className="mt-4 mb-4" aria-labelledby="Kontorhistorikk">
@@ -40,38 +37,81 @@ export const KontorHistorikk = ({ kontorHistorikk }: Props) => {
             </ExpansionCard.Header>
             <ExpansionCard.Content>
                 <div className="">
-                    {kontorHistorikk.map(historikkEntry => {
-                        return (
-                            <div
-                                className="first:rounded-t-lg last:rounded-b-lg p-2 odd:bg-gray-50 "
-                                key={historikkEntry.endretTidspunkt}
-                            >
-                                <div className="flex flex-row grid grid-flow-col grid-cols-12">
-                                    <span className="col-span-5 space-x-2 flex flex-col">
-                                        <span className="">
-                                            <span className="font-bold">{historikkEntry.kontorId}</span> -{' '}
-                                            {historikkEntry.kontorNavn}
-                                        </span>
-                                    </span>
-                                    <span className="col-span-4">{kontorTypeNavn[historikkEntry.kontorType]}</span>
-
-                                    <span className="col-span-3">
-                                        {dayjs(historikkEntry.endretTidspunkt).fromNow()}
-                                    </span>
-                                </div>
-                                <div>
-                                    <EndretAv
-                                        isLoading={veilederListeLoading}
-                                        navn={getNavn(historikkEntry, veilederIdentTilNavnMapping)}
-                                    />
-                                </div>
-                                <div className="text-gray-700">{endringstypeTekst[historikkEntry.endringsType]}</div>
-                            </div>
-                        );
-                    })}
+                    <Tabs defaultValue="arbeidsoppfolgingskontor" fill={true}>
+                        <Tabs.List>
+                            <Tabs.Tab value="arbeidsoppfolgingskontor" label="Arbeidsoppfølgingskontor" />
+                            <Tabs.Tab value="gtkontor" label="GT-kontor" />
+                            <Tabs.Tab value="arenakontor" label="Arena-kontor" />
+                        </Tabs.List>
+                        <Tabs.Panel value="arbeidsoppfolgingskontor">
+                            {arbeidsoppfolgingskontorHistorikk.length > 0 ? (
+                                arbeidsoppfolgingskontorHistorikk.map(historikkEntry => {
+                                    return KontorHistorikkInnslag(
+                                        historikkEntry,
+                                        veilederListeLoading,
+                                        veilederIdentTilNavnMapping
+                                    );
+                                })
+                            ) : (
+                                <p className="mt-2 text-gray-600">Ingen endringer for arbeidsoppfølgingskontor</p>
+                            )}
+                        </Tabs.Panel>
+                        <Tabs.Panel value="gtkontor">
+                            {gtkontorHistorikk.length > 0 ? (
+                                gtkontorHistorikk.map(historikkEntry => {
+                                    return KontorHistorikkInnslag(
+                                        historikkEntry,
+                                        veilederListeLoading,
+                                        veilederIdentTilNavnMapping
+                                    );
+                                })
+                            ) : (
+                                <p className="mt-2 text-gray-600">Ingen endringer for GT-kontor</p>
+                            )}
+                        </Tabs.Panel>
+                        <Tabs.Panel value="arenakontor">
+                            {arenakontorHistorikk.length > 0 ? (
+                                arenakontorHistorikk.map(historikkEntry => {
+                                    return KontorHistorikkInnslag(
+                                        historikkEntry,
+                                        veilederListeLoading,
+                                        veilederIdentTilNavnMapping
+                                    );
+                                })
+                            ) : (
+                                <p className="mt-2 text-gray-600">Ingen endringer for Arena-kontor</p>
+                            )}
+                        </Tabs.Panel>
+                    </Tabs>
                 </div>
             </ExpansionCard.Content>
         </ExpansionCard>
+    );
+};
+
+const KontorHistorikkInnslag = (
+    historikkEntry: KontorHistorikkEntry,
+    veilederListeLoading: boolean,
+    veilederIdentTilNavnMapping: Record<string, string>
+) => {
+    return (
+        <div className="first:rounded-t-lg last:rounded-b-lg p-2 odd:bg-gray-50 " key={historikkEntry.endretTidspunkt}>
+            <div className="flex flex-row grid grid-flow-col grid-cols-12">
+                <span className="col-span-8 space-x-2 flex flex-col">
+                    <span className="">
+                        <span className="font-bold">{historikkEntry.kontorId}</span> - {historikkEntry.kontorNavn}
+                    </span>
+                </span>
+                <span className="col-span-4">{dayjs(historikkEntry.endretTidspunkt).fromNow()}</span>
+            </div>
+            <div>
+                <EndretAv
+                    isLoading={veilederListeLoading}
+                    navn={getNavn(historikkEntry, veilederIdentTilNavnMapping)}
+                />
+            </div>
+            <div className="text-gray-700">{endringstypeTekst[historikkEntry.endringsType]}</div>
+        </div>
     );
 };
 
