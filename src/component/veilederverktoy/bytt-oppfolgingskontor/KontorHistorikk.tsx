@@ -11,7 +11,7 @@ interface Props {
 const kontorTypeNavn: Record<KontorType, string> = {
     GEOGRAFISK_TILKNYTNING: 'GT-kontor',
     ARENA: 'Arena',
-    ARBEIDSOPPFOLGING: 'Arbeidsoppfolgingskontor'
+    ARBEIDSOPPFOLGING: 'Arbeidsoppfølgingskontor'
 };
 
 export const KontorHistorikk = ({ kontorHistorikk }: Props) => {
@@ -82,7 +82,15 @@ const getNavn = (historikkEntry: KontorHistorikkEntry, veilederIdentTilNavnMappi
     } else if (historikkEntry.endretAvType == 'BRUKER') {
         return 'Bruker';
     } else if (historikkEntry.endretAvType == 'SYSTEM') {
-        return 'Arena';
+        if (historikkEntry.endretAv == 'PDL') {
+            return 'Persondataløsningen';
+        } else if (historikkEntry.endretAv == 'SKJERMING') {
+            return 'Skjermingsløsningen';
+        } else if (historikkEntry.endretAv == 'VEILARBOPPFOLGING') {
+            return 'Modia arbeidsrettet oppfølging';
+        } else {
+            return 'Arena';
+        }
     } else {
         return `${historikkEntry.endretAv} (${historikkEntry.endretAvType})`;
     }

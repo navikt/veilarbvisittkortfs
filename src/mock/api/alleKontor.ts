@@ -17,7 +17,7 @@ export const alleKontorResponse = {
                 kontorNavn: 'Nav NOE',
                 kontorType: 'ARBEIDSOPPFOLGING',
                 endringsType: 'AutomatiskRutetTilNOE',
-                endretAv: 'System',
+                endretAv: 'VEILARBOPPFOLGING',
                 endretAvType: 'SYSTEM',
                 endretTidspunkt: '2025-01-01T12:00:00Z'
             } as KontorHistorikkEntry,
@@ -26,7 +26,7 @@ export const alleKontorResponse = {
                 kontorNavn: 'Nav Nedland',
                 kontorType: 'ARENA',
                 endringsType: 'EndretIArena',
-                endretAv: 'Arena',
+                endretAv: 'ARENA',
                 endretAvType: 'SYSTEM',
                 endretTidspunkt: '2023-10-01T12:00:00Z'
             } as KontorHistorikkEntry
