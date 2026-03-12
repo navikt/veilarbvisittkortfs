@@ -2,20 +2,27 @@ import { filterUnique } from '../../../util/utils';
 import { InnstillingHistorikkInnslag } from '../../../api/veilarboppfolging';
 import { OppgaveHistorikkInnslag } from '../../../api/veilarboppgave';
 import { EskaleringsvarselHistorikkInnslag } from '../../../api/veilarbdialog';
+import { KontorHistorikkEntry } from '../../../api/ao-oppfolgingskontor';
 import { StringOrNothing } from '../../../util/type/utility-types';
 import { isNonEmptyArray } from '../../../util/type/type-guards';
 import { isString } from 'formik';
 
-type HistorikkInnslag = InnstillingHistorikkInnslag | OppgaveHistorikkInnslag | EskaleringsvarselHistorikkInnslag;
+type HistorikkInnslag =
+    | InnstillingHistorikkInnslag
+    | OppgaveHistorikkInnslag
+    | EskaleringsvarselHistorikkInnslag
+    | KontorHistorikkEntry;
 
 export const getVeilederIdents = ({
     innstillingsHistorikkData,
     oppgaveHistorikkData,
-    eskaleringsvarselHistorikkData
+    eskaleringsvarselHistorikkData,
+    kontorEndringHistorikkData
 }: {
     innstillingsHistorikkData: InnstillingHistorikkInnslag[];
     oppgaveHistorikkData: OppgaveHistorikkInnslag[];
     eskaleringsvarselHistorikkData: EskaleringsvarselHistorikkInnslag[];
+    kontorEndringHistorikkData?: KontorHistorikkEntry[];
 }) =>
     filterUnique([
         ...tilIdentListe(
@@ -42,6 +49,11 @@ export const getVeilederIdents = ({
             eskaleringsvarselHistorikkData,
             (evhi: EskaleringsvarselHistorikkInnslag) => evhi.avsluttetAv,
             (evhi: EskaleringsvarselHistorikkInnslag) => /^[A-Z]\d{6}$/.test(evhi.avsluttetAv ?? '')
+        ),
+        ...tilIdentListe(
+            kontorEndringHistorikkData,
+            (ke: KontorHistorikkEntry) => ke.endretAv,
+            (ke: KontorHistorikkEntry) => ke.endretAvType === 'VEILEDER'
         )
     ]);
 

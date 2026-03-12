@@ -76,11 +76,11 @@ export type KontorEndringsType =
     /* Både Arbeidsoppfølgingskontor og GT kontor  */
     | 'FikkSkjerming'
     | 'FikkAddressebeskyttelse'
+    | 'MistetSkjerming'
 
     /* GT kontor */
     | 'GTKontorVedOppfolgingStart'
     | 'EndretBostedsadresse'
-    | 'MistetSkjerming'
     | 'AddressebeskyttelseMistet'
 
     /* ArenaKontor */
@@ -105,6 +105,9 @@ export interface KontorHistorikkEntry {
     endretAvType: KontorEndretAvType;
     endretTidspunkt: string;
     endringsType: KontorEndringsType;
+    endretAvBrukerNavn?: string;
+    fraKontorId?: string;
+    fraKontorNavn?: string;
 }
 
 export function hentAlleKontor(ident: string) {
