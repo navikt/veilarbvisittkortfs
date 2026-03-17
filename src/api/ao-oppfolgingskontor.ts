@@ -76,6 +76,7 @@ export type KontorEndringsType =
     /* Både Arbeidsoppfølgingskontor og GT kontor  */
     | 'FikkSkjerming'
     | 'FikkAddressebeskyttelse'
+    | 'FikkNorskGt'
 
     /* GT kontor */
     | 'GTKontorVedOppfolgingStart'
