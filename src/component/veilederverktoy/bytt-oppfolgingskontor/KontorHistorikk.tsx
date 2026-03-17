@@ -39,8 +39,8 @@ export const KontorHistorikk = ({ kontorHistorikk }: Props) => {
                 <div className="">
                     <Tabs defaultValue="arbeidsoppfolgingskontor" fill={true}>
                         <Tabs.List>
-                            <Tabs.Tab value="arbeidsoppfolgingskontor" label="Arbeidsoppfølgingskontor" />
-                            <Tabs.Tab value="gtkontor" label="GT-kontor" />
+                            <Tabs.Tab value="arbeidsoppfolgingskontor" label="AO-kontor" />
+                            <Tabs.Tab value="gtkontor" label="Geografisk kontor" />
                             <Tabs.Tab value="arenakontor" label="Arena-kontor" />
                         </Tabs.List>
                         <Tabs.Panel value="arbeidsoppfolgingskontor">
@@ -122,17 +122,21 @@ const getNavn = (historikkEntry: KontorHistorikkEntry, veilederIdentTilNavnMappi
     } else if (historikkEntry.endretAvType == 'BRUKER') {
         return 'Bruker';
     } else if (historikkEntry.endretAvType == 'SYSTEM') {
-        if (historikkEntry.endretAv == 'PDL') {
-            return 'Persondataløsningen';
-        } else if (historikkEntry.endretAv == 'SKJERMING') {
-            return 'Skjermingsløsningen';
-        } else if (historikkEntry.endretAv == 'VEILARBOPPFOLGING') {
-            return 'Modia arbeidsrettet oppfølging';
-        } else {
-            return 'Arena';
-        }
+        return `System (${getSystemnavn(historikkEntry)})`;
     } else {
         return `${historikkEntry.endretAv} (${historikkEntry.endretAvType})`;
+    }
+};
+
+const getSystemnavn = (historikkEntry: KontorHistorikkEntry): string => {
+    if (historikkEntry.endretAv == 'PDL') {
+        return 'PDL';
+    } else if (historikkEntry.endretAv == 'SKJERMING') {
+        return 'Skjermingsløsningen';
+    } else if (historikkEntry.endretAv == 'VEILARBOPPFOLGING') {
+        return 'Modia arbeidsrettet oppfølging';
+    } else {
+        return 'Arena';
     }
 };
 

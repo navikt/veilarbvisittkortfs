@@ -28,7 +28,7 @@ export const BrukerFakta = ({ hentAlleKontorLoading, navn, kontorTilhorighet }: 
                 <div className="pl-4 flex flex-col flex-wrap gap-4">
                     <div className="flex border-b pb-2 space-x-2 flex-col border-surface-alt-3-moderate">
                         <BodyShort className="text-gray-700" as={'dt'} weight="semibold">
-                            Arbeidsrettet-oppfølgings-kontor
+                            Arbeidsrettet oppfølgingskontor
                         </BodyShort>
                         {hentAlleKontorLoading ? (
                             <Skeleton width={100} />
@@ -38,7 +38,7 @@ export const BrukerFakta = ({ hentAlleKontorLoading, navn, kontorTilhorighet }: 
                     </div>
                     <div className="flex border-b pb-2 border-surface-alt-3-moderate space-x-2 flex-col">
                         <BodyShort className="text-gray-700" as={'dt'} weight="semibold">
-                            Arenakontor
+                            Arena-kontor
                         </BodyShort>
                         {hentAlleKontorLoading ? (
                             <Skeleton width={100} />
@@ -49,7 +49,7 @@ export const BrukerFakta = ({ hentAlleKontorLoading, navn, kontorTilhorighet }: 
                     <div className="flex pb-2 space-x-2 flex-col">
                         <div className="flex gap-2 items-center">
                             <BodyShort className="text-gray-700" as={'dt'} weight="semibold">
-                                Geografisk tilknyttet kontor
+                                Geografisk kontor
                             </BodyShort>
                             <HelpText>Samme som "Geografisk enhet"</HelpText>
                         </div>
