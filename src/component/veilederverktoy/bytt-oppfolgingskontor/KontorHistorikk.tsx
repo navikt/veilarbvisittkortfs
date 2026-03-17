@@ -179,7 +179,8 @@ const endringstypeTekst: Record<KontorEndringsType, string> = {
     MistetSkjerming: 'Bruker er ikke lenger skjermet',
     PATCH: 'Kontor ble migrert fra Arena',
     StartKontorSattManueltAvVeileder: 'Kontor ble manuelt satt av en veileder ved start av oppfølging',
-    TidligArenaKontorVedOppfolgingStart: 'Brukers kontor i Arena ved start av oppfølging'
+    TidligArenaKontorVedOppfolgingStart: 'Brukers kontor i Arena ved start av oppfølging',
+    FikkNorskGt: 'Bruker ble rutet fra NAV-IT til geografisk kontor'
 };
 
 export default KontorHistorikk;
