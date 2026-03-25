@@ -33,7 +33,7 @@
     },
     "dependencies": {
         "@navikt/aksel-icons": "7.31.0",
-        "@navikt/ds-css": "7.31.0",
+        "@navikt/ds-css": "^7.31.0",
         "@navikt/ds-react": "7.31.0",
         "@navikt/ds-tailwind": "^7.31.0",
         "@navikt/navspa": "7.1.0",
@@ -50,6 +50,7 @@
     },
     "devDependencies": {
         "@eslint/js": "9.39.1",
+        "@navikt/aksel": "^8.8.0",
         "@testing-library/react": "16.3.0",
         "@types/react": "19.1.10",
         "@types/react-dom": "19.1.7",
