@@ -1,6 +1,7 @@
 import { Alert, BodyShort, Button } from '@navikt/ds-react';
 import { KvittertKontor } from '../../../api/ao-oppfolgingskontor';
 import { ArrowRightIcon } from '@navikt/aksel-icons';
+import { useModalStore } from '../../../store/modal-store';
 
 export interface KontorSkiftetKvittering {
     fraKontor: KvittertKontor;
@@ -8,6 +9,7 @@ export interface KontorSkiftetKvittering {
 }
 
 export const ByttOppfolgingskontorKvittering = ({ kvittering }: { kvittering: KontorSkiftetKvittering }) => {
+    const { hideModal } = useModalStore();
     return (
         <div className="space-y-4">
             <div className="mt-4 flex space-x-4 items-center">
@@ -22,7 +24,7 @@ export const ByttOppfolgingskontorKvittering = ({ kvittering }: { kvittering: Ko
             <Alert variant="success" size={'small'}>
                 <BodyShort>Bytte av oppfølgingskontor er registrert</BodyShort>
             </Alert>
-            <Button size="small" variant="primary">
+            <Button size="small" variant="primary" onClick={hideModal}>
                 Lukk
             </Button>
         </div>
