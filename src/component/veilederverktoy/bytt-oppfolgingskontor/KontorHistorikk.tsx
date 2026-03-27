@@ -53,7 +53,7 @@ export const KontorHistorikk = ({ kontorHistorikk }: Props) => {
                                     );
                                 })
                             ) : (
-                                <p className="mt-2 text-gray-600">Ingen endringer for arbeidsoppfølgingskontor</p>
+                                <p className="mt-2 text-ax-neutral-700">Ingen endringer for arbeidsoppfølgingskontor</p>
                             )}
                         </Tabs.Panel>
                         <Tabs.Panel value="gtkontor">
@@ -66,7 +66,7 @@ export const KontorHistorikk = ({ kontorHistorikk }: Props) => {
                                     );
                                 })
                             ) : (
-                                <p className="mt-2 text-gray-600">Ingen endringer for GT-kontor</p>
+                                <p className="mt-2 text-ax-neutral-700">Ingen endringer for GT-kontor</p>
                             )}
                         </Tabs.Panel>
                         <Tabs.Panel value="arenakontor">
@@ -79,7 +79,7 @@ export const KontorHistorikk = ({ kontorHistorikk }: Props) => {
                                     );
                                 })
                             ) : (
-                                <p className="mt-2 text-gray-600">Ingen endringer for Arena-kontor</p>
+                                <p className="mt-2 text-ax-neutral-700">Ingen endringer for Arena-kontor</p>
                             )}
                         </Tabs.Panel>
                     </Tabs>
@@ -95,11 +95,14 @@ const KontorHistorikkInnslag = (
     veilederIdentTilNavnMapping: Record<string, string>
 ) => {
     return (
-        <div className="first:rounded-t-lg last:rounded-b-lg p-2 odd:bg-gray-50 " key={historikkEntry.endretTidspunkt}>
+        <div
+            className="first:rounded-t-lg last:rounded-b-lg p-2 odd:bg-ax-neutral-100 "
+            key={historikkEntry.endretTidspunkt}
+        >
             <div className="flex flex-row grid grid-flow-col grid-cols-12">
                 <span className="col-span-8 space-x-2 flex flex-col">
                     <span className="">
-                        <span className="font-bold">{historikkEntry.kontorId}</span> - {historikkEntry.kontorNavn}
+                        <span className="font-ax-bold">{historikkEntry.kontorId}</span> - {historikkEntry.kontorNavn}
                     </span>
                 </span>
                 <span className="col-span-4">{dayjs(historikkEntry.endretTidspunkt).fromNow()}</span>
@@ -110,7 +113,7 @@ const KontorHistorikkInnslag = (
                     navn={getNavn(historikkEntry, veilederIdentTilNavnMapping)}
                 />
             </div>
-            <div className="text-gray-700">{endringstypeTekst[historikkEntry.endringsType]}</div>
+            <div className="text-ax-neutral-800">{endringstypeTekst[historikkEntry.endringsType]}</div>
         </div>
     );
 };
@@ -143,13 +146,13 @@ const getSystemnavn = (historikkEntry: KontorHistorikkEntry): string => {
 const EndretAv = ({ isLoading, navn }: { isLoading: boolean; navn: string }) => {
     if (isLoading) {
         return (
-            <span className="text-gray-700 flex space-x-4">
+            <span className="text-ax-neutral-800 flex space-x-4">
                 <span>Endret av:</span>
                 <Skeleton variant="text" width={'40%'} />
             </span>
         );
     }
-    return <span className="text-gray-700">Endret av: {navn}</span>;
+    return <span className="text-ax-neutral-800">Endret av: {navn}</span>;
 };
 
 const endringstypeTekst: Record<KontorEndringsType, string> = {
