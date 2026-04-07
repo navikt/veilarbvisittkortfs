@@ -9,8 +9,8 @@ export const settOppfolgingskontor: RequestHandler = http.post(`${baseUrl}/api/k
     const kontorId = ((await request.json()) as ArbeidsOppfolgingKontorDTO).kontorId;
     await delay(defaultNetworkResponseDelay);
     return HttpResponse.json({
-        tilKontor: { kontorId, kontorNavn: 'Nytt kontor' },
-        fraKontor: { kontorId, kontorNavn: 'Gammelt Kontor' }
+        tilKontor: { kontorId, kontorNavn: 'NAV Gamle Oslo' },
+        fraKontor: { kontorId, kontorNavn: 'Nav Halden-Aremark' }
     });
 });
 
