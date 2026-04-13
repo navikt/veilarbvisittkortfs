@@ -113,7 +113,7 @@ function Etiketter({ brukerFnr }: { brukerFnr: string }) {
     }
 
     return (
-        <HStack className="etikett-container" gap="2" wrap>
+        <HStack className="etikett-container" gap="space-2" wrap>
             <BaseDod visible={!!personalia?.dodsdato}>Død</BaseDod>
             <Advarsel visible={!!personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>
             <Advarsel visible={!!personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
