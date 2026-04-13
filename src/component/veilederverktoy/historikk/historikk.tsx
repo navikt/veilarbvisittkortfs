@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import HistorikkVisning from './historikk-visning';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { Alert } from '@navikt/ds-react';
@@ -52,7 +52,7 @@ function Historikk() {
 
     const { innstillingsHistorikkData, innstillingsHistorikkLoading, innstillingsHistorikkError } =
         useInnstillingsHistorikk(brukerFnr);
-    const { oppgaveHistorikkData, oppgaveHistorikkLoaing, oppgaveHistorikkError } = useOppgaveHistorikk(brukerFnr);
+    const { oppgaveHistorikkData, oppgaveHistorikkLoading, oppgaveHistorikkError } = useOppgaveHistorikk(brukerFnr);
     const { eskaleringsvarselHistorikkData, eskaleringsvarselHistorikkError, eskaleringsvarselHistorikkLoading } =
         useEskaleringsvarselHistorikk(brukerFnr);
 
@@ -66,48 +66,24 @@ function Historikk() {
         ke => ke.kontorType === 'ARBEIDSOPPFOLGING'
     );
 
-    const [veilederIdenter, setVeilederIdenter] = useState<string[] | null>(null);
-    const { veilederListeData, veilederListeLoading } = useVeilederDataListe(veilederIdenter);
-
-    useEffect(() => {
-        const skalHenteVeilederDataListe =
-            !(
-                innstillingsHistorikkLoading ||
-                oppgaveHistorikkLoaing ||
-                eskaleringsvarselHistorikkLoading ||
-                kontorHistorikkLoading
-            ) &&
-            innstillingsHistorikkData &&
-            oppgaveHistorikkData &&
-            eskaleringsvarselHistorikkData;
-
-        if (skalHenteVeilederDataListe) {
-            const veilederIdentListe = getVeilederIdents({
+    const veilederIdenter = useMemo(() => {
+        if (innstillingsHistorikkData && oppgaveHistorikkData && eskaleringsvarselHistorikkData) {
+            const identer = getVeilederIdents({
                 innstillingsHistorikkData,
                 oppgaveHistorikkData,
                 eskaleringsvarselHistorikkData,
                 kontorEndringHistorikkData: kontorHistorikkData
             });
-
-            if (isNonEmptyArray(veilederIdentListe)) {
-                setVeilederIdenter(veilederIdentListe);
-            }
+            return isNonEmptyArray(identer) ? identer : null;
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [
-        innstillingsHistorikkData,
-        oppgaveHistorikkData,
-        eskaleringsvarselHistorikkData,
-        alleKontorData,
-        innstillingsHistorikkLoading,
-        oppgaveHistorikkLoaing,
-        eskaleringsvarselHistorikkLoading,
-        kontorHistorikkLoading
-    ]);
+        return null;
+    }, [innstillingsHistorikkData, oppgaveHistorikkData, eskaleringsvarselHistorikkData, kontorHistorikkData]);
+
+    const { veilederListeData, veilederListeLoading } = useVeilederDataListe(veilederIdenter);
 
     const isLoading =
         innstillingsHistorikkLoading ||
-        oppgaveHistorikkLoaing ||
+        oppgaveHistorikkLoading ||
         eskaleringsvarselHistorikkLoading ||
         kontorHistorikkLoading ||
         veilederListeLoading;
