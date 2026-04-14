@@ -70,7 +70,7 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
                 {uformattertTelefon && (
                     <CopyButton
                         aria-label="Kopier telefonnummer"
-                        copyText={telefon.replace(/\s/g, '')}
+                        copyText={telefon.replaceAll(' ', '')}
                         text={`Tlf.: ${telefon}`}
                         activeText="Kopiert!"
                         size="medium"
