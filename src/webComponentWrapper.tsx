@@ -4,7 +4,6 @@ import App from './app';
 import visittkortLessStyles from './index.less?inline';
 import visittkortCssStyles from './index.css?inline';
 import sijStyles from './component/components/sokfilter/sok-filter.less?inline';
-import kopierStyles from './component/components/kopier-knapp/kopier-knapp.less?inline';
 import radioStyles from './component/components/radiofilterform/radio-filterform.less?inline';
 import varselModalStyles from './component/components/varselmodal/varsel-modal.less?inline';
 import tilbakelenkeStyles from './component/components/tilbakelenke/tilbakelenke.less?inline';
@@ -14,7 +13,6 @@ import huskelappPostitstylingStyles from './component/huskelapp/huskelapp-postit
 import huskelappRedigeringStyles from './component/huskelapp/redigering/huskelapp-redigering.less?inline';
 import dataFetcherStyles from './component/data-fetcher.less?inline';
 import personinfoStyles from './component/personinfo/personinfo.less?inline';
-import etiketterStyles from './component/personinfo/components/etiketter.less?inline';
 import tildelVeilederStyles from './component/veilederverktoy/tildel-veileder/tildel-veileder.less?inline';
 import begrunnelseFormStyles from './component/veilederverktoy/begrunnelseform/begrunnelse-form.less?inline';
 import historikkStyles from './component/veilederverktoy/historikk/historikk.less?inline';
@@ -27,7 +25,6 @@ const styles =
     visittkortCssStyles +
     visittkortLessStyles +
     sijStyles +
-    kopierStyles +
     radioStyles +
     varselModalStyles +
     tilbakelenkeStyles +
@@ -37,7 +34,6 @@ const styles =
     huskelappRedigeringStyles +
     dataFetcherStyles +
     personinfoStyles +
-    etiketterStyles +
     tildelVeilederStyles +
     begrunnelseFormStyles +
     historikkStyles +

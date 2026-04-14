@@ -1,7 +1,6 @@
-import { Label } from '@navikt/ds-react';
+import { CopyButton, Label } from '@navikt/ds-react';
 import NavnOgAlder from './components/navnogalder';
 import { KjonnIkon } from './components/kjonn-ikon';
-import { KopierKnappTekst } from '../components/kopier-knapp/kopier-knapp';
 import { selectSammensattNavn, selectTelefonnummer } from '../../util/selectors';
 import { logMetrikk } from '../../util/logger';
 import { StringOrNothing } from '../../util/type/utility-types';
@@ -59,17 +58,23 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
                         />
                     </>
                 )}
-                <KopierKnappTekst
-                    kopierTekst={brukerFnr}
-                    viseTekst={`F.nr.: ${brukerFnr}`}
-                    arialabel="Kopier fødselsnummer"
+                <CopyButton
+                    aria-label="Kopier fødselsnummer"
+                    copyText={brukerFnr}
+                    text={`F.nr.: ${brukerFnr}`}
+                    activeText="Kopiert!"
+                    size="medium"
+                    iconPosition="right"
                 />
                 {<Label>/</Label>}
                 {uformattertTelefon && (
-                    <KopierKnappTekst
-                        kopierTekst={telefon.replace(/\s/g, '')}
-                        viseTekst={`Tlf.: ${telefon}`}
-                        arialabel="Kopier telefonnummer"
+                    <CopyButton
+                        aria-label="Kopier telefonnummer"
+                        copyText={telefon.replace(/\s/g, '')}
+                        text={`Tlf.: ${telefon}`}
+                        activeText="Kopiert!"
+                        size="medium"
+                        iconPosition="right"
                     />
                 )}
                 {!uformattertTelefon && <Label className="uten-telefon">Tlf.: -</Label>}

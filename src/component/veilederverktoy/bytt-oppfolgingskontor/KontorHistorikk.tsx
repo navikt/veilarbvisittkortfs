@@ -30,7 +30,7 @@ export const KontorHistorikk = ({ kontorHistorikk }: Props) => {
     return (
         <ExpansionCard size="small" className="mt-4 mb-4" aria-labelledby="Kontorhistorikk">
             <ExpansionCard.Header>
-                <HStack gap="space-4" align="center">
+                <HStack gap="space-16" align="center">
                     <ClockDashedIcon />
                     <ExpansionCard.Title size="small">Kontorhistorikk</ExpansionCard.Title>
                 </HStack>
