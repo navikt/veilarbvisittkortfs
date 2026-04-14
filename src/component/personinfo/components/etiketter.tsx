@@ -9,7 +9,7 @@ import {
 } from '../../../api/veilarbperson';
 import { OppfolgingStatus, useOppfolging, useOppfolgingsstatus } from '../../../api/veilarboppfolging';
 import { OrNothing } from '../../../util/type/utility-types';
-import { Tag, TagProps } from '@navikt/ds-react';
+import { HStack, Tag, TagProps } from '@navikt/ds-react';
 import { Oppfolgingsvedtak14a, useGjeldende14aVedtak } from '../../../api/veilarbvedtaksstotte';
 import { useGjeldendeEskaleringsvarsel } from '../../../api/veilarbdialog';
 
@@ -19,28 +19,28 @@ interface Etikettprops extends Omit<TagProps, 'variant'> {
 
 const Advarsel = ({ visible, title, children }: Etikettprops) =>
     visible && (
-        <Tag variant="error" size="small" className="etikett" title={title}>
+        <Tag variant="error" size="small" title={title}>
             {children}
         </Tag>
     );
 
 const Info = ({ visible, title, children }: Etikettprops) =>
     visible && (
-        <Tag variant="info" size="small" className="etikett" title={title}>
+        <Tag variant="info" size="small" title={title}>
             {children}
         </Tag>
     );
 
 const Fokus = ({ visible, title, children }: Etikettprops) =>
     visible && (
-        <Tag variant="warning" size="small" className="etikett" title={title}>
+        <Tag variant="warning" size="small" title={title}>
             {children}
         </Tag>
     );
 
 const BaseDod = ({ visible, title, children }: Etikettprops) =>
     visible && (
-        <Tag variant="neutral" size="small" className="etikett etikett--mork" title={title}>
+        <Tag variant="neutral" size="small" title={title}>
             {children}
         </Tag>
     );
@@ -113,7 +113,7 @@ function Etiketter({ brukerFnr }: { brukerFnr: string }) {
     }
 
     return (
-        <div className="etikett-container">
+        <HStack className="etikett-container" gap="space-2 space-4" wrap>
             <BaseDod visible={!!personalia?.dodsdato}>Død</BaseDod>
             <Advarsel visible={!!personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>
             <Advarsel visible={!!personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
@@ -173,7 +173,7 @@ function Etiketter({ brukerFnr }: { brukerFnr: string }) {
             <Info visible={visProfileringsetikett('ANTATT_GODE_MULIGHETER')}>Antatt gode muligheter</Info>
             <Info visible={visProfileringsetikett('ANTATT_BEHOV_FOR_VEILEDNING')}>Antatt behov for veiledning</Info>
             <Info visible={visProfileringsetikett('OPPGITT_HINDRINGER')}>Oppgitt hindringer</Info>
-        </div>
+        </HStack>
     );
 }
 
