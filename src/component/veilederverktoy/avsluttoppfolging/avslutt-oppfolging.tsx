@@ -53,6 +53,11 @@ function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
                         {avsluttOppfolgingStatus?.underKvp && (
                             <li>Brukeren deltar i på KVP. KVP må avsluttes først.</li>
                         )}
+                        {avsluttOppfolgingStatus?.erDeltakerIUngdomsprogrammet && (
+                            <li>
+                                Brukeren deltar i Ungdomsprogrammet. Deltakelse i Ungdomsprogrammet må avsluttes først.
+                            </li>
+                        )}
                     </ul>
                 </Modal.Body>
             </VarselModal>

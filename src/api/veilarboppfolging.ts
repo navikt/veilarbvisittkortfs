@@ -28,6 +28,7 @@ export interface AvslutningStatus {
     underOppfolging: boolean;
     erIserv: boolean;
     harAktiveTiltaksdeltakelser: boolean;
+    erDeltakerIUngdomsprogrammet: boolean;
 }
 
 export interface OppfolgingsPerioder {
