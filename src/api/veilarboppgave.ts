@@ -60,7 +60,7 @@ export const useOppgaveHistorikk = (fnr: string | undefined) => {
         () => fetchWithPost(url, { fnr: fnr as string }),
         swrOptions
     );
-    return { oppgaveHistorikkData: data, oppgaveHistorikkLoaing: isLoading, oppgaveHistorikkError: error };
+    return { oppgaveHistorikkData: data, oppgaveHistorikkLoading: isLoading, oppgaveHistorikkError: error };
 };
 
 export function opprettOppgave(fnr: string, oppgaveFormData: OppgaveFormData): AxiosPromise<OppgaveFormResponse> {
