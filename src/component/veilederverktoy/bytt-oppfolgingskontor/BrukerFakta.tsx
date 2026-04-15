@@ -14,7 +14,7 @@ const getKontorNavn = (kontor: { kontorId: string; kontorNavn: string } | undefi
 
 export const BrukerFakta = ({ hentAlleKontorLoading, navn, kontorTilhorighet }: Props) => {
     return (
-        <div className="space-y-2 pb-4 bg-surface-alt-3-subtle p-4 rounded-lg">
+        <div className="space-y-2 pb-4 bg-ax-bg-brand-blue-soft p-4 rounded-lg">
             <div className="mb-2">
                 <Heading size={'small'}>Fakta om bruker</Heading>
             </div>
@@ -26,8 +26,8 @@ export const BrukerFakta = ({ hentAlleKontorLoading, navn, kontorTilhorighet }: 
                     <BodyShort as={'dd'}>{navn}</BodyShort>
                 </div>
                 <div className="pl-4 flex flex-col flex-wrap gap-4">
-                    <div className="flex border-b pb-2 space-x-2 flex-col border-surface-alt-3-moderate">
-                        <BodyShort className="text-gray-700" as={'dt'} weight="semibold">
+                    <div className="flex border-b pb-2 space-x-2 flex-col border-ax-bg-brand-blue-moderate">
+                        <BodyShort className="text-ax-neutral-800" as={'dt'} weight="semibold">
                             Arbeidsrettet oppfølgingskontor
                         </BodyShort>
                         {hentAlleKontorLoading ? (
@@ -36,8 +36,8 @@ export const BrukerFakta = ({ hentAlleKontorLoading, navn, kontorTilhorighet }: 
                             <BodyShort as={'dd'}>{getKontorNavn(kontorTilhorighet?.arbeidsoppfolging)}</BodyShort>
                         )}
                     </div>
-                    <div className="flex border-b pb-2 border-surface-alt-3-moderate space-x-2 flex-col">
-                        <BodyShort className="text-gray-700" as={'dt'} weight="semibold">
+                    <div className="flex border-b pb-2 border-ax-bg-brand-blue-moderate space-x-2 flex-col">
+                        <BodyShort className="text-ax-neutral-800" as={'dt'} weight="semibold">
                             Arena-kontor
                         </BodyShort>
                         {hentAlleKontorLoading ? (
@@ -48,7 +48,7 @@ export const BrukerFakta = ({ hentAlleKontorLoading, navn, kontorTilhorighet }: 
                     </div>
                     <div className="flex pb-2 space-x-2 flex-col">
                         <div className="flex gap-2 items-center">
-                            <BodyShort className="text-gray-700" as={'dt'} weight="semibold">
+                            <BodyShort className="text-ax-neutral-800" as={'dt'} weight="semibold">
                                 Geografisk kontor
                             </BodyShort>
                             <HelpText>Samme som "Geografisk enhet"</HelpText>

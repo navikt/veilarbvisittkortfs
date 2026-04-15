@@ -2,7 +2,7 @@
     .chevronline-mixin() {
         pointer-events: none; // gjør at en kan klikke igjennom denne (pilen), slik at select åpner seg
         content: '';
-        background: var(--a-gray-900);
+        background: var(--ax-neutral-1000);
         height: 0.125rem;
         width: 0.625rem;
         border-radius: 0.625rem;
@@ -21,7 +21,7 @@
             line-height: 1rem; // trur denne eigentleg kan bort
             padding: 0.45rem;
 
-            border: 1px solid var(--a-border-default);
+            border: 1px solid var(--ax-border-neutral);
             background-color: white;
 
             justify-content: left; /* Overskriv button-styling frå designsystemet */
@@ -46,19 +46,19 @@
             }
 
             &:hover {
-                border: 1px solid var(--a-border-action);
+                border: 1px solid var(--ax-border-accent);
             }
 
             // Overskriv designsystemet slik at knappen ikkje vert svart når ein trykkar på den
             &:active:hover, &:active {
-                background-color: var(--a-bg-default);
-                color: var(--a-text-default);
+                background-color: var(--ax-bg-default);
+                color: var(--ax-text-neutral);
             }
 
             // Unngår dobbel fokuslinje rundt knappen
             &:focus {
                 outline: 0;
-                box-shadow: 0 0 0 3px var(--a-border-focus);
+                box-shadow: 0 0 0 3px var(--ax-border-focus);
             }
 
             .navds-label {
@@ -74,9 +74,9 @@
             z-index: 110;
 
             width: 15.5rem;
-            border: 1px solid var(--a-border-default);
-            border-radius: 0 0 var(--a-border-radius-small) var(--a-border-radius-small);
-            background-color: var(--a-bg-default);
+            border: 1px solid var(--ax-border-neutral);
+            border-radius: 0 0 var(--ax-radius-2) var(--ax-radius-2);
+            background-color: var(--ax-bg-default);
             padding: 0 0.5rem;
         }
 
