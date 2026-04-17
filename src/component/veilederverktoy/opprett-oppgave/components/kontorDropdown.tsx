@@ -33,7 +33,7 @@ function KontorDropdown({
             {isLoading ? (
                 <Skeleton
                     variant="rectangle"
-                    style={{ borderRadius: 'var(--a-border-radius-medium)', lineHeight: '1.333' }}
+                    style={{ borderRadius: 'var(--ax-radius-4)', lineHeight: '1.333' }}
                     height="2rem"
                     width="20rem"
                 />

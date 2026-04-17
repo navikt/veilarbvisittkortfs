@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import HistorikkVisning from './historikk-visning';
 import VeilederVerktoyModal from '../../components/modal/veilederverktoy-modal';
 import { Alert } from '@navikt/ds-react';
@@ -10,6 +10,8 @@ import { EskaleringsvarselHistorikkInnslag, useEskaleringsvarselHistorikk } from
 import { useVeilederDataListe } from '../../../api/veilarbveileder';
 import { isNonEmptyArray } from '../../../util/type/type-guards';
 import { getVeilederIdents } from './getIdents';
+import { hentAlleKontor } from '../../../api/ao-oppfolgingskontor';
+import useSWR from 'swr';
 
 function eskaleringsvarselHistorikkTilEvent(
     historikk: EskaleringsvarselHistorikkInnslag[] | undefined
@@ -50,52 +52,61 @@ function Historikk() {
 
     const { innstillingsHistorikkData, innstillingsHistorikkLoading, innstillingsHistorikkError } =
         useInnstillingsHistorikk(brukerFnr);
-    const { oppgaveHistorikkData, oppgaveHistorikkLoaing, oppgaveHistorikkError } = useOppgaveHistorikk(brukerFnr);
+    const { oppgaveHistorikkData, oppgaveHistorikkLoading, oppgaveHistorikkError } = useOppgaveHistorikk(brukerFnr);
     const { eskaleringsvarselHistorikkData, eskaleringsvarselHistorikkError, eskaleringsvarselHistorikkLoading } =
         useEskaleringsvarselHistorikk(brukerFnr);
 
-    const [veilederIdenter, setVeilederIdenter] = useState<string[] | null>(null);
-    const { veilederListeData, veilederListeLoading } = useVeilederDataListe(veilederIdenter);
+    const {
+        data: alleKontorData,
+        error: kontorHistorikkError,
+        isLoading: kontorHistorikkLoading
+    } = useSWR(brukerFnr ? `/kontorer/${brukerFnr}` : null, () => hentAlleKontor(brukerFnr as string));
 
-    useEffect(() => {
-        const skalHenteVeilederDataListe =
-            !(innstillingsHistorikkLoading || oppgaveHistorikkLoaing || eskaleringsvarselHistorikkLoading) &&
-            innstillingsHistorikkData &&
-            oppgaveHistorikkData &&
-            eskaleringsvarselHistorikkData;
+    const kontorHistorikkData = (alleKontorData?.data?.data?.kontorHistorikk || []).filter(
+        ke => ke.kontorType === 'ARBEIDSOPPFOLGING'
+    );
 
-        if (skalHenteVeilederDataListe) {
-            const veilederIdentListe = getVeilederIdents({
+    const veilederIdenter = useMemo(() => {
+        if (innstillingsHistorikkData && oppgaveHistorikkData && eskaleringsvarselHistorikkData) {
+            const identer = getVeilederIdents({
                 innstillingsHistorikkData,
                 oppgaveHistorikkData,
-                eskaleringsvarselHistorikkData
+                eskaleringsvarselHistorikkData,
+                kontorEndringHistorikkData: kontorHistorikkData
             });
-
-            if (isNonEmptyArray(veilederIdentListe)) {
-                // eslint-disable-next-line react-hooks/set-state-in-effect
-                setVeilederIdenter(veilederIdentListe);
-            }
+            return isNonEmptyArray(identer) ? identer : null;
         }
-    }, [innstillingsHistorikkData, oppgaveHistorikkData, eskaleringsvarselHistorikkData]);
+        return null;
+    }, [innstillingsHistorikkData, oppgaveHistorikkData, eskaleringsvarselHistorikkData, kontorHistorikkData]);
+
+    const { veilederListeData, veilederListeLoading } = useVeilederDataListe(veilederIdenter);
 
     const isLoading =
         innstillingsHistorikkLoading ||
-        oppgaveHistorikkLoaing ||
+        oppgaveHistorikkLoading ||
         eskaleringsvarselHistorikkLoading ||
+        kontorHistorikkLoading ||
         veilederListeLoading;
 
-    if (innstillingsHistorikkError || oppgaveHistorikkError || eskaleringsvarselHistorikkError) {
+    if (
+        innstillingsHistorikkError ||
+        oppgaveHistorikkError ||
+        eskaleringsvarselHistorikkError ||
+        kontorHistorikkError
+    ) {
         return <Alert variant="error">Noe gikk galt</Alert>;
     }
 
     const innstillingHistorikk =
-        innstillingsHistorikkData?.map(ih => {
-            return {
-                ...ih,
-                opprettetAvBrukerNavn: veilederListeData?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn,
-                tildeltVeilederNavn: veilederListeData?.find(vd => ih.tildeltVeilederId === vd.ident)?.navn
-            };
-        }) || [];
+        innstillingsHistorikkData
+            ?.filter(ih => ih.type !== 'OPPFOLGINGSENHET_ENDRET')
+            .map(ih => {
+                return {
+                    ...ih,
+                    opprettetAvBrukerNavn: veilederListeData?.find(vd => ih.opprettetAvBrukerId === vd.ident)?.navn,
+                    tildeltVeilederNavn: veilederListeData?.find(vd => ih.tildeltVeilederId === vd.ident)?.navn
+                };
+            }) || [];
 
     const oppgaveHistorikk =
         oppgaveHistorikkData?.map(ih => {
@@ -114,6 +125,19 @@ function Historikk() {
             };
         }) || [];
 
+    const kontorEndringHistorikk = kontorHistorikkData.map((ke, idx) => {
+        const forrigeKontor = kontorHistorikkData[idx + 1];
+        return {
+            ...ke,
+            fraKontorId: forrigeKontor?.kontorId,
+            fraKontorNavn: forrigeKontor?.kontorNavn,
+            endretAvBrukerNavn:
+                ke.endretAvType === 'VEILEDER'
+                    ? veilederListeData?.find(vd => ke.endretAv === vd.ident)?.navn
+                    : undefined
+        };
+    });
+
     return (
         <VeilederVerktoyModal className="historikk__modal" tittel="Historikk">
             <div className="prosess">
@@ -122,6 +146,7 @@ function Historikk() {
                     innstillingHistorikk={innstillingHistorikk}
                     oppgaveHistorikk={oppgaveHistorikk}
                     eskaleringsvarselHistorikk={eskaleringsvarselHistorikk}
+                    kontorEndringHistorikk={kontorEndringHistorikk}
                 />
             </div>
         </VeilederVerktoyModal>
