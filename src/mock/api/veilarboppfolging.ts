@@ -15,7 +15,8 @@ const mockAvslutningStatus: AvslutningStatus = {
     inaktiveringsDato: null,
     underKvp: false,
     erIserv: true,
-    harAktiveTiltaksdeltakelser: true
+    harAktiveTiltaksdeltakelser: true,
+    erDeltakerIUngdomsprogrammet: true
 };
 
 const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
@@ -25,7 +26,8 @@ const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
     inaktiveringsDato: null,
     underKvp: false,
     erIserv: false,
-    harAktiveTiltaksdeltakelser: false
+    harAktiveTiltaksdeltakelser: false,
+    erDeltakerIUngdomsprogrammet: false
 };
 
 const mockInnstillingsHistorikk: InnstillingHistorikkInnslag[] = [
