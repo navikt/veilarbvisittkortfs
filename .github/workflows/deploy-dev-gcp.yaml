@@ -14,7 +14,6 @@ jobs:
     name: Deploy to dev
     runs-on: ubuntu-latest
     permissions:
-      contents: read
       id-token: write
     steps:
       - name: Checkout
@@ -37,14 +36,6 @@ jobs:
 
       - name: Build application
         run: npm run build:dev
-
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v3
-        with:
-          credentials_json: ${{ secrets.GCS_SA_KEY_DEV }}
-
-      - name: Upload files to GCS
-        run: gcloud storage cp -r build "gs://veilarbvisittkortfs-dev"
 
       - name: Upload to CDN
         uses: nais/deploy/actions/cdn-upload/v2@master
