@@ -1,5 +1,4 @@
 import { createRoot } from 'react-dom/client';
-import { Navspa } from '@navikt/navspa';
 import { isLocalDevelopment } from './util/utils';
 import * as dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -10,7 +9,6 @@ import { exposeVisittkortAsWebComponent } from './webComponentWrapper';
 dayjs.locale('nb');
 dayjs.extend(relativeTime);
 
-Navspa.eksporter('veilarbvisittkortfs', App);
 exposeVisittkortAsWebComponent();
 
 if (isLocalDevelopment()) {
