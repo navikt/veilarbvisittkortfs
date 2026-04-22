@@ -3,14 +3,11 @@
     "outDir": "build/dist",
     "module": "esnext",
     "target": "ESNext",
-    "lib": [
-      "esnext",
-      "dom"
-    ],
+    "lib": ["esnext", "dom"],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react-jsx",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
@@ -27,15 +24,6 @@
     "noEmit": true,
     "noFallthroughCasesInSwitch": true
   },
-  "exclude": [
-    "node_modules",
-    "build",
-    "scripts",
-    "acceptance-tests",
-    "jest",
-    "src/setupTests.ts"
-  ],
-  "include": [
-    "src"
-  ]
+  "exclude": ["node_modules", "build", "scripts", "acceptance-tests", "jest", "src/setupTests.ts"],
+  "include": ["src"]
 }
