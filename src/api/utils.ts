@@ -52,7 +52,8 @@ export type RequestTypes =
     | TildelVeilederData[]
     | StansVarselQueryRequest
     | VeilederDataListeRequest
-    | VeilarbOppfolgingGraphqlRequest;
+    | VeilarbOppfolgingGraphqlRequest
+    | VeilederDataListeRequest;
 
 export const createPOSToptions = (event: RequestTypes) => ({
     withCredentials: true,
