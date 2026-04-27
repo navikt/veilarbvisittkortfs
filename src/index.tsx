@@ -3,7 +3,6 @@ import { isLocalDevelopment } from './util/utils';
 import * as dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/nb';
-import App from './app';
 import { exposeVisittkortAsWebComponent } from './webComponentWrapper';
 
 dayjs.locale('nb');
@@ -23,7 +22,14 @@ function renderMockApp() {
         return worker
             .start({ serviceWorker: { url: `${import.meta.env.BASE_URL}mockServiceWorker.js` } })
             .then(() => {
-                root.render(<App fnr={'10108000398'} enhet={'1234'} tilbakeTilFlate={''} visVeilederVerktoy={true} />);
+                root.render(
+                    <ao-visittkort
+                        fnr={'10108000398'}
+                        enhet={'1234'}
+                        tilbakeTilFlate={''}
+                        visVeilederVerktoy={'true'}
+                    />
+                );
                 // eslint-disable-next-line no-console
                 console.log('Bruker mock-data i applikasjonen');
             })

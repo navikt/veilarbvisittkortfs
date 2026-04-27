@@ -133,10 +133,33 @@ const mockOppfolgingsstatus: OppfolgingStatus = {
     servicegruppe: 'BKART'
 };
 
-const mockAktiveTiltaksdeltakelserResponse = {
+const mockOppfolgingGraphqlResponse = {
     data: {
+        oppfolgingsEnhet: {},
         brukerStatus: {
-            harAktiveTiltaksdeltakelser: true
+            harAktiveTiltaksdeltakelser: true,
+            arena: {
+                inaktivIArena: false,
+                inaktiveringsdato: null,
+                kanReaktiveres: null,
+                formidlingsgruppe: 'ARBS',
+                kvalifiseringsgruppe: 'IKVAL'
+            },
+            manuell: {
+                erManuell: false
+            },
+            krr: {
+                kanVarsles: false,
+                reservertIKrr: false,
+                registrertIKrr: false
+            },
+            erKontorsperret: false,
+            veilederTilordning: {
+                veilederIdent: 'Z994381'
+            }
+        },
+        oppfolging: {
+            erUnderOppfolging: true
         }
     }
 };
@@ -184,6 +207,6 @@ export const veilarboppfolgingHandlers: RequestHandler[] = [
     }),
     http.post('/veilarboppfolging/api/graphql', async () => {
         await delay(defaultNetworkResponseDelay);
-        return HttpResponse.json(mockAktiveTiltaksdeltakelserResponse);
+        return HttpResponse.json(mockOppfolgingGraphqlResponse);
     })
 ];
