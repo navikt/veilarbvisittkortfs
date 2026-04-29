@@ -53,7 +53,7 @@ function TildelVeileder() {
 
                 // Oppdater med ny veileder
                 mutateOppfolging(currentState => ({
-                    ...currentState!,
+                    ...(currentState || oppfolging),
                     veilederId: selectedVeilederId
                 }));
 

@@ -260,7 +260,7 @@ const mapTilBackoverkompatibelState = (
             `Feilet å hente oppfolgingsdata (graphql) fra veilarboppfolging: ${data.errors.map(it => it.message).join(',')}`
         );
     }
-    if (!data.data) throw new Error(`Forventet "data" i graphql response med fikk ingenting`);
+    if (!data.data) throw new Error(`Forventet "data" i graphql response men fikk ingenting`);
     return {
         inaktiveringsdato: data.data.brukerStatus.arena?.inaktiveringsdato,
         inaktivIArena: data.data.brukerStatus.arena?.inaktivIArena,
@@ -285,7 +285,7 @@ export interface VeilarbOppfolgingGraphqlRequest {
 
 const graphqlUrl = '/veilarboppfolging/api/graphql';
 export const useVeilarboppfolgingData = (fnr: string | undefined) => {
-    const { data, error, isLoading, mutate } = useSWR<(Oppfolging & OppfolgingStatus) | undefined, ErrorMessage>(
+    const { data, error, isLoading, mutate } = useSWR<(Oppfolging & OppfolgingStatus) | undefined, Error>(
         fnr ? `${graphqlUrl}/${fnr}` : null,
         () =>
             fetchWithPost(graphqlUrl, {
@@ -296,12 +296,12 @@ export const useVeilarboppfolgingData = (fnr: string | undefined) => {
     );
     if (error) {
         // eslint-disable-next-line no-console
-        console.log('useVeilarboppfolgingData - error', error);
+        console.error('useVeilarboppfolgingData - error', error);
     }
     return { oppfolging: data, isLoading, error, mutate };
 };
 
-/* Burde vært modelert annerledes men vil ikke brekke noe */
+/* Burde vært modellert annerledes men vil ikke brekke noe */
 const oppfolgingsEnhet = (enhet: Enhet | undefined): OppfolgingEnhet => ({ enhetId: enhet?.id, navn: enhet?.navn });
 
 export const useOppfolging = useVeilarboppfolgingData;

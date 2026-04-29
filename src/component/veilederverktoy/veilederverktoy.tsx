@@ -15,7 +15,7 @@ import {
 } from '../../util/selectors';
 import { harTilgangTilHuskelappEllerFargekategori } from '../huskelapp/harTilgangTilHuskelapp';
 import { useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
-import { useOppfolging, useOppfolgingsstatus, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
+import { useOppfolging, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 import withClickMetric from '../components/click-metric/click-metric';
 import './veilederverktoy.less';
 import { StartArbeidsoppfolgingKnapp } from './start-arbeidsoppfolging/start-arbeidsoppfolging-knapp';
@@ -31,7 +31,6 @@ export const Veilederverktoy = () => {
     const visVeilederVerktoy = useVisVeilederVerktøy();
     const { oppfolging } = useOppfolging(brukerFnr);
     const { gjeldendeEskaleringsvarsel } = useGjeldendeEskaleringsvarsel(brukerFnr);
-    const { oppfolging: oppfolgingsstatus } = useOppfolgingsstatus(brukerFnr);
     const { data: erUfordeltBruker } = useErUfordeltBruker(
         brukerFnr,
         visVeilederVerktoy && oppfolging?.underOppfolging
@@ -55,7 +54,7 @@ export const Veilederverktoy = () => {
 
     const sjekkHarTilgangTilHuskelappEllerFargekategori = harTilgangTilHuskelappEllerFargekategori(
         erUfordeltBruker === undefined ? true : erUfordeltBruker,
-        !!oppfolgingsstatus?.veilederId,
+        !!oppfolging?.veilederId,
         !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor
     );
 
@@ -75,7 +74,7 @@ export const Veilederverktoy = () => {
         tilgangTilBrukersKontor
     );
     const underOppfolging = oppfolging?.underOppfolging || false;
-    const erIservIArena = oppfolgingsstatus?.formidlingsgruppe == 'ISERV' || false;
+    const erIservIArena = oppfolging?.formidlingsgruppe == 'ISERV' || false;
     const kanAvslutteOppfolging = selectKanAvslutteOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteManuellOppfolging = selectKanStarteManuellOppfolging(oppfolging, tilgangTilBrukersKontor);
     const kanStarteDigitalOppfolging = selectKanStarteDigitalOppfolging(oppfolging, tilgangTilBrukersKontor);
