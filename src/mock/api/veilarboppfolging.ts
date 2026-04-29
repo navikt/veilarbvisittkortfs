@@ -2,11 +2,13 @@ import {
     AvslutningStatus,
     InnstillingHistorikkInnslag,
     Oppfolging,
+    OppfolgingsDataGraphqlResponse,
     OppfolgingStatus
 } from '../../api/veilarboppfolging';
 import { mockInnloggetVeileder } from './veilarbveileder';
 import { defaultNetworkResponseDelay } from '../config';
 import { delay, http, HttpResponse, RequestHandler } from 'msw';
+import { GraphqlResponse } from '../../api/GraphqlUtils';
 
 const mockAvslutningStatus: AvslutningStatus = {
     kanAvslutte: true,
@@ -111,31 +113,15 @@ const mockInnstillingsHistorikk: InnstillingHistorikkInnslag[] = [
 ];
 
 const mockOppfolging: Oppfolging = {
-    fnr: '123456',
     veilederId: mockInnloggetVeileder.ident,
     reservasjonKRR: true,
     manuell: true,
     underOppfolging: true,
     registrertKRR: false,
     underKvp: true,
-    oppfolgingUtgang: '2019-03-28T11:12:40.973+01:00',
-    kanStarteOppfolging: true,
-    oppfolgingsPerioder: [
-        {
-            aktorId: '00007',
-            veileder: null,
-            startDato: '2017-12-02T18:37:24.717+01:00',
-            sluttDato: '2019-03-28T11:12:40.973+01:00',
-            begrunnelse: 'Oppfølging avsluttet automatisk pga. inaktiv bruker som ikke kan reaktiveres',
-            kvpPerioder: []
-        }
-    ],
-    harSkriveTilgang: true,
     inaktivIArena: true,
     kanReaktiveres: false,
     inaktiveringsdato: '2019-02-22T00:00:00+01:00',
-    erSykmeldtMedArbeidsgiver: false,
-    erIkkeArbeidssokerUtenOppfolging: false,
     kanVarsles: true
 };
 
@@ -149,10 +135,38 @@ const mockOppfolgingsstatus: OppfolgingStatus = {
     servicegruppe: 'BKART'
 };
 
-const mockAktiveTiltaksdeltakelserResponse = {
+const mockOppfolgingGraphqlResponse: GraphqlResponse<OppfolgingsDataGraphqlResponse> = {
+    errors: [],
     data: {
+        oppfolgingsEnhet: {
+            enhet: {
+                navn: 'Nav TestHeim',
+                id: '007'
+            }
+        },
         brukerStatus: {
-            harAktiveTiltaksdeltakelser: true
+            arena: {
+                inaktivIArena: true,
+                inaktiveringsdato: null,
+                kanReaktiveres: undefined,
+                formidlingsgruppe: 'ARBS',
+                kvalifiseringsgruppe: 'IKVAL'
+            },
+            manuell: {
+                erManuell: false
+            },
+            krr: {
+                kanVarsles: false,
+                reservertIKrr: false,
+                registrertIKrr: true
+            },
+            erKontorsperret: true,
+            veilederTilordning: {
+                veilederIdent: mockInnloggetVeileder.ident
+            }
+        },
+        oppfolging: {
+            erUnderOppfolging: true
         }
     }
 };
@@ -200,6 +214,6 @@ export const veilarboppfolgingHandlers: RequestHandler[] = [
     }),
     http.post('/veilarboppfolging/api/graphql', async () => {
         await delay(defaultNetworkResponseDelay);
-        return HttpResponse.json(mockAktiveTiltaksdeltakelserResponse);
+        return HttpResponse.json(mockOppfolgingGraphqlResponse);
     })
 ];
