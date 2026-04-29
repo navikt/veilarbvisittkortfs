@@ -2,11 +2,13 @@ import {
     AvslutningStatus,
     InnstillingHistorikkInnslag,
     Oppfolging,
+    OppfolgingsDataGraphqlResponse,
     OppfolgingStatus
 } from '../../api/veilarboppfolging';
 import { mockInnloggetVeileder } from './veilarbveileder';
 import { defaultNetworkResponseDelay } from '../config';
 import { delay, http, HttpResponse, RequestHandler } from 'msw';
+import { GraphqlResponse } from '../../api/GraphqlUtils';
 
 const mockAvslutningStatus: AvslutningStatus = {
     kanAvslutte: true,
@@ -133,15 +135,20 @@ const mockOppfolgingsstatus: OppfolgingStatus = {
     servicegruppe: 'BKART'
 };
 
-const mockOppfolgingGraphqlResponse = {
+const mockOppfolgingGraphqlResponse: GraphqlResponse<OppfolgingsDataGraphqlResponse> = {
+    errors: [],
     data: {
-        oppfolgingsEnhet: {},
+        oppfolgingsEnhet: {
+            enhet: {
+                navn: 'Nav TestHeim',
+                id: '007'
+            }
+        },
         brukerStatus: {
-            harAktiveTiltaksdeltakelser: true,
             arena: {
-                inaktivIArena: false,
+                inaktivIArena: true,
                 inaktiveringsdato: null,
-                kanReaktiveres: null,
+                kanReaktiveres: undefined,
                 formidlingsgruppe: 'ARBS',
                 kvalifiseringsgruppe: 'IKVAL'
             },
@@ -151,11 +158,11 @@ const mockOppfolgingGraphqlResponse = {
             krr: {
                 kanVarsles: false,
                 reservertIKrr: false,
-                registrertIKrr: false
+                registrertIKrr: true
             },
-            erKontorsperret: false,
+            erKontorsperret: true,
             veilederTilordning: {
-                veilederIdent: 'Z994381'
+                veilederIdent: mockInnloggetVeileder.ident
             }
         },
         oppfolging: {

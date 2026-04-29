@@ -226,7 +226,7 @@ interface Enhet {
     navn: string;
 }
 
-interface OppfolgingsDataGraphqlResponse {
+export interface OppfolgingsDataGraphqlResponse {
     oppfolgingsEnhet:
         | {
               enhet: Enhet | undefined;
