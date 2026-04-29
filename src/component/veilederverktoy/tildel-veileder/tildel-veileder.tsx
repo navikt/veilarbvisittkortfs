@@ -53,7 +53,8 @@ function TildelVeileder() {
 
                 // Oppdater med ny veileder
                 mutateOppfolging(currentState => ({
-                    ...(currentState || oppfolging),
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    ...((currentState as any) || {}),
                     veilederId: selectedVeilederId
                 }));
 
