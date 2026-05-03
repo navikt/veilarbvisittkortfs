@@ -38,7 +38,7 @@ jobs:
         run: npm run build
 
       - name: Upload to CDN
-        uses: nais/deploy/actions/cdn-upload/v2@437e4adfe270e3f1c98fd0eed7f86ecf0e0873db # ratchet:nais/deploy/actions/cdn-upload/v2@master
+        uses: nais/deploy/actions/cdn-upload/v2@2f28259ff29ea37915f5a0c9e2a8e3542c429df7 # ratchet:nais/deploy/actions/cdn-upload/v2@master
         with:
           team: poao
           source: ./build/
