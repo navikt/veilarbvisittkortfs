@@ -18,7 +18,8 @@ const mockAvslutningStatus: AvslutningStatus = {
     underKvp: false,
     erIserv: true,
     harAktiveTiltaksdeltakelser: true,
-    erDeltakerIUngdomsprogrammet: true
+    erDeltakerIUngdomsprogrammet: true,
+    erArbeidssoeker: true
 };
 
 const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
@@ -29,7 +30,8 @@ const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
     underKvp: false,
     erIserv: false,
     harAktiveTiltaksdeltakelser: false,
-    erDeltakerIUngdomsprogrammet: false
+    erDeltakerIUngdomsprogrammet: false,
+    erArbeidssoeker: false
 };
 
 const mockInnstillingsHistorikk: InnstillingHistorikkInnslag[] = [
