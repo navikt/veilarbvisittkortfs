@@ -59,6 +59,7 @@ function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
                             </li>
                         )}
                         {avsluttOppfolgingStatus?.erArbeidssoeker && <li>Brukeren er arbeidssøker.</li>}
+                        {avsluttOppfolgingStatus?.harAap && <li>Brukeren har AAP.</li>}
                     </ul>
                 </Modal.Body>
             </VarselModal>
