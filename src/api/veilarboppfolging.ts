@@ -40,6 +40,7 @@ export interface AvslutningStatus {
     erIserv: boolean;
     harAktiveTiltaksdeltakelser: boolean;
     erDeltakerIUngdomsprogrammet: boolean;
+    erArbeidssoeker: boolean;
 }
 
 export interface Oppfolging {

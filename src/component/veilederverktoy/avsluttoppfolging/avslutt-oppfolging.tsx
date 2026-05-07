@@ -58,6 +58,7 @@ function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
                                 Brukeren deltar i Ungdomsprogrammet. Deltakelse i Ungdomsprogrammet må avsluttes først.
                             </li>
                         )}
+                        {avsluttOppfolgingStatus?.erArbeidssoeker && <li>Brukeren er arbeidssøker.</li>}
                     </ul>
                 </Modal.Body>
             </VarselModal>
