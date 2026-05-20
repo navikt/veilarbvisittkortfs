@@ -12,15 +12,15 @@ import { GraphqlResponse } from '../../api/GraphqlUtils';
 
 const mockAvslutningStatus: AvslutningStatus = {
     kanAvslutte: true,
-    harYtelser: true,
+    harYtelser: false,
     underOppfolging: true,
     inaktiveringsDato: null,
     underKvp: false,
     erIserv: true,
-    harAktiveTiltaksdeltakelser: true,
-    erDeltakerIUngdomsprogrammet: true,
-    erArbeidssoeker: true,
-    harAap: true
+    harAktiveTiltaksdeltakelser: false,
+    erDeltakerIUngdomsprogrammet: false,
+    erArbeidssoeker: false,
+    harAap: false
 };
 
 const mockOppfolgingAvsluttetStatus: AvslutningStatus = {

@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
 import { Alert, BodyShort, Loader } from '@navikt/ds-react';
-import { fetchHarUtkast } from '../../../../api/veilarbvedtaksstotte';
+import { useHarUtkast } from '../../../../api/veilarbvedtaksstotte';
 import { fetchHarArenaTiltak } from '../../../../api/veilarbaktivitet';
 import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
 
@@ -18,14 +17,9 @@ export function AvsluttOppfolgingInfoText({
     harUbehandledeDialoger
 }: Props) {
     const harArenaTiltakFetcher = useAxiosFetcher(fetchHarArenaTiltak);
-    const harUtakstFetcher = useAxiosFetcher(fetchHarUtkast);
+    const { data: harUtkast, isLoading: harUtkastIsLoading } = useHarUtkast(fnr);
 
-    useEffect(() => {
-        harUtakstFetcher.fetch(fnr);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    if (harArenaTiltakFetcher.loading || harUtakstFetcher.loading) {
+    if (harArenaTiltakFetcher.loading || harUtkastIsLoading) {
         return <Loader size="2xlarge" />;
     }
 
@@ -52,7 +46,7 @@ export function AvsluttOppfolgingInfoText({
                     </ul>
                 </Alert>
             )}
-            {harUtakstFetcher.data && (
+            {harUtkast && (
                 <Alert variant="warning" size="small">
                     Utkast til oppfølgingsvedtak vil bli slettet
                 </Alert>
