@@ -1,5 +1,4 @@
 import { axiosInstance, createPOSToptions, ErrorMessage, swrOptions } from './utils';
-import { AxiosPromise } from 'axios';
 import useSWR from 'swr';
 
 export interface Oppfolgingsvedtak14a {
@@ -22,8 +21,12 @@ export enum Hovedmal {
     OKE_DELTAKELSE = 'OKE_DELTAKELSE'
 }
 
-export function fetchHarUtkast(fnr: string): AxiosPromise<boolean> {
-    return axiosInstance.post<boolean>(`/veilarbvedtaksstotte/api/v2/utkast/hent-harUtkast`, { fnr: fnr });
+export function useHarUtkast(fnr: string) {
+    return useSWR(
+        fnr ? `harUtkast/${fnr}` : null,
+        () => axiosInstance.post<boolean>(`/veilarbvedtaksstotte/api/v2/utkast/hent-harUtkast`, { fnr: fnr }),
+        swrOptions
+    );
 }
 
 export function useGjeldende14aVedtak(fnr: string | undefined) {
