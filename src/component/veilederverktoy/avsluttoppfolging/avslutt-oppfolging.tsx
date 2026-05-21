@@ -34,7 +34,7 @@ function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
         return <LasterModal />;
     }
 
-    if (!avsluttOppfolgingStatus?.kanAvslutte || erAktivIArena) {
+    if (!avsluttOppfolgingStatus?.kanAvslutte) {
         if (avsluttOppfolgingStatus?.kanAvslutte !== undefined && avsluttOppfolgingStatus?.kanAvslutte !== null) {
             if (!avsluttOppfolgingOpptelt) {
                 logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt_oppfolging_ikke_mulig`);
