@@ -46,7 +46,7 @@ export function AvsluttOppfolgingInfoText({
                     </ul>
                 </Alert>
             )}
-            {harUtkast && (
+            {harUtkast?.data && (
                 <Alert variant="warning" size="small">
                     Utkast til oppfølgingsvedtak vil bli slettet
                 </Alert>
