@@ -20,9 +20,9 @@ import withClickMetric from '../components/click-metric/click-metric';
 import './veilederverktoy.less';
 import { StartArbeidsoppfolgingKnapp } from './start-arbeidsoppfolging/start-arbeidsoppfolging-knapp';
 import { StartArbeidssokerRegistreringKnapp } from './start-arbeidssoker-registrering/start-arbeidssoker-registrering-knapp';
-import { erProd, isLocalDevelopment } from '../../util/utils';
 import { useVisVeilederVerktøy } from '../../store/visittkort-config';
 import { useGjeldendeEskaleringsvarsel } from '../../api/veilarbdialog';
+import { useBrukAoKontorSomMaster } from '../../api/veilarbaktivitet';
 
 const ButtonWithClickMetric = withClickMetric(Button);
 
@@ -81,7 +81,7 @@ export const Veilederverktoy = () => {
     const kanStarteKVP = selectKanStarteKVP(oppfolging, tilgangTilBrukersKontor);
     const kanStoppeKVP = selectKanStoppeKVP(oppfolging, tilgangTilBrukersKontor);
     const kanTildeleVeileder = selectKanTildeleVeileder(oppfolging, tilgangTilBrukersKontor);
-    const harLansertArbeidsoppfolgingskontor = !erProd() || isLocalDevelopment();
+    const harLansertArbeidsoppfolgingskontor = useBrukAoKontorSomMaster();
 
     const huskelappKlikk = () => {
         showHuskelappRedigereModal();

@@ -1,5 +1,5 @@
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { APP_NAME, isDefined } from '../util/utils';
+import axios, { AxiosRequestConfig } from 'axios';
+import { APP_NAME } from '../util/utils';
 import { TildelVeilederData, VeilarbOppfolgingGraphqlRequest } from './veilarboppfolging';
 import { StansVarselQueryRequest } from './veilarbdialogGraphql';
 import { VeilederDataListeRequest } from './veilarbveileder';
@@ -13,24 +13,6 @@ export const axiosJsonRequestConfig: AxiosRequestConfig = {
     withCredentials: true,
     headers: { 'Nav-Consumer-Id': APP_NAME, 'Content-Type': 'application/json' }
 };
-
-export function isAnyLoading(...fetchers: Array<{ loading: boolean }>): boolean {
-    return fetchers.some(f => f.loading);
-}
-
-export function isAnyLoadingOrNotStarted(
-    ...fetchers: Array<{ data?: object; error?: object; loading: boolean }>
-): boolean {
-    return fetchers.some(f => f.loading || (!f.error && !f.data));
-}
-
-export function hasAnyFailed(...fetchers: Array<{ error?: AxiosError }>): boolean {
-    return fetchers.some(f => f.error);
-}
-
-export function hasAllData(...fetchers: Array<{ data?: object }>): boolean {
-    return fetchers.every(f => isDefined(f.data));
-}
 
 export interface FnrOgEnhetId {
     fnr: string;
