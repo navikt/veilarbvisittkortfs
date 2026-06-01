@@ -13,7 +13,7 @@ export interface Kontor {
 
 const graphqlQuery = `
     query($ident: String!, $kunEnheterForEgneAnsatte: Boolean) {
-        alleKontor(ident: $ident, $kunEnheterForEgneAnsatte: Boolean) {
+        alleKontor(ident: $ident, kunEnheterForEgneAnsatte: $kunEnheterForEgneAnsatte) {
             kontorId,
             kontorNavn
         },
