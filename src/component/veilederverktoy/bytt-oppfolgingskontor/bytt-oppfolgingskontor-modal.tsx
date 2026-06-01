@@ -23,7 +23,7 @@ function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
         data: alleKontorData,
         error: hentAlleKontorError,
         isLoading: hentAlleKontorLoading
-    } = useSWR(brukerFnr ? `/kontorer/${brukerFnr}` : null, () => hentAlleKontor(brukerFnr));
+    } = useSWR(brukerFnr ? `/kontorer/${brukerFnr}` : null, () => hentAlleKontor(brukerFnr, personalia?.egenAnsatt));
 
     const {
         data: brukerHarAktiveTiltaksdeltakelserData,
