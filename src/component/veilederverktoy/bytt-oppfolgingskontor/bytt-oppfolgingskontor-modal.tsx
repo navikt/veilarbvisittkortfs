@@ -55,7 +55,7 @@ function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
                         Her kan du overføre denne personen / brukeren til et annet kontor for arbeidsrettet oppfølging.
                     </div>
                     <Alert inline variant="info">
-                        Husk å oppdatere aktivitetsplan og § 14 a vedtaket før du overfører brukeren til et annet
+                        Husk å oppdatere aktivitetsplan og § 14 a-vedtaket før du overfører brukeren til et annet
                         kontor.
                     </Alert>
                     {brukerHarAktiveTiltaksdeltakelserError && (

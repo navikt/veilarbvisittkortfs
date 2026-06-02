@@ -27,9 +27,12 @@ export const BrukerFakta = ({ hentAlleKontorLoading, navn, kontorTilhorighet }: 
                 </div>
                 <div className="pl-4 flex flex-col flex-wrap gap-4">
                     <div className="flex border-b pb-2 space-x-2 flex-col border-ax-bg-brand-blue-moderate">
-                        <BodyShort className="text-ax-neutral-800" as={'dt'} weight="semibold">
-                            Arbeidsrettet oppfølgingskontor
-                        </BodyShort>
+                        <div className="flex gap-2 items-center">
+                            <BodyShort className="text-ax-neutral-800" as={'dt'} weight="semibold">
+                                Arbeidsrettet oppfølgingskontor
+                            </BodyShort>
+                            <HelpText>Samme som "Oppfølgingsenhet"</HelpText>
+                        </div>
                         {hentAlleKontorLoading ? (
                             <Skeleton width={100} />
                         ) : (
