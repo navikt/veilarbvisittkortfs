@@ -1,8 +1,8 @@
 import { ExpansionCard, HStack, Skeleton, Tabs } from '@navikt/ds-react';
 import { ClockDashedIcon } from '@navikt/aksel-icons';
-import dayjs from 'dayjs';
 import { KontorEndringsType, KontorHistorikkEntry } from '../../../api/ao-oppfolgingskontor';
 import { useVeilederDataListe, VeilederData } from '../../../api/veilarbveileder';
+import { toSimpleDateTimeStr } from '../../../util/date-utils';
 
 interface Props {
     kontorHistorikk: KontorHistorikkEntry[];
@@ -105,7 +105,7 @@ const KontorHistorikkInnslag = (
                         <span className="font-ax-bold">{historikkEntry.kontorId}</span> - {historikkEntry.kontorNavn}
                     </span>
                 </span>
-                <span className="col-span-4">{dayjs(historikkEntry.endretTidspunkt).fromNow()}</span>
+                <span className="col-span-4">{toSimpleDateTimeStr(historikkEntry.endretTidspunkt)}</span>
             </div>
             <div>
                 <EndretAv
