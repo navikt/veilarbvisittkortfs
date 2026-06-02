@@ -12,6 +12,7 @@ import { useInnstillingsHistorikk } from '../../../api/veilarboppfolging';
 import { EskaleringsvarselHistorikkInnslag, useEskaleringsvarselHistorikk } from '../../../api/veilarbdialog';
 import { useVeilederDataListe } from '../../../api/veilarbveileder';
 import { isNonEmptyArray } from '../../../util/type/type-guards';
+import { usePersonalia } from '../../../api/veilarbperson';
 
 function eskaleringsvarselHistorikkTilEvent(
     historikk: EskaleringsvarselHistorikkInnslag[] | undefined
@@ -49,7 +50,7 @@ function eskaleringsvarselHistorikkTilEvent(
 
 function Historikk() {
     const brukerFnr = useBrukerFnr();
-
+    const { personalia } = usePersonalia(brukerFnr);
     const { innstillingsHistorikkData, innstillingsHistorikkLoading, innstillingsHistorikkError } =
         useInnstillingsHistorikk(brukerFnr);
     const { oppgaveHistorikkData, oppgaveHistorikkLoading, oppgaveHistorikkError } = useOppgaveHistorikk(brukerFnr);
@@ -60,7 +61,9 @@ function Historikk() {
         data: alleKontorData,
         error: kontorHistorikkError,
         isLoading: kontorHistorikkLoading
-    } = useSWR(brukerFnr ? `/kontorer/${brukerFnr}` : null, () => hentAlleKontor(brukerFnr as string));
+    } = useSWR(brukerFnr ? `/kontorer/${brukerFnr}` : null, () =>
+        hentAlleKontor(brukerFnr as string, personalia?.egenAnsatt)
+    );
 
     const kontorHistorikkData = (alleKontorData?.data?.data?.kontorHistorikk || []).filter(
         ke => ke.kontorType === 'ARBEIDSOPPFOLGING'

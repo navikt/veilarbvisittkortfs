@@ -12,8 +12,8 @@ export interface Kontor {
 }
 
 const graphqlQuery = `
-    query($ident: String!) {
-        alleKontor(ident: $ident) {
+    query($ident: String!, $kunEnheterForEgneAnsatte: Boolean) {
+        alleKontor(ident: $ident, kunEnheterForEgneAnsatte: $kunEnheterForEgneAnsatte) {
             kontorId,
             kontorNavn
         },
@@ -111,7 +111,7 @@ export interface KontorHistorikkEntry {
     fraKontorNavn?: string;
 }
 
-export function hentAlleKontor(ident: string) {
+export function hentAlleKontor(ident: string, kunEnheterForEgneAnsatte: boolean | undefined) {
     return axiosInstance
         .post<
             GraphqlResponse<{
@@ -123,7 +123,7 @@ export function hentAlleKontor(ident: string) {
             `/ao-oppfolgingskontor/graphql`,
             JSON.stringify({
                 query: graphqlQuery,
-                variables: { ident }
+                variables: { ident, kunEnheterForEgneAnsatte }
             }),
             axiosJsonRequestConfig
         )
