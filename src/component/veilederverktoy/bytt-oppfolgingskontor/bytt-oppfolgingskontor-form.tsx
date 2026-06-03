@@ -6,7 +6,7 @@ import {
     settKontor
 } from '../../../api/ao-oppfolgingskontor';
 import { Formik, Form } from 'formik';
-import { Button } from '@navikt/ds-react';
+import { Button, LocalAlert } from '@navikt/ds-react';
 import { AxiosError } from 'axios';
 import KontorDropdown from '../opprett-oppgave/components/kontorDropdown';
 
@@ -46,8 +46,22 @@ function ByttOppfolgingskontorForm({
 
     const arbeidsOppfolgingKontorInitialValues: ArbeidsOppfolgingKontorDTO = {
         ident: brukerFnr,
-        kontorId: brukerKontorTilhorigheter?.arbeidsoppfolging.kontorId || ''
+        kontorId: brukerKontorTilhorigheter?.arbeidsoppfolging?.kontorId || ''
     };
+
+    if (!brukerKontorTilhorigheter?.arbeidsoppfolging) {
+        return (
+            <LocalAlert status="warning">
+                <LocalAlert.Header>
+                    <LocalAlert.Title>Kontor kan ikke endres manuelt enda</LocalAlert.Title>
+                </LocalAlert.Header>
+                <LocalAlert.Content>
+                    Kontor kan ikke endres manuelt før automatisk tilordning av kontor er ferdig. Vi trenger informasjon
+                    om adresser og profilering og det kan ta noen minutter før det er klart.
+                </LocalAlert.Content>
+            </LocalAlert>
+        );
+    }
 
     return (
         <Formik
@@ -66,21 +80,15 @@ function ByttOppfolgingskontorForm({
                         formikFieldName={'kontorId'}
                     />
                     <div className="space-x-4 flex">
-                        <div>
-                            {/*
-                                Ekstra div pga alle stiler fra Aksel i veilarbpersonflate er ikke i plassert i
-                                css-layer components enda og vil da overstyre tailwind stiler
-                            */}
-                            <Button
-                                loading={formikProps.isSubmitting}
-                                disabled={!formikProps.dirty || formikProps.isSubmitting}
-                                variant="primary"
-                                size="small"
-                                type="submit"
-                            >
-                                Bekreft
-                            </Button>
-                        </div>
+                        <Button
+                            loading={formikProps.isSubmitting}
+                            disabled={!formikProps.dirty || formikProps.isSubmitting}
+                            variant="primary"
+                            size="small"
+                            type="submit"
+                        >
+                            Bekreft
+                        </Button>
                         <div>
                             <Button
                                 disabled={formikProps.isSubmitting}
