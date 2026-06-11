@@ -208,7 +208,7 @@ const graphqlQuery = `
         oppfolging(fnr: $fnr) {
             erUnderOppfolging
         }
-        kandidatForUtmeldingTag(fnr: $fnr)
+        utmeldingskandidatTag(fnr: $fnr)
     }
 `;
 
