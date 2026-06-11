@@ -7,7 +7,7 @@ import {
     useSpraakTolk,
     useVerge
 } from '../../../api/veilarbperson';
-import { OppfolgingStatus, useOppfolging } from '../../../api/veilarboppfolging';
+import { KandidatForUtmeldingTag, OppfolgingStatus, useOppfolging } from '../../../api/veilarboppfolging';
 import { OrNothing } from '../../../util/type/utility-types';
 import { HStack, Tag, TagProps } from '@navikt/ds-react';
 import { Oppfolgingsvedtak14a, useGjeldende14aVedtak } from '../../../api/veilarbvedtaksstotte';
@@ -64,6 +64,21 @@ function erFullmaktOmradeMedOppfolging(fullmaktListe: FullmaktData[]): boolean {
         .includes('Oppfølging');
 }
 
+function mapUtmeldingskandidatTag(utmeldingskandidatTag: KandidatForUtmeldingTag | undefined): string {
+    switch (utmeldingskandidatTag) {
+        case 'ARBEIDSSOKERPERIODE_AVSLUTTET_BRUKER':
+            return 'Arbeidssøkerperiode avsluttet av bruker';
+        case 'ARBEIDSSOKERPERIODE_AVSLUTTET_VEILEDER':
+            return 'Arbeidssøkerperiode avsluttet av veileder';
+        case 'ARBEIDSSOKERPERIODE_AVSLUTTET_SYSTEM':
+            return 'Arbeidssøkerperiode avsluttet av system';
+        case 'ARBEIDSSOKERPERIODE_AVSLUTTET_UKJENT':
+            return 'Arbeidssøkerperiode avsluttet (ukjent årsak)';
+        case undefined:
+            return '';
+    }
+}
+
 function Etiketter({ brukerFnr }: { brukerFnr: string }) {
     const { personalia } = usePersonalia(brukerFnr);
     const { gjeldendeEskaleringsvarsel } = useGjeldendeEskaleringsvarsel(brukerFnr);
@@ -115,7 +130,9 @@ function Etiketter({ brukerFnr }: { brukerFnr: string }) {
         <HStack className="etikett-container" align="center" gap="space-2 space-4" wrap>
             <BaseDod visible={!!personalia?.dodsdato}>Død</BaseDod>
             <Advarsel visible={!!personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>
-            <Advarsel visible={!!oppfolging?.utmeldingskandidatTag}>{oppfolging?.utmeldingskandidatTag}</Advarsel>
+            <Advarsel visible={!!oppfolging?.utmeldingskandidatTag}>
+                {mapUtmeldingskandidatTag(oppfolging?.utmeldingskandidatTag)}
+            </Advarsel>
             <Advarsel visible={!!personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
             <Advarsel visible={personalia?.egenAnsatt}>Skjermet</Advarsel>
             <Fokus visible={!isEmpty(verge?.vergemaalEllerFremtidsfullmakt)}>Vergemål</Fokus>
