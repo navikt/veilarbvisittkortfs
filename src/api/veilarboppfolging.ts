@@ -208,6 +208,7 @@ const graphqlQuery = `
         oppfolging(fnr: $fnr) {
             erUnderOppfolging
         }
+        kandidatForUtmeldingTag(fnr: $fnr)
     }
 `;
 
@@ -226,6 +227,13 @@ interface ArenaStatus {
 interface Enhet {
     id: string;
     navn: string;
+}
+
+enum KandidatForUtmeldingTag {
+    ARBEIDSSOKERPERIODE_AVSLUTTET_BRUKER = 'ARBEIDSSOKERPERIODE_AVSLUTTET_BRUKER',
+    ARBEIDSSOKERPERIODE_AVSLUTTET_VEILEDER = 'Arbeidssøkerperiode avsluttet av veileder',
+    ARBEIDSSOKERPERIODE_AVSLUTTET_SYSTEM = 'Arbeidssøkerperiode avsluttet av system',
+    ARBEIDSSOKERPERIODE_AVSLUTTET_UKJENT = 'Arbeidssøkerperiode avsluttet (ukjent årsak)'
 }
 
 export interface OppfolgingsDataGraphqlResponse {
@@ -252,6 +260,7 @@ export interface OppfolgingsDataGraphqlResponse {
     oppfolging: {
         erUnderOppfolging: boolean | undefined;
     };
+    utmeldingskandidatTag: KandidatForUtmeldingTag | undefined;
 }
 
 const mapTilBackoverkompatibelState = (
