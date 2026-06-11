@@ -229,12 +229,11 @@ interface Enhet {
     navn: string;
 }
 
-enum KandidatForUtmeldingTag {
-    ARBEIDSSOKERPERIODE_AVSLUTTET_BRUKER = 'ARBEIDSSOKERPERIODE_AVSLUTTET_BRUKER',
-    ARBEIDSSOKERPERIODE_AVSLUTTET_VEILEDER = 'Arbeidssøkerperiode avsluttet av veileder',
-    ARBEIDSSOKERPERIODE_AVSLUTTET_SYSTEM = 'Arbeidssøkerperiode avsluttet av system',
-    ARBEIDSSOKERPERIODE_AVSLUTTET_UKJENT = 'Arbeidssøkerperiode avsluttet (ukjent årsak)'
-}
+export type KandidatForUtmeldingTag =
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_BRUKER'
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_VEILEDER'
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_SYSTEM'
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_UKJENT';
 
 export interface OppfolgingsDataGraphqlResponse {
     oppfolgingsEnhet:
@@ -265,7 +264,7 @@ export interface OppfolgingsDataGraphqlResponse {
 
 const mapTilBackoverkompatibelState = (
     data: GraphqlResponse<OppfolgingsDataGraphqlResponse>
-): (Oppfolging & OppfolgingStatus) | undefined => {
+): (Oppfolging & OppfolgingStatus & KandidatForUtmeldingTag) | undefined => {
     if ((data.errors?.length || 0) != 0) {
         throw new Error(
             `Feilet å hente oppfolgingsdata (graphql) fra veilarboppfolging: ${data.errors.map(it => it.message).join(',')}`
@@ -285,7 +284,8 @@ const mapTilBackoverkompatibelState = (
         veilederId: data.data.brukerStatus.veilederTilordning?.veilederIdent,
         oppfolgingsenhet: oppfolgingsEnhet(data.data.oppfolgingsEnhet?.enhet),
         formidlingsgruppe: data.data.brukerStatus.arena?.formidlingsgruppe,
-        servicegruppe: data.data.brukerStatus.arena?.kvalifiseringsgruppe
+        servicegruppe: data.data.brukerStatus.arena?.kvalifiseringsgruppe,
+        utmeldingskandidatTag: data.data.utmeldingskandidatTag
     };
 };
 
@@ -296,7 +296,10 @@ export interface VeilarbOppfolgingGraphqlRequest {
 
 const graphqlUrl = '/veilarboppfolging/api/graphql';
 export const useVeilarboppfolgingData = (fnr: string | undefined) => {
-    const { data, error, isLoading, mutate } = useSWR<(Oppfolging & OppfolgingStatus) | undefined, Error>(
+    const { data, error, isLoading, mutate } = useSWR<
+        (Oppfolging & OppfolgingStatus & KandidatForUtmeldingTag) | undefined,
+        Error
+    >(
         fnr ? `${graphqlUrl}/${fnr}` : null,
         () =>
             fetchWithPost(graphqlUrl, {
