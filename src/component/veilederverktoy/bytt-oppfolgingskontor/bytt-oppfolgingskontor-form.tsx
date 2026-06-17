@@ -46,7 +46,7 @@ function ByttOppfolgingskontorForm({
 
     const arbeidsOppfolgingKontorInitialValues: ArbeidsOppfolgingKontorDTO = {
         ident: brukerFnr,
-        kontorId: brukerKontorTilhorigheter?.arbeidsoppfolging.kontorId || ''
+        kontorId: brukerKontorTilhorigheter?.arbeidsoppfolging?.kontorId || ''
     };
 
     return (

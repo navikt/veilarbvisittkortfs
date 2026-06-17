@@ -11,6 +11,7 @@ import KontorHistorikk from './KontorHistorikk';
 import { BrukerFakta } from './BrukerFakta';
 import { usePersonalia } from '../../../api/veilarbperson';
 import { useBrukerHarAktiveTiltaksdeltakelser } from '../../../api/veilarboppfolging';
+import { KontorIkkeSattAlert } from './KontorIkkeSattAlert';
 
 function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
     const [kvittering, setKvittering] = useState<KontorSkiftetKvittering | undefined>(undefined);
@@ -80,15 +81,19 @@ function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
                         navn={navn}
                     />
                     <KontorHistorikk kontorHistorikk={kontorHistorikk} />
-                    <ByttOppfolgingskontorForm
-                        brukerFnr={brukerFnr}
-                        brukerKontorTilhorigheter={kontorTilhorighet}
-                        isKontorFetchLoading={hentAlleKontorLoading}
-                        alleKontor={alleKontor}
-                        tilbake={() => hideModal()}
-                        setKvittering={setKvittering}
-                        setSettKontorError={setSettKontorError}
-                    />
+                    {kontorTilhorighet && !kontorTilhorighet?.arbeidsoppfolging ? (
+                        <KontorIkkeSattAlert />
+                    ) : (
+                        <ByttOppfolgingskontorForm
+                            brukerFnr={brukerFnr}
+                            brukerKontorTilhorigheter={kontorTilhorighet}
+                            isKontorFetchLoading={hentAlleKontorLoading}
+                            alleKontor={alleKontor}
+                            tilbake={() => hideModal()}
+                            setKvittering={setKvittering}
+                            setSettKontorError={setSettKontorError}
+                        />
+                    )}
                     {settKontorError && (
                         <Alert className="mt-4" variant="error">
                             <span className="flex">
