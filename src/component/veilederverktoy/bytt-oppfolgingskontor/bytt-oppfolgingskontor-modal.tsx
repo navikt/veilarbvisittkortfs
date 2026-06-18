@@ -12,6 +12,7 @@ import { BrukerFakta } from './BrukerFakta';
 import { usePersonalia } from '../../../api/veilarbperson';
 import { useBrukerHarAktiveTiltaksdeltakelser } from '../../../api/veilarboppfolging';
 import { KontorIkkeSattAlert } from './KontorIkkeSattAlert';
+import { InaktivIArenaAlert } from './InaktivIArenaAlert';
 
 function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
     const [kvittering, setKvittering] = useState<KontorSkiftetKvittering | undefined>(undefined);
@@ -43,6 +44,8 @@ function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
     const kontorHistorikk = alleKontorData?.data?.data?.kontorHistorikk || [];
     const harAktiveTiltaksdeltakelser =
         brukerHarAktiveTiltaksdeltakelserData?.data?.brukerStatus?.harAktiveTiltaksdeltakelser;
+    const erInaktivIArena = brukerHarAktiveTiltaksdeltakelserData?.data?.brukerStatus?.arena?.inaktivIArena;
+    const inaktiveringsdato = brukerHarAktiveTiltaksdeltakelserData?.data?.brukerStatus?.arena?.inaktiveringsdato;
 
     const getModalBody = () => {
         if (kvittering) {
@@ -94,6 +97,7 @@ function ByttOppfolgingskontorModal({ brukerFnr }: { brukerFnr: string }) {
                             setSettKontorError={setSettKontorError}
                         />
                     )}
+                    {erInaktivIArena && <InaktivIArenaAlert inaktiveringsdato={inaktiveringsdato} />}
                     {settKontorError && (
                         <Alert className="mt-4" variant="error">
                             <span className="flex">
