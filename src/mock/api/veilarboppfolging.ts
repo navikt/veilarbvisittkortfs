@@ -12,7 +12,6 @@ import { GraphqlResponse } from '../../api/GraphqlUtils';
 
 const mockAvslutningStatus: AvslutningStatus = {
     kanAvslutte: true,
-    harYtelser: false,
     underOppfolging: true,
     inaktiveringsDato: null,
     underKvp: false,
@@ -25,7 +24,6 @@ const mockAvslutningStatus: AvslutningStatus = {
 
 const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
     kanAvslutte: false,
-    harYtelser: true,
     underOppfolging: false,
     inaktiveringsDato: null,
     underKvp: false,
