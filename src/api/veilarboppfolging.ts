@@ -32,7 +32,6 @@ export interface OppfolgingStatus {
 }
 
 export interface AvslutningStatus {
-    harYtelser: boolean;
     inaktiveringsDato: StringOrNothing;
     kanAvslutte: boolean;
     underKvp: boolean;
