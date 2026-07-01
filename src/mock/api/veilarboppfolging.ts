@@ -170,7 +170,7 @@ const mockOppfolgingGraphqlResponse: GraphqlResponse<OppfolgingsDataGraphqlRespo
         oppfolging: {
             erUnderOppfolging: true
         },
-        utmeldingskandidatTag: 'ARBEIDSSOKERPERIODE_AVSLUTTET_BRUKER'
+        utmeldingskandidatTag: 'ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE'
     }
 };
 
