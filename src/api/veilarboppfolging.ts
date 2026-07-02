@@ -340,6 +340,10 @@ export function useTilgangTilBrukersKontor(fnr: string | undefined) {
 const aktiveTiltaksdeltakelserGraphqlQuery = `
   query($fnr: String!) {
     brukerStatus(fnr: $fnr) {
+		arena {
+			inaktivIArena
+      inaktiveringsdato
+		}
 		harAktiveTiltaksdeltakelser
     }
   }
@@ -349,7 +353,13 @@ export interface BrukerStatusResponse {
     brukerStatus?: BrukerStatus;
 }
 
+export interface BrukerArenaStatus {
+    inaktivIArena?: boolean;
+    inaktiveringsdato?: StringOrNothing;
+}
+
 export interface BrukerStatus {
+    arena?: BrukerArenaStatus;
     harAktiveTiltaksdeltakelser?: boolean;
 }
 
