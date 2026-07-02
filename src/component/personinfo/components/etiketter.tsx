@@ -67,11 +67,11 @@ function erFullmaktOmradeMedOppfolging(fullmaktListe: FullmaktData[]): boolean {
 function mapUtmeldingskandidatTag(utmeldingskandidatTag: KandidatForUtmeldingTag | undefined): string {
     switch (utmeldingskandidatTag) {
         case 'ARBEIDSSOKERPERIODE_AVSLUTTET_IKKE_LEVERT_MELDEKORT':
-            return 'Avregistrert: Ikke levert meldekort';
+            return 'Arbeidssøkerperiode avsluttet: Ikke levert bekreftelse';
         case 'ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE':
-            return 'Avregistrert: Svarte nei i bekreftelse';
+            return 'Arbeidssøkerperiode avsluttet: Svarte nei i bekreftelse';
         case 'ARBEIDSSOKERPERIODE_AVSLUTTET_ANNET':
-            return 'Avregistrert';
+            return 'Arbeidssøkerperiode avsluttet';
         case 'ARBEIDSSOKERPERIODE_AVSLUTTET_BRUKER':
             return 'Arbeidssøkerperiode avsluttet av bruker';
         case 'ARBEIDSSOKERPERIODE_AVSLUTTET_VEILEDER':
