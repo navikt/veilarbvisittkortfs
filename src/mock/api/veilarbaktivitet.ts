@@ -6,12 +6,5 @@ export const veilarbaktivitetHandlers: RequestHandler[] = [
         await delay(defaultNetworkResponseDelay);
 
         return HttpResponse.json(true);
-    }),
-    http.get('/veilarbaktivitet/api/feature', async () => {
-        await delay(defaultNetworkResponseDelay);
-
-        return HttpResponse.json({
-            bruk_ao_kontor_som_master: true
-        });
     })
 ];
