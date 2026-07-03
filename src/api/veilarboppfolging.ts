@@ -32,7 +32,6 @@ export interface OppfolgingStatus {
 }
 
 export interface AvslutningStatus {
-    harYtelser: boolean;
     inaktiveringsDato: StringOrNothing;
     kanAvslutte: boolean;
     underKvp: boolean;
@@ -230,6 +229,9 @@ interface Enhet {
 }
 
 export type KandidatForUtmeldingTag =
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_IKKE_LEVERT_MELDEKORT'
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE'
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_ANNET'
     | 'ARBEIDSSOKERPERIODE_AVSLUTTET_BRUKER'
     | 'ARBEIDSSOKERPERIODE_AVSLUTTET_VEILEDER'
     | 'ARBEIDSSOKERPERIODE_AVSLUTTET_SYSTEM'

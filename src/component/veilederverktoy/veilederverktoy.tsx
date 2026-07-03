@@ -22,7 +22,6 @@ import { StartArbeidsoppfolgingKnapp } from './start-arbeidsoppfolging/start-arb
 import { StartArbeidssokerRegistreringKnapp } from './start-arbeidssoker-registrering/start-arbeidssoker-registrering-knapp';
 import { useVisVeilederVerktøy } from '../../store/visittkort-config';
 import { useGjeldendeEskaleringsvarsel } from '../../api/veilarbdialog';
-import { useBrukAoKontorSomMaster } from '../../api/veilarbaktivitet';
 
 const ButtonWithClickMetric = withClickMetric(Button);
 
@@ -81,7 +80,6 @@ export const Veilederverktoy = () => {
     const kanStarteKVP = selectKanStarteKVP(oppfolging, tilgangTilBrukersKontor);
     const kanStoppeKVP = selectKanStoppeKVP(oppfolging, tilgangTilBrukersKontor);
     const kanTildeleVeileder = selectKanTildeleVeileder(oppfolging, tilgangTilBrukersKontor);
-    const harLansertArbeidsoppfolgingskontor = useBrukAoKontorSomMaster();
 
     const huskelappKlikk = () => {
         showHuskelappRedigereModal();
@@ -177,7 +175,7 @@ export const Veilederverktoy = () => {
                             metricName="avslutt_oppfolging"
                         />
                     )}
-                    {harLansertArbeidsoppfolgingskontor && underOppfolging ? (
+                    {underOppfolging ? (
                         <StartProsessKnapp
                             knappeTekst={'Bytt oppfølgingskontor'}
                             onClick={showByttOppfolgingKontorModal}
