@@ -5,7 +5,6 @@ import { useOppfolgingsstatus } from '../api/veilarboppfolging';
 import { usePersonalia, useVerge, useFullmakt, useSpraakTolk } from '../api/veilarbperson';
 import { useInnloggetVeileder, useVeilederePaEnhet } from '../api/veilarbveileder';
 import { useGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
-import { useFeaturesFromOboUnleash } from '../api/veilarbpersonflatefs';
 import './data-fetcher.less';
 import { useVisVeilederVerktøy } from '../store/visittkort-config';
 
@@ -21,7 +20,6 @@ export function DataFetcher({ children }: Props) {
     const { oppfolging, isLoading: oppfolgingsstatusIsLoading } = useOppfolgingsstatus(brukerFnr);
     const { isLoading: personaliaIsLoading } = usePersonalia(brukerFnr);
     const { isLoading: innloggetVeilederIsLoading } = useInnloggetVeileder();
-    useFeaturesFromOboUnleash();
     useVerge(brukerFnr);
     useFullmakt(brukerFnr);
     useSpraakTolk(brukerFnr);
