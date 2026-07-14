@@ -5,17 +5,11 @@ import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
 
 interface Props {
     fnr: string;
-    harYtelser?: boolean;
     datoErInnenFor28DagerSiden: boolean;
     harUbehandledeDialoger: boolean;
 }
 
-export function AvsluttOppfolgingInfoText({
-    fnr,
-    harYtelser,
-    datoErInnenFor28DagerSiden,
-    harUbehandledeDialoger
-}: Props) {
+export function AvsluttOppfolgingInfoText({ fnr, datoErInnenFor28DagerSiden, harUbehandledeDialoger }: Props) {
     const harArenaTiltakFetcher = useAxiosFetcher(fetchHarArenaTiltak);
     const { data: harUtkast, isLoading: harUtkastIsLoading } = useHarUtkast(fnr);
 
@@ -35,14 +29,13 @@ export function AvsluttOppfolgingInfoText({
             <BodyShort size="small" spacing={true}>
                 {aktivMindreEnn28Dager}
             </BodyShort>
-            {(harUbehandledeDialoger || harArenaTiltak || harYtelser) && (
+            {(harUbehandledeDialoger || harArenaTiltak) && (
                 <Alert variant="warning" size="small">
                     Du kan avslutte oppfølgingsperioden selv om:
                     <ul className="margin--0">
                         {harUbehandledeDialoger && <li>Brukeren har ubehandlede dialoger</li>}
                         {hentTiltakFeilet && <li>Brukeren kan ha aktive tiltak i Arena</li>}
                         {!hentTiltakFeilet && harArenaTiltak && <li>Brukeren har aktive tiltak i Arena</li>}
-                        {harYtelser && <li>Brukeren har aktive saker i Arena</li>}
                     </ul>
                 </Alert>
             )}

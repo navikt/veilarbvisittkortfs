@@ -39,16 +39,6 @@ export const BrukerFakta = ({ hentAlleKontorLoading, navn, kontorTilhorighet }: 
                             <BodyShort as={'dd'}>{getKontorNavn(kontorTilhorighet?.arbeidsoppfolging)}</BodyShort>
                         )}
                     </div>
-                    <div className="flex border-b pb-2 border-ax-bg-brand-blue-moderate space-x-2 flex-col">
-                        <BodyShort className="text-ax-neutral-800" as={'dt'} weight="semibold">
-                            Arena-kontor
-                        </BodyShort>
-                        {hentAlleKontorLoading ? (
-                            <Skeleton width={100} />
-                        ) : (
-                            <BodyShort as={'dd'}>{getKontorNavn(kontorTilhorighet?.arena)}</BodyShort>
-                        )}
-                    </div>
                     <div className="flex pb-2 space-x-2 flex-col">
                         <div className="flex gap-2 items-center">
                             <BodyShort className="text-ax-neutral-800" as={'dt'} weight="semibold">
