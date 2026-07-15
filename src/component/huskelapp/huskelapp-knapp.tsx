@@ -31,7 +31,7 @@ function HuskelappKnapp({ brukerFnr, visVeilederVerktoy, onClick }: Props) {
             )}
             {!hasError && (
                 <Button
-                    variant="tertiary"
+                    variant="tertiary-neutral"
                     icon={harHuskelapp ? <HuskelappIkon /> : <HuskelappInaktivIkon />}
                     title={harHuskelapp ? 'Endre huskelapp' : 'Opprett huskelapp'}
                     onClick={onClick}
