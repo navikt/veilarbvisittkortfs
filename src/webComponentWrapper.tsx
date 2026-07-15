@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './app';
+import App, { AppTheme } from './app';
 import visittkortLessStyles from './index.less?inline';
 import visittkortCssStyles from './index.css?inline';
 import sijStyles from './component/components/sokfilter/sok-filter.less?inline';
@@ -47,7 +47,7 @@ class VisittkortElement extends HTMLElement {
     private mountPoint: HTMLDivElement | null = null;
 
     static get observedAttributes() {
-        return ['fnr', 'enhet'];
+        return ['fnr', 'enhet', 'theme'];
     }
 
     connectedCallback() {
@@ -88,6 +88,9 @@ class VisittkortElement extends HTMLElement {
         const tilbakeTilFlate = this.getAttribute('tilbakeTilFlate') || '';
         const visVeilederVerktoy = this.getAttribute('visVeilederVerktoy') === 'true';
         const skjulEtiketter = this.getAttribute('skjulEtiketter') === 'true';
+        const themeAttribute = this.getAttribute('theme');
+        const theme: AppTheme | undefined =
+            themeAttribute === 'dark' ? 'dark' : themeAttribute === 'light' ? 'light' : undefined;
 
         this.root.render(
             <React.StrictMode>
@@ -97,6 +100,16 @@ class VisittkortElement extends HTMLElement {
                     tilbakeTilFlate={tilbakeTilFlate}
                     skjulEtiketter={skjulEtiketter}
                     visVeilederVerktoy={visVeilederVerktoy}
+                    theme={theme}
+                    onThemeChange={nextTheme => {
+                        this.dispatchEvent(
+                            new CustomEvent('app-theme-change', {
+                                detail: { theme: nextTheme, source: 'ao-visittkort' },
+                                bubbles: true,
+                                composed: true
+                            })
+                        );
+                    }}
                 />
             </React.StrictMode>
         );

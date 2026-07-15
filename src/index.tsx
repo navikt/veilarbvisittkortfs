@@ -28,6 +28,7 @@ function renderMockApp() {
                         enhet={'1234'}
                         tilbakeTilFlate={''}
                         visVeilederVerktoy={'true'}
+                        theme={'light'}
                     />
                 );
                 // eslint-disable-next-line no-console
