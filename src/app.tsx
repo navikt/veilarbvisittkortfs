@@ -15,8 +15,6 @@ import { Theme } from '@navikt/ds-react';
 
 export type AppTheme = 'light' | 'dark';
 
-export type AppTheme = 'light' | 'dark';
-
 export interface AppProps {
     fnr: string;
     enhet?: string;
