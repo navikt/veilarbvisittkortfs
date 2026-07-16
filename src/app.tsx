@@ -8,9 +8,12 @@ import { DarkModeSwitch } from './component/darkmode-switch';
 import './index.less';
 import './index.css';
 import { useSetAppState } from './store/app-store';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { VisittKortConfigContext } from './store/visittkort-config';
 import { FeilIVisittkortAlert } from './component/FeilIVisittkortAlert';
+import { Theme } from '@navikt/ds-react';
+
+export type AppTheme = 'light' | 'dark';
 
 export type AppTheme = 'light' | 'dark';
 
@@ -26,14 +29,22 @@ export interface AppProps {
 
 function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, theme, onThemeChange }: AppProps) {
     const setAppstate = useSetAppState();
-    const darkMode = theme === 'dark';
+    const [localTheme, setLocalTheme] = useState<AppTheme>(theme ?? 'light');
+    const valgtTheme = theme ?? localTheme;
+    const darkMode = valgtTheme === 'dark';
 
     useEffect(() => {
         setAppstate({ brukerFnr: fnr, enhetId: enhet });
     }, [fnr, enhet, setAppstate]);
 
     const byttTheme = () => {
-        onThemeChange(theme === 'dark' ? 'light' : 'dark');
+        const nesteTheme: AppTheme = darkMode ? 'light' : 'dark';
+
+        if (!theme) {
+            setLocalTheme(nesteTheme);
+        }
+
+        onThemeChange?.(nesteTheme);
     };
 
     const configValue = useMemo(() => {
@@ -46,24 +57,26 @@ function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, 
     return (
         <VisittKortConfigContext.Provider value={configValue}>
             <div>
-                <div className="visittkortfs">
-                    <DataFetcher>
-                        {brukerFnr => (
-                            <>
-                                <Tilbakelenke />
-                                <div className="visittkortfs__container">
-                                    <PersonInfo brukerFnr={brukerFnr} />
-                                    {!skjulEtiketter && <Etiketter brukerFnr={brukerFnr} />}
-                                    <div className="visittkortfs__actions">
-                                        <Veilederverktoy />
-                                        <DarkModeSwitch checked={darkMode} onChange={byttTheme} />
+                <Theme asChild theme={valgtTheme}>
+                    <div className="visittkortfs">
+                        <DataFetcher>
+                            {brukerFnr => (
+                                <>
+                                    <Tilbakelenke />
+                                    <div className="visittkortfs__container">
+                                        <PersonInfo brukerFnr={brukerFnr} />
+                                        {!skjulEtiketter && <Etiketter brukerFnr={brukerFnr} />}
+                                        <div className="visittkortfs__actions">
+                                            <Veilederverktoy />
+                                            <DarkModeSwitch checked={darkMode} onChange={byttTheme} />
+                                        </div>
                                     </div>
-                                </div>
-                            </>
-                        )}
-                    </DataFetcher>
-                    <VeilederverktoyModalController />
-                </div>
+                                </>
+                            )}
+                        </DataFetcher>
+                        <VeilederverktoyModalController />
+                    </div>
+                </Theme>
                 <FeilIVisittkortAlert />
             </div>
         </VisittKortConfigContext.Provider>
