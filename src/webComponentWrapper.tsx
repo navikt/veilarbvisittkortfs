@@ -45,6 +45,7 @@ const styles =
 class VisittkortElement extends HTMLElement {
     private root: ReactDOM.Root | null = null;
     private mountPoint: HTMLDivElement | null = null;
+    private internalTheme: AppTheme = 'light';
 
     static get observedAttributes() {
         return ['fnr', 'enhet', 'theme'];
@@ -89,7 +90,8 @@ class VisittkortElement extends HTMLElement {
         const visVeilederVerktoy = this.getAttribute('visVeilederVerktoy') === 'true';
         const skjulEtiketter = this.getAttribute('skjulEtiketter') === 'true';
         const themeAttribute = this.getAttribute('theme');
-        const theme: AppTheme = themeAttribute === 'dark' ? 'dark' : 'light';
+        const theme: AppTheme =
+            themeAttribute === 'dark' ? 'dark' : themeAttribute === 'light' ? 'light' : this.internalTheme;
 
         this.root.render(
             <React.StrictMode>
@@ -101,6 +103,8 @@ class VisittkortElement extends HTMLElement {
                     visVeilederVerktoy={visVeilederVerktoy}
                     theme={theme}
                     onThemeChange={nextTheme => {
+                        this.internalTheme = nextTheme;
+                        this.render();
                         this.dispatchEvent(
                             new CustomEvent('app-theme-change', {
                                 detail: { theme: nextTheme, source: 'ao-visittkort' },
