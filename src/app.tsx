@@ -21,8 +21,8 @@ export interface AppProps {
     tilbakeTilFlate: string;
     visVeilederVerktoy?: boolean;
     skjulEtiketter?: boolean;
-    theme?: AppTheme;
-    onThemeChange?: (theme: AppTheme) => void;
+    theme: AppTheme;
+    onThemeChange: (theme: AppTheme) => void;
 }
 
 function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, theme, onThemeChange }: AppProps) {
