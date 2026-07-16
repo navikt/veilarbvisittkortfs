@@ -89,8 +89,7 @@ class VisittkortElement extends HTMLElement {
         const visVeilederVerktoy = this.getAttribute('visVeilederVerktoy') === 'true';
         const skjulEtiketter = this.getAttribute('skjulEtiketter') === 'true';
         const themeAttribute = this.getAttribute('theme');
-        const theme: AppTheme | undefined =
-            themeAttribute === 'dark' ? 'dark' : themeAttribute === 'light' ? 'light' : undefined;
+        const theme: AppTheme = themeAttribute === 'dark' ? 'dark' : 'light';
 
         this.root.render(
             <React.StrictMode>
