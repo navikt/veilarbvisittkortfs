@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App, { AppTheme } from './app';
+import { Theme } from '@navikt/ds-react';
 import visittkortLessStyles from './index.less?inline';
 import visittkortCssStyles from './index.css?inline';
 import sijStyles from './component/components/sokfilter/sok-filter.less?inline';
@@ -95,25 +96,27 @@ class VisittkortElement extends HTMLElement {
 
         this.root.render(
             <React.StrictMode>
-                <App
-                    fnr={fnr}
-                    enhet={enhet}
-                    tilbakeTilFlate={tilbakeTilFlate}
-                    skjulEtiketter={skjulEtiketter}
-                    visVeilederVerktoy={visVeilederVerktoy}
-                    theme={theme}
-                    onThemeChange={nextTheme => {
-                        this.internalTheme = nextTheme;
-                        this.render();
-                        this.dispatchEvent(
-                            new CustomEvent('app-theme-change', {
-                                detail: { theme: nextTheme, source: 'ao-visittkort' },
-                                bubbles: true,
-                                composed: true
-                            })
-                        );
-                    }}
-                />
+                <Theme theme={theme}>
+                    <App
+                        fnr={fnr}
+                        enhet={enhet}
+                        tilbakeTilFlate={tilbakeTilFlate}
+                        skjulEtiketter={skjulEtiketter}
+                        visVeilederVerktoy={visVeilederVerktoy}
+                        theme={theme}
+                        onThemeChange={nextTheme => {
+                            this.internalTheme = nextTheme;
+                            this.render();
+                            this.dispatchEvent(
+                                new CustomEvent('app-theme-change', {
+                                    detail: { theme: nextTheme, source: 'ao-visittkort' },
+                                    bubbles: true,
+                                    composed: true
+                                })
+                            );
+                        }}
+                    />
+                </Theme>
             </React.StrictMode>
         );
     }
