@@ -24,8 +24,6 @@ function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
     const datoErInnenFor28DagerSiden = (avsluttOppfolgingStatus?.inaktiveringsDato || 0) > for28dagerSiden;
     const harUbehandledeDialoger = dialogerData ? selectHarUbehandledeDialoger(dialogerData) : false;
 
-    const erAktivIArena = !avsluttOppfolgingStatus?.erIserv;
-
     function handleSubmitAvsluttOppfolging(values: BegrunnelseValues) {
         showAvsluttOppfolgingBekrefModal({ begrunnelse: values.begrunnelse });
     }
@@ -46,7 +44,6 @@ function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
                 <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
                     <BodyShort>Du kan ikke avslutte oppfølgingsperioden fordi:</BodyShort>
                     <ul>
-                        {erAktivIArena && <li>Brukeren har aktiv status i Arena.</li>}
                         {avsluttOppfolgingStatus?.harAktiveTiltaksdeltakelser && (
                             <li>Brukeren har aktive arbeidsmarkedstiltak.</li>
                         )}
