@@ -40,7 +40,6 @@ const mockPersonaliaV2: Personalia = {
     fornavn: 'GRØNN',
     mellomnavn: 'LIV',
     etternavn: 'STAFELLI',
-    fodselsnummer: '10108000398',
     fodselsdato: '1990-09-16',
     dodsdato: '2021-09-16',
     diskresjonskode: '7',

@@ -1,15 +1,16 @@
 import { AxiosPromise } from 'axios';
-import { axiosInstance, ErrorMessage, fetchWithPost, swrOptions } from './utils';
+import { axiosInstance, axiosJsonRequestConfig, ErrorMessage, fetchWithPost, swrOptions } from './utils';
 import { FrontendEvent } from '../util/logger';
 import { StringOrNothing } from '../util/type/utility-types';
 import useSWR from 'swr';
 import { behandlingsnummer } from './behandlingsnummer';
+import { logGraphQLError } from './ao-oppfolgingskontor';
+import { GraphqlResponse } from './GraphqlUtils';
 
 export interface Personalia {
     fornavn: string;
     mellomnavn: StringOrNothing;
     etternavn: string;
-    fodselsnummer: string;
     fodselsdato: string;
     dodsdato: StringOrNothing;
     kjonn: string;
@@ -89,10 +90,6 @@ export interface PersonaliaTelefon {
     master: StringOrNothing;
 }
 
-export interface PersonRequest {
-    fnr: string;
-}
-
 export interface PdlRequest {
     fnr: string;
     behandlingsnummer: string;
@@ -127,6 +124,14 @@ export const usePersonalia = (fnr: string | undefined) => {
         swrOptions
     );
     return { personalia: data, error, isLoading };
+};
+export const usePersonaliaGraphql = (fnr: string | undefined) => {
+    const { data, error, isLoading } = useSWR(
+        fnr ? `/veilarbperson/graphql/${fnr}` : null,
+        () => hentPersonalia(fnr as string, behandlingsnummer),
+        swrOptions
+    );
+    return { personalia: data?.data?.data, error, isLoading };
 };
 
 export const useVerge = (fnr: string | undefined) => {
@@ -170,4 +175,44 @@ export function useOpplysningerOmArbeidssokerMedProfilering(fnr: string | undefi
 
 export function sendEventTilVeilarbperson(event: FrontendEvent): AxiosPromise<void> {
     return axiosInstance.post<void>(`/veilarbperson/api/logger/event`, event);
+}
+
+
+const graphqlQuery = `
+    query($fnr: ID!, $behandlingsnummer: String!) {
+        person(fnr: $fnr, behandlingsnummer: $behandlingsnummer) {
+            fornavn
+            etternavn
+            diskresjonskode
+            egenAnsatt
+            telefon { telefonNr }
+            }
+        }
+    `;
+
+function hentPersonalia(fnr: string, behandlingsnummer: string ) {
+    return axiosInstance
+        .post<
+        GraphqlResponse<{
+        fornavn: string;
+        etternavn: string;
+        diskresjonskode: StringOrNothing;
+        egenAnsatt: boolean;
+        telefon: PersonaliaTelefon;
+        }>
+    >(
+        `/veilarbperson/graphql`,
+            {
+                query: graphqlQuery,
+                variables: { fnr, behandlingsnummer }
+            },
+            axiosJsonRequestConfig
+        )
+        .then(res => {
+            if (res.data.errors) {
+                logGraphQLError(res.data);
+                throw new Error('Feil ved henting av personalia');
+            }
+            return res;
+        });
 }
