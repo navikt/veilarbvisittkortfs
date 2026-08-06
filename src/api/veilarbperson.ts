@@ -181,11 +181,16 @@ export function sendEventTilVeilarbperson(event: FrontendEvent): AxiosPromise<vo
 const graphqlQuery = `
     query($fnr: ID!, $behandlingsnummer: String!) {
         person(fnr: $fnr, behandlingsnummer: $behandlingsnummer) {
-            fornavn
-            etternavn
-            diskresjonskode
-            egenAnsatt
-            telefon { telefonNr }
+           fornavn
+           mellomnavn
+           etternavn
+           fodselsdato
+           dodsdato
+           kjonn
+           diskresjonskode
+           egenAnsatt
+           sikkerhetstiltak
+           telefon { prioritet telefonNr registrertDato master }
             }
         }
     `;
