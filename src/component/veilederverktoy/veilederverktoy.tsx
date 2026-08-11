@@ -15,7 +15,7 @@ import {
 } from '../../util/selectors';
 import { harTilgangTilHuskelappEllerFargekategori } from '../huskelapp/harTilgangTilHuskelapp';
 import { useErUfordeltBruker, useHuskelapp } from '../../api/veilarbportefolje';
-import { useOppfolging, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
+import { useOppfolging } from '../../api/veilarboppfolging';
 import withClickMetric from '../components/click-metric/click-metric';
 import './veilederverktoy.less';
 import { StartArbeidsoppfolgingKnapp } from './start-arbeidsoppfolging/start-arbeidsoppfolging-knapp';
@@ -34,7 +34,9 @@ export const Veilederverktoy = () => {
         brukerFnr,
         visVeilederVerktoy && oppfolging?.underOppfolging
     );
-    const { data: tilgangTilBrukersKontor } = useTilgangTilBrukersKontor(brukerFnr);
+    const tilgangTilBrukersKontor = oppfolging
+        ? oppfolging.harVeilederLeseTilgangTilBruker && oppfolging.harVeilederLeseTilgangTilBrukersEnhet
+        : false;
 
     const {
         showTildelVeilederModal,
@@ -54,7 +56,7 @@ export const Veilederverktoy = () => {
     const sjekkHarTilgangTilHuskelappEllerFargekategori = harTilgangTilHuskelappEllerFargekategori(
         erUfordeltBruker === undefined ? true : erUfordeltBruker,
         !!oppfolging?.veilederId,
-        !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor
+        tilgangTilBrukersKontor
     );
 
     const { data: huskelapp } = useHuskelapp(

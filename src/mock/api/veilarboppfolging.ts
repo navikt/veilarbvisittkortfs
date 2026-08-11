@@ -2,8 +2,7 @@ import {
     AvslutningStatus,
     InnstillingHistorikkInnslag,
     Oppfolging,
-    OppfolgingsDataGraphqlResponse,
-    OppfolgingStatus
+    OppfolgingsDataGraphqlResponse
 } from '../../api/veilarboppfolging';
 import { mockInnloggetVeileder } from './veilarbveileder';
 import { defaultNetworkResponseDelay } from '../config';
@@ -115,6 +114,8 @@ const mockInnstillingsHistorikk: InnstillingHistorikkInnslag[] = [
 ];
 
 const mockOppfolging: Oppfolging = {
+    harVeilederLeseTilgangTilBruker: true,
+    harVeilederLeseTilgangTilBrukersEnhet: true,
     veilederId: mockInnloggetVeileder.ident,
     reservasjonKRR: true,
     manuell: true,
@@ -127,19 +128,13 @@ const mockOppfolging: Oppfolging = {
     kanVarsles: true
 };
 
-const mockOppfolgingsstatus: OppfolgingStatus = {
-    oppfolgingsenhet: {
-        navn: 'Nav TestHeim',
-        enhetId: '007'
-    },
-    veilederId: mockInnloggetVeileder.ident,
-    formidlingsgruppe: 'ARBS',
-    servicegruppe: 'BKART'
-};
-
 const mockOppfolgingGraphqlResponse: GraphqlResponse<OppfolgingsDataGraphqlResponse> = {
     errors: [],
     data: {
+        veilederTilgang: {
+            harVeilederLeseTilgangTilBruker: true,
+            harVeilederLeseTilgangTilBrukersEnhet: true
+        },
         oppfolgingsEnhet: {
             enhet: {
                 navn: 'Nav TestHeim',
@@ -179,10 +174,6 @@ export const veilarboppfolgingHandlers: RequestHandler[] = [
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json({ feilendeTilordninger: [] });
     }),
-    http.post('/veilarboppfolging/api/v3/oppfolging/hent-veilederTilgang', async () => {
-        await delay(defaultNetworkResponseDelay);
-        return HttpResponse.json({ tilgangTilBrukersKontor: true });
-    }),
     http.post('/veilarboppfolging/api/v3/hent-instillingshistorikk', async () => {
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json(mockInnstillingsHistorikk);
@@ -206,14 +197,6 @@ export const veilarboppfolgingHandlers: RequestHandler[] = [
     http.post('/veilarboppfolging/api/v3/oppfolging/stoppKvp', async () => {
         await delay(defaultNetworkResponseDelay);
         return new HttpResponse(null, { status: 204 });
-    }),
-    http.post('/veilarboppfolging/api/v2/person/hent-oppfolgingsstatus', async () => {
-        await delay(defaultNetworkResponseDelay);
-        return HttpResponse.json(mockOppfolgingsstatus);
-    }),
-    http.post('/veilarboppfolging/api/v3/oppfolging/hent-status', async () => {
-        await delay(defaultNetworkResponseDelay);
-        return HttpResponse.json(mockOppfolging);
     }),
     http.post('/veilarboppfolging/api/graphql', async () => {
         await delay(defaultNetworkResponseDelay);

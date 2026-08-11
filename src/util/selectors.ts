@@ -1,6 +1,6 @@
 import { storeForbokstaver } from './utils';
 import { Dialog, GjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
-import { Oppfolging, TilgangTilBrukersKontor } from '../api/veilarboppfolging';
+import { Oppfolging } from '../api/veilarboppfolging';
 import { Personalia } from '../api/veilarbperson';
 import { Huskelapp } from '../api/veilarbportefolje';
 import { VeilederData } from '../api/veilarbveileder';
@@ -32,11 +32,11 @@ export function kanFjerneHuskelapp(
 export function selectKanSendeEskaleringsVarsel(
     oppfolging: OrNothing<Oppfolging>,
     gjeldendeEskaleringsvarsel: OrNothing<GjeldendeEskaleringsvarsel>,
-    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
+    tilgangTilBrukersKontor: boolean
 ): boolean {
     if (!oppfolging || !tilgangTilBrukersKontor) return false;
     return (
-        tilgangTilBrukersKontor.tilgangTilBrukersKontor &&
+        tilgangTilBrukersKontor &&
         oppfolging.underOppfolging &&
         !oppfolging.underKvp &&
         gjeldendeEskaleringsvarsel == null &&
@@ -48,62 +48,49 @@ export function selectKanSendeEskaleringsVarsel(
 export function selectKanStoppeEskaleringsVarsel(
     oppfolging: OrNothing<Oppfolging>,
     gjeldendeEskaleringsvarsel: OrNothing<GjeldendeEskaleringsvarsel>,
-    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
+    tilgangTilBrukersKontor: boolean
 ): boolean {
     if (!oppfolging || !tilgangTilBrukersKontor) return false;
-    return (
-        tilgangTilBrukersKontor.tilgangTilBrukersKontor &&
-        oppfolging.underOppfolging &&
-        gjeldendeEskaleringsvarsel != null
-    );
+    return tilgangTilBrukersKontor && oppfolging.underOppfolging && gjeldendeEskaleringsvarsel != null;
 }
 
 export function selectKanAvslutteOppfolging(
     oppfolging: OrNothing<Oppfolging>,
-    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
+    tilgangTilBrukersKontor: boolean
 ): boolean {
     if (!oppfolging || !tilgangTilBrukersKontor) return false;
-    return tilgangTilBrukersKontor.tilgangTilBrukersKontor && oppfolging.underOppfolging;
+    return tilgangTilBrukersKontor && oppfolging.underOppfolging;
 }
 
 export function selectKanStarteManuellOppfolging(
     oppfolging: OrNothing<Oppfolging>,
-    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
+    tilgangTilBrukersKontor: boolean
 ): boolean {
     if (!oppfolging || !tilgangTilBrukersKontor) return false;
-    return tilgangTilBrukersKontor.tilgangTilBrukersKontor && oppfolging.underOppfolging && !oppfolging.manuell;
+    return tilgangTilBrukersKontor && oppfolging.underOppfolging && !oppfolging.manuell;
 }
 
 export function selectKanStarteDigitalOppfolging(
     oppfolging: OrNothing<Oppfolging>,
-    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
+    tilgangTilBrukersKontor: boolean
 ): boolean {
     if (!oppfolging || !tilgangTilBrukersKontor) return false;
-    return tilgangTilBrukersKontor.tilgangTilBrukersKontor && oppfolging.underOppfolging && oppfolging.manuell;
+    return tilgangTilBrukersKontor && oppfolging.underOppfolging && oppfolging.manuell;
 }
 
-export function selectKanStarteKVP(
-    oppfolging: OrNothing<Oppfolging>,
-    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
-): boolean {
+export function selectKanStarteKVP(oppfolging: OrNothing<Oppfolging>, tilgangTilBrukersKontor: boolean): boolean {
     if (!oppfolging || !tilgangTilBrukersKontor) return false;
-    return tilgangTilBrukersKontor.tilgangTilBrukersKontor && oppfolging.underOppfolging && !oppfolging.underKvp;
+    return tilgangTilBrukersKontor && oppfolging.underOppfolging && !oppfolging.underKvp;
 }
 
-export function selectKanStoppeKVP(
-    oppfolging: OrNothing<Oppfolging>,
-    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
-): boolean {
+export function selectKanStoppeKVP(oppfolging: OrNothing<Oppfolging>, tilgangTilBrukersKontor: boolean): boolean {
     if (!oppfolging || !tilgangTilBrukersKontor) return false;
-    return tilgangTilBrukersKontor.tilgangTilBrukersKontor && oppfolging.underOppfolging && oppfolging.underKvp;
+    return tilgangTilBrukersKontor && oppfolging.underOppfolging && oppfolging.underKvp;
 }
 
-export function selectKanTildeleVeileder(
-    oppfolging: OrNothing<Oppfolging>,
-    tilgangTilBrukersKontor: OrNothing<TilgangTilBrukersKontor>
-): boolean {
+export function selectKanTildeleVeileder(oppfolging: OrNothing<Oppfolging>, tilgangTilBrukersKontor: boolean): boolean {
     if (!oppfolging || !tilgangTilBrukersKontor) return false;
-    return oppfolging.underOppfolging && tilgangTilBrukersKontor.tilgangTilBrukersKontor;
+    return oppfolging.underOppfolging && tilgangTilBrukersKontor;
 }
 
 export function selectTelefonnummer(personalia: Personalia | undefined): StringOrNothing {
