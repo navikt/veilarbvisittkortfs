@@ -24,9 +24,9 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # ratchet:pnpm/action-setup@v6
       - name: Install dependencies
-        run: pnpm ci
+        run: pnpm install --frozen-lockfile --ignore-scripts
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+          pnpm_config__auth: '{"https://npm.pkg.github.com":{"@navikt":{"authToken":"${{ secrets.READER_TOKEN }}"}}}'
       - name: Build mock application
         run: pnpm run build:mock
       - name: Upload static files as artifact
