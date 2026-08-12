@@ -8,7 +8,7 @@ import HuskelappKnapp from '../huskelapp/huskelapp-knapp';
 import { Fargekategoriknapp } from '../fargekategori/fargekategoriknapp';
 import { harTilgangTilHuskelappEllerFargekategori } from '../huskelapp/harTilgangTilHuskelapp';
 import { useErUfordeltBruker } from '../../api/veilarbportefolje';
-import { useOppfolging, useTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
+import { useOppfolging } from '../../api/veilarboppfolging';
 import { useModalStore } from '../../store/modal-store';
 import { formaterTelefonnummer } from '../../util/formaterTelefonnummer';
 import './personinfo.less';
@@ -25,14 +25,17 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
         brukerFnr,
         visVeilederVerktoy && oppfolging?.underOppfolging
     );
-    const { data: tilgangTilBrukersKontor } = useTilgangTilBrukersKontor(brukerFnr);
+
+    const tilgangTilBrukersKontor = oppfolging
+        ? oppfolging.harVeilederLeseTilgangTilBruker && oppfolging.harVeilederLeseTilgangTilBrukersEnhet
+        : false;
 
     const navn = selectSammensattNavn(personalia);
 
     const sjekkHarTilgangTilHuskelappEllerFargekategori = harTilgangTilHuskelappEllerFargekategori(
         erUfordeltBruker === undefined ? true : erUfordeltBruker,
         !!oppfolging?.veilederId,
-        !!tilgangTilBrukersKontor?.tilgangTilBrukersKontor
+        tilgangTilBrukersKontor
     );
 
     const klikkShowHuskelapp = () => {
