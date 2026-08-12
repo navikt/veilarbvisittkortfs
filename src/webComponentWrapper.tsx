@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App, { AppTheme } from './app';
-import { Theme } from '@navikt/ds-react';
 import visittkortLessStyles from './index.less?inline';
 import visittkortCssStyles from './index.css?inline';
 import sijStyles from './component/components/sokfilter/sok-filter.less?inline';
@@ -46,7 +45,6 @@ const styles =
 class VisittkortElement extends HTMLElement {
     private root: ReactDOM.Root | null = null;
     private mountPoint: HTMLDivElement | null = null;
-    private internalTheme: AppTheme = 'light';
 
     static get observedAttributes() {
         return ['fnr', 'enhet', 'theme'];
@@ -91,32 +89,27 @@ class VisittkortElement extends HTMLElement {
         const visVeilederVerktoy = this.getAttribute('visVeilederVerktoy') === 'true';
         const skjulEtiketter = this.getAttribute('skjulEtiketter') === 'true';
         const themeAttribute = this.getAttribute('theme');
-        const theme: AppTheme =
-            themeAttribute === 'dark' ? 'dark' : themeAttribute === 'light' ? 'light' : this.internalTheme;
+        const theme: AppTheme = themeAttribute === 'dark' ? 'dark' : 'light';
 
         this.root.render(
             <React.StrictMode>
-                <Theme theme={theme}>
-                    <App
-                        fnr={fnr}
-                        enhet={enhet}
-                        tilbakeTilFlate={tilbakeTilFlate}
-                        skjulEtiketter={skjulEtiketter}
-                        visVeilederVerktoy={visVeilederVerktoy}
-                        theme={theme}
-                        onThemeChange={nextTheme => {
-                            this.internalTheme = nextTheme;
-                            this.render();
-                            this.dispatchEvent(
-                                new CustomEvent('app-theme-change', {
-                                    detail: { theme: nextTheme, source: 'ao-visittkort' },
-                                    bubbles: true,
-                                    composed: true
-                                })
-                            );
-                        }}
-                    />
-                </Theme>
+                <App
+                    fnr={fnr}
+                    enhet={enhet}
+                    tilbakeTilFlate={tilbakeTilFlate}
+                    skjulEtiketter={skjulEtiketter}
+                    visVeilederVerktoy={visVeilederVerktoy}
+                    theme={theme}
+                    onThemeChange={nextTheme => {
+                        this.dispatchEvent(
+                            new CustomEvent('app-theme-change', {
+                                detail: { theme: nextTheme, source: 'ao-visittkort' },
+                                bubbles: true,
+                                composed: true
+                            })
+                        );
+                    }}
+                />
             </React.StrictMode>
         );
     }

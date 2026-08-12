@@ -8,7 +8,7 @@ import { DarkModeSwitch } from './component/darkmode-switch';
 import './index.less';
 import './index.css';
 import { useSetAppState } from './store/app-store';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { VisittKortConfigContext } from './store/visittkort-config';
 import { FeilIVisittkortAlert } from './component/FeilIVisittkortAlert';
 import { Theme } from '@navikt/ds-react';
@@ -27,9 +27,7 @@ export interface AppProps {
 
 function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, theme, onThemeChange }: AppProps) {
     const setAppstate = useSetAppState();
-    const [localTheme, setLocalTheme] = useState<AppTheme>(theme ?? 'light');
-    const valgtTheme = theme ?? localTheme;
-    const darkMode = valgtTheme === 'dark';
+    const darkMode = theme === 'dark';
 
     useEffect(() => {
         setAppstate({ brukerFnr: fnr, enhetId: enhet });
@@ -38,11 +36,7 @@ function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, 
     const byttTheme = () => {
         const nesteTheme: AppTheme = darkMode ? 'light' : 'dark';
 
-        if (!theme) {
-            setLocalTheme(nesteTheme);
-        }
-
-        onThemeChange?.(nesteTheme);
+        onThemeChange(nesteTheme);
     };
 
     const configValue = useMemo(() => {
@@ -54,8 +48,8 @@ function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, 
 
     return (
         <VisittKortConfigContext.Provider value={configValue}>
-            <div>
-                <Theme asChild theme={valgtTheme}>
+            <Theme asChild theme={theme}>
+                <div>
                     <div className="visittkortfs">
                         <DataFetcher>
                             {brukerFnr => (
@@ -66,7 +60,7 @@ function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, 
                                         {!skjulEtiketter && <Etiketter brukerFnr={brukerFnr} />}
                                         <div className="visittkortfs__actions">
                                             <Veilederverktoy />
-                                            <DarkModeSwitch checked={darkMode} onChange={byttTheme} />
+                                            <DarkModeSwitch checked={theme === 'dark'} onChange={byttTheme} />
                                         </div>
                                     </div>
                                 </>
@@ -74,9 +68,9 @@ function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, 
                         </DataFetcher>
                         <VeilederverktoyModalController />
                     </div>
-                </Theme>
-                <FeilIVisittkortAlert />
-            </div>
+                    <FeilIVisittkortAlert />
+                </div>
+            </Theme>
         </VisittKortConfigContext.Provider>
     );
 }
