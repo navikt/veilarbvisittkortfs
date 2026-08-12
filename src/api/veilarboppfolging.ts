@@ -181,6 +181,7 @@ const graphqlQuery = `
     query hentOppfolgingsData($fnr: String!) {
         veilederTilgang(fnr: $fnr) {
             harVeilederLeseTilgangTilBruker
+            harVeilederLeseTilgangTilBrukersEnhet
         }
         oppfolgingsEnhet(fnr: $fnr) {
             enhet {
