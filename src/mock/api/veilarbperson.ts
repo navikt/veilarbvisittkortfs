@@ -36,7 +36,7 @@ const mockTelefon: PersonaliaTelefon[] = [
     }
 ];
 
-const mockPersonaliaV2: Personalia = {
+export const mockPersonaliaV2: Personalia = {
     fornavn: 'GRØNN',
     mellomnavn: 'LIV',
     etternavn: 'STAFELLI',

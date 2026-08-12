@@ -128,7 +128,7 @@ const mockOppfolging: Oppfolging = {
     kanVarsles: true
 };
 
-const mockOppfolgingGraphqlResponse: GraphqlResponse<OppfolgingsDataGraphqlResponse> = {
+export const mockOppfolgingGraphqlResponse: GraphqlResponse<OppfolgingsDataGraphqlResponse> = {
     errors: [],
     data: {
         veilederTilgang: {
