@@ -30,7 +30,7 @@ export const HuskelappSkjema = ({ endretAv }: Props) => (
             />
         </Form>
         {endretAv.length > 0 && (
-            <Detail>
+            <Detail className="huskelapp-postitstyling__endret-av">
                 <i>{endretAv}</i>
             </Detail>
         )}

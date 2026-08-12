@@ -4,6 +4,7 @@ interface VisittkortProps {
     tilbakeTilFlate?: string;
     visVeilederVerktoy?: string;
     skjulEtiketter?: string;
+    theme?: 'light' | 'dark';
 }
 
 declare module 'react' {

@@ -39,6 +39,10 @@ export function todayReversedDateStr(): string {
     return dayjs().format('YYYY-MM-DD');
 }
 
+export function toSimpleDateTimeStr(dato: string | Date | undefined): string | undefined {
+    return safeFormat(dayjs(dato), 'DD.MM.YYYY kl. HH:mm');
+}
+
 /**
  *
  * @param dato

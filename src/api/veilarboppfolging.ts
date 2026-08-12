@@ -32,7 +32,6 @@ export interface OppfolgingStatus {
 }
 
 export interface AvslutningStatus {
-    harYtelser: boolean;
     inaktiveringsDato: StringOrNothing;
     kanAvslutte: boolean;
     underKvp: boolean;
@@ -208,6 +207,7 @@ const graphqlQuery = `
         oppfolging(fnr: $fnr) {
             erUnderOppfolging
         }
+        utmeldingskandidatTag(fnr: $fnr)
     }
 `;
 
@@ -226,6 +226,19 @@ interface ArenaStatus {
 interface Enhet {
     id: string;
     navn: string;
+}
+
+export type KandidatForUtmeldingTag =
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_IKKE_LEVERT_MELDEKORT'
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE'
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_ANNET'
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_BRUKER'
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_VEILEDER'
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_SYSTEM'
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_UKJENT';
+
+export interface MedUtmeldingskandidatTag {
+    utmeldingskandidatTag: KandidatForUtmeldingTag | undefined;
 }
 
 export interface OppfolgingsDataGraphqlResponse {
@@ -252,11 +265,12 @@ export interface OppfolgingsDataGraphqlResponse {
     oppfolging: {
         erUnderOppfolging: boolean | undefined;
     };
+    utmeldingskandidatTag: KandidatForUtmeldingTag | undefined;
 }
 
 const mapTilBackoverkompatibelState = (
     data: GraphqlResponse<OppfolgingsDataGraphqlResponse>
-): (Oppfolging & OppfolgingStatus) | undefined => {
+): (Oppfolging & OppfolgingStatus & MedUtmeldingskandidatTag) | undefined => {
     if ((data.errors?.length || 0) != 0) {
         throw new Error(
             `Feilet å hente oppfolgingsdata (graphql) fra veilarboppfolging: ${data.errors.map(it => it.message).join(',')}`
@@ -276,7 +290,8 @@ const mapTilBackoverkompatibelState = (
         veilederId: data.data.brukerStatus.veilederTilordning?.veilederIdent,
         oppfolgingsenhet: oppfolgingsEnhet(data.data.oppfolgingsEnhet?.enhet),
         formidlingsgruppe: data.data.brukerStatus.arena?.formidlingsgruppe,
-        servicegruppe: data.data.brukerStatus.arena?.kvalifiseringsgruppe
+        servicegruppe: data.data.brukerStatus.arena?.kvalifiseringsgruppe,
+        utmeldingskandidatTag: data.data.utmeldingskandidatTag
     };
 };
 
@@ -287,7 +302,10 @@ export interface VeilarbOppfolgingGraphqlRequest {
 
 const graphqlUrl = '/veilarboppfolging/api/graphql';
 export const useVeilarboppfolgingData = (fnr: string | undefined) => {
-    const { data, error, isLoading, mutate } = useSWR<(Oppfolging & OppfolgingStatus) | undefined, Error>(
+    const { data, error, isLoading, mutate } = useSWR<
+        (Oppfolging & OppfolgingStatus & MedUtmeldingskandidatTag) | undefined,
+        Error
+    >(
         fnr ? `${graphqlUrl}/${fnr}` : null,
         () =>
             fetchWithPost(graphqlUrl, {
@@ -322,6 +340,10 @@ export function useTilgangTilBrukersKontor(fnr: string | undefined) {
 const aktiveTiltaksdeltakelserGraphqlQuery = `
   query($fnr: String!) {
     brukerStatus(fnr: $fnr) {
+		arena {
+			inaktivIArena
+      inaktiveringsdato
+		}
 		harAktiveTiltaksdeltakelser
     }
   }
@@ -331,7 +353,13 @@ export interface BrukerStatusResponse {
     brukerStatus?: BrukerStatus;
 }
 
+export interface BrukerArenaStatus {
+    inaktivIArena?: boolean;
+    inaktiveringsdato?: StringOrNothing;
+}
+
 export interface BrukerStatus {
+    arena?: BrukerArenaStatus;
     harAktiveTiltaksdeltakelser?: boolean;
 }
 

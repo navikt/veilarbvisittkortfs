@@ -1,7 +1,7 @@
-import { Field, FieldProps, getIn } from 'formik';
-import { ErrorMessage, DatePicker, useDatepicker, DateInputProps } from '@navikt/ds-react';
-import classNames from 'classnames';
+import { Field, FieldProps } from 'formik';
+import { DatePicker, useDatepicker, DateInputProps } from '@navikt/ds-react';
 import { toReversedDateStr } from '../../../util/date-utils';
+import { getErrors } from './formik-utils';
 
 interface FormikDatepickerProps {
     name: string;
@@ -18,9 +18,10 @@ interface DatoVelgerProps {
     size: DateInputProps['size'];
     label: string;
     name: string;
+    error?: string;
 }
 
-const DatoVelger = ({ formikProps, ariaLabel, size, label, name }: DatoVelgerProps) => {
+const DatoVelger = ({ formikProps, ariaLabel, size, label, name, error }: DatoVelgerProps) => {
     const {
         field,
         form: { setFieldValue }
@@ -43,7 +44,7 @@ const DatoVelger = ({ formikProps, ariaLabel, size, label, name }: DatoVelgerPro
 
     return (
         <DatePicker {...datepickerProps}>
-            <DatePicker.Input size={size} label={label} {...datepickerInputProps} />
+            <DatePicker.Input size={size} label={label} error={error} {...datepickerInputProps} />
         </DatePicker>
     );
 };
@@ -51,15 +52,19 @@ const DatoVelger = ({ formikProps, ariaLabel, size, label, name }: DatoVelgerPro
 const FormikDatoVelger = ({ name, validate, label, ariaLabel, size = 'medium', className }: FormikDatepickerProps) => (
     <Field validate={validate} name={name} id={name}>
         {(formProps: FieldProps) => {
-            const error = getIn(formProps.form.errors, name);
-            const datePickerClassName = classNames('skjemaelement datovelger', className, {
-                'datovelger--harFeil': error
-            });
+            const feil = getErrors(formProps.form.errors, formProps.form.touched, name);
+            const datePickerClassName = ['skjemaelement datovelger', className].filter(Boolean).join(' ');
 
             return (
                 <div className={datePickerClassName}>
-                    <DatoVelger formikProps={formProps} ariaLabel={ariaLabel} size={size} label={label} name={name} />
-                    {error && <ErrorMessage size={size}>{error}</ErrorMessage>}
+                    <DatoVelger
+                        formikProps={formProps}
+                        ariaLabel={ariaLabel}
+                        size={size}
+                        label={label}
+                        name={name}
+                        error={feil?.feilmelding}
+                    />
                 </div>
             );
         }}
