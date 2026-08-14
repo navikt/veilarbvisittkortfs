@@ -141,6 +141,10 @@ export const veilarbpersonHandlers: RequestHandler[] = [
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json(mockPersonaliaV2);
     }),
+    http.post('/veilarbperson/graphql', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json({ data: { person: mockPersonaliaV2 }, errors: null });
+    }),
     http.post('/veilarbperson/api/v3/person/hent-vergeOgFullmakt', async () => {
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json(mockVerge);

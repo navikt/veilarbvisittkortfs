@@ -6,6 +6,7 @@ import useSWR from 'swr';
 import { behandlingsnummer } from './behandlingsnummer';
 import { logGraphQLError } from './ao-oppfolgingskontor';
 import { GraphqlResponse } from './GraphqlUtils';
+import { MINIMERT_PDL_DATA, useFeaturesFromOboUnleash } from './veilarbpersonflatefs';
 
 export interface Personalia {
     fornavn: string;
@@ -116,7 +117,8 @@ export interface OpplysningerOmArbeidssoekerMedProfilering {
     profilering: Profilering;
 }
 
-export const usePersonalia = (fnr: string | undefined) => {
+// Intern hook for REST-endepunktet — brukes kun av usePersonalia-wrapperen nedenfor.
+const usePersonaliaRest = (fnr: string | undefined) => {
     const url = '/veilarbperson/api/v3/hent-person';
     const { data, error, isLoading } = useSWR<Personalia, ErrorMessage>(
         fnr ? `${url}/${fnr}` : null,
@@ -125,13 +127,34 @@ export const usePersonalia = (fnr: string | undefined) => {
     );
     return { personalia: data, error, isLoading };
 };
-export const usePersonaliaGraphql = (fnr: string | undefined) => {
+
+// Intern hook for GraphQL-endepunktet — brukes kun av usePersonalia-wrapperen nedenfor.
+const usePersonaliaGraphql = (fnr: string | undefined) => {
     const { data, error, isLoading } = useSWR(
         fnr ? `/veilarbperson/graphql/${fnr}` : null,
         () => hentPersonalia(fnr as string, behandlingsnummer),
         swrOptions
     );
-    return { personalia: data?.data?.data, error, isLoading };
+    return { personalia: data?.data?.data?.person, error, isLoading };
+};
+
+// TODO: Fjern toggle når veilarbvisittkortfs.minimert_pdldata er verifisert (ca. én måned).
+// Ved fjerning:
+//   1. Slett usePersonaliaRest og usePersonaliaGraphql
+//   2. Gjør usePersonalia om til å kalle GraphQL direkte (inline hentPersonalia-logikken)
+//   3. Fjern MINIMERT_PDL_DATA fra veilarbpersonflatefs.ts (konstant, ALL_TOGGLES, OboUnleashFeatures)
+//   4. Fjern MINIMERT_PDL_DATA fra mock/api/veilarbpersonflatefs.ts
+//   5. Valgfritt: fjern mock-handler for POST /veilarbperson/api/v3/hent-person
+export const usePersonalia = (fnr: string | undefined) => {
+    const { features } = useFeaturesFromOboUnleash();
+    const brukGraphQL = features?.[MINIMERT_PDL_DATA] ?? false;
+    const restResult = usePersonaliaRest(brukGraphQL ? undefined : fnr);
+    const graphqlResult = usePersonaliaGraphql(brukGraphQL ? fnr : undefined);
+    // Manuell verifisering nødvendig når toggle aktiveres:
+    // Sjekk at disse valgfrie feltene vises korrekt i UI: mellomnavn, dodsdato,
+    // diskresjonskode, sikkerhetstiltak og telefon-liste.
+    // REST-responsen er allerede verifisert; GraphQL-skjemaet kan ha ulik null-håndtering.
+    return brukGraphQL ? graphqlResult : restResult;
 };
 
 export const useVerge = (fnr: string | undefined) => {
@@ -177,7 +200,6 @@ export function sendEventTilVeilarbperson(event: FrontendEvent): AxiosPromise<vo
     return axiosInstance.post<void>(`/veilarbperson/api/logger/event`, event);
 }
 
-
 const graphqlQuery = `
     query($fnr: ID!, $behandlingsnummer: String!) {
         person(fnr: $fnr, behandlingsnummer: $behandlingsnummer) {
@@ -195,18 +217,10 @@ const graphqlQuery = `
         }
     `;
 
-function hentPersonalia(fnr: string, behandlingsnummer: string ) {
+function hentPersonalia(fnr: string, behandlingsnummer: string) {
     return axiosInstance
-        .post<
-        GraphqlResponse<{
-        fornavn: string;
-        etternavn: string;
-        diskresjonskode: StringOrNothing;
-        egenAnsatt: boolean;
-        telefon: PersonaliaTelefon;
-        }>
-    >(
-        `/veilarbperson/graphql`,
+        .post<GraphqlResponse<{ person: Personalia }>>(
+            `/veilarbperson/graphql`,
             {
                 query: graphqlQuery,
                 variables: { fnr, behandlingsnummer }

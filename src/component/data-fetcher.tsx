@@ -2,13 +2,7 @@ import React from 'react';
 import { Loader } from '@navikt/ds-react';
 import { useBrukerFnr } from '../store/app-store';
 import { useOppfolgingsstatus } from '../api/veilarboppfolging';
-import {
-    useVerge,
-    useFullmakt,
-    useSpraakTolk,
-    usePersonalia,
-    usePersonaliaGraphql
-} from '../api/veilarbperson';
+import { usePersonalia, useVerge, useFullmakt, useSpraakTolk } from '../api/veilarbperson';
 import { useInnloggetVeileder, useVeilederePaEnhet } from '../api/veilarbveileder';
 import { useGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 import './data-fetcher.less';
@@ -25,12 +19,6 @@ export function DataFetcher({ children }: Props) {
     // Start henting av data
     const { oppfolging, isLoading: oppfolgingsstatusIsLoading } = useOppfolgingsstatus(brukerFnr);
     const { isLoading: personaliaIsLoading } = usePersonalia(brukerFnr);
-    const { isLoading: personaliaIsLoading2 } = usePersonaliaGraphql(brukerFnr);
-
-
-
-
-
     const { isLoading: innloggetVeilederIsLoading } = useInnloggetVeileder();
     useVerge(brukerFnr);
     useFullmakt(brukerFnr);
@@ -45,8 +33,7 @@ export function DataFetcher({ children }: Props) {
     if (
         innloggetVeilederIsLoading ||
         oppfolgingsstatusIsLoading ||
-        personaliaIsLoading ||
-        personaliaIsLoading2
+        personaliaIsLoading
         // trenger ikke vente på vergeOgFullmaktFetcher eller spraakTolkFetcher
     ) {
         return <Loader className="visittkort-laster" size="xlarge" />;
