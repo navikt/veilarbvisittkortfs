@@ -56,7 +56,7 @@
     "eslint-plugin-react-hooks": "7.0.1",
     "globals": "16.5.0",
     "husky": "9.1.7",
-    "jsdom": "26.1.0",
+    "jsdom": "30.0.1",
     "less": "4.6.4",
     "lint-staged": "16.4.0",
     "msw": "2.10.5",
@@ -69,5 +69,6 @@
   },
   "msw": {
     "workerDirectory": "public"
-  }
+  },
+  "packageManager": "pnpm@11.21.0+sha512.521705bce689924eac72f5a3587122f362689ef6571e55ba80076fd637c11132ecffada26fad4ea79c485bfddbfd3d5a2a5b05805a77e893de71ec8a6cca3bb1"
 }

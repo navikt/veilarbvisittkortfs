@@ -1,0 +1,11 @@
+allowBuilds:
+  esbuild: true
+  msw: true
+
+minimumReleaseAge: 10080 # 1 week in minutes
+minimumReleaseAgeExclude:
+  - "@navikt/*"
+
+registries:
+  default: 'https://registry.npmjs.org/'
+  '@navikt': 'https://npm.pkg.github.com/'

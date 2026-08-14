@@ -54,6 +54,8 @@ export interface Oppfolging {
     underKvp: boolean;
     underOppfolging: boolean;
     veilederId: StringOrNothing;
+    harVeilederLeseTilgangTilBruker: boolean;
+    harVeilederLeseTilgangTilBrukersEnhet: boolean;
 }
 
 export interface TildelVeilederData {
@@ -177,6 +179,10 @@ export const useTildelTilVeileder = () => {
 
 const graphqlQuery = `
     query hentOppfolgingsData($fnr: String!) {
+        veilederTilgang(fnr: $fnr) {
+            harVeilederLeseTilgangTilBruker
+            harVeilederLeseTilgangTilBrukersEnhet
+        }
         oppfolgingsEnhet(fnr: $fnr) {
             enhet {
                 id
@@ -242,6 +248,10 @@ export interface MedUtmeldingskandidatTag {
 }
 
 export interface OppfolgingsDataGraphqlResponse {
+    veilederTilgang: {
+        harVeilederLeseTilgangTilBruker: boolean;
+        harVeilederLeseTilgangTilBrukersEnhet: boolean;
+    };
     oppfolgingsEnhet:
         | {
               enhet: Enhet | undefined;
@@ -278,6 +288,8 @@ const mapTilBackoverkompatibelState = (
     }
     if (!data.data) throw new Error(`Forventet "data" i graphql response men fikk ingenting`);
     return {
+        harVeilederLeseTilgangTilBruker: data.data.veilederTilgang.harVeilederLeseTilgangTilBruker,
+        harVeilederLeseTilgangTilBrukersEnhet: data.data.veilederTilgang.harVeilederLeseTilgangTilBrukersEnhet,
         inaktiveringsdato: data.data.brukerStatus.arena?.inaktiveringsdato,
         inaktivIArena: data.data.brukerStatus.arena?.inaktivIArena,
         kanReaktiveres: data.data.brukerStatus.arena?.kanReaktiveres,
@@ -326,16 +338,6 @@ const oppfolgingsEnhet = (enhet: Enhet | undefined): OppfolgingEnhet => ({ enhet
 
 export const useOppfolging = useVeilarboppfolgingData;
 export const useOppfolgingsstatus = useVeilarboppfolgingData;
-
-export function useTilgangTilBrukersKontor(fnr: string | undefined) {
-    const url = '/veilarboppfolging/api/v3/oppfolging/hent-veilederTilgang';
-    const { data, error, isLoading } = useSWR<TilgangTilBrukersKontor, ErrorMessage>(
-        fnr ? `${url}/${fnr}` : null,
-        () => fetchWithPost(url, { fnr: fnr as string }),
-        swrOptions
-    );
-    return { data, isLoading, error };
-}
 
 const aktiveTiltaksdeltakelserGraphqlQuery = `
   query($fnr: String!) {
