@@ -1,5 +1,5 @@
 import { AxiosPromise } from 'axios';
-import { axiosInstance, axiosJsonRequestConfig, ErrorMessage, fetchWithPost, swrOptions } from './utils';
+import { axiosInstance, ErrorMessage, fetchWithPost, swrOptions } from './utils';
 import { FrontendEvent } from '../util/logger';
 import { StringOrNothing } from '../util/type/utility-types';
 import useSWR from 'swr';
@@ -96,6 +96,11 @@ export interface PdlRequest {
     behandlingsnummer: string;
 }
 
+export interface PersonaliaGraphqlRequest {
+    query: string;
+    variables: { fnr: string; behandlingsnummer: string };
+}
+
 export type Profilering = {
     profileringId: string;
     periodeId: string;
@@ -135,7 +140,7 @@ const usePersonaliaGraphql = (fnr: string | undefined) => {
         () => hentPersonalia(fnr as string, behandlingsnummer),
         swrOptions
     );
-    return { personalia: data?.data?.data?.person, error, isLoading };
+    return { personalia: data?.data?.person, error, isLoading };
 };
 
 // TODO: Fjern toggle når veilarbvisittkortfs.minimert_pdldata er verifisert (ca. én måned).
@@ -217,21 +222,16 @@ const graphqlQuery = `
         }
     `;
 
-function hentPersonalia(fnr: string, behandlingsnummer: string) {
-    return axiosInstance
-        .post<GraphqlResponse<{ person: Personalia }>>(
-            `/veilarbperson/graphql`,
-            {
-                query: graphqlQuery,
-                variables: { fnr, behandlingsnummer }
-            },
-            axiosJsonRequestConfig
-        )
-        .then(res => {
-            if (res.data.errors) {
-                logGraphQLError(res.data);
-                throw new Error('Feil ved henting av personalia');
-            }
-            return res;
-        });
+function hentPersonalia(fnr: string, behandlingsnummer: string): Promise<GraphqlResponse<{ person: Personalia }>> {
+    const requestBody: PersonaliaGraphqlRequest = {
+        query: graphqlQuery,
+        variables: { fnr, behandlingsnummer }
+    };
+    return fetchWithPost('/veilarbperson/graphql', requestBody).then((res: GraphqlResponse<{ person: Personalia }>) => {
+        if (res.errors) {
+            logGraphQLError(res);
+            throw new Error('Feil ved henting av personalia');
+        }
+        return res;
+    });
 }
