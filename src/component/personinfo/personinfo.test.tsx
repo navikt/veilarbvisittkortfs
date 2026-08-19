@@ -39,8 +39,8 @@ const mockOppfolgingGraphql = (overrides: Partial<OppfolgingsDataGraphqlResponse
     });
 
 const mockPersonalia = (overrides: Partial<typeof mockPersonaliaV2> = {}) =>
-    http.post('/veilarbperson/api/v3/hent-person', async () => {
-        return HttpResponse.json({ ...mockPersonaliaV2, ...overrides });
+    http.post('/veilarbperson/graphql', async () => {
+        return HttpResponse.json({ data: { person: { ...mockPersonaliaV2, ...overrides } }, errors: null });
     });
 
 const mockHuskelapp = () =>

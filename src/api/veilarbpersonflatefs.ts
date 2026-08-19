@@ -3,14 +3,12 @@ import useSWR from 'swr';
 
 export const EKSEMPELTOGGLE = 'togglenavn-eksempeltoggle';
 export const DARKMODE_VISITTKORT_TOGGLE = 'veilarbvisittkort.darkmode';
-export const MINIMERT_PDL_DATA = 'veilarbvisittkortfs.minimert_pdldata';
 
-export const ALL_TOGGLES = [EKSEMPELTOGGLE, DARKMODE_VISITTKORT_TOGGLE, MINIMERT_PDL_DATA];
+export const ALL_TOGGLES = [EKSEMPELTOGGLE, DARKMODE_VISITTKORT_TOGGLE];
 
 export interface OboUnleashFeatures {
     [EKSEMPELTOGGLE]: boolean;
     [DARKMODE_VISITTKORT_TOGGLE]: boolean;
-    [MINIMERT_PDL_DATA]: boolean;
 }
 
 export const useFeaturesFromOboUnleash = () => {
