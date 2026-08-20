@@ -36,7 +36,7 @@ const mockTelefon: PersonaliaTelefon[] = [
     }
 ];
 
-export const mockPersonaliaV2: Personalia = {
+export const mockPersonalia: Personalia = {
     fornavn: 'GRØNN',
     mellomnavn: 'LIV',
     etternavn: 'STAFELLI',
@@ -139,7 +139,7 @@ export const veilarbpersonHandlers: RequestHandler[] = [
     }),
     http.post('/veilarbperson/graphql', async () => {
         await delay(defaultNetworkResponseDelay);
-        return HttpResponse.json({ data: { person: mockPersonaliaV2 }, errors: null });
+        return HttpResponse.json({ data: { person: mockPersonalia }, errors: null });
     }),
     http.post('/veilarbperson/api/v3/person/hent-vergeOgFullmakt', async () => {
         await delay(defaultNetworkResponseDelay);

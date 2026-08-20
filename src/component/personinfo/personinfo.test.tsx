@@ -4,7 +4,7 @@ import { setupServer } from 'msw/node';
 import { delay, http, HttpResponse } from 'msw';
 import { SWRConfig } from 'swr';
 import PersonInfo from './personinfo';
-import { mockPersonaliaV2 } from '../../mock/api/veilarbperson';
+import { mockPersonalia as mockPersonaliaData } from '../../mock/api/veilarbperson';
 import { mockOppfolgingGraphqlResponse } from '../../mock/api/veilarboppfolging';
 import { OppfolgingsDataGraphqlResponse } from '../../api/veilarboppfolging';
 import { GraphqlResponse } from '../../api/GraphqlUtils';
@@ -38,9 +38,9 @@ const mockOppfolgingGraphql = (overrides: Partial<OppfolgingsDataGraphqlResponse
         return HttpResponse.json(response);
     });
 
-const mockPersonalia = (overrides: Partial<typeof mockPersonaliaV2> = {}) =>
+const mockPersonalia = (overrides: Partial<typeof mockPersonaliaData> = {}) =>
     http.post('/veilarbperson/graphql', async () => {
-        return HttpResponse.json({ data: { person: { ...mockPersonaliaV2, ...overrides } }, errors: null });
+        return HttpResponse.json({ data: { person: { ...mockPersonaliaData, ...overrides } }, errors: null });
     });
 
 const mockHuskelapp = () =>
