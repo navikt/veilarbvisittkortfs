@@ -4,6 +4,12 @@
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 version: 2
+registries:
+  npmjs:
+    type: npm-registry
+    url: https://registry.npmjs.org/
+    token: ${{ secrets.DEPENDABOT_NULL_TOKEN }}
+    replaces-base: true
 
 updates:
   - package-ecosystem: "github-actions"
@@ -15,6 +21,8 @@ updates:
 
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
+    registries:
+      - npmjs
     schedule:
       interval: "weekly"
     cooldown:
