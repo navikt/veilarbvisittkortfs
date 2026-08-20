@@ -36,11 +36,10 @@ const mockTelefon: PersonaliaTelefon[] = [
     }
 ];
 
-export const mockPersonaliaV2: Personalia = {
+export const mockPersonalia: Personalia = {
     fornavn: 'GRØNN',
     mellomnavn: 'LIV',
     etternavn: 'STAFELLI',
-    fodselsnummer: '10108000398',
     fodselsdato: '1990-09-16',
     dodsdato: '2021-09-16',
     diskresjonskode: '7',
@@ -138,9 +137,9 @@ export const veilarbpersonHandlers: RequestHandler[] = [
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json(mockHarBruktNivaa4);
     }),
-    http.post('/veilarbperson/api/v3/hent-person', async () => {
+    http.post('/veilarbperson/graphql', async () => {
         await delay(defaultNetworkResponseDelay);
-        return HttpResponse.json(mockPersonaliaV2);
+        return HttpResponse.json({ data: { person: mockPersonalia }, errors: null });
     }),
     http.post('/veilarbperson/api/v3/person/hent-vergeOgFullmakt', async () => {
         await delay(defaultNetworkResponseDelay);

@@ -3,6 +3,7 @@ import { APP_NAME } from '../util/utils';
 import { TildelVeilederData, VeilarbOppfolgingGraphqlRequest } from './veilarboppfolging';
 import { StansVarselQueryRequest } from './veilarbdialogGraphql';
 import { VeilederDataListeRequest } from './veilarbveileder';
+import { PersonaliaGraphqlRequest } from './veilarbperson';
 
 export const axiosInstance = axios.create({
     withCredentials: true,
@@ -34,7 +35,8 @@ export type RequestTypes =
     | TildelVeilederData[]
     | StansVarselQueryRequest
     | VeilarbOppfolgingGraphqlRequest
-    | VeilederDataListeRequest;
+    | VeilederDataListeRequest
+    | PersonaliaGraphqlRequest;
 
 export const createPOSToptions = (event: RequestTypes) => ({
     withCredentials: true,
