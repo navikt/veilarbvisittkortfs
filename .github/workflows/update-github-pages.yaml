@@ -20,9 +20,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # ratchet:actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
       - name: Install pnpm
-        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # ratchet:pnpm/action-setup@v6
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # ratchet:pnpm/setup@v2.0.2
+        with:
+          runtime: node@22
+          cache: true
+          install: false
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
         env:
@@ -34,4 +38,4 @@ jobs:
         with:
           path: ./build
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # ratchet:actions/deploy-pages@v4
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # ratchet:actions/deploy-pages@v5.0.0

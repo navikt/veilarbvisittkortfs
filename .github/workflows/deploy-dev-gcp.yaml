@@ -17,10 +17,14 @@ jobs:
       id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # ratchet:actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
 
       - name: Install pnpm
-        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # ratchet:pnpm/action-setup@v6
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # ratchet:pnpm/setup@v2.0.2
+        with:
+          runtime: node@22
+          cache: true
+          install: false
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
@@ -34,7 +38,7 @@ jobs:
         run: pnpm build:dev
 
       - name: Upload to CDN
-        uses: nais/deploy/actions/cdn-upload/v2@437e4adfe270e3f1c98fd0eed7f86ecf0e0873db # ratchet:nais/deploy/actions/cdn-upload/v2@master
+        uses: nais/deploy/actions/cdn-upload/v2@849e900e3cfa7faf7ad1532bb3a3e6499c932199 # ratchet:nais/deploy/actions/cdn-upload/v2@master
         with:
           team: poao
           source: ./build/

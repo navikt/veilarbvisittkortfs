@@ -4,47 +4,56 @@
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 version: 2
+registries:
+  npmjs:
+    type: npm-registry
+    url: https://registry.npmjs.org/
+    token: ${{ secrets.DEPENDABOT_NULL_TOKEN }}
+    replaces-base: true
+
 updates:
   - package-ecosystem: "github-actions"
     directory: "/.github/workflows"
     schedule:
       interval: "weekly"
     cooldown:
-        default-days: 3
+      default-days: 3
 
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
+    registries:
+      - npmjs
     schedule:
       interval: "weekly"
     cooldown:
-        default-days: 7
+      default-days: 7
     groups:
       aksel-dependencies:
         patterns:
-          - '@navikt/aksel*'
-          - '@navikt/ds*'
+          - "@navikt/aksel*"
+          - "@navikt/ds*"
       react-dependencies:
         patterns:
-          - '@types/react'
-          - '@types/react-dom'
-          - 'react'
-          - 'react-dom'
+          - "@types/react"
+          - "@types/react-dom"
+          - "react"
+          - "react-dom"
       eslint:
         patterns:
-          - 'eslint*'
-          - 'globals'
-          - 'typescript-eslint'
-          - '@eslint/*'
+          - "eslint*"
+          - "globals"
+          - "typescript-eslint"
+          - "@eslint/*"
       workflow-tools:
         patterns:
-          - 'husky'
-          - 'lint-staged'
+          - "husky"
+          - "lint-staged"
       testing:
         patterns:
-          - '@testing-library/react'
-          - 'jsdom'
-          - 'vitest'
+          - "@testing-library/react"
+          - "jsdom"
+          - "vitest"
       typescript:
         patterns:
-          - 'typescript'
-          - 'typescript-eslint'
+          - "typescript"
+          - "typescript-eslint"
