@@ -1,6 +1,6 @@
 import { storeForbokstaver } from './utils';
 import { Dialog, GjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
-import { Oppfolging } from '../api/veilarboppfolging';
+import { KandidatForUtmeldingTag, Oppfolging } from '../api/veilarboppfolging';
 import { Personalia } from '../api/veilarbperson';
 import { Huskelapp } from '../api/veilarbportefolje';
 import { VeilederData } from '../api/veilarbveileder';
@@ -91,6 +91,16 @@ export function selectKanStoppeKVP(oppfolging: OrNothing<Oppfolging>, tilgangTil
 export function selectKanTildeleVeileder(oppfolging: OrNothing<Oppfolging>, tilgangTilBrukersKontor: boolean): boolean {
     if (!oppfolging || !tilgangTilBrukersKontor) return false;
     return oppfolging.underOppfolging && tilgangTilBrukersKontor;
+}
+
+export function selectKanForlengeOppfolging(
+    oppfolging: OrNothing<Oppfolging & { utmeldingskandidatTag?: KandidatForUtmeldingTag }>,
+    tilgangTilBrukersKontor: boolean,
+    kanForlengeOppfolgingBackend: boolean = false
+): boolean {
+    if (!oppfolging || !tilgangTilBrukersKontor) return false;
+    // TODO: Bytt til backend-felt for "kan forlenge" når API er tilgjengelig.
+    return kanForlengeOppfolgingBackend;
 }
 
 export function selectTelefonnummer(personalia: Personalia | undefined): StringOrNothing {

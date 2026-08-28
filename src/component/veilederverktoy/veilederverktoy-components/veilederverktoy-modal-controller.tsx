@@ -32,6 +32,7 @@ import HuskelappRedigereModal from '../../huskelapp/redigering/huskelapp-rediger
 import HuskelappFjernModal from '../../huskelapp/visning/huskelapp-fjern-modal';
 import ByttOppfolgingskontorModal from '../bytt-oppfolgingskontor/bytt-oppfolgingskontor-modal';
 import { useBrukerFnr } from '../../../store/app-store';
+import ForlengOppfolging from '../forleng-oppfolging/forleng-oppfolging';
 
 export function VeilederverktoyModalController() {
     const { activeModalState } = useModalStore();
@@ -107,6 +108,8 @@ export function VeilederverktoyModalController() {
             return <HuskelappFjernModal />;
         case ModalType.BYTT_OPPFOLGINGSKONTOR:
             return <ByttOppfolgingskontorModal brukerFnr={brukerFnr} />;
+        case ModalType.FORLENG_OPPFOLGING:
+            return <ForlengOppfolging brukerFnr={brukerFnr} />;
         default:
             return null;
     }

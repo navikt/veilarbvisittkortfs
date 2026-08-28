@@ -5,6 +5,7 @@ import { useBrukerFnr } from '../../store/app-store';
 import { useModalStore } from '../../store/modal-store';
 import {
     selectKanAvslutteOppfolging,
+    selectKanForlengeOppfolging,
     selectKanSendeEskaleringsVarsel,
     selectKanStarteDigitalOppfolging,
     selectKanStarteKVP,
@@ -50,7 +51,8 @@ export const Veilederverktoy = () => {
         showAvsluttOppfolgingModal,
         showHistorikkModal,
         showHuskelappRedigereModal,
-        showByttOppfolgingKontorModal
+        showByttOppfolgingKontorModal,
+        showForlengOppfolgingModal
     } = useModalStore();
 
     const sjekkHarTilgangTilHuskelappEllerFargekategori = harTilgangTilHuskelappEllerFargekategori(
@@ -82,6 +84,7 @@ export const Veilederverktoy = () => {
     const kanStarteKVP = selectKanStarteKVP(oppfolging, tilgangTilBrukersKontor);
     const kanStoppeKVP = selectKanStoppeKVP(oppfolging, tilgangTilBrukersKontor);
     const kanTildeleVeileder = selectKanTildeleVeileder(oppfolging, tilgangTilBrukersKontor);
+    const kanForlengeOppfolging = selectKanForlengeOppfolging(oppfolging, tilgangTilBrukersKontor);
 
     const huskelappKlikk = () => {
         showHuskelappRedigereModal();
@@ -175,6 +178,13 @@ export const Veilederverktoy = () => {
                             knappeTekst="Avslutt oppfølging"
                             onClick={showAvsluttOppfolgingModal}
                             metricName="avslutt_oppfolging"
+                        />
+                    )}
+                    {kanForlengeOppfolging && (
+                        <StartProsessKnapp
+                            knappeTekst="Forleng oppfølging"
+                            onClick={showForlengOppfolgingModal}
+                            metricName="forleng_oppfolging"
                         />
                     )}
                     {underOppfolging ? (
