@@ -5,15 +5,17 @@ import OpprettOppgaveVelgVeileder from './opprett-oppgave-veileder-selector';
 import OpprettOppgaveBeskrivelseTekstArea from './opprett-oppgave-beskrivelse-textarea';
 import { FormikProps } from 'formik';
 import { OpprettOppgaveFormValues } from '../opprett-oppgave';
-import { BehandlandeEnhet, hentBehandlendeEnheter, OppgaveTema } from '../../../../api/veilarboppgave';
+import { BehandlandeEnhet, BehandlingsTema, hentBehandlendeEnheter, OppgaveTema } from '../../../../api/veilarboppgave';
 import { OrNothing, StringOrNothing } from '../../../../util/type/utility-types';
 import { Button } from '@navikt/ds-react';
 import { useEffect, useState } from 'react';
 import KontorDropdown from './kontorDropdown';
+import OpprettBehandlingstemaTypeSelector from './opprett-behandlingstema-type-selector';
 
 interface OppgaveInnerFormProps {
     fnr: string;
     tema: OrNothing<OppgaveTema>;
+    behandlingsTema: OrNothing<BehandlingsTema>;
     enhetId: StringOrNothing;
     veilederId: StringOrNothing;
     avsenderenhetId: string;
@@ -22,14 +24,15 @@ interface OppgaveInnerFormProps {
 }
 
 function OppgaveInnerForm({
-    fnr,
-    tema,
-    enhetId,
-    veilederId,
-    avsenderenhetId,
-    formikProps,
-    tilbake
-}: OppgaveInnerFormProps) {
+                              fnr,
+                              tema,
+                              behandlingsTema,
+                              enhetId,
+                              veilederId,
+                              avsenderenhetId,
+                              formikProps,
+                              tilbake
+                          }: OppgaveInnerFormProps) {
     const [behandladeEnheter, setBehandladeEnheter] = useState([] as BehandlandeEnhet[]);
     const [isLoading, setIsLoading] = useState(true);
     const { setFieldValue } = formikProps;
@@ -52,6 +55,10 @@ function OppgaveInnerForm({
 
     return (
         <>
+            {tema === 'ARBEIDSAVKLARING' &&
+                <div className="oppgave-type-og-prioritet-container">
+                    <OpprettBehandlingstemaTypeSelector behandlingsTema={behandlingsTema} />
+                </div> }
             <div className="oppgave-type-og-prioritet-container">
                 <OpprettOppgaveTypeSelector oppgaveTema={tema} />
                 <OpprettOppgavePrioritetSelector />
