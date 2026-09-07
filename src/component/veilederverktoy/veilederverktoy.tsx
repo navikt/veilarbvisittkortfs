@@ -84,7 +84,7 @@ export const Veilederverktoy = () => {
     const kanStarteKVP = selectKanStarteKVP(oppfolging, tilgangTilBrukersKontor);
     const kanStoppeKVP = selectKanStoppeKVP(oppfolging, tilgangTilBrukersKontor);
     const kanTildeleVeileder = selectKanTildeleVeileder(oppfolging, tilgangTilBrukersKontor);
-    const kanForlengeOppfolging = selectKanForlengeOppfolging(oppfolging, tilgangTilBrukersKontor, true);
+    const kanForlengeOppfolging = selectKanForlengeOppfolging(oppfolging, tilgangTilBrukersKontor);
 
     const huskelappKlikk = () => {
         showHuskelappRedigereModal();

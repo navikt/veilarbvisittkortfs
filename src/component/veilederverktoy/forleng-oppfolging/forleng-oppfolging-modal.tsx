@@ -2,27 +2,116 @@ import { DatePicker, Modal, Tag, VStack, useDatepicker, HelpText, Button, Detail
 import { useModalStore } from '../../../store/modal-store';
 import './forleng-oppfolging.less';
 import dayjs from 'dayjs';
-import { useOppfolging } from '../../../api/veilarboppfolging';
+import { useForlengOppfolging, useOppfolging } from '../../../api/veilarboppfolging';
 import { OppfolgingForlengetTilKvitering, ForlengOppfolgingKvittering } from './forleng-oppfolging-kvittering';
 import { mapUtmeldingskandidatTag } from '../../../util/utmeldingskandidat-tag';
 import { useState } from 'react';
 import { erITestMiljo } from '../../../util/utils';
+import { OppfolgingForlengelseFeilet } from './forleng-oppfolging-feilet';
 
 function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
     const [forlengTilDato, setForlengTilDato] = useState<Date | undefined>(dayjs().add(14, 'day').toDate());
     const [kvittering, setKvittering] = useState<OppfolgingForlengetTilKvitering | undefined>(undefined);
-    // const [settForlengError, setSettForlengError] = useState<string | undefined>(undefined);
+    const [valideringsfeil, setValideringsfeil] = useState<boolean>(false);
 
     const { hideModal } = useModalStore();
     const { oppfolging } = useOppfolging(brukerFnr);
+    const { forlengOppfolging, isLoading, error } = useForlengOppfolging();
     const { datepickerProps, inputProps } = useDatepicker({
         defaultSelected: forlengTilDato,
         onDateChange: setForlengTilDato,
-        fromDate: new Date()
+        fromDate: new Date(),
+        toDate: dayjs().add(6, 'month').toDate()
     });
 
-    async function lagreForlengelse() {
-        setKvittering({ forlengetTil: forlengTilDato! });
+    async function handleLagreForlengelse() {
+        setValideringsfeil(false);
+
+        if (!brukerFnr) {
+            setValideringsfeil(true);
+            return;
+        }
+        if (!forlengTilDato) {
+            setValideringsfeil(true);
+            return;
+        }
+
+        const valgtDato = dayjs(forlengTilDato).startOf('day');
+        const idag = dayjs().startOf('day');
+        const maksDato = idag.add(6, 'month').startOf('day');
+
+        if (!valgtDato.isValid() || valgtDato.isBefore(idag) || valgtDato.isAfter(maksDato)) {
+            setValideringsfeil(true);
+            return;
+        }
+
+        const formatertDato = valgtDato.format('YYYY-MM-DD');
+
+        await forlengOppfolging({ fnr: brukerFnr, forlengetTil: formatertDato });
+        setKvittering({ forlengetTil: forlengTilDato });
+    }
+
+    function getModalContent() {
+        if (error || valideringsfeil) {
+            return <OppfolgingForlengelseFeilet tilbake={() => hideModal()} />;
+        } else if (kvittering) {
+            return <ForlengOppfolgingKvittering kvittering={kvittering} tilbake={() => hideModal()} />;
+        } else {
+            return (
+                <>
+                    <Modal.Body>
+                        <VStack gap="space-16" align="start" className="pb-8">
+                            <Tag variant="warning" size="small">
+                                {mapUtmeldingskandidatTag(oppfolging?.utmeldingskandidat.tag)}
+                            </Tag>
+                            <DatePicker {...datepickerProps}>
+                                <DatePicker.Input
+                                    {...inputProps}
+                                    id="forleng-til-dato"
+                                    label={
+                                        <span className="flex items-center gap-1">
+                                            Velg når personen igjen skal bli kandidat for avslutning
+                                            <HelpText title="forklaring">
+                                                På valgt dato legges personen igjen i filteret «Kandidater for
+                                                avslutning (fase 1)». Du kan velge en dato inntil 6 måneder frem i tid.
+                                            </HelpText>
+                                        </span>
+                                    }
+                                    required
+                                />
+                            </DatePicker>
+                        </VStack>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Detail className="text-ax-text-neutral self-end ml-auto text-left flex-1">
+                            Forlengelse registrerer <strong>ikke</strong> personen som arbeidssøker.{' '}
+                            <Link
+                                href={
+                                    erITestMiljo()
+                                        ? `https://arbeidssokerregistrering-for-veileder.ansatt.dev.nav.no`
+                                        : `https://arbeidssokerregistrering-for-veileder.intern.nav.no/`
+                                }
+                            >
+                                Gå til arbeidssøkerregisteret
+                            </Link>
+                        </Detail>
+                        <Button
+                            variant="primary"
+                            size="small"
+                            type="submit"
+                            onClick={handleLagreForlengelse}
+                            loading={isLoading}
+                            disabled={isLoading || !forlengTilDato}
+                        >
+                            Bekreft
+                        </Button>
+                        <Button variant="secondary" size="small" onClick={hideModal} disabled={isLoading}>
+                            Avbryt
+                        </Button>
+                    </Modal.Footer>
+                </>
+            );
+        }
     }
 
     return (
@@ -34,53 +123,7 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
             }}
             className="forleng-oppfolging-modal"
         >
-            <Modal.Body className="forleng-oppfolging-modal__body">
-                if (kvittering) {<ForlengOppfolgingKvittering kvittering={kvittering} />}
-                else{' '}
-                {
-                    <VStack gap="space-16" align="start" className="pb-8">
-                        <Tag variant="warning" size="small">
-                            {mapUtmeldingskandidatTag(oppfolging?.utmeldingskandidatTag)}
-                        </Tag>
-                        <DatePicker {...datepickerProps}>
-                            <DatePicker.Input
-                                {...inputProps}
-                                id="forleng-til-dato"
-                                label={
-                                    <span className="flex items-center gap-1">
-                                        Velg når personen igjen skal bli kandidat for avslutning
-                                        <HelpText title="forklaring">
-                                            På valgt dato legges personen igjen i filteret «Kandidater for avslutning
-                                            (fase 1)». Du kan velge en dato inntil 6 måneder frem i tid.
-                                        </HelpText>
-                                    </span>
-                                }
-                                required
-                            />
-                        </DatePicker>
-                    </VStack>
-                }
-            </Modal.Body>
-            <Modal.Footer>
-                <Detail className="text-ax-text-neutral self-end ml-auto text-left flex-1">
-                    Forlengelse registrerer <strong>ikke</strong> personen som arbeidssøker.{' '}
-                    <Link
-                        href={
-                            erITestMiljo()
-                                ? `https://arbeidssokerregistrering-for-veileder.ansatt.dev.nav.no`
-                                : `https://arbeidssokerregistrering-for-veileder.intern.nav.no/`
-                        }
-                    >
-                        Gå til arbeidssøkerregisteret
-                    </Link>
-                </Detail>
-                <Button variant="primary" size="small" type="submit" onClick={lagreForlengelse}>
-                    Bekreft
-                </Button>
-                <Button variant="secondary" size="small">
-                    Avbryt
-                </Button>
-            </Modal.Footer>
+            {getModalContent()}
         </Modal>
     );
 }
