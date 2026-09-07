@@ -1,6 +1,5 @@
 import { DatePicker, Modal, Tag, VStack, useDatepicker, HelpText, Button, Detail, Link } from '@navikt/ds-react';
 import { useModalStore } from '../../../store/modal-store';
-import './forleng-oppfolging.less';
 import dayjs from 'dayjs';
 import { useForlengOppfolging, useOppfolging } from '../../../api/veilarboppfolging';
 import { OppfolgingForlengetTilKvitering, ForlengOppfolgingKvittering } from './forleng-oppfolging-kvittering';
