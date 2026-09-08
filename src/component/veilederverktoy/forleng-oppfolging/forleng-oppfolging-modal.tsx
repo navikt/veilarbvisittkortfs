@@ -14,7 +14,7 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
     const [valideringsfeil, setValideringsfeil] = useState<boolean>(false);
 
     const { hideModal } = useModalStore();
-    const { oppfolging } = useOppfolging(brukerFnr);
+    const { oppfolging, mutate } = useOppfolging(brukerFnr);
     const { forlengOppfolging, isLoading, error } = useForlengOppfolging();
     const { datepickerProps, inputProps } = useDatepicker({
         defaultSelected: forlengTilDato,
@@ -50,7 +50,8 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
 
         const formatertDato = valgtDato.format('YYYY-MM-DD');
 
-        await forlengOppfolging({ fnr: brukerFnr, forlengetTil: formatertDato });
+        await forlengOppfolging({ fnr: brukerFnr, forlengetTil: formatertDato }, { throwOnError: false });
+        await mutate();
         setKvittering({ forlengetTil: forlengTilDato });
     }
 
