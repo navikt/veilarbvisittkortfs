@@ -34,6 +34,10 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
             setValideringsfeil(true);
             return;
         }
+        if (oppfolging?.utmeldingskandidat?.tag === null) {
+            setValideringsfeil(true);
+            return;
+        }
 
         const valgtDato = dayjs(forlengTilDato).startOf('day');
         const idag = dayjs().startOf('day');

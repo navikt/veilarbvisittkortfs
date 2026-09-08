@@ -98,8 +98,7 @@ export function selectKanForlengeOppfolging(
     tilgangTilBrukersKontor: boolean
 ): boolean {
     if (!oppfolging || !tilgangTilBrukersKontor) return false;
-
-    return oppfolging.underOppfolging && oppfolging.utmeldingskandidat.tag !== undefined;
+    return oppfolging.underOppfolging && oppfolging.utmeldingskandidat?.tag != null;
 }
 
 export function selectTelefonnummer(personalia: Personalia | undefined): StringOrNothing {
