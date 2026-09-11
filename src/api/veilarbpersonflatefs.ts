@@ -3,7 +3,7 @@ import useSWR from 'swr';
 
 export const EKSEMPELTOGGLE = 'togglenavn-eksempeltoggle';
 export const DARKMODE_VISITTKORT_TOGGLE = 'veilarbvisittkort.darkmode';
-export const UTMELDINGSKANDIDATER_TOGGLE = 'veilarbvisittkort.utmeldingskandidater';
+export const UTMELDINGSKANDIDATER_TOGGLE = 'veilarbvisittkortfs.utmeldingskandidater';
 
 export const ALL_TOGGLES = [EKSEMPELTOGGLE, DARKMODE_VISITTKORT_TOGGLE, UTMELDINGSKANDIDATER_TOGGLE];
 
