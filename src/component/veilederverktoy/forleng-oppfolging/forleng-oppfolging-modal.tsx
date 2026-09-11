@@ -7,15 +7,24 @@ import { mapUtmeldingskandidatTag } from '../../../util/utmeldingskandidat-tag';
 import { useState } from 'react';
 import { erITestMiljo } from '../../../util/utils';
 import { OppfolgingForlengelseFeilet } from './forleng-oppfolging-feilet';
+import { harAktivForlengelse } from './utils';
 
 function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
-    const [forlengTilDato, setForlengTilDato] = useState<Date | undefined>(dayjs().add(14, 'day').toDate());
-    const [kvittering, setKvittering] = useState<OppfolgingForlengetTilKvitering | undefined>(undefined);
-    const [valideringsfeil, setValideringsfeil] = useState<boolean>(false);
+    const dagensDato = dayjs().startOf('day').toDate();
+    const maksDato = dayjs().add(6, 'month').startOf('day').toDate();
 
     const { hideModal } = useModalStore();
     const { oppfolging, mutate } = useOppfolging(brukerFnr);
     const { forlengOppfolging, isLoading, error } = useForlengOppfolging();
+
+    const [forlengTilDato, setForlengTilDato] = useState<Date | undefined>(
+        harAktivForlengelse(oppfolging)
+            ? dayjs(oppfolging?.utmeldingskandidat?.aktivForlengelse?.forlengetTil).toDate()
+            : dagensDato
+    );
+    const [kvittering, setKvittering] = useState<OppfolgingForlengetTilKvitering | undefined>(undefined);
+    const [valideringsfeil, setValideringsfeil] = useState<boolean>(false);
+
     const { datepickerProps, inputProps } = useDatepicker({
         defaultSelected: forlengTilDato,
         onDateChange: setForlengTilDato,
@@ -34,16 +43,14 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
             setValideringsfeil(true);
             return;
         }
-        if (oppfolging?.utmeldingskandidat?.tag === null) {
+        if (oppfolging?.utmeldingskandidat?.tag === null && !harAktivForlengelse(oppfolging)) {
             setValideringsfeil(true);
             return;
         }
 
         const valgtDato = dayjs(forlengTilDato).startOf('day');
-        const idag = dayjs().startOf('day');
-        const maksDato = idag.add(6, 'month').startOf('day');
 
-        if (!valgtDato.isValid() || valgtDato.isBefore(idag) || valgtDato.isAfter(maksDato)) {
+        if (!valgtDato.isValid() || valgtDato.isBefore(dagensDato) || valgtDato.isAfter(maksDato)) {
             setValideringsfeil(true);
             return;
         }
@@ -61,13 +68,17 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
         } else if (kvittering) {
             return <ForlengOppfolgingKvittering kvittering={kvittering} tilbake={() => hideModal()} />;
         } else {
+            const utmeldingskandidatTag = mapUtmeldingskandidatTag(oppfolging?.utmeldingskandidat.tag);
+
             return (
                 <>
                     <Modal.Body>
                         <VStack gap="space-16" align="start" className="pb-8">
-                            <Tag variant="warning" size="small">
-                                {mapUtmeldingskandidatTag(oppfolging?.utmeldingskandidat.tag)}
-                            </Tag>
+                            {utmeldingskandidatTag && (
+                                <Tag variant="warning" size="small">
+                                    {utmeldingskandidatTag}
+                                </Tag>
+                            )}
                             <DatePicker {...datepickerProps}>
                                 <DatePicker.Input
                                     {...inputProps}

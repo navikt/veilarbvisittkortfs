@@ -1,6 +1,6 @@
 import { KandidatForUtmeldingTag } from '../api/veilarboppfolging';
 
-export function mapUtmeldingskandidatTag(tag: KandidatForUtmeldingTag | undefined): string {
+export function mapUtmeldingskandidatTag(tag: KandidatForUtmeldingTag | undefined | null): string | null {
     switch (tag) {
         case 'ARBEIDSSOKERPERIODE_AVSLUTTET_IKKE_LEVERT_MELDEKORT':
             return 'Arbeidssøkerperiode avsluttet: Ikke levert bekreftelse';
@@ -12,6 +12,7 @@ export function mapUtmeldingskandidatTag(tag: KandidatForUtmeldingTag | undefine
             return 'Forlengelse utløpt';
 
         case undefined:
-            return '';
+        case null:
+            return null;
     }
 }

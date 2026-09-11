@@ -296,7 +296,7 @@ export interface MedUtmeldingskandidat {
             type: string | undefined;
             forlengetTil: string | undefined;
         }[];
-        tag: KandidatForUtmeldingTag | undefined;
+        tag: KandidatForUtmeldingTag | null;
     };
 }
 
@@ -328,22 +328,7 @@ export interface OppfolgingsDataGraphqlResponse {
     oppfolging: {
         erUnderOppfolging: boolean | undefined;
     };
-    utmeldingskandidat: {
-        aktivForlengelse: {
-            utfortAvType: KandidatForUtmeldingHendelseUtfortAvType;
-            utfortAv: string | undefined;
-            hendelseTidspunkt: string;
-            forlengetTil: string | undefined;
-        } | null;
-        utmeldingskandidatHendelser: {
-            utfortAvType: KandidatForUtmeldingHendelseUtfortAvType;
-            utfortAv: string | undefined;
-            hendelseTidspunkt: string;
-            type: string | undefined;
-            forlengetTil: string | undefined;
-        }[];
-        tag: KandidatForUtmeldingTag | undefined;
-    };
+    utmeldingskandidat: MedUtmeldingskandidat['utmeldingskandidat'];
 }
 
 const mapTilBackoverkompatibelState = (

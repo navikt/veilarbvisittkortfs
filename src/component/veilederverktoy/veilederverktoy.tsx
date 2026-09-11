@@ -23,6 +23,7 @@ import { StartArbeidsoppfolgingKnapp } from './start-arbeidsoppfolging/start-arb
 import { StartArbeidssokerRegistreringKnapp } from './start-arbeidssoker-registrering/start-arbeidssoker-registrering-knapp';
 import { useVisVeilederVerktøy } from '../../store/visittkort-config';
 import { useGjeldendeEskaleringsvarsel } from '../../api/veilarbdialog';
+import { harAktivForlengelse } from './forleng-oppfolging/utils';
 
 const ButtonWithClickMetric = withClickMetric(Button);
 
@@ -186,7 +187,9 @@ export const Veilederverktoy = () => {
                     )}
                     {kanForlengeOppfolging && (
                         <StartProsessKnapp
-                            knappeTekst="Forleng oppfølging"
+                            knappeTekst={
+                                harAktivForlengelse(oppfolging) ? 'Endre forlenget oppfølging' : 'Forleng oppfølging '
+                            }
                             onClick={showForlengOppfolgingModal}
                             metricName="forleng_oppfolging"
                         />

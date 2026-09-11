@@ -552,7 +552,7 @@ describe('Veilederverktoy', () => {
                     oppfolging: { erUnderOppfolging: false },
                     utmeldingskandidat: {
                         ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
-                        tag: undefined
+                        tag: null
                     }
                 })
             );
@@ -569,7 +569,7 @@ describe('Veilederverktoy', () => {
                     oppfolging: { erUnderOppfolging: true },
                     utmeldingskandidat: {
                         ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
-                        tag: undefined
+                        tag: null
                     },
                     brukerStatus: {
                         ...mockOppfolgingGraphqlResponse.data.brukerStatus,
@@ -593,7 +593,7 @@ describe('Veilederverktoy', () => {
                     oppfolging: { erUnderOppfolging: true },
                     utmeldingskandidat: {
                         ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
-                        tag: undefined
+                        tag: null
                     },
                     brukerStatus: {
                         ...mockOppfolgingGraphqlResponse.data.brukerStatus,

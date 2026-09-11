@@ -5,6 +5,7 @@ import { Personalia } from '../api/veilarbperson';
 import { Huskelapp } from '../api/veilarbportefolje';
 import { VeilederData } from '../api/veilarbveileder';
 import { OrNothing, StringOrNothing } from './type/utility-types';
+import { harAktivForlengelse } from '../component/veilederverktoy/forleng-oppfolging/utils';
 
 export function selectSammensattNavn(personalia: Personalia | undefined): string {
     if (!personalia) return '';
@@ -97,8 +98,10 @@ export function selectKanForlengeOppfolging(
     oppfolging: OrNothing<Oppfolging & MedUtmeldingskandidat>,
     tilgangTilBrukersKontor: boolean
 ): boolean {
-    if (!oppfolging || !tilgangTilBrukersKontor) return false;
-    return oppfolging.underOppfolging && oppfolging.utmeldingskandidat?.tag != null;
+    if (!oppfolging) return false;
+    if (!tilgangTilBrukersKontor || !oppfolging.underOppfolging) return false;
+
+    return oppfolging.utmeldingskandidat?.tag != null || harAktivForlengelse(oppfolging);
 }
 
 export function selectTelefonnummer(personalia: Personalia | undefined): StringOrNothing {
