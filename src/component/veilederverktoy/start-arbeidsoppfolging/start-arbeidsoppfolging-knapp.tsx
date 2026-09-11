@@ -16,16 +16,18 @@ const url = startArbeidsoppfolgingUrl[`${env.type}-${env.ingressType}`];
 export const StartArbeidsoppfolgingKnapp = ({
     underOppfolging,
     erIservIArena,
-    utmeldingskandidatTag
+    utmeldingskandidatTag,
+    harAktivForlengelse
 }: {
     underOppfolging: boolean;
     erIservIArena: boolean;
     utmeldingskandidatTag?: string | null;
+    harAktivForlengelse?: boolean;
 }) => {
     const { features } = useFeaturesFromOboUnleash();
     const utmeldingsKandidaterLansert = features?.[UTMELDINGSKANDIDATER_TOGGLE] ?? false;
     if (utmeldingsKandidaterLansert) {
-        if (utmeldingskandidatTag != null) {
+        if (utmeldingskandidatTag != null || harAktivForlengelse) {
             return null;
         }
     }

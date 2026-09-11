@@ -112,6 +112,7 @@ export const Veilederverktoy = () => {
                         underOppfolging={underOppfolging}
                         erIservIArena={erIservIArena}
                         utmeldingskandidatTag={oppfolging?.utmeldingskandidat?.tag}
+                        harAktivForlengelse={oppfolging?.utmeldingskandidat?.aktivForlengelse != null}
                     />
                     <StartArbeidssokerRegistreringKnapp />
                     {sjekkHarTilgangTilHuskelappEllerFargekategori && (
