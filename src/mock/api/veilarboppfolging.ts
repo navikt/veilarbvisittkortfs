@@ -172,14 +172,15 @@ export const mockOppfolgingGraphqlResponse: GraphqlResponse<OppfolgingsDataGraph
             erUnderOppfolging: true
         },
         utmeldingskandidat: {
-            aktivForlengelse: {
+            /*aktivForlengelse: {
                 utfortAvType: 'VEILEDER',
                 utfortAv: 'Z123456',
                 hendelseTidspunkt: '2026-09-08T13:28:40.558650Z',
                 forlengetTil: '2026-10-31'
-            },
+            },*/
+            aktivForlengelse: null,
             utmeldingskandidatHendelser: [],
-            tag: null
+            tag: 'ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE'
         }
     }
 };
