@@ -14,12 +14,14 @@ const url = startArbeidsoppfolgingUrl[`${env.type}-${env.ingressType}`];
 
 export const StartArbeidsoppfolgingKnapp = ({
     underOppfolging,
-    erIservIArena
+    erIservIArena,
+    utmeldingskandidatTag
 }: {
     underOppfolging: boolean;
     erIservIArena: boolean;
+    utmeldingskandidatTag?: string | null;
 }) => {
-    if (underOppfolging && !erIservIArena) return null;
+    if (utmeldingskandidatTag != null || (underOppfolging && !erIservIArena)) return null;
 
     const buttonText =
         underOppfolging && erIservIArena ? 'Reaktiver arbeidsrettet oppfølging' : 'Start arbeidsrettet oppfølging';
