@@ -4,12 +4,13 @@ import { FrontendEvent } from '../util/logger';
 import { StringOrNothing } from '../util/type/utility-types';
 import useSWR from 'swr';
 import { behandlingsnummer } from './behandlingsnummer';
+import { logGraphQLError } from './ao-oppfolgingskontor';
+import { GraphqlResponse } from './GraphqlUtils';
 
 export interface Personalia {
     fornavn: string;
     mellomnavn: StringOrNothing;
     etternavn: string;
-    fodselsnummer: string;
     fodselsdato: string;
     dodsdato: StringOrNothing;
     kjonn: string;
@@ -89,13 +90,14 @@ export interface PersonaliaTelefon {
     master: StringOrNothing;
 }
 
-export interface PersonRequest {
-    fnr: string;
-}
-
 export interface PdlRequest {
     fnr: string;
     behandlingsnummer: string;
+}
+
+export interface PersonaliaGraphqlRequest {
+    query: string;
+    variables: { fnr: string; behandlingsnummer: string };
 }
 
 export type Profilering = {
@@ -120,13 +122,12 @@ export interface OpplysningerOmArbeidssoekerMedProfilering {
 }
 
 export const usePersonalia = (fnr: string | undefined) => {
-    const url = '/veilarbperson/api/v3/hent-person';
-    const { data, error, isLoading } = useSWR<Personalia, ErrorMessage>(
-        fnr ? `${url}/${fnr}` : null,
-        () => fetchWithPost(url, { fnr: fnr as string, behandlingsnummer } as PdlRequest),
+    const { data, error, isLoading } = useSWR(
+        fnr ? `/veilarbperson/graphql/${fnr}` : null,
+        () => hentPersonalia(fnr as string, behandlingsnummer),
         swrOptions
     );
-    return { personalia: data, error, isLoading };
+    return { personalia: data?.data?.person, error, isLoading };
 };
 
 export const useVerge = (fnr: string | undefined) => {
@@ -170,4 +171,37 @@ export function useOpplysningerOmArbeidssokerMedProfilering(fnr: string | undefi
 
 export function sendEventTilVeilarbperson(event: FrontendEvent): AxiosPromise<void> {
     return axiosInstance.post<void>(`/veilarbperson/api/logger/event`, event);
+}
+
+const graphqlQuery = `
+    query($fnr: ID!, $behandlingsnummer: String!) {
+        person(fnr: $fnr, behandlingsnummer: $behandlingsnummer) {
+           fornavn
+           mellomnavn
+           etternavn
+           fodselsdato
+           dodsdato
+           kjonn
+           diskresjonskode
+           egenAnsatt
+           sikkerhetstiltak
+           telefon { prioritet telefonNr registrertDato master }
+            }
+        }
+    `;
+
+async function hentPersonalia(
+    fnr: string,
+    behandlingsnummer: string
+): Promise<GraphqlResponse<{ person: Personalia }>> {
+    const requestBody: PersonaliaGraphqlRequest = {
+        query: graphqlQuery,
+        variables: { fnr, behandlingsnummer }
+    };
+    const res = await fetchWithPost('/veilarbperson/graphql', requestBody);
+    if (res.errors) {
+        logGraphQLError(res);
+        throw new Error('Feil ved henting av personalia');
+    }
+    return res;
 }
