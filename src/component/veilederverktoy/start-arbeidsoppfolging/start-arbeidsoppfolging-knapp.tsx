@@ -1,5 +1,6 @@
 import { Dropdown } from '@navikt/ds-react';
 import { EnvType, getEnv } from '../../../util/envUtil';
+import { useFeaturesFromOboUnleash, UTMELDINGSKANDIDATER_TOGGLE } from '../../../api/veilarbpersonflatefs';
 
 const env = getEnv();
 const startArbeidsoppfolgingUrl: Record<`${EnvType}-${'ansatt' | 'intern'}`, string> = {
@@ -21,7 +22,14 @@ export const StartArbeidsoppfolgingKnapp = ({
     erIservIArena: boolean;
     utmeldingskandidatTag?: string | null;
 }) => {
-    if (utmeldingskandidatTag != null || (underOppfolging && !erIservIArena)) return null;
+    const { features } = useFeaturesFromOboUnleash();
+    const utmeldingsKandidaterLansert = features?.[UTMELDINGSKANDIDATER_TOGGLE] ?? false;
+    if (utmeldingsKandidaterLansert) {
+        if (utmeldingskandidatTag != null) {
+            return null;
+        }
+    }
+    if (underOppfolging && !erIservIArena) return null;
 
     const buttonText =
         underOppfolging && erIservIArena ? 'Reaktiver arbeidsrettet oppfølging' : 'Start arbeidsrettet oppfølging';
