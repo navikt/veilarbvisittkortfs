@@ -15,7 +15,10 @@ enum Maler {
     IKKE_LENGER_NEDSATT_ARBEIDSEVNE = 'ikke_lenger_nedsatt_arbeidsevne',
     UUTNYTTET_ARBEIDSEVNE = 'uutnyttet_arbeidsevne',
     STANS_AAP_I_PERIODE = 'stans_aap_i_periode',
-    OVERGANGSSTONAD = 'overgangsstonad'
+    OVERGANGSSTONAD = 'overgangsstonad',
+    UNGDOMSPROGRAM_FRAVÆR = 'ungdomsprogram_fravear',
+    UNGDOMSPROGRAM_FLYTTING = 'ungdomsprogram_flytting',
+    UNGDOMSPROGRAM_IKKE_LENGER_NØDVENDIG_ELLER_HENSIKTSMESSIG = 'ungdomsprogram_ikke_lenger_nodvendig_eller_hensiktsmessig'
 }
 
 /* Typeforklaring:
@@ -173,6 +176,67 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
             '[Fyll inn begrunnelse for varslet]\n' +
             '\n' +
             `Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må uttale deg innen [fristDato]. Du kan uttale deg skriftlig her eller du kan ringe oss på ${telefonnummerNav} og uttale deg muntlig.\n`
+    },
+    [Maler.UNGDOMSPROGRAM_FRAVÆR]: {
+        tekstNedtrekksmeny: 'Ungdomsprogram: Fravær',
+        maltekst:
+            'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved\n' +
+            'å svare på denne meldingen.\n' +
+            'Du har ikke møtt til de planlagte aktivitetene i ungdomsprogrammet. Nav kan stanse deltakelsen\n' +
+            'din hvis du ikke følger opp aktivitetene vi har avtalt. Det betyr at du også mister pengene du får for å\n' +
+            'delta i ungdomsprogrammet.\n' +
+            'Dette står i forskrift om forsøk med ungdomsprogram §7.\n' +
+            '[Fyll inn begrunnelse for varslet]\n' +
+            'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Du må ta\n' +
+            'kontakt med Nav så fort som mulig, og senest innen [dato].\n' +
+            'Du kan ta kontakt ved å:\n' +
+            '[Fyll inn dato for samtale, møte, aktivitet eller tiltak, nødvendig dokumentasjon eller lignende]\n' +
+            'Hvis vi ikke hører fra deg, blir ungdomsprogrammet ditt stanset.\n' +
+            'Dersom ungdomsprogrammet ditt blir stanset, kan du ikke delta på nytt.\n' +
+            'Regelen om at du bare kan delta i ungdomsprogram én gang står i forskrift om forsøk med\n' +
+            'ungdomsprogram, § 3 første avsnitt bokstav c.'
+    },
+    [Maler.UNGDOMSPROGRAM_FLYTTING]: {
+        tekstNedtrekksmeny: 'Ungdomsprogram: Flytting',
+        maltekst:
+            'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved\n' +
+            'å svare på denne meldingen.\n' +
+            'For å delta i ungdomsprogrammet, må du tilhøre et Nav-kontor som deltar i forsøket. Du flytter, og\n' +
+            'ditt nye Nav-kontor deltar ikke i dette forsøket. Det betyr at programmet stanses. Det betyr at du også\n' +
+            'mister pengene du får for å delta i ungdomsprogrammet.\n' +
+            'Dette står i forskrift om forsøk med ungdomsprogram §2.\n' +
+            '[Fyll inn hvilke Nav-kontor deltaker vil tilhøre, og hvilken dato programmet stanses fra.]\n' +
+            'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Hvis du\n' +
+            'vil uttale deg, må du ta kontakt med Nav så fort som mulig, og senest innen datoen over.\n' +
+            'Hvis du ikke vil uttale deg, trenger du ikke å svare. Ungdomsprogrammet ditt vil uansett bli stanset.\n' +
+            'Du kan bare få ungdomsprogram én gang. Når Nav stanser din deltakelse i programmet, kan du ikke få\n' +
+            'ungdomsprogram igjen senere.\n' +
+            'Regelen om at du bare kan delta i ungdomsprogram én gang står i forskrift om forsøk med\n' +
+            'ungdomsprogram, § 3 første avsnitt bokstav c.'
+    },
+    [Maler.UNGDOMSPROGRAM_IKKE_LENGER_NØDVENDIG_ELLER_HENSIKTSMESSIG]: {
+        tekstNedtrekksmeny: 'Ungdomsprogram: ikke lenger nødvendig og hensiktsmessig',
+        maltekst:
+            'Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved\n' +
+            'å svare på denne meldingen.\n' +
+            'Målet med ungdomsprogrammet er at du kommer i arbeid eller utdanning.\n' +
+            'Programmet skal avsluttes hvis det ikke lenger ansees som nødvendig og hensiktsmessig med videre\n' +
+            'deltakelse for at du skal kunne komme i ordinært arbeid eller utdanning.\n' +
+            'Dette står i forskrift om forsøk med ungdomsprogram § 3, andre ledd.\n' +
+            'Ved overgang til andre livsoppholdsytelser gjelder forskriftens § 12.\n' +
+            'Ungdomsprogrammet er for deg som trenger hjelp til å komme i arbeid eller utdanning. Hvis du\n' +
+            'allerede har kommet dit, har valgt noe annet, eller trenger annen type oppfølging, kan det bety at du\n' +
+            'ikke lenger trenger å være med i programmet.\n' +
+            'Nav vurderer at ungdomsprogrammet ikke lenger er nødvendig og hensiktsmessig fordi:\n' +
+            '[Fyll inn individuell begrunnelse og fakta som ligger til grunn for at deltaker avsluttes]\n' +
+            'Nav vurderer derfor å stanse din deltakelse i programmet fra [fyll inn dato.]\n' +
+            'Det betyr at du også mister retten til pengene du får når du deltar i programmet.\n' +
+            'Vi sender deg dette varselet for at du skal ha mulighet til å uttale deg før vi avgjør saken din. Hvis du\n' +
+            'vil uttale deg, må du ta kontakt med Nav så fort som mulig, og senest innen datoen over.\n' +
+            'Du kan bare få ungdomsprogram én gang. Når Nav stanser din deltakelse i programmet, kan du ikke få\n' +
+            'ungdomsprogram igjen senere.\n' +
+            'Regelen om at du bare kan delta i ungdomsprogram én gang står i forskrift om forsøk med\n' +
+            'ungdomsprogram, § 3 første avsnitt bokstav c.'
     }
 };
 
