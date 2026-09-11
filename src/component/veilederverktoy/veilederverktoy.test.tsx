@@ -547,7 +547,15 @@ describe('Veilederverktoy', () => {
 
     describe('Start arbeidsrettet oppfølging', () => {
         test('viser "Start arbeidsrettet oppfølging" når bruker ikke er under oppfølging', async () => {
-            server.use(mockOppfolgingGraphql({ oppfolging: { erUnderOppfolging: false } }));
+            server.use(
+                mockOppfolgingGraphql({
+                    oppfolging: { erUnderOppfolging: false },
+                    utmeldingskandidat: {
+                        ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
+                        tag: null
+                    }
+                })
+            );
 
             renderVeilederverktoy();
             await apneMeny();
@@ -559,6 +567,10 @@ describe('Veilederverktoy', () => {
             server.use(
                 mockOppfolgingGraphql({
                     oppfolging: { erUnderOppfolging: true },
+                    utmeldingskandidat: {
+                        ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
+                        tag: null
+                    },
                     brukerStatus: {
                         ...mockOppfolgingGraphqlResponse.data.brukerStatus,
                         arena: {
@@ -579,6 +591,10 @@ describe('Veilederverktoy', () => {
             server.use(
                 mockOppfolgingGraphql({
                     oppfolging: { erUnderOppfolging: true },
+                    utmeldingskandidat: {
+                        ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
+                        tag: undefined
+                    },
                     brukerStatus: {
                         ...mockOppfolgingGraphqlResponse.data.brukerStatus,
                         arena: {
