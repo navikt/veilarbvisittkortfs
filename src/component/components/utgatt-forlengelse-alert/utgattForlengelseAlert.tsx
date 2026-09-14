@@ -5,7 +5,6 @@ import { useOppfolging } from '../../../api/veilarboppfolging';
 import { erUtmeldingsKandidat } from '../../veilederverktoy/forleng-oppfolging/utils';
 import { LeaveIcon, TimerStartIcon } from '@navikt/aksel-icons';
 import { useModalStore } from '../../../store/modal-store';
-// import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 
 export const UtgattForlengelseAlert = () => {
     const [skjulModal, setSkjulModal] = useState<boolean>(false);
@@ -33,7 +32,6 @@ export const UtgattForlengelseAlert = () => {
             className="w-full outline-ax-bg-warning-moderate **:[[class*='alert']]:before:hidden"
         >
             <GlobalAlert.Header className="items-center w-full bg-ax-bg-warning-moderate p-2">
-                {/*<ExclamationmarkTriangleFillIcon aria-hidden className="text-ax-text-warning text-red-600" /> */}
                 <GlobalAlert.Title className="text-ax font-ax-regular text-ax-text-warning">
                     Skal denne brukeren fortsatt ha oppfølging?
                 </GlobalAlert.Title>
