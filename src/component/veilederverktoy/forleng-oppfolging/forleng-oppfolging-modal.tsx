@@ -10,7 +10,7 @@ import { OppfolgingForlengelseFeilet } from './forleng-oppfolging-feilet';
 import { harAktivForlengelse } from './utils';
 
 function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
-    const dagensDato = dayjs().startOf('day').toDate();
+    const imorgen = dayjs().add(1, 'day').toDate();
     const maksDato = dayjs().add(6, 'month').startOf('day').toDate();
 
     const { hideModal } = useModalStore();
@@ -20,7 +20,7 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
     const [forlengTilDato, setForlengTilDato] = useState<Date | undefined>(
         harAktivForlengelse(oppfolging)
             ? dayjs(oppfolging?.utmeldingskandidat?.aktivForlengelse?.forlengetTil).toDate()
-            : dagensDato
+            : imorgen
     );
     const [kvittering, setKvittering] = useState<OppfolgingForlengetTilKvitering | undefined>(undefined);
     const [valideringsfeil, setValideringsfeil] = useState<boolean>(false);
@@ -28,7 +28,7 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
     const { datepickerProps, inputProps } = useDatepicker({
         defaultSelected: forlengTilDato,
         onDateChange: setForlengTilDato,
-        fromDate: new Date(),
+        fromDate: dayjs().add(1, 'day').toDate(),
         toDate: dayjs().add(6, 'month').toDate()
     });
 
@@ -50,7 +50,7 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
 
         const valgtDato = dayjs(forlengTilDato).startOf('day');
 
-        if (!valgtDato.isValid() || valgtDato.isBefore(dagensDato) || valgtDato.isAfter(maksDato)) {
+        if (!valgtDato.isValid() || valgtDato.isBefore(imorgen) || valgtDato.isAfter(maksDato)) {
             setValideringsfeil(true);
             return;
         }

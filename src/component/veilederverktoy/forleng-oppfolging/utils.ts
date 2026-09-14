@@ -9,9 +9,9 @@ export function harAktivForlengelse(oppfolging: OrNothing<Oppfolging & MedUtmeld
     if (oppfolging.utmeldingskandidat.aktivForlengelse === null) return false;
 
     const today = dayjs().add(0, 'day');
-    const aktivForlengelse = dayjs(oppfolging.utmeldingskandidat?.aktivForlengelse?.forlengetTil).isSameOrAfter(today);
+    const aktivForlengelse = dayjs(oppfolging.utmeldingskandidat.aktivForlengelse.forlengetTil).isSameOrAfter(today);
 
-    return oppfolging.utmeldingskandidat?.tag === null && aktivForlengelse;
+    return oppfolging.utmeldingskandidat.tag === null && aktivForlengelse;
 }
 
 export function erUtmeldingsKandidat(oppfolging: OrNothing<Oppfolging & MedUtmeldingskandidat>): boolean {
