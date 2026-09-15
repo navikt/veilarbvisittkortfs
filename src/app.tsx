@@ -12,6 +12,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { VisittKortConfigContext } from './store/visittkort-config';
 import { FeilIVisittkortAlert } from './component/FeilIVisittkortAlert';
 import { Theme } from '@navikt/ds-react';
+import { UtgattForlengelseAlert } from './component/components/utgatt-forlengelse-alert/utgattForlengelseAlert';
 
 export type AppTheme = 'light' | 'dark';
 
@@ -56,24 +57,27 @@ function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, 
         <VisittKortConfigContext.Provider value={configValue}>
             <div>
                 <Theme asChild theme={valgtTheme}>
-                    <div className="visittkortfs">
-                        <DataFetcher>
-                            {brukerFnr => (
-                                <>
-                                    <Tilbakelenke />
-                                    <div className="visittkortfs__container">
-                                        <PersonInfo brukerFnr={brukerFnr} />
-                                        {!skjulEtiketter && <Etiketter brukerFnr={brukerFnr} />}
-                                        <div className="visittkortfs__actions">
-                                            <Veilederverktoy />
-                                            <DarkModeSwitch checked={darkMode} onChange={byttTheme} />
+                    <>
+                        <div className="visittkortfs">
+                            <DataFetcher>
+                                {brukerFnr => (
+                                    <>
+                                        <Tilbakelenke />
+                                        <div className="visittkortfs__container">
+                                            <PersonInfo brukerFnr={brukerFnr} />
+                                            {!skjulEtiketter && <Etiketter brukerFnr={brukerFnr} />}
+                                            <div className="visittkortfs__actions">
+                                                <Veilederverktoy />
+                                                <DarkModeSwitch checked={darkMode} onChange={byttTheme} />
+                                            </div>
                                         </div>
-                                    </div>
-                                </>
-                            )}
-                        </DataFetcher>
-                        <VeilederverktoyModalController />
-                    </div>
+                                    </>
+                                )}
+                            </DataFetcher>
+                            <VeilederverktoyModalController />
+                        </div>
+                        <UtgattForlengelseAlert />
+                    </>
                 </Theme>
                 <FeilIVisittkortAlert />
             </div>

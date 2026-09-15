@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { APP_NAME } from '../util/utils';
-import { TildelVeilederData, VeilarbOppfolgingGraphqlRequest } from './veilarboppfolging';
+import { ForlengOppfolgingRequest, TildelVeilederData, VeilarbOppfolgingGraphqlRequest } from './veilarboppfolging';
 import { StansVarselQueryRequest } from './veilarbdialogGraphql';
 import { VeilederDataListeRequest } from './veilarbveileder';
 import { PersonaliaGraphqlRequest } from './veilarbperson';
@@ -36,7 +36,8 @@ export type RequestTypes =
     | StansVarselQueryRequest
     | VeilarbOppfolgingGraphqlRequest
     | VeilederDataListeRequest
-    | PersonaliaGraphqlRequest;
+    | PersonaliaGraphqlRequest
+    | ForlengOppfolgingRequest;
 
 export const createPOSToptions = (event: RequestTypes) => ({
     withCredentials: true,

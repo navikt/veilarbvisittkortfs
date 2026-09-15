@@ -74,6 +74,17 @@ export interface TilgangTilBrukersKontor {
     tilgangTilBrukersKontor: boolean;
 }
 
+export interface ForlengOppfolgingRequest {
+    fnr: string;
+    forlengetTil: string;
+}
+
+export type ForlengOppfolgingResponse = {
+    ok: boolean;
+};
+
+export type KandidatForUtmeldingHendelseUtfortAvType = 'VEILEDER' | 'SYSTEM' | 'BRUKER' | 'UKJENT';
+
 export type InnstillingsHistorikkType =
     | 'SATT_TIL_DIGITAL'
     | 'SATT_TIL_MANUELL'
@@ -169,6 +180,21 @@ export function avsluttOppfolging(
     });
 }
 
+export function useForlengOppfolging() {
+    const url = '/veilarboppfolging/api/forlengelse';
+    const { trigger, isMutating, error } = useSWRMutation<
+        ForlengOppfolgingResponse,
+        ErrorMessage,
+        string,
+        ForlengOppfolgingRequest
+    >(url, (url, { arg }) => fetchWithPost(url, arg));
+    return {
+        forlengOppfolging: trigger,
+        isLoading: isMutating,
+        error: error
+    };
+}
+
 export const useTildelTilVeileder = () => {
     const url = '/veilarboppfolging/api/tilordneveileder';
     const { trigger, isMutating, error } = useSWRMutation(url, (url, arg: { arg: TildelVeilederData[] }) =>
@@ -213,7 +239,22 @@ const graphqlQuery = `
         oppfolging(fnr: $fnr) {
             erUnderOppfolging
         }
-        utmeldingskandidatTag(fnr: $fnr)
+        utmeldingskandidat(fnr: $fnr) {
+            aktivForlengelse {
+                utfortAvType
+                utfortAv
+                hendelseTidspunkt
+                forlengetTil
+            }
+            utmeldingskandidatHendelser {
+                utfortAvType
+                utfortAv
+                hendelseTidspunkt
+                type
+                forlengetTil
+            }
+            tag
+        }
     }
 `;
 
@@ -238,13 +279,25 @@ export type KandidatForUtmeldingTag =
     | 'ARBEIDSSOKERPERIODE_AVSLUTTET_IKKE_LEVERT_MELDEKORT'
     | 'ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE'
     | 'ARBEIDSSOKERPERIODE_AVSLUTTET_ANNET'
-    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_BRUKER'
-    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_VEILEDER'
-    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_SYSTEM'
-    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_UKJENT';
+    | 'FORLENGELSE_UTLOPT';
 
-export interface MedUtmeldingskandidatTag {
-    utmeldingskandidatTag: KandidatForUtmeldingTag | undefined;
+export interface MedUtmeldingskandidat {
+    utmeldingskandidat: {
+        aktivForlengelse: {
+            utfortAvType: KandidatForUtmeldingHendelseUtfortAvType;
+            utfortAv: string | undefined;
+            hendelseTidspunkt: string;
+            forlengetTil: string | undefined;
+        } | null;
+        utmeldingskandidatHendelser: {
+            utfortAvType: KandidatForUtmeldingHendelseUtfortAvType;
+            utfortAv: string | undefined;
+            hendelseTidspunkt: string;
+            type: string | undefined;
+            forlengetTil: string | undefined;
+        }[];
+        tag: KandidatForUtmeldingTag | null;
+    };
 }
 
 export interface OppfolgingsDataGraphqlResponse {
@@ -275,12 +328,12 @@ export interface OppfolgingsDataGraphqlResponse {
     oppfolging: {
         erUnderOppfolging: boolean | undefined;
     };
-    utmeldingskandidatTag: KandidatForUtmeldingTag | undefined;
+    utmeldingskandidat: MedUtmeldingskandidat['utmeldingskandidat'];
 }
 
 const mapTilBackoverkompatibelState = (
     data: GraphqlResponse<OppfolgingsDataGraphqlResponse>
-): (Oppfolging & OppfolgingStatus & MedUtmeldingskandidatTag) | undefined => {
+): (Oppfolging & OppfolgingStatus & MedUtmeldingskandidat) | undefined => {
     if ((data.errors?.length || 0) != 0) {
         throw new Error(
             `Feilet å hente oppfolgingsdata (graphql) fra veilarboppfolging: ${data.errors.map(it => it.message).join(',')}`
@@ -303,7 +356,7 @@ const mapTilBackoverkompatibelState = (
         oppfolgingsenhet: oppfolgingsEnhet(data.data.oppfolgingsEnhet?.enhet),
         formidlingsgruppe: data.data.brukerStatus.arena?.formidlingsgruppe,
         servicegruppe: data.data.brukerStatus.arena?.kvalifiseringsgruppe,
-        utmeldingskandidatTag: data.data.utmeldingskandidatTag
+        utmeldingskandidat: data.data.utmeldingskandidat
     };
 };
 
@@ -315,7 +368,7 @@ export interface VeilarbOppfolgingGraphqlRequest {
 const graphqlUrl = '/veilarboppfolging/api/graphql';
 export const useVeilarboppfolgingData = (fnr: string | undefined) => {
     const { data, error, isLoading, mutate } = useSWR<
-        (Oppfolging & OppfolgingStatus & MedUtmeldingskandidatTag) | undefined,
+        (Oppfolging & OppfolgingStatus & MedUtmeldingskandidat) | undefined,
         Error
     >(
         fnr ? `${graphqlUrl}/${fnr}` : null,

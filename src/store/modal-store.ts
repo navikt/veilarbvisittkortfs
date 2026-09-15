@@ -33,7 +33,8 @@ export enum ModalType {
     HUSKELAPP,
     FJERN_HUSKELAPP,
     HUSKELAPP_REDIGERE,
-    BYTT_OPPFOLGINGSKONTOR
+    BYTT_OPPFOLGINGSKONTOR,
+    FORLENG_OPPFOLGING
 }
 
 export interface ModalState {
@@ -73,6 +74,7 @@ interface ModalStoreActions {
     showStoppKvpPeriodeKvitteringModal(): void;
     showStoppEskaleringKvitteringModal(): void;
     showByttOppfolgingKontorModal(): void;
+    showForlengOppfolgingModal(): void;
 }
 
 // Denne storen blir brukt av <VeilederverktoyModalController/> for å sette hvilken dialog som skal vises
@@ -161,6 +163,9 @@ export const _useModalStore = create<ModalStoreState & ModalStoreActions>(set =>
     },
     showByttOppfolgingKontorModal() {
         set({ activeModalState: { type: ModalType.BYTT_OPPFOLGINGSKONTOR } });
+    },
+    showForlengOppfolgingModal() {
+        set({ activeModalState: { type: ModalType.FORLENG_OPPFOLGING } });
     }
 }));
 

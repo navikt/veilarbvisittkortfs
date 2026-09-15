@@ -7,11 +7,12 @@ import {
     useSpraakTolk,
     useVerge
 } from '../../../api/veilarbperson';
-import { KandidatForUtmeldingTag, OppfolgingStatus, useOppfolging } from '../../../api/veilarboppfolging';
+import { OppfolgingStatus, useOppfolging } from '../../../api/veilarboppfolging';
 import { OrNothing } from '../../../util/type/utility-types';
 import { HStack, Tag, TagProps } from '@navikt/ds-react';
 import { Oppfolgingsvedtak14a, useGjeldende14aVedtak } from '../../../api/veilarbvedtaksstotte';
 import { useGjeldendeEskaleringsvarsel } from '../../../api/veilarbdialog';
+import { mapUtmeldingskandidatTag } from '../../../util/utmeldingskandidat-tag';
 
 interface Etikettprops extends Omit<TagProps, 'variant'> {
     visible: boolean | undefined;
@@ -62,27 +63,6 @@ function erFullmaktOmradeMedOppfolging(fullmaktListe: FullmaktData[]): boolean {
         .flatMap(fullmakt => fullmakt.omraade)
         .map(omraadeMedHandling => omraadeMedHandling.tema)
         .includes('Oppfølging');
-}
-
-function mapUtmeldingskandidatTag(utmeldingskandidatTag: KandidatForUtmeldingTag | undefined): string {
-    switch (utmeldingskandidatTag) {
-        case 'ARBEIDSSOKERPERIODE_AVSLUTTET_IKKE_LEVERT_MELDEKORT':
-            return 'Arbeidssøkerperiode avsluttet: Ikke levert bekreftelse';
-        case 'ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE':
-            return 'Arbeidssøkerperiode avsluttet: Svarte nei i bekreftelse';
-        case 'ARBEIDSSOKERPERIODE_AVSLUTTET_ANNET':
-            return 'Arbeidssøkerperiode avsluttet';
-        case 'ARBEIDSSOKERPERIODE_AVSLUTTET_BRUKER':
-            return 'Arbeidssøkerperiode avsluttet av bruker';
-        case 'ARBEIDSSOKERPERIODE_AVSLUTTET_VEILEDER':
-            return 'Arbeidssøkerperiode avsluttet av veileder';
-        case 'ARBEIDSSOKERPERIODE_AVSLUTTET_SYSTEM':
-            return 'Arbeidssøkerperiode avsluttet av system';
-        case 'ARBEIDSSOKERPERIODE_AVSLUTTET_UKJENT':
-            return 'Arbeidssøkerperiode avsluttet (ukjent årsak)';
-        case undefined:
-            return '';
-    }
 }
 
 function Etiketter({ brukerFnr }: { brukerFnr: string }) {
@@ -136,8 +116,8 @@ function Etiketter({ brukerFnr }: { brukerFnr: string }) {
         <HStack className="etikett-container" align="center" gap="space-2 space-4" wrap>
             <BaseDod visible={!!personalia?.dodsdato}>Død</BaseDod>
             <Advarsel visible={!!personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>
-            <Fokus visible={!!oppfolging?.utmeldingskandidatTag}>
-                {mapUtmeldingskandidatTag(oppfolging?.utmeldingskandidatTag)}
+            <Fokus visible={!!oppfolging?.utmeldingskandidat.tag}>
+                {mapUtmeldingskandidatTag(oppfolging?.utmeldingskandidat.tag)}
             </Fokus>
             <Advarsel visible={!!personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
             <Advarsel visible={personalia?.egenAnsatt}>Skjermet</Advarsel>

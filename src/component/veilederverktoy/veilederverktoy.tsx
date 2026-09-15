@@ -5,6 +5,7 @@ import { useBrukerFnr } from '../../store/app-store';
 import { useModalStore } from '../../store/modal-store';
 import {
     selectKanAvslutteOppfolging,
+    selectKanForlengeOppfolging,
     selectKanSendeEskaleringsVarsel,
     selectKanStarteDigitalOppfolging,
     selectKanStarteKVP,
@@ -22,6 +23,8 @@ import { StartArbeidsoppfolgingKnapp } from './start-arbeidsoppfolging/start-arb
 import { StartArbeidssokerRegistreringKnapp } from './start-arbeidssoker-registrering/start-arbeidssoker-registrering-knapp';
 import { useVisVeilederVerktøy } from '../../store/visittkort-config';
 import { useGjeldendeEskaleringsvarsel } from '../../api/veilarbdialog';
+import { harAktivForlengelse } from './forleng-oppfolging/utils';
+import { useFeaturesFromOboUnleash, UTMELDINGSKANDIDATER_TOGGLE } from '../../api/veilarbpersonflatefs';
 
 const ButtonWithClickMetric = withClickMetric(Button);
 
@@ -50,7 +53,8 @@ export const Veilederverktoy = () => {
         showAvsluttOppfolgingModal,
         showHistorikkModal,
         showHuskelappRedigereModal,
-        showByttOppfolgingKontorModal
+        showByttOppfolgingKontorModal,
+        showForlengOppfolgingModal
     } = useModalStore();
 
     const sjekkHarTilgangTilHuskelappEllerFargekategori = harTilgangTilHuskelappEllerFargekategori(
@@ -82,10 +86,14 @@ export const Veilederverktoy = () => {
     const kanStarteKVP = selectKanStarteKVP(oppfolging, tilgangTilBrukersKontor);
     const kanStoppeKVP = selectKanStoppeKVP(oppfolging, tilgangTilBrukersKontor);
     const kanTildeleVeileder = selectKanTildeleVeileder(oppfolging, tilgangTilBrukersKontor);
+    const kanForlengeOppfolging = selectKanForlengeOppfolging(oppfolging, tilgangTilBrukersKontor);
 
     const huskelappKlikk = () => {
         showHuskelappRedigereModal();
     };
+
+    const { features } = useFeaturesFromOboUnleash();
+    const utmeldingsKandidaterLansert = features?.[UTMELDINGSKANDIDATER_TOGGLE] ?? false;
 
     if (!visVeilederVerktoy) {
         return null;
@@ -175,6 +183,15 @@ export const Veilederverktoy = () => {
                             knappeTekst="Avslutt oppfølging"
                             onClick={showAvsluttOppfolgingModal}
                             metricName="avslutt_oppfolging"
+                        />
+                    )}
+                    {kanForlengeOppfolging && utmeldingsKandidaterLansert && (
+                        <StartProsessKnapp
+                            knappeTekst={
+                                harAktivForlengelse(oppfolging) ? 'Endre forlenget oppfølging' : 'Forleng oppfølging '
+                            }
+                            onClick={showForlengOppfolgingModal}
+                            metricName="forleng_oppfolging"
                         />
                     )}
                     {underOppfolging ? (
