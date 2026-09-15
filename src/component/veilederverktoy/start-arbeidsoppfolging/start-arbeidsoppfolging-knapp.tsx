@@ -15,23 +15,15 @@ const url = startArbeidsoppfolgingUrl[`${env.type}-${env.ingressType}`];
 
 export const StartArbeidsoppfolgingKnapp = ({
     underOppfolging,
-    erIservIArena,
-    utmeldingskandidatTag,
-    harAktivForlengelse
+    erIservIArena
 }: {
     underOppfolging: boolean;
     erIservIArena: boolean;
-    utmeldingskandidatTag?: string | null;
-    harAktivForlengelse?: boolean;
 }) => {
     const { features } = useFeaturesFromOboUnleash();
     const utmeldingsKandidaterLansert = features?.[UTMELDINGSKANDIDATER_TOGGLE] ?? false;
-    if (utmeldingsKandidaterLansert) {
-        if (utmeldingskandidatTag != null || harAktivForlengelse) {
-            return null;
-        }
-    }
-    if (underOppfolging && !erIservIArena) return null;
+
+    if (underOppfolging && (utmeldingsKandidaterLansert || !erIservIArena)) return null;
 
     const buttonText =
         underOppfolging && erIservIArena ? 'Reaktiver arbeidsrettet oppfølging' : 'Start arbeidsrettet oppfølging';
