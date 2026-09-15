@@ -5,11 +5,10 @@ import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
 
 interface Props {
     fnr: string;
-    datoErInnenFor28DagerSiden: boolean;
     harUbehandledeDialoger: boolean;
 }
 
-export function AvsluttOppfolgingInfoText({ fnr, datoErInnenFor28DagerSiden, harUbehandledeDialoger }: Props) {
+export function AvsluttOppfolgingInfoText({ fnr, harUbehandledeDialoger }: Props) {
     const harArenaTiltakFetcher = useAxiosFetcher(fetchHarArenaTiltak);
     const { data: harUtkast, isLoading: harUtkastIsLoading } = useHarUtkast(fnr);
 
@@ -20,14 +19,13 @@ export function AvsluttOppfolgingInfoText({ fnr, datoErInnenFor28DagerSiden, har
     const harArenaTiltak = harArenaTiltakFetcher.data;
     const hentTiltakFeilet = !!harArenaTiltakFetcher.error;
 
-    const aktivMindreEnn28Dager = datoErInnenFor28DagerSiden
-        ? 'Brukeren har vært inaktiv i mindre enn 28 dager. Vil du likevel avslutte brukerens oppfølgingsperiode?'
-        : 'Her avslutter du brukerens oppfølgingsperioden og legger inn en kort begrunnelse om hvorfor.';
+    const avslutningstekst =
+        'Her avslutter du brukerens oppfølgingsperiode og legger inn en kort begrunnelse om hvorfor.';
 
     return (
         <>
             <BodyShort size="small" spacing={true}>
-                {aktivMindreEnn28Dager}
+                {avslutningstekst}
             </BodyShort>
             {(harUbehandledeDialoger || harArenaTiltak) && (
                 <Alert variant="warning" size="small">
