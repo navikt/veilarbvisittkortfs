@@ -112,12 +112,7 @@ export const Veilederverktoy = () => {
             </ButtonWithClickMetric>
             <Dropdown.Menu placement="bottom-end">
                 <Dropdown.Menu.List className="veilederverktoy-dropdown-menyliste">
-                    <StartArbeidsoppfolgingKnapp
-                        underOppfolging={underOppfolging}
-                        erIservIArena={erIservIArena}
-                        utmeldingskandidatTag={oppfolging?.utmeldingskandidat?.tag}
-                        harAktivForlengelse={oppfolging?.utmeldingskandidat?.aktivForlengelse != null}
-                    />
+                    <StartArbeidsoppfolgingKnapp underOppfolging={underOppfolging} erIservIArena={erIservIArena} />
                     <StartArbeidssokerRegistreringKnapp />
                     {sjekkHarTilgangTilHuskelappEllerFargekategori && (
                         <>

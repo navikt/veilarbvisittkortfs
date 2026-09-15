@@ -11,6 +11,7 @@ import { GjeldendeEskaleringsvarsel, veilarbDialogGraphqlEndpoint } from '../../
 import { useAppStore } from '../../store/app-store';
 import { VisittKortConfigContext, VisittkortConfig } from '../../store/visittkort-config';
 import dayjs from 'dayjs';
+import { veilarbpersonflatefsHandlers } from '../../mock/api/veilarbpersonflatefs';
 
 const brukerFnr = '10108000398';
 
@@ -58,6 +59,7 @@ const mockLoggerEvent = () =>
     });
 
 const server = setupServer(
+    ...veilarbpersonflatefsHandlers,
     mockOppfolgingGraphql(),
     mockErUfordeltBruker(false),
     mockHuskelappForBruker(null),
@@ -634,7 +636,7 @@ describe('Veilederverktoy', () => {
             renderVeilederverktoy();
             await apneMeny();
 
-            expect(screen.getByText('Forleng oppfølging')).toBeTruthy();
+            expect(screen.findByRole('button', { name: /forleng oppfølging/i })).toBeTruthy();
             expect(screen.queryByText('Endre forlenget oppfølging')).toBeNull();
         });
 
@@ -657,7 +659,7 @@ describe('Veilederverktoy', () => {
             renderVeilederverktoy();
             await apneMeny();
 
-            expect(screen.getByText('Forleng oppfølging')).toBeTruthy();
+            expect(screen.findByRole('button', { name: 'Forleng oppfølging' })).toBeTruthy();
             expect(screen.queryByText('Endre forlenget oppfølging')).toBeNull();
         });
 
@@ -685,7 +687,7 @@ describe('Veilederverktoy', () => {
             renderVeilederverktoy();
             await apneMeny();
 
-            expect(screen.getByText('Forleng oppfølging')).toBeTruthy();
+            expect(screen.findByRole('button', { name: 'Forleng oppfølging' })).toBeTruthy();
             expect(screen.queryByText('Endre forlenget oppfølging')).toBeNull();
         });
 
@@ -708,7 +710,7 @@ describe('Veilederverktoy', () => {
             renderVeilederverktoy();
             await apneMeny();
 
-            expect(screen.queryByText('Forleng oppfølging')).toBeNull();
+            expect(screen.queryByRole('button', { name: 'Forleng oppfølging' })).toBeNull();
             expect(screen.queryByText('Endre forlenget oppfølging')).toBeNull();
         });
 
@@ -731,7 +733,7 @@ describe('Veilederverktoy', () => {
             renderVeilederverktoy();
             await apneMeny();
 
-            expect(screen.queryByText('Forleng oppfølging')).toBeNull();
+            expect(screen.queryByRole('button', { name: 'Forleng oppfølging' })).toBeNull();
             expect(screen.queryByText('Endre forlenget oppfølging')).toBeNull();
         });
 
@@ -759,7 +761,7 @@ describe('Veilederverktoy', () => {
             renderVeilederverktoy();
             await apneMeny();
 
-            expect(screen.getByText('Endre forlenget oppfølging')).toBeTruthy();
+            expect(screen.findByRole('button', { name: 'Endre forlenget oppfølging' })).toBeTruthy();
             expect(screen.queryByText('Forleng oppfølging')).toBeNull();
         });
 
