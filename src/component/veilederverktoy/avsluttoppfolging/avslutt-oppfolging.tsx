@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { BodyShort, Modal } from '@navikt/ds-react';
 import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { AvsluttOppfolgingInfoText } from './components/avslutt-oppfolging-info-text';
@@ -11,8 +10,6 @@ import { useDialoger } from '../../../api/veilarbdialog';
 import { useAvsluttOppfolgingStatus } from '../../../api/veilarboppfolging';
 import { logMetrikk } from '../../../util/logger';
 
-const for28dagerSiden = dayjs().subtract(28, 'day').toISOString();
-
 function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
     const avsluttOppfolgingOpptelt = useAvsluttOppfolgingOpptelt();
     const setAvsluttOppfolgingOpptelt = useSetAvsluttOppfolgingOpptelt();
@@ -21,7 +18,6 @@ function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
     const { avsluttOppfolgingStatus, avsluttOppfolgingStatusLoading } = useAvsluttOppfolgingStatus(brukerFnr);
     const { dialogerData, dialogerLoading } = useDialoger(brukerFnr);
 
-    const datoErInnenFor28DagerSiden = (avsluttOppfolgingStatus?.inaktiveringsDato || 0) > for28dagerSiden;
     const harUbehandledeDialoger = dialogerData ? selectHarUbehandledeDialoger(dialogerData) : false;
 
     function handleSubmitAvsluttOppfolging(values: BegrunnelseValues) {
@@ -69,13 +65,7 @@ function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
             handleSubmit={handleSubmitAvsluttOppfolging}
             tekstariaLabel="Begrunnelse"
             tittel="Avslutt oppfølgingsperioden"
-            infoTekst={
-                <AvsluttOppfolgingInfoText
-                    datoErInnenFor28DagerSiden={datoErInnenFor28DagerSiden}
-                    harUbehandledeDialoger={harUbehandledeDialoger}
-                    fnr={brukerFnr}
-                />
-            }
+            infoTekst={<AvsluttOppfolgingInfoText harUbehandledeDialoger={harUbehandledeDialoger} fnr={brukerFnr} />}
             isLoading={false}
         />
     );
