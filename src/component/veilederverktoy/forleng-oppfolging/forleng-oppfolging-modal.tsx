@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { erITestMiljo } from '../../../util/utils';
 import { OppfolgingForlengelseFeilet } from './forleng-oppfolging-feilet';
 import { harAktivForlengelse } from './utils';
+import { useFeaturesFromOboUnleash, UTMELDINGSKANDIDATER_TOGGLE } from '../../../api/veilarbpersonflatefs';
 
 function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
     const imorgen = dayjs().add(1, 'day').toDate();
@@ -24,6 +25,9 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
     );
     const [kvittering, setKvittering] = useState<OppfolgingForlengetTilKvitering | undefined>(undefined);
     const [valideringsfeil, setValideringsfeil] = useState<boolean>(false);
+
+    const { features } = useFeaturesFromOboUnleash();
+    const utmeldingsKandidaterLansert = features?.[UTMELDINGSKANDIDATER_TOGGLE] ?? false;
 
     const { datepickerProps, inputProps } = useDatepicker({
         defaultSelected: forlengTilDato,
@@ -127,6 +131,10 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
                 </>
             );
         }
+    }
+
+    if (!utmeldingsKandidaterLansert) {
+        return null;
     }
 
     return (

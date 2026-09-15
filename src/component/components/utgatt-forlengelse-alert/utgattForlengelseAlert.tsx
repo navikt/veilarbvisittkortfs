@@ -54,7 +54,7 @@ export const UtgattForlengelseAlert = () => {
                         className="bg-ax-neutral-100 hover:bg-ax-neutral-300"
                         onClick={() => showAvsluttOppfolgingModal()}
                     >
-                        Nei, Avslutt nå
+                        Nei, avslutt nå
                     </Button>
                 </div>
                 <GlobalAlert.CloseButton onClick={() => setSkjulModal(true)} className="[&_svg]:text-ax-text-warning" />

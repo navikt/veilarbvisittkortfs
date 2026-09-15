@@ -24,6 +24,7 @@ import { StartArbeidssokerRegistreringKnapp } from './start-arbeidssoker-registr
 import { useVisVeilederVerktøy } from '../../store/visittkort-config';
 import { useGjeldendeEskaleringsvarsel } from '../../api/veilarbdialog';
 import { harAktivForlengelse } from './forleng-oppfolging/utils';
+import { useFeaturesFromOboUnleash, UTMELDINGSKANDIDATER_TOGGLE } from '../../api/veilarbpersonflatefs';
 
 const ButtonWithClickMetric = withClickMetric(Button);
 
@@ -90,6 +91,9 @@ export const Veilederverktoy = () => {
     const huskelappKlikk = () => {
         showHuskelappRedigereModal();
     };
+
+    const { features } = useFeaturesFromOboUnleash();
+    const utmeldingsKandidaterLansert = features?.[UTMELDINGSKANDIDATER_TOGGLE] ?? false;
 
     if (!visVeilederVerktoy) {
         return null;
@@ -186,7 +190,7 @@ export const Veilederverktoy = () => {
                             metricName="avslutt_oppfolging"
                         />
                     )}
-                    {kanForlengeOppfolging && (
+                    {kanForlengeOppfolging && utmeldingsKandidaterLansert && (
                         <StartProsessKnapp
                             knappeTekst={
                                 harAktivForlengelse(oppfolging) ? 'Endre forlenget oppfølging' : 'Forleng oppfølging '
