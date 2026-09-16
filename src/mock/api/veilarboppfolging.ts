@@ -134,6 +134,38 @@ const mockForlengOppfolging: ForlengOppfolgingRequest = {
     forlengetTil: '2026-09-02'
 };
 
+const mockUtmeldingskandidatHendelser: OppfolgingsDataGraphqlResponse['utmeldingskandidat']['utmeldingskandidatHendelser'] =
+    [
+        {
+            utfortAvType: 'SYSTEM',
+            utfortAv: undefined,
+            hendelseTidspunkt: '2026-09-09T08:15:00.000Z',
+            type: 'ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE',
+            forlengetTil: undefined
+        },
+        {
+            utfortAvType: 'VEILEDER',
+            utfortAv: 'Z123456',
+            hendelseTidspunkt: '2026-09-10T08:15:00.000Z',
+            type: 'FORLENGELSE_OPPRETTET',
+            forlengetTil: '2026-10-31'
+        },
+        {
+            utfortAvType: 'VEILEDER',
+            utfortAv: 'Z000003',
+            hendelseTidspunkt: '2026-09-11T08:15:00.000Z',
+            type: 'FORLENGELSE_ENDRET',
+            forlengetTil: '2026-11-15'
+        },
+        {
+            utfortAvType: 'SYSTEM',
+            utfortAv: undefined,
+            hendelseTidspunkt: '2026-11-16T08:15:00.000Z',
+            type: 'FORLENGELSE_UTLOPT',
+            forlengetTil: undefined
+        }
+    ];
+
 export const mockOppfolgingGraphqlResponse: GraphqlResponse<OppfolgingsDataGraphqlResponse> = {
     errors: [],
     data: {
@@ -179,7 +211,7 @@ export const mockOppfolgingGraphqlResponse: GraphqlResponse<OppfolgingsDataGraph
                 forlengetTil: '2026-10-31'
             },*/
             aktivForlengelse: null,
-            utmeldingskandidatHendelser: [],
+            utmeldingskandidatHendelser: mockUtmeldingskandidatHendelser,
             tag: 'ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE'
         }
     }

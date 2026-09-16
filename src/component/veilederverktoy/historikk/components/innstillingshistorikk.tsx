@@ -23,6 +23,12 @@ const typeTilTekst: InnstillingsHistorikkTypeTilTekst = {
     KVP_STARTET: 'Kvalifiseringsprogram startet',
     KVP_STOPPET: 'Kvalifiseringsprogram avsluttet',
     VEILEDER_TILORDNET: 'Tildelt veileder',
+    ARBEIDSSOKERPERIODE_AVSLUTTET_IKKE_LEVERT_MELDEKORT: 'Arbeidssøkerperiode avsluttet (ikke levert meldekort)',
+    ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE: 'Arbeidssøkerperiode avsluttet (svarte nei i bekreftelse)',
+    ARBEIDSSOKERPERIODE_AVSLUTTET_ANNET: 'Arbeidssøkerperiode avsluttet (annet)',
+    FORLENGELSE_OPPRETTET: 'Forlengelse av oppfølgingsperiode opprettet',
+    FORLENGELSE_ENDRET: 'Forlengelse av oppfølgingsperiode endret',
+    FORLENGELSE_UTLOPT: 'Forlengelse av oppfølgingsperiode utløpt',
     ESKALERING_STARTET: 'Varsel sendt', // TODO Typefiksing: Dette alternativet ikkje eigentleg gyldig som input i komponenten - Ingrid, 2024-02-02
     ESKALERING_STOPPET: 'Varsel deaktivert', // TODO Typefiksing: Dette alternativet ikkje eigentleg gyldig som input i komponenten - Ingrid, 2024-02-02
     OPPFOLGINGSENHET_ENDRET: 'Oppfølgingsenhet endret'
@@ -30,10 +36,11 @@ const typeTilTekst: InnstillingsHistorikkTypeTilTekst = {
 
 function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHistorikkKomponentProps) {
     const { type, begrunnelse, dialogId } = innstillingsHistorikk;
-    const begrunnelseTekst =
-        begrunnelse && begrunnelse.length > ESKALERING_MAX_LENGTH
+    const begrunnelseTekst = begrunnelse
+        ? begrunnelse.length > ESKALERING_MAX_LENGTH
             ? `${begrunnelse.substring(0, ESKALERING_MAX_LENGTH)}... `
-            : `${begrunnelse} `;
+            : `${begrunnelse} `
+        : '';
 
     return (
         <div className="historikk__elem">

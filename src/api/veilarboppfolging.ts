@@ -85,6 +85,16 @@ export type ForlengOppfolgingResponse = {
 
 export type KandidatForUtmeldingHendelseUtfortAvType = 'VEILEDER' | 'SYSTEM' | 'BRUKER' | 'UKJENT';
 
+type UtmeldingskandidatHistorikkType =
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_IKKE_LEVERT_MELDEKORT'
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE'
+    | 'ARBEIDSSOKERPERIODE_AVSLUTTET_ANNET'
+    | 'FORLENGELSE_OPPRETTET'
+    | 'FORLENGELSE_ENDRET'
+    | 'FORLENGELSE_UTLOPT';
+
+export type UtmeldingskandidatHendelseType = UtmeldingskandidatHistorikkType;
+
 export type InnstillingsHistorikkType =
     | 'SATT_TIL_DIGITAL'
     | 'SATT_TIL_MANUELL'
@@ -94,7 +104,8 @@ export type InnstillingsHistorikkType =
     | 'KVP_STARTET'
     | 'KVP_STOPPET'
     | 'VEILEDER_TILORDNET'
-    | 'OPPFOLGINGSENHET_ENDRET';
+    | 'OPPFOLGINGSENHET_ENDRET'
+    | UtmeldingskandidatHistorikkType;
 
 export type InnstillingsHistorikkOpprettetAvType = 'NAV' | 'SYSTEM' | 'EKSTERN';
 
@@ -293,7 +304,7 @@ export interface MedUtmeldingskandidat {
             utfortAvType: KandidatForUtmeldingHendelseUtfortAvType;
             utfortAv: string | undefined;
             hendelseTidspunkt: string;
-            type: string | undefined;
+            type: UtmeldingskandidatHendelseType | undefined;
             forlengetTil: string | undefined;
         }[];
         tag: KandidatForUtmeldingTag | null;
