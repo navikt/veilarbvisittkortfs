@@ -29,7 +29,7 @@ export const UtgattForlengelseAlert = () => {
             status="warning"
             centered={false}
             size="small"
-            className="w-full outline-ax-bg-warning-moderate **:[[class*='alert']]:before:hidden"
+            className="w-full outline-ax-bg-warning-moderate utgatt-forlengelse-alert **:[[class*='alert']]:before:hidden"
         >
             <GlobalAlert.Header className="items-center w-full bg-ax-bg-warning-moderate p-2">
                 <GlobalAlert.Title className="text-ax font-ax-regular text-ax-text-warning">

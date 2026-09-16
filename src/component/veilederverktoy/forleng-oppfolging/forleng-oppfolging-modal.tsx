@@ -47,14 +47,14 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
             setValideringsfeil(true);
             return;
         }
-        if (oppfolging?.utmeldingskandidat?.tag === null && !harAktivForlengelse(oppfolging)) {
+        if (oppfolging?.utmeldingskandidat.tag === null && !harAktivForlengelse(oppfolging)) {
             setValideringsfeil(true);
             return;
         }
 
         const valgtDato = dayjs(forlengTilDato).startOf('day');
 
-        if (!valgtDato.isValid() || valgtDato.isBefore(imorgen) || valgtDato.isAfter(maksDato)) {
+        if (!valgtDato.isValid() || valgtDato.isBefore(imorgen, 'day') || valgtDato.isAfter(maksDato)) {
             setValideringsfeil(true);
             return;
         }
@@ -120,6 +120,7 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
                             type="submit"
                             onClick={handleLagreForlengelse}
                             loading={isLoading}
+                            aria-label="Bekreft forleng oppfølging"
                             disabled={isLoading || !forlengTilDato}
                         >
                             Bekreft
