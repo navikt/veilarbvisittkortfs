@@ -3,11 +3,19 @@ import { UtgattForlengelseAlert } from './utgattForlengelseAlert';
 import { MedUtmeldingskandidat, Oppfolging } from '../../../api/veilarboppfolging';
 import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { UTMELDINGSKANDIDATER_TOGGLE } from '../../../api/veilarbpersonflatefs';
 
 const { mockUseOppfolging, mockShowForleng, mockShowAvslutt } = vi.hoisted(() => ({
     mockUseOppfolging: vi.fn(),
     mockShowForleng: vi.fn(),
     mockShowAvslutt: vi.fn()
+}));
+
+vi.mock('../../../api/veilarbpersonflatefs', () => ({
+    UTMELDINGSKANDIDATER_TOGGLE: 'veilarbvisittkortfs.utmeldingskandidater',
+    useFeaturesFromOboUnleash: () => ({
+        features: { [UTMELDINGSKANDIDATER_TOGGLE]: true }
+    })
 }));
 
 vi.mock('../../../store/app-store', () => ({
