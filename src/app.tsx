@@ -13,6 +13,7 @@ import { VisittKortConfigContext } from './store/visittkort-config';
 import { FeilIVisittkortAlert } from './component/FeilIVisittkortAlert';
 import { Theme } from '@navikt/ds-react';
 import { UtgattForlengelseAlert } from './component/components/utgatt-forlengelse-alert/utgattForlengelseAlert';
+import { useFeaturesFromOboUnleash, UTMELDINGSKANDIDATER_TOGGLE } from './api/veilarbpersonflatefs';
 
 export type AppTheme = 'light' | 'dark';
 
@@ -53,6 +54,9 @@ function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, 
         };
     }, [visVeilederVerktoy, tilbakeTilFlate]);
 
+    const { features } = useFeaturesFromOboUnleash();
+    const utmeldingsKandidaterLansert = features?.[UTMELDINGSKANDIDATER_TOGGLE] ?? false;
+
     return (
         <VisittKortConfigContext.Provider value={configValue}>
             <div>
@@ -76,7 +80,7 @@ function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, 
                             </DataFetcher>
                             <VeilederverktoyModalController />
                         </div>
-                        <UtgattForlengelseAlert />
+                        {utmeldingsKandidaterLansert && <UtgattForlengelseAlert />}
                     </>
                 </Theme>
                 <FeilIVisittkortAlert />
