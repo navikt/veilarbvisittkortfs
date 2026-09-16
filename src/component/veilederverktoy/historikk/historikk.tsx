@@ -10,7 +10,7 @@ import useSWR from 'swr';
 import { useOppgaveHistorikk } from '../../../api/veilarboppgave';
 import {
     InnstillingHistorikkInnslag,
-    UtmeldingskandidatHendelseType,
+    UtmeldingskandidatHistorikkType,
     useInnstillingsHistorikk,
     useOppfolging
 } from '../../../api/veilarboppfolging';
@@ -61,7 +61,7 @@ function utmeldingskandidatHistorikkTilInnstillingHistorikk(
               utfortAvType: 'VEILEDER' | 'SYSTEM' | 'BRUKER' | 'UKJENT';
               utfortAv: string | undefined;
               hendelseTidspunkt: string;
-              type: UtmeldingskandidatHendelseType | undefined;
+              type: UtmeldingskandidatHistorikkType | undefined;
               forlengetTil: string | undefined;
           }[]
         | undefined
