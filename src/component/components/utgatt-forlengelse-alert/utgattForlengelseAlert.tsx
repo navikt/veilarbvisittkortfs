@@ -5,9 +5,13 @@ import { useOppfolging } from '../../../api/veilarboppfolging';
 import { erUtmeldingsKandidat } from '../../veilederverktoy/forleng-oppfolging/utils';
 import { LeaveIcon, TimerStartIcon } from '@navikt/aksel-icons';
 import { useModalStore } from '../../../store/modal-store';
+import { useFeaturesFromOboUnleash, UTMELDINGSKANDIDATER_TOGGLE } from '../../../api/veilarbpersonflatefs';
 
 export const UtgattForlengelseAlert = () => {
     const [skjulModal, setSkjulModal] = useState<boolean>(false);
+
+    const { features } = useFeaturesFromOboUnleash();
+    const utmeldingsKandidaterLansert = features?.[UTMELDINGSKANDIDATER_TOGGLE] ?? false;
 
     const brukerFnr = useBrukerFnr();
     const { oppfolging } = useOppfolging(brukerFnr);
@@ -20,6 +24,8 @@ export const UtgattForlengelseAlert = () => {
 
         return erUtmeldingsKandidat(oppfolging);
     };
+
+    if (!utmeldingsKandidaterLansert) return null;
 
     if (!harTilgang()) return null;
     if (skjulModal) return null;
