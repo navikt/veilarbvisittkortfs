@@ -764,22 +764,5 @@ describe('Veilederverktoy', () => {
             expect(screen.findByRole('button', { name: 'Endre forlenget oppfølging' })).toBeTruthy();
             expect(screen.queryByText('Forleng oppfølging')).toBeNull();
         });
-
-        test('Vis forleng oppføging alert banner når bruker er utmeldingskandidat', () => {
-            server.use(
-                mockOppfolgingGraphql({
-                    oppfolging: { erUnderOppfolging: true },
-                    veilederTilgang: {
-                        harVeilederLeseTilgangTilBruker: true,
-                        harVeilederLeseTilgangTilBrukersEnhet: true
-                    },
-                    utmeldingskandidat: {
-                        ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
-                        tag: null,
-                        aktivForlengelse: null
-                    }
-                })
-            );
-        });
     });
 });
