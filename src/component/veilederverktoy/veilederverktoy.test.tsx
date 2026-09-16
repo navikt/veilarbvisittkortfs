@@ -10,6 +10,8 @@ import { GraphqlResponse } from '../../api/GraphqlUtils';
 import { GjeldendeEskaleringsvarsel, veilarbDialogGraphqlEndpoint } from '../../api/veilarbdialog';
 import { useAppStore } from '../../store/app-store';
 import { VisittKortConfigContext, VisittkortConfig } from '../../store/visittkort-config';
+import dayjs from 'dayjs';
+import { veilarbpersonflatefsHandlers } from '../../mock/api/veilarbpersonflatefs';
 
 const brukerFnr = '10108000398';
 
@@ -57,6 +59,7 @@ const mockLoggerEvent = () =>
     });
 
 const server = setupServer(
+    ...veilarbpersonflatefsHandlers,
     mockOppfolgingGraphql(),
     mockErUfordeltBruker(false),
     mockHuskelappForBruker(null),
@@ -547,7 +550,15 @@ describe('Veilederverktoy', () => {
 
     describe('Start arbeidsrettet oppfølging', () => {
         test('viser "Start arbeidsrettet oppfølging" når bruker ikke er under oppfølging', async () => {
-            server.use(mockOppfolgingGraphql({ oppfolging: { erUnderOppfolging: false } }));
+            server.use(
+                mockOppfolgingGraphql({
+                    oppfolging: { erUnderOppfolging: false },
+                    utmeldingskandidat: {
+                        ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
+                        tag: null
+                    }
+                })
+            );
 
             renderVeilederverktoy();
             await apneMeny();
@@ -559,6 +570,10 @@ describe('Veilederverktoy', () => {
             server.use(
                 mockOppfolgingGraphql({
                     oppfolging: { erUnderOppfolging: true },
+                    utmeldingskandidat: {
+                        ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
+                        tag: null
+                    },
                     brukerStatus: {
                         ...mockOppfolgingGraphqlResponse.data.brukerStatus,
                         arena: {
@@ -579,6 +594,10 @@ describe('Veilederverktoy', () => {
             server.use(
                 mockOppfolgingGraphql({
                     oppfolging: { erUnderOppfolging: true },
+                    utmeldingskandidat: {
+                        ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
+                        tag: null
+                    },
                     brukerStatus: {
                         ...mockOppfolgingGraphqlResponse.data.brukerStatus,
                         arena: {
@@ -594,6 +613,156 @@ describe('Veilederverktoy', () => {
 
             expect(screen.queryByText('Start arbeidsrettet oppfølging')).toBeNull();
             expect(screen.queryByText('Reaktiver arbeidsrettet oppfølging')).toBeNull();
+        });
+    });
+
+    describe('Forleng oppfølging', () => {
+        test('Viser "Forleng oppfølging" når bruker er utmeldingskandidat uten aktiv forlengelse', async () => {
+            server.use(
+                mockOppfolgingGraphql({
+                    oppfolging: { erUnderOppfolging: true },
+                    veilederTilgang: {
+                        harVeilederLeseTilgangTilBruker: true,
+                        harVeilederLeseTilgangTilBrukersEnhet: true
+                    },
+                    utmeldingskandidat: {
+                        ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
+                        tag: 'ARBEIDSSOKERPERIODE_AVSLUTTET_IKKE_LEVERT_MELDEKORT',
+                        aktivForlengelse: null
+                    }
+                })
+            );
+
+            renderVeilederverktoy();
+            await apneMeny();
+
+            expect(screen.findByRole('button', { name: /forleng oppfølging/i })).toBeTruthy();
+            expect(screen.queryByText('Endre forlenget oppfølging')).toBeNull();
+        });
+
+        test('Viser "Forleng oppfølging" når bruker er utmeldingskandidat med utløpt forlengelse', async () => {
+            server.use(
+                mockOppfolgingGraphql({
+                    oppfolging: { erUnderOppfolging: true },
+                    veilederTilgang: {
+                        harVeilederLeseTilgangTilBruker: true,
+                        harVeilederLeseTilgangTilBrukersEnhet: true
+                    },
+                    utmeldingskandidat: {
+                        ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
+                        tag: 'ARBEIDSSOKERPERIODE_AVSLUTTET_IKKE_LEVERT_MELDEKORT',
+                        aktivForlengelse: null
+                    }
+                })
+            );
+
+            renderVeilederverktoy();
+            await apneMeny();
+
+            expect(screen.findByRole('button', { name: 'Forleng oppfølging' })).toBeTruthy();
+            expect(screen.queryByText('Endre forlenget oppfølging')).toBeNull();
+        });
+
+        test('Skjuler "Forleng" knapper når bruker verken er eller har vært utmeldingskandidat', async () => {
+            server.use(
+                mockOppfolgingGraphql({
+                    oppfolging: { erUnderOppfolging: true },
+                    veilederTilgang: {
+                        harVeilederLeseTilgangTilBruker: true,
+                        harVeilederLeseTilgangTilBrukersEnhet: true
+                    },
+                    utmeldingskandidat: {
+                        ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
+                        tag: null,
+                        aktivForlengelse: {
+                            utfortAvType: 'VEILEDER',
+                            utfortAv: 'Z123456',
+                            hendelseTidspunkt: '2026-09-08T13:28:40.558650Z',
+                            forlengetTil: dayjs().subtract(1, 'day').toString()
+                        }
+                    }
+                })
+            );
+
+            renderVeilederverktoy();
+            await apneMeny();
+
+            expect(screen.findByRole('button', { name: 'Forleng oppfølging' })).toBeTruthy();
+            expect(screen.queryByText('Endre forlenget oppfølging')).toBeNull();
+        });
+
+        test('Skjuler "Forleng" knapper når bruker ikke er under oppfølging', async () => {
+            server.use(
+                mockOppfolgingGraphql({
+                    oppfolging: { erUnderOppfolging: false },
+                    veilederTilgang: {
+                        harVeilederLeseTilgangTilBruker: true,
+                        harVeilederLeseTilgangTilBrukersEnhet: true
+                    },
+                    utmeldingskandidat: {
+                        ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
+                        tag: null,
+                        aktivForlengelse: null
+                    }
+                })
+            );
+
+            renderVeilederverktoy();
+            await apneMeny();
+
+            expect(screen.queryByRole('button', { name: 'Forleng oppfølging' })).toBeNull();
+            expect(screen.queryByText('Endre forlenget oppfølging')).toBeNull();
+        });
+
+        test('Skjuler "Forleng" knapper når veileder ikke har tilgang til brukers kontor', async () => {
+            server.use(
+                mockOppfolgingGraphql({
+                    oppfolging: { erUnderOppfolging: true },
+                    veilederTilgang: {
+                        harVeilederLeseTilgangTilBruker: false,
+                        harVeilederLeseTilgangTilBrukersEnhet: false
+                    },
+                    utmeldingskandidat: {
+                        ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
+                        tag: null,
+                        aktivForlengelse: null
+                    }
+                })
+            );
+
+            renderVeilederverktoy();
+            await apneMeny();
+
+            expect(screen.queryByRole('button', { name: 'Forleng oppfølging' })).toBeNull();
+            expect(screen.queryByText('Endre forlenget oppfølging')).toBeNull();
+        });
+
+        test('Viser "Endre forlenget oppfølging" i menyvalg når bruker er en forlenget utmeldingskandidat med utløp frem i tid', async () => {
+            server.use(
+                mockOppfolgingGraphql({
+                    oppfolging: { erUnderOppfolging: true },
+                    veilederTilgang: {
+                        harVeilederLeseTilgangTilBruker: true,
+                        harVeilederLeseTilgangTilBrukersEnhet: true
+                    },
+                    utmeldingskandidat: {
+                        ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
+                        tag: null,
+                        aktivForlengelse: {
+                            utfortAvType: 'VEILEDER',
+                            utfortAv: 'Z123456',
+                            hendelseTidspunkt: '2026-09-08T13:28:40.558650Z',
+                            forlengetTil: dayjs().add(1, 'day').toString()
+                        }
+                    }
+                })
+            );
+
+            renderVeilederverktoy();
+            await apneMeny();
+
+            expect(screen.findByRole('button', { name: 'Endre forlenget oppfølging' })).toBeTruthy();
+            expect(screen.queryByText('Forleng oppfølging')).toBeNull();
         });
     });
 });

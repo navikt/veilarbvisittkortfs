@@ -1,5 +1,6 @@
 import {
     AvslutningStatus,
+    ForlengOppfolgingRequest,
     InnstillingHistorikkInnslag,
     Oppfolging,
     OppfolgingsDataGraphqlResponse
@@ -128,6 +129,11 @@ const mockOppfolging: Oppfolging = {
     kanVarsles: true
 };
 
+const mockForlengOppfolging: ForlengOppfolgingRequest = {
+    fnr: '12345678901',
+    forlengetTil: '2026-09-02'
+};
+
 export const mockOppfolgingGraphqlResponse: GraphqlResponse<OppfolgingsDataGraphqlResponse> = {
     errors: [],
     data: {
@@ -165,7 +171,17 @@ export const mockOppfolgingGraphqlResponse: GraphqlResponse<OppfolgingsDataGraph
         oppfolging: {
             erUnderOppfolging: true
         },
-        utmeldingskandidatTag: 'ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE'
+        utmeldingskandidat: {
+            /*aktivForlengelse: {
+                utfortAvType: 'VEILEDER',
+                utfortAv: 'Z123456',
+                hendelseTidspunkt: '2026-09-08T13:28:40.558650Z',
+                forlengetTil: '2026-10-31'
+            },*/
+            aktivForlengelse: null,
+            utmeldingskandidatHendelser: [],
+            tag: 'ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE'
+        }
     }
 };
 
@@ -201,5 +217,9 @@ export const veilarboppfolgingHandlers: RequestHandler[] = [
     http.post('/veilarboppfolging/api/graphql', async () => {
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json(mockOppfolgingGraphqlResponse);
+    }),
+    http.post('/veilarboppfolging/api/forlengelse', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json(mockForlengOppfolging);
     })
 ];
