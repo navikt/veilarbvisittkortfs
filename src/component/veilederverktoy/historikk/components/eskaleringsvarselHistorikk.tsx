@@ -16,10 +16,10 @@ function EskaleringsvarselHistorikkKomponent({ innslag }: EskaleringsvarselHisto
     const begrunnelse = innslag.avsluttetBegrunnelse || innslag.opprettetBegrunnelse;
     const overskrift = innslag.avsluttetDato != null ? 'Varsel deaktivert' : 'Varsel sendt';
 
-    const begrunnelseTekst =
-        begrunnelse && begrunnelse.length > ESKALERING_MAX_LENGTH
-            ? `${begrunnelse.substring(0, ESKALERING_MAX_LENGTH)}... `
-            : `${begrunnelse} `;
+    const harLangBegrunnelse = !!begrunnelse && begrunnelse.length > ESKALERING_MAX_LENGTH;
+    const formatertBegrunnelse = harLangBegrunnelse
+        ? `${begrunnelse.substring(0, ESKALERING_MAX_LENGTH)}... `
+        : `${begrunnelse} `;
 
     return (
         <div className="historikk__elem">
@@ -27,7 +27,7 @@ function EskaleringsvarselHistorikkKomponent({ innslag }: EskaleringsvarselHisto
                 {overskrift}
             </BodyShort>
             <BodyShort size="small">
-                {begrunnelseTekst}
+                {formatertBegrunnelse}
                 <LenkeTilDialog dialogId={innslag.tilhorendeDialogId}>Les mer i dialog</LenkeTilDialog>
             </BodyShort>
             <Detail>{`${toSimpleDateStr(dato)} av ${utfortAv}${

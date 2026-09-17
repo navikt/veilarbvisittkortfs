@@ -8,11 +8,18 @@ import { getVeilederIdents } from './getIdents';
 import { hentAlleKontor } from '../../../api/ao-oppfolgingskontor';
 import useSWR from 'swr';
 import { useOppgaveHistorikk } from '../../../api/veilarboppgave';
-import { useInnstillingsHistorikk } from '../../../api/veilarboppfolging';
+import {
+    InnstillingHistorikkInnslag,
+    UtmeldingskandidatHistorikkType,
+    useInnstillingsHistorikk,
+    useOppfolging
+} from '../../../api/veilarboppfolging';
 import { EskaleringsvarselHistorikkInnslag, useEskaleringsvarselHistorikk } from '../../../api/veilarbdialog';
 import { useVeilederDataListe } from '../../../api/veilarbveileder';
 import { isNonEmptyArray } from '../../../util/type/type-guards';
 import { usePersonalia } from '../../../api/veilarbperson';
+import dayjs from 'dayjs';
+import { useFeaturesFromOboUnleash, UTMELDINGSKANDIDATER_TOGGLE } from '../../../api/veilarbpersonflatefs';
 
 function eskaleringsvarselHistorikkTilEvent(
     historikk: EskaleringsvarselHistorikkInnslag[] | undefined
@@ -48,9 +55,45 @@ function eskaleringsvarselHistorikkTilEvent(
     return eventHistorikk;
 }
 
+function utmeldingskandidatHistorikkTilInnstillingHistorikk(
+    oppfolgingHistorikk:
+        | {
+              utfortAvType: 'VEILEDER' | 'SYSTEM' | 'BRUKER' | 'UKJENT';
+              utfortAv: string | undefined;
+              hendelseTidspunkt: string;
+              type: UtmeldingskandidatHistorikkType | undefined;
+              forlengetTil: string | undefined;
+          }[]
+        | undefined
+): InnstillingHistorikkInnslag[] {
+    return (
+        (oppfolgingHistorikk
+            ?.map(hendelse => {
+                if (!hendelse.type) return null;
+
+                const detaljer = hendelse.forlengetTil
+                    ? `Forlenget til ${dayjs(hendelse.forlengetTil).format('DD.MM.YYYY')}.`
+                    : null;
+
+                return {
+                    type: hendelse.type,
+                    dato: hendelse.hendelseTidspunkt,
+                    begrunnelse: detaljer,
+                    opprettetAv: hendelse.utfortAvType === 'VEILEDER' ? 'NAV' : 'SYSTEM',
+                    opprettetAvBrukerId: hendelse.utfortAvType === 'VEILEDER' ? hendelse.utfortAv : null,
+                    dialogId: null
+                };
+            })
+            .filter(Boolean) as InnstillingHistorikkInnslag[]) || []
+    );
+}
+
 function Historikk() {
     const brukerFnr = useBrukerFnr();
+    const { features } = useFeaturesFromOboUnleash();
+    const utmeldingsKandidaterLansert = features?.[UTMELDINGSKANDIDATER_TOGGLE] ?? false;
     const { personalia } = usePersonalia(brukerFnr);
+    const { oppfolging, isLoading: oppfolgingLoading, error: oppfolgingError } = useOppfolging(brukerFnr);
     const { innstillingsHistorikkData, innstillingsHistorikkLoading, innstillingsHistorikkError } =
         useInnstillingsHistorikk(brukerFnr);
     const { oppgaveHistorikkData, oppgaveHistorikkLoading, oppgaveHistorikkError } = useOppgaveHistorikk(brukerFnr);
@@ -69,10 +112,26 @@ function Historikk() {
         ke => ke.kontorType === 'ARBEIDSOPPFOLGING'
     );
 
+    const innstillingsHistorikkDataMedUtmeldingshendelser = useMemo(
+        () => [
+            ...(innstillingsHistorikkData || []),
+            ...(utmeldingsKandidaterLansert
+                ? utmeldingskandidatHistorikkTilInnstillingHistorikk(
+                      oppfolging?.utmeldingskandidat?.utmeldingskandidatHendelser
+                  )
+                : [])
+        ],
+        [
+            innstillingsHistorikkData,
+            utmeldingsKandidaterLansert,
+            oppfolging?.utmeldingskandidat?.utmeldingskandidatHendelser
+        ]
+    );
+
     const veilederIdenter = useMemo(() => {
-        if (innstillingsHistorikkData && oppgaveHistorikkData && eskaleringsvarselHistorikkData) {
+        if (oppgaveHistorikkData && eskaleringsvarselHistorikkData) {
             const identer = getVeilederIdents({
-                innstillingsHistorikkData,
+                innstillingsHistorikkData: innstillingsHistorikkDataMedUtmeldingshendelser,
                 oppgaveHistorikkData,
                 eskaleringsvarselHistorikkData,
                 kontorEndringHistorikkData: kontorHistorikkData
@@ -80,11 +139,17 @@ function Historikk() {
             return isNonEmptyArray(identer) ? identer : null;
         }
         return null;
-    }, [innstillingsHistorikkData, oppgaveHistorikkData, eskaleringsvarselHistorikkData, kontorHistorikkData]);
+    }, [
+        innstillingsHistorikkDataMedUtmeldingshendelser,
+        oppgaveHistorikkData,
+        eskaleringsvarselHistorikkData,
+        kontorHistorikkData
+    ]);
 
     const { veilederListeData, veilederListeLoading } = useVeilederDataListe(veilederIdenter);
 
     const isLoading =
+        (utmeldingsKandidaterLansert && oppfolgingLoading) ||
         innstillingsHistorikkLoading ||
         oppgaveHistorikkLoading ||
         eskaleringsvarselHistorikkLoading ||
@@ -92,6 +157,7 @@ function Historikk() {
         veilederListeLoading;
 
     if (
+        (utmeldingsKandidaterLansert && oppfolgingError) ||
         innstillingsHistorikkError ||
         oppgaveHistorikkError ||
         eskaleringsvarselHistorikkError ||
@@ -101,7 +167,7 @@ function Historikk() {
     }
 
     const innstillingHistorikk =
-        innstillingsHistorikkData
+        innstillingsHistorikkDataMedUtmeldingshendelser
             ?.filter(ih => ih.type !== 'OPPFOLGINGSENHET_ENDRET')
             .map(ih => {
                 return {
