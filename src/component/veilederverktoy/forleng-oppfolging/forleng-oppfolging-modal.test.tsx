@@ -3,20 +3,12 @@ import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import dayjs from 'dayjs';
 import ForlengOppfolgingModal from './forleng-oppfolging-modal';
-import { UTMELDINGSKANDIDATER_TOGGLE } from '../../../api/veilarbpersonflatefs';
 
 const { mockUseOppfolging, mockForlengOppfolging, mockMutate } = vi.hoisted(() => ({
     mockHideModal: vi.fn(),
     mockUseOppfolging: vi.fn(),
     mockForlengOppfolging: vi.fn(),
     mockMutate: vi.fn()
-}));
-
-vi.mock('../../../api/veilarbpersonflatefs', () => ({
-    UTMELDINGSKANDIDATER_TOGGLE: 'veilarbvisittkortfs.utmeldingskandidater',
-    useFeaturesFromOboUnleash: () => ({
-        features: { [UTMELDINGSKANDIDATER_TOGGLE]: true }
-    })
 }));
 
 vi.mock('../../../api/veilarboppfolging', () => ({

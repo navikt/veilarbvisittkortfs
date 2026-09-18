@@ -19,7 +19,6 @@ import { useVeilederDataListe } from '../../../api/veilarbveileder';
 import { isNonEmptyArray } from '../../../util/type/type-guards';
 import { usePersonalia } from '../../../api/veilarbperson';
 import dayjs from 'dayjs';
-import { useFeaturesFromOboUnleash, UTMELDINGSKANDIDATER_TOGGLE } from '../../../api/veilarbpersonflatefs';
 
 function eskaleringsvarselHistorikkTilEvent(
     historikk: EskaleringsvarselHistorikkInnslag[] | undefined
@@ -90,8 +89,6 @@ function utmeldingskandidatHistorikkTilInnstillingHistorikk(
 
 function Historikk() {
     const brukerFnr = useBrukerFnr();
-    const { features } = useFeaturesFromOboUnleash();
-    const utmeldingsKandidaterLansert = features?.[UTMELDINGSKANDIDATER_TOGGLE] ?? false;
     const { personalia } = usePersonalia(brukerFnr);
     const { oppfolging, isLoading: oppfolgingLoading, error: oppfolgingError } = useOppfolging(brukerFnr);
     const { innstillingsHistorikkData, innstillingsHistorikkLoading, innstillingsHistorikkError } =
@@ -115,17 +112,11 @@ function Historikk() {
     const innstillingsHistorikkDataMedUtmeldingshendelser = useMemo(
         () => [
             ...(innstillingsHistorikkData || []),
-            ...(utmeldingsKandidaterLansert
-                ? utmeldingskandidatHistorikkTilInnstillingHistorikk(
-                      oppfolging?.utmeldingskandidat?.utmeldingskandidatHendelser
-                  )
-                : [])
+            ...(utmeldingskandidatHistorikkTilInnstillingHistorikk(
+                oppfolging?.utmeldingskandidat?.utmeldingskandidatHendelser
+            ) || [])
         ],
-        [
-            innstillingsHistorikkData,
-            utmeldingsKandidaterLansert,
-            oppfolging?.utmeldingskandidat?.utmeldingskandidatHendelser
-        ]
+        [innstillingsHistorikkData, oppfolging?.utmeldingskandidat?.utmeldingskandidatHendelser]
     );
 
     const veilederIdenter = useMemo(() => {
@@ -149,7 +140,7 @@ function Historikk() {
     const { veilederListeData, veilederListeLoading } = useVeilederDataListe(veilederIdenter);
 
     const isLoading =
-        (utmeldingsKandidaterLansert && oppfolgingLoading) ||
+        oppfolgingLoading ||
         innstillingsHistorikkLoading ||
         oppgaveHistorikkLoading ||
         eskaleringsvarselHistorikkLoading ||
@@ -157,7 +148,7 @@ function Historikk() {
         veilederListeLoading;
 
     if (
-        (utmeldingsKandidaterLansert && oppfolgingError) ||
+        oppfolgingError ||
         innstillingsHistorikkError ||
         oppgaveHistorikkError ||
         eskaleringsvarselHistorikkError ||

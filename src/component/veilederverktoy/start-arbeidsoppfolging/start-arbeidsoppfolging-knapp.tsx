@@ -1,6 +1,5 @@
 import { Dropdown } from '@navikt/ds-react';
 import { EnvType, getEnv } from '../../../util/envUtil';
-import { useFeaturesFromOboUnleash, UTMELDINGSKANDIDATER_TOGGLE } from '../../../api/veilarbpersonflatefs';
 
 const env = getEnv();
 const startArbeidsoppfolgingUrl: Record<`${EnvType}-${'ansatt' | 'intern'}`, string> = {
@@ -13,24 +12,12 @@ const startArbeidsoppfolgingUrl: Record<`${EnvType}-${'ansatt' | 'intern'}`, str
 };
 const url = startArbeidsoppfolgingUrl[`${env.type}-${env.ingressType}`];
 
-export const StartArbeidsoppfolgingKnapp = ({
-    underOppfolging,
-    erIservIArena
-}: {
-    underOppfolging: boolean;
-    erIservIArena: boolean;
-}) => {
-    const { features } = useFeaturesFromOboUnleash();
-    const utmeldingsKandidaterLansert = features?.[UTMELDINGSKANDIDATER_TOGGLE] ?? false;
-
-    if (underOppfolging && (utmeldingsKandidaterLansert || !erIservIArena)) return null;
-
-    const buttonText =
-        underOppfolging && erIservIArena ? 'Reaktiver arbeidsrettet oppfølging' : 'Start arbeidsrettet oppfølging';
+export const StartArbeidsoppfolgingKnapp = ({ underOppfolging }: { underOppfolging: boolean }) => {
+    if (underOppfolging) return null;
 
     return (
         <Dropdown.Menu.List.Item as="a" href={url}>
-            {buttonText}
+            Start arbeidsrettet oppfølging
         </Dropdown.Menu.List.Item>
     );
 };
