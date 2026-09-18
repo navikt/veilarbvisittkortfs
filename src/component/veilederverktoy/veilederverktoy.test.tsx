@@ -566,45 +566,10 @@ describe('Veilederverktoy', () => {
             expect(screen.getByText('Start arbeidsrettet oppfølging')).toBeTruthy();
         });
 
-        test('viser "Reaktiver arbeidsrettet oppfølging" når bruker er under oppfølging og er iserv i Arena', async () => {
+        test('skjuler knappen når bruker er under oppfølging', async () => {
             server.use(
                 mockOppfolgingGraphql({
-                    oppfolging: { erUnderOppfolging: true },
-                    utmeldingskandidat: {
-                        ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
-                        tag: null
-                    },
-                    brukerStatus: {
-                        ...mockOppfolgingGraphqlResponse.data.brukerStatus,
-                        arena: {
-                            ...mockOppfolgingGraphqlResponse.data.brukerStatus.arena!,
-                            formidlingsgruppe: 'ISERV'
-                        }
-                    }
-                })
-            );
-
-            renderVeilederverktoy();
-            await apneMeny();
-
-            expect(screen.getByText('Reaktiver arbeidsrettet oppfølging')).toBeTruthy();
-        });
-
-        test('skjuler knappen når bruker er under oppfølging og ikke er iserv i Arena', async () => {
-            server.use(
-                mockOppfolgingGraphql({
-                    oppfolging: { erUnderOppfolging: true },
-                    utmeldingskandidat: {
-                        ...mockOppfolgingGraphqlResponse.data.utmeldingskandidat,
-                        tag: null
-                    },
-                    brukerStatus: {
-                        ...mockOppfolgingGraphqlResponse.data.brukerStatus,
-                        arena: {
-                            ...mockOppfolgingGraphqlResponse.data.brukerStatus.arena!,
-                            formidlingsgruppe: 'ARBS'
-                        }
-                    }
+                    oppfolging: { erUnderOppfolging: true }
                 })
             );
 
@@ -612,7 +577,6 @@ describe('Veilederverktoy', () => {
             await apneMeny();
 
             expect(screen.queryByText('Start arbeidsrettet oppfølging')).toBeNull();
-            expect(screen.queryByText('Reaktiver arbeidsrettet oppfølging')).toBeNull();
         });
     });
 
