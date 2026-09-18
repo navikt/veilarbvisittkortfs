@@ -123,7 +123,6 @@ const mockOppfolging: Oppfolging = {
     underOppfolging: true,
     registrertKRR: false,
     underKvp: true,
-    inaktivIArena: true,
     kanReaktiveres: false,
     inaktiveringsdato: '2019-02-22T00:00:00+01:00',
     kanVarsles: true
@@ -181,7 +180,6 @@ export const mockOppfolgingGraphqlResponse: GraphqlResponse<OppfolgingsDataGraph
         },
         brukerStatus: {
             arena: {
-                inaktivIArena: true,
                 inaktiveringsdato: null,
                 kanReaktiveres: undefined,
                 formidlingsgruppe: 'ARBS',
