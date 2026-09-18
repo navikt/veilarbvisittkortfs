@@ -44,7 +44,6 @@ export interface AvslutningStatus {
 }
 
 export interface Oppfolging {
-    inaktivIArena: OrNothing<boolean>;
     inaktiveringsdato: StringOrNothing;
     kanReaktiveres: OrNothing<boolean>;
     kanVarsles: boolean;
@@ -272,7 +271,6 @@ interface VeilederTilordning {
 }
 
 interface ArenaStatus {
-    inaktivIArena: boolean;
     inaktiveringsdato: StringOrNothing;
     kanReaktiveres: boolean | undefined;
     formidlingsgruppe: 'IARBS' | 'ARBS' | 'ISERV' | undefined;
@@ -353,7 +351,6 @@ const mapTilBackoverkompatibelState = (
         harVeilederLeseTilgangTilBruker: data.data.veilederTilgang.harVeilederLeseTilgangTilBruker,
         harVeilederLeseTilgangTilBrukersEnhet: data.data.veilederTilgang.harVeilederLeseTilgangTilBrukersEnhet,
         inaktiveringsdato: data.data.brukerStatus.arena?.inaktiveringsdato,
-        inaktivIArena: data.data.brukerStatus.arena?.inaktivIArena,
         kanReaktiveres: data.data.brukerStatus.arena?.kanReaktiveres,
         kanVarsles: data.data.brukerStatus.krr.kanVarsles,
         registrertKRR: data.data.brukerStatus.krr.registrertIKrr,

@@ -152,7 +152,6 @@ function Etiketter({ brukerFnr }: { brukerFnr: string }) {
             >
                 Utdatert i KRR
             </Fokus>
-            <Fokus visible={!!oppfolging?.inaktivIArena}>Inaktivert</Fokus>
             <Fokus visible={!oppfolging?.underOppfolging}>Ikke under oppfølging</Fokus>
             <Fokus visible={!!gjeldendeEskaleringsvarsel}>Varsel</Fokus>
             <Fokus
