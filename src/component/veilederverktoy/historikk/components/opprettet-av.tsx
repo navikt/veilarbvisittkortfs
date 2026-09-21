@@ -19,7 +19,11 @@ export function opprettetAvTekst(
         }
         case 'SYSTEM':
             return 'av system (automatisk oppdatering)';
-        default:
+        case 'ADMIN':
+            return 'av admin';
+        case 'EKSTERN':
             return 'av brukeren';
+        default:
+            return 'av ukjent';
     }
 }
