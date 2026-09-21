@@ -201,7 +201,7 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
             '\n' +
             'Dersom ungdomsprogrammet ditt blir stanset, kan du ikke delta på nytt.\n' +
             '\n' +
-            'Regelen om at du bare kan delta i ungdomsprogram én gang står i forskrift om forsøk med\n' +
+            'Regelen om at du bare kan delta i ungdomsprogram én gang står i forskrift om forsøk med ' +
             'ungdomsprogram, § 3 første avsnitt bokstav c.'
     },
     [Maler.UNGDOMSPROGRAM_FLYTTING]: {
@@ -262,7 +262,7 @@ const maler: { [key in Maler]: { tekstNedtrekksmeny?: string; maltekst: string }
             'Du kan bare få ungdomsprogram én gang. Når Nav stanser din deltakelse i programmet, kan du ikke få\n' +
             'ungdomsprogram igjen senere.\n' +
             '\n' +
-            'Regelen om at du bare kan delta i ungdomsprogram én gang står i forskrift om forsøk med\n' +
+            'Regelen om at du bare kan delta i ungdomsprogram én gang står i forskrift om forsøk med ' +
             'ungdomsprogram, § 3 første avsnitt bokstav c.'
     }
 };
