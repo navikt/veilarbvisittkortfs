@@ -179,6 +179,7 @@ export const mockOppfolgingGraphqlResponse: GraphqlResponse<OppfolgingsDataGraph
             }
         },
         brukerStatus: {
+            sykmeldtStatus: 'SYKMELDT_UTEN_ARBEIDSGIVER',
             arena: {
                 inaktiveringsdato: null,
                 kanReaktiveres: undefined,

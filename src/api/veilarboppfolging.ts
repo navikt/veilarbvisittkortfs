@@ -231,6 +231,7 @@ const graphqlQuery = `
                 formidlingsgruppe
                 kvalifiseringsgruppe
             }
+            sykmeldtStatus
             manuell {
                 erManuell
             }
@@ -307,6 +308,8 @@ export interface MedUtmeldingskandidat {
     };
 }
 
+export type SykmeldtStatus = 'SYKMELDT_MED_ARBEIDSGIVER' | 'SYKMELDT_UTEN_ARBEIDSGIVER';
+
 export interface OppfolgingsDataGraphqlResponse {
     veilederTilgang: {
         harVeilederLeseTilgangTilBruker: boolean;
@@ -318,6 +321,7 @@ export interface OppfolgingsDataGraphqlResponse {
           }
         | undefined;
     brukerStatus: {
+        sykmeldtStatus: SykmeldtStatus | undefined;
         arena: ArenaStatus | undefined;
         manuell:
             | {
@@ -340,7 +344,9 @@ export interface OppfolgingsDataGraphqlResponse {
 
 const mapTilBackoverkompatibelState = (
     data: GraphqlResponse<OppfolgingsDataGraphqlResponse>
-): (Oppfolging & OppfolgingStatus & MedUtmeldingskandidat) | undefined => {
+):
+    | (Oppfolging & OppfolgingStatus & MedUtmeldingskandidat & { sykmeldtStatus: SykmeldtStatus | undefined })
+    | undefined => {
     if ((data.errors?.length || 0) != 0) {
         throw new Error(
             `Feilet å hente oppfolgingsdata (graphql) fra veilarboppfolging: ${data.errors.map(it => it.message).join(',')}`
@@ -362,7 +368,8 @@ const mapTilBackoverkompatibelState = (
         oppfolgingsenhet: oppfolgingsEnhet(data.data.oppfolgingsEnhet?.enhet),
         formidlingsgruppe: data.data.brukerStatus.arena?.formidlingsgruppe,
         servicegruppe: data.data.brukerStatus.arena?.kvalifiseringsgruppe,
-        utmeldingskandidat: data.data.utmeldingskandidat
+        utmeldingskandidat: data.data.utmeldingskandidat,
+        sykmeldtStatus: data.data.brukerStatus.sykmeldtStatus
     };
 };
 
@@ -374,7 +381,8 @@ export interface VeilarbOppfolgingGraphqlRequest {
 const graphqlUrl = '/veilarboppfolging/api/graphql';
 export const useVeilarboppfolgingData = (fnr: string | undefined) => {
     const { data, error, isLoading, mutate } = useSWR<
-        (Oppfolging & OppfolgingStatus & MedUtmeldingskandidat) | undefined,
+        | (Oppfolging & OppfolgingStatus & MedUtmeldingskandidat & { sykmeldtStatus: SykmeldtStatus | undefined })
+        | undefined,
         Error
     >(
         fnr ? `${graphqlUrl}/${fnr}` : null,

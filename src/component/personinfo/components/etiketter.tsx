@@ -7,7 +7,7 @@ import {
     useSpraakTolk,
     useVerge
 } from '../../../api/veilarbperson';
-import { OppfolgingStatus, useOppfolging } from '../../../api/veilarboppfolging';
+import { OppfolgingStatus, SykmeldtStatus, useOppfolging } from '../../../api/veilarboppfolging';
 import { OrNothing } from '../../../util/type/utility-types';
 import { HStack, Tag, TagProps } from '@navikt/ds-react';
 import { Oppfolgingsvedtak14a, useGjeldende14aVedtak } from '../../../api/veilarbvedtaksstotte';
@@ -46,8 +46,8 @@ const BaseDod = ({ visible, title, children }: Etikettprops) =>
         </Tag>
     );
 
-function erBrukerSykmeldt(oppfolging: OrNothing<OppfolgingStatus>): boolean {
-    return !!oppfolging && oppfolging.formidlingsgruppe === 'IARBS' && oppfolging.servicegruppe === 'VURDI';
+function erBrukerSykmeldt(oppfolging: OrNothing<{ sykmeldtStatus: SykmeldtStatus | undefined }>): boolean {
+    return !!oppfolging && oppfolging.sykmeldtStatus !== undefined;
 }
 
 function trengerAEV(oppfolging: OrNothing<OppfolgingStatus>): boolean {
