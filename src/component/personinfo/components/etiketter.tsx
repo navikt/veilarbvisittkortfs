@@ -46,8 +46,8 @@ const BaseDod = ({ visible, title, children }: Etikettprops) =>
         </Tag>
     );
 
-function erBrukerSykmeldt(oppfolging: OrNothing<{ sykmeldtStatus: SykmeldtStatus | undefined }>): boolean {
-    return !!oppfolging && oppfolging.sykmeldtStatus !== undefined;
+function erBrukerSykmeldt(oppfolging: OrNothing<{ sykmeldtStatus: SykmeldtStatus | null }>): boolean {
+    return !!oppfolging && oppfolging.sykmeldtStatus !== null;
 }
 
 function trengerAEV(oppfolging: OrNothing<OppfolgingStatus>): boolean {

@@ -321,7 +321,7 @@ export interface OppfolgingsDataGraphqlResponse {
           }
         | undefined;
     brukerStatus: {
-        sykmeldtStatus: SykmeldtStatus | undefined;
+        sykmeldtStatus: SykmeldtStatus | null;
         arena: ArenaStatus | undefined;
         manuell:
             | {
@@ -344,9 +344,7 @@ export interface OppfolgingsDataGraphqlResponse {
 
 const mapTilBackoverkompatibelState = (
     data: GraphqlResponse<OppfolgingsDataGraphqlResponse>
-):
-    | (Oppfolging & OppfolgingStatus & MedUtmeldingskandidat & { sykmeldtStatus: SykmeldtStatus | undefined })
-    | undefined => {
+): (Oppfolging & OppfolgingStatus & MedUtmeldingskandidat & { sykmeldtStatus: SykmeldtStatus | null }) | undefined => {
     if ((data.errors?.length || 0) != 0) {
         throw new Error(
             `Feilet å hente oppfolgingsdata (graphql) fra veilarboppfolging: ${data.errors.map(it => it.message).join(',')}`
@@ -381,8 +379,7 @@ export interface VeilarbOppfolgingGraphqlRequest {
 const graphqlUrl = '/veilarboppfolging/api/graphql';
 export const useVeilarboppfolgingData = (fnr: string | undefined) => {
     const { data, error, isLoading, mutate } = useSWR<
-        | (Oppfolging & OppfolgingStatus & MedUtmeldingskandidat & { sykmeldtStatus: SykmeldtStatus | undefined })
-        | undefined,
+        (Oppfolging & OppfolgingStatus & MedUtmeldingskandidat & { sykmeldtStatus: SykmeldtStatus | null }) | undefined,
         Error
     >(
         fnr ? `${graphqlUrl}/${fnr}` : null,
