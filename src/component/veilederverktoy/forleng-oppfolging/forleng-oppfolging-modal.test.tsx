@@ -285,8 +285,8 @@ describe('Valider forlenging', () => {
         const bekreftKnappDOM = bekreftKnapp as HTMLButtonElement;
         await user.click(bekreftKnappDOM);
 
-        const feilmelding = await screen.findAllByText((_, element) =>
-            element.textContent.includes('Velg en dato for forlengelse av oppfølging.')
+        const feilmelding = await screen.findAllByText(
+            (_, element) => element?.textContent.includes('Velg en dato for forlengelse av oppfølging.') != null
         );
 
         expect(mockForlengOppfolging).toHaveBeenCalledTimes(0);
@@ -308,8 +308,8 @@ describe('Valider forlenging', () => {
         expect(bekreftKnappDOM.disabled).toBe(false);
 
         await user.click(bekreftKnapp);
-        const feilmelding = await screen.findAllByText((_, element) =>
-            element.textContent.includes('Velg en fremtidig dato inntill 6 måneder.')
+        const feilmelding = await screen.findAllByText(
+            (_, element) => element?.textContent.includes('Velg en fremtidig dato inntill 6 måneder.') != null
         );
 
         expect(mockForlengOppfolging).toHaveBeenCalledTimes(0);
@@ -331,8 +331,8 @@ describe('Valider forlenging', () => {
         expect(bekreftKnappDOM.disabled).toBe(false);
 
         await user.click(bekreftKnapp);
-        const feilmelding = await screen.findAllByText((_, element) =>
-            element.textContent.includes('Velg en fremtidig dato inntill 6 måneder.')
+        const feilmelding = await screen.findAllByText(
+            (_, element) => element?.textContent.includes('Velg en fremtidig dato inntill 6 måneder.') != null
         );
 
         expect(mockForlengOppfolging).toHaveBeenCalledTimes(0);
@@ -354,8 +354,8 @@ describe('Valider forlenging', () => {
         expect(bekreftKnappDOM.disabled).toBe(false);
 
         await user.click(bekreftKnapp);
-        const feilmelding = await screen.findAllByText((_, element) =>
-            element.textContent.includes('Velg en fremtidig dato inntill 6 måneder.')
+        const feilmelding = await screen.findAllByText(
+            (_, element) => element?.textContent.includes('Velg en fremtidig dato inntill 6 måneder.') != null
         );
 
         expect(mockForlengOppfolging).toHaveBeenCalledTimes(0);
