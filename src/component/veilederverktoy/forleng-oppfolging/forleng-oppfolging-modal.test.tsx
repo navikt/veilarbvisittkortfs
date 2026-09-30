@@ -30,6 +30,7 @@ const defaultOppfolging = {
 };
 
 const dagensDato = dayjs();
+const user = userEvent.setup();
 
 describe('Forhåndsvalgt dato', () => {
     afterEach(() => {
@@ -132,7 +133,6 @@ describe('Valider forlenging', () => {
     });
 
     test('sender maks tillate dato frem i tid og viser kvittering når bekreft trykkes', async () => {
-        const user = userEvent.setup();
         mockForlengOppfolging.mockResolvedValue({ ok: true });
         mockUseOppfolging.mockReturnValue(apiRespons);
         const forlengetTilDato = dayjs().add(6, 'month').startOf('day').format('YYYY-MM-DD');
@@ -168,7 +168,6 @@ describe('Valider forlenging', () => {
     });
 
     test('Sender valgt dato frem i tid og viser kvittering ved bekreftelse', async () => {
-        const user = userEvent.setup();
         mockForlengOppfolging.mockResolvedValue({ ok: true });
         mockUseOppfolging.mockReturnValue(apiRespons);
         render(<ForlengOppfolgingModal brukerFnr={'10108000398'} />);
@@ -198,7 +197,6 @@ describe('Valider forlenging', () => {
     });
 
     test('Endrer forlenget dato når bruker har aktiv forlengelse', async () => {
-        const user = userEvent.setup();
         mockForlengOppfolging.mockResolvedValue({ ok: true });
         mockUseOppfolging.mockReturnValue({
             oppfolging: {
@@ -243,7 +241,6 @@ describe('Valider forlenging', () => {
     });
 
     test('Feilmelding hvis bruker verken er utmeldindskandidat eller har aktiv forlengelse', async () => {
-        const user = userEvent.setup();
         mockForlengOppfolging.mockResolvedValue({ ok: false });
         mockUseOppfolging.mockReturnValue({
             oppfolging: {
@@ -273,7 +270,6 @@ describe('Valider forlenging', () => {
     });
 
     test('viser feltfeilmelding ved å klikke bekreft-knappen når dato er tom', async () => {
-        const user = userEvent.setup();
         mockForlengOppfolging.mockResolvedValue({ ok: false });
         mockUseOppfolging.mockReturnValue(apiRespons);
         render(<ForlengOppfolgingModal brukerFnr={'10108000398'} />);
@@ -294,7 +290,6 @@ describe('Valider forlenging', () => {
     });
 
     test('viser feltfeilmelding ved dagens dato', async () => {
-        const user = userEvent.setup();
         mockForlengOppfolging.mockResolvedValue({ ok: false });
         mockUseOppfolging.mockReturnValue(apiRespons);
         render(<ForlengOppfolgingModal brukerFnr={'10108000398'} />);
@@ -317,7 +312,6 @@ describe('Valider forlenging', () => {
     });
 
     test('viser feltfeilmelding om ugyldig dato når valgt dato er i fortiden', async () => {
-        const user = userEvent.setup();
         mockForlengOppfolging.mockResolvedValue({ ok: false });
         mockUseOppfolging.mockReturnValue(apiRespons);
         render(<ForlengOppfolgingModal brukerFnr={'10108000398'} />);
@@ -340,7 +334,6 @@ describe('Valider forlenging', () => {
     });
 
     test('viser feltfeilmelding om ugyldig dato når valgt dato er for langt frem i tid', async () => {
-        const user = userEvent.setup();
         mockForlengOppfolging.mockResolvedValue({ ok: false });
         mockUseOppfolging.mockReturnValue(apiRespons);
         render(<ForlengOppfolgingModal brukerFnr={'10108000398'} />);
