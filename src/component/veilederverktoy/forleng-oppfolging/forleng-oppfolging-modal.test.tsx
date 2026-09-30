@@ -39,7 +39,7 @@ describe('Forhåndsvalgt dato', () => {
         mockMutate.mockReset();
     });
 
-    test('viser i morgen som standarddato når bruker er utmeldingskandidat', async () => {
+    test('Viser tomt datofelt når modal åpnes og bruker er kandidat for utmelding', async () => {
         mockUseOppfolging.mockReturnValue({
             oppfolging: defaultOppfolging,
             mutate: mockMutate
@@ -48,10 +48,10 @@ describe('Forhåndsvalgt dato', () => {
         render(<ForlengOppfolgingModal brukerFnr="10108000398" />);
 
         const input = document.getElementById('forleng-til-dato') as HTMLInputElement;
-        expect(input.value).toBe(dayjs().add(1, 'day').format('DD.MM.YYYY'));
+        expect(input.value).toBe('');
     });
 
-    test('viser aktiv forlengelsesdato som standard når bruker er en tidligere forlenget utmeldingskandidat', async () => {
+    test('viser aktiv forlengelsesdato som standard når bruker er en tidligere forlenget kandidat for utmelding', async () => {
         const forlengetTil = dayjs().add(5, 'day').format('YYYY-MM-DD');
         mockUseOppfolging.mockReturnValue({
             oppfolging: {
@@ -99,12 +99,56 @@ describe('Valider forlenging', () => {
         const user = userEvent.setup();
         mockForlengOppfolging.mockResolvedValue({ ok: true });
         mockUseOppfolging.mockReturnValue(apiRespons);
-        const forlengetTilDato = dayjs().add(1, 'day').format('YYYY-MM-DD');
-        const forventetDato = dayjs().add(1, 'day').format('DD.MM.YYYY');
+        const forlengetTilDato = dayjs().add(1, 'day').startOf('day').format('YYYY-MM-DD');
+        const forventetDato = dayjs().add(1, 'day').startOf('day').format('DD.MM.YYYY');
 
         render(<ForlengOppfolgingModal brukerFnr="10108000398" />);
 
-        await user.click(await screen.findByLabelText(/Bekreft forleng oppfølging/i));
+        const forlengDato = dayjs().add(1, 'day').startOf('day');
+        const input = document.getElementById('forleng-til-dato') as HTMLInputElement;
+        await user.clear(input);
+
+        await user.type(input, forlengDato.format('DD.MM.YYYY'));
+
+        const bekreftKnapp = await screen.findByLabelText(/Bekreft forleng oppfølging/i);
+        const bekreftKnappDOM = bekreftKnapp as HTMLButtonElement;
+        await user.click(bekreftKnappDOM);
+
+        expect(mockForlengOppfolging).toHaveBeenCalledTimes(1);
+        expect(mockForlengOppfolging).toHaveBeenCalledWith(
+            {
+                fnr: '10108000398',
+                forlengetTil: forlengetTilDato
+            },
+            { throwOnError: false }
+        );
+
+        const kvittering = await screen.findByText((_, element) => {
+            if (!element || element.tagName.toLowerCase() !== 'p') return false;
+            return element.textContent === `Oppfølging forlenget til ${forventetDato}`;
+        });
+
+        expect(kvittering).toBeTruthy();
+    });
+
+    test('sender maks tillate dato frem i tid og viser kvittering når bekreft trykkes', async () => {
+        const user = userEvent.setup();
+        mockForlengOppfolging.mockResolvedValue({ ok: true });
+        mockUseOppfolging.mockReturnValue(apiRespons);
+        const forlengetTilDato = dayjs().add(6, 'month').startOf('day').format('YYYY-MM-DD');
+        const forventetDato = dayjs().add(6, 'month').startOf('day').format('DD.MM.YYYY');
+
+        render(<ForlengOppfolgingModal brukerFnr="10108000398" />);
+
+        const forlengDato = dayjs().add(6, 'month').startOf('day');
+        const input = document.getElementById('forleng-til-dato') as HTMLInputElement;
+        await user.clear(input);
+
+        await user.type(input, forlengDato.format('DD.MM.YYYY'));
+
+        const bekreftKnapp = await screen.findByLabelText(/Bekreft forleng oppfølging/i);
+        const bekreftKnappDOM = bekreftKnapp as HTMLButtonElement;
+        await user.click(bekreftKnappDOM);
 
         expect(mockForlengOppfolging).toHaveBeenCalledTimes(1);
         expect(mockForlengOppfolging).toHaveBeenCalledWith(
@@ -228,7 +272,7 @@ describe('Valider forlenging', () => {
         expect(feilmelding).toBeTruthy();
     });
 
-    test('Bekreft knapp er deaktivert ved dagens dato', async () => {
+    test('viser feltfeilmelding ved å klikke bekreft-knappen når dato er tom', async () => {
         const user = userEvent.setup();
         mockForlengOppfolging.mockResolvedValue({ ok: false });
         mockUseOppfolging.mockReturnValue(apiRespons);
@@ -237,16 +281,42 @@ describe('Valider forlenging', () => {
         const input = document.getElementById('forleng-til-dato') as HTMLInputElement;
         await user.clear(input);
 
+        const bekreftKnapp = await screen.findByLabelText(/Bekreft forleng oppfølging/i);
+        const bekreftKnappDOM = bekreftKnapp as HTMLButtonElement;
+        await user.click(bekreftKnappDOM);
+
+        const feilmelding = await screen.findAllByText((_, element) =>
+            element.textContent.includes('Velg en dato for forlengelse av oppfølging.')
+        );
+
+        expect(mockForlengOppfolging).toHaveBeenCalledTimes(0);
+        expect(feilmelding).toBeTruthy();
+    });
+
+    test('viser feltfeilmelding ved dagens dato', async () => {
+        const user = userEvent.setup();
+        mockForlengOppfolging.mockResolvedValue({ ok: false });
+        mockUseOppfolging.mockReturnValue(apiRespons);
+        render(<ForlengOppfolgingModal brukerFnr={'10108000398'} />);
+
+        const input = document.getElementById('forleng-til-dato') as HTMLInputElement;
+        await user.clear(input);
         await user.type(input, dagensDato.format('DD.MM.YYYY'));
+
         const bekreftKnapp = await screen.findByLabelText(/Bekreft forleng oppfølging/i);
         const bekreftKnappDOM = bekreftKnapp as HTMLButtonElement;
+        expect(bekreftKnappDOM.disabled).toBe(false);
+
         await user.click(bekreftKnapp);
+        const feilmelding = await screen.findAllByText((_, element) =>
+            element.textContent.includes('Velg en fremtidig dato inntill 6 måneder.')
+        );
 
         expect(mockForlengOppfolging).toHaveBeenCalledTimes(0);
-        expect(bekreftKnappDOM.disabled).toBe(true);
+        expect(feilmelding).toBeTruthy();
     });
 
-    test('Bekreft knapp er deaktivert ved dato i fortiden', async () => {
+    test('viser feltfeilmelding om ugyldig dato når valgt dato er i fortiden', async () => {
         const user = userEvent.setup();
         mockForlengOppfolging.mockResolvedValue({ ok: false });
         mockUseOppfolging.mockReturnValue(apiRespons);
@@ -254,17 +324,22 @@ describe('Valider forlenging', () => {
 
         const input = document.getElementById('forleng-til-dato') as HTMLInputElement;
         await user.clear(input);
-
         await user.type(input, dagensDato.subtract(1, 'day').format('DD.MM.YYYY'));
+
         const bekreftKnapp = await screen.findByLabelText(/Bekreft forleng oppfølging/i);
         const bekreftKnappDOM = bekreftKnapp as HTMLButtonElement;
+        expect(bekreftKnappDOM.disabled).toBe(false);
+
         await user.click(bekreftKnapp);
+        const feilmelding = await screen.findAllByText((_, element) =>
+            element.textContent.includes('Velg en fremtidig dato inntill 6 måneder.')
+        );
 
         expect(mockForlengOppfolging).toHaveBeenCalledTimes(0);
-        expect(bekreftKnappDOM.disabled).toBe(true);
+        expect(feilmelding).toBeTruthy();
     });
 
-    test('Bekreft knapp er deaktivert når dato er mer enn 6 måneder frem i tid', async () => {
+    test('viser feltfeilmelding om ugyldig dato når valgt dato er for langt frem i tid', async () => {
         const user = userEvent.setup();
         mockForlengOppfolging.mockResolvedValue({ ok: false });
         mockUseOppfolging.mockReturnValue(apiRespons);
@@ -276,9 +351,14 @@ describe('Valider forlenging', () => {
 
         const bekreftKnapp = await screen.findByLabelText(/Bekreft forleng oppfølging/i);
         const bekreftKnappDOM = bekreftKnapp as HTMLButtonElement;
+        expect(bekreftKnappDOM.disabled).toBe(false);
+
         await user.click(bekreftKnapp);
+        const feilmelding = await screen.findAllByText((_, element) =>
+            element.textContent.includes('Velg en fremtidig dato inntill 6 måneder.')
+        );
 
         expect(mockForlengOppfolging).toHaveBeenCalledTimes(0);
-        expect(bekreftKnappDOM.disabled).toBe(true);
+        expect(feilmelding).toBeTruthy();
     });
 });
