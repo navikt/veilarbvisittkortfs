@@ -7,7 +7,7 @@ import {
     useSpraakTolk,
     useVerge
 } from '../../../api/veilarbperson';
-import { OppfolgingStatus, SykmeldtStatus, useOppfolging } from '../../../api/veilarboppfolging';
+import { SykmeldtStatus, useOppfolging } from '../../../api/veilarboppfolging';
 import { OrNothing } from '../../../util/type/utility-types';
 import { HStack, Tag, TagProps } from '@navikt/ds-react';
 import { Oppfolgingsvedtak14a, useGjeldende14aVedtak } from '../../../api/veilarbvedtaksstotte';
@@ -48,10 +48,6 @@ const BaseDod = ({ visible, title, children }: Etikettprops) =>
 
 function erBrukerSykmeldt(oppfolging: OrNothing<{ sykmeldtStatus: SykmeldtStatus | null }>): boolean {
     return !!oppfolging && oppfolging.sykmeldtStatus !== null;
-}
-
-function trengerAEV(oppfolging: OrNothing<OppfolgingStatus>): boolean {
-    return !!oppfolging && oppfolging.formidlingsgruppe !== 'ISERV' && oppfolging.servicegruppe === 'BKART';
 }
 
 function harGjeldende14aVedtak(gjeldende14aVedtak: OrNothing<Oppfolgingsvedtak14a>): boolean {
@@ -161,15 +157,6 @@ function Etiketter({ brukerFnr }: { brukerFnr: string }) {
                 Ikke registrert KRR
             </Fokus>
             <Info visible={visTrengerOppfolgingsvedtakEtikett()}>Trenger oppfølgingsvedtak § 14 a</Info>
-            <Info
-                visible={
-                    trengerAEV(oppfolging) &&
-                    !opplysningerOmArbeidssoekerLoading &&
-                    !opplysningerOmArbeidssoeker?.profilering?.profilertTil
-                }
-            >
-                Behov for AEV
-            </Info>
             <Info visible={erBrukerSykmeldt(oppfolging)}>Sykmeldt</Info>
             <Info visible={visIArbeidssokerregisteretEtikett()}>I Arbeidssøkerregisteret</Info>
             <Info visible={visProfileringsetikett('ANTATT_GODE_MULIGHETER')}>Antatt gode muligheter</Info>
