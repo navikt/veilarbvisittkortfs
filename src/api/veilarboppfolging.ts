@@ -5,20 +5,6 @@ import { axiosInstance, ErrorMessage, fetchWithPost, swrOptions } from './utils'
 import { OrNothing, StringOrNothing } from '../util/type/utility-types';
 import { GraphqlResponse } from './GraphqlUtils';
 
-export type Formidlingsgruppe = 'ARBS' | 'IARBS' | 'ISERV' | 'PARBS' | 'RARBS';
-export type Servicegruppe = 'BKART' | 'IVURD' | 'OPPFI' | 'VARIG' | 'VURDI' | 'VURDU';
-type Kvalifiseringsgruppe =
-    | 'BATT' // Spesielt tilpasset innsats:	                Personen har nedsatt arbeidsevne og har et identifisert behov for kvalifisering og/eller tilrettelegging.  Aktivitetsplan skal utformes.
-    | 'BFORM' // Situasjonsbestemt innsats:	                    Personen har moderat bistandsbehov
-    | 'BKART' // Behov for arbeidsevnevurdering:	            Personen har behov for arbeidsevnevurdering
-    | 'IKVAL' // Standardinnsats:	                            Personen har behov for ordinær bistand
-    | 'IVURD' // Ikke vurdert:	                                Ikke vurdert
-    | 'KAP11' // Rettigheter etter Ftrl. Kapittel 11:	        Rettigheter etter Ftrl. Kapittel 11
-    | 'OPPFI' // Helserelatert arbeidsrettet oppfølging i NAV:	Helserelatert arbeidsrettet oppfølging i NAV
-    | 'VARIG' // Varig tilpasset innsats:	                    Personen har varig nedsatt arbeidsevne
-    | 'VURDI' // Sykmeldt, oppfølging på arbeidsplassen:	    Sykmeldt, oppfølging på arbeidsplassen
-    | 'VURDU'; // Sykmeldt uten arbeidsgiver:
-
 interface OppfolgingEnhet {
     navn: StringOrNothing;
     enhetId: StringOrNothing;
@@ -27,8 +13,6 @@ interface OppfolgingEnhet {
 export interface OppfolgingStatus {
     oppfolgingsenhet: OppfolgingEnhet;
     veilederId: StringOrNothing;
-    formidlingsgruppe: OrNothing<Formidlingsgruppe>;
-    servicegruppe: OrNothing<Kvalifiseringsgruppe>;
 }
 
 export interface AvslutningStatus {
@@ -44,8 +28,6 @@ export interface AvslutningStatus {
 }
 
 export interface Oppfolging {
-    inaktiveringsdato: StringOrNothing;
-    kanReaktiveres: OrNothing<boolean>;
     kanVarsles: boolean;
     manuell: boolean;
     reservasjonKRR: boolean;
@@ -224,13 +206,7 @@ const graphqlQuery = `
             }
         }
         brukerStatus(fnr: $fnr) {
-            arena {
-                inaktivIArena
-                inaktiveringsdato
-                kanReaktiveres
-                formidlingsgruppe
-                kvalifiseringsgruppe
-            }
+            sykmeldtStatus
             manuell {
                 erManuell
             }
@@ -270,13 +246,6 @@ interface VeilederTilordning {
     veilederIdent: string;
 }
 
-interface ArenaStatus {
-    inaktiveringsdato: StringOrNothing;
-    kanReaktiveres: boolean | undefined;
-    formidlingsgruppe: 'IARBS' | 'ARBS' | 'ISERV' | undefined;
-    kvalifiseringsgruppe: Kvalifiseringsgruppe | undefined;
-}
-
 interface Enhet {
     id: string;
     navn: string;
@@ -307,6 +276,8 @@ export interface MedUtmeldingskandidat {
     };
 }
 
+export type SykmeldtStatus = 'SYKMELDT_MED_ARBEIDSGIVER' | 'SYKMELDT_UTEN_ARBEIDSGIVER';
+
 export interface OppfolgingsDataGraphqlResponse {
     veilederTilgang: {
         harVeilederLeseTilgangTilBruker: boolean;
@@ -318,7 +289,7 @@ export interface OppfolgingsDataGraphqlResponse {
           }
         | undefined;
     brukerStatus: {
-        arena: ArenaStatus | undefined;
+        sykmeldtStatus: SykmeldtStatus | null;
         manuell:
             | {
                   erManuell: boolean | undefined;
@@ -340,7 +311,7 @@ export interface OppfolgingsDataGraphqlResponse {
 
 const mapTilBackoverkompatibelState = (
     data: GraphqlResponse<OppfolgingsDataGraphqlResponse>
-): (Oppfolging & OppfolgingStatus & MedUtmeldingskandidat) | undefined => {
+): (Oppfolging & OppfolgingStatus & MedUtmeldingskandidat & { sykmeldtStatus: SykmeldtStatus | null }) | undefined => {
     if ((data.errors?.length || 0) != 0) {
         throw new Error(
             `Feilet å hente oppfolgingsdata (graphql) fra veilarboppfolging: ${data.errors.map(it => it.message).join(',')}`
@@ -350,8 +321,6 @@ const mapTilBackoverkompatibelState = (
     return {
         harVeilederLeseTilgangTilBruker: data.data.veilederTilgang.harVeilederLeseTilgangTilBruker,
         harVeilederLeseTilgangTilBrukersEnhet: data.data.veilederTilgang.harVeilederLeseTilgangTilBrukersEnhet,
-        inaktiveringsdato: data.data.brukerStatus.arena?.inaktiveringsdato,
-        kanReaktiveres: data.data.brukerStatus.arena?.kanReaktiveres,
         kanVarsles: data.data.brukerStatus.krr.kanVarsles,
         registrertKRR: data.data.brukerStatus.krr.registrertIKrr,
         reservasjonKRR: data.data.brukerStatus.krr.reservertIKrr,
@@ -360,9 +329,8 @@ const mapTilBackoverkompatibelState = (
         underOppfolging: data.data.oppfolging.erUnderOppfolging || false,
         veilederId: data.data.brukerStatus.veilederTilordning?.veilederIdent,
         oppfolgingsenhet: oppfolgingsEnhet(data.data.oppfolgingsEnhet?.enhet),
-        formidlingsgruppe: data.data.brukerStatus.arena?.formidlingsgruppe,
-        servicegruppe: data.data.brukerStatus.arena?.kvalifiseringsgruppe,
-        utmeldingskandidat: data.data.utmeldingskandidat
+        utmeldingskandidat: data.data.utmeldingskandidat,
+        sykmeldtStatus: data.data.brukerStatus.sykmeldtStatus
     };
 };
 
@@ -374,7 +342,7 @@ export interface VeilarbOppfolgingGraphqlRequest {
 const graphqlUrl = '/veilarboppfolging/api/graphql';
 export const useVeilarboppfolgingData = (fnr: string | undefined) => {
     const { data, error, isLoading, mutate } = useSWR<
-        (Oppfolging & OppfolgingStatus & MedUtmeldingskandidat) | undefined,
+        (Oppfolging & OppfolgingStatus & MedUtmeldingskandidat & { sykmeldtStatus: SykmeldtStatus | null }) | undefined,
         Error
     >(
         fnr ? `${graphqlUrl}/${fnr}` : null,
@@ -401,10 +369,6 @@ export const useOppfolgingsstatus = useVeilarboppfolgingData;
 const aktiveTiltaksdeltakelserGraphqlQuery = `
   query($fnr: String!) {
     brukerStatus(fnr: $fnr) {
-		arena {
-			inaktivIArena
-      inaktiveringsdato
-		}
 		harAktiveTiltaksdeltakelser
     }
   }
@@ -414,13 +378,7 @@ export interface BrukerStatusResponse {
     brukerStatus?: BrukerStatus;
 }
 
-export interface BrukerArenaStatus {
-    inaktivIArena?: boolean;
-    inaktiveringsdato?: StringOrNothing;
-}
-
 export interface BrukerStatus {
-    arena?: BrukerArenaStatus;
     harAktiveTiltaksdeltakelser?: boolean;
 }
 

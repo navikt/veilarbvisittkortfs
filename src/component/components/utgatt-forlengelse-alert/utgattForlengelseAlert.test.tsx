@@ -37,7 +37,6 @@ describe('UtgattForlengelseAlert', () => {
         const mockOppfolging: Partial<Oppfolging> & MedUtmeldingskandidat = {
             harVeilederLeseTilgangTilBruker: true,
             harVeilederLeseTilgangTilBrukersEnhet: true,
-            inaktiveringsdato: '2019-02-22T00:00:00+01:00',
             utmeldingskandidat: {
                 tag: 'ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE',
                 utmeldingskandidatHendelser: [],
@@ -58,7 +57,6 @@ describe('UtgattForlengelseAlert', () => {
         const mockOppfolging: Partial<Oppfolging> & MedUtmeldingskandidat = {
             harVeilederLeseTilgangTilBruker: true,
             harVeilederLeseTilgangTilBrukersEnhet: true,
-            inaktiveringsdato: '2019-02-22T00:00:00+01:00',
             utmeldingskandidat: {
                 tag: null,
                 utmeldingskandidatHendelser: [],
@@ -80,7 +78,6 @@ describe('UtgattForlengelseAlert', () => {
         const mockOppfolging: Partial<Oppfolging> & MedUtmeldingskandidat = {
             harVeilederLeseTilgangTilBruker: true,
             harVeilederLeseTilgangTilBrukersEnhet: true,
-            inaktiveringsdato: '2019-02-22T00:00:00+01:00',
             utmeldingskandidat: {
                 tag: 'ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE',
                 utmeldingskandidatHendelser: [],
@@ -102,7 +99,6 @@ describe('UtgattForlengelseAlert', () => {
         const mockOppfolging: Partial<Oppfolging> & MedUtmeldingskandidat = {
             harVeilederLeseTilgangTilBruker: true,
             harVeilederLeseTilgangTilBrukersEnhet: true,
-            inaktiveringsdato: '2019-02-22T00:00:00+01:00',
             utmeldingskandidat: {
                 tag: 'ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE',
                 utmeldingskandidatHendelser: [],
