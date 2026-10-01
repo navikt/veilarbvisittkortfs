@@ -1,6 +1,5 @@
-import { axiosInstance } from './utils';
-import { AxiosPromise } from 'axios';
+import { httpGet, HttpPromise } from './utils';
 
-export function fetchHarArenaTiltak(fnr: string): AxiosPromise<boolean> {
-    return axiosInstance.get<boolean>(`/veilarbaktivitet/api/arena/harTiltak?fnr=${fnr}`);
+export function fetchHarArenaTiltak(fnr: string): HttpPromise<boolean> {
+    return httpGet<boolean>(`/veilarbaktivitet/api/arena/harTiltak?fnr=${fnr}`);
 }

@@ -1,4 +1,4 @@
-import { AxiosError, AxiosPromise } from 'axios';
+import { HttpError, HttpPromise } from '../../api/utils';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 type ActionFunction0<R> = () => R;
@@ -10,32 +10,30 @@ type ActionFunction4<T1, T2, T3, T4, R> = (t1: T1, t2: T2, t3: T3, t4: T4) => R;
 interface FetchState<D> {
     loading: boolean;
     data?: D;
-    error?: AxiosError;
+    error?: HttpError;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface UseAxiosFetcher<D = any, F = () => AxiosPromise<D>> extends FetchState<D> {
+interface UseFetcher<D = any, F = () => HttpPromise<D>> extends FetchState<D> {
     fetch: F;
 }
 
-export function useAxiosFetcher<R>(
-    fetcher: () => AxiosPromise<R>
-): UseAxiosFetcher<R, ActionFunction0<AxiosPromise<R>>>;
-export function useAxiosFetcher<T1, R>(
-    fetcher: (t1: T1) => AxiosPromise<R>
-): UseAxiosFetcher<R, ActionFunction1<T1, AxiosPromise<R>>>;
-export function useAxiosFetcher<T1, T2, R>(
-    fetcher: (t1: T1, t2: T2) => AxiosPromise<R>
-): UseAxiosFetcher<R, ActionFunction2<T1, T2, AxiosPromise<R>>>;
-export function useAxiosFetcher<T1, T2, T3, R>(
-    fetcher: (t1: T1, t2: T2, t3: T3) => AxiosPromise<R>
-): UseAxiosFetcher<R, ActionFunction3<T1, T2, T3, AxiosPromise<R>>>;
-export function useAxiosFetcher<T1, T2, T3, T4, R>(
-    fetcher: (t1: T1, t2: T2, t3: T3, t4: T4) => AxiosPromise<R>
-): UseAxiosFetcher<R, ActionFunction4<T1, T2, T3, T4, AxiosPromise<R>>>;
+export function useFetcher<R>(fetcher: () => HttpPromise<R>): UseFetcher<R, ActionFunction0<HttpPromise<R>>>;
+export function useFetcher<T1, R>(
+    fetcher: (t1: T1) => HttpPromise<R>
+): UseFetcher<R, ActionFunction1<T1, HttpPromise<R>>>;
+export function useFetcher<T1, T2, R>(
+    fetcher: (t1: T1, t2: T2) => HttpPromise<R>
+): UseFetcher<R, ActionFunction2<T1, T2, HttpPromise<R>>>;
+export function useFetcher<T1, T2, T3, R>(
+    fetcher: (t1: T1, t2: T2, t3: T3) => HttpPromise<R>
+): UseFetcher<R, ActionFunction3<T1, T2, T3, HttpPromise<R>>>;
+export function useFetcher<T1, T2, T3, T4, R>(
+    fetcher: (t1: T1, t2: T2, t3: T3, t4: T4) => HttpPromise<R>
+): UseFetcher<R, ActionFunction4<T1, T2, T3, T4, HttpPromise<R>>>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function useAxiosFetcher<R>(fetcher: (...args: any[]) => AxiosPromise<R>): UseAxiosFetcher<R> {
+export function useFetcher<R>(fetcher: (...args: any[]) => HttpPromise<R>): UseFetcher<R> {
     const [fetchState, setFetchState] = useState<FetchState<R>>({ loading: false });
     const isMounted = useRef<boolean>(true);
 
@@ -47,7 +45,7 @@ export function useAxiosFetcher<R>(fetcher: (...args: any[]) => AxiosPromise<R>)
 
     const axiosFetch = useCallback(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (...args: any[]): AxiosPromise<R> => {
+        (...args: any[]): HttpPromise<R> => {
             setFetchState({ loading: true });
             return fetcher(...args)
                 .then(res => {

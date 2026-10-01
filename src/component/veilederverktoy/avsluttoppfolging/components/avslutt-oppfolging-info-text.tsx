@@ -1,7 +1,7 @@
 import { Alert, BodyShort, Loader } from '@navikt/ds-react';
 import { useHarUtkast } from '../../../../api/veilarbvedtaksstotte';
 import { fetchHarArenaTiltak } from '../../../../api/veilarbaktivitet';
-import { useAxiosFetcher } from '../../../../util/hook/use-axios-fetcher';
+import { useFetcher } from '../../../../util/hook/use-fetcher';
 
 interface Props {
     fnr: string;
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function AvsluttOppfolgingInfoText({ fnr, harUbehandledeDialoger }: Props) {
-    const harArenaTiltakFetcher = useAxiosFetcher(fetchHarArenaTiltak);
+    const harArenaTiltakFetcher = useFetcher(fetchHarArenaTiltak);
     const { data: harUtkast, isLoading: harUtkastIsLoading } = useHarUtkast(fnr);
 
     if (harArenaTiltakFetcher.loading || harUtkastIsLoading) {
