@@ -133,6 +133,10 @@ const httpRequest = async <T>(
     });
 
     const data = await parseResponseData<T>(response);
+    if (!response.ok) {
+        throw createHttpError(response, config, data);
+    }
+
     const httpResponse: HttpResponse<T> = {
         data,
         status: response.status,
@@ -140,11 +144,6 @@ const httpRequest = async <T>(
         headers: responseHeadersToObject(response.headers),
         config
     };
-
-    if (!response.ok) {
-        throw createHttpError(response, config, data);
-    }
-
     return httpResponse;
 };
 

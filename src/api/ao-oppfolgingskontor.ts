@@ -118,13 +118,10 @@ export function hentAlleKontor(ident: string, kunEnheterForEgneAnsatte: boolean 
             kontorTilhorigheter: KontorTilhorigheter;
             kontorHistorikk: KontorHistorikkEntry[];
         }>
-    >(
-        `/ao-oppfolgingskontor/graphql`,
-        JSON.stringify({
-            query: graphqlQuery,
-            variables: { ident, kunEnheterForEgneAnsatte }
-        })
-    ).then(res => {
+    >(`/ao-oppfolgingskontor/graphql`, {
+        query: graphqlQuery,
+        variables: { ident, kunEnheterForEgneAnsatte }
+    }).then(res => {
         if (res.data.errors) {
             logGraphQLError(res.data);
             throw new Error('Feil ved henting av kontor');
