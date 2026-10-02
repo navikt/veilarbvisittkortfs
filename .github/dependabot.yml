@@ -28,6 +28,7 @@ updates:
     directory: "/" # Location of package manifests
     registries:
       - npmjs
+      - npm-github
     schedule:
       interval: "weekly"
     cooldown:
