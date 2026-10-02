@@ -1,4 +1,4 @@
-import { axiosInstance, axiosJsonRequestConfig } from './utils';
+import { httpPost } from './utils';
 import { GraphqlResponse } from './GraphqlUtils';
 
 export interface ArbeidsOppfolgingKontorDTO {
@@ -112,28 +112,22 @@ export interface KontorHistorikkEntry {
 }
 
 export function hentAlleKontor(ident: string, kunEnheterForEgneAnsatte: boolean | undefined) {
-    return axiosInstance
-        .post<
-            GraphqlResponse<{
-                alleKontor: Kontor[];
-                kontorTilhorigheter: KontorTilhorigheter;
-                kontorHistorikk: KontorHistorikkEntry[];
-            }>
-        >(
-            `/ao-oppfolgingskontor/graphql`,
-            JSON.stringify({
-                query: graphqlQuery,
-                variables: { ident, kunEnheterForEgneAnsatte }
-            }),
-            axiosJsonRequestConfig
-        )
-        .then(res => {
-            if (res.data.errors) {
-                logGraphQLError(res.data);
-                throw new Error('Feil ved henting av kontor');
-            }
-            return res;
-        });
+    return httpPost<
+        GraphqlResponse<{
+            alleKontor: Kontor[];
+            kontorTilhorigheter: KontorTilhorigheter;
+            kontorHistorikk: KontorHistorikkEntry[];
+        }>
+    >(`/ao-oppfolgingskontor/graphql`, {
+        query: graphqlQuery,
+        variables: { ident, kunEnheterForEgneAnsatte }
+    }).then(res => {
+        if (res.data.errors) {
+            logGraphQLError(res.data);
+            throw new Error('Feil ved henting av kontor');
+        }
+        return res;
+    });
 }
 
 /* kontorNavn istedetfor navn */
@@ -143,10 +137,9 @@ export interface KvittertKontor {
 }
 
 export function settKontor(arbeidsOppfolgingKontorDTO: ArbeidsOppfolgingKontorDTO) {
-    return axiosInstance.post<{ fraKontor: KvittertKontor; tilKontor: KvittertKontor }>(
+    return httpPost<{ fraKontor: KvittertKontor; tilKontor: KvittertKontor }>(
         `/ao-oppfolgingskontor/api/kontor`,
-        arbeidsOppfolgingKontorDTO,
-        axiosJsonRequestConfig
+        arbeidsOppfolgingKontorDTO
     );
 }
 

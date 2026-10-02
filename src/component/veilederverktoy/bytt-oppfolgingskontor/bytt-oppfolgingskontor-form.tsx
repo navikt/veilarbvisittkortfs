@@ -7,7 +7,7 @@ import {
 } from '../../../api/ao-oppfolgingskontor';
 import { Formik, Form } from 'formik';
 import { Button } from '@navikt/ds-react';
-import { AxiosError } from 'axios';
+import { HttpError } from '../../../api/utils';
 import KontorDropdown from '../opprett-oppgave/components/kontorDropdown';
 
 interface ByttOppfolgingskontorFormProps {
@@ -39,7 +39,7 @@ function ByttOppfolgingskontorForm({
                 tilKontor: kontorKvittering.tilKontor
             });
         } catch (error) {
-            const axisosError = error as AxiosError<string>;
+            const axisosError = error as HttpError<string>;
             setSettKontorError(axisosError.response?.data || axisosError.message);
         }
     }

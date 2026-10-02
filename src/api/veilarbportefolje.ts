@@ -1,6 +1,5 @@
 import useSWR from 'swr';
-import { AxiosPromise } from 'axios';
-import { axiosInstance, ErrorMessage, fetchWithPost, swrOptions } from './utils';
+import { ErrorMessage, fetchWithPost, httpDelete, httpPost, httpPut, HttpPromise, swrOptions } from './utils';
 import { OrNothing, StringOrNothing } from '../util/type/utility-types';
 
 export interface Huskelapp {
@@ -64,20 +63,20 @@ export enum Fargekategorinavn {
     INGEN_KATEGORI = 'Ingen kategori'
 }
 
-export function lagreHuskelapp(huskelappformValues: HuskelappLagreValues): AxiosPromise<string> {
-    return axiosInstance.post(`/veilarbportefolje/api/v1/huskelapp`, huskelappformValues);
+export function lagreHuskelapp(huskelappformValues: HuskelappLagreValues): HttpPromise<string> {
+    return httpPost(`/veilarbportefolje/api/v1/huskelapp`, huskelappformValues);
 }
 
-export function redigerHuskelapp(huskelappformValues: HuskelappRedigerValues): AxiosPromise {
-    return axiosInstance.put(`/veilarbportefolje/api/v1/huskelapp`, huskelappformValues);
+export function redigerHuskelapp(huskelappformValues: HuskelappRedigerValues): HttpPromise {
+    return httpPut(`/veilarbportefolje/api/v1/huskelapp`, huskelappformValues);
 }
 
-export function slettHuskelapp(huskelappId: string): AxiosPromise<string> {
-    return axiosInstance.delete(`/veilarbportefolje/api/v1/huskelapp`, { data: { huskelappId: huskelappId } });
+export function slettHuskelapp(huskelappId: string): HttpPromise<string> {
+    return httpDelete(`/veilarbportefolje/api/v1/huskelapp`, { data: { huskelappId: huskelappId } });
 }
 
-export function endreFargekategori(fargekategoriVerdi: string, fnr: string): AxiosPromise<EndreFargekategoriResponse> {
-    return axiosInstance.put('/veilarbportefolje/api/v1/fargekategorier', { fargekategoriVerdi, fnr: [fnr] });
+export function endreFargekategori(fargekategoriVerdi: string, fnr: string): HttpPromise<EndreFargekategoriResponse> {
+    return httpPut('/veilarbportefolje/api/v1/fargekategorier', { fargekategoriVerdi, fnr: [fnr] });
 }
 
 export function useErUfordeltBruker(fnr: string | undefined, skalHenteData: boolean = true) {

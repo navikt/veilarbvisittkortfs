@@ -1,5 +1,4 @@
-import { AxiosPromise } from 'axios';
-import { axiosInstance, ErrorMessage, fetchWithPost, get, swrOptions } from './utils';
+import { ErrorMessage, fetchWithPost, get, httpGet, HttpPromise, swrOptions } from './utils';
 import useSWR from 'swr';
 
 export interface VeilederData {
@@ -66,6 +65,6 @@ export const useEnhetsNavn = (enhetId: string | undefined) => {
     return { enhetsNavnLoding: isLoading, enhetsNavnData: data };
 };
 
-export function fetchEnhetNavn(enhetId: string): AxiosPromise<EnhetData> {
-    return axiosInstance.get<EnhetData>(`/veilarbveileder/api/enhet/${enhetId}/navn`);
+export function fetchEnhetNavn(enhetId: string): HttpPromise<EnhetData> {
+    return httpGet<EnhetData>(`/veilarbveileder/api/enhet/${enhetId}/navn`);
 }

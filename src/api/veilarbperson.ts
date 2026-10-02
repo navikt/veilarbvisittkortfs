@@ -169,7 +169,6 @@ export function useOpplysningerOmArbeidssokerMedProfilering(fnr: string | undefi
 
 export function sendEventTilVeilarbperson() {
     // Dette endepunktet er kommentert ut i veilarbperson, sannsynligvis fordi influx er var vanskelig å sette opp for gcp
-    // return axiosInstance.post<void>(`/veilarbperson/api/logger/event`, event);
 }
 
 const graphqlQuery = `
