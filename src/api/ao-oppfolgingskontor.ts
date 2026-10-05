@@ -1,4 +1,4 @@
-import { httpPost } from './utils';
+import { httpPost } from './httpUtils';
 import { GraphqlResponse } from './GraphqlUtils';
 
 export interface ArbeidsOppfolgingKontorDTO {

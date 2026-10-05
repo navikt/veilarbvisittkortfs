@@ -52,7 +52,12 @@ const buildUrlWithParams = (url: string, params?: HttpRequestConfig['params']) =
         }
     });
     const queryString = queryParams.toString();
-    return queryString ? `${url}${url.includes('?') ? '&' : '?'}${queryString}` : url;
+    if (queryString) {
+        const separator = url.includes('?') ? '&' : '?';
+        return `${url}${separator}${queryString}`;
+    } else {
+        return url;
+    }
 };
 
 const responseHeadersToObject = (headers: Headers) => {
@@ -119,7 +124,7 @@ const httpRequest = async <T>(
 
     const response = await fetch(requestUrl, {
         method,
-        credentials: config.withCredentials === false ? 'same-origin' : 'include',
+        credentials: config.withCredentials === true ? 'include' : 'same-origin',
         headers: finalHeaders,
         body: hasBodyMethod
             ? shouldStringifyBody

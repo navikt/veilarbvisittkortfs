@@ -1,4 +1,4 @@
-import { createPOSToptions, ErrorMessage, httpPost, swrOptions } from './utils';
+import { createPOSToptions, ErrorMessage, httpPost, swrOptions } from './httpUtils';
 import useSWR from 'swr';
 
 export interface Oppfolgingsvedtak14a {

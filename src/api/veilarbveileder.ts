@@ -1,4 +1,4 @@
-import { ErrorMessage, fetchWithPost, get, httpGet, HttpPromise, swrOptions } from './utils';
+import { ErrorMessage, fetchWithPost, get, httpGet, HttpPromise, swrOptions } from './httpUtils';
 import useSWR from 'swr';
 
 export interface VeilederData {

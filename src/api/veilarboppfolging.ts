@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
-import { ErrorMessage, fetchWithPost, httpPost, HttpPromise, swrOptions } from './utils';
+import { ErrorMessage, fetchWithPost, httpPost, HttpPromise, swrOptions } from './httpUtils';
 import { OrNothing, StringOrNothing } from '../util/type/utility-types';
 import { GraphqlResponse } from './GraphqlUtils';
 

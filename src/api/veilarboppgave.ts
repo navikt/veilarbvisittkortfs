@@ -1,4 +1,4 @@
-import { fetchWithPost, httpPost, HttpPromise, swrOptions } from './utils';
+import { fetchWithPost, httpPost, HttpPromise, swrOptions } from './httpUtils';
 import { StringOrNothing } from '../util/type/utility-types';
 import { behandlingsnummer } from './behandlingsnummer';
 import useSWR from 'swr';

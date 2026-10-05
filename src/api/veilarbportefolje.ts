@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { ErrorMessage, fetchWithPost, httpDelete, httpPost, httpPut, HttpPromise, swrOptions } from './utils';
+import { ErrorMessage, fetchWithPost, httpDelete, httpPost, httpPut, HttpPromise, swrOptions } from './httpUtils';
 import { OrNothing, StringOrNothing } from '../util/type/utility-types';
 
 export interface Huskelapp {

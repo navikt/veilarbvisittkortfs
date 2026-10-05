@@ -7,7 +7,7 @@ import {
 } from '../../../api/ao-oppfolgingskontor';
 import { Formik, Form } from 'formik';
 import { Button } from '@navikt/ds-react';
-import { HttpError } from '../../../api/utils';
+import { HttpError } from '../../../api/httpUtils';
 import KontorDropdown from '../opprett-oppgave/components/kontorDropdown';
 
 interface ByttOppfolgingskontorFormProps {

@@ -1,4 +1,4 @@
-import { ErrorMessage, fetchWithPost, swrOptions } from './utils';
+import { ErrorMessage, fetchWithPost, swrOptions } from './httpUtils';
 import { StringOrNothing } from '../util/type/utility-types';
 import useSWR from 'swr';
 import { behandlingsnummer } from './behandlingsnummer';

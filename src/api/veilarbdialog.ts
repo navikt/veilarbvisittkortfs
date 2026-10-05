@@ -1,4 +1,4 @@
-import { fetchWithPost, httpPatch, httpPost, HttpPromise, swrOptions } from './utils';
+import { fetchWithPost, httpPatch, httpPost, HttpPromise, swrOptions } from './httpUtils';
 import { StringOrNothing } from '../util/type/utility-types';
 import {
     dialogerQuery,
