@@ -1,4 +1,4 @@
-import { axiosInstance, createPOSToptions, ErrorMessage, swrOptions } from './utils';
+import { createPOSToptions, ErrorMessage, httpPost, swrOptions } from './httpUtils';
 import useSWR from 'swr';
 
 export interface Oppfolgingsvedtak14a {
@@ -24,7 +24,7 @@ export enum Hovedmal {
 export function useHarUtkast(fnr: string) {
     return useSWR(
         fnr ? `harUtkast/${fnr}` : null,
-        () => axiosInstance.post<boolean>(`/veilarbvedtaksstotte/api/v2/utkast/hent-harUtkast`, { fnr: fnr }),
+        () => httpPost<boolean>(`/veilarbvedtaksstotte/api/v2/utkast/hent-harUtkast`, { fnr: fnr }),
         swrOptions
     );
 }

@@ -1,4 +1,4 @@
-import { ErrorMessage } from '../../api/utils';
+import { ErrorMessage } from '../../api/httpUtils';
 
 export const harTilgangTilHuskelappEllerFargekategori = (
     erBrukerUfordelt: boolean,

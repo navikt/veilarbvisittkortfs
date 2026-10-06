@@ -1,5 +1,4 @@
-import { axiosInstance, fetchWithPost, swrOptions } from './utils';
-import { AxiosPromise } from 'axios';
+import { fetchWithPost, httpPost, HttpPromise, swrOptions } from './httpUtils';
 import { StringOrNothing } from '../util/type/utility-types';
 import { behandlingsnummer } from './behandlingsnummer';
 import useSWR from 'swr';
@@ -15,12 +14,7 @@ export interface OppgaveHistorikkInnslag {
 }
 
 export type OppgaveTema =
-    | 'DAGPENGER'
-    | 'OPPFOLGING'
-    | 'ARBEIDSAVKLARING'
-    | 'INDIVIDSTONAD'
-    | 'ENSLIG_FORSORGER'
-    | 'TILLEGGSTONAD';
+    'DAGPENGER' | 'OPPFOLGING' | 'ARBEIDSAVKLARING' | 'INDIVIDSTONAD' | 'ENSLIG_FORSORGER' | 'TILLEGGSTONAD';
 
 export type OppgaveType = 'VURDER_HENVENDELSE' | 'VURDER_KONSEKVENS_FOR_YTELSE';
 
@@ -63,13 +57,13 @@ export const useOppgaveHistorikk = (fnr: string | undefined) => {
     return { oppgaveHistorikkData: data, oppgaveHistorikkLoading: isLoading, oppgaveHistorikkError: error };
 };
 
-export function opprettOppgave(fnr: string, oppgaveFormData: OppgaveFormData): AxiosPromise<OppgaveFormResponse> {
+export function opprettOppgave(fnr: string, oppgaveFormData: OppgaveFormData): HttpPromise<OppgaveFormResponse> {
     oppgaveFormData.fnr = fnr;
-    return axiosInstance.post(`/veilarboppgave/api/oppgave`, oppgaveFormData);
+    return httpPost(`/veilarboppgave/api/oppgave`, oppgaveFormData);
 }
 
-export function hentBehandlendeEnheter(tema: OppgaveTema, fnr: string): AxiosPromise<BehandlandeEnhet[]> {
-    return axiosInstance.post<BehandlandeEnhet[]>(`/veilarboppgave/api/v2/hent-enheter?tema=${tema}`, {
+export function hentBehandlendeEnheter(tema: OppgaveTema, fnr: string): HttpPromise<BehandlandeEnhet[]> {
+    return httpPost<BehandlandeEnhet[]>(`/veilarboppgave/api/v2/hent-enheter?tema=${tema}`, {
         fnr: fnr,
         behandlingsnummer
     });

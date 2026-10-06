@@ -1,7 +1,6 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
-import { AxiosPromise } from 'axios';
-import { axiosInstance, ErrorMessage, fetchWithPost, swrOptions } from './utils';
+import { ErrorMessage, fetchWithPost, httpPost, HttpPromise, swrOptions } from './httpUtils';
 import { OrNothing, StringOrNothing } from '../util/type/utility-types';
 import { GraphqlResponse } from './GraphqlUtils';
 
@@ -128,42 +127,38 @@ export const useAvsluttOppfolgingStatus = (fnr: string | undefined) => {
     };
 };
 
-export function settBrukerTilDigital(fnr: string, veilederId: string, begrunnelse: string): AxiosPromise {
-    return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/settDigital`, {
+export function settBrukerTilDigital(fnr: string, veilederId: string, begrunnelse: string): HttpPromise {
+    return httpPost(`/veilarboppfolging/api/v3/oppfolging/settDigital`, {
         fnr,
         begrunnelse,
         veilederId
     });
 }
 
-export function settBrukerTilManuell(fnr: string, veilederId: string, begrunnelse: string): AxiosPromise {
-    return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/settManuell`, {
+export function settBrukerTilManuell(fnr: string, veilederId: string, begrunnelse: string): HttpPromise {
+    return httpPost(`/veilarboppfolging/api/v3/oppfolging/settManuell`, {
         fnr,
         begrunnelse,
         veilederId
     });
 }
 
-export function startKvpOppfolging(fnr: string, begrunnelse: string): AxiosPromise {
-    return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/startKvp`, {
+export function startKvpOppfolging(fnr: string, begrunnelse: string): HttpPromise {
+    return httpPost(`/veilarboppfolging/api/v3/oppfolging/startKvp`, {
         fnr,
         begrunnelse
     });
 }
 
-export function stoppKvpOppfolging(fnr: string, begrunnelse: string): AxiosPromise {
-    return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/stoppKvp`, {
+export function stoppKvpOppfolging(fnr: string, begrunnelse: string): HttpPromise {
+    return httpPost(`/veilarboppfolging/api/v3/oppfolging/stoppKvp`, {
         fnr,
         begrunnelse
     });
 }
 
-export function avsluttOppfolging(
-    fnr: string,
-    begrunnelse: string,
-    veilederId: string
-): AxiosPromise<AvslutningStatus> {
-    return axiosInstance.post(`/veilarboppfolging/api/v2/oppfolging/avslutt`, {
+export function avsluttOppfolging(fnr: string, begrunnelse: string, veilederId: string): HttpPromise<AvslutningStatus> {
+    return httpPost(`/veilarboppfolging/api/v2/oppfolging/avslutt`, {
         fnr,
         begrunnelse,
         veilederId

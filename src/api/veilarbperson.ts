@@ -1,4 +1,4 @@
-import { ErrorMessage, fetchWithPost, swrOptions } from './utils';
+import { ErrorMessage, fetchWithPost, swrOptions } from './httpUtils';
 import { StringOrNothing } from '../util/type/utility-types';
 import useSWR from 'swr';
 import { behandlingsnummer } from './behandlingsnummer';
@@ -169,7 +169,6 @@ export function useOpplysningerOmArbeidssokerMedProfilering(fnr: string | undefi
 
 export function sendEventTilVeilarbperson() {
     // Dette endepunktet er kommentert ut i veilarbperson, sannsynligvis fordi influx er var vanskelig å sette opp for gcp
-    // return axiosInstance.post<void>(`/veilarbperson/api/logger/event`, event);
 }
 
 const graphqlQuery = `
