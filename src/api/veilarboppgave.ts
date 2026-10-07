@@ -16,6 +16,8 @@ export interface OppgaveHistorikkInnslag {
 export type OppgaveTema =
     'DAGPENGER' | 'OPPFOLGING' | 'ARBEIDSAVKLARING' | 'INDIVIDSTONAD' | 'ENSLIG_FORSORGER' | 'TILLEGGSTONAD';
 
+export type BehandlingsTema = 'FERDIG_AVKLART_MOT_UFØRETRYGD' | 'INGEN';
+
 export type OppgaveType = 'VURDER_HENVENDELSE' | 'VURDER_KONSEKVENS_FOR_YTELSE';
 
 export type PrioritetType = 'NORM' | 'LAV' | 'HOY';
@@ -29,6 +31,7 @@ export interface OppgaveFormData {
     tilDato: string;
     prioritet: PrioritetType;
     tema: OppgaveTema;
+    behandlingsTema?: BehandlingsTema;
     type: OppgaveType;
     veilederId: StringOrNothing;
 }
