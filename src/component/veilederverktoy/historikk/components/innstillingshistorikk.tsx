@@ -31,7 +31,8 @@ const typeTilTekst: InnstillingsHistorikkTypeTilTekst = {
     FORLENGELSE_UTLOPT: 'Forlengelse av oppfølgingsperiode utløpt',
     ESKALERING_STARTET: 'Varsel sendt', // TODO Typefiksing: Dette alternativet ikkje eigentleg gyldig som input i komponenten - Ingrid, 2024-02-02
     ESKALERING_STOPPET: 'Varsel deaktivert', // TODO Typefiksing: Dette alternativet ikkje eigentleg gyldig som input i komponenten - Ingrid, 2024-02-02
-    OPPFOLGINGSENHET_ENDRET: 'Oppfølgingsenhet endret'
+    OPPFOLGINGSENHET_ENDRET: 'Oppfølgingsenhet endret',
+    AVSLUTTET_AAP_SAK: 'Avsluttet AAP-sak'
 };
 
 function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHistorikkKomponentProps) {
