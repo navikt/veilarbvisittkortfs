@@ -18,9 +18,8 @@ const mocks = vi.hoisted(() => ({
     },
     dialoger: { dialogerData: undefined as undefined | unknown[], dialogerLoading: true },
     utkast: { data: undefined as undefined | { data: boolean }, isLoading: false },
-    useHarUtkast: vi.fn((fnr: string, shouldFetch: boolean) => {
+    useHarUtkast: vi.fn((fnr: string | null) => {
         void fnr;
-        void shouldFetch;
         return mocks.utkast;
     }),
     setAvsluttOppfolgingOpptelt: vi.fn(),
@@ -75,14 +74,14 @@ describe('AvsluttOppfolging', () => {
         const body = dialog.querySelector('.aksel-modal__body');
         expect(dialog.classList.contains('aksel-modal--width-medium')).toBe(true);
         expect(dialog.classList.contains('h-88')).toBe(false);
-        expect(body?.classList.contains('h-[min(22rem,calc(100dvh-var(--ax-space-28)))]')).toBe(true);
+        expect(body?.classList.contains('h-[min(16rem,calc(100dvh-var(--ax-space-28)))]')).toBe(true);
         expect(screen.queryByTestId('avsluttoppfolging-warning-icon')).toBeNull();
         expect(container.querySelector('.aksel-loader')).toBeTruthy();
         expect(screen.getByTitle('Laster innhold')).toBeTruthy();
         expect(screen.queryByRole('textbox')).toBeNull();
         expect(container.querySelector('form')).toBeNull();
         expect(screen.queryByText('Du kan ikke avslutte oppfølgingsperioden fordi:')).toBeNull();
-        expect(mocks.useHarUtkast).toHaveBeenLastCalledWith('123', false);
+        expect(mocks.useHarUtkast).toHaveBeenLastCalledWith(null);
 
         mocks.status = { avsluttOppfolgingStatus: { kanAvslutte: true }, avsluttOppfolgingStatusLoading: false };
         mocks.dialoger = { dialogerData: [], dialogerLoading: false };
@@ -96,7 +95,7 @@ describe('AvsluttOppfolging', () => {
         expect(screen.queryByRole('textbox')).toBeNull();
         expect(container.querySelector('form')).toBeNull();
         expect(screen.queryByText('Du kan ikke avslutte oppfølgingsperioden fordi:')).toBeNull();
-        expect(mocks.useHarUtkast).toHaveBeenLastCalledWith('123', true);
+        expect(mocks.useHarUtkast).toHaveBeenLastCalledWith('123');
         expect(mocks.useHarUtkast).toHaveBeenCalledTimes(2);
 
         mocks.utkast = { data: { data: true }, isLoading: false };
@@ -129,8 +128,8 @@ describe('AvsluttOppfolging', () => {
         expect(dialog.classList.contains('overflow-visible')).toBe(false);
         expect(screen.queryByText('Du kan ikke avslutte oppfølgingsperioden fordi:')).toBeNull();
         expect(document.querySelector('form')).toBeTruthy();
-        expect(mocks.useHarUtkast).toHaveBeenNthCalledWith(1, '123', false);
-        expect(mocks.useHarUtkast).toHaveBeenNthCalledWith(2, '123', false);
+        expect(mocks.useHarUtkast).toHaveBeenNthCalledWith(1, null);
+        expect(mocks.useHarUtkast).toHaveBeenNthCalledWith(2, null);
         expect(mocks.useHarUtkast).toHaveBeenCalledTimes(2);
         expect(mocks.logMetrikk).toHaveBeenCalledTimes(1);
         expect(mocks.setAvsluttOppfolgingOpptelt).toHaveBeenCalledTimes(1);
