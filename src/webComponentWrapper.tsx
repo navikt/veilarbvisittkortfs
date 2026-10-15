@@ -21,8 +21,8 @@ import veilederverktoyStyles from './component/veilederverktoy/veilederverktoy.l
 import selectMedSokStyles from './component/veilederverktoy/opprett-oppgave/components/select-med-sok/select-med-sok.less?inline';
 import opprettOppgaveStyles from './component/veilederverktoy/opprett-oppgave/opprett-oppgave.less?inline';
 
-const styles =
-    visittkortCssStyles +
+const createStyles = (cssStyles: string) =>
+    cssStyles +
     visittkortLessStyles +
     sijStyles +
     radioStyles +
@@ -41,9 +41,13 @@ const styles =
     selectMedSokStyles +
     opprettOppgaveStyles;
 
+let styles = createStyles(visittkortCssStyles);
+const mountedStyles = new Set<HTMLStyleElement>();
+
 class VisittkortElement extends HTMLElement {
     private root: ReactDOM.Root | null = null;
     private mountPoint: HTMLDivElement | null = null;
+    private styleElement: HTMLStyleElement | null = null;
     private internalTheme: AppTheme = 'light';
 
     static get observedAttributes() {
@@ -55,15 +59,20 @@ class VisittkortElement extends HTMLElement {
         this.mountPoint = document.createElement('div');
         shadow.appendChild(this.mountPoint);
 
-        const style = document.createElement('style');
-        style.textContent = styles;
-        shadow.appendChild(style);
+        this.styleElement = document.createElement('style');
+        this.styleElement.textContent = styles;
+        shadow.appendChild(this.styleElement);
+        mountedStyles.add(this.styleElement);
 
         this.root = ReactDOM.createRoot(this.mountPoint);
         this.render();
     }
 
     disconnectedCallback() {
+        if (this.styleElement) {
+            mountedStyles.delete(this.styleElement);
+            this.styleElement = null;
+        }
         if (this.root) {
             this.root.unmount();
             this.root = null;
@@ -125,3 +134,15 @@ export const exposeVisittkortAsWebComponent = () => {
         customElements.define('ao-visittkort', VisittkortElement);
     }
 };
+
+if (import.meta.hot) {
+    import.meta.hot.accept('./index.css?inline', module => {
+        if (!module || typeof module.default !== 'string') {
+            throw new Error('Kunne ikke oppdatere stilene i visittkortet');
+        }
+        styles = createStyles(module.default);
+        for (const styleElement of mountedStyles) {
+            styleElement.textContent = styles;
+        }
+    });
+}

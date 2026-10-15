@@ -11,15 +11,15 @@ import { delay, http, HttpResponse, RequestHandler } from 'msw';
 import { GraphqlResponse } from '../../api/GraphqlUtils';
 
 const mockAvslutningStatus: AvslutningStatus = {
-    kanAvslutte: true,
+    kanAvslutte: false,
     underOppfolging: true,
     inaktiveringsDato: null,
-    underKvp: false,
+    underKvp: true,
     erIserv: true,
-    harAktiveTiltaksdeltakelser: false,
-    erDeltakerIUngdomsprogrammet: false,
-    erArbeidssoeker: false,
-    harAap: false
+    harAktiveTiltaksdeltakelser: true,
+    erDeltakerIUngdomsprogrammet: true,
+    erArbeidssoeker: true,
+    harAap: true
 };
 
 const mockOppfolgingAvsluttetStatus: AvslutningStatus = {
