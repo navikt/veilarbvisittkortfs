@@ -12,7 +12,6 @@ import lasterModalStyles from './component/components/lastermodal/laster-modal.l
 import formikStyles from './component/components/formik/formik.less?inline';
 import huskelappPostitstylingStyles from './component/huskelapp/huskelapp-postitstyling.less?inline';
 import huskelappRedigeringStyles from './component/huskelapp/redigering/huskelapp-redigering.less?inline';
-import dataFetcherStyles from './component/data-fetcher.less?inline';
 import personinfoStyles from './component/personinfo/personinfo.less?inline';
 import tildelVeilederStyles from './component/veilederverktoy/tildel-veileder/tildel-veileder.less?inline';
 import begrunnelseFormStyles from './component/veilederverktoy/begrunnelseform/begrunnelse-form.less?inline';
@@ -33,7 +32,6 @@ const styles =
     formikStyles +
     huskelappPostitstylingStyles +
     huskelappRedigeringStyles +
-    dataFetcherStyles +
     personinfoStyles +
     tildelVeilederStyles +
     begrunnelseFormStyles +

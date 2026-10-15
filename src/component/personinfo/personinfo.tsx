@@ -50,16 +50,18 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
             {personalia?.kjonn && <KjonnIkon kjonn={personalia?.kjonn as string} />}
             <NavnOgAlder fodselsdato={personalia?.fodselsdato as string} navn={navn} />
             <div className="verktoylinje">
-                {sjekkHarTilgangTilHuskelappEllerFargekategori && brukerFnr && (
-                    <>
-                        <Fargekategoriknapp />
-                        <HuskelappKnapp
-                            onClick={klikkShowHuskelapp}
-                            brukerFnr={brukerFnr}
-                            visVeilederVerktoy={visVeilederVerktoy}
-                        />
-                    </>
-                )}
+                <div className="verktoylinje__ikonplass">
+                    {sjekkHarTilgangTilHuskelappEllerFargekategori && brukerFnr && (
+                        <>
+                            <Fargekategoriknapp />
+                            <HuskelappKnapp
+                                onClick={klikkShowHuskelapp}
+                                brukerFnr={brukerFnr}
+                                visVeilederVerktoy={visVeilederVerktoy}
+                            />
+                        </>
+                    )}
+                </div>
                 <CopyButton
                     aria-label="Kopier fødselsnummer"
                     copyText={brukerFnr}

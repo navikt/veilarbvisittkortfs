@@ -27,6 +27,26 @@
         display: flex;
         align-items: center;
         gap: var(--ax-space-4);
+
+        &__ikonplass {
+            display: flex;
+            align-items: center;
+            gap: var(--ax-space-4);
+            width: calc(6rem + var(--ax-space-4));
+            flex-shrink: 0;
+        }
+
+        &__lastverdi {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--ax-space-8);
+            padding: var(--ax-space-12) var(--ax-space-20);
+        }
+
+        &__kopiikonplass {
+            width: 1.5rem;
+            flex-shrink: 0;
+        }
     }
 
     .uten-telefon {

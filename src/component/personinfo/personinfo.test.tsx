@@ -142,12 +142,13 @@ describe('PersonInfo', () => {
             mockErUfordeltBruker(false)
         );
 
-        renderPersonInfo();
+        const { container } = renderPersonInfo();
 
         await waitFor(() => {
             expect(screen.getByTitle('Opprett huskelapp')).toBeTruthy();
         });
         expect(screen.getByTitle('Ingen kategori: endre')).toBeTruthy();
+        expect(container.querySelectorAll('.verktoylinje__ikonplass > button')).toHaveLength(2);
     });
 
     test('skjuler huskelapp- og fargekategoriknapp når bruker er ufordelt', async () => {
@@ -165,13 +166,15 @@ describe('PersonInfo', () => {
             mockErUfordeltBruker(true)
         );
 
-        renderPersonInfo();
+        const { container } = renderPersonInfo();
 
         await waitFor(() => {
             expect(screen.getByText(`F.nr.: ${brukerFnr}`)).toBeTruthy();
         });
         expect(screen.queryByTitle('Opprett huskelapp')).toBeNull();
         expect(screen.queryByTitle('Ingen kategori: endre')).toBeNull();
+        expect(container.querySelector('.verktoylinje__ikonplass')).toBeTruthy();
+        expect(container.querySelectorAll('.verktoylinje__ikonplass > button')).toHaveLength(0);
     });
 
     test('skjuler huskelapp- og fargekategoriknapp når bruker ikke har veileder', async () => {
