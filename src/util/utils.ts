@@ -1,5 +1,3 @@
-import { AxiosResponse } from 'axios';
-
 export const APP_NAME = 'veilarbvisittkortfs';
 
 export function isLocalDevelopment(): boolean {
@@ -10,8 +8,8 @@ export const erProd = () => import.meta.env.PROD;
 
 export function ifResponseHasData<T>(
     callback: (data: T) => void
-): (res: AxiosResponse<T>) => Promise<AxiosResponse<T>> {
-    return (res: AxiosResponse<T>) => {
+): (res: { status: number; data: T }) => Promise<{ status: number; data: T }> {
+    return (res: { status: number; data: T }) => {
         if (res.status < 300 && res.data) {
             callback(res.data);
         }

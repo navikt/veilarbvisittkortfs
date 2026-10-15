@@ -1,4 +1,4 @@
-import { ErrorMessage, get, swrOptions } from './utils';
+import { ErrorMessage, get, swrOptions } from './httpUtils';
 import useSWR from 'swr';
 
 export const EKSEMPELTOGGLE = 'togglenavn-eksempeltoggle';

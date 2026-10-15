@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { AxiosError } from 'axios';
 import { Alert, Button, Popover } from '@navikt/ds-react';
 import { useBrukerFnr, useEnhetIdValgtIModiaContextHolder } from '../../store/app-store';
 import { mapfargekategoriToIkon } from './mapfargekategoriToIkon';
+import { HttpError } from '../../api/httpUtils';
 import { endreFargekategori, Fargekategori, FargekategoriModell, Fargekategorinavn } from '../../api/veilarbportefolje';
 
 interface Props {
@@ -28,7 +28,8 @@ export const FargekategoriPopover = ({ buttonAnchor, isOpen, setIsOpen, setFarge
             )
             .then(() => setError(undefined))
             .then(() => setIsOpen(false))
-            .catch(({ response }: AxiosError) => {
+            .catch((error: HttpError) => {
+                const response = error.response;
                 if (response?.status === 400)
                     return setError('Kunne ikke oppdatere kategori. Fødselsnummer er ugyldig.');
                 else if (response?.status === 403) return setError('Du har ikke tilgang til å oppdatere kategori.');

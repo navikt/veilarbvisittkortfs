@@ -1,5 +1,4 @@
-import { AxiosPromise } from 'axios';
-import { axiosInstance, ErrorMessage, fetchWithPost, get, swrOptions } from './utils';
+import { ErrorMessage, fetchWithPost, get, httpGet, HttpPromise, swrOptions } from './httpUtils';
 import useSWR from 'swr';
 
 export interface VeilederData {
@@ -50,22 +49,6 @@ export const useVeilederePaEnhet = (enhetId: string | undefined) => {
     return { veilederePaEnhet: data, error, isLoading };
 };
 
-export const useEnhetsNavn = (enhetId: string | undefined) => {
-    const url = `/veilarbveileder/api/enhet/${enhetId}/navn`;
-    const { isLoading, data } = useSWR(
-        enhetId,
-        () =>
-            fetch(url).then(res => {
-                if (res.ok) {
-                    return res.json() as Promise<EnhetData>;
-                }
-                throw new Error('Klarte ikke hente enhetsnavn');
-            }),
-        swrOptions
-    );
-    return { enhetsNavnLoding: isLoading, enhetsNavnData: data };
-};
-
-export function fetchEnhetNavn(enhetId: string): AxiosPromise<EnhetData> {
-    return axiosInstance.get<EnhetData>(`/veilarbveileder/api/enhet/${enhetId}/navn`);
+export function fetchEnhetNavn(enhetId: string): HttpPromise<EnhetData> {
+    return httpGet<EnhetData>(`/veilarbveileder/api/enhet/${enhetId}/navn`);
 }
