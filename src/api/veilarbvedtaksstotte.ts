@@ -21,9 +21,9 @@ export enum Hovedmal {
     OKE_DELTAKELSE = 'OKE_DELTAKELSE'
 }
 
-export function useHarUtkast(fnr: string) {
+export function useHarUtkast(fnr: string, shouldFetch: boolean = true) {
     return useSWR(
-        fnr ? `harUtkast/${fnr}` : null,
+        shouldFetch && fnr ? `harUtkast/${fnr}` : null,
         () => httpPost<boolean>(`/veilarbvedtaksstotte/api/v2/utkast/hent-harUtkast`, { fnr: fnr }),
         swrOptions
     );
