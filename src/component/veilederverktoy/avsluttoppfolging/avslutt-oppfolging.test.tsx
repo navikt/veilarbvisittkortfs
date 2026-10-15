@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { cleanup, render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import AvsluttOppfolging from './avslutt-oppfolging';
 
 const mocks = vi.hoisted(() => ({
@@ -24,7 +24,8 @@ const mocks = vi.hoisted(() => ({
     }),
     setAvsluttOppfolgingOpptelt: vi.fn(),
     hideModal: vi.fn(),
-    logMetrikk: vi.fn()
+    logMetrikk: vi.fn(),
+    harUbehandledeDialoger: vi.fn(() => false)
 }));
 
 vi.mock('../../../api/veilarboppfolging', () => ({
@@ -52,7 +53,7 @@ vi.mock('../../../store/modal-store', () => ({
 }));
 
 vi.mock('../../../util/selectors', () => ({
-    selectHarUbehandledeDialoger: () => false
+    selectHarUbehandledeDialoger: mocks.harUbehandledeDialoger
 }));
 
 vi.mock('../../../util/logger', () => ({
@@ -60,78 +61,70 @@ vi.mock('../../../util/logger', () => ({
 }));
 
 describe('AvsluttOppfolging', () => {
+    afterEach(cleanup);
+
     beforeEach(() => {
         mocks.status = { avsluttOppfolgingStatus: undefined, avsluttOppfolgingStatusLoading: true };
         mocks.dialoger = { dialogerData: undefined, dialogerLoading: true };
         mocks.utkast = { data: undefined, isLoading: false };
         vi.clearAllMocks();
+        mocks.harUbehandledeDialoger.mockReturnValue(false);
     });
 
-    it('keeps one fixed modal through loading until the warning branch is ready', () => {
-        const { container, rerender } = render(<AvsluttOppfolging brukerFnr="123" />);
-
-        const dialog = screen.getByRole('dialog', { name: 'Avslutt oppfølgingsperioden' });
-        const body = dialog.querySelector('.aksel-modal__body');
-        expect(dialog.classList.contains('aksel-modal--width-medium')).toBe(true);
-        expect(dialog.classList.contains('h-88')).toBe(false);
-        expect(body?.classList.contains('h-[min(16rem,calc(100dvh-var(--ax-space-28)))]')).toBe(true);
-        expect(screen.queryByTestId('avsluttoppfolging-warning-icon')).toBeNull();
-        expect(container.querySelector('.aksel-loader')).toBeTruthy();
-        expect(screen.getByTitle('Laster innhold')).toBeTruthy();
-        expect(screen.queryByRole('textbox')).toBeNull();
-        expect(container.querySelector('form')).toBeNull();
-        expect(screen.queryByText('Du kan ikke avslutte oppfølgingsperioden fordi:')).toBeNull();
-        expect(mocks.useHarUtkast).toHaveBeenLastCalledWith(null);
-
+    it('viser begrunnelse, knapper og relevante advarsler når brukeren kan avsluttes', () => {
         mocks.status = { avsluttOppfolgingStatus: { kanAvslutte: true }, avsluttOppfolgingStatusLoading: false };
         mocks.dialoger = { dialogerData: [], dialogerLoading: false };
-        mocks.utkast = { data: undefined, isLoading: true };
-        rerender(<AvsluttOppfolging brukerFnr="123" />);
-
-        expect(screen.getByRole('dialog', { name: 'Avslutt oppfølgingsperioden' })).toBe(dialog);
-        expect(dialog.querySelector('.aksel-modal__body')).toBe(body);
-        expect(screen.queryByTestId('avsluttoppfolging-warning-icon')).toBeNull();
-        expect(container.querySelector('.aksel-loader')).toBeTruthy();
-        expect(screen.queryByRole('textbox')).toBeNull();
-        expect(container.querySelector('form')).toBeNull();
-        expect(screen.queryByText('Du kan ikke avslutte oppfølgingsperioden fordi:')).toBeNull();
-        expect(mocks.useHarUtkast).toHaveBeenLastCalledWith('123');
-        expect(mocks.useHarUtkast).toHaveBeenCalledTimes(2);
-
         mocks.utkast = { data: { data: true }, isLoading: false };
-        rerender(<AvsluttOppfolging brukerFnr="123" />);
+        mocks.harUbehandledeDialoger.mockReturnValue(true);
+        render(<AvsluttOppfolging brukerFnr="123" />);
 
-        expect(screen.getByRole('dialog', { name: 'Avslutt oppfølgingsperioden' })).toBe(dialog);
-        expect(dialog.querySelector('.aksel-modal__body')).toBe(body);
-        expect(container.querySelector('.aksel-loader')).toBeNull();
-        const icon = screen.getByTestId('avsluttoppfolging-warning-icon');
-        expect(icon.closest('.aksel-modal__header')).toBeTruthy();
-        expect(screen.getByText('Du kan ikke avslutte oppfølgingsperioden fordi:')).toBeTruthy();
-        expect(dialog.classList.contains('overflow-visible')).toBe(true);
-        expect(screen.getByRole('dialog', { name: 'Avslutt oppfølgingsperioden' })).toBe(dialog);
+        expect(
+            screen.getByText(
+                'Her avslutter du brukerens oppfølgingsperiode og legger inn en kort begrunnelse om hvorfor.'
+            )
+        ).toBeTruthy();
+        expect(screen.getByText('Du kan avslutte oppfølgingsperioden selv om:')).toBeTruthy();
+        expect(screen.getByText('Brukeren har ubehandlede dialoger')).toBeTruthy();
+        expect(screen.getByText('Utkast til oppfølgingsvedtak vil bli slettet')).toBeTruthy();
+        expect(screen.getByRole('textbox', { name: 'Begrunnelse' })).toBeTruthy();
+        expect(screen.getByRole('button', { name: 'Bekreft' })).toBeTruthy();
+        expect(screen.getByRole('button', { name: 'Avbryt' })).toBeTruthy();
+        expect(screen.queryByText('Brukeren har aktive arbeidsmarkedstiltak.')).toBeNull();
+        expect(mocks.useHarUtkast).toHaveBeenCalledWith('123');
     });
 
-    it('does not show the warning icon in the allowed branch', () => {
-        const { rerender } = render(<AvsluttOppfolging brukerFnr="123" />);
-
+    it('viser årsakene uten begrunnelsesskjema når brukeren ikke kan avsluttes', () => {
         mocks.status = {
-            avsluttOppfolgingStatus: { kanAvslutte: false, harAktiveTiltaksdeltakelser: true },
+            avsluttOppfolgingStatus: {
+                kanAvslutte: false,
+                harAktiveTiltaksdeltakelser: true,
+                underKvp: true,
+                erDeltakerIUngdomsprogrammet: true,
+                erArbeidssoeker: true,
+                harAap: true
+            },
             avsluttOppfolgingStatusLoading: false
         };
         mocks.dialoger = { dialogerData: [], dialogerLoading: false };
-        rerender(<AvsluttOppfolging brukerFnr="123" />);
+        render(<AvsluttOppfolging brukerFnr="123" />);
 
-        const dialog = screen.getByRole('dialog', { name: 'Avslutt oppfølgingsperioden' });
-        expect(dialog).toBeTruthy();
-        expect(document.querySelector('.aksel-loader')).toBeNull();
-        expect(screen.queryByTestId('avsluttoppfolging-warning-icon')).toBeNull();
-        expect(dialog.classList.contains('overflow-visible')).toBe(false);
-        expect(screen.queryByText('Du kan ikke avslutte oppfølgingsperioden fordi:')).toBeNull();
-        expect(document.querySelector('form')).toBeTruthy();
-        expect(mocks.useHarUtkast).toHaveBeenNthCalledWith(1, null);
-        expect(mocks.useHarUtkast).toHaveBeenNthCalledWith(2, null);
-        expect(mocks.useHarUtkast).toHaveBeenCalledTimes(2);
-        expect(mocks.logMetrikk).toHaveBeenCalledTimes(1);
-        expect(mocks.setAvsluttOppfolgingOpptelt).toHaveBeenCalledTimes(1);
+        expect(
+            screen.getByText(
+                (_, element) =>
+                    element?.tagName === 'P' &&
+                    element.textContent === 'Du kan ikke avslutte oppfølgingsperioden fordi:'
+            )
+        ).toBeTruthy();
+        expect(screen.getByText('Brukeren har aktive arbeidsmarkedstiltak.')).toBeTruthy();
+        expect(screen.getByText('Brukeren deltar i på KVP. KVP må avsluttes først.')).toBeTruthy();
+        expect(
+            screen.getByText('Brukeren deltar i Ungdomsprogrammet. Deltakelse i Ungdomsprogrammet må avsluttes først.')
+        ).toBeTruthy();
+        expect(screen.getByText('Brukeren er arbeidssøker.')).toBeTruthy();
+        expect(screen.getByText('Brukeren har AAP.')).toBeTruthy();
+        expect(screen.queryByRole('textbox', { name: 'Begrunnelse' })).toBeNull();
+        expect(screen.queryByRole('button', { name: 'Bekreft' })).toBeNull();
+        expect(screen.queryByRole('button', { name: 'Avbryt' })).toBeNull();
+        expect(mocks.useHarUtkast).toHaveBeenCalledWith(null);
     });
 });

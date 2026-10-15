@@ -58,26 +58,18 @@ function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
         }
     }
 
-    function handleBeforeClose() {
+    function kanModalLukkes() {
         if (modalState === KanAvslutteModalState.loading) {
             return false;
         }
-
         if (modalState === KanAvslutteModalState.kanIkkeAvslutte) {
             return true;
         }
-
         if (!formikRef.current?.dirty) {
-            hideModal();
             return true;
         }
-
         const confirmTekst = 'Er du sikker på at du vil lukke siden? Ulagrede endringer vil da gå tapt.';
-        if (window.confirm(confirmTekst)) {
-            hideModal();
-            return true;
-        }
-        return false;
+        return window.confirm(confirmTekst);
     }
 
     return (
@@ -85,9 +77,9 @@ function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
             className={modalState === KanAvslutteModalState.kanIkkeAvslutte ? 'overflow-visible' : undefined}
             open
             width="medium"
-            onBeforeClose={handleBeforeClose}
+            onBeforeClose={kanModalLukkes}
             closeOnBackdropClick={true}
-            onClose={modalState === KanAvslutteModalState.kanIkkeAvslutte ? hideModal : () => {}}
+            onClose={hideModal}
             header={{
                 heading: TITTEL,
                 closeButton: modalState !== KanAvslutteModalState.loading,
