@@ -1,6 +1,7 @@
 import { DatePicker, Modal, Tag, VStack, useDatepicker, HelpText, Button, Detail, Link } from '@navikt/ds-react';
 import { useModalStore } from '../../../store/modal-store';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { useForlengOppfolging, useOppfolging } from '../../../api/veilarboppfolging';
 import { OppfolgingForlengetTilKvitering, ForlengOppfolgingKvittering } from './forleng-oppfolging-kvittering';
 import { mapUtmeldingskandidatTag } from '../../../util/utmeldingskandidat-tag';
@@ -8,6 +9,8 @@ import { useState } from 'react';
 import { erITestMiljo } from '../../../util/utils';
 import { OppfolgingForlengelseFeilet } from './forleng-oppfolging-feilet';
 import { harAktivForlengelse } from './utils';
+
+dayjs.extend(customParseFormat);
 
 function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
     const imorgen = dayjs().add(1, 'day').toDate();
@@ -20,16 +23,23 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
     const [forlengTilDato, setForlengTilDato] = useState<Date | undefined>(
         harAktivForlengelse(oppfolging)
             ? dayjs(oppfolging?.utmeldingskandidat?.aktivForlengelse?.forlengetTil).toDate()
-            : imorgen
+            : undefined
+    );
+    const [datoInput, setDatoInput] = useState<string>(() =>
+        forlengTilDato ? dayjs(forlengTilDato).format('DD.MM.YYYY') : ''
     );
     const [kvittering, setKvittering] = useState<OppfolgingForlengetTilKvitering | undefined>(undefined);
+    const [datoFeilmelding, setDatoFeilmelding] = useState<string | undefined>(undefined);
     const [valideringsfeil, setValideringsfeil] = useState<boolean>(false);
 
     const { datepickerProps, inputProps } = useDatepicker({
         defaultSelected: forlengTilDato,
-        onDateChange: setForlengTilDato,
-        fromDate: dayjs().add(1, 'day').toDate(),
-        toDate: dayjs().add(6, 'month').toDate()
+        onDateChange: date => {
+            setForlengTilDato(date);
+            if (date) setDatoFeilmelding(undefined);
+        },
+        fromDate: imorgen,
+        toDate: maksDato
     });
 
     async function handleLagreForlengelse() {
@@ -39,19 +49,20 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
             setValideringsfeil(true);
             return;
         }
-        if (!forlengTilDato) {
-            setValideringsfeil(true);
-            return;
-        }
         if (oppfolging?.utmeldingskandidat.tag === null && !harAktivForlengelse(oppfolging)) {
             setValideringsfeil(true);
             return;
         }
 
-        const valgtDato = dayjs(forlengTilDato).startOf('day');
+        const valgtDato = forlengTilDato ? dayjs(forlengTilDato) : dayjs(datoInput, 'DD.MM.YYYY');
 
-        if (!valgtDato.isValid() || valgtDato.isBefore(imorgen, 'day') || valgtDato.isAfter(maksDato)) {
-            setValideringsfeil(true);
+        if (!valgtDato.isValid()) {
+            setDatoFeilmelding('Velg en dato for forlengelse av oppfølging.');
+            return;
+        }
+
+        if (valgtDato.isBefore(imorgen, 'day') || valgtDato.isAfter(maksDato)) {
+            setDatoFeilmelding('Velg en fremtidig dato inntill 6 måneder.');
             return;
         }
 
@@ -59,7 +70,7 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
 
         await forlengOppfolging({ fnr: brukerFnr, forlengetTil: formatertDato }, { throwOnError: false });
         await mutate();
-        setKvittering({ forlengetTil: forlengTilDato });
+        setKvittering({ forlengetTil: dayjs(formatertDato).toDate() });
     }
 
     function getModalContent() {
@@ -92,7 +103,21 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
                                             </HelpText>
                                         </span>
                                     }
-                                    required
+
+                                    onChange={event => {
+                                        const dato = event.target.value;
+                                        inputProps.onChange?.(event);
+                                        setDatoInput(dato);
+
+                                        if (!dato) {
+                                            setForlengTilDato(undefined);
+                                            return;
+                                        }
+
+                                        const parsedDato = dayjs(dato, 'DD.MM.YYYY', true);
+                                        setForlengTilDato(parsedDato.isValid() ? parsedDato.toDate() : undefined);
+                                    }}
+                                    error={datoFeilmelding}
                                 />
                             </DatePicker>
                         </VStack>
@@ -117,7 +142,6 @@ function ForlengOppfolgingModal({ brukerFnr }: { brukerFnr: string }) {
                             onClick={handleLagreForlengelse}
                             loading={isLoading}
                             aria-label="Bekreft forleng oppfølging"
-                            disabled={isLoading || !forlengTilDato}
                         >
                             Bekreft
                         </Button>

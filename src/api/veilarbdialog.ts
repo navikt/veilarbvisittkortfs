@@ -1,5 +1,4 @@
-import { AxiosPromise } from 'axios';
-import { axiosInstance, fetchWithPost, swrOptions } from './utils';
+import { fetchWithPost, httpPatch, httpPost, HttpPromise, swrOptions } from './httpUtils';
 import { StringOrNothing } from '../util/type/utility-types';
 import {
     dialogerQuery,
@@ -101,10 +100,10 @@ export const useEskaleringsvarselHistorikk = (fnr: string | undefined) => {
     };
 };
 
-export function startEskalering(startEskaleringRequest: StartEskaleringRequest): AxiosPromise {
-    return axiosInstance.post('/veilarbdialog/api/eskaleringsvarsel/start', startEskaleringRequest);
+export function startEskalering(startEskaleringRequest: StartEskaleringRequest): HttpPromise {
+    return httpPost('/veilarbdialog/api/eskaleringsvarsel/start', startEskaleringRequest);
 }
 
-export function stopEskalering(stopEskaleringRequest: StopEskaleringRequest): AxiosPromise {
-    return axiosInstance.patch('/veilarbdialog/api/eskaleringsvarsel/stop', stopEskaleringRequest);
+export function stopEskalering(stopEskaleringRequest: StopEskaleringRequest): HttpPromise {
+    return httpPatch('/veilarbdialog/api/eskaleringsvarsel/stop', stopEskaleringRequest);
 }
