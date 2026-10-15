@@ -24,7 +24,9 @@ function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
     const { dialogerData, dialogerLoading } = useDialoger(brukerFnr);
     const outerLoading = dialogerLoading || avsluttOppfolgingStatusLoading;
     const kanAvsluttes = avsluttOppfolgingStatus?.kanAvslutte === true;
-    const { data: harUtkast, isLoading: harUtkastIsLoading } = useHarUtkast(brukerFnr, !outerLoading && kanAvsluttes);
+    const { data: harUtkast, isLoading: harUtkastIsLoading } = useHarUtkast(
+        !outerLoading && kanAvsluttes ? brukerFnr : null
+    );
 
     const harUbehandledeDialoger = dialogerData ? selectHarUbehandledeDialoger(dialogerData) : false;
     const isLoading = outerLoading || (kanAvsluttes && harUtkastIsLoading);
