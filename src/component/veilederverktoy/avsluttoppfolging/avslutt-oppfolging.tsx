@@ -15,6 +15,12 @@ import AdvarselSirkelIkon from '../../components/varselmodal/advarsel-sirkel.svg
 
 const TITTEL = 'Avslutt oppfølgingsperioden';
 
+enum KanAvslutteModalState {
+    loading = 'loading',
+    kanIkkeAvslutte = 'kanIkkeAvslutte',
+    kanAvslutte = 'kanAvslutte'
+}
+
 function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
     const avsluttOppfolgingOpptelt = useAvsluttOppfolgingOpptelt();
     const setAvsluttOppfolgingOpptelt = useSetAvsluttOppfolgingOpptelt();
@@ -22,22 +28,28 @@ function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
 
     const { avsluttOppfolgingStatus, avsluttOppfolgingStatusLoading } = useAvsluttOppfolgingStatus(brukerFnr);
     const { dialogerData, dialogerLoading } = useDialoger(brukerFnr);
-    const outerLoading = dialogerLoading || avsluttOppfolgingStatusLoading;
-    const kanAvsluttes = avsluttOppfolgingStatus?.kanAvslutte === true;
+    const statusState =
+        dialogerLoading || avsluttOppfolgingStatusLoading
+            ? KanAvslutteModalState.loading
+            : avsluttOppfolgingStatus?.kanAvslutte === true
+              ? KanAvslutteModalState.kanAvslutte
+              : KanAvslutteModalState.kanIkkeAvslutte;
     const { data: harUtkast, isLoading: harUtkastIsLoading } = useHarUtkast(
-        !outerLoading && kanAvsluttes ? brukerFnr : null
+        statusState === KanAvslutteModalState.kanAvslutte ? brukerFnr : null
     );
 
     const harUbehandledeDialoger = dialogerData ? selectHarUbehandledeDialoger(dialogerData) : false;
-    const isLoading = outerLoading || (kanAvsluttes && harUtkastIsLoading);
-    const visKanIkkeAvsluttes = !isLoading && !kanAvsluttes;
+    const modalState =
+        statusState === KanAvslutteModalState.kanAvslutte && harUtkastIsLoading
+            ? KanAvslutteModalState.loading
+            : statusState;
     const formikRef = useRef<FormikProps<BegrunnelseValues>>(null);
 
     function handleSubmitAvsluttOppfolging(values: BegrunnelseValues) {
         showAvsluttOppfolgingBekrefModal({ begrunnelse: values.begrunnelse });
     }
 
-    if (!outerLoading && !kanAvsluttes) {
+    if (modalState === KanAvslutteModalState.kanIkkeAvslutte) {
         if (avsluttOppfolgingStatus?.kanAvslutte !== undefined && avsluttOppfolgingStatus?.kanAvslutte !== null) {
             if (!avsluttOppfolgingOpptelt) {
                 logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt_oppfolging_ikke_mulig`);
@@ -47,11 +59,11 @@ function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
     }
 
     function handleBeforeClose() {
-        if (isLoading) {
+        if (modalState === KanAvslutteModalState.loading) {
             return false;
         }
 
-        if (!kanAvsluttes) {
+        if (modalState === KanAvslutteModalState.kanIkkeAvslutte) {
             return true;
         }
 
@@ -70,32 +82,33 @@ function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
 
     return (
         <Modal
-            className={visKanIkkeAvsluttes ? 'overflow-visible' : undefined}
+            className={modalState === KanAvslutteModalState.kanIkkeAvslutte ? 'overflow-visible' : undefined}
             open
             width="medium"
             onBeforeClose={handleBeforeClose}
             closeOnBackdropClick={true}
-            onClose={!outerLoading && !kanAvsluttes ? hideModal : () => {}}
+            onClose={modalState === KanAvslutteModalState.kanIkkeAvslutte ? hideModal : () => {}}
             header={{
                 heading: TITTEL,
-                closeButton: !isLoading,
-                icon: visKanIkkeAvsluttes ? (
-                    <span
-                        aria-hidden="true"
-                        data-testid="avsluttoppfolging-warning-icon"
-                        className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-4"
-                    >
-                        <AdvarselSirkelIkon className="h-16 w-16" />
-                    </span>
-                ) : undefined
+                closeButton: modalState !== KanAvslutteModalState.loading,
+                icon:
+                    modalState === KanAvslutteModalState.kanIkkeAvslutte ? (
+                        <span
+                            aria-hidden="true"
+                            data-testid="avsluttoppfolging-warning-icon"
+                            className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-4"
+                        >
+                            <AdvarselSirkelIkon className="h-16 w-16" />
+                        </span>
+                    ) : undefined
             }}
         >
             <Modal.Body className="rounded-2xl h-[min(16rem,calc(100dvh-var(--ax-space-28)))] min-h-0 overflow-auto">
-                {isLoading ? (
+                {modalState === KanAvslutteModalState.loading ? (
                     <div className="flex h-full items-center justify-center">
                         <Loader size="3xlarge" title="Laster innhold" />
                     </div>
-                ) : visKanIkkeAvsluttes ? (
+                ) : modalState === KanAvslutteModalState.kanIkkeAvslutte ? (
                     <KanIkkeAvsluttesInnhold status={avsluttOppfolgingStatus} />
                 ) : (
                     <KanAvsluttesInnhold
