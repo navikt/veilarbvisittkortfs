@@ -80,9 +80,13 @@ describe('PersonInfo', () => {
     test('viser navn og alder basert på personalia', async () => {
         server.use(mockPersonalia({ fornavn: 'GRØNN', mellomnavn: 'LIV', etternavn: 'STAFELLI' }));
 
-        renderPersonInfo();
+        const { container } = renderPersonInfo();
 
         expect(await screen.findByText(/Grønn Liv Stafelli/i)).toBeTruthy();
+        expect(container.firstElementChild?.classList.contains('flex-none')).toBe(true);
+        expect(container.firstElementChild?.classList.contains('min-w-max')).toBe(true);
+        expect(container.firstElementChild?.classList.contains('grid-cols-[2rem_16.5rem_max-content]')).toBe(true);
+        expect(screen.getByRole('heading', { level: 2 }).classList.contains('ml-2')).toBe(true);
     });
 
     test('viser kvinne-ikon når personalia har kjønn KVINNE', async () => {
@@ -99,6 +103,16 @@ describe('PersonInfo', () => {
         renderPersonInfo();
 
         expect(await screen.findByAltText('mann')).toBeTruthy();
+    });
+
+    test('beholder plass til ikonet når kjønn mangler', async () => {
+        server.use(mockPersonalia({ kjonn: '' }));
+
+        const { container } = renderPersonInfo();
+
+        expect(await screen.findByText(`F.nr.: ${brukerFnr}`)).toBeTruthy();
+        expect(container.firstElementChild?.firstElementChild?.classList.contains('w-[2rem]')).toBe(true);
+        expect(container.querySelector('.personinfo__ikon')).toBeNull();
     });
 
     test('viser formatert telefonnummer når bruker har telefon', async () => {

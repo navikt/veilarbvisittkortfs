@@ -12,7 +12,7 @@ export function kalkulerAlder(fodselsdato: Date): number {
 
 function NavnOgAlder({ fodselsdato, navn }: { fodselsdato: string | undefined; navn: string }) {
     const alder = fodselsdato ? kalkulerAlder(new Date(fodselsdato)) : '';
-    return <Heading size="small" level="2" className="basis-64 shrink-0">{`${navn} (${alder} år)`}</Heading>;
+    return <Heading size="small" level="2" className="ml-2">{`${navn} (${alder} år)`}</Heading>;
 }
 
 export default NavnOgAlder;

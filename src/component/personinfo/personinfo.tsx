@@ -46,10 +46,10 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
     const telefon: string = formaterTelefonnummer(uformattertTelefon);
 
     return (
-        <div className="personinfo">
-            {personalia?.kjonn && <KjonnIkon kjonn={personalia?.kjonn as string} />}
+        <div className="grid min-w-max flex-none grid-cols-[2rem_16.5rem_max-content] items-center">
+            <div className="h-[2rem] w-[2rem]">{personalia?.kjonn && <KjonnIkon kjonn={personalia.kjonn} />}</div>
             <NavnOgAlder fodselsdato={personalia?.fodselsdato as string} navn={navn} />
-            <div className="verktoylinje">
+            <div className="verktoylinje min-w-max">
                 <div className="flex w-[calc(6rem+var(--ax-space-4))] shrink-0 items-center gap-[var(--ax-space-4)]">
                     {sjekkHarTilgangTilHuskelappEllerFargekategori && brukerFnr && (
                         <>
@@ -62,7 +62,7 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
                         </>
                     )}
                 </div>
-                <div className="flex flex-col items-start">
+                <div className="flex w-max flex-col items-start">
                     <CopyButton
                         aria-label="Kopier fødselsnummer"
                         className="shrink-0 whitespace-nowrap"

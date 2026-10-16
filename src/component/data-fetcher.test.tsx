@@ -34,18 +34,24 @@ describe('DataFetcher', () => {
         const { container } = render(<DataFetcher>{() => <span>Personopplysninger</span>}</DataFetcher>);
 
         expect(screen.getByRole('status', { name: 'Laster personopplysninger' })).toBeTruthy();
+        expect(container.querySelector('.visittkortfs__container')?.classList.contains('flex-wrap')).toBe(true);
+        expect(container.querySelector('.visittkortfs__container > div')?.classList.contains('min-w-max')).toBe(true);
         expect(container.querySelector('.personinfo__ikon.aksel-skeleton--circle')).toBeTruthy();
-        expect(container.querySelector('.personinfo h2 .aksel-skeleton')?.getAttribute('style')).toContain(
+        expect(container.querySelector('.personinfo__ikon')?.parentElement?.classList.contains('shrink-0')).toBe(true);
+        expect(container.querySelector('.visittkortfs__container h2')?.classList.contains('basis-[16rem]')).toBe(true);
+        expect(container.querySelector('.visittkortfs__container h2 .aksel-skeleton')?.getAttribute('style')).toContain(
             'width: 100%'
         );
         expect(container.querySelector('.verktoylinje > div')).toBeTruthy();
-        expect(container.querySelectorAll('.verktoylinje > span')).toHaveLength(2);
-        expect(container.querySelectorAll('.verktoylinje > span.whitespace-nowrap.shrink-0')).toHaveLength(2);
-        expect(container.querySelectorAll('.verktoylinje > span .aksel-label--small')).toHaveLength(2);
-        expect(container.querySelectorAll('.verktoylinje > span > span:last-child')).toHaveLength(2);
-        expect(container.querySelector('.verktoylinje > span')?.textContent).toContain('F.nr.:');
-        expect(container.querySelectorAll('.verktoylinje > span')[1]?.textContent).toContain('Tlf.:');
-        expect(container.querySelectorAll('.verktoylinje > span .aksel-skeleton')).toHaveLength(2);
+        expect(container.querySelectorAll('.verktoylinje > div:last-child > span')).toHaveLength(2);
+        expect(
+            container.querySelectorAll('.verktoylinje > div:last-child > span.whitespace-nowrap.shrink-0')
+        ).toHaveLength(2);
+        expect(container.querySelectorAll('.verktoylinje > div:last-child .aksel-label--small')).toHaveLength(2);
+        expect(container.querySelectorAll('.verktoylinje > div:last-child > span > span:last-child')).toHaveLength(2);
+        expect(container.querySelector('.verktoylinje > div:last-child > span')?.textContent).toContain('F.nr.:');
+        expect(container.querySelectorAll('.verktoylinje > div:last-child > span')[1]?.textContent).toContain('Tlf.:');
+        expect(container.querySelectorAll('.verktoylinje > div:last-child .aksel-skeleton')).toHaveLength(2);
         expect(screen.queryByText('Personopplysninger')).toBeNull();
     });
 

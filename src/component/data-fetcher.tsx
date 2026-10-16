@@ -36,15 +36,21 @@ export function DataFetcher({ children }: Props) {
         // trenger ikke vente på vergeOgFullmaktFetcher eller spraakTolkFetcher
     ) {
         return (
-            <div className="visittkortfs__container" role="status" aria-label="Laster personopplysninger">
-                <div className="personinfo" aria-hidden="true">
-                    <Skeleton variant="circle" width="2rem" height="2rem" className="personinfo__ikon" />
-                    <Heading size="small" level="2" className="basis-64 shrink-0">
+            <div
+                className="visittkortfs__container flex flex-wrap items-center gap-x-[var(--ax-space-16)] gap-y-[var(--ax-space-8)]"
+                role="status"
+                aria-label="Laster personopplysninger"
+            >
+                <div className="flex items-center min-w-max" aria-hidden="true">
+                    <div className="h-[2rem] w-[2rem] shrink-0">
+                        <Skeleton variant="circle" width="2rem" height="2rem" className="personinfo__ikon" />
+                    </div>
+                    <Heading size="small" level="2" className="ml-2 basis-[16rem] min-w-0 shrink-0">
                         <Skeleton variant="text" width="100%" />
                     </Heading>
-                    <div className="verktoylinje">
+                    <div className="verktoylinje min-w-max">
                         <div className="flex w-[calc(6rem+var(--ax-space-4))] shrink-0 items-center gap-[var(--ax-space-4)]" />
-                        <div className="flex flex-col">
+                        <div className="flex w-max flex-col">
                             <span className="h-8 inline-flex shrink-0 items-center gap-[var(--ax-space-6)] whitespace-nowrap [padding-block:var(--ax-space-4)] [padding-inline:var(--ax-space-12)]">
                                 <Label as="span" size="small">
                                     F.nr.: <Skeleton as="span" variant="text" width="6rem" />
