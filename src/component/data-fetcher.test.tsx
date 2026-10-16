@@ -35,10 +35,12 @@ describe('DataFetcher', () => {
 
         expect(screen.getByRole('status', { name: 'Laster personopplysninger' })).toBeTruthy();
         expect(container.querySelector('.personinfo__ikon.aksel-skeleton--circle')).toBeTruthy();
-        expect(container.querySelector('.personinfo h2 .aksel-skeleton')).toBeTruthy();
+        expect(container.querySelector('.personinfo h2 .aksel-skeleton')?.getAttribute('style')).toContain(
+            'width: 100%'
+        );
         expect(container.querySelector('.verktoylinje__ikonplass')).toBeTruthy();
         expect(container.querySelectorAll('.verktoylinje__lastverdi')).toHaveLength(2);
-        expect(container.querySelectorAll('.verktoylinje__lastverdi .aksel-label')).toHaveLength(2);
+        expect(container.querySelectorAll('.verktoylinje__lastverdi .aksel-label--small')).toHaveLength(2);
         expect(container.querySelectorAll('.verktoylinje__kopiikonplass')).toHaveLength(2);
         expect(container.querySelector('.verktoylinje__lastverdi')?.textContent).toContain('F.nr.:');
         expect(container.querySelectorAll('.verktoylinje__lastverdi')[1]?.textContent).toContain('Tlf.:');

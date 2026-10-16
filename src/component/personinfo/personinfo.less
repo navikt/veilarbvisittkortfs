@@ -6,6 +6,7 @@
         h2 {
             font-weight: bold;
             margin-left: 0.5rem;
+            flex: 0 0 16rem;
         }
 
         &__ikon {
@@ -39,12 +40,12 @@
         &__lastverdi {
             display: inline-flex;
             align-items: center;
-            gap: var(--ax-space-8);
-            padding: var(--ax-space-12) var(--ax-space-20);
+            gap: var(--ax-space-6);
+            padding: var(--ax-space-4) var(--ax-space-12);
         }
 
         &__kopiikonplass {
-            width: 1.5rem;
+            width: calc(1.5rem - var(--ax-space-2));
             flex-shrink: 0;
         }
     }

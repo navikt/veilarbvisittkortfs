@@ -67,7 +67,7 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
                     copyText={brukerFnr}
                     text={`F.nr.: ${brukerFnr}`}
                     activeText="Kopiert!"
-                    size="medium"
+                    size="small"
                     iconPosition="right"
                 />
                 {<Label>/</Label>}
@@ -77,7 +77,7 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
                         copyText={telefon.replaceAll(' ', '')}
                         text={`Tlf.: ${telefon}`}
                         activeText="Kopiert!"
-                        size="medium"
+                        size="small"
                         iconPosition="right"
                     />
                 )}

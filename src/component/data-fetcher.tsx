@@ -40,19 +40,19 @@ export function DataFetcher({ children }: Props) {
                 <div className="personinfo" aria-hidden="true">
                     <Skeleton variant="circle" width="2rem" height="2rem" className="personinfo__ikon" />
                     <Heading size="small" level="2">
-                        <Skeleton variant="text" width="12rem" />
+                        <Skeleton variant="text" width="100%" />
                     </Heading>
                     <div className="verktoylinje">
                         <div className="verktoylinje__ikonplass" />
                         <span className="verktoylinje__lastverdi">
-                            <Label as="span">
+                            <Label as="span" size="small">
                                 F.nr.: <Skeleton as="span" variant="text" width="6rem" />
                             </Label>
                             <span className="verktoylinje__kopiikonplass" />
                         </span>
                         <Label>/</Label>
                         <span className="verktoylinje__lastverdi">
-                            <Label as="span">
+                            <Label as="span" size="small">
                                 Tlf.: <Skeleton as="span" variant="text" width="6rem" />
                             </Label>
                             <span className="verktoylinje__kopiikonplass" />
