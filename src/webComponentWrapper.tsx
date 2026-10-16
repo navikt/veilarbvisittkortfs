@@ -57,6 +57,7 @@ class VisittkortElement extends HTMLElement {
     connectedCallback() {
         const shadow = this.attachShadow({ mode: 'open' });
         this.mountPoint = document.createElement('div');
+        this.mountPoint.className = 'visittkort-placeholder';
         shadow.appendChild(this.mountPoint);
 
         this.styleElement = document.createElement('style');

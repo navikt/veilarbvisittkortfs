@@ -55,7 +55,7 @@ function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, 
 
     return (
         <VisittKortConfigContext.Provider value={configValue}>
-            <div className="visittkort-placeholder">
+            <div>
                 <Theme asChild theme={valgtTheme}>
                     <>
                         <div className="visittkortfs">
