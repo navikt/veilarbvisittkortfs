@@ -111,6 +111,9 @@ describe('PersonInfo', () => {
         renderPersonInfo();
 
         expect(await screen.findByText('Tlf.: 46 33 33 33')).toBeTruthy();
+        expect(
+            screen.getByRole('button', { name: 'Kopier telefonnummer' }).classList.contains('whitespace-nowrap')
+        ).toBe(true);
     });
 
     test('viser "Tlf.: -" når bruker ikke har telefonnummer', async () => {
@@ -118,13 +121,16 @@ describe('PersonInfo', () => {
 
         renderPersonInfo();
 
-        expect(await screen.findByText('Tlf.: -')).toBeTruthy();
+        expect((await screen.findByText('Tlf.: -')).classList.contains('whitespace-nowrap')).toBe(true);
     });
 
     test('viser knapp for å kopiere fødselsnummer', async () => {
         renderPersonInfo();
 
         expect(await screen.findByText(`F.nr.: ${brukerFnr}`)).toBeTruthy();
+        expect(
+            screen.getByRole('button', { name: 'Kopier fødselsnummer' }).classList.contains('whitespace-nowrap')
+        ).toBe(true);
     });
 
     test('viser huskelapp- og fargekategoriknapp når veileder har tilgang til brukers kontor og bruker ikke er ufordelt', async () => {

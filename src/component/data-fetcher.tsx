@@ -44,19 +44,20 @@ export function DataFetcher({ children }: Props) {
                     </Heading>
                     <div className="verktoylinje">
                         <div className="flex w-[calc(6rem+var(--ax-space-4))] shrink-0 items-center gap-[var(--ax-space-4)]" />
-                        <span className="inline-flex items-center gap-[var(--ax-space-6)] [padding-block:var(--ax-space-4)] [padding-inline:var(--ax-space-12)]">
-                            <Label as="span" size="small">
-                                F.nr.: <Skeleton as="span" variant="text" width="6rem" />
-                            </Label>
-                            <span className="w-[calc(1.5rem-var(--ax-space-2))] shrink-0" />
-                        </span>
-                        <Label>/</Label>
-                        <span className="inline-flex items-center gap-[var(--ax-space-6)] [padding-block:var(--ax-space-4)] [padding-inline:var(--ax-space-12)]">
-                            <Label as="span" size="small">
-                                Tlf.: <Skeleton as="span" variant="text" width="6rem" />
-                            </Label>
-                            <span className="w-[calc(1.5rem-var(--ax-space-2))] shrink-0" />
-                        </span>
+                        <div className="flex flex-col">
+                            <span className="h-8 inline-flex shrink-0 items-center gap-[var(--ax-space-6)] whitespace-nowrap [padding-block:var(--ax-space-4)] [padding-inline:var(--ax-space-12)]">
+                                <Label as="span" size="small">
+                                    F.nr.: <Skeleton as="span" variant="text" width="6rem" />
+                                </Label>
+                                <span className="w-[calc(1.5rem-var(--ax-space-2))] shrink-0" />
+                            </span>
+                            <span className="h-8 inline-flex shrink-0 items-center gap-[var(--ax-space-6)] whitespace-nowrap [padding-block:var(--ax-space-4)] [padding-inline:var(--ax-space-12)]">
+                                <Label as="span" size="small">
+                                    Tlf.: <Skeleton as="span" variant="text" width="6rem" />
+                                </Label>
+                                <span className="w-[calc(1.5rem-var(--ax-space-2))] shrink-0" />
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

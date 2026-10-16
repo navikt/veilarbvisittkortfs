@@ -40,6 +40,7 @@ describe('DataFetcher', () => {
         );
         expect(container.querySelector('.verktoylinje > div')).toBeTruthy();
         expect(container.querySelectorAll('.verktoylinje > span')).toHaveLength(2);
+        expect(container.querySelectorAll('.verktoylinje > span.whitespace-nowrap.shrink-0')).toHaveLength(2);
         expect(container.querySelectorAll('.verktoylinje > span .aksel-label--small')).toHaveLength(2);
         expect(container.querySelectorAll('.verktoylinje > span > span:last-child')).toHaveLength(2);
         expect(container.querySelector('.verktoylinje > span')?.textContent).toContain('F.nr.:');

@@ -62,26 +62,29 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
                         </>
                     )}
                 </div>
-                <CopyButton
-                    aria-label="Kopier fødselsnummer"
-                    copyText={brukerFnr}
-                    text={`F.nr.: ${brukerFnr}`}
-                    activeText="Kopiert!"
-                    size="small"
-                    iconPosition="right"
-                />
-                {<Label>/</Label>}
-                {uformattertTelefon && (
+                <div className="flex flex-col items-start">
                     <CopyButton
-                        aria-label="Kopier telefonnummer"
-                        copyText={telefon.replaceAll(' ', '')}
-                        text={`Tlf.: ${telefon}`}
+                        aria-label="Kopier fødselsnummer"
+                        className="shrink-0 whitespace-nowrap"
+                        copyText={brukerFnr}
+                        text={`F.nr.: ${brukerFnr}`}
                         activeText="Kopiert!"
                         size="small"
                         iconPosition="right"
                     />
-                )}
-                {!uformattertTelefon && <Label className="uten-telefon">Tlf.: -</Label>}
+                    {uformattertTelefon && (
+                        <CopyButton
+                            aria-label="Kopier telefonnummer"
+                            className="shrink-0 whitespace-nowrap"
+                            copyText={telefon.replaceAll(' ', '')}
+                            text={`Tlf.: ${telefon}`}
+                            activeText="Kopiert!"
+                            size="small"
+                            iconPosition="right"
+                        />
+                    )}
+                    {!uformattertTelefon && <Label className="uten-telefon shrink-0 whitespace-nowrap">Tlf.: -</Label>}
+                </div>
             </div>
         </div>
     );
