@@ -41,22 +41,27 @@ export function DataFetcher({ children }: Props) {
                 role="status"
                 aria-label="Laster personopplysninger"
             >
-                <div className="flex items-center min-w-max" aria-hidden="true">
-                    <div className="h-[2rem] w-[2rem] shrink-0">
+                <div
+                    className="grid min-w-max flex-none grid-cols-[2rem_16.5rem_max-content] items-center"
+                    aria-hidden="true"
+                >
+                    <div className="h-[2rem] w-[2rem]">
                         <Skeleton variant="circle" width="2rem" height="2rem" className="personinfo__ikon" />
                     </div>
-                    <Heading size="small" level="2" className="ml-2 basis-[16rem] min-w-0 shrink-0">
-                        <Skeleton variant="text" width="100%" />
-                    </Heading>
+                    <div className="personinfo__navn-og-alder ml-2 flex flex-col items-start">
+                        <Heading size="xsmall" level="2" className="w-full [padding-inline-start:var(--ax-space-12)]">
+                            <Skeleton variant="text" width="100%" />
+                        </Heading>
+                        <span className="h-8 inline-flex shrink-0 items-center gap-[var(--ax-space-6)] whitespace-nowrap [padding-block:var(--ax-space-4)] [padding-inline:var(--ax-space-12)]">
+                            <Label as="span" size="small">
+                                F.nr.: <Skeleton as="span" variant="text" width="6rem" />
+                            </Label>
+                            <span className="w-[calc(1.5rem-var(--ax-space-2))] shrink-0" />
+                        </span>
+                    </div>
                     <div className="verktoylinje min-w-max">
                         <div className="flex w-[calc(6rem+var(--ax-space-4))] shrink-0 items-center gap-[var(--ax-space-4)]" />
                         <div className="flex w-max flex-col">
-                            <span className="h-8 inline-flex shrink-0 items-center gap-[var(--ax-space-6)] whitespace-nowrap [padding-block:var(--ax-space-4)] [padding-inline:var(--ax-space-12)]">
-                                <Label as="span" size="small">
-                                    F.nr.: <Skeleton as="span" variant="text" width="6rem" />
-                                </Label>
-                                <span className="w-[calc(1.5rem-var(--ax-space-2))] shrink-0" />
-                            </span>
                             <span className="h-8 inline-flex shrink-0 items-center gap-[var(--ax-space-6)] whitespace-nowrap [padding-block:var(--ax-space-4)] [padding-inline:var(--ax-space-12)]">
                                 <Label as="span" size="small">
                                     Tlf.: <Skeleton as="span" variant="text" width="6rem" />

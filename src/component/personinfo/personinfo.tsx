@@ -48,7 +48,7 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
     return (
         <div className="grid min-w-max flex-none grid-cols-[2rem_16.5rem_max-content] items-center">
             <div className="h-[2rem] w-[2rem]">{personalia?.kjonn && <KjonnIkon kjonn={personalia.kjonn} />}</div>
-            <NavnOgAlder fodselsdato={personalia?.fodselsdato as string} navn={navn} />
+            <NavnOgAlder fodselsdato={personalia?.fodselsdato as string} navn={navn} brukerFnr={brukerFnr} />
             <div className="verktoylinje min-w-max">
                 <div className="flex w-[calc(6rem+var(--ax-space-4))] shrink-0 items-center gap-[var(--ax-space-4)]">
                     {sjekkHarTilgangTilHuskelappEllerFargekategori && brukerFnr && (
@@ -63,15 +63,6 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
                     )}
                 </div>
                 <div className="flex w-max flex-col items-start">
-                    <CopyButton
-                        aria-label="Kopier fødselsnummer"
-                        className="shrink-0 whitespace-nowrap"
-                        copyText={brukerFnr}
-                        text={`F.nr.: ${brukerFnr}`}
-                        activeText="Kopiert!"
-                        size="small"
-                        iconPosition="right"
-                    />
                     {uformattertTelefon && (
                         <CopyButton
                             aria-label="Kopier telefonnummer"

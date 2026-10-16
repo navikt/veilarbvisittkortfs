@@ -86,7 +86,16 @@ describe('PersonInfo', () => {
         expect(container.firstElementChild?.classList.contains('flex-none')).toBe(true);
         expect(container.firstElementChild?.classList.contains('min-w-max')).toBe(true);
         expect(container.firstElementChild?.classList.contains('grid-cols-[2rem_16.5rem_max-content]')).toBe(true);
-        expect(screen.getByRole('heading', { level: 2 }).classList.contains('ml-2')).toBe(true);
+        const overskrift = screen.getByRole('heading', { level: 2 });
+        expect(overskrift.parentElement?.classList.contains('ml-2')).toBe(true);
+        expect(overskrift.parentElement?.contains(screen.getByRole('button', { name: 'Kopier fødselsnummer' }))).toBe(
+            true
+        );
+        expect(
+            container
+                .querySelector('.verktoylinje')
+                ?.contains(screen.getByRole('button', { name: 'Kopier fødselsnummer' }))
+        ).toBe(false);
     });
 
     test('viser kvinne-ikon når personalia har kjønn KVINNE', async () => {
