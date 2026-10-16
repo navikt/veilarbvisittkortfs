@@ -38,13 +38,13 @@ describe('DataFetcher', () => {
         expect(container.querySelector('.personinfo h2 .aksel-skeleton')?.getAttribute('style')).toContain(
             'width: 100%'
         );
-        expect(container.querySelector('.verktoylinje__ikonplass')).toBeTruthy();
-        expect(container.querySelectorAll('.verktoylinje__lastverdi')).toHaveLength(2);
-        expect(container.querySelectorAll('.verktoylinje__lastverdi .aksel-label--small')).toHaveLength(2);
-        expect(container.querySelectorAll('.verktoylinje__kopiikonplass')).toHaveLength(2);
-        expect(container.querySelector('.verktoylinje__lastverdi')?.textContent).toContain('F.nr.:');
-        expect(container.querySelectorAll('.verktoylinje__lastverdi')[1]?.textContent).toContain('Tlf.:');
-        expect(container.querySelectorAll('.verktoylinje__lastverdi .aksel-skeleton')).toHaveLength(2);
+        expect(container.querySelector('.verktoylinje > div')).toBeTruthy();
+        expect(container.querySelectorAll('.verktoylinje > span')).toHaveLength(2);
+        expect(container.querySelectorAll('.verktoylinje > span .aksel-label--small')).toHaveLength(2);
+        expect(container.querySelectorAll('.verktoylinje > span > span:last-child')).toHaveLength(2);
+        expect(container.querySelector('.verktoylinje > span')?.textContent).toContain('F.nr.:');
+        expect(container.querySelectorAll('.verktoylinje > span')[1]?.textContent).toContain('Tlf.:');
+        expect(container.querySelectorAll('.verktoylinje > span .aksel-skeleton')).toHaveLength(2);
         expect(screen.queryByText('Personopplysninger')).toBeNull();
     });
 

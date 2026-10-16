@@ -39,23 +39,23 @@ export function DataFetcher({ children }: Props) {
             <div className="visittkortfs__container" role="status" aria-label="Laster personopplysninger">
                 <div className="personinfo" aria-hidden="true">
                     <Skeleton variant="circle" width="2rem" height="2rem" className="personinfo__ikon" />
-                    <Heading size="small" level="2">
+                    <Heading size="small" level="2" className="basis-64 shrink-0">
                         <Skeleton variant="text" width="100%" />
                     </Heading>
                     <div className="verktoylinje">
-                        <div className="verktoylinje__ikonplass" />
-                        <span className="verktoylinje__lastverdi">
+                        <div className="flex w-[calc(6rem+var(--ax-space-4))] shrink-0 items-center gap-[var(--ax-space-4)]" />
+                        <span className="inline-flex items-center gap-[var(--ax-space-6)] [padding-block:var(--ax-space-4)] [padding-inline:var(--ax-space-12)]">
                             <Label as="span" size="small">
                                 F.nr.: <Skeleton as="span" variant="text" width="6rem" />
                             </Label>
-                            <span className="verktoylinje__kopiikonplass" />
+                            <span className="w-[calc(1.5rem-var(--ax-space-2))] shrink-0" />
                         </span>
                         <Label>/</Label>
-                        <span className="verktoylinje__lastverdi">
+                        <span className="inline-flex items-center gap-[var(--ax-space-6)] [padding-block:var(--ax-space-4)] [padding-inline:var(--ax-space-12)]">
                             <Label as="span" size="small">
                                 Tlf.: <Skeleton as="span" variant="text" width="6rem" />
                             </Label>
-                            <span className="verktoylinje__kopiikonplass" />
+                            <span className="w-[calc(1.5rem-var(--ax-space-2))] shrink-0" />
                         </span>
                     </div>
                 </div>

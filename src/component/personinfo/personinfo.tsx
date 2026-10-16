@@ -50,7 +50,7 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
             {personalia?.kjonn && <KjonnIkon kjonn={personalia?.kjonn as string} />}
             <NavnOgAlder fodselsdato={personalia?.fodselsdato as string} navn={navn} />
             <div className="verktoylinje">
-                <div className="verktoylinje__ikonplass">
+                <div className="flex w-[calc(6rem+var(--ax-space-4))] shrink-0 items-center gap-[var(--ax-space-4)]">
                     {sjekkHarTilgangTilHuskelappEllerFargekategori && brukerFnr && (
                         <>
                             <Fargekategoriknapp />

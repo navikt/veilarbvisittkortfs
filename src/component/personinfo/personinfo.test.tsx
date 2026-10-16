@@ -148,7 +148,7 @@ describe('PersonInfo', () => {
             expect(screen.getByTitle('Opprett huskelapp')).toBeTruthy();
         });
         expect(screen.getByTitle('Ingen kategori: endre')).toBeTruthy();
-        expect(container.querySelectorAll('.verktoylinje__ikonplass > button')).toHaveLength(2);
+        expect(container.querySelectorAll('.verktoylinje > div:first-child > button')).toHaveLength(2);
     });
 
     test('skjuler huskelapp- og fargekategoriknapp når bruker er ufordelt', async () => {
@@ -173,8 +173,8 @@ describe('PersonInfo', () => {
         });
         expect(screen.queryByTitle('Opprett huskelapp')).toBeNull();
         expect(screen.queryByTitle('Ingen kategori: endre')).toBeNull();
-        expect(container.querySelector('.verktoylinje__ikonplass')).toBeTruthy();
-        expect(container.querySelectorAll('.verktoylinje__ikonplass > button')).toHaveLength(0);
+        expect(container.querySelector('.verktoylinje > div:first-child')).toBeTruthy();
+        expect(container.querySelectorAll('.verktoylinje > div:first-child > button')).toHaveLength(0);
     });
 
     test('skjuler huskelapp- og fargekategoriknapp når bruker ikke har veileder', async () => {
