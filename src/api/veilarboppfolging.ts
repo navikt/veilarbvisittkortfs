@@ -71,7 +71,8 @@ export type UtmeldingskandidatHistorikkType =
     | 'ARBEIDSSOKERPERIODE_AVSLUTTET_ANNET'
     | 'FORLENGELSE_OPPRETTET'
     | 'FORLENGELSE_ENDRET'
-    | 'FORLENGELSE_UTLOPT';
+    | 'FORLENGELSE_UTLOPT'
+    | 'AVSLUTTET_AAP_SAK';
 
 export type InnstillingsHistorikkType =
     | 'SATT_TIL_DIGITAL'
@@ -250,7 +251,8 @@ export type KandidatForUtmeldingTag =
     | 'ARBEIDSSOKERPERIODE_AVSLUTTET_IKKE_LEVERT_MELDEKORT'
     | 'ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE'
     | 'ARBEIDSSOKERPERIODE_AVSLUTTET_ANNET'
-    | 'FORLENGELSE_UTLOPT';
+    | 'FORLENGELSE_UTLOPT'
+    | 'AVSLUTTET_AAP_SAK';
 
 export interface MedUtmeldingskandidat {
     utmeldingskandidat: {
