@@ -1,14 +1,25 @@
-import { BodyShort, Modal } from '@navikt/ds-react';
-import BegrunnelseForm, { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
-import { AvsluttOppfolgingInfoText } from './components/avslutt-oppfolging-info-text';
-import { VarselModal } from '../../components/varselmodal/varsel-modal';
+import { useRef } from 'react';
+import { FormikProps } from 'formik';
+import { Loader, Modal } from '@navikt/ds-react';
+import { BegrunnelseValues } from '../begrunnelseform/begrunnelse-form';
 import { useAvsluttOppfolgingOpptelt, useSetAvsluttOppfolgingOpptelt } from '../../../store/app-store';
 import { useModalStore } from '../../../store/modal-store';
 import { selectHarUbehandledeDialoger } from '../../../util/selectors';
-import { LasterModal } from '../../components/lastermodal/laster-modal';
 import { useDialoger } from '../../../api/veilarbdialog';
 import { useAvsluttOppfolgingStatus } from '../../../api/veilarboppfolging';
 import { logMetrikk } from '../../../util/logger';
+import { useHarUtkast } from '../../../api/veilarbvedtaksstotte';
+import { KanAvsluttesInnhold } from './components/kan-avsluttes-innhold';
+import { KanIkkeAvsluttesInnhold } from './components/kan-ikke-avsluttes-innhold';
+import AdvarselSirkelIkon from '../../components/varselmodal/advarsel-sirkel.svg?react';
+
+const TITTEL = 'Avslutt oppfølgingsperioden';
+
+enum KanAvslutteModalState {
+    loading = 'loading',
+    kanIkkeAvslutte = 'kanIkkeAvslutte',
+    kanAvslutte = 'kanAvslutte'
+}
 
 function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
     const avsluttOppfolgingOpptelt = useAvsluttOppfolgingOpptelt();
@@ -17,57 +28,90 @@ function AvsluttOppfolging({ brukerFnr }: { brukerFnr: string }) {
 
     const { avsluttOppfolgingStatus, avsluttOppfolgingStatusLoading } = useAvsluttOppfolgingStatus(brukerFnr);
     const { dialogerData, dialogerLoading } = useDialoger(brukerFnr);
+    const statusState =
+        dialogerLoading || avsluttOppfolgingStatusLoading
+            ? KanAvslutteModalState.loading
+            : avsluttOppfolgingStatus?.kanAvslutte === true
+              ? KanAvslutteModalState.kanAvslutte
+              : KanAvslutteModalState.kanIkkeAvslutte;
+    const { data: harUtkast, isLoading: harUtkastIsLoading } = useHarUtkast(
+        statusState === KanAvslutteModalState.kanAvslutte ? brukerFnr : null
+    );
 
     const harUbehandledeDialoger = dialogerData ? selectHarUbehandledeDialoger(dialogerData) : false;
+    const modalState =
+        statusState === KanAvslutteModalState.kanAvslutte && harUtkastIsLoading
+            ? KanAvslutteModalState.loading
+            : statusState;
+    const formikRef = useRef<FormikProps<BegrunnelseValues>>(null);
 
     function handleSubmitAvsluttOppfolging(values: BegrunnelseValues) {
         showAvsluttOppfolgingBekrefModal({ begrunnelse: values.begrunnelse });
     }
 
-    if (dialogerLoading || avsluttOppfolgingStatusLoading) {
-        return <LasterModal />;
-    }
-
-    if (!avsluttOppfolgingStatus?.kanAvslutte) {
+    if (modalState === KanAvslutteModalState.kanIkkeAvslutte) {
         if (avsluttOppfolgingStatus?.kanAvslutte !== undefined && avsluttOppfolgingStatus?.kanAvslutte !== null) {
             if (!avsluttOppfolgingOpptelt) {
                 logMetrikk(`veilarbvisittkortfs.metrikker.Avslutt_oppfolging_ikke_mulig`);
                 setAvsluttOppfolgingOpptelt(true);
             }
         }
-        return (
-            <VarselModal isOpen={true} onRequestClose={hideModal} type="ADVARSEL">
-                <Modal.Body className="veilarbvisittkortfs-varsel-modal-body">
-                    <BodyShort>Du kan ikke avslutte oppfølgingsperioden fordi:</BodyShort>
-                    <ul>
-                        {avsluttOppfolgingStatus?.harAktiveTiltaksdeltakelser && (
-                            <li>Brukeren har aktive arbeidsmarkedstiltak.</li>
-                        )}
-                        {avsluttOppfolgingStatus?.underKvp && (
-                            <li>Brukeren deltar i på KVP. KVP må avsluttes først.</li>
-                        )}
-                        {avsluttOppfolgingStatus?.erDeltakerIUngdomsprogrammet && (
-                            <li>
-                                Brukeren deltar i Ungdomsprogrammet. Deltakelse i Ungdomsprogrammet må avsluttes først.
-                            </li>
-                        )}
-                        {avsluttOppfolgingStatus?.erArbeidssoeker && <li>Brukeren er arbeidssøker.</li>}
-                        {avsluttOppfolgingStatus?.harAap && <li>Brukeren har AAP.</li>}
-                    </ul>
-                </Modal.Body>
-            </VarselModal>
-        );
+    }
+
+    function kanModalLukkes() {
+        if (modalState === KanAvslutteModalState.loading) {
+            return false;
+        }
+        if (modalState === KanAvslutteModalState.kanIkkeAvslutte) {
+            return true;
+        }
+        if (!formikRef.current?.dirty) {
+            return true;
+        }
+        const confirmTekst = 'Er du sikker på at du vil lukke siden? Ulagrede endringer vil da gå tapt.';
+        return window.confirm(confirmTekst);
     }
 
     return (
-        <BegrunnelseForm
-            initialValues={{ begrunnelse: '' }}
-            handleSubmit={handleSubmitAvsluttOppfolging}
-            tekstariaLabel="Begrunnelse"
-            tittel="Avslutt oppfølgingsperioden"
-            infoTekst={<AvsluttOppfolgingInfoText harUbehandledeDialoger={harUbehandledeDialoger} fnr={brukerFnr} />}
-            isLoading={false}
-        />
+        <Modal
+            className={modalState === KanAvslutteModalState.kanIkkeAvslutte ? 'overflow-visible' : undefined}
+            open
+            width="medium"
+            onBeforeClose={kanModalLukkes}
+            closeOnBackdropClick={true}
+            onClose={hideModal}
+            header={{
+                heading: TITTEL,
+                closeButton: modalState !== KanAvslutteModalState.loading,
+                icon:
+                    modalState === KanAvslutteModalState.kanIkkeAvslutte ? (
+                        <span
+                            aria-hidden="true"
+                            data-testid="avsluttoppfolging-warning-icon"
+                            className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-4"
+                        >
+                            <AdvarselSirkelIkon className="h-16 w-16" />
+                        </span>
+                    ) : undefined
+            }}
+        >
+            <Modal.Body className="rounded-2xl h-[min(16rem,calc(100dvh-var(--ax-space-28)))] min-h-0 overflow-auto">
+                {modalState === KanAvslutteModalState.loading ? (
+                    <div className="flex h-full items-center justify-center">
+                        <Loader size="3xlarge" title="Laster innhold" />
+                    </div>
+                ) : modalState === KanAvslutteModalState.kanIkkeAvslutte ? (
+                    <KanIkkeAvsluttesInnhold status={avsluttOppfolgingStatus} />
+                ) : (
+                    <KanAvsluttesInnhold
+                        harUtkast={harUtkast}
+                        harUbehandledeDialoger={harUbehandledeDialoger}
+                        handleSubmit={handleSubmitAvsluttOppfolging}
+                        formikRef={formikRef}
+                    />
+                )}
+            </Modal.Body>
+        </Modal>
     );
 }
 

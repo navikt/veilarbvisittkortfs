@@ -1,18 +1,12 @@
-import { Alert, BodyShort, Loader } from '@navikt/ds-react';
+import { Alert, BodyShort } from '@navikt/ds-react';
 import { useHarUtkast } from '../../../../api/veilarbvedtaksstotte';
 
 interface Props {
-    fnr: string;
+    harUtkast: ReturnType<typeof useHarUtkast>['data'];
     harUbehandledeDialoger: boolean;
 }
 
-export function AvsluttOppfolgingInfoText({ fnr, harUbehandledeDialoger }: Props) {
-    const { data: harUtkast, isLoading: harUtkastIsLoading } = useHarUtkast(fnr);
-
-    if (harUtkastIsLoading) {
-        return <Loader size="2xlarge" />;
-    }
-
+export function AvsluttOppfolgingInfoText({ harUtkast, harUbehandledeDialoger }: Props) {
     const avslutningstekst =
         'Her avslutter du brukerens oppfølgingsperiode og legger inn en kort begrunnelse om hvorfor.';
 
