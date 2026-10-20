@@ -57,7 +57,7 @@ function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, 
         <VisittKortConfigContext.Provider value={configValue}>
             <div>
                 <Theme asChild theme={valgtTheme}>
-                    <>
+                    <div>
                         <div className="visittkortfs">
                             <DataFetcher>
                                 {brukerFnr => (
@@ -77,7 +77,7 @@ function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, 
                             <VeilederverktoyModalController />
                         </div>
                         <UtgattForlengelseAlert />
-                    </>
+                    </div>
                 </Theme>
                 <FeilIVisittkortAlert />
             </div>
