@@ -1,7 +1,7 @@
 import { CopyButton, Label } from '@navikt/ds-react';
 import NavnOgAlder from './components/navnogalder';
 import { KjonnIkon } from './components/kjonn-ikon';
-import { selectSammensattNavn, selectTelefonnummer } from '../../util/selectors';
+import { selectHarVergemaal, selectSammensattNavn, selectTelefonnummer } from '../../util/selectors';
 import { logMetrikk } from '../../util/logger';
 import { StringOrNothing } from '../../util/type/utility-types';
 import HuskelappKnapp from '../huskelapp/huskelapp-knapp';
@@ -13,11 +13,12 @@ import { useModalStore } from '../../store/modal-store';
 import { formaterTelefonnummer } from '../../util/formaterTelefonnummer';
 import './personinfo.less';
 import { useVisVeilederVerktøy } from '../../store/visittkort-config';
-import { usePersonalia } from '../../api/veilarbperson';
+import { usePersonalia, useVerge } from '../../api/veilarbperson';
 
 function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
     const visVeilederVerktoy = useVisVeilederVerktøy();
     const { personalia } = usePersonalia(brukerFnr);
+    const { verge } = useVerge(brukerFnr);
     const { oppfolging } = useOppfolging(brukerFnr);
     const { showHuskelappRedigereModal } = useModalStore();
 
@@ -44,6 +45,10 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
     };
     const uformattertTelefon: StringOrNothing = selectTelefonnummer(personalia);
     const telefon: string = formaterTelefonnummer(uformattertTelefon);
+    const harPrioritet1Telefon = personalia?.telefon.some(
+        oppføring => oppføring.prioritet === '1' && oppføring.telefonNr === uformattertTelefon
+    );
+    const visSomVerge = selectHarVergemaal(verge) && (harPrioritet1Telefon ?? false);
 
     return (
         <div className="personinfo">
@@ -71,9 +76,9 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
                 {<Label>/</Label>}
                 {uformattertTelefon && (
                     <CopyButton
-                        aria-label="Kopier telefonnummer"
+                        aria-label={visSomVerge ? 'Kopier telefonnummer til verge' : 'Kopier telefonnummer'}
                         copyText={telefon.replaceAll(' ', '')}
-                        text={`Tlf.: ${telefon}`}
+                        text={`Tlf.: ${telefon}${visSomVerge ? '(verge)' : ''}`}
                         activeText="Kopiert!"
                         size="medium"
                         iconPosition="right"
