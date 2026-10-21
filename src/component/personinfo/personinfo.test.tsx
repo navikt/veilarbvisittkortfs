@@ -146,7 +146,7 @@ describe('PersonInfo', () => {
 
         renderPersonInfo();
 
-        expect(await screen.findByText('Tlf.: 46 33 33 33(verge)')).toBeTruthy();
+        expect(await screen.findByText('Tlf.: 46 33 33 33 (verge)')).toBeTruthy();
         expect(screen.getByRole('button', { name: 'Kopier telefonnummer til verge' })).toBeTruthy();
     });
 

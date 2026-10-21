@@ -78,7 +78,7 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
                     <CopyButton
                         aria-label={visSomVerge ? 'Kopier telefonnummer til verge' : 'Kopier telefonnummer'}
                         copyText={telefon.replaceAll(' ', '')}
-                        text={`Tlf.: ${telefon}${visSomVerge ? '(verge)' : ''}`}
+                        text={`Tlf.: ${telefon}${visSomVerge ? ' (verge)' : ''}`}
                         activeText="Kopiert!"
                         size="medium"
                         iconPosition="right"
