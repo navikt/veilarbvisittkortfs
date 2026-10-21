@@ -1,7 +1,7 @@
 import { storeForbokstaver } from './utils';
 import { Dialog, GjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 import { MedUtmeldingskandidat, Oppfolging } from '../api/veilarboppfolging';
-import { Personalia, Verge } from '../api/veilarbperson';
+import { Personalia } from '../api/veilarbperson';
 import { Huskelapp } from '../api/veilarbportefolje';
 import { VeilederData } from '../api/veilarbveileder';
 import { OrNothing, StringOrNothing } from './type/utility-types';
@@ -11,10 +11,6 @@ export function selectSammensattNavn(personalia: Personalia | undefined): string
     if (!personalia) return '';
     const { fornavn, mellomnavn, etternavn } = personalia;
     return storeForbokstaver([fornavn, mellomnavn || '', etternavn]);
-}
-
-export function selectHarVergemaal(verge: Verge | undefined): boolean {
-    return (verge?.vergemaalEllerFremtidsfullmakt?.length ?? 0) > 0;
 }
 
 export function selectHarUbehandledeDialoger(dialoger: Dialog[]): boolean {

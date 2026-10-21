@@ -8,7 +8,6 @@ import { mockPersonalia as mockPersonaliaData } from '../../mock/api/veilarbpers
 import { mockOppfolgingGraphqlResponse } from '../../mock/api/veilarboppfolging';
 import { OppfolgingsDataGraphqlResponse } from '../../api/veilarboppfolging';
 import { GraphqlResponse } from '../../api/GraphqlUtils';
-import { Verge } from '../../api/veilarbperson';
 import { useAppStore } from '../../store/app-store';
 
 const brukerFnr = '10108000398';
@@ -44,27 +43,6 @@ const mockPersonalia = (overrides: Partial<typeof mockPersonaliaData> = {}) =>
         return HttpResponse.json({ data: { person: { ...mockPersonaliaData, ...overrides } }, errors: null });
     });
 
-const mockVerge = (harVergemaal: boolean) => {
-    const response: Verge = {
-        vergemaalEllerFremtidsfullmakt: harVergemaal
-            ? [
-                  {
-                      type: 'Vergemål',
-                      embete: null,
-                      vergeEllerFullmektig: {
-                          navn: { fornavn: null, mellomnavn: null, etternavn: null },
-                          motpartsPersonident: null,
-                          omfang: null
-                      },
-                      folkeregistermetadata: { ajourholdstidspunkt: null, gyldighetstidspunkt: null }
-                  }
-              ]
-            : []
-    };
-
-    return http.post('/veilarbperson/api/v3/person/hent-vergeOgFullmakt', async () => HttpResponse.json(response));
-};
-
 const mockHuskelapp = () =>
     http.post('/veilarbportefolje/api/v1/hent-huskelapp-for-bruker', async () => {
         return HttpResponse.json({});
@@ -84,7 +62,6 @@ const mockFargekategori = () =>
 
 const server = setupServer(
     mockPersonalia(),
-    mockVerge(false),
     mockOppfolgingGraphql(),
     mockErUfordeltBruker(false),
     mockHuskelapp(),
@@ -136,41 +113,12 @@ describe('PersonInfo', () => {
         expect(await screen.findByText('Tlf.: 46 33 33 33')).toBeTruthy();
     });
 
-    test('merker telefonnummer med verge når vergeopplysninger finnes', async () => {
-        server.use(
-            mockPersonalia({
-                telefon: [{ prioritet: '1', telefonNr: '+4746333333', registrertDato: null, master: 'FREG' }]
-            }),
-            mockVerge(true)
-        );
-
-        renderPersonInfo();
-
-        expect(await screen.findByText('Tlf.: 46 33 33 33 (verge)')).toBeTruthy();
-        expect(screen.getByRole('button', { name: 'Kopier telefonnummer til verge' })).toBeTruthy();
-    });
-
-    test('merker ikke telefonnummer med verge når det ikke har prioritet 1', async () => {
-        server.use(
-            mockPersonalia({
-                telefon: [{ prioritet: '2', telefonNr: '80022222', registrertDato: null, master: 'KRR' }]
-            }),
-            mockVerge(true)
-        );
-
-        renderPersonInfo();
-
-        expect(await screen.findByText('Tlf.: 80 02 22 22')).toBeTruthy();
-        expect(screen.queryByRole('button', { name: 'Kopier telefonnummer til verge' })).toBeNull();
-    });
-
     test('viser "Tlf.: -" når bruker ikke har telefonnummer', async () => {
-        server.use(mockPersonalia({ telefon: [] }), mockVerge(true));
+        server.use(mockPersonalia({ telefon: [] }));
 
         renderPersonInfo();
 
         expect(await screen.findByText('Tlf.: -')).toBeTruthy();
-        expect(screen.queryByText('Tlf.: - verge')).toBeNull();
     });
 
     test('viser knapp for å kopiere fødselsnummer', async () => {
