@@ -13,6 +13,7 @@ import { HStack, Tag, TagProps } from '@navikt/ds-react';
 import { Oppfolgingsvedtak14a, useGjeldende14aVedtak } from '../../../api/veilarbvedtaksstotte';
 import { useGjeldendeEskaleringsvarsel } from '../../../api/veilarbdialog';
 import { mapUtmeldingskandidatTag } from '../../../util/utmeldingskandidat-tag';
+import { selectHarVergemaal } from '../../../util/selectors';
 
 interface Etikettprops extends Omit<TagProps, 'variant'> {
     visible: boolean | undefined;
@@ -117,7 +118,7 @@ function Etiketter({ brukerFnr }: { brukerFnr: string }) {
             </Fokus>
             <Advarsel visible={!!personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
             <Advarsel visible={personalia?.egenAnsatt}>Skjermet</Advarsel>
-            <Fokus visible={!isEmpty(verge?.vergemaalEllerFremtidsfullmakt)}>Vergemål</Fokus>
+            <Fokus visible={selectHarVergemaal(verge)}>Vergemål</Fokus>
             <Fokus
                 visible={fullmakt && !isEmpty(fullmakt.fullmakt) && erFullmaktOmradeMedOppfolging(fullmakt.fullmakt)}
             >
