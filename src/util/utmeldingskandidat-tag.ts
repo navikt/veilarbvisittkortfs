@@ -10,7 +10,8 @@ export function mapUtmeldingskandidatTag(tag: KandidatForUtmeldingTag | undefine
             return 'Arbeidssøkerperiode avsluttet';
         case 'FORLENGELSE_UTLOPT':
             return 'Forlengelse utløpt';
-
+        case 'AVSLUTTET_AAP_SAK':
+            return 'AAP-sak avsluttet';
         case undefined:
         case null:
             return null;
