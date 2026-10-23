@@ -59,19 +59,17 @@ function App({ fnr, enhet, tilbakeTilFlate, visVeilederVerktoy, skjulEtiketter, 
                 <Theme asChild theme={valgtTheme}>
                     <div>
                         <div className="visittkortfs">
+                            <Tilbakelenke />
                             <DataFetcher>
                                 {brukerFnr => (
-                                    <>
-                                        <Tilbakelenke />
-                                        <div className="visittkortfs__container">
-                                            <PersonInfo brukerFnr={brukerFnr} />
-                                            {!skjulEtiketter && <Etiketter brukerFnr={brukerFnr} />}
-                                            <div className="visittkortfs__actions">
-                                                <Veilederverktoy />
-                                                <DarkModeSwitch checked={darkMode} onChange={byttTheme} />
-                                            </div>
+                                    <div className="visittkortfs__container flex flex-wrap items-center gap-x-[var(--ax-space-16)] gap-y-[var(--ax-space-8)]">
+                                        <PersonInfo brukerFnr={brukerFnr} />
+                                        {!skjulEtiketter && <Etiketter brukerFnr={brukerFnr} />}
+                                        <div className="visittkortfs__actions [margin-left:auto]">
+                                            <Veilederverktoy />
+                                            <DarkModeSwitch checked={darkMode} onChange={byttTheme} />
                                         </div>
-                                    </>
+                                    </div>
                                 )}
                             </DataFetcher>
                             <VeilederverktoyModalController />

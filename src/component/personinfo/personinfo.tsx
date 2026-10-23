@@ -46,40 +46,36 @@ function PersonInfo({ brukerFnr }: { brukerFnr: string }) {
     const telefon: string = formaterTelefonnummer(uformattertTelefon);
 
     return (
-        <div className="personinfo">
-            {personalia?.kjonn && <KjonnIkon kjonn={personalia?.kjonn as string} />}
-            <NavnOgAlder fodselsdato={personalia?.fodselsdato as string} navn={navn} />
-            <div className="verktoylinje">
-                {sjekkHarTilgangTilHuskelappEllerFargekategori && brukerFnr && (
-                    <>
-                        <Fargekategoriknapp />
-                        <HuskelappKnapp
-                            onClick={klikkShowHuskelapp}
-                            brukerFnr={brukerFnr}
-                            visVeilederVerktoy={visVeilederVerktoy}
+        <div className="grid min-w-max flex-none grid-cols-[2rem_16.5rem_max-content] items-center">
+            <div className="h-[2rem] w-[2rem]">{personalia?.kjonn && <KjonnIkon kjonn={personalia.kjonn} />}</div>
+            <NavnOgAlder fodselsdato={personalia?.fodselsdato as string} navn={navn} brukerFnr={brukerFnr} />
+            <div className="verktoylinje min-w-max">
+                <div className="flex w-[calc(6rem+var(--ax-space-4))] shrink-0 items-center gap-[var(--ax-space-4)]">
+                    {sjekkHarTilgangTilHuskelappEllerFargekategori && brukerFnr && (
+                        <>
+                            <Fargekategoriknapp />
+                            <HuskelappKnapp
+                                onClick={klikkShowHuskelapp}
+                                brukerFnr={brukerFnr}
+                                visVeilederVerktoy={visVeilederVerktoy}
+                            />
+                        </>
+                    )}
+                </div>
+                <div className="flex w-max flex-col items-start">
+                    {uformattertTelefon && (
+                        <CopyButton
+                            aria-label="Kopier telefonnummer"
+                            className="shrink-0 whitespace-nowrap"
+                            copyText={telefon.replaceAll(' ', '')}
+                            text={`Tlf.: ${telefon}`}
+                            activeText="Kopiert!"
+                            size="small"
+                            iconPosition="right"
                         />
-                    </>
-                )}
-                <CopyButton
-                    aria-label="Kopier fødselsnummer"
-                    copyText={brukerFnr}
-                    text={`F.nr.: ${brukerFnr}`}
-                    activeText="Kopiert!"
-                    size="medium"
-                    iconPosition="right"
-                />
-                {<Label>/</Label>}
-                {uformattertTelefon && (
-                    <CopyButton
-                        aria-label="Kopier telefonnummer"
-                        copyText={telefon.replaceAll(' ', '')}
-                        text={`Tlf.: ${telefon}`}
-                        activeText="Kopiert!"
-                        size="medium"
-                        iconPosition="right"
-                    />
-                )}
-                {!uformattertTelefon && <Label className="uten-telefon">Tlf.: -</Label>}
+                    )}
+                    {!uformattertTelefon && <Label className="uten-telefon shrink-0 whitespace-nowrap">Tlf.: -</Label>}
+                </div>
             </div>
         </div>
     );

@@ -97,6 +97,7 @@ export const Veilederverktoy = () => {
     return (
         <Dropdown>
             <ButtonWithClickMetric
+                size={'small'}
                 as={Dropdown.Toggle}
                 icon={<CogIcon title="a11y-title" fontSize="1.5rem" aria-hidden={true} />}
                 metricName="dropdown-trykket"
