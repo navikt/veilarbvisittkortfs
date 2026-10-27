@@ -12,6 +12,14 @@ export function mapUtmeldingskandidatTag(tag: KandidatForUtmeldingTag | undefine
             return 'Forlengelse utløpt';
         case 'AVSLUTTET_AAP_SAK':
             return 'AAP-sak avsluttet';
+        case 'FOLKEREGISTERSTATUS_FORSVUNNET':
+            return 'Folkeregisterstatus: Forsvunnet';
+        case 'FOLKEREGISTERSTATUS_OPPHORT':
+            return 'Folkeregisterstatus: Opphørt';
+        case 'FOLKEREGISTERSTATUS_UKJENT':
+            return 'Folkeregisterstatus: Ukjent';
+        case 'FOLKEREGISTERSTATUS_INGEN_STATUS':
+            return 'Folkeregisterstatus: Ingen status';
         case undefined:
         case null:
             return null;

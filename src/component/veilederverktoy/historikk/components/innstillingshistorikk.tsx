@@ -29,6 +29,10 @@ const typeTilTekst: InnstillingsHistorikkTypeTilTekst = {
     FORLENGELSE_OPPRETTET: 'Forlengelse av oppfølgingsperiode opprettet',
     FORLENGELSE_ENDRET: 'Forlengelse av oppfølgingsperiode endret',
     FORLENGELSE_UTLOPT: 'Forlengelse av oppfølgingsperiode utløpt',
+    FOLKEREGISTERSTATUS_FORSVUNNET: 'Folkeregisterstatus: Forsvunnet',
+    FOLKEREGISTERSTATUS_OPPHORT: 'Folkeregisterstatus: Opphørt',
+    FOLKEREGISTERSTATUS_UKJENT: 'Folkeregisterstatus: Ukjent',
+    FOLKEREGISTERSTATUS_INGEN_STATUS: 'Folkeregisterstatus: Ingen status',
     ESKALERING_STARTET: 'Varsel sendt', // TODO Typefiksing: Dette alternativet ikkje eigentleg gyldig som input i komponenten - Ingrid, 2024-02-02
     ESKALERING_STOPPET: 'Varsel deaktivert', // TODO Typefiksing: Dette alternativet ikkje eigentleg gyldig som input i komponenten - Ingrid, 2024-02-02
     OPPFOLGINGSENHET_ENDRET: 'Oppfølgingsenhet endret',
