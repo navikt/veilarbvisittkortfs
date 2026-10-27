@@ -141,8 +141,8 @@ export const useVerge = (fnr: string | undefined) => {
 export const useFullmakt = (fnr: string | undefined) => {
     const url = '/veilarbperson/api/v3/person/hent-fullmakt';
     const { data, error, isLoading } = useSWR<FullmaktDTO, ErrorMessage>(
-        fnr ? `${url}/${fnr}` : null,
-        () => fetchWithPost(url, { fnr: fnr as string }),
+        fnr && behandlingsnummer ? `${url}/${fnr}` : null,
+        () => fetchWithPost(url, { fnr: fnr as string, behandlingsnummer } as PdlRequest),
         swrOptions
     );
     return { fullmakt: data, error, isLoading };
