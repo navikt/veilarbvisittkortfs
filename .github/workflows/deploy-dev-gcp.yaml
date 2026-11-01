@@ -38,7 +38,7 @@ jobs:
         run: pnpm build:dev
 
       - name: Upload to CDN
-        uses: nais/deploy/actions/cdn-upload/v2@7ad7c2b833e1db74a80954e3ee6bb6ac060a8ae7 # ratchet:nais/deploy/actions/cdn-upload/v2@master
+        uses: nais/deploy/actions/cdn-upload/v2@3944168fd20b7eea3818e97de3810f74b54c78ff # ratchet:nais/deploy/actions/cdn-upload/v2@master
         with:
           team: poao
           source: ./build/
