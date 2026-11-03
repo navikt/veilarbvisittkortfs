@@ -16,6 +16,16 @@ export interface Personalia {
     egenAnsatt: boolean;
     sikkerhetstiltak: StringOrNothing;
     telefon: PersonaliaTelefon[];
+    etiketter: Etiketter[];
+}
+
+export enum Etiketter {
+    VERGEMAAL_OPPFOLGING = 'VERGEMAAL_OPPFOLGING',
+    FULLMEKTIG_OPPFOLGING = 'FULLMEKTIG_OPPFOLGING',
+    SPRAAKTOLK = 'SPRAAKTOLK',
+    TALETOLK = 'TALETOLK',
+    REPRESENTASJON_UKJENT = 'REPRESENTASJON_UKJENT',
+    TOLK_UKJENT = 'TOLK_UKJENT'
 }
 
 export interface VergeNavn {
@@ -184,6 +194,7 @@ const graphqlQuery = `
            egenAnsatt
            sikkerhetstiltak
            telefon { prioritet telefonNr registrertDato master }
+           etiketter
             }
         }
     `;

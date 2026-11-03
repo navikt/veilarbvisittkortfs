@@ -1,4 +1,5 @@
 import {
+    Etiketter,
     HarBruktNivaa4Type,
     Personalia,
     PersonaliaTelefon,
@@ -46,7 +47,8 @@ export const mockPersonalia: Personalia = {
     sikkerhetstiltak: 'Ansatte i samtale',
     egenAnsatt: true,
     kjonn: 'KVINNE',
-    telefon: mockTelefon
+    telefon: mockTelefon,
+    etiketter: [Etiketter.VERGEMAAL_OPPFOLGING]
 };
 
 const mockVerge: Verge = {
