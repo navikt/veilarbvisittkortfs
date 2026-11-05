@@ -89,8 +89,8 @@ const parseResponseData = async <T>(response: Response): Promise<T> => {
 const createHttpError = <T>(response: Response, config: HttpRequestConfig, responseData: T): HttpError<T> => {
     const error = new HttpError<T>(`Request failed with status code ${response.status}`, config, {
         data: responseData,
-        status: response.status,
-        statusText: response.statusText,
+        status: response?.status,
+        statusText: response?.statusText,
         headers: responseHeadersToObject(response.headers),
         config
     });
@@ -230,11 +230,11 @@ const handleResponse = async (respons: Response, config: HttpRequestConfig) => {
     try {
         return await respons.text().then(res => (!res ? null : JSON.parse(res)));
     } catch (err) {
-        return {
-            error: err,
-            status: null,
-            info: null
-        };
+        throw createHttpError(
+            respons,
+            config,
+            `Could  not parse response as JSON, ${(err as Error)?.message}: ${await parseResponseData(respons)}`
+        );
     }
 };
 
