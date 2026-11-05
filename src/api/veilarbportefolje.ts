@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { ErrorMessage, fetchWithPost, httpDelete, httpPost, httpPut, HttpPromise, swrOptions } from './httpUtils';
+import { fetchWithPost, httpDelete, httpPost, httpPut, HttpPromise, swrOptions, HttpError } from './httpUtils';
 import { OrNothing, StringOrNothing } from '../util/type/utility-types';
 
 export interface Huskelapp {
@@ -81,7 +81,7 @@ export function endreFargekategori(fargekategoriVerdi: string, fnr: string): Htt
 
 export function useErUfordeltBruker(fnr: string | undefined, skalHenteData: boolean = true) {
     const url = '/veilarbportefolje/api/v1/hent-er-bruker-ufordelt';
-    const { data, error, isLoading, mutate } = useSWR<boolean, ErrorMessage>(
+    const { data, error, isLoading, mutate } = useSWR<boolean, HttpError>(
         skalHenteData && fnr ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr as string }),
         swrOptions
@@ -91,7 +91,7 @@ export function useErUfordeltBruker(fnr: string | undefined, skalHenteData: bool
 
 export function useHuskelapp(fnr: string | undefined, skalHenteData: boolean = true) {
     const url = '/veilarbportefolje/api/v1/hent-huskelapp-for-bruker';
-    const { data, error, isLoading, mutate } = useSWR<Huskelapp, ErrorMessage>(
+    const { data, error, isLoading, mutate } = useSWR<Huskelapp, HttpError>(
         skalHenteData && fnr ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr as string }),
         swrOptions
@@ -101,7 +101,7 @@ export function useHuskelapp(fnr: string | undefined, skalHenteData: boolean = t
 
 export function useFargekategori(fnr: string | undefined, skalHenteData: boolean = true) {
     const url = '/veilarbportefolje/api/v1/hent-fargekategori';
-    const { data, error, isLoading, mutate } = useSWR<Fargekategori, ErrorMessage>(
+    const { data, error, isLoading, mutate } = useSWR<Fargekategori, HttpError>(
         skalHenteData && fnr ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr as string }),
         swrOptions
