@@ -1,4 +1,4 @@
-import { ErrorMessage, fetchWithPost, swrOptions } from './httpUtils';
+import { fetchWithPost, HttpError, swrOptions } from './httpUtils';
 import { StringOrNothing } from '../util/type/utility-types';
 import useSWR from 'swr';
 import { behandlingsnummer } from './behandlingsnummer';
@@ -130,7 +130,7 @@ export const usePersonalia = (fnr: string | undefined) => {
 
 export const useVerge = (fnr: string | undefined) => {
     const url = '/veilarbperson/api/v3/person/hent-vergeOgFullmakt';
-    const { data, error, isLoading } = useSWR<Verge, ErrorMessage>(
+    const { data, error, isLoading } = useSWR<Verge, HttpError>(
         fnr && behandlingsnummer ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr as string, behandlingsnummer } as PdlRequest),
         swrOptions
@@ -140,7 +140,7 @@ export const useVerge = (fnr: string | undefined) => {
 
 export const useFullmakt = (fnr: string | undefined) => {
     const url = '/veilarbperson/api/v3/person/hent-fullmakt';
-    const { data, error, isLoading } = useSWR<FullmaktDTO, ErrorMessage>(
+    const { data, error, isLoading } = useSWR<FullmaktDTO, HttpError>(
         fnr && behandlingsnummer ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr as string, behandlingsnummer } as PdlRequest),
         swrOptions
@@ -150,7 +150,7 @@ export const useFullmakt = (fnr: string | undefined) => {
 
 export const useSpraakTolk = (fnr: string | undefined) => {
     const url = '/veilarbperson/api/v3/person/hent-tolk';
-    const { data, error, isLoading } = useSWR<SpraakTolk, ErrorMessage>(
+    const { data, error, isLoading } = useSWR<SpraakTolk, HttpError>(
         fnr && behandlingsnummer ? `${url}/${fnr}/${behandlingsnummer}` : null,
         () => fetchWithPost(url, { fnr: fnr as string, behandlingsnummer } as PdlRequest),
         swrOptions
@@ -160,7 +160,7 @@ export const useSpraakTolk = (fnr: string | undefined) => {
 
 export function useOpplysningerOmArbeidssokerMedProfilering(fnr: string | undefined) {
     const url = '/veilarbperson/api/v3/person/hent-siste-opplysninger-om-arbeidssoeker-med-profilering';
-    return useSWR<OpplysningerOmArbeidssoekerMedProfilering, ErrorMessage>(
+    return useSWR<OpplysningerOmArbeidssoekerMedProfilering, HttpError>(
         fnr ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr as string }),
         swrOptions

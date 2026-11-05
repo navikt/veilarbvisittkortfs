@@ -179,11 +179,6 @@ export interface Fnr {
     fnr: string;
 }
 
-export interface ErrorMessage {
-    error: Error;
-    status: number;
-}
-
 export type RequestTypes =
     | FnrOgEnhetId
     | Fnr
@@ -211,21 +206,19 @@ const GETOptions = {
 };
 
 export const fetchWithPost = async (url: string, requestBody: RequestTypes) => {
-    const respons = await fetch(url, createPOSToptions(requestBody));
-    return handleResponse(respons);
+    const options = createPOSToptions(requestBody);
+    const respons = await fetch(url, options);
+    return handleResponse(respons, options);
 };
 
 export const get = async (url: string) => {
     const respons = await fetch(url, GETOptions);
-    return handleResponse(respons);
+    return handleResponse(respons, GETOptions);
 };
 
-const handleResponse = async (respons: Response) => {
+const handleResponse = async (respons: Response, config: HttpRequestConfig) => {
     if (respons.status >= 400) {
-        throw {
-            error: new Error('Det har skjedd en feil ved henting av data.'),
-            status: respons.status
-        } as ErrorMessage;
+        throw createHttpError(respons, config, parseResponseData(respons));
     }
     if (respons.status === 204) {
         return {
