@@ -1,4 +1,4 @@
-import { createPOSToptions, ErrorMessage, httpPost, swrOptions } from './httpUtils';
+import { HttpError, httpPost, swrOptions } from './httpUtils';
 import useSWR from 'swr';
 
 export interface Oppfolgingsvedtak14a {
@@ -31,21 +31,11 @@ export function useHarUtkast(fnr: string | null) {
 
 export function useGjeldende14aVedtak(fnr: string | undefined) {
     const url = '/veilarbvedtaksstotte/api/hent-gjeldende-14a-vedtak';
-    const { data, error, isLoading } = useSWR<Oppfolgingsvedtak14a | null, ErrorMessage>(
+    const { data, error, isLoading } = useSWR<Oppfolgingsvedtak14a | null, HttpError>(
         fnr ? `${url}/${fnr}` : null,
         async () => {
-            const response = await fetch(url, createPOSToptions({ fnr: fnr as string }));
-
-            if (response.status === 200) {
-                try {
-                    const text = await response.text();
-                    return (await JSON.parse(text)) as Oppfolgingsvedtak14a;
-                } catch {
-                    return null;
-                }
-            } else {
-                return null;
-            }
+            const response = await httpPost<Oppfolgingsvedtak14a>(url, { fnr: fnr as string });
+            return response.data;
         },
         swrOptions
     );

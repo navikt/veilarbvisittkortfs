@@ -1,4 +1,4 @@
-import { ErrorMessage, fetchWithPost, get, httpGet, HttpPromise, swrOptions } from './httpUtils';
+import { fetchWithPost, get, HttpError, httpGet, HttpPromise, swrOptions } from './httpUtils';
 import useSWR from 'swr';
 
 export interface VeilederData {
@@ -21,7 +21,7 @@ export type VeilederDataListeRequest = { identer: string[] };
 
 export const useInnloggetVeileder = () => {
     const url = '/veilarbveileder/api/veileder/me';
-    const { data, error, isLoading } = useSWR<VeilederData, ErrorMessage>(url, () => get(url), swrOptions);
+    const { data, error, isLoading } = useSWR<VeilederData, HttpError>(url, () => get(url), swrOptions);
     return { innloggetVeileder: data, error, isLoading };
 };
 
@@ -41,7 +41,7 @@ export const useVeilederDataListe = (identer: string[] | null) => {
 
 export const useVeilederePaEnhet = (enhetId: string | undefined) => {
     const url = `/veilarbveileder/api/enhet/${enhetId}/veiledere`;
-    const { data, error, isLoading } = useSWR<VeilederListe, ErrorMessage>(
+    const { data, error, isLoading } = useSWR<VeilederListe, HttpError>(
         enhetId ? url : null,
         () => get(url),
         swrOptions

@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
-import { ErrorMessage, fetchWithPost, httpPost, HttpPromise, swrOptions } from './httpUtils';
+import { fetchWithPost, HttpError, httpPost, HttpPromise, swrOptions } from './httpUtils';
 import { OrNothing, StringOrNothing } from '../util/type/utility-types';
 import { GraphqlResponse } from './GraphqlUtils';
 
@@ -107,7 +107,7 @@ export interface InnstillingHistorikkInnslag {
 
 export const useInnstillingsHistorikk = (fnr: string | undefined) => {
     const url = '/veilarboppfolging/api/v3/hent-instillingshistorikk';
-    const { data, isLoading, error } = useSWR<InnstillingHistorikkInnslag[], ErrorMessage>(
+    const { data, isLoading, error } = useSWR<InnstillingHistorikkInnslag[], HttpError>(
         fnr ? `${url}/${fnr}` : null,
         () => fetchWithPost(url, { fnr: fnr as string }),
         swrOptions
@@ -174,7 +174,7 @@ export function useForlengOppfolging() {
     const url = '/veilarboppfolging/api/forlengelse';
     const { trigger, isMutating, error } = useSWRMutation<
         ForlengOppfolgingResponse,
-        ErrorMessage,
+        HttpError,
         string,
         ForlengOppfolgingRequest
     >(url, (url, { arg }) => fetchWithPost(url, arg));
@@ -348,7 +348,7 @@ const graphqlUrl = '/veilarboppfolging/api/graphql';
 export const useVeilarboppfolgingData = (fnr: string | undefined) => {
     const { data, error, isLoading, mutate } = useSWR<
         (Oppfolging & OppfolgingStatus & MedUtmeldingskandidat & { sykmeldtStatus: SykmeldtStatus | null }) | undefined,
-        Error
+        HttpError
     >(
         fnr ? `${graphqlUrl}/${fnr}` : null,
         () =>
@@ -389,7 +389,7 @@ export interface BrukerStatus {
 
 export function useBrukerHarAktiveTiltaksdeltakelser(fnr: string) {
     const url = '/veilarboppfolging/api/graphql';
-    const { data, error, isLoading } = useSWR<GraphqlResponse<BrukerStatusResponse>, ErrorMessage>(
+    const { data, error, isLoading } = useSWR<GraphqlResponse<BrukerStatusResponse>, HttpError>(
         fnr ? `brukerHarAktiveTiltaksdeltakelser/${fnr}` : null,
         () =>
             fetchWithPost(url, {
