@@ -108,13 +108,11 @@ describe('AvsluttOppfolging', () => {
         mocks.dialoger = { dialogerData: [], dialogerLoading: false };
         render(<AvsluttOppfolging brukerFnr="123" />);
 
-        expect(
-            screen.getByText(
-                (_, element) =>
-                    element?.tagName === 'P' &&
-                    element.textContent === 'Du kan ikke avslutte oppfølgingsperioden fordi:'
-            )
-        ).toBeTruthy();
+        const forklaring = screen.getByText(
+            (_, element) =>
+                element?.tagName === 'P' && element.textContent === 'Du kan ikke avslutte oppfølgingsperioden fordi:'
+        );
+        expect(forklaring.classList.contains('max-w-[66ch]')).toBe(true);
         expect(screen.getByText('Brukeren har aktive arbeidsmarkedstiltak.')).toBeTruthy();
         expect(screen.getByText('Brukeren deltar i på KVP. KVP må avsluttes først.')).toBeTruthy();
         expect(

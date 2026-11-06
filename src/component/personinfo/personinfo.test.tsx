@@ -80,9 +80,22 @@ describe('PersonInfo', () => {
     test('viser navn og alder basert på personalia', async () => {
         server.use(mockPersonalia({ fornavn: 'GRØNN', mellomnavn: 'LIV', etternavn: 'STAFELLI' }));
 
-        renderPersonInfo();
+        const { container } = renderPersonInfo();
 
         expect(await screen.findByText(/Grønn Liv Stafelli/i)).toBeTruthy();
+        expect(container.firstElementChild?.classList.contains('flex-none')).toBe(true);
+        expect(container.firstElementChild?.classList.contains('min-w-max')).toBe(true);
+        expect(container.firstElementChild?.classList.contains('grid-cols-[2rem_16.5rem_max-content]')).toBe(true);
+        const overskrift = screen.getByRole('heading', { level: 2 });
+        expect(overskrift.parentElement?.classList.contains('ml-2')).toBe(true);
+        expect(overskrift.parentElement?.contains(screen.getByRole('button', { name: 'Kopier fødselsnummer' }))).toBe(
+            true
+        );
+        expect(
+            container
+                .querySelector('.verktoylinje')
+                ?.contains(screen.getByRole('button', { name: 'Kopier fødselsnummer' }))
+        ).toBe(false);
     });
 
     test('viser kvinne-ikon når personalia har kjønn KVINNE', async () => {
@@ -101,6 +114,16 @@ describe('PersonInfo', () => {
         expect(await screen.findByAltText('mann')).toBeTruthy();
     });
 
+    test('beholder plass til ikonet når kjønn mangler', async () => {
+        server.use(mockPersonalia({ kjonn: '' }));
+
+        const { container } = renderPersonInfo();
+
+        expect(await screen.findByText(`F.nr.: ${brukerFnr}`)).toBeTruthy();
+        expect(container.firstElementChild?.firstElementChild?.classList.contains('w-[2rem]')).toBe(true);
+        expect(container.querySelector('.personinfo__ikon')).toBeNull();
+    });
+
     test('viser formatert telefonnummer når bruker har telefon', async () => {
         server.use(
             mockPersonalia({
@@ -111,6 +134,9 @@ describe('PersonInfo', () => {
         renderPersonInfo();
 
         expect(await screen.findByText('Tlf.: 46 33 33 33')).toBeTruthy();
+        expect(
+            screen.getByRole('button', { name: 'Kopier telefonnummer' }).classList.contains('whitespace-nowrap')
+        ).toBe(true);
     });
 
     test('viser "Tlf.: -" når bruker ikke har telefonnummer', async () => {
@@ -118,13 +144,16 @@ describe('PersonInfo', () => {
 
         renderPersonInfo();
 
-        expect(await screen.findByText('Tlf.: -')).toBeTruthy();
+        expect((await screen.findByText('Tlf.: -')).classList.contains('whitespace-nowrap')).toBe(true);
     });
 
     test('viser knapp for å kopiere fødselsnummer', async () => {
         renderPersonInfo();
 
         expect(await screen.findByText(`F.nr.: ${brukerFnr}`)).toBeTruthy();
+        expect(
+            screen.getByRole('button', { name: 'Kopier fødselsnummer' }).classList.contains('whitespace-nowrap')
+        ).toBe(true);
     });
 
     test('viser huskelapp- og fargekategoriknapp når veileder har tilgang til brukers kontor og bruker ikke er ufordelt', async () => {
@@ -142,12 +171,13 @@ describe('PersonInfo', () => {
             mockErUfordeltBruker(false)
         );
 
-        renderPersonInfo();
+        const { container } = renderPersonInfo();
 
         await waitFor(() => {
             expect(screen.getByTitle('Opprett huskelapp')).toBeTruthy();
         });
         expect(screen.getByTitle('Ingen kategori: endre')).toBeTruthy();
+        expect(container.querySelectorAll('.verktoylinje > div:first-child > button')).toHaveLength(2);
     });
 
     test('skjuler huskelapp- og fargekategoriknapp når bruker er ufordelt', async () => {
@@ -165,13 +195,15 @@ describe('PersonInfo', () => {
             mockErUfordeltBruker(true)
         );
 
-        renderPersonInfo();
+        const { container } = renderPersonInfo();
 
         await waitFor(() => {
             expect(screen.getByText(`F.nr.: ${brukerFnr}`)).toBeTruthy();
         });
         expect(screen.queryByTitle('Opprett huskelapp')).toBeNull();
         expect(screen.queryByTitle('Ingen kategori: endre')).toBeNull();
+        expect(container.querySelector('.verktoylinje > div:first-child')).toBeTruthy();
+        expect(container.querySelectorAll('.verktoylinje > div:first-child > button')).toHaveLength(0);
     });
 
     test('skjuler huskelapp- og fargekategoriknapp når bruker ikke har veileder', async () => {

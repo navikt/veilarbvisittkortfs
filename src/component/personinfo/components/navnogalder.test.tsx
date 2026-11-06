@@ -47,7 +47,13 @@ describe('tester utregning av alder', () => {
         const iDag = new Date('2024-02-02');
         vi.setSystemTime(iDag);
 
-        render(<NavnOgAlder fodselsdato="2000-01-01" navn="Test" />);
-        expect(screen.getByText('Test (24 år)')).toBeTruthy();
+        render(<NavnOgAlder fodselsdato="2000-01-01" navn="Test" brukerFnr="00000000000" />);
+        const overskrift = screen.getByRole('heading', { level: 2 });
+        const kopierFnr = screen.getByRole('button', { name: 'Kopier fødselsnummer' });
+        expect(overskrift.textContent).toBe('Test (24 år)');
+        expect(overskrift.classList.contains('aksel-heading--xsmall')).toBe(true);
+        expect(kopierFnr.textContent).toContain('F.nr.: 00000000000');
+        expect(kopierFnr.parentElement).toBe(overskrift.parentElement);
+        expect(overskrift.parentElement?.classList.contains('personinfo__navn-og-alder')).toBe(true);
     });
 });
