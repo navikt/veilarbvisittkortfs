@@ -4,19 +4,6 @@ export function isLocalDevelopment(): boolean {
     return import.meta.env.MODE === 'mock';
 }
 
-export const erProd = () => import.meta.env.PROD;
-
-export function ifResponseHasData<T>(
-    callback: (data: T) => void
-): (res: { status: number; data: T }) => Promise<{ status: number; data: T }> {
-    return (res: { status: number; data: T }) => {
-        if (res.status < 300 && res.data) {
-            callback(res.data);
-        }
-        return Promise.resolve(res);
-    };
-}
-
 export function storeForbokstaver(tekster: string[]): string {
     const tekst = tekster.filter(s => s).join(' ');
 
