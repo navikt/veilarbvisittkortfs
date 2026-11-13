@@ -76,7 +76,8 @@ export type UtmeldingskandidatHistorikkType =
     | 'FOLKEREGISTERSTATUS_FORSVUNNET'
     | 'FOLKEREGISTERSTATUS_OPPHORT'
     | 'FOLKEREGISTERSTATUS_UKJENT'
-    | 'FOLKEREGISTERSTATUS_INGEN_STATUS';
+    | 'FOLKEREGISTERSTATUS_INGEN_STATUS'
+    | 'IKKE_LENGER_SYKMELDT';
 
 export type InnstillingsHistorikkType =
     | 'SATT_TIL_DIGITAL'
@@ -260,7 +261,8 @@ export type KandidatForUtmeldingTag =
     | 'FOLKEREGISTERSTATUS_FORSVUNNET'
     | 'FOLKEREGISTERSTATUS_OPPHORT'
     | 'FOLKEREGISTERSTATUS_UKJENT'
-    | 'FOLKEREGISTERSTATUS_INGEN_STATUS';
+    | 'FOLKEREGISTERSTATUS_INGEN_STATUS'
+    | 'IKKE_LENGER_SYKMELDT';
 
 export interface MedUtmeldingskandidat {
     utmeldingskandidat: {
