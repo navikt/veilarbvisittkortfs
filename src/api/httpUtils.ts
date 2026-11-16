@@ -89,8 +89,8 @@ const parseResponseData = async <T>(response: Response): Promise<T> => {
 const createHttpError = <T>(response: Response, config: HttpRequestConfig, responseData: T): HttpError<T> => {
     const error = new HttpError<T>(`Request failed with status code ${response.status}`, config, {
         data: responseData,
-        status: response.status,
-        statusText: response.statusText,
+        status: response?.status,
+        statusText: response?.statusText,
         headers: responseHeadersToObject(response.headers),
         config
     });
@@ -179,11 +179,6 @@ export interface Fnr {
     fnr: string;
 }
 
-export interface ErrorMessage {
-    error: Error;
-    status: number;
-}
-
 export type RequestTypes =
     | FnrOgEnhetId
     | Fnr
@@ -211,21 +206,19 @@ const GETOptions = {
 };
 
 export const fetchWithPost = async (url: string, requestBody: RequestTypes) => {
-    const respons = await fetch(url, createPOSToptions(requestBody));
-    return handleResponse(respons);
+    const options = createPOSToptions(requestBody);
+    const respons = await fetch(url, options);
+    return handleResponse(respons, options);
 };
 
 export const get = async (url: string) => {
     const respons = await fetch(url, GETOptions);
-    return handleResponse(respons);
+    return handleResponse(respons, GETOptions);
 };
 
-const handleResponse = async (respons: Response) => {
+const handleResponse = async (respons: Response, config: HttpRequestConfig) => {
     if (respons.status >= 400) {
-        throw {
-            error: new Error('Det har skjedd en feil ved henting av data.'),
-            status: respons.status
-        } as ErrorMessage;
+        throw createHttpError(respons, config, parseResponseData(respons));
     }
     if (respons.status === 204) {
         return {
@@ -237,11 +230,11 @@ const handleResponse = async (respons: Response) => {
     try {
         return await respons.text().then(res => (!res ? null : JSON.parse(res)));
     } catch (err) {
-        return {
-            error: err,
-            status: null,
-            info: null
-        };
+        throw createHttpError(
+            respons,
+            config,
+            `Could  not parse response as JSON, ${(err as Error)?.message}: ${await parseResponseData(respons)}`
+        );
     }
 };
 
