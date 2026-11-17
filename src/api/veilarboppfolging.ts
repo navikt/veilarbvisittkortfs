@@ -24,6 +24,7 @@ export interface AvslutningStatus {
     erDeltakerIUngdomsprogrammet: boolean;
     erArbeidssoeker: boolean;
     harAap: boolean;
+    erSykmeldtUtenArbeidsgiver: boolean;
 }
 
 export interface Oppfolging {
