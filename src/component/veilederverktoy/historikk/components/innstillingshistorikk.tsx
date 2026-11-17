@@ -37,7 +37,7 @@ const typeTilTekst: InnstillingsHistorikkTypeTilTekst = {
     ESKALERING_STOPPET: 'Varsel deaktivert', // TODO Typefiksing: Dette alternativet ikkje eigentleg gyldig som input i komponenten - Ingrid, 2024-02-02
     OPPFOLGINGSENHET_ENDRET: 'Oppfølgingsenhet endret',
     AVSLUTTET_AAP_SAK: 'Avsluttet AAP-sak',
-    IKKE_LENGER_SYKMELDT: 'Ikke lenger sykmeldt'
+    IKKE_LENGER_SYKMELDT_UTEN_ARBEIDSGIVER: 'Ikke lenger sykmeldt uten arbeidsgiver'
 };
 
 function InnstillingHistorikkKomponent({ innstillingsHistorikk }: InnstillingHistorikkKomponentProps) {
