@@ -2,7 +2,7 @@ import React from 'react';
 import { Loader } from '@navikt/ds-react';
 import { useBrukerFnr } from '../store/app-store';
 import { useOppfolgingsstatus } from '../api/veilarboppfolging';
-import { usePersonalia, useVerge, useFullmakt, useSpraakTolk } from '../api/veilarbperson';
+import { usePersonalia, useVerge, useFullmakt, useSpraakTolk, useVisittkortEtiketter } from '../api/veilarbperson';
 import { useInnloggetVeileder, useVeilederePaEnhet } from '../api/veilarbveileder';
 import { useGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 import './data-fetcher.less';
@@ -19,6 +19,7 @@ export function DataFetcher({ children }: Props) {
     // Start henting av data
     const { oppfolging, isLoading: oppfolgingsstatusIsLoading } = useOppfolgingsstatus(brukerFnr);
     const { isLoading: personaliaIsLoading } = usePersonalia(brukerFnr);
+    useVisittkortEtiketter(brukerFnr);
     const { isLoading: innloggetVeilederIsLoading } = useInnloggetVeileder();
     useVerge(brukerFnr);
     useFullmakt(brukerFnr);

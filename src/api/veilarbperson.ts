@@ -4,6 +4,7 @@ import useSWR from 'swr';
 import { behandlingsnummer } from './behandlingsnummer';
 import { logGraphQLError } from './ao-oppfolgingskontor';
 import { GraphqlResponse } from './GraphqlUtils';
+import type { KandidatForUtmeldingTag } from './veilarboppfolging';
 
 export interface Personalia {
     fornavn: string;
@@ -16,16 +17,35 @@ export interface Personalia {
     egenAnsatt: boolean;
     sikkerhetstiltak: StringOrNothing;
     telefon: PersonaliaTelefon[];
-    etiketter: Etiketter[];
 }
 
-export enum Etiketter {
-    VERGEMAAL_OPPFOLGING = 'VERGEMAAL_OPPFOLGING',
-    FULLMEKTIG_OPPFOLGING = 'FULLMEKTIG_OPPFOLGING',
-    SPRAAKTOLK = 'SPRAAKTOLK',
-    TALETOLK = 'TALETOLK',
-    REPRESENTASJON_UKJENT = 'REPRESENTASJON_UKJENT',
-    TOLK_UKJENT = 'TOLK_UKJENT'
+export interface VisittkortEtiketter {
+    dod: 'DOD' | 'UKJENT_PERSONALIA' | null;
+    diskresjonskode: 'KODE_6' | 'KODE_7' | 'KODE_19' | 'UKJENT_PERSONALIA' | null;
+    utmeldingskandidat:
+        Exclude<KandidatForUtmeldingTag, 'IKKE_LENGER_SYKMELDT_UTEN_ARBEIDSGIVER'> | 'UKJENT_UTMELDINGSKANDIDAT' | null;
+    sikkerhetstiltak: {
+        etikett: 'SIKKERHETSTILTAK' | 'UKJENT_SIKKERHETSTILTAK';
+        beskrivelse: string | null;
+    } | null;
+    skjerming: 'SKJERMET' | 'UKJENT_SKJERMING' | null;
+    vergemaalOppfolging: 'VERGEMAAL_OPPFOLGING' | 'UKJENT_REPRESENTASJON' | null;
+    fullmaktOppfolging: 'FULLMAKT_OPPFOLGING' | 'UKJENT_REPRESENTASJON' | null;
+    tegnspraaktolk: 'TEGNSPRAAKTOLK' | 'UKJENT_TOLKEBEHOV' | null;
+    talespraaktolk: 'TALESPRAAKTOLK' | 'UKJENT_TOLKEBEHOV' | null;
+    kvp: 'KVP' | 'UKJENT_OPPFOLGING' | null;
+    manuellOppfolging: 'MANUELL_OPPFOLGING' | 'UKJENT_OPPFOLGING' | null;
+    reservertKrr: 'RESERVERT_KRR' | 'UKJENT_KRR' | null;
+    utdatertIKrr: 'UTDATERT_I_KRR' | 'UKJENT_KRR' | null;
+    ikkeUnderOppfolging: 'IKKE_UNDER_OPPFOLGING' | 'UKJENT_OPPFOLGING' | null;
+    varsel: 'VARSEL' | 'UKJENT_VARSEL' | null;
+    ikkeRegistrertKrr: 'IKKE_REGISTRERT_KRR' | 'UKJENT_KRR' | null;
+    trengerOppfolgingsvedtak: 'TRENGER_OPPFOLGINGSVEDTAK' | 'UKJENT_OPPFOLGINGSVEDTAK' | null;
+    sykmeldt: 'SYKMELDT' | 'UKJENT_OPPFOLGING' | null;
+    iArbeidssokerregisteret: 'I_ARBEIDSSOKERREGISTERET' | 'UKJENT_ARBEIDSSOKERREGISTER' | null;
+    antattGodeMuligheter: 'ANTATT_GODE_MULIGHETER' | 'UKJENT_PROFILERING' | null;
+    antattBehovForVeiledning: 'ANTATT_BEHOV_FOR_VEILEDNING' | 'UKJENT_PROFILERING' | null;
+    oppgittHindringer: 'OPPGITT_HINDRINGER' | 'UKJENT_PROFILERING' | null;
 }
 
 export interface VergeNavn {
@@ -138,6 +158,15 @@ export const usePersonalia = (fnr: string | undefined) => {
     return { personalia: data?.data?.person, error, isLoading };
 };
 
+export const useVisittkortEtiketter = (fnr: string | undefined) => {
+    const { data, error, isLoading } = useSWR<VisittkortEtiketter, Error>(
+        fnr ? ['/veilarbperson/graphql', 'visittkortEtiketter', fnr, behandlingsnummer] : null,
+        ([, , fnr, behandlingsnummer]: string[]) => hentVisittkortEtiketter(fnr, behandlingsnummer),
+        swrOptions
+    );
+    return { etiketter: data, error, isLoading };
+};
+
 export const useVerge = (fnr: string | undefined) => {
     const url = '/veilarbperson/api/v3/person/hent-vergeOgFullmakt';
     const { data, error, isLoading } = useSWR<Verge, HttpError>(
@@ -194,7 +223,6 @@ const graphqlQuery = `
            egenAnsatt
            sikkerhetstiltak
            telefon { prioritet telefonNr registrertDato master }
-           etiketter
             }
         }
     `;
@@ -213,4 +241,48 @@ async function hentPersonalia(
         throw new Error('Feil ved henting av personalia');
     }
     return res;
+}
+
+const visittkortEtiketterQuery = `
+    query HentVisittkortEtiketter($fnr: ID!, $behandlingsnummer: String!) {
+        visittkortEtiketter(fnr: $fnr, behandlingsnummer: $behandlingsnummer) {
+            dod
+            diskresjonskode
+            utmeldingskandidat
+            sikkerhetstiltak {
+                etikett
+                beskrivelse
+            }
+            skjerming
+            vergemaalOppfolging
+            fullmaktOppfolging
+            tegnspraaktolk
+            talespraaktolk
+            kvp
+            manuellOppfolging
+            reservertKrr
+            utdatertIKrr
+            ikkeUnderOppfolging
+            varsel
+            ikkeRegistrertKrr
+            trengerOppfolgingsvedtak
+            sykmeldt
+            iArbeidssokerregisteret
+            antattGodeMuligheter
+            antattBehovForVeiledning
+            oppgittHindringer
+        }
+    }
+`;
+
+async function hentVisittkortEtiketter(fnr: string, behandlingsnummer: string): Promise<VisittkortEtiketter> {
+    const res: GraphqlResponse<{ visittkortEtiketter: VisittkortEtiketter | null }> | null = await fetchWithPost(
+        '/veilarbperson/graphql',
+        { query: visittkortEtiketterQuery, variables: { fnr, behandlingsnummer } }
+    );
+    const etiketter = res?.data?.visittkortEtiketter;
+    if (res?.errors?.length || !etiketter || typeof etiketter !== 'object' || Array.isArray(etiketter)) {
+        throw new Error('Feil ved henting av visittkortetiketter');
+    }
+    return etiketter;
 }

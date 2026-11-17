@@ -1,5 +1,4 @@
 import {
-    Etiketter,
     HarBruktNivaa4Type,
     Personalia,
     PersonaliaTelefon,
@@ -7,10 +6,11 @@ import {
     Verge,
     FullmaktDTO,
     OmraadeHandlingType,
-    OpplysningerOmArbeidssoekerMedProfilering
+    OpplysningerOmArbeidssoekerMedProfilering,
+    VisittkortEtiketter
 } from '../../api/veilarbperson';
 import { defaultNetworkResponseDelay } from '../config';
-import { delay, http, HttpResponse, RequestHandler } from 'msw';
+import { delay, graphql, http, HttpResponse, RequestHandler } from 'msw';
 
 const mockHarBruktNivaa4: HarBruktNivaa4Type = {
     harbruktnivaa4: false
@@ -47,8 +47,32 @@ export const mockPersonalia: Personalia = {
     sikkerhetstiltak: 'Ansatte i samtale',
     egenAnsatt: true,
     kjonn: 'KVINNE',
-    telefon: mockTelefon,
-    etiketter: [Etiketter.VERGEMAAL_OPPFOLGING]
+    telefon: mockTelefon
+};
+
+export const mockVisittkortEtiketter: VisittkortEtiketter = {
+    dod: 'DOD',
+    diskresjonskode: 'KODE_7',
+    utmeldingskandidat: null,
+    sikkerhetstiltak: { etikett: 'SIKKERHETSTILTAK', beskrivelse: 'Ansatte i samtale' },
+    skjerming: 'SKJERMET',
+    vergemaalOppfolging: 'VERGEMAAL_OPPFOLGING',
+    fullmaktOppfolging: 'FULLMAKT_OPPFOLGING',
+    tegnspraaktolk: 'TEGNSPRAAKTOLK',
+    talespraaktolk: 'TALESPRAAKTOLK',
+    kvp: 'KVP',
+    manuellOppfolging: 'MANUELL_OPPFOLGING',
+    reservertKrr: 'RESERVERT_KRR',
+    utdatertIKrr: null,
+    ikkeUnderOppfolging: null,
+    varsel: 'VARSEL',
+    ikkeRegistrertKrr: 'IKKE_REGISTRERT_KRR',
+    trengerOppfolgingsvedtak: null,
+    sykmeldt: 'SYKMELDT',
+    iArbeidssokerregisteret: 'I_ARBEIDSSOKERREGISTERET',
+    antattGodeMuligheter: null,
+    antattBehovForVeiledning: null,
+    oppgittHindringer: 'OPPGITT_HINDRINGER'
 };
 
 const mockVerge: Verge = {
@@ -138,6 +162,10 @@ export const veilarbpersonHandlers: RequestHandler[] = [
     http.get('/veilarbperson/api/person/:fnr/harNivaa4', async () => {
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json(mockHarBruktNivaa4);
+    }),
+    graphql.link('/veilarbperson/graphql').query('HentVisittkortEtiketter', async () => {
+        await delay(defaultNetworkResponseDelay);
+        return HttpResponse.json({ data: { visittkortEtiketter: mockVisittkortEtiketter } });
     }),
     http.post('/veilarbperson/graphql', async () => {
         await delay(defaultNetworkResponseDelay);
