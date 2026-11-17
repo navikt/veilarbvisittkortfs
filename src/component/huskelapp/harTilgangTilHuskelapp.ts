@@ -1,4 +1,4 @@
-import { ErrorMessage } from '../../api/httpUtils';
+import { HttpError } from '../../api/httpUtils';
 
 export const harTilgangTilHuskelappEllerFargekategori = (
     erBrukerUfordelt: boolean,
@@ -11,6 +11,6 @@ export const harTilgangTilHuskelappEllerFargekategori = (
     return harVeileder && innloggetVeilederHarTilgangTilBrukersKontor;
 };
 
-export const feilErIkke403 = (error?: ErrorMessage) => error && error.status !== 403;
-export const feilErIkke404 = (error?: ErrorMessage) => error && error.status !== 404;
-export const feilErIkke400 = (error?: ErrorMessage) => error && error.status !== 400;
+export const feilErIkke403 = (error?: HttpError) => error && error.response?.status !== 403;
+export const feilErIkke404 = (error?: HttpError) => error && error.response?.status !== 404;
+export const feilErIkke400 = (error?: HttpError) => error && error.response?.status !== 400;
