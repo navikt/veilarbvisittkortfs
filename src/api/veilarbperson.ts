@@ -1,9 +1,114 @@
-import { fetchWithPost, HttpError, swrOptions } from './httpUtils';
+import { fetchWithPost, HttpError, httpPost, swrOptions } from './httpUtils';
 import { StringOrNothing } from '../util/type/utility-types';
 import useSWR from 'swr';
 import { behandlingsnummer } from './behandlingsnummer';
 import { logGraphQLError } from './ao-oppfolgingskontor';
 import { GraphqlResponse } from './GraphqlUtils';
+import { KandidatForUtmeldingTag } from './veilarboppfolging';
+
+export interface VisittkortEtiketter {
+    dod: string | null;
+    diskresjonskode: string | null;
+    utmeldingskandidat: KandidatForUtmeldingTag | null;
+    sikkerhetstiltak: { etikett: string; beskrivelse: string | null } | null;
+    skjerming: string | null;
+    vergemaalOppfolging: string | null;
+    fullmaktOppfolging: string | null;
+    tegnspraaktolk: string | null;
+    talespraaktolk: string | null;
+    kvp: string | null;
+    manuellOppfolging: string | null;
+    reservertKrr: string | null;
+    utdatertIKrr: string | null;
+    ikkeUnderOppfolging: string | null;
+    varsel: string | null;
+    ikkeRegistrertKrr: string | null;
+    trengerOppfolgingsvedtak: string | null;
+    sykmeldt: string | null;
+    iArbeidssokerregisteret: string | null;
+    antattGodeMuligheter: string | null;
+    antattBehovForVeiledning: string | null;
+    oppgittHindringer: string | null;
+}
+
+const visittkortEtiketterQuery = `
+    query VisittkortEtiketter($fnr: ID!, $behandlingsnummer: String) {
+        visittkortEtiketter(fnr: $fnr, behandlingsnummer: $behandlingsnummer) {
+            dod
+            diskresjonskode
+            utmeldingskandidat
+            sikkerhetstiltak { etikett beskrivelse }
+            skjerming
+            vergemaalOppfolging
+            fullmaktOppfolging
+            tegnspraaktolk
+            talespraaktolk
+            kvp
+            manuellOppfolging
+            reservertKrr
+            utdatertIKrr
+            ikkeUnderOppfolging
+            varsel
+            ikkeRegistrertKrr
+            trengerOppfolgingsvedtak
+            sykmeldt
+            iArbeidssokerregisteret
+            antattGodeMuligheter
+            antattBehovForVeiledning
+            oppgittHindringer
+        }
+    }
+`;
+
+interface VisittkortEtiketterResultat {
+    etiketter: VisittkortEtiketter;
+    feilendeEtiketter: (keyof VisittkortEtiketter)[];
+}
+
+function erEtikettfelt(
+    felt: string | number | undefined,
+    etiketter: VisittkortEtiketter
+): felt is keyof VisittkortEtiketter {
+    return typeof felt === 'string' && Object.hasOwn(etiketter, felt);
+}
+
+export const useVisittkortEtiketter = (fnr: string | undefined) =>
+    useSWR<VisittkortEtiketterResultat, Error>(
+        fnr ? ['/veilarbperson/graphql', 'visittkortEtiketter', fnr, behandlingsnummer] : null,
+        async () => {
+            const { data: response } = await httpPost<
+                GraphqlResponse<{ visittkortEtiketter: VisittkortEtiketter | null }>
+            >(
+                '/veilarbperson/graphql',
+                { query: visittkortEtiketterQuery, variables: { fnr, behandlingsnummer } },
+                { withCredentials: true }
+            );
+
+            if (!response?.data?.visittkortEtiketter) {
+                throw new Error('Kunne ikke laste etiketter');
+            }
+
+            const etiketter = { ...response.data.visittkortEtiketter };
+            const feilendeEtiketter = new Set<keyof VisittkortEtiketter>();
+
+            for (const feil of response.errors ?? []) {
+                const felt = feil.path?.[1];
+                if (feil.path?.[0] !== 'visittkortEtiketter' || !erEtikettfelt(felt, etiketter)) {
+                    throw new Error('Kunne ikke laste etiketter');
+                }
+
+                feilendeEtiketter.add(felt);
+                etiketter[felt] = null;
+            }
+
+            if (feilendeEtiketter.size === Object.keys(etiketter).length) {
+                throw new Error('Kunne ikke laste etiketter');
+            }
+
+            return { etiketter, feilendeEtiketter: [...feilendeEtiketter] };
+        },
+        swrOptions
+    );
 
 export interface Personalia {
     fornavn: string;

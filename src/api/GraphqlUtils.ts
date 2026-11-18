@@ -1,5 +1,6 @@
 export interface GraphqlError {
     message: string;
+    path?: (string | number)[];
 }
 
 export interface GraphqlResponse<T> {

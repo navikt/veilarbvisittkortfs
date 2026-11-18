@@ -1,22 +1,18 @@
 import './etiketter.less';
-import {
-    FullmaktData,
-    useFullmakt,
-    useOpplysningerOmArbeidssokerMedProfilering,
-    usePersonalia,
-    useSpraakTolk,
-    useVerge
-} from '../../../api/veilarbperson';
-import { SykmeldtStatus, useOppfolging } from '../../../api/veilarboppfolging';
-import { OrNothing } from '../../../util/type/utility-types';
-import { HStack, Tag, TagProps } from '@navikt/ds-react';
-import { Oppfolgingsvedtak14a, useGjeldende14aVedtak } from '../../../api/veilarbvedtaksstotte';
-import { useGjeldendeEskaleringsvarsel } from '../../../api/veilarbdialog';
+import { useVisittkortEtiketter, VisittkortEtiketter } from '../../../api/veilarbperson';
+import { HStack, InlineMessage, Loader, Tag, TagProps } from '@navikt/ds-react';
 import { mapUtmeldingskandidatTag } from '../../../util/utmeldingskandidat-tag';
 
 interface Etikettprops extends Omit<TagProps, 'variant'> {
     visible: boolean | undefined;
 }
+
+const alvorligeEtiketter: readonly (keyof VisittkortEtiketter)[] = [
+    'dod',
+    'diskresjonskode',
+    'sikkerhetstiltak',
+    'skjerming'
+];
 
 const Advarsel = ({ visible, title, children }: Etikettprops) =>
     visible && (
@@ -46,122 +42,84 @@ const BaseDod = ({ visible, title, children }: Etikettprops) =>
         </Tag>
     );
 
-function erBrukerSykmeldt(oppfolging: OrNothing<{ sykmeldtStatus: SykmeldtStatus | null }>): boolean {
-    return !!oppfolging && oppfolging.sykmeldtStatus !== null;
-}
-
-function harGjeldende14aVedtak(gjeldende14aVedtak: OrNothing<Oppfolgingsvedtak14a>): boolean {
-    return gjeldende14aVedtak !== null && gjeldende14aVedtak !== undefined && typeof gjeldende14aVedtak !== 'undefined';
-}
-
-function erFullmaktOmradeMedOppfolging(fullmaktListe: FullmaktData[]): boolean {
-    return fullmaktListe
-        .flatMap(fullmakt => fullmakt.omraade)
-        .map(omraadeMedHandling => omraadeMedHandling.tema)
-        .includes('Oppfølging');
-}
-
 function Etiketter({ brukerFnr }: { brukerFnr: string }) {
-    const { personalia } = usePersonalia(brukerFnr);
-    const { gjeldendeEskaleringsvarsel } = useGjeldendeEskaleringsvarsel(brukerFnr);
-    const { oppfolging } = useOppfolging(brukerFnr);
-    const { verge } = useVerge(brukerFnr);
-    const { fullmakt } = useFullmakt(brukerFnr);
-    const { spraakTolk } = useSpraakTolk(brukerFnr);
+    const { data, error, isLoading } = useVisittkortEtiketter(brukerFnr);
 
-    const { data: opplysningerOmArbeidssoeker, isLoading: opplysningerOmArbeidssoekerLoading } =
-        useOpplysningerOmArbeidssokerMedProfilering(brukerFnr);
-    const { data: gjeldende14aVedtak, isLoading: gjeldende14aVedtakLoading } = useGjeldende14aVedtak(brukerFnr);
-
-    function isEmpty(array: undefined | unknown[]): boolean {
-        return !array || array.length === 0;
-    }
-
-    function visTrengerOppfolgingsvedtakEtikett() {
-        if (!oppfolging?.underOppfolging) {
-            return false;
-        }
-
-        return !gjeldende14aVedtakLoading && !harGjeldende14aVedtak(gjeldende14aVedtak);
-    }
-
-    function visProfileringsetikett(
-        profilering: 'OPPGITT_HINDRINGER' | 'ANTATT_GODE_MULIGHETER' | 'ANTATT_BEHOV_FOR_VEILEDNING'
-    ) {
-        if (oppfolging === null || oppfolging === undefined || typeof oppfolging === 'undefined') {
-            return false;
-        }
-
+    if (error) {
         return (
-            !opplysningerOmArbeidssoekerLoading &&
-            opplysningerOmArbeidssoeker?.profilering?.profilertTil === profilering &&
-            !gjeldende14aVedtakLoading &&
-            !harGjeldende14aVedtak(gjeldende14aVedtak)
+            <InlineMessage className="etikett-status" status="error" size="small" role="alert">
+                Kunne ikke laste etiketter. Prøv igjen senere.
+            </InlineMessage>
         );
     }
 
-    function visIArbeidssokerregisteretEtikett() {
-        return (
-            !opplysningerOmArbeidssoekerLoading &&
-            opplysningerOmArbeidssoeker?.arbeidssoekerperiodeStartet !== null &&
-            opplysningerOmArbeidssoeker?.arbeidssoekerperiodeStartet !== undefined
-        );
+    if (isLoading) {
+        return <Loader className="etikett-status" size="small" title="Laster etiketter" />;
     }
+
+    if (!data) return null;
+
+    const { etiketter, feilendeEtiketter } = data;
+    const harAlvorligeFeil = feilendeEtiketter.some(felt => alvorligeEtiketter.includes(felt));
 
     return (
         <HStack className="etikett-container" align="center" gap="space-2 space-4" wrap>
-            <BaseDod visible={!!personalia?.dodsdato}>Død</BaseDod>
-            <Advarsel visible={!!personalia?.diskresjonskode}>Kode {personalia?.diskresjonskode}</Advarsel>
-            <Fokus visible={!!oppfolging?.utmeldingskandidat.tag}>
-                {mapUtmeldingskandidatTag(oppfolging?.utmeldingskandidat.tag)}
+            <BaseDod visible={!!etiketter.dod}>Død</BaseDod>
+            <Advarsel visible={!!etiketter.diskresjonskode}>Kode {etiketter.diskresjonskode}</Advarsel>
+            <Fokus visible={!!etiketter.utmeldingskandidat}>
+                {mapUtmeldingskandidatTag(etiketter.utmeldingskandidat)}
             </Fokus>
-            <Advarsel visible={!!personalia?.sikkerhetstiltak}>{personalia?.sikkerhetstiltak}</Advarsel>
-            <Advarsel visible={personalia?.egenAnsatt}>Skjermet</Advarsel>
-            <Fokus visible={!isEmpty(verge?.vergemaalEllerFremtidsfullmakt)}>Vergemål</Fokus>
-            <Fokus
-                visible={fullmakt && !isEmpty(fullmakt.fullmakt) && erFullmaktOmradeMedOppfolging(fullmakt.fullmakt)}
+            <Advarsel
+                visible={!!etiketter.sikkerhetstiltak}
+                title={etiketter.sikkerhetstiltak?.beskrivelse ?? undefined}
             >
-                Fullmakt Oppfølging
-            </Fokus>
-            <Fokus visible={!!spraakTolk?.tegnspraak}>Tegnspråktolk</Fokus>
-            <Fokus visible={!!spraakTolk?.talespraak}>Språktolk</Fokus>
-            <Fokus visible={oppfolging?.underKvp}>KVP</Fokus>
+                {etiketter.sikkerhetstiltak?.etikett}
+            </Advarsel>
+            <Advarsel visible={!!etiketter.skjerming}>Skjermet</Advarsel>
+            <Fokus visible={!!etiketter.vergemaalOppfolging}>Vergemål</Fokus>
+            <Fokus visible={!!etiketter.fullmaktOppfolging}>Fullmakt Oppfølging</Fokus>
+            <Fokus visible={!!etiketter.tegnspraaktolk}>Tegnspråktolk</Fokus>
+            <Fokus visible={!!etiketter.talespraaktolk}>Språktolk</Fokus>
+            <Fokus visible={!!etiketter.kvp}>KVP</Fokus>
             <Fokus
-                visible={oppfolging && oppfolging.manuell}
+                visible={!!etiketter.manuellOppfolging}
                 title="Brukeren er vurdert til å ikke kunne benytte seg av aktivitetsplanen og dialogen. Du kan endre til digital oppfølging i Veilederverktøy dersom bruker ikke er reservert i KRR."
             >
                 Manuell oppfølging
             </Fokus>
             <Fokus
-                visible={oppfolging?.reservasjonKRR}
+                visible={!!etiketter.reservertKrr}
                 title="Brukeren har reservert seg mot digital kommunikasjon i Kontakt- og reservasjonsregisteret, og kan derfor ikke benytte seg av aktivitetsplanen og dialogen."
             >
                 Reservert KRR
             </Fokus>
+            <Fokus visible={!!etiketter.utdatertIKrr}>Utdatert i KRR</Fokus>
+            <Fokus visible={!!etiketter.ikkeUnderOppfolging}>Ikke under oppfølging</Fokus>
+            <Fokus visible={!!etiketter.varsel}>Varsel</Fokus>
             <Fokus
-                visible={
-                    oppfolging?.registrertKRR &&
-                    !oppfolging?.kanVarsles &&
-                    !oppfolging.manuell &&
-                    !oppfolging?.reservasjonKRR
-                }
-            >
-                Utdatert i KRR
-            </Fokus>
-            <Fokus visible={!oppfolging?.underOppfolging}>Ikke under oppfølging</Fokus>
-            <Fokus visible={!!gjeldendeEskaleringsvarsel}>Varsel</Fokus>
-            <Fokus
-                visible={oppfolging?.registrertKRR === false}
+                visible={!!etiketter.ikkeRegistrertKrr}
                 title="Brukeren er ikke registrert i Kontakt- og reservasjonsregisteret og kan ikke varsles. Du kan derfor ikke samhandle digitalt med brukeren. "
             >
                 Ikke registrert KRR
             </Fokus>
-            <Info visible={visTrengerOppfolgingsvedtakEtikett()}>Trenger oppfølgingsvedtak § 14 a</Info>
-            <Info visible={erBrukerSykmeldt(oppfolging)}>Sykmeldt</Info>
-            <Info visible={visIArbeidssokerregisteretEtikett()}>I Arbeidssøkerregisteret</Info>
-            <Info visible={visProfileringsetikett('ANTATT_GODE_MULIGHETER')}>Antatt gode muligheter</Info>
-            <Info visible={visProfileringsetikett('ANTATT_BEHOV_FOR_VEILEDNING')}>Antatt behov for veiledning</Info>
-            <Info visible={visProfileringsetikett('OPPGITT_HINDRINGER')}>Oppgitt hindringer</Info>
+            <Info visible={!!etiketter.trengerOppfolgingsvedtak}>Trenger oppfølgingsvedtak § 14 a</Info>
+            <Info visible={!!etiketter.sykmeldt}>Sykmeldt</Info>
+            <Info visible={!!etiketter.iArbeidssokerregisteret}>I Arbeidssøkerregisteret</Info>
+            <Info visible={!!etiketter.antattGodeMuligheter}>Antatt gode muligheter</Info>
+            <Info visible={!!etiketter.antattBehovForVeiledning}>Antatt behov for veiledning</Info>
+            <Info visible={!!etiketter.oppgittHindringer}>Oppgitt hindringer</Info>
+            {feilendeEtiketter.length > 0 && (
+                <InlineMessage
+                    className="etikett-feil"
+                    status={harAlvorligeFeil ? 'error' : 'warning'}
+                    size="small"
+                    role="alert"
+                >
+                    {harAlvorligeFeil
+                        ? 'Kunne ikke laste alle viktige etiketter. Informasjon om beskyttelse, sikkerhet eller dødsfall kan mangle.'
+                        : 'Kunne ikke laste alle etiketter. Noe informasjon kan mangle.'}
+                </InlineMessage>
+            )}
         </HStack>
     );
 }

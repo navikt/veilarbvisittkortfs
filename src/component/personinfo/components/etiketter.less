@@ -1,4 +1,21 @@
 .visittkortfs {
+    .etikett-status {
+        min-width: 0;
+    }
+
+    .etikett-feil {
+        flex-basis: 100%;
+    }
+
+    @media (max-width: 799px) {
+        .etikett-status {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            max-width: calc(100vw - 5rem);
+            margin-block: 0.5rem;
+        }
+    }
+
     @media (min-width: 1300px) {
         .etikett-container {
             justify-content: center;

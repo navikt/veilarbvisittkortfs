@@ -14,6 +14,7 @@ import huskelappPostitstylingStyles from './component/huskelapp/huskelapp-postit
 import huskelappRedigeringStyles from './component/huskelapp/redigering/huskelapp-redigering.less?inline';
 import dataFetcherStyles from './component/data-fetcher.less?inline';
 import personinfoStyles from './component/personinfo/personinfo.less?inline';
+import etiketterStyles from './component/personinfo/components/etiketter.less?inline';
 import tildelVeilederStyles from './component/veilederverktoy/tildel-veileder/tildel-veileder.less?inline';
 import begrunnelseFormStyles from './component/veilederverktoy/begrunnelseform/begrunnelse-form.less?inline';
 import historikkStyles from './component/veilederverktoy/historikk/historikk.less?inline';
@@ -35,6 +36,7 @@ const createStyles = (cssStyles: string) =>
     huskelappRedigeringStyles +
     dataFetcherStyles +
     personinfoStyles +
+    etiketterStyles +
     tildelVeilederStyles +
     begrunnelseFormStyles +
     historikkStyles +
