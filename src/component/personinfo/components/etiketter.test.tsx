@@ -11,7 +11,7 @@ import { veilarbpersonHandlers } from '../../../mock/api/veilarbperson';
 const brukerFnr = '10108000398';
 const tommeEtiketter: VisittkortEtiketter = {
     dod: null,
-    diskresjonskode: null,
+    adressebeskyttelse: null,
     utmeldingskandidat: null,
     sikkerhetstiltak: null,
     skjerming: null,
@@ -32,6 +32,31 @@ const tommeEtiketter: VisittkortEtiketter = {
     antattGodeMuligheter: null,
     antattBehovForVeiledning: null,
     oppgittHindringer: null
+};
+
+const ukjenteEtiketter: VisittkortEtiketter = {
+    dod: 'UKJENT_PERSONALIA',
+    adressebeskyttelse: 'UKJENT_PERSONALIA',
+    utmeldingskandidat: 'UKJENT_UTMELDINGSKANDIDAT',
+    sikkerhetstiltak: { etikett: 'UKJENT_SIKKERHETSTILTAK', beskrivelse: null },
+    skjerming: 'UKJENT_SKJERMING',
+    vergemaalOppfolging: 'UKJENT_REPRESENTASJON',
+    fullmaktOppfolging: 'UKJENT_REPRESENTASJON',
+    tegnspraaktolk: 'UKJENT_TOLKEBEHOV',
+    talespraaktolk: 'UKJENT_TOLKEBEHOV',
+    kvp: 'UKJENT_OPPFOLGING',
+    manuellOppfolging: 'UKJENT_OPPFOLGING',
+    reservertKrr: 'UKJENT_KRR',
+    utdatertIKrr: 'UKJENT_KRR',
+    ikkeUnderOppfolging: 'UKJENT_OPPFOLGING',
+    varsel: 'UKJENT_VARSEL',
+    ikkeRegistrertKrr: 'UKJENT_KRR',
+    trengerOppfolgingsvedtak: 'UKJENT_OPPFOLGINGSVEDTAK',
+    sykmeldt: 'UKJENT_OPPFOLGING',
+    iArbeidssokerregisteret: 'UKJENT_ARBEIDSSOKERREGISTER',
+    antattGodeMuligheter: 'UKJENT_PROFILERING',
+    antattBehovForVeiledning: 'UKJENT_PROFILERING',
+    oppgittHindringer: 'UKJENT_PROFILERING'
 };
 
 const server = setupServer();
@@ -60,8 +85,8 @@ describe('Etiketter', () => {
                         visittkortEtiketter: {
                             ...tommeEtiketter,
                             vergemaalOppfolging: 'VERGEMAAL_OPPFOLGING',
-                            diskresjonskode: '7',
-                            sikkerhetstiltak: { etikett: 'Ansatte i samtale', beskrivelse: 'To ansatte i samtale' },
+                            adressebeskyttelse: 'KODE_7',
+                            sikkerhetstiltak: { etikett: 'SIKKERHETSTILTAK', beskrivelse: 'To ansatte i samtale' },
                             utmeldingskandidat: 'FORLENGELSE_UTLOPT',
                             trengerOppfolgingsvedtak: 'TRENGER_OPPFOLGINGSVEDTAK'
                         }
@@ -74,7 +99,7 @@ describe('Etiketter', () => {
 
         expect(await screen.findByText('Vergemål')).toBeTruthy();
         expect(screen.getByText('Kode 7')).toBeTruthy();
-        expect(screen.getByText('Ansatte i samtale').getAttribute('title')).toBe('To ansatte i samtale');
+        expect(screen.getByText('To ansatte i samtale').getAttribute('title')).toBe('To ansatte i samtale');
         expect(screen.getByText('Forlengelse utløpt')).toBeTruthy();
         expect(screen.getByText('Trenger oppfølgingsvedtak § 14 a')).toBeTruthy();
         expect(screen.queryByText('Ikke under oppfølging')).toBeNull();
@@ -85,6 +110,8 @@ describe('Etiketter', () => {
             },
             'include'
         );
+        expect(mottattRequest.mock.calls[0][0].query).toContain('adressebeskyttelse');
+        expect(mottattRequest.mock.calls[0][0].query).not.toContain('diskresjonskode');
     });
 
     test('utviklingsmocken skiller etikettspørringen fra personalia', async () => {
@@ -114,7 +141,7 @@ describe('Etiketter', () => {
         expect(screen.queryByRole('alert')).toBeNull();
     });
 
-    test.each(['dod', 'diskresjonskode', 'sikkerhetstiltak', 'skjerming'])(
+    test.each(['dod', 'adressebeskyttelse', 'sikkerhetstiltak', 'skjerming'])(
         'viser alvorlig feil ved feil i %s, beholder vellykkede etiketter og prioriterer over mindre alvorlige feil',
         async felt => {
             server.use(
@@ -124,8 +151,8 @@ describe('Etiketter', () => {
                             visittkortEtiketter: {
                                 ...tommeEtiketter,
                                 dod: 'DOD',
-                                diskresjonskode: '7',
-                                sikkerhetstiltak: { etikett: 'Ansatte i samtale', beskrivelse: null },
+                                adressebeskyttelse: 'KODE_7',
+                                sikkerhetstiltak: { etikett: 'SIKKERHETSTILTAK', beskrivelse: 'Ansatte i samtale' },
                                 skjerming: 'SKJERMET',
                                 sykmeldt: 'SYKMELDT',
                                 kvp: 'KVP'
@@ -151,7 +178,7 @@ describe('Etiketter', () => {
             expect(screen.queryByText('KVP')).toBeNull();
             const tekster: Record<string, string> = {
                 dod: 'Død',
-                diskresjonskode: 'Kode 7',
+                adressebeskyttelse: 'Kode 7',
                 sikkerhetstiltak: 'Ansatte i samtale',
                 skjerming: 'Skjermet'
             };
@@ -163,8 +190,7 @@ describe('Etiketter', () => {
         server.use(
             http.post('/veilarbperson/graphql', () =>
                 HttpResponse.json({
-                    data: { visittkortEtiketter: { ...tommeEtiketter, sykmeldt, kvp: 'KVP' } },
-                    errors: [{ message: 'Kunne ikke hente KVP', path: ['visittkortEtiketter', 'kvp'] }]
+                    data: { visittkortEtiketter: { ...tommeEtiketter, sykmeldt, kvp: 'UKJENT_OPPFOLGING' } }
                 })
             )
         );
@@ -184,7 +210,7 @@ describe('Etiketter', () => {
                     data: {
                         visittkortEtiketter: {
                             ...tommeEtiketter,
-                            sikkerhetstiltak: { etikett: 'Ansatte i samtale', beskrivelse: null },
+                            sikkerhetstiltak: { etikett: 'SIKKERHETSTILTAK', beskrivelse: 'Ansatte i samtale' },
                             sykmeldt: 'SYKMELDT'
                         }
                     },
@@ -210,6 +236,147 @@ describe('Etiketter', () => {
         expect(screen.getByText(/Kunne ikke laste alle viktige etiketter/)).toBeTruthy();
     });
 
+    test.each(Object.entries(ukjenteEtiketter))(
+        'behandler ukjent verdi for %s som feil uten GraphQL-errors',
+        async (felt, verdi) => {
+            const vellykketFelt = felt === 'sykmeldt' ? 'kvp' : 'sykmeldt';
+            const vellykketTekst = felt === 'sykmeldt' ? 'KVP' : 'Sykmeldt';
+            server.use(
+                http.post('/veilarbperson/graphql', () =>
+                    HttpResponse.json({
+                        data: {
+                            visittkortEtiketter: {
+                                ...tommeEtiketter,
+                                [vellykketFelt]: felt === 'sykmeldt' ? 'KVP' : 'SYKMELDT',
+                                [felt]: verdi
+                            }
+                        }
+                    })
+                )
+            );
+
+            const { container } = renderEtiketter();
+
+            expect((await screen.findAllByRole('alert')).length).toBe(1);
+            expect(screen.getByText(vellykketTekst)).toBeTruthy();
+            expect(container.querySelectorAll('.aksel-tag').length).toBe(1);
+            expect(container.textContent).not.toContain('UKJENT_');
+            const alvorlig = ['dod', 'adressebeskyttelse', 'sikkerhetstiltak', 'skjerming'].includes(felt);
+            expect(
+                screen.getByText(
+                    alvorlig
+                        ? 'Kunne ikke laste alle viktige etiketter. Informasjon om beskyttelse, sikkerhet eller dødsfall kan mangle.'
+                        : 'Kunne ikke laste alle etiketter. Noe informasjon kan mangle.'
+                )
+            ).toBeTruthy();
+        }
+    );
+
+    test('beholder alvorlige etiketter når bare tolk er ukjent', async () => {
+        server.use(
+            http.post('/veilarbperson/graphql', () =>
+                HttpResponse.json({
+                    data: {
+                        visittkortEtiketter: {
+                            ...tommeEtiketter,
+                            dod: 'DOD',
+                            adressebeskyttelse: 'KODE_6',
+                            sikkerhetstiltak: { etikett: 'SIKKERHETSTILTAK', beskrivelse: 'Fysisk utestengelse' },
+                            tegnspraaktolk: 'UKJENT_TOLKEBEHOV',
+                            talespraaktolk: 'UKJENT_TOLKEBEHOV'
+                        }
+                    }
+                })
+            )
+        );
+
+        renderEtiketter();
+
+        expect(await screen.findByRole('alert')).toBeTruthy();
+        expect(screen.getByText('Kunne ikke laste alle etiketter. Noe informasjon kan mangle.')).toBeTruthy();
+        expect(screen.getByText('Død')).toBeTruthy();
+        expect(screen.getByText('Kode 6')).toBeTruthy();
+        expect(screen.getByText('Fysisk utestengelse')).toBeTruthy();
+        expect(screen.queryByText('Tegnspråktolk')).toBeNull();
+        expect(screen.queryByText('Språktolk')).toBeNull();
+    });
+
+    test('kombinerer ukjente verdier og GraphQL-feil med alvorlig feil som høyeste prioritet', async () => {
+        server.use(
+            http.post('/veilarbperson/graphql', () =>
+                HttpResponse.json({
+                    data: {
+                        visittkortEtiketter: {
+                            ...tommeEtiketter,
+                            skjerming: 'UKJENT_SKJERMING',
+                            kvp: 'KVP',
+                            sykmeldt: 'SYKMELDT'
+                        }
+                    },
+                    errors: [{ message: 'Kunne ikke hente KVP', path: ['visittkortEtiketter', 'kvp'] }]
+                })
+            )
+        );
+
+        renderEtiketter();
+
+        expect((await screen.findAllByRole('alert')).length).toBe(1);
+        expect(screen.getByText(/Kunne ikke laste alle viktige etiketter/)).toBeTruthy();
+        expect(screen.getByText('Sykmeldt')).toBeTruthy();
+        expect(screen.queryByText('Skjermet')).toBeNull();
+        expect(screen.queryByText('KVP')).toBeNull();
+    });
+
+    test.each(['KODE_6', 'KODE_7', 'KODE_19'])('viser adressebeskyttelse %s som kodeetikett', async kode => {
+        server.use(
+            http.post('/veilarbperson/graphql', () =>
+                HttpResponse.json({ data: { visittkortEtiketter: { ...tommeEtiketter, adressebeskyttelse: kode } } })
+            )
+        );
+
+        renderEtiketter();
+
+        expect(await screen.findByText(kode.replace('KODE_', 'Kode '))).toBeTruthy();
+        expect(screen.queryByRole('alert')).toBeNull();
+    });
+
+    test('beholder folkeregisterstatus ukjent som gyldig etikett, ikke feilstatus', async () => {
+        server.use(
+            http.post('/veilarbperson/graphql', () =>
+                HttpResponse.json({
+                    data: {
+                        visittkortEtiketter: { ...tommeEtiketter, utmeldingskandidat: 'FOLKEREGISTERSTATUS_UKJENT' }
+                    }
+                })
+            )
+        );
+
+        renderEtiketter();
+
+        expect(await screen.findByText('Folkeregisterstatus: Ukjent')).toBeTruthy();
+        expect(screen.queryByRole('alert')).toBeNull();
+    });
+
+    test('viser sikkerhetstiltak uten beskrivelse som Sikkerhetstiltak', async () => {
+        server.use(
+            http.post('/veilarbperson/graphql', () =>
+                HttpResponse.json({
+                    data: {
+                        visittkortEtiketter: {
+                            ...tommeEtiketter,
+                            sikkerhetstiltak: { etikett: 'SIKKERHETSTILTAK', beskrivelse: null }
+                        }
+                    }
+                })
+            )
+        );
+
+        renderEtiketter();
+
+        expect(await screen.findByText('Sikkerhetstiltak')).toBeTruthy();
+        expect(screen.queryByRole('alert')).toBeNull();
+    });
+
     test.each<[string, () => Response]>([
         ['HTTP-feil', () => new HttpResponse(null, { status: 500 })],
         ['nettverksfeil', () => HttpResponse.error()],
@@ -233,6 +400,10 @@ describe('Etiketter', () => {
                     errors: [{ message: 'Kunne ikke hente etiketter', path }]
                 })
         ]),
+        [
+            'alle etiketter er ukjente uten GraphQL-errors',
+            () => HttpResponse.json({ data: { visittkortEtiketter: ukjenteEtiketter } })
+        ],
         [
             'feil på alle felt',
             () =>
