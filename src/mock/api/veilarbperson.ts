@@ -14,7 +14,7 @@ import { delay, graphql, http, HttpResponse, RequestHandler } from 'msw';
 
 export const mockVisittkortEtiketter: VisittkortEtiketter = {
     dod: null,
-    diskresjonskode: null,
+    adressebeskyttelse: null,
     utmeldingskandidat: null,
     sikkerhetstiltak: null,
     skjerming: null,

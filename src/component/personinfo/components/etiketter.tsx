@@ -9,7 +9,7 @@ interface Etikettprops extends Omit<TagProps, 'variant'> {
 
 const alvorligeEtiketter: readonly (keyof VisittkortEtiketter)[] = [
     'dod',
-    'diskresjonskode',
+    'adressebeskyttelse',
     'sikkerhetstiltak',
     'skjerming'
 ];
@@ -65,7 +65,9 @@ function Etiketter({ brukerFnr }: { brukerFnr: string }) {
     return (
         <HStack className="etikett-container" align="center" gap="space-2 space-4" wrap>
             <BaseDod visible={!!etiketter.dod}>Død</BaseDod>
-            <Advarsel visible={!!etiketter.diskresjonskode}>Kode {etiketter.diskresjonskode}</Advarsel>
+            <Advarsel visible={!!etiketter.adressebeskyttelse}>
+                {etiketter.adressebeskyttelse?.replace('KODE_', 'Kode ')}
+            </Advarsel>
             <Fokus visible={!!etiketter.utmeldingskandidat}>
                 {mapUtmeldingskandidatTag(etiketter.utmeldingskandidat)}
             </Fokus>
@@ -73,7 +75,7 @@ function Etiketter({ brukerFnr }: { brukerFnr: string }) {
                 visible={!!etiketter.sikkerhetstiltak}
                 title={etiketter.sikkerhetstiltak?.beskrivelse ?? undefined}
             >
-                {etiketter.sikkerhetstiltak?.etikett}
+                {etiketter.sikkerhetstiltak?.beskrivelse ?? 'Sikkerhetstiltak'}
             </Advarsel>
             <Advarsel visible={!!etiketter.skjerming}>Skjermet</Advarsel>
             <Fokus visible={!!etiketter.vergemaalOppfolging}>Vergemål</Fokus>

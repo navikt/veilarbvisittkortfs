@@ -7,35 +7,38 @@ import { GraphqlResponse } from './GraphqlUtils';
 import { KandidatForUtmeldingTag } from './veilarboppfolging';
 
 export interface VisittkortEtiketter {
-    dod: string | null;
-    diskresjonskode: string | null;
-    utmeldingskandidat: KandidatForUtmeldingTag | null;
-    sikkerhetstiltak: { etikett: string; beskrivelse: string | null } | null;
-    skjerming: string | null;
-    vergemaalOppfolging: string | null;
-    fullmaktOppfolging: string | null;
-    tegnspraaktolk: string | null;
-    talespraaktolk: string | null;
-    kvp: string | null;
-    manuellOppfolging: string | null;
-    reservertKrr: string | null;
-    utdatertIKrr: string | null;
-    ikkeUnderOppfolging: string | null;
-    varsel: string | null;
-    ikkeRegistrertKrr: string | null;
-    trengerOppfolgingsvedtak: string | null;
-    sykmeldt: string | null;
-    iArbeidssokerregisteret: string | null;
-    antattGodeMuligheter: string | null;
-    antattBehovForVeiledning: string | null;
-    oppgittHindringer: string | null;
+    dod: 'DOD' | 'UKJENT_PERSONALIA' | null;
+    adressebeskyttelse: 'KODE_6' | 'KODE_7' | 'KODE_19' | 'UKJENT_PERSONALIA' | null;
+    utmeldingskandidat: KandidatForUtmeldingTag | 'UKJENT_UTMELDINGSKANDIDAT' | null;
+    sikkerhetstiltak: {
+        etikett: 'SIKKERHETSTILTAK' | 'UKJENT_SIKKERHETSTILTAK';
+        beskrivelse: string | null;
+    } | null;
+    skjerming: 'SKJERMET' | 'UKJENT_SKJERMING' | null;
+    vergemaalOppfolging: 'VERGEMAAL_OPPFOLGING' | 'UKJENT_REPRESENTASJON' | null;
+    fullmaktOppfolging: 'FULLMAKT_OPPFOLGING' | 'UKJENT_REPRESENTASJON' | null;
+    tegnspraaktolk: 'TEGNSPRAAKTOLK' | 'UKJENT_TOLKEBEHOV' | null;
+    talespraaktolk: 'TALESPRAAKTOLK' | 'UKJENT_TOLKEBEHOV' | null;
+    kvp: 'KVP' | 'UKJENT_OPPFOLGING' | null;
+    manuellOppfolging: 'MANUELL_OPPFOLGING' | 'UKJENT_OPPFOLGING' | null;
+    reservertKrr: 'RESERVERT_KRR' | 'UKJENT_KRR' | null;
+    utdatertIKrr: 'UTDATERT_I_KRR' | 'UKJENT_KRR' | null;
+    ikkeUnderOppfolging: 'IKKE_UNDER_OPPFOLGING' | 'UKJENT_OPPFOLGING' | null;
+    varsel: 'VARSEL' | 'UKJENT_VARSEL' | null;
+    ikkeRegistrertKrr: 'IKKE_REGISTRERT_KRR' | 'UKJENT_KRR' | null;
+    trengerOppfolgingsvedtak: 'TRENGER_OPPFOLGINGSVEDTAK' | 'UKJENT_OPPFOLGINGSVEDTAK' | null;
+    sykmeldt: 'SYKMELDT' | 'UKJENT_OPPFOLGING' | null;
+    iArbeidssokerregisteret: 'I_ARBEIDSSOKERREGISTERET' | 'UKJENT_ARBEIDSSOKERREGISTER' | null;
+    antattGodeMuligheter: 'ANTATT_GODE_MULIGHETER' | 'UKJENT_PROFILERING' | null;
+    antattBehovForVeiledning: 'ANTATT_BEHOV_FOR_VEILEDNING' | 'UKJENT_PROFILERING' | null;
+    oppgittHindringer: 'OPPGITT_HINDRINGER' | 'UKJENT_PROFILERING' | null;
 }
 
 const visittkortEtiketterQuery = `
     query VisittkortEtiketter($fnr: ID!, $behandlingsnummer: String) {
         visittkortEtiketter(fnr: $fnr, behandlingsnummer: $behandlingsnummer) {
             dod
-            diskresjonskode
+            adressebeskyttelse
             utmeldingskandidat
             sikkerhetstiltak { etikett beskrivelse }
             skjerming
@@ -90,6 +93,17 @@ export const useVisittkortEtiketter = (fnr: string | undefined) =>
 
             const etiketter = { ...response.data.visittkortEtiketter };
             const feilendeEtiketter = new Set<keyof VisittkortEtiketter>();
+
+            for (const felt in etiketter) {
+                if (erEtikettfelt(felt, etiketter)) {
+                    const verdi = etiketter[felt];
+                    const kode = typeof verdi === 'object' ? verdi?.etikett : verdi;
+                    if (kode?.startsWith('UKJENT_')) {
+                        feilendeEtiketter.add(felt);
+                        etiketter[felt] = null;
+                    }
+                }
+            }
 
             for (const feil of response.errors ?? []) {
                 const felt = feil.path?.[1];
