@@ -23,6 +23,8 @@ export function mapUtmeldingskandidatTag(
         case 'FOLKEREGISTERSTATUS_INGEN_STATUS':
             return 'Folkeregisterstatus: Ingen status';
         case 'UKJENT_UTMELDINGSKANDIDAT':
+        case 'IKKE_LENGER_SYKMELDT_UTEN_ARBEIDSGIVER':
+            return 'Ikke lenger sykmeldt uten arbeidsgiver';
         case undefined:
         case null:
             return null;
