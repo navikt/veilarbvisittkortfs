@@ -22,7 +22,7 @@ updates:
     schedule:
       interval: "weekly"
     cooldown:
-      default-days: 3
+      default-days: 4
 
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
@@ -32,7 +32,7 @@ updates:
     schedule:
       interval: "weekly"
     cooldown:
-      default-days: 7
+      default-days: 4
     groups:
       aksel-dependencies:
         patterns:

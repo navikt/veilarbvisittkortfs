@@ -24,6 +24,7 @@ export interface AvslutningStatus {
     erDeltakerIUngdomsprogrammet: boolean;
     erArbeidssoeker: boolean;
     harAap: boolean;
+    erSykmeldtUtenArbeidsgiver: boolean;
 }
 
 export interface Oppfolging {
@@ -76,7 +77,8 @@ export type UtmeldingskandidatHistorikkType =
     | 'FOLKEREGISTERSTATUS_FORSVUNNET'
     | 'FOLKEREGISTERSTATUS_OPPHORT'
     | 'FOLKEREGISTERSTATUS_UKJENT'
-    | 'FOLKEREGISTERSTATUS_INGEN_STATUS';
+    | 'FOLKEREGISTERSTATUS_INGEN_STATUS'
+    | 'IKKE_LENGER_SYKMELDT_UTEN_ARBEIDSGIVER';
 
 export type InnstillingsHistorikkType =
     | 'SATT_TIL_DIGITAL'
@@ -260,7 +262,8 @@ export type KandidatForUtmeldingTag =
     | 'FOLKEREGISTERSTATUS_FORSVUNNET'
     | 'FOLKEREGISTERSTATUS_OPPHORT'
     | 'FOLKEREGISTERSTATUS_UKJENT'
-    | 'FOLKEREGISTERSTATUS_INGEN_STATUS';
+    | 'FOLKEREGISTERSTATUS_INGEN_STATUS'
+    | 'IKKE_LENGER_SYKMELDT_UTEN_ARBEIDSGIVER';
 
 export interface MedUtmeldingskandidat {
     utmeldingskandidat: {

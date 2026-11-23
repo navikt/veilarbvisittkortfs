@@ -19,6 +19,7 @@ export function KanIkkeAvsluttesInnhold({ status }: Props) {
                 )}
                 {status?.erArbeidssoeker && <li>Brukeren er arbeidssøker.</li>}
                 {status?.harAap && <li>Brukeren har AAP.</li>}
+                {status?.erSykmeldtUtenArbeidsgiver && <li>Brukeren er sykmeldt uten arbeidsgiver.</li>}
             </ul>
         </div>
     );

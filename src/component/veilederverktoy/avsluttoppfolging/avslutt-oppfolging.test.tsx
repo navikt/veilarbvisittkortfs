@@ -13,6 +13,7 @@ const mocks = vi.hoisted(() => ({
                   erDeltakerIUngdomsprogrammet?: boolean;
                   erArbeidssoeker?: boolean;
                   harAap?: boolean;
+                  erSykmeldtUtenArbeidsgiver?: boolean;
               },
         avsluttOppfolgingStatusLoading: true
     },
@@ -101,7 +102,8 @@ describe('AvsluttOppfolging', () => {
                 underKvp: true,
                 erDeltakerIUngdomsprogrammet: true,
                 erArbeidssoeker: true,
-                harAap: true
+                harAap: true,
+                erSykmeldtUtenArbeidsgiver: true
             },
             avsluttOppfolgingStatusLoading: false
         };
@@ -122,6 +124,7 @@ describe('AvsluttOppfolging', () => {
         ).toBeTruthy();
         expect(screen.getByText('Brukeren er arbeidssøker.')).toBeTruthy();
         expect(screen.getByText('Brukeren har AAP.')).toBeTruthy();
+        expect(screen.getByText('Brukeren er sykmeldt uten arbeidsgiver.')).toBeTruthy();
         expect(screen.queryByRole('textbox', { name: 'Begrunnelse' })).toBeNull();
         expect(screen.queryByRole('button', { name: 'Bekreft' })).toBeNull();
         expect(screen.queryByRole('button', { name: 'Avbryt' })).toBeNull();
