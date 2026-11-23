@@ -196,7 +196,7 @@ describe('Etiketter', () => {
             expect((await screen.findAllByRole('alert')).length).toBe(1);
             expect(
                 screen.getByText(
-                    'Kunne ikke laste alle viktige etiketter. Informasjon om beskyttelse, sikkerhet eller dødsfall kan mangle.'
+                    'Kunne ikke hente alle etiketter. Status for f.eks. adressebeskyttelse og sikkerhetstiltak kan mangle. Prøv igjen senere.'
                 )
             ).toBeTruthy();
             expect(screen.getByText('Sykmeldt')).toBeTruthy();
@@ -232,7 +232,9 @@ describe('Etiketter', () => {
         renderEtiketter();
 
         expect((await screen.findAllByRole('alert')).length).toBe(1);
-        expect(screen.getByText('Kunne ikke laste alle etiketter. Noe informasjon kan mangle.')).toBeTruthy();
+        expect(
+            screen.getByText('Kunne ikke hente alle etiketter. Noe informasjon kan mangle. Prøv igjen senere.')
+        ).toBeTruthy();
         expect(!!screen.queryByText('Sykmeldt')).toBe(!!sykmeldt);
         expect(screen.queryByText('Varsel')).toBeNull();
     });
@@ -267,7 +269,7 @@ describe('Etiketter', () => {
         expect(await screen.findByRole('alert')).toBeTruthy();
         expect(screen.getByText('Sykmeldt')).toBeTruthy();
         expect(screen.queryByText('Ansatte i samtale')).toBeNull();
-        expect(screen.getByText(/Kunne ikke laste alle viktige etiketter/)).toBeTruthy();
+        expect(screen.getByText(/Kunne ikke hente alle etiketter\. Status for f\.eks\./)).toBeTruthy();
     });
 
     test.each(Object.entries(ukjenteEtiketter))(
@@ -299,8 +301,8 @@ describe('Etiketter', () => {
             expect(
                 screen.getByText(
                     alvorlig
-                        ? 'Kunne ikke laste alle viktige etiketter. Informasjon om beskyttelse, sikkerhet eller dødsfall kan mangle.'
-                        : 'Kunne ikke laste alle etiketter. Noe informasjon kan mangle.'
+                        ? 'Kunne ikke hente alle etiketter. Status for f.eks. adressebeskyttelse og sikkerhetstiltak kan mangle. Prøv igjen senere.'
+                        : 'Kunne ikke hente alle etiketter. Noe informasjon kan mangle. Prøv igjen senere.'
                 )
             ).toBeTruthy();
         }
@@ -327,7 +329,7 @@ describe('Etiketter', () => {
         renderEtiketter();
 
         expect(await screen.findByRole('alert')).toBeTruthy();
-        expect(screen.getByText(/Kunne ikke laste alle viktige etiketter/)).toBeTruthy();
+        expect(screen.getByText(/Kunne ikke hente alle etiketter\. Status for f\.eks\./)).toBeTruthy();
         expect(screen.getByText('Død')).toBeTruthy();
         expect(screen.getByText('Kode 6')).toBeTruthy();
         expect(screen.getByText('Fysisk utestengelse')).toBeTruthy();
@@ -355,7 +357,7 @@ describe('Etiketter', () => {
         renderEtiketter();
 
         expect((await screen.findAllByRole('alert')).length).toBe(1);
-        expect(screen.getByText(/Kunne ikke laste alle viktige etiketter/)).toBeTruthy();
+        expect(screen.getByText(/Kunne ikke hente alle etiketter\. Status for f\.eks\./)).toBeTruthy();
         expect(screen.getByText('Sykmeldt')).toBeTruthy();
         expect(screen.queryByText('Skjermet')).toBeNull();
         expect(screen.queryByText('Varsel')).toBeNull();
@@ -456,7 +458,11 @@ describe('Etiketter', () => {
         renderEtiketter();
 
         expect(await screen.findByRole('alert')).toBeTruthy();
-        expect(screen.getByText('Kunne ikke laste etiketter. Prøv igjen senere.')).toBeTruthy();
+        expect(
+            screen.getByText(
+                'Kunne ikke hente etiketter. Har ikke status for bl.a. adressebeskyttelse og sikkerhetstiltak. Prøv igjen senere.'
+            )
+        ).toBeTruthy();
         expect(screen.queryByText('Død')).toBeNull();
         expect(screen.queryByText('Ikke under oppfølging')).toBeNull();
     });

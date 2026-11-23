@@ -57,7 +57,8 @@ function Etiketter({ brukerFnr }: { brukerFnr: string }) {
     if (error) {
         return (
             <InlineMessage className="etikett-status" status="error" size="small" role="alert">
-                Kunne ikke laste etiketter. Prøv igjen senere.
+                Kunne ikke hente etiketter. Har ikke status for bl.a. adressebeskyttelse og sikkerhetstiltak. Prøv igjen
+                senere.
             </InlineMessage>
         );
     }
@@ -127,8 +128,8 @@ function Etiketter({ brukerFnr }: { brukerFnr: string }) {
                     role="alert"
                 >
                     {harAlvorligeFeil
-                        ? 'Kunne ikke laste alle viktige etiketter. Informasjon om beskyttelse, sikkerhet eller dødsfall kan mangle.'
-                        : 'Kunne ikke laste alle etiketter. Noe informasjon kan mangle.'}
+                        ? 'Kunne ikke hente alle etiketter. Status for f.eks. adressebeskyttelse og sikkerhetstiltak kan mangle. Prøv igjen senere.'
+                        : 'Kunne ikke hente alle etiketter. Noe informasjon kan mangle. Prøv igjen senere.'}
                 </InlineMessage>
             )}
         </HStack>
