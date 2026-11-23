@@ -59,6 +59,22 @@ const ukjenteEtiketter: VisittkortEtiketter = {
     oppgittHindringer: 'UKJENT_PROFILERING'
 };
 
+const alvorligeFelter: readonly (keyof VisittkortEtiketter)[] = [
+    'dod',
+    'adressebeskyttelse',
+    'sikkerhetstiltak',
+    'skjerming',
+    'vergemaalOppfolging',
+    'fullmaktOppfolging',
+    'tegnspraaktolk',
+    'talespraaktolk',
+    'kvp',
+    'manuellOppfolging',
+    'reservertKrr',
+    'utdatertIKrr',
+    'ikkeRegistrertKrr'
+];
+
 const server = setupServer();
 const renderEtiketter = () =>
     render(
@@ -141,7 +157,7 @@ describe('Etiketter', () => {
         expect(screen.queryByRole('alert')).toBeNull();
     });
 
-    test.each(['dod', 'adressebeskyttelse', 'sikkerhetstiltak', 'skjerming'])(
+    test.each(alvorligeFelter)(
         'viser alvorlig feil ved feil i %s, beholder vellykkede etiketter og prioriterer over mindre alvorlige feil',
         async felt => {
             server.use(
@@ -154,13 +170,22 @@ describe('Etiketter', () => {
                                 adressebeskyttelse: 'KODE_7',
                                 sikkerhetstiltak: { etikett: 'SIKKERHETSTILTAK', beskrivelse: 'Ansatte i samtale' },
                                 skjerming: 'SKJERMET',
+                                vergemaalOppfolging: 'VERGEMAAL_OPPFOLGING',
+                                fullmaktOppfolging: 'FULLMAKT_OPPFOLGING',
+                                tegnspraaktolk: 'TEGNSPRAAKTOLK',
+                                talespraaktolk: 'TALESPRAAKTOLK',
+                                manuellOppfolging: 'MANUELL_OPPFOLGING',
+                                reservertKrr: 'RESERVERT_KRR',
+                                utdatertIKrr: 'UTDATERT_I_KRR',
+                                ikkeRegistrertKrr: 'IKKE_REGISTRERT_KRR',
                                 sykmeldt: 'SYKMELDT',
-                                kvp: 'KVP'
+                                kvp: 'KVP',
+                                varsel: 'VARSEL'
                             }
                         },
                         errors: [
                             { message: 'Kunne ikke hente etikett', path: ['visittkortEtiketter', felt] },
-                            { message: 'Kunne ikke hente KVP', path: ['visittkortEtiketter', 'kvp'] }
+                            { message: 'Kunne ikke hente varsel', path: ['visittkortEtiketter', 'varsel'] }
                         ]
                     })
                 )
@@ -175,12 +200,21 @@ describe('Etiketter', () => {
                 )
             ).toBeTruthy();
             expect(screen.getByText('Sykmeldt')).toBeTruthy();
-            expect(screen.queryByText('KVP')).toBeNull();
+            expect(screen.queryByText('Varsel')).toBeNull();
             const tekster: Record<string, string> = {
                 dod: 'Død',
                 adressebeskyttelse: 'Kode 7',
                 sikkerhetstiltak: 'Ansatte i samtale',
-                skjerming: 'Skjermet'
+                skjerming: 'Skjermet',
+                vergemaalOppfolging: 'Vergemål',
+                fullmaktOppfolging: 'Fullmakt Oppfølging',
+                tegnspraaktolk: 'Tegnspråktolk',
+                talespraaktolk: 'Språktolk',
+                kvp: 'KVP',
+                manuellOppfolging: 'Manuell oppfølging',
+                reservertKrr: 'Reservert KRR',
+                utdatertIKrr: 'Utdatert i KRR',
+                ikkeRegistrertKrr: 'Ikke registrert KRR'
             };
             expect(screen.queryByText(tekster[felt])).toBeNull();
         }
@@ -190,7 +224,7 @@ describe('Etiketter', () => {
         server.use(
             http.post('/veilarbperson/graphql', () =>
                 HttpResponse.json({
-                    data: { visittkortEtiketter: { ...tommeEtiketter, sykmeldt, kvp: 'UKJENT_OPPFOLGING' } }
+                    data: { visittkortEtiketter: { ...tommeEtiketter, sykmeldt, varsel: 'UKJENT_VARSEL' } }
                 })
             )
         );
@@ -200,7 +234,7 @@ describe('Etiketter', () => {
         expect((await screen.findAllByRole('alert')).length).toBe(1);
         expect(screen.getByText('Kunne ikke laste alle etiketter. Noe informasjon kan mangle.')).toBeTruthy();
         expect(!!screen.queryByText('Sykmeldt')).toBe(!!sykmeldt);
-        expect(screen.queryByText('KVP')).toBeNull();
+        expect(screen.queryByText('Varsel')).toBeNull();
     });
 
     test('håndterer nestede og gjentatte feil uten å forkaste vellykkede etiketter', async () => {
@@ -261,7 +295,7 @@ describe('Etiketter', () => {
             expect(screen.getByText(vellykketTekst)).toBeTruthy();
             expect(container.querySelectorAll('.aksel-tag').length).toBe(1);
             expect(container.textContent).not.toContain('UKJENT_');
-            const alvorlig = ['dod', 'adressebeskyttelse', 'sikkerhetstiltak', 'skjerming'].includes(felt);
+            const alvorlig = alvorligeFelter.some(alvorligFelt => alvorligFelt === felt);
             expect(
                 screen.getByText(
                     alvorlig
@@ -272,7 +306,7 @@ describe('Etiketter', () => {
         }
     );
 
-    test('beholder alvorlige etiketter når bare tolk er ukjent', async () => {
+    test('viser alvorlig feil og beholder vellykkede etiketter når bare tolk er ukjent', async () => {
         server.use(
             http.post('/veilarbperson/graphql', () =>
                 HttpResponse.json({
@@ -293,7 +327,7 @@ describe('Etiketter', () => {
         renderEtiketter();
 
         expect(await screen.findByRole('alert')).toBeTruthy();
-        expect(screen.getByText('Kunne ikke laste alle etiketter. Noe informasjon kan mangle.')).toBeTruthy();
+        expect(screen.getByText(/Kunne ikke laste alle viktige etiketter/)).toBeTruthy();
         expect(screen.getByText('Død')).toBeTruthy();
         expect(screen.getByText('Kode 6')).toBeTruthy();
         expect(screen.getByText('Fysisk utestengelse')).toBeTruthy();
@@ -309,11 +343,11 @@ describe('Etiketter', () => {
                         visittkortEtiketter: {
                             ...tommeEtiketter,
                             skjerming: 'UKJENT_SKJERMING',
-                            kvp: 'KVP',
+                            varsel: 'VARSEL',
                             sykmeldt: 'SYKMELDT'
                         }
                     },
-                    errors: [{ message: 'Kunne ikke hente KVP', path: ['visittkortEtiketter', 'kvp'] }]
+                    errors: [{ message: 'Kunne ikke hente varsel', path: ['visittkortEtiketter', 'varsel'] }]
                 })
             )
         );
@@ -324,7 +358,7 @@ describe('Etiketter', () => {
         expect(screen.getByText(/Kunne ikke laste alle viktige etiketter/)).toBeTruthy();
         expect(screen.getByText('Sykmeldt')).toBeTruthy();
         expect(screen.queryByText('Skjermet')).toBeNull();
-        expect(screen.queryByText('KVP')).toBeNull();
+        expect(screen.queryByText('Varsel')).toBeNull();
     });
 
     test.each(['KODE_6', 'KODE_7', 'KODE_19'])('viser adressebeskyttelse %s som kodeetikett', async kode => {

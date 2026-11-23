@@ -11,7 +11,16 @@ const alvorligeEtiketter: readonly (keyof VisittkortEtiketter)[] = [
     'dod',
     'adressebeskyttelse',
     'sikkerhetstiltak',
-    'skjerming'
+    'skjerming',
+    'vergemaalOppfolging',
+    'fullmaktOppfolging',
+    'tegnspraaktolk',
+    'talespraaktolk',
+    'kvp',
+    'manuellOppfolging',
+    'reservertKrr',
+    'utdatertIKrr',
+    'ikkeRegistrertKrr'
 ];
 
 const Advarsel = ({ visible, title, children }: Etikettprops) =>

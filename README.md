@@ -2,6 +2,18 @@
 
 Personinfo om bruker og veilederverktøy
 
+## Feil ved henting av etiketter
+
+Ved delvise feil beholdes etikettene som er hentet. Feil for følgende felt regnes som alvorlige:
+
+- `dod`, `adressebeskyttelse` (diskresjonskode), `sikkerhetstiltak`, `skjerming`
+- `vergemaalOppfolging`, `fullmaktOppfolging`, `tegnspraaktolk`, `talespraaktolk`
+- `kvp`, `manuellOppfolging`, `reservertKrr`, `utdatertIKrr`, `ikkeRegistrertKrr`
+
+Feil for øvrige etikettfelt regnes som mindre alvorlige, også når de har samme
+`UKJENT_*`-verdi som et alvorlig felt. Kun én feilmelding vises, med prioritet
+totalfeil, alvorlig feil, mindre alvorlig feil.
+
 Demoløsning: https://navikt.github.io/veilarbvisittkortfs/
 
 ![Skjermutklipp av hvordan Visittkort og veilederverktøy ser ut i frontend.](readme_appillustrasjon.png)
