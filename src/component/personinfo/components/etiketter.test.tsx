@@ -237,6 +237,14 @@ describe('Etiketter', () => {
         ).toBeTruthy();
         expect(!!screen.queryByText('Sykmeldt')).toBe(!!sykmeldt);
         expect(screen.queryByText('Varsel')).toBeNull();
+        if (sykmeldt) {
+            const etikettboks = screen.getByText('Sykmeldt').closest('.etikett-container');
+            const feilmelding = screen.getByRole('alert');
+            expect(etikettboks).not.toBeNull();
+            expect(etikettboks?.parentElement).toBe(feilmelding.parentElement);
+            expect(etikettboks?.contains(feilmelding)).toBe(false);
+            expect(feilmelding.nextElementSibling).toBe(etikettboks);
+        }
     });
 
     test('håndterer nestede og gjentatte feil uten å forkaste vellykkede etiketter', async () => {
