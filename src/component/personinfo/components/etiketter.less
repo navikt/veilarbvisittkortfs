@@ -1,4 +1,38 @@
 .visittkortfs {
+    .etikett-omrade {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        align-items: center;
+        gap: var(--ax-space-4);
+    }
+
+    .etikett-omrade,
+    .etikett-container,
+    .etikett-status,
+    .etikett-feil {
+        min-width: 0;
+    }
+
+    .etikett-container:empty {
+        display: none;
+    }
+
+    @media (max-width: 799px) {
+        .etikett-omrade,
+        .etikett-status {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            max-width: calc(100vw - 5rem);
+            margin-block: 0.5rem;
+        }
+    }
+
+    @media (min-width: 800px) {
+        .etikett-omrade:has(.etikett-container:not(:empty)):has(.etikett-feil) {
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        }
+    }
+
     @media (min-width: 1300px) {
         .etikett-container {
             justify-content: center;

@@ -6,10 +6,36 @@ import {
     Verge,
     FullmaktDTO,
     OmraadeHandlingType,
-    OpplysningerOmArbeidssoekerMedProfilering
+    OpplysningerOmArbeidssoekerMedProfilering,
+    VisittkortEtiketter
 } from '../../api/veilarbperson';
 import { defaultNetworkResponseDelay } from '../config';
-import { delay, http, HttpResponse, RequestHandler } from 'msw';
+import { delay, graphql, http, HttpResponse, RequestHandler } from 'msw';
+
+export const mockVisittkortEtiketter: VisittkortEtiketter = {
+    dod: null,
+    adressebeskyttelse: null,
+    utmeldingskandidat: null,
+    sikkerhetstiltak: null,
+    skjerming: null,
+    vergemaalOppfolging: 'VERGEMAAL_OPPFOLGING',
+    fullmaktOppfolging: null,
+    tegnspraaktolk: null,
+    talespraaktolk: null,
+    kvp: null,
+    manuellOppfolging: null,
+    reservertKrr: null,
+    utdatertIKrr: null,
+    ikkeUnderOppfolging: null,
+    varsel: null,
+    ikkeRegistrertKrr: null,
+    trengerOppfolgingsvedtak: null,
+    sykmeldt: null,
+    iArbeidssokerregisteret: 'I_ARBEIDSSOKERREGISTERET',
+    antattGodeMuligheter: null,
+    antattBehovForVeiledning: null,
+    oppgittHindringer: 'OPPGITT_HINDRINGER'
+};
 
 const mockHarBruktNivaa4: HarBruktNivaa4Type = {
     harbruktnivaa4: false
@@ -137,10 +163,15 @@ export const veilarbpersonHandlers: RequestHandler[] = [
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json(mockHarBruktNivaa4);
     }),
-    http.post('/veilarbperson/graphql', async () => {
-        await delay(defaultNetworkResponseDelay);
-        return HttpResponse.json({ data: { person: mockPersonalia }, errors: null });
-    }),
+    graphql
+        .link('/veilarbperson/graphql')
+        .operation<{ person?: Personalia; visittkortEtiketter?: VisittkortEtiketter }>(async ({ operationName }) => {
+            await delay(defaultNetworkResponseDelay);
+            if (operationName === 'VisittkortEtiketter') {
+                return HttpResponse.json({ data: { visittkortEtiketter: mockVisittkortEtiketter } });
+            }
+            return HttpResponse.json({ data: { person: mockPersonalia }, errors: null });
+        }),
     http.post('/veilarbperson/api/v3/person/hent-vergeOgFullmakt', async () => {
         await delay(defaultNetworkResponseDelay);
         return HttpResponse.json(mockVerge);

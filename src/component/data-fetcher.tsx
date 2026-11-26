@@ -2,7 +2,7 @@ import React from 'react';
 import { Loader } from '@navikt/ds-react';
 import { useBrukerFnr } from '../store/app-store';
 import { useOppfolgingsstatus } from '../api/veilarboppfolging';
-import { usePersonalia, useVerge, useFullmakt, useSpraakTolk } from '../api/veilarbperson';
+import { usePersonalia } from '../api/veilarbperson';
 import { useInnloggetVeileder, useVeilederePaEnhet } from '../api/veilarbveileder';
 import { useGjeldendeEskaleringsvarsel } from '../api/veilarbdialog';
 import './data-fetcher.less';
@@ -20,9 +20,6 @@ export function DataFetcher({ children }: Props) {
     const { oppfolging, isLoading: oppfolgingsstatusIsLoading } = useOppfolgingsstatus(brukerFnr);
     const { isLoading: personaliaIsLoading } = usePersonalia(brukerFnr);
     const { isLoading: innloggetVeilederIsLoading } = useInnloggetVeileder();
-    useVerge(brukerFnr);
-    useFullmakt(brukerFnr);
-    useSpraakTolk(brukerFnr);
 
     const oppfolgingsEnhet = oppfolging?.oppfolgingsenhet.enhetId || undefined;
 
@@ -30,12 +27,7 @@ export function DataFetcher({ children }: Props) {
     useVeilederePaEnhet(visVeilederVerktoy ? oppfolgingsEnhet : undefined);
     useGjeldendeEskaleringsvarsel(visVeilederVerktoy ? brukerFnr : undefined);
 
-    if (
-        innloggetVeilederIsLoading ||
-        oppfolgingsstatusIsLoading ||
-        personaliaIsLoading
-        // trenger ikke vente på vergeOgFullmaktFetcher eller spraakTolkFetcher
-    ) {
+    if (innloggetVeilederIsLoading || oppfolgingsstatusIsLoading || personaliaIsLoading) {
         return <Loader className="visittkort-laster" size="xlarge" />;
     }
 
