@@ -114,7 +114,7 @@ describe('Etiketter', () => {
         renderEtiketter();
 
         expect(await screen.findByText('Vergemål')).toBeTruthy();
-        expect(screen.getByText('Kode 7')).toBeTruthy();
+        expect(screen.getByText('Fortrolig')).toBeTruthy();
         expect(screen.getByText('To ansatte i samtale').getAttribute('title')).toBe('To ansatte i samtale');
         expect(screen.getByText('Forlengelse utløpt')).toBeTruthy();
         expect(screen.getByText('Trenger oppfølgingsvedtak § 14 a')).toBeTruthy();
@@ -203,7 +203,7 @@ describe('Etiketter', () => {
             expect(screen.queryByText('Varsel')).toBeNull();
             const tekster: Record<string, string> = {
                 dod: 'Død',
-                adressebeskyttelse: 'Kode 7',
+                adressebeskyttelse: 'Fortrolig',
                 sikkerhetstiltak: 'Ansatte i samtale',
                 skjerming: 'Skjermet',
                 vergemaalOppfolging: 'Vergemål',
@@ -339,7 +339,7 @@ describe('Etiketter', () => {
         expect(await screen.findByRole('alert')).toBeTruthy();
         expect(screen.getByText(/Kunne ikke hente alle etiketter\. Status for f\.eks\./)).toBeTruthy();
         expect(screen.getByText('Død')).toBeTruthy();
-        expect(screen.getByText('Kode 6')).toBeTruthy();
+        expect(screen.getByText('Strengt fortrolig')).toBeTruthy();
         expect(screen.getByText('Fysisk utestengelse')).toBeTruthy();
         expect(screen.queryByText('Tegnspråktolk')).toBeNull();
         expect(screen.queryByText('Språktolk')).toBeNull();
@@ -371,7 +371,11 @@ describe('Etiketter', () => {
         expect(screen.queryByText('Varsel')).toBeNull();
     });
 
-    test.each(['KODE_6', 'KODE_7', 'KODE_19'])('viser adressebeskyttelse %s som kodeetikett', async kode => {
+    test.each([
+        ['KODE_6', 'Strengt fortrolig'],
+        ['KODE_7', 'Fortrolig'],
+        ['KODE_19', 'Strengt fortrolig i utlandet']
+    ])('viser adressebeskyttelse %s som %s', async (kode, tekst) => {
         server.use(
             http.post('/veilarbperson/graphql', () =>
                 HttpResponse.json({ data: { visittkortEtiketter: { ...tommeEtiketter, adressebeskyttelse: kode } } })
@@ -380,7 +384,10 @@ describe('Etiketter', () => {
 
         renderEtiketter();
 
-        expect(await screen.findByText(kode.replace('KODE_', 'Kode '))).toBeTruthy();
+        expect(await screen.findByText(tekst)).toBeTruthy();
+        expect(screen.queryByText('Kode 7')).toBeNull();
+        expect(screen.queryByText('Kode 6')).toBeNull();
+        expect(screen.queryByText('Kode 19')).toBeNull();
         expect(screen.queryByRole('alert')).toBeNull();
     });
 

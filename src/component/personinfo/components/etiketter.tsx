@@ -7,6 +7,12 @@ interface Etikettprops extends Omit<TagProps, 'variant'> {
     visible: boolean | undefined;
 }
 
+const adressebeskyttelseTekster = {
+    KODE_6: 'Strengt fortrolig',
+    KODE_7: 'Fortrolig',
+    KODE_19: 'Strengt fortrolig i utlandet'
+};
+
 const alvorligeEtiketter: readonly (keyof VisittkortEtiketter)[] = [
     'dod',
     'adressebeskyttelse',
@@ -89,7 +95,9 @@ function Etiketter({ brukerFnr }: { brukerFnr: string }) {
             <HStack className="etikett-container" align="center" gap="space-2 space-4" wrap>
                 <BaseDod visible={!!etiketter.dod}>Død</BaseDod>
                 <Advarsel visible={!!etiketter.adressebeskyttelse}>
-                    {etiketter.adressebeskyttelse?.replace('KODE_', 'Kode ')}
+                    {etiketter.adressebeskyttelse && etiketter.adressebeskyttelse !== 'UKJENT_PERSONALIA'
+                        ? adressebeskyttelseTekster[etiketter.adressebeskyttelse]
+                        : null}
                 </Advarsel>
                 <Fokus visible={!!etiketter.utmeldingskandidat}>
                     {mapUtmeldingskandidatTag(etiketter.utmeldingskandidat)}
